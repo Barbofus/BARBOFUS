@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('tailwindtest');
 });
+
+Route::get('/about', function () {
+    return view('about');
+});
