@@ -14,7 +14,7 @@ Tall Stack:
 
 ## INSTALLATION
 
-Pour installer le projet, commencez par le cloner, pensez aussi créer une database nommé BARBOFUS, ensuite executer les commandes suivantes dans la console
+Pour installer le projet, commencez par le cloner, pensez aussi à créer une database nommé BARBOFUS, ensuite executez les commandes suivantes dans la console
 
 ```
 composer install
