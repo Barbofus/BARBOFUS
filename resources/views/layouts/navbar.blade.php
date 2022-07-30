@@ -22,6 +22,12 @@
         </style>
 
         @auth
+            @if ( Auth::user()->role_id > 1)
+                <li><a href="#" class="pr-4 hover:font-bold">Skin en attente</a></li>
+            @endif
+
+            <li><a href="#" class="pr-4 hover:font-bold">Poster un skin</a></li>
+            <li><a href="#" class="pr-4 hover:font-bold">Mon compte</a></li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="hover:font-bold">Se déconnecter</button>
