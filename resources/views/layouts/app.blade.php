@@ -7,9 +7,10 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
-    @yield('title')
+    <title>Barbofus</title>
 </head>
 <body>
+    @include('layouts.header')
     @yield('content')
 </body>
 </html>

@@ -1,11 +1,14 @@
-<div class="text-2xl justify-center pl-5 pt-2 pb-3 border-b">
-    <ul class="flex">
-        <li class="{{ Route::is('index') ? "active" : "" }}"><a href="{{ route('index') }}" class="pr-4 hover:font-bold">Accueil</a></li>
-        <li class="{{ Route::is('about') ? "active" : "" }}"><a href="{{ route('about') }}" class=" pr-4 hover:font-bold">About</a></li>
+<ul class="flex justify-between text-2xl border-b h-[50px]">
+    <div class="flex ml-[15%] h-full items-center pb-1">
+        <li class="{{ Route::is('home') ? "active" : "" }}"><a href="{{ route('home') }}" class="pr-4 hover:font-bold">Accueil</a></li>
+        <li><a href="#" class="pr-4 hover:font-bold">Les skins</a></li>
+        <li><a href="#" class="pr-4 hover:font-bold">Les builds</a></li>
+    </div>
 
+    <div class="flex mr-[5%] h-full items-center pb-1">
         @guest
-            <li class="{{ Route::is('login') ? "active" : "" }}"><a href="{{ route('login') }}" class="pr-4 hover:font-bold">Login</a></li>
-            <li><a href="#" class="hover:font-bold">Register</a></li>
+            <li class="{{ Route::is('login') ? "active" : "" }}"><a href="{{ route('login') }}" class="pr-4 hover:font-bold">Se connecter</a></li>
+            <li class="{{ Route::is('register') ? "active" : "" }}"><a href="{{ route('register') }}" class="hover:font-bold">S'enregistrer</a></li>
         @endguest
 
         <style>
@@ -19,7 +22,10 @@
         </style>
 
         @auth
-            <li><a href="#">Log out</a></li>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="hover:font-bold">Se déconnecter</button>
+            </form>
         @endauth
-    </ul>
-</div>
+    </div>
+</ul>
