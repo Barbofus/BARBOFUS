@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/favicon.ico') }}">
+
     
     <title>Barbofus</title>
 </head>
