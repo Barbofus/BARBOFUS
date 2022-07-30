@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('tailwindtest');
-});
+})->name('index');
 
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
 
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');

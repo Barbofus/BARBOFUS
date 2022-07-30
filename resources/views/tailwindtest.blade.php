@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@extends('layouts.app')
 
+@section('title')
+<title>Accueil</title>
+@endsection
 
-    <title>Document</title>
-</head>
-<body>
+@section('content')
+    @include('layouts.navbar')
     <aside class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
         <div>
             <div class="-mx-6 px-6 py-4">
@@ -391,5 +387,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+@endsection
