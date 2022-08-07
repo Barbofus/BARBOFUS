@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBuildRequest;
+use App\Models\Build;
+use App\Models\Race;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class BuildController extends Controller
@@ -24,8 +28,10 @@ class BuildController extends Controller
      */
     public function create()
     {
-        if(Gate::allows('admin-access')) {
-            return view('builds.create');
+        if(Gate::allows('admin-access')) {  
+            $races = Race::all();
+ 
+            return view('builds.create', ['races' => $races]);
         }
         
         abort(403, 'Autorisation requise');
@@ -35,12 +41,27 @@ class BuildController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreBuildRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBuildRequest $request)
     {
-        //
+        if(Gate::allows('admin-access')) {
+            $imageName = $request->image_path->store('builds');
+
+            Build::create([
+                'title' => $request->title,
+                'build_link' => $request->build_link,
+                'ap_nbr' => $request->ap_nbr,
+                'mp_nbr' => $request->mp_nbr,
+                'image_path' => $imageName,
+                'race_id' => $request->race_id,
+            ]);
+    
+            return redirect()->route('home');
+        }
+        
+        abort(403, 'Autorisation requise');
     }
 
     /**
@@ -51,7 +72,11 @@ class BuildController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Gate::allows('admin-access')) {
+            //return view('builds.create');
+        }
+        
+        abort(403, 'Autorisation requise');
     }
 
     /**
@@ -63,7 +88,11 @@ class BuildController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(Gate::allows('admin-access')) {
+            //return view('builds.create');
+        }
+        
+        abort(403, 'Autorisation requise');
     }
 
     /**
@@ -74,6 +103,10 @@ class BuildController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(Gate::allows('admin-access')) {
+            //return view('builds.create');
+        }
+        
+        abort(403, 'Autorisation requise');
     }
 }

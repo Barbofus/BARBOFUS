@@ -20,6 +20,14 @@ class Build extends Model
 
     use HasFactory;
 
+    public static function boot() {
+        parent::boot();
+
+        self::creating(function ($build) {
+            $build->user()->associate(auth()->user()->id);
+        });
+    }
+
     public function Element()
     {
         return $this->belongsToMany('App\Models\Element');
