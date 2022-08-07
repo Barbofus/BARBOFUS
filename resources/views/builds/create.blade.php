@@ -82,6 +82,22 @@
           @enderror
       </div>
 
+      <div class="-mx-3 mb-5 pl-[250px]">
+        <div class="w-[50%] px-3">
+            <label for="" class="text-l font-semibold px-1">Choix des élements</label>
+            
+            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+              @foreach ($elements as $element)
+                <input name="{{ $element->id }}" id="{{ $element->id }}" type="checkbox" value="{{ $element->id }}">{{ $element->name }}</option>
+              @endforeach
+        </div>
+        @error('element_id')
+          <span class="text-red-400 text-l ml-[50px]">
+            <span>{{ $message }}</span>
+          </span>
+        @enderror
+    </div>
+
         <div class="-mx-3 mb-5 pl-[250px]">
           <div class="w-[50%] px-3">
               <label for="" class="text-l font-semibold px-1">Image du build</label>

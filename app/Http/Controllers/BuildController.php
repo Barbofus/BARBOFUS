@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBuildRequest;
 use App\Models\Build;
+use App\Models\Element;
 use App\Models\Race;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,9 @@ class BuildController extends Controller
      */
     public function index()
     {
-        return view('builds.index');
+        $builds = Build::all();
+
+        return view('builds.index', ['builds' => $builds]);
     }
 
     /**
@@ -30,8 +33,9 @@ class BuildController extends Controller
     {
         if(Gate::allows('admin-access')) {  
             $races = Race::all();
+            $elements = Element::all();
  
-            return view('builds.create', ['races' => $races]);
+            return view('builds.create', ['races' => $races, 'elements' => $elements]);
         }
         
         abort(403, 'Autorisation requise');
