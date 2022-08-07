@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuildController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('builds', BuildController::class )
+    ->except('show', 'index');
+});
+
+Route::get('/builds', [BuildController::class, 'index'])->name('builds.index');
