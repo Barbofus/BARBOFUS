@@ -88,7 +88,7 @@
             
             <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
               @foreach ($elements as $element)
-                <input name="{{ $element->id }}" id="{{ $element->id }}" type="checkbox" value="{{ $element->id }}">{{ $element->name }}</option>
+                <input name="element_id[]" id="element_id" type="checkbox" value="{{ $element->id }}">{{ $element->name }}</option>
               @endforeach
         </div>
         @error('element_id')

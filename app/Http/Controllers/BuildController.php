@@ -20,8 +20,9 @@ class BuildController extends Controller
     public function index()
     {
         $builds = Build::all();
+        $elements = Element::with('build')->get();
 
-        return view('builds.index', ['builds' => $builds]);
+    return view('builds.index', ['builds' => $builds, 'elements' => $elements]);
     }
 
     /**
@@ -53,7 +54,9 @@ class BuildController extends Controller
         if(Gate::allows('admin-access')) {
             $imageName = $request->image_path->store('builds');
 
-            Build::create([
+            //dd($request);
+
+            $build = Build::create([
                 'title' => $request->title,
                 'build_link' => $request->build_link,
                 'ap_nbr' => $request->ap_nbr,
@@ -61,8 +64,16 @@ class BuildController extends Controller
                 'image_path' => $imageName,
                 'race_id' => $request->race_id,
             ]);
+
+            $elements = $request->element_id;
+
+            //dd($elements);
+            
+            foreach($elements as $element) {
+                $build->Element()->attach($element);
+            }
     
-            return redirect()->route('home');
+            return redirect()->route('builds.index');
         }
         
         abort(403, 'Autorisation requise');
