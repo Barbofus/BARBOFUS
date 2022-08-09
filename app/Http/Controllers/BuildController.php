@@ -19,10 +19,11 @@ class BuildController extends Controller
      */
     public function index()
     {
-        $builds = Build::all();
+        $builds = Build::orderBy('race_id')->get();
         $elements = Element::with('build')->get();
+        $races = Race::all();
 
-    return view('builds.index', ['builds' => $builds, 'elements' => $elements]);
+    return view('builds.index', ['builds' => $builds, 'elements' => $elements, 'races' => $races]);
     }
 
     /**
@@ -52,7 +53,7 @@ class BuildController extends Controller
     public function store(StoreBuildRequest $request)
     {
         if(Gate::allows('admin-access')) {
-            $imageName = $request->image_path->store('builds');
+            $imageName = $request->image_path->store('images/builds');
 
             //dd($request);
 
