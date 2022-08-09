@@ -5,17 +5,7 @@
     <h1 class=" text-5xl font-bold text-center mt-[50px]">Bienvenue sur la page des builds !</h1>
     <h2 class=" text-3xl italic text-center mt-[10px]">Je suis encore en construction, mais... on se reverra bientôt</h2>
 
-    <div class="mt-[32px] border-t pt-[16px] flex justify-center space-x-4">
-        @foreach ($races as $race)
-            <img src="{{ asset('/storage/images/icons/classes/' .$race->icon_path) }}" alt="{{ $race->name }}" width="100" height="100" class="hover:grayscale hover:opacity-95 transition ease-in duration-100">
-        @endforeach
-    </div>
-
-    <div class="mt-[32px] border-t pt-[16px] flex justify-center space-x-4">
-        @foreach ($elements as $element)
-            <img src="{{ asset('/storage/images/icons/elements/' .$element->icon_path) }}" alt="{{ $element->name }}" width="100" height="100" class="hover:grayscale hover:opacity-95 transition ease-in duration-100">
-        @endforeach
-    </div>
+    @livewire('filter-builds')
 
     <div class="mt-[48px] ml-[150px] mr-[150px] grid grid-cols-5 gap-y-8 mb-[128px] border-t pt-[16px]">
         @foreach ($builds as $build)
@@ -27,21 +17,23 @@
                         <div class=" h-[40%] w-full flex items-center justify-center">
                             <span class=" text-3xl font-bold">{{ $build->title }}</span>
                         </div>
+
                         <div class=" h-[60%] w-full flex">
                             <div class=" h-full w-[50%]">
                                 <div class="flex justify-center h-full p-4">
                                     <div class="relative w-[50%] h-full flex items-center justify-center">
-                                        <img src="{{ asset('/storage/images/icons/elements/icon_pa.png') }}" alt="Icone PA" width="70">
+                                        <img src="{{ asset('/storage/images/misc_ui/icon_pa.png') }}" alt="Icone PA" width="70">
                                         <span class="absolute text-xl font-bold">{{ $build->ap_nbr }}</span>
                                     </div>
                                     
                                     <div class="relative w-[50%] h-full flex items-center justify-center">
-                                        <img src="{{ asset('/storage/images/icons/elements/icon_pm.png') }}" alt="Icone PM" width="60">
+                                        <img src="{{ asset('/storage/images/misc_ui/icon_pm.png') }}" alt="Icone PM" width="70">
                                         <span class="absolute text-xl font-bold">{{ $build->mp_nbr }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class=" h-full w-[50%] bg-white bg-opacity-[35%]">
+
+                            <div class=" h-full w-[50%] backdrop-blur-sm">
                                 <div class=" w-full h-[50%] flex items-center justify-end">
                                     @foreach ($build->Element as $element)
                                         @if ($element->is_elemental == 1)
@@ -49,6 +41,7 @@
                                         @endif
                                     @endforeach
                                 </div>
+
                                 <div class=" w-full h-[50%] border-t flex items-center justify-end">
                                     @foreach ($build->Element as $element)
                                         @if ($element->is_elemental == 0)
@@ -58,9 +51,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- 
-                            
-                         --}}
                     </div>
                 </div>
                 <img src="{{ asset('/storage/images/' .$build->image_path) }}" alt="{{ $build->title }}" width="400" height="400" class="group-hover:grayscale group-hover:opacity-95 transition ease-in duration-150">
