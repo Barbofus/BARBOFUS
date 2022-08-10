@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Element;
 use App\Models\Race;
+use App\Models\Build;
+use App\Models\Element;
 use Livewire\Component;
 
 class FilterBuilds extends Component
@@ -13,20 +14,31 @@ class FilterBuilds extends Component
     public $selectedElements = [];
     public $selectedRaces = [];
 
+    public $builds;
+    public $wher = [];
+    
+
     // public function mount($elements, $races)
     // {
     //     $this->$elements = $elements;
     //     $this->$races = $races;
     // }
 
+    public function boot()
+    {
+        $this->builds = Build::orderBy("race_id")->get();
+    }
+
     public function SelectRaces($id)
     {
         if(!array_keys($this->selectedRaces, $id))
         {
             $this->selectedRaces[] = $id;
+            $this->wher[] = ['race_id', '=', $id, 'or'];
         }
         else {
             unset($this->selectedRaces[array_search($id, $this->selectedRaces)]);
+            unset($this->wher[array_search(['race_id', '=', $id, 'or'], $this->wher)]);
         }
     }
 
@@ -34,6 +46,9 @@ class FilterBuilds extends Component
     {
         unset($this->selectedRaces);
         $this->selectedRaces = array();
+
+        unset($this->wher);
+        $this->wher = array();
     }
 
     public function SelectElements($id)
@@ -56,6 +71,7 @@ class FilterBuilds extends Component
 
     public function render()
     {
-        return view('livewire.filter-builds', ['elements' => Element::all(), 'races' => Race::all()]);
+        $this->builds = Build::where($this->wher)->orderBy("race_id")->get();
+        return view('livewire.filter-builds', ['elements' => Element::all(), 'races' => Race::all(), 'builds' => $this->builds]);
     }
 }

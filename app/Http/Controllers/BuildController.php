@@ -23,7 +23,7 @@ class BuildController extends Controller
         $elements = Element::with('build')->get();
         $races = Race::all();
 
-    return view('builds.index', ['builds' => $builds, 'elements' => $elements, 'races' => $races]);
+        return view('builds.index', ['builds' => $builds, 'elements' => $elements, 'races' => $races]);
     }
 
     /**
