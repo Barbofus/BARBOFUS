@@ -6,27 +6,20 @@ use App\Models\Race;
 use App\Models\Build;
 use App\Models\Element;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Builder;
 
 class FilterBuilds extends Component
 {
-    //public $selectedElements = [1,2,3,4,5,6];
-    //public $selectedRaces = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
     public $selectedElements = [];
     public $selectedRaces = [];
 
-    public $builds;
+    //public $buildsQuery;
     public $wher = [];
-    
 
-    // public function mount($elements, $races)
-    // {
-    //     $this->$elements = $elements;
-    //     $this->$races = $races;
-    // }
 
     public function boot()
     {
-        $this->builds = Build::orderBy("race_id")->get();
+        //$this->buildsQuery = Build::orderBy("race_id")->get();
     }
 
     public function SelectRaces($id)
@@ -71,7 +64,16 @@ class FilterBuilds extends Component
 
     public function render()
     {
-        $this->builds = Build::where($this->wher)->orderBy("race_id")->get();
-        return view('livewire.filter-builds', ['elements' => Element::all(), 'races' => Race::all(), 'builds' => $this->builds]);
+        $buildsQuery = Build::where($this->wher)->with('element');
+
+        foreach($this->selectedElements as $id) {
+            $buildsQuery->whereHas('element', function (Builder $query) use ($id) { 
+                $query->where('element_id', '=', $id, 'and'); 
+            });
+        }
+
+        $response = $buildsQuery->orderBy('race_id')->get();
+        
+        return view('livewire.filter-builds', ['elements' => Element::all(), 'races' => Race::all(), 'builds' => $response]);
     }
 }

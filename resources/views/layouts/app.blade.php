@@ -10,7 +10,7 @@
     <!-- The "defer" attribute is important to make sure Alpine waits for Livewire to load first. -->
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="icon" type="image/x-icon" href="{{ asset('/storage/icons/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('/storage/images/icons/favicon.ico') }}">
 
     
     <title>Barbofus</title>
