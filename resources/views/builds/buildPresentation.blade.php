@@ -1,0 +1,47 @@
+<a href="{{ $build->build_link }}" target="_blank" class="group">
+    <div class="border rounded-xl w-[400px] overflow-hidden">
+        <div class="relative">
+            <img src="{{ asset('/storage/images/banner/classes/' .$build->Race->banner_path) }}" alt="{{ $build->Race->name }}" class="brightness-[45%] contrast-[120%] group-hover:brightness-[100%] group-hover:contrast-[100%] transition duration-150">
+            <div class=" absolute text-white top-0 w-full h-full">
+                <div class=" h-[40%] w-full flex items-center justify-center">
+                    <span class=" text-3xl font-bold">{{ $build->title }}</span>
+                </div>
+
+                <div class=" h-[60%] w-full flex">
+                    <div class=" h-full w-[50%]">
+                        <div class="flex justify-center h-full p-4">
+                            <div class="relative w-[50%] h-full flex items-center justify-center">
+                                <img src="{{ asset('/storage/images/misc_ui/icon_pa.png') }}" alt="Icone PA" width="70">
+                                <span class="absolute text-xl font-bold">{{ $build->ap_nbr }}</span>
+                            </div>
+                            
+                            <div class="relative w-[50%] h-full flex items-center justify-center">
+                                <img src="{{ asset('/storage/images/misc_ui/icon_pm.png') }}" alt="Icone PM" width="70">
+                                <span class="absolute text-xl font-bold">{{ $build->mp_nbr }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=" h-full w-[50%] backdrop-blur-sm">
+                        <div class=" w-full h-[50%] flex items-center justify-end">
+                            @foreach ($build->Element as $element)
+                                @if ($element->is_elemental == 1)
+                                    <img src="{{ asset('/storage/images/icons/elements/' .$element->icon_path) }}" alt="{{ $element->name }}" width="50" height="50">
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <div class=" w-full h-[50%] border-t flex items-center justify-end">
+                            @foreach ($build->Element as $element)
+                                @if ($element->is_elemental == 0)
+                                    <img src="{{ asset('/storage/images/icons/elements/' .$element->icon_path) }}" alt="{{ $element->name }}" width="50" height="50">
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="{{ asset('/storage/images/' .$build->image_path) }}" alt="{{ $build->title }}" width="400" height="400" class="group-hover:grayscale group-hover:brightness-110 transition ease-in duration-150">
+    </div>
+</a>

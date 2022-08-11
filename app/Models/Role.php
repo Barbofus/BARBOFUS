@@ -9,7 +9,7 @@ class Role extends Model
 {
     use HasFactory;
 
-    public function user(){
+    public function User(){
         return $this->hasMany('App\Models\User');
     }
 }

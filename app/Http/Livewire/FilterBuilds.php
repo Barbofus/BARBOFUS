@@ -13,14 +13,8 @@ class FilterBuilds extends Component
     public $selectedElements = [];
     public $selectedRaces = [];
 
-    //public $buildsQuery;
     public $wher = [];
 
-
-    public function boot()
-    {
-        //$this->buildsQuery = Build::orderBy("race_id")->get();
-    }
 
     public function SelectRaces($id)
     {

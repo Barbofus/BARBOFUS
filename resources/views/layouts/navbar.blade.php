@@ -27,7 +27,7 @@
             @endif
 
             <li><a href="#" class="pr-4 hover:font-bold">Poster un skin</a></li>
-            <li><a href="#" class="pr-4 hover:font-bold">Mon compte</a></li>
+            <li class="{{ Route::is('userpage.index') ? "active" : "" }}"><a href="{{ route('userpage.index') }}" class="pr-4 hover:font-bold">Mon compte</a></li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="hover:font-bold">Se déconnecter</button>

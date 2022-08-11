@@ -19,6 +19,6 @@ class Race extends Model
 
     public function Build()
     {
-        return $this->HasMany('App\Models\Build');
+        return $this->hasMany('App\Models\Build');
     }
 }

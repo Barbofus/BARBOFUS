@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildController;
+use App\Http\Controllers\UserPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,8 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('builds', BuildController::class )
     ->except('show', 'index');
+
+    Route::get('/mon-compte', [UserPageController::class, 'index'])->name('userpage.index');
 });
 
 Route::get('/builds', [BuildController::class, 'index'])->name('builds.index');
