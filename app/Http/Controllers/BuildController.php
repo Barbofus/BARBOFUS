@@ -19,11 +19,7 @@ class BuildController extends Controller
      */
     public function index()
     {
-        $builds = Build::orderBy('race_id')->get();
-        $elements = Element::with('build')->get();
-        $races = Race::all();
-
-        return view('builds.index', ['builds' => $builds, 'elements' => $elements, 'races' => $races]);
+        return view('builds.index');
     }
 
     /**

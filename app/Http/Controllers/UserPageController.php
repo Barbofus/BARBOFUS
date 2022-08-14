@@ -13,41 +13,47 @@ class UserPageController extends Controller
 
     public function index() 
     {
-
         $currentUser = Auth::user();
-        $users = User::all();
+        $accountUptimeStr = Self::CountUptime($currentUser);
 
+        return view('user_page.index', ['currentUser' => $currentUser, 'accountUptime' => $accountUptimeStr]);
+    }
 
+    protected function CountUptime($user)
+    {
             // Récupération du temps écoulé en jours, mois, années depuis la création du compte
-        $accountUptimeDay = $currentUser->created_at->diffInDays(Carbon::now()) % 365 % 30;
-        $accountUptimeMonth = $currentUser->created_at->diffInMonths(Carbon::now()) % 12;
-        $accountUptimeYear = $currentUser->created_at->diffInYears(Carbon::now());
-
-
-
-            // Création du string '3 ans, 4 mois et 87 jours'
-        $accountUptimeStr = '';
-
-        if($accountUptimeYear > 0) {
-            if($accountUptimeYear > 1) {
-                $accountUptimeStr .= $accountUptimeYear.' ans ';
+            $accountUptimeDay = $user->created_at->diffInDays(Carbon::now()) % 365 % 30;
+            $accountUptimeMonth = $user->created_at->diffInMonths(Carbon::now()) % 12;
+            $accountUptimeYear = $user->created_at->diffInYears(Carbon::now());
+    
+    
+    
+                // Création du string '3 ans, 4 mois et 87 jours'
+            $str = '';
+    
+            if($accountUptimeYear > 0) {
+                if($accountUptimeYear > 1) {
+                    $str .= $accountUptimeYear.' ans ';
+                }
+                else {
+                    $str .= $accountUptimeYear.' an ';
+                }
             }
-            else {
-                $accountUptimeStr .= $accountUptimeYear.' an ';
+    
+            if($accountUptimeMonth > 0) {
+                $str .= $accountUptimeMonth.' mois ';
             }
-        }
+    
+            if($accountUptimeDay > 0) {
+                $str .= $accountUptimeDay.' jours';
+            }
+            else if($accountUptimeYear > 0 || $accountUptimeMonth > 0){
+                $str .= ' et moins d\'un jour';
+            }
+            else{
+                $str .= 'moins d\'un jour';
+            }
 
-        if($accountUptimeMonth > 0) {
-            $accountUptimeStr .= $accountUptimeMonth.' mois ';
-        }
-
-        if($accountUptimeDay > 0) {
-            $accountUptimeStr .= $accountUptimeDay.' jours';
-        }
-        else {
-            $accountUptimeStr .= ' et moins d\'un jour';
-        }
-
-        return view('user_page.index', ['users' => $users, 'currentUser' => $currentUser, 'accountUptime' => $accountUptimeStr]);
+            return $str;
     }
 }
