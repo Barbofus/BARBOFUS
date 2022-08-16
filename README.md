@@ -24,3 +24,21 @@ php artisan key:generate
 php artisan migrate
 npm run dev
 ```
+
+## PHP
+
+lien vers php : https://www.php.net/manual/fr/intro-whatis.php
+
+Lorsque vous installez php veuillez à ne pas oublier de l'ajouter dans vos variables d'environnements
+
+- Version PHP 8.0 minimum
+
+et pensez à activer les extension nécessaires au lancement (voir si-dessous)
+
+```
+extension=fileinfo
+```
+
+pour simplifiez votre recherche vous pouvez utilisez la touche ```f3``` et indiquez dans la barre de recherche ```;extension```
+
+![extension](readme_image/img.png)
