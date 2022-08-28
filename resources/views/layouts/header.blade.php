@@ -1,4 +1,4 @@
-<div class=" h-[200px] flex justify-center ">
+<div class=" h-[200px] flex justify-center">
     <div class="text-xl w-[25%]"></div>
     <div class=" h-full w-[50%] border-b ">
         <h1 class="text-8xl text-amber-400 font-bold w-full mt-3 text-center">BARBOFUS</h1>

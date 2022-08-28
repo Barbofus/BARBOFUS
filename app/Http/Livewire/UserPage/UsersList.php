@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\UserPage;
 
 use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class UserPageUsersList extends Component
+class UsersList extends Component
 {
+    
     public $users = [];
 
     public $currentUser;
@@ -67,7 +67,7 @@ class UserPageUsersList extends Component
         }
     }
 
-    public function DeleteUser($userName)
+    public function ToDelete($userName)
     {
         $userToDelete = User::where('name', $userName)->first(); 
         $userToDelete->delete();
@@ -85,11 +85,6 @@ class UserPageUsersList extends Component
         $role->user()->save($user);
 
         session()->flash('message', $user->name.' est devenu '.$role->name.' avec succé !');
-    }
-
-    public function SearchUser($search)
-    {
-        dd($search);
     }
 
     protected function CountUptime($user)
@@ -133,6 +128,6 @@ class UserPageUsersList extends Component
     
     public function render()
     {
-        return view('livewire.user-page-users-list');
+        return view('livewire.user-page.users-list');
     }
 }

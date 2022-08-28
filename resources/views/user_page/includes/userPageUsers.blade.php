@@ -3,6 +3,6 @@
     <p class=" italic text-xl">Page en construction</p>
 
 
-    @livewire('user-page-users-list')
+    @livewire('user-page.users-list')
 
 </div>
