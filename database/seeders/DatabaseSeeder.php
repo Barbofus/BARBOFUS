@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Build;
+use App\Models\Element;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        //User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // $elements = Element::all();
+
+        // //Build::factory(10)->create();
+        // Build::factory(35)->create()->each(function($build) use ($elements) {
+        //     $build->Element()->attach(
+        //         $elements->random(rand(1, 6))->pluck('id')->toArray()
+        //     );
+        // });=
     }
 }

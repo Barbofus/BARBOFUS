@@ -7,7 +7,9 @@
         <div class="pl-10">
             <span class="text-3xl">Es-tu sûr de vouloir supprimer <span x-text="deleteVerify"></span> ?</span>
             <div class="mt-10 flex justify-between">
+                
                 <button x-on:click="$wire.ToDelete(deleteVerify), deleteVerify = false" class="ml-8 h-[50px] w-[150px] bg-green-600 text-2xl text-green-100 border-r-[16px] border-green-700 hover:bg-green-700 hover:border-green-800 hover:font-bold">Supprimer</button>
+
                 <button x-on:click="deleteVerify = false" class="mr-8 h-[50px] w-[150px] bg-blue-600 text-2xl text-blue-100 border-r-[16px] border-blue-700 hover:bg-blue-700 hover:border-blue-800 hover:font-bold">Annuler</button>
             </div>
         </div>

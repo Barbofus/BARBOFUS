@@ -6,6 +6,8 @@ use App\Models\Race;
 use App\Models\Build;
 use App\Models\Element;
 use Livewire\Component;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 
 class FilterBuilds extends Component
@@ -14,8 +16,9 @@ class FilterBuilds extends Component
     public $selectedElements = [];
     public $selectedRaces = [];
 
-    public $wher = [];
 
+    public $wher = [];
+    
 
     public function SelectRaces($id)
     {
@@ -56,13 +59,26 @@ class FilterBuilds extends Component
         unset($this->selectedElements);
         $this->selectedElements = array();
     }
-    
 
     public function ToDelete($buildTitle)
-    {
-        $userToDelete = Build::where('title', $buildTitle)->first(); 
-        $userToDelete->delete();
+    {        
+        if(!Gate::allows('admin-access')) {
+            abort(403, 'Autorisation requise');
+        }
+
+        $buildToDelete = Build::where('title', $buildTitle)->first(); 
+        
+        $deletedBuildName = $buildToDelete->title;
+
+        Storage::delete($buildToDelete->image_path);
+
+        $buildToDelete->delete();
+
+        
+        session()->flash('success', 'Le build ' . $deletedBuildName . ' a bien été supprimé');
+    
     }
+
 
     public function render()
     {

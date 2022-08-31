@@ -70,7 +70,11 @@ class UsersList extends Component
     public function ToDelete($userName)
     {
         $userToDelete = User::where('name', $userName)->first(); 
+
         $userToDelete->delete();
+
+
+        session()->flash('success', 'L\'utilisateur ' . $userName . ' à bien été supprimé');
 
 
         Self::ChangeSort($this->sortType, $this->sortSelection);
@@ -84,7 +88,10 @@ class UsersList extends Component
 
         $role->user()->save($user);
 
-        session()->flash('message', $user->name.' est devenu '.$role->name.' avec succé !');
+        
+        Self::ChangeSort($this->sortType, $this->sortSelection);
+        
+        session()->flash('success', $user->name.' est devenu '.$role->name.' avec succé !');
     }
 
     protected function CountUptime($user)

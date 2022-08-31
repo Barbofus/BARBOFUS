@@ -1,19 +1,22 @@
 <div>
-    <div class="relative mt-10 mb-5 ml-24" x-data="{srchBar: ''}" >
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clip-rule="evenodd"></path>
-            </svg>
+    <div class="flex mt-10 mb-5 ml-24 items-end justify-between">
+        <div class="relative" x-data="{srchBar: ''}" >
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <input 
+                type="text"
+                placeholder="Recherche un nom ou un email..."
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5"
+                wire:model="query"
+            >
         </div>
-        <input 
-            type="text"
-            placeholder="Recherche un nom ou un email..."
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5"
-            wire:model="query"
-        >
+        <p class="mr-[250px] text-lg text-gray-500">Vous avez <span class="font-bold">{{ $users->count() }}</span> utilisateurs enregistrés</p>
     </div>
 
     <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative mb-10 mx-16" style="height: 600px;" x-data="{
@@ -105,14 +108,15 @@
                             <td class="border-dashed border-t border-r border-gray-200">
                                 <span class="text-gray-700 px-6 py-3 flex items-center">{{ $usersUptime[$user->id] }}</span>
                             </td>
-                            {{-- $wire.ChangeUserRole({{ $user->id }}, $refs.sel.value) --}}
-                            <td class="border-dashed border-t border-r border-gray-200" x-data="{
-                                debug($str){
-                                    console.log($str)
-                                }}">
-                                <select x-ref="sel" name="role_id" id="role_id" x-on:change="$wire.ChangeUserRole({{ $user->id }}, $refs.sel.value)">
+                            
+                            <td class="border-dashed border-t border-r border-gray-200">
+                                <select 
+                                    x-ref="sel_{{ $user->id }}" 
+                                    name="role_id" id="role_id" 
+                                    x-on:change="$wire.ChangeUserRole({{ $user->id }}, $refs.sel_{{ $user->id }}.value)">
+
                                     @foreach ($roles as $role)
-                                        <option value="{{  $role->id }}" @if ($user->role_id === $role->id) selected @endif>{{  $role->name }}</option>
+                                        <option value="{{  $role->id }}" {{ $role->id === $user->role_id ? 'selected' : ''}}>{{  $role->name }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -133,11 +137,13 @@
             </tbody>
         </table>
 
+        
         @include('layouts.deleteVerify')
 
-        @if (session()->Has('message'))
+        
+        @if (session()->Has('success'))
             @section('alertMessage')
-                {{session('message')}}
+                {{session('success')}}
             @endsection
 
             @include('layouts.success-alert')

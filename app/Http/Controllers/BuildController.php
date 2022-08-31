@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBuildRequest;
+use App\Models\Race;
 use App\Models\Build;
 use App\Models\Element;
-use App\Models\Race;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreBuildRequest;
+use App\Http\Requests\UpdateBuildRequest;
 
 class BuildController extends Controller
 {
@@ -66,11 +68,11 @@ class BuildController extends Controller
 
             //dd($elements);
             
-            foreach($elements as $element) {
-                $build->Element()->attach($element);
-            }
+            $build->Element()->sync($elements);
     
-            return redirect()->route('builds.index');
+            return redirect()   ->route('userpage.index')
+                                ->with('success', 'Le build ' . $build->title . ' a bien été créé')
+                                ->with('selection', 'userPageBuilds');
         }
         
         abort(403, 'Autorisation requise');
@@ -85,7 +87,16 @@ class BuildController extends Controller
     public function edit($id)
     {
         if(Gate::allows('admin-access')) {
-            //return view('builds.create');
+            
+            $build = Build::where('id', $id)->first();
+            $races = Race::all();
+            $elements = Element::all();
+
+            return view('builds.edit', [
+                'build' => $build,
+                'races' => $races,
+                'elements' => $elements
+            ]);
         }
         
         abort(403, 'Autorisation requise');
@@ -94,29 +105,50 @@ class BuildController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\UpdateBuildRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBuildRequest $request, $id)
     {
         if(Gate::allows('admin-access')) {
-            //return view('builds.create');
-        }
-        
-        abort(403, 'Autorisation requise');
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        if(Gate::allows('admin-access')) {
-            //return view('builds.create');
+            $build = Build::where('id', $id)->first();
+
+            $elements = $request->element_id;
+
+            //dd($elements);
+            
+      
+
+            
+            $arrayUpdate = [
+                'title' => $request->title,
+                'build_link' => $request->build_link,
+                'ap_nbr' => $request->ap_nbr,
+                'mp_nbr' => $request->mp_nbr,
+                'race_id' => $request->race_id,
+            ];
+
+            if($request->image_path != null) {
+                $imageName = $request->image_path->store('images/builds');
+
+                $arrayUpdate = array_merge($arrayUpdate, [
+                    'image_path' => $imageName
+                ]);
+
+                Storage::delete($build->image_path);
+            }
+
+            
+            $build->Element()->sync($elements);
+
+            $build->update($arrayUpdate);
+
+    
+            return redirect()   ->route('userpage.index')
+                                ->with('success', 'Le build ' . $build->title . ' a bien été modifié')
+                                ->with('selection', 'userPageBuilds');
         }
         
         abort(403, 'Autorisation requise');

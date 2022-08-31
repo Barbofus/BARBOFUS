@@ -41,5 +41,5 @@
             </div>
         </div>
     </div>
-    <img src="{{ asset('/storage/images/' .$build->image_path) }}" alt="{{ $build->title }}" width="400" height="400" class="group-hover:grayscale group-hover:brightness-110 transition ease-in duration-150">
+    <img src="{{ asset('/storage/' .$build->image_path) }}" alt="{{ $build->title }}" width="400" height="400" class="h-[400px] w-[400px] object-contain group-hover:grayscale group-hover:brightness-110 transition ease-in duration-150">
 </div>
