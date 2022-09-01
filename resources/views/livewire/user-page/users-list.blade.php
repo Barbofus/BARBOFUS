@@ -16,7 +16,7 @@
                 wire:model="query"
             >
         </div>
-        <p class="mr-[250px] text-lg text-gray-500">Vous avez <span class="font-bold">{{ $users->count() }}</span> utilisateurs enregistrés</p>
+        <p class="mr-[250px] text-lg text-gray-500">Vous avez <span class="font-bold">{{ App\Models\User::all()->count() }}</span> utilisateurs enregistrés</p>
     </div>
 
     <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative mb-10 mx-16" style="height: 600px;" x-data="{

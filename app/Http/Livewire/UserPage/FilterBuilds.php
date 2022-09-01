@@ -14,11 +14,20 @@ class FilterBuilds extends Component
 {    
     
     public $selectedElements = [];
+    public $unselectedElements = [];
+
     public $selectedRaces = [];
 
 
     public $wher = [];
-    
+
+    public $elementsOnly = true;
+
+
+    public function mount()
+    {
+        Self::UnselectAllElements();
+    }
 
     public function SelectRaces($id)
     {
@@ -47,9 +56,12 @@ class FilterBuilds extends Component
         if(!array_keys($this->selectedElements, $id))
         {
             $this->selectedElements[] = $id;
+            unset($this->unselectedElements[array_search($id, $this->unselectedElements)]);
+
         }
         else {
             unset($this->selectedElements[array_search($id, $this->selectedElements)]);
+            $this->unselectedElements[] = $id;
         }
     }
     
@@ -58,6 +70,20 @@ class FilterBuilds extends Component
     {
         unset($this->selectedElements);
         $this->selectedElements = array();
+        
+        unset($this->unselectedElements);
+        $this->unselectedElements = array();
+
+        $elements = Element::all();
+
+        foreach($elements as $el) {
+            $this->unselectedElements[] = $el->id;
+        }
+    }
+
+    public function ToggleElementsOnly()
+    {
+        $this->elementsOnly = !$this->elementsOnly;
     }
 
     public function ToDelete($buildTitle)
@@ -83,11 +109,21 @@ class FilterBuilds extends Component
     public function render()
     {
         $buildsQuery = Build::where($this->wher)->with('element');
-
+        
         foreach($this->selectedElements as $id) {
             $buildsQuery->whereHas('element', function (Builder $query) use ($id) { 
-                $query->where('element_id', '=', $id, 'and'); 
+                $query->having('element_id', '=', $id, 'and'); 
             });
+        }
+
+        if($this->elementsOnly) {
+            if(count($this->unselectedElements) < Element::count()) {
+                foreach($this->unselectedElements as $id) {
+                    $buildsQuery->doesntHave('element', 'and', function (Builder $query) use ($id) { 
+                        $query->having('element_id', '=', $id, 'and'); 
+                    });
+                }
+            }
         }
 
         $response = $buildsQuery->orderBy('race_id')->get();

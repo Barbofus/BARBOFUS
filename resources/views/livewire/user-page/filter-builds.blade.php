@@ -1,6 +1,6 @@
 <div x-data="{ deleteVerify: false  }">    
     
-    <p class="text-lg text-gray-500 text-center">Vous avez posté <span class="font-bold">{{ $builds->count() }}</span> builds</p>
+    <p class="text-lg text-gray-500 text-center">Vous avez posté <span class="font-bold">{{ App\Models\Build::All()->count() }}</span> builds</p>
 
     <div class="top-0 mb-4 pb-2 border-b">
         <div class="mt-[32px] border-t pt-[16px]">
@@ -25,23 +25,33 @@
         </div>
 
         {{-- Affichage des elements --}}
-        <div class="mt-2 border-t flex justify-center items-center space-x-4">
-            @foreach ($elements as $element)
-                <button wire:click="SelectElements({{ $element->id }})">
-                    <img src="{{ asset('/storage/images/icons/elements/' .$element->icon_path) }}" alt="{{ $element->name }}" width="75" height="75" 
-                    @if (array_keys($selectedElements, $element->id))
-                        class="grayscale-0 brightness-100 transition ease-in duration-[50ms] hover:brightness-110 hover:-translate-y-2 active:scale-90"
-                    @else
-                        class="grayscale brightness-75 transition ease-in duration-[50ms] hover:brightness-100 hover:-translate-y-2 active:scale-90"
-                    @endif>
-                </button>
-            @endforeach
+        <div class="flex justify-center items-center">
+            <div class="mt-2 border-t flex justify-center items-center space-x-4">
+                @foreach ($elements as $element)
+                    <button wire:click="SelectElements({{ $element->id }})">
+                        <img src="{{ asset('/storage/images/icons/elements/' .$element->icon_path) }}" alt="{{ $element->name }}" width="75" height="75" 
+                        @if (array_keys($selectedElements, $element->id))
+                            class="grayscale-0 brightness-100 transition ease-in duration-[50ms] hover:brightness-110 hover:-translate-y-2 active:scale-90"
+                        @else
+                            class="grayscale brightness-75 transition ease-in duration-[50ms] hover:brightness-100 hover:-translate-y-2 active:scale-90"
+                        @endif>
+                    </button>
+                @endforeach
+            </div>
 
-            <div class="flex justify-center mt-2">
+            <div class="flex justify-center mt-2 ml-8">
                 <button wire:click="UnselectAllElements()" class="text-sm bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded">Afficher tous les élements</button>
+            </div>
+
+            <div class="flex justify-center mt-2 ml-8">
+                <input wire:click="ToggleElementsOnly()" checked type="checkbox" class="mr-2 scale-150 accent-green-600">
+                    <span class=" text-lg text-gray-700">Elements selectionnés UNIQUEMENT</span>
             </div>
         </div>
     </div>
+
+    
+    <p class="text-lg text-gray-500 text-center">Vos filtres affichent <span class="font-bold">{{ $builds->count() }}</span> builds</p>
 
     {{-- Affichage des builds --}}
     @if($builds->count() < 1)
