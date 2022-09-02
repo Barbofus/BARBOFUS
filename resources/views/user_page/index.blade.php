@@ -6,17 +6,21 @@
     <h2 class=" text-3xl italic text-center mt-[10px]">Je suis encore en construction, mais... on se reverra bientôt</h2>
 
     <div class="flex justify-center mt-10 mb-10"  x-data="{ deleteVerify: false  }">
-        <div class="w-[80%] flex border rounded-xl overflow-hidden bg-slate-50" x-data="{
-            
-            @if (session()->Has('selection'))
-                selection: '{{session('selection')}}', 
-            @else
-                selection: 'userPageDetails', 
-            @endif
+        
+        {{-- Création des variables de class pour éviter les copier coller avec AlpineJS --}}
+        {{-- Création de la variable 'selection:' qui définit qu'elle onglet sera affiché --}}
+        <div 
+            class="w-[80%] flex border rounded-xl overflow-hidden bg-slate-50" 
+            x-data="{
+                @if (session()->Has('selection'))
+                    selection: '{{session('selection')}}', 
+                @else
+                    selection: 'userPageDetails', 
+                @endif
+                initButtonClass: 'border-b border-slate-300 h-[50px] text-left text-xl w-full pl-6 bg-slate-200 hover:bg-slate-100',
+                selectedButtonClass: 'border-b border-slate-300 h-[50px] text-left text-xl w-full pl-6 bg-slate-50' }">
 
-            initButtonClass: 'border-b border-slate-300 h-[50px] text-left text-xl w-full pl-6 bg-slate-200 hover:bg-slate-100',
-            selectedButtonClass: 'border-b border-slate-300 h-[50px] text-left text-xl w-full pl-6 bg-slate-50' }">
-
+            {{-- Pseudo navbar pour afficher tel ou tel onglet, 100% AlpineJS --}}
             <div class="w-[350px] ">
                 <button x-on:click="selection = 'userPageDetails'" 
                 :class="selection === 'userPageDetails' ? selectedButtonClass : initButtonClass">Détails du compte</button>
@@ -27,11 +31,13 @@
                 <button x-on:click="selection = 'userPageLikes'" 
                 :class="selection === 'userPageLikes' ? selectedButtonClass : initButtonClass">Mes Likes</button>
 
+                {{-- Onglet visible uniquement par les modérateurs et les admins --}}
                 @canany(['mod-access', 'admin-access'])
                     <button x-on:click="selection = 'userPagePendginSkins'" 
                     :class="selection === 'userPagePendginSkins' ? selectedButtonClass : initButtonClass">Skins en attente</button>
                 @endcanany
 
+                {{-- Onglet visible uniquement par les admins --}}
                 @can('admin-access')
                     <button x-on:click="selection = 'userPageBuilds'" 
                     :class="selection === 'userPageBuilds' ? selectedButtonClass : initButtonClass">Mes Builds</button>
@@ -55,14 +61,15 @@
                 @include('user_page.includes.userPageLikes')
 
                 @canany(['mod-access', 'admin-access'])
+
                     {{-- Contenu de l'onglet "Skins en attente" --}}
                     @include('user_page.includes.userPagePendginSkins')
                 @endcanany
                 
                 @can('admin-access')
+
                     {{-- Contenu de l'onglet "Mes builds" --}}
                     @include('user_page.includes.userPageBuilds')
-
                     
                     {{-- Contenu de l'onglet "Liste des utilisateurs" --}}
                     @include('user_page.includes.userPageUsers')

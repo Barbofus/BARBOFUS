@@ -11,23 +11,23 @@ use Illuminate\Support\Facades\Auth;
 class UsersList extends Component
 {
     
-    public $users = [];
+    public $users = []; // Liste des utilisateurs
 
-    public $currentUser;
-    public $usersUptime = [];
+    public $currentUser; // Utilisateur actuellement connecté
+    public $usersUptime = []; // Liste des âges de comptes
 
-    public $accountUptimeStr;
+    public $sortType; // Type de trie, ASC ou DESC
+    public $sortSelection; // Quel catégorie sera trier (id, nom, email etc.)
 
-    public $sortType;
-    public $sortSelection;
+    public $roles = []; // Liste des rôles
 
-    public $roles = [];
-
-    public $query;
+    public $query; //  Le contenu de la barre de recherche
     
 
+    // Fonction qui s'execute à l'init, comme un construct
     public function mount()
     {
+        // On remplit toutes les variables créées
         $this->sortSelection = 'created_at';
         $this->sortType = false;
 
@@ -46,18 +46,22 @@ class UsersList extends Component
         }
     }
 
+    // Fonctionne appelé à chaque changement dans la barre de recherche
     public function updatedQuery()
     {
+        // Récupère les users contenu la query dans leur nom ou email
         $this->users = User::where('name', 'like', '%'.$this->query.'%')
             ->orWhere('email', 'like', '%'.$this->query.'%')
             ->get();
     }
 
+    // Fonction appelé par le clique des en-têtes du tableau des utilisateur, elle change la l'ordre de trie
     public function ChangeSort($sType, $sSelection)
     {
         $this->sortSelection = $sSelection;
         $this->sortType = $sType;
         
+        // Si on a un texte dans la barre de recherche, le conserve avec le 'where()'
         if($this->query)
         {
             $this->users = User::where('name', 'like', '%'.$this->query.'%')->orderBy($this->sortSelection, $this->sortType ? 'Asc' : 'Desc')->get();
@@ -67,33 +71,39 @@ class UsersList extends Component
         }
     }
 
+    // Fonction appelé par le 'layouts.deleteVerify' visant à supprimé définitivement l'utilisateur
     public function ToDelete($userName)
     {
+        // Récupère l'utilisateur actuel grace à son nom (les noms sont unique) et le supprime
         $userToDelete = User::where('name', $userName)->first(); 
 
         $userToDelete->delete();
 
-
+        // Envoie une notification de succé
         session()->flash('success', 'L\'utilisateur ' . $userName . ' à bien été supprimé');
 
-
+        // Actualise la liste des utlisateurs
         Self::ChangeSort($this->sortType, $this->sortSelection);
     }
 
+    // Fonction qui change le rôle du user, elle s'appele depuis la vue 'livewire.user-page.users-list'
     public function ChangeUserRole($userID, $newRole)
     {
-        //$user = User::findOrFail($userID)->update(['role_id' => Role::findOrFail($newRole-1)->id]);
+        // Récupère le user et le rôle concerné
         $role = Role::find($newRole);
         $user = User::find($userID);
 
+        // Applique le nouveau rôle au user
         $role->user()->save($user);
 
-        
+        // Lance la fonction qui réarrange l'affichage de la liste des utilisateurs
         Self::ChangeSort($this->sortType, $this->sortSelection);
         
+        // Envoie une notification de succé
         session()->flash('success', $user->name.' est devenu '.$role->name.' avec succé !');
     }
 
+    // Fonction interne qui permet de calculer depuis combien de temps un utilisateur à été créé en Années / Mois / Jours
     protected function CountUptime($user)
     {
             // Récupération du temps écoulé en jours, mois, années depuis la création du compte
@@ -103,9 +113,10 @@ class UsersList extends Component
     
     
     
-                // Création du string '3 ans, 4 mois et 87 jours'
+            // Création du string '3 ans, 4 mois et 87 jours'
             $str = '';
-    
+
+            // Si on a plus d'un an d'ancienneté, l'écris en pluriel, si on est là depuis moins d'un an, n'ajoute rien au string
             if($accountUptimeYear > 0) {
                 if($accountUptimeYear > 1) {
                     $str .= $accountUptimeYear.' ans ';
@@ -115,10 +126,13 @@ class UsersList extends Component
                 }
             }
     
+            // Si on a plus d'un mois d'ancienneté, en ajoute le nombre au string
             if($accountUptimeMonth > 0) {
                 $str .= $accountUptimeMonth.' mois ';
             }
     
+            // Si on a plus d'un jour d'ancienneté, en ajoute le nombre au string
+            // Si on a moins d'un jour, le dit, si on a moins d'un jour mais + d'un mois ou année, change la phrase
             if($accountUptimeDay > 0) {
                 $str .= $accountUptimeDay.' jours';
             }
@@ -129,10 +143,11 @@ class UsersList extends Component
                 $str .= 'Moins d\'un jour';
             }
 
+            // Renvoi le résultat
             return $str;
     }
 
-    
+    // Affiche la vue
     public function render()
     {
         return view('livewire.user-page.users-list');

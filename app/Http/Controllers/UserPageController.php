@@ -28,9 +28,10 @@ class UserPageController extends Controller
     
     
     
-                // Création du string '3 ans, 4 mois et 87 jours'
+            // Création du string '3 ans, 4 mois et 87 jours'
             $str = '';
     
+            // Si on a plus d'un an d'ancienneté, l'écris en pluriel, si on est là depuis moins d'un an, n'ajoute rien au string
             if($accountUptimeYear > 0) {
                 if($accountUptimeYear > 1) {
                     $str .= $accountUptimeYear.' ans ';
@@ -40,10 +41,13 @@ class UserPageController extends Controller
                 }
             }
     
+            // Si on a plus d'un mois d'ancienneté, en ajoute le nombre au string
             if($accountUptimeMonth > 0) {
                 $str .= $accountUptimeMonth.' mois ';
             }
     
+            // Si on a plus d'un jour d'ancienneté, en ajoute le nombre au string
+            // Si on a moins d'un jour, le dit, si on a moins d'un jour mais + d'un mois ou année, change la phrase
             if($accountUptimeDay > 0) {
                 $str .= $accountUptimeDay.' jours';
             }
@@ -54,6 +58,7 @@ class UserPageController extends Controller
                 $str .= 'moins d\'un jour';
             }
 
+            // Renvoi le résultat
             return $str;
     }
 }
