@@ -31,7 +31,8 @@
         x-data="{
             userSortSelection: 'created_at',
             userSortType: false,
-            deleteVerify: false  }">
+            deleteVerify: false,
+            deleteVerifyMessage: '' }">
 
         <table class="border-collapse table-fixed w-full whitespace-no-wrap bg-white table-striped relative">
             <tbody>
@@ -154,7 +155,7 @@
                                 <span class="text-gray-700 px-6 py-3 flex items-center">
                                     
                                     {{-- Au clique, remplis la variable deleteVerify avec le nom du User, pour afficher le 'layouts.deleteVerify' --}}
-                                    <button x-on:click="deleteVerify = '{{ $user->name }}'" class="px-1 py-1 bg-transparent outline-none border-2 border-red-400 rounded text-red-500 font-medium active:scale-95 hover:bg-red-600 hover:text-white hover:border-transparent transition-colors duration-200">
+                                    <button x-on:click="deleteVerify = '{{ $user->id }}', deleteVerifyMessage = '{{ $user->name }}'" class="px-1 py-1 bg-transparent outline-none border-2 border-red-400 rounded text-red-500 font-medium active:scale-95 hover:bg-red-600 hover:text-white hover:border-transparent transition-colors duration-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                         </svg>

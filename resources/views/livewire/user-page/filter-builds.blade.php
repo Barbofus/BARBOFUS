@@ -1,4 +1,6 @@
-<div x-data="{ deleteVerify: false  }">    
+<div x-data="{ 
+    deleteVerify: false, 
+    deleteVerifyMessage: ''  }">    
     
     {{-- Affichage de tous les builds enregistrés sur le site --}}
     <p class="text-lg text-gray-500 text-center">Vous avez posté <span class="font-bold">{{ App\Models\Build::All()->count() }}</span> builds</p>
@@ -89,7 +91,7 @@
                                 <a href="{{ route('builds.edit', ['build'=> $build->id]) }}" class="block mb-[50px] h-[50px] w-[150px] bg-blue-600 text-2xl text-blue-100 border-r-[16px] border-blue-700 hover:bg-blue-700 hover:border-blue-800 hover:font-bold">Modifier</a>
                                 
                                 {{-- Avec AlpineJS, stock le nom du build dans une variable, ce qui activera le 'layouts.deleteVerify' --}}
-                                <button x-on:click="deleteVerify = '{{ $build->id }}'" class="block h-[50px] w-[150px] bg-red-600 text-2xl text-red-100 border-r-[16px] border-red-700 hover:bg-red-700 hover:border-red-800 hover:font-bold">Supprimer</button>
+                                <button x-on:click="deleteVerify = '{{ $build->id }}', deleteVerifyMessage = '{{ $build->title }}'" class="block h-[50px] w-[150px] bg-red-600 text-2xl text-red-100 border-r-[16px] border-red-700 hover:bg-red-700 hover:border-red-800 hover:font-bold">Supprimer</button>
                             </div>  
                         </div>
 

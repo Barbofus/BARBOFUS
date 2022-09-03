@@ -72,15 +72,17 @@ class UsersList extends Component
     }
 
     // Fonction appelé par le 'layouts.deleteVerify' visant à supprimé définitivement l'utilisateur
-    public function ToDelete($userName)
+    public function ToDelete($userID)
     {
-        // Récupère l'utilisateur actuel grace à son nom (les noms sont unique) et le supprime
-        $userToDelete = User::where('name', $userName)->first(); 
+        // Récupère l'utilisateur actuel grace à son id et le supprime
+        //$userToDelete = User::where('name', $userName)->first(); 
+        $userToDelete = User::find($userID); 
+        $deletedUserName = $userToDelete->name;
 
         $userToDelete->delete();
 
         // Envoie une notification de succé
-        session()->flash('success', 'L\'utilisateur ' . $userName . ' à bien été supprimé');
+        session()->flash('success', 'L\'utilisateur ' . $deletedUserName . ' à bien été supprimé');
 
         // Actualise la liste des utlisateurs
         Self::ChangeSort($this->sortType, $this->sortSelection);
