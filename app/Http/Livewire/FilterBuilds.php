@@ -19,6 +19,11 @@ class FilterBuilds extends Component
 
     public $elementsOnly = true; // boolean pour activer ou non le filtrage stricte
 
+    public $showPvp = false; // Boolean pour montrer ou non les builds PVP
+    public $showPvm = false; // Boolean pour montrer ou non les builds PVM
+
+    public $firstPass = true;
+
 
     // Fonction s'executant à l'init, comme un construct
     public function mount()
@@ -90,10 +95,22 @@ class FilterBuilds extends Component
         }
     }
 
-    // Fonction appelé depuis 'livewire.user-page.filter-builds' qui toggle le filtrage stricte
+    // Fonction appelé depuis 'livewire.filter-builds' qui toggle le filtrage stricte
     public function ToggleElementsOnly()
     {
         $this->elementsOnly = !$this->elementsOnly;
+    }
+
+    // Fonction appelé depuis 'livewire.filter-builds' qui toggle le filtrage PVP
+    public function TogglePvp()
+    {
+        $this->showPvp = !$this->showPvp;
+    }
+
+    // Fonction appelé depuis 'livewire.filter-builds' qui toggle le filtrage PVM
+    public function TogglePvm()
+    {
+        $this->showPvm = !$this->showPvm;
     }
 
     // Rendu de la page
@@ -118,6 +135,16 @@ class FilterBuilds extends Component
                     });
                 }
             }
+        }
+
+        // Si seul le PVM est actif
+        if($this->showPvm && !$this->showPvp)
+        {
+            $buildsQuery->where('is_Pvp', false);
+        }
+        elseif(!$this->showPvm && $this->showPvp) // Si seul le PVP est actif
+        {
+            $buildsQuery->where('is_Pvp', true);
         }
 
         // Trier par classes

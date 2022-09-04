@@ -53,6 +53,19 @@
                 <input wire:click="ToggleElementsOnly()" checked type="checkbox" class="mr-2 scale-150 accent-green-600">
                     <span class=" text-lg text-gray-700">Elements selectionnés UNIQUEMENT</span>
             </div>
+
+            {{-- Boutou pour choisir les PVP et/ou PVM --}}
+            <div 
+                class="flex justify-center mt-2 ml-8 space-x-4"
+                x-data="{
+                    is_PvpSelected: false,
+                    is_PvmSelected: false,
+                    activeCSS: 'text-lg font-bold h-[35px] w-[75px] bg-yellow-500 rounded-xl hover:border-none hover:bg-yellow-300 active:bg-yellow-200  active:border-none',
+                    inactiveCSS: 'text-lg h-[35px] w-[75px] bg-white border-2 border-yellow-500 rounded-xl hover:bg-yellow-100 active:bg-yellow-200 active:border-none',
+                }">
+                <button x-on:click="is_PvpSelected = !is_PvpSelected, $wire.TogglePvp()" :class="is_PvpSelected ? activeCSS : inactiveCSS">PVP</button>
+                <button x-on:click="is_PvmSelected = !is_PvmSelected, $wire.TogglePvm()" :class="is_PvmSelected ? activeCSS : inactiveCSS">PVM</button>
+            </div>
         </div>
     </div>
 
