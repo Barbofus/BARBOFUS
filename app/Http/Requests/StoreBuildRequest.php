@@ -30,6 +30,7 @@ class StoreBuildRequest extends FormRequest
             'image_path' => 'image|required',
             'ap_nbr' => 'required',
             'mp_nbr' => 'required',
+            'is_pvp' => 'required',
         ];
     }
 }

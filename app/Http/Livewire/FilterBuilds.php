@@ -121,7 +121,7 @@ class FilterBuilds extends Component
         }
 
         // Trier par classes
-        $response = $buildsQuery->orderBy('race_id')->get();
+        $response = $buildsQuery->orderBy('race_id')->orderBy('is_pvp')->get();
         
         // Et on envoie !
         return view('livewire.filter-builds', ['elements' => Element::all(), 'races' => Race::all(), 'builds' => $response]);

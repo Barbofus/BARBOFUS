@@ -19,13 +19,17 @@ class DatabaseSeeder extends Seeder
     {
         //User::factory(10)->create();
 
-        // $elements = Element::all();
+        // $primaryElements = Element::where('is_elemental', 1)->get();
+        // $secondaryElements = Element::where('is_elemental', 0)->get();
 
         // //Build::factory(10)->create();
-        // Build::factory(35)->create()->each(function($build) use ($elements) {
+        // Build::factory(108)->create()->each(function($build) use ($primaryElements, $secondaryElements) {
         //     $build->Element()->attach(
-        //         $elements->random(rand(1, 6))->pluck('id')->toArray()
+        //         $primaryElements->random(rand(1, 4))->pluck('id')->toArray()
         //     );
-        // });=
+        //     $build->Element()->attach(
+        //         $secondaryElements->random(rand(0, 1))->pluck('id')->toArray()
+        //     );
+        // });
     }
 }

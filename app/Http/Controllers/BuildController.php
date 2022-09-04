@@ -62,6 +62,7 @@ class BuildController extends Controller
                 'mp_nbr' => $request->mp_nbr,
                 'image_path' => $imageName,
                 'race_id' => $request->race_id,
+                'is_pvp' => $request->is_pvp,
             ]);
 
             $elements = $request->element_id;

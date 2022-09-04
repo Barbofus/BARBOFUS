@@ -15,6 +15,7 @@ class Build extends Model
         'ap_nbr',
         'mp_nbr',
         'user_id',
+        'is_pvp',
     ];
 
 
