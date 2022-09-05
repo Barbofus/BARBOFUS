@@ -95,6 +95,7 @@
                     {{-- Vue qui contient tous le module de présentation des builds --}}
                     @include('builds.buildPresentation')
 
+
                     {{-- A l'hover, noirçit le build et donne accés aux boutons de modification / suppression --}}
                     <div class="absolute top-0 left-0 w-full h-full opacity-0 hover:opacity-100">
 
