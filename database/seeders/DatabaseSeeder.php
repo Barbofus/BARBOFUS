@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         // $secondaryElements = Element::where('is_elemental', 0)->get();
 
         // //Build::factory(10)->create();
-        // Build::factory(108)->create()->each(function($build) use ($primaryElements, $secondaryElements) {
+        // Build::factory(114)->create()->each(function($build) use ($primaryElements, $secondaryElements) {
         //     $build->Element()->attach(
         //         $primaryElements->random(rand(1, 4))->pluck('id')->toArray()
         //     );
