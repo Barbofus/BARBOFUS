@@ -171,6 +171,7 @@ class FilterBuilds extends Component
         // Liste des builds à supprimer
         $indexToDelete = [];
 
+        //dd($this->buildsToShow);
         // On parcours tous les builds, puis toutes les classes
         for ($i=0; $i < count($this->buildsToShow) ; $i++) {
 
@@ -356,6 +357,9 @@ class FilterBuilds extends Component
         }
 
         unset($this->allBuilds[$indexToDelete]);
+
+        // On réindexe tout ça !
+        $this->allBuilds = array_values($this->allBuilds);
 
         // Supprime l'image du storage
         Storage::delete($buildToDelete->image_path);

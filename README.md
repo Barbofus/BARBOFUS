@@ -1,16 +1,15 @@
 ## BARBOFUS
 
-Projet Git pour le site de BARBE___DOUCE
-
+Projet Git pour le site de BARBE\_\_\_DOUCE
 
 ## TECHNO
 
 Tall Stack:
-- Tailwind CSS
-- AlpinJS
-- Laravel
-- Livewire
 
+-   Tailwind CSS
+-   AlpinJS
+-   Laravel
+-   Livewire
 
 ## INSTALLATION
 

@@ -24,9 +24,11 @@ class Build extends Model
     public static function boot() {
         parent::boot();
 
-        self::creating(function ($build) {
-            $build->user()->associate(auth()->user()->id);
-        });
+        if(auth()->user()) {
+            self::creating(function ($build) {
+                $build->user()->associate(auth()->user()->id);
+            });
+        }
     }
 
     public function Element()

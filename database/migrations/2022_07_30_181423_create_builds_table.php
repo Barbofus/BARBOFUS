@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('ap_nbr');
             $table->integer('mp_nbr');
             $table->foreignId('user_id')->constrained();
+            $table->boolean('is_pvp');
             $table->timestamps();
         });
     }

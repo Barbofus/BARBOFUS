@@ -28,7 +28,7 @@ class BuildFactory extends Factory
             'image_path' => 'images/builds/MNzbHGFJPB5DB1ipVIuNDFl34I86l5N3YaryanjQ.webp',
             'ap_nbr' => $this->faker->numberBetween(11,12),
             'mp_nbr' => 6,
-            'user_id' => User::find(5),
+            'user_id' => User::where('email', '=', 'admin@gmail.com')->first()->id,
             'race_id' => $chosenRace,
             'is_pvp' => $is_pvp === 'PVP' ? 1 : 0,
         ];

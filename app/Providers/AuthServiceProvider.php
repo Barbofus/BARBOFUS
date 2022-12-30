@@ -27,12 +27,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('admin-access', function ($user) {
-            return $user->role_id == Role::where('name', 'Admin')->first()->id;
-        }); 
-        
+            return $user->role_id == Role::where('name', 'Administrateur')->first()->id;
+        });
+
         Gate::define('mod-access', function ($user) {
             return $user->role_id == Role::where('name', 'Modérateur')->first()->id;
-        }); 
+        });
         //
     }
 }
