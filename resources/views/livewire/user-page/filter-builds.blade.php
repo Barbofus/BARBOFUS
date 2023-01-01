@@ -49,9 +49,15 @@
             </div>
 
             {{-- Boutou pour activer la recherche stricte --}}
-            <div class="flex justify-center mt-2 ml-8">
-                <input wire:click="ToggleStrictFilter()" type="checkbox" class="mr-2 scale-150 accent-green-600">
-                    <span class="text-lg text-gray-700 ">Montrer les variantes DO CRI / DO POU</span>
+            <div>
+                <div class="flex justify-center mt-2 ml-8">
+                    <input wire:click="ToggleSecondaryElementFilter()" type="checkbox" class="mr-2 scale-150 accent-green-600">
+                        <span class="text-lg text-gray-700 ">Montrer les variantes DO CRI / DO POU</span>
+                </div>
+                <div class="flex justify-center mt-2 ml-8">
+                    <input wire:click="TogglePrimaryElementFilter()" type="checkbox" class="mr-2 scale-150 accent-green-600">
+                        <span class="text-lg text-gray-700 ">Montrer les variantes élementaires</span>
+                </div>
             </div>
 
             {{-- Boutou pour choisir les PVP et/ou PVM --}}

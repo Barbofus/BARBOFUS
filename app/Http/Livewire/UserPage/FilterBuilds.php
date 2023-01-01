@@ -17,7 +17,8 @@ class FilterBuilds extends Component
 
     public $selectedRaces = []; // Liste des classes selectionnés
 
-    public $strictFilter = true; // Boolean pour activer ou non le filtrage stricte
+    public $secondaryElementFilter = false; // Boolean pour activer ou non le filtrage stricte
+    public $primaryElementFilter = false; // Boolean pour activer ou non le filtrage stricte
 
     public $showPvp = false; // Boolean pour montrer ou non les builds PVP
     public $showPvm = false; // Boolean pour montrer ou non les builds PVM
@@ -147,10 +148,16 @@ class FilterBuilds extends Component
         }
     }
 
-    // Fonction appelé depuis 'livewire.filter-builds' qui toggle le filtrage stricte
-    public function ToggleStrictFilter()
+    // Fonction appelé depuis 'livewire.filter-builds' qui toggle l'apparition de variantes docri et dopou
+    public function ToggleSecondaryElementFilter()
     {
-        $this->strictFilter = !$this->strictFilter;
+        $this->secondaryElementFilter = !$this->secondaryElementFilter;
+    }
+
+    // Fonction appelé depuis 'livewire.filter-builds' qui toggle l'apparition de variantes élementaires
+    public function TogglePrimaryElementFilter()
+    {
+        $this->primaryElementFilter = !$this->primaryElementFilter;
     }
 
     // Fonction appelé depuis 'livewire.filter-builds' qui toggle le filtrage PVP
@@ -214,7 +221,7 @@ class FilterBuilds extends Component
         for ($i=0; $i < count($this->buildsToShow) ; $i++) {
 
             $getGoodElement = 0;
-            $extraElementIsSecondary = true;
+            $extraElementIsSecondary = false;
 
             // Pour chaque élement dans le build
             for ($j=0; $j < count($this->buildsToShow[$i]['elements']); $j++) {
@@ -228,16 +235,18 @@ class FilterBuilds extends Component
                     }
                 }
 
-                // Si on veux voir les variantes do pou / do cri
-                if(!$this->strictFilter) {
+                // Si on veux voir au moins une des variantes
+                if($this->secondaryElementFilter || $this->primaryElementFilter) {
 
-                    // On fouille tous es élements non selectionné
+                    // On fouille tous les élements non selectionné
                     foreach ($this->unselectedElements as $element) {
-                        if($this->allElements->find($element)->is_elemental) {
 
-                            // Si notre build possède cette élement et qu'il est élementaire, alors on le dit
+                        // On vérifie s'il est secondaire
+                        if(!$this->allElements->find($element)->is_elemental) {
+
+                            // Si notre build possède cette élement et qu'il est secondaire, alors le compte
                             if($element === $this->buildsToShow[$i]['elements'][$j]['id']) {
-                                $extraElementIsSecondary = false;
+                                $extraElementIsSecondary = true;
                                 break;
                             }
                         }
@@ -245,38 +254,43 @@ class FilterBuilds extends Component
                 }
             }
 
-
-
-
             // Si on a pas trouvé tous les élements séléctionné, ça dégage
             if($getGoodElement < count($this->selectedElements)) {
                 $indexToDelete[] = $i;
                 continue;
             }
 
-            // Si on veux une recherche stricte
-            if($this->strictFilter) {
+            // On laisse passer les builds avec autant d'élements que ceux séléctionnés
+            if($getGoodElement === count($this->buildsToShow[$i]['elements']))
+                continue;
 
-                // Si on a pas le même nombre d'élement dans le build que ce qu'on a trouvé, ça dégage
-                if($getGoodElement < count($this->buildsToShow[$i]['elements'])) {
-                    $indexToDelete[] = $i;
-                    continue;
-                }
-            }
-            else { // Pour accepter les variantes do pou / do cri
-
-                // On laisse passer les builds sans variantes, avec autant d'élement que ceux trouvé
-                if($getGoodElement === count($this->buildsToShow[$i]['elements']))
-                    continue;
+            // Pour accepter les variantes do pou / do cri
+            if($this->secondaryElementFilter) {
 
                 // Si le build possède un élement de plus que ceux trouvés et que c'est un élement secondaire, on prend
                 if($getGoodElement + 1 === count($this->buildsToShow[$i]['elements']) && $extraElementIsSecondary)
                     continue;
 
-                // Tous le reste ça dégage
-                $indexToDelete[] = $i;
+                // Si on accepte également les variantes élementaires
+                if($this->primaryElementFilter) {
+
+                    // Si le build possède plus d'élements que ceux trouvés, on prend
+                    if($getGoodElement < count($this->buildsToShow[$i]['elements']))
+                        continue;
+                }
+            }
+
+            // Pour accepter les variantes élementaires
+            if($this->primaryElementFilter) {
+
+                // Si le build possède plus d'élements que ceux trouvés et qu'ils ne sont pas secondaire, on prend
+                if($getGoodElement < count($this->buildsToShow[$i]['elements']) &! $extraElementIsSecondary)
+                    continue;
 
             }
+
+            // Tous le reste ça dégage
+            $indexToDelete[] = $i;
         }
 
         // On supprime de l'array

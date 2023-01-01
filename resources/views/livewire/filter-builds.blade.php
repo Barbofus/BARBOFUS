@@ -43,9 +43,15 @@
             </div>
 
             {{-- Boutou pour activer la recherche stricte --}}
-            <div class="flex justify-center mt-2 ml-8">
-                <input wire:click="ToggleStrictFilter()" type="checkbox" class="mr-2 scale-150 accent-green-600">
-                    <span class="text-lg text-gray-700 ">Montrer les variantes DO CRI / DO POU</span>
+            <div>
+                <div class="flex justify-center mt-2 ml-8">
+                    <input wire:click="ToggleSecondaryElementFilter()" type="checkbox" class="mr-2 scale-150 accent-green-600">
+                        <span class="text-lg text-gray-700 ">Montrer les variantes DO CRI / DO POU</span>
+                </div>
+                <div class="flex justify-center mt-2 ml-8">
+                    <input wire:click="TogglePrimaryElementFilter()" type="checkbox" class="mr-2 scale-150 accent-green-600">
+                        <span class="text-lg text-gray-700 ">Montrer les variantes élementaires</span>
+                </div>
             </div>
 
             {{-- Boutou pour choisir les PVP et/ou PVM --}}
@@ -63,25 +69,27 @@
         </div>
     </div>
 
-    {{-- Affichage du nombre de builds visiblent avec les filtres actifs --}}
-    <p class="text-lg text-center text-gray-500">Vos filtres affichent <span class="font-bold">{{ count($builds) }}</span> builds</p>
+    <div class="h-[1000px]">
+        {{-- Affichage du nombre de builds visiblent avec les filtres actifs --}}
+        <p class="text-lg text-center text-gray-500">Vos filtres affichent <span class="font-bold">{{ count($builds) }}</span> builds</p>
 
-    {{-- Si les filtres montrent des builds, les affichent, sinon indique qu'il n'y en a pas --}}
-    @if(count($builds) < 1)
-        <h1 class=" text-5xl font-bold text-center mt-[50px]">Aucun résultat pour les filtres choisis</h1>
-    @else
-        <div class="ml-[150px] mr-[150px] grid grid-cols-1 2xl:grid-cols-5 gap-y-8 mb-[128px] pt-[16px]">
-            @foreach ($builds as $build)
-                <div class=" w-[400px]">
+        {{-- Si les filtres montrent des builds, les affichent, sinon indique qu'il n'y en a pas --}}
+        @if(count($builds) < 1)
+            <h1 class=" text-5xl font-bold text-center mt-[50px]">Aucun résultat pour les filtres choisis</h1>
+        @else
+            <div class="ml-[150px] mr-[150px] grid grid-cols-1 2xl:grid-cols-5 gap-y-8 mb-[128px] pt-[16px]">
+                @foreach ($builds as $build)
+                    <div class=" w-[400px]">
 
-                    {{-- Liens qui mène à la page (sûrement DofusRoom) du build --}}
-                    <a href="{{ $build['build']['build_link'] }}" target="_blank" class="group">
+                        {{-- Liens qui mène à la page (sûrement DofusRoom) du build --}}
+                        <a href="{{ $build['build']['build_link'] }}" target="_blank" class="group">
 
-                        {{-- Vue qui contient tous le module de présentation des builds --}}
-                        @include('builds.buildPresentation')
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    @endif
+                            {{-- Vue qui contient tous le module de présentation des builds --}}
+                            @include('builds.buildPresentation')
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
 </div>
