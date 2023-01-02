@@ -18,6 +18,7 @@ Pour installer le projet, commencez par le cloner, pensez aussi à créer une Da
 ```
 composer install
 npm install
+php artisan storage:link
 cp .env.example .env
 php artisan key:generate
 php artisan migrate:fresh --seed
