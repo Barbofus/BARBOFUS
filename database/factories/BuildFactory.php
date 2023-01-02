@@ -25,7 +25,7 @@ class BuildFactory extends Factory
         return [
             'title' => $is_pvp. ' ' .Race::find($chosenRace)->name,
             'build_link' => 'https://dofusroom.com/b-303022',
-            'image_path' => 'images/builds/MNzbHGFJPB5DB1ipVIuNDFl34I86l5N3YaryanjQ.webp',
+            'image_path' => 'images/builds/builds_debug.jpg',
             'ap_nbr' => $this->faker->numberBetween(11,12),
             'mp_nbr' => 6,
             'user_id' => User::where('email', '=', 'admin@gmail.com')->first()->id,

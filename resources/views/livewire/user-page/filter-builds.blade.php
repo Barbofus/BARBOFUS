@@ -83,7 +83,7 @@
     @if(count($builds) < 1)
         <h1 class=" text-5xl font-bold text-center mt-[50px]">Aucun résultat pour les filtres choisis</h1>
     @else
-        <div class="ml-[150px] mr-[150px] grid grid-cols-1 2xl:grid-cols-3 gap-y-8 mb-[128px] pt-[16px]">
+        <div class="ml-[150px] mr-[150px] grid grid-cols-1 2xl:grid-cols-2 gap-y-8 mb-[128px] pt-[16px]">
 
             {{-- Première case, au clique lance la route pour créer des builds --}}
             <div class=" w-[400px] relative rounded-xl overflow-hidden bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:border-gray-400">

@@ -77,7 +77,7 @@
         @if(count($builds) < 1)
             <h1 class=" text-5xl font-bold text-center mt-[50px]">Aucun résultat pour les filtres choisis</h1>
         @else
-            <div class="ml-[150px] mr-[150px] grid grid-cols-1 2xl:grid-cols-5 gap-y-8 mb-[128px] pt-[16px]">
+            <div class="ml-[150px] mr-[150px] grid grid-cols-1 2xl:grid-cols-3 gap-y-8 mb-[128px] pt-[16px]">
                 @foreach ($builds as $build)
                     <div class=" w-[400px]">
 
