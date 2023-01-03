@@ -55,17 +55,17 @@ class DatabaseSeeder extends Seeder
 
         // Création des 19 classes de Dofus
         $races = [
-            'ecaflip',
-            'eniripsa',
-            'iop',
-            'crâ',
             'féca',
-            'sacrieur',
-            'sadida',
             'osamodas',
             'enutrof',
             'sram',
             'xélor',
+            'ecaflip',
+            'eniripsa',
+            'iop',
+            'crâ',
+            'sadida',
+            'sacrieur',
             'pandawa',
             'roublard',
             'zobal',
