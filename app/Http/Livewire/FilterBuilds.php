@@ -14,8 +14,8 @@ class FilterBuilds extends Component
 
     public $selectedRaces = []; // Liste des classes selectionnés
 
-    public $secondaryElementFilter = false; // Boolean pour activer ou non le filtrage stricte
-    public $primaryElementFilter = false; // Boolean pour activer ou non le filtrage stricte
+    public $secondaryElementFilter = true; // Boolean pour activer ou non le filtrage stricte
+    public $primaryElementFilter = true; // Boolean pour activer ou non le filtrage stricte
 
     public $showPvp = false; // Boolean pour montrer ou non les builds PVP
     public $showPvm = false; // Boolean pour montrer ou non les builds PVM
@@ -84,9 +84,83 @@ class FilterBuilds extends Component
             ];
         }
 
-        // On montre tous les builds à l'init de la page
-        $this->buildsToShow = $this->allBuilds;
+        // Commencons par faire un tableau à 5 dimensions (1 dimension par Nbr d'élements possible dans un build)
+        $buildsToSort = [];
 
+        // Puis on remplis chaque dimension en fonction du Nbr d'élements
+        foreach ($this->allBuilds as $key => $value) {
+
+            // On parcours chaque dimension
+            for ($i=1; $i < 6; $i++) {
+
+                // Si on a autant d'élements que le $i, nous sommes dans la bonne dimension
+                if(count($value['elements']) === $i) {
+                    $haveVariant = false;
+
+                    // Si on a au moins 2 éléments
+                    if($i > 1) {
+                        // On check si le build possède une variante docri / dopou
+                        foreach ($value['elements'] as $key2 => $elem) {
+                            if(!$elem['is_elemental']) {
+                                $haveVariant = true;
+                                continue;
+                            }
+                        }
+                    }
+
+                    // Si oui, alors on range ce build dans la dimension inférieur, (un stuff eau/docri se doit d'être dans la dimension à 1 élément)
+                    if($haveVariant){
+                        $buildsToSort[$i-1][] = $value;
+                        continue;
+                    }
+
+                    // Sinon on le range dans cette dimension
+                    $buildsToSort[$i][] = $value;
+                    continue;
+                }
+            }
+        }
+
+        // Pour chaque dimensions, on va trier par somme des id des élements (ce qui veux dire que les mêmes élements / multi seront ensemble et les variantes do pou / docri seront à la fin)
+        foreach ($buildsToSort as $key => $value) {
+            $elemSums = [];
+            foreach ($buildsToSort[$key] as $key2 => $value2) {
+                $currentBuildElemSum = 0;
+                foreach ($buildsToSort[$key][$key2]['elements'] as $key3 => $value3) {
+                    $currentBuildElemSum += 2**$value3['id']; // On utilise les puissances de 2 pour que chaque résultat n'ai qu'une combinaison possible (ex: id 3 + 6 = 9, mais aussi id 4 + 5 = 9, avec les puissances, ce cas n'es pas possible, 2**3 + 2**6 != 2**4 + 2**5)
+                }
+                $elemSums[] = $currentBuildElemSum;
+            }
+
+            // On trie nos résultats par ordre croissant
+            asort($elemSums);
+
+            // Puis on applique ce trie à notre liste de builds
+            $buildsToSort[$key] = array_replace($elemSums, $buildsToSort[$key]);
+
+
+            // On réindexe tout ça !
+            $buildsToSort[$key] = array_values($buildsToSort[$key]);
+
+            //dd($elemSums, $buildsToSort[$key]);
+        }
+
+        // Puis on réindexe en fonction des keys pour trier par Nbr d'élements
+        ksort($buildsToSort);
+
+        // On vide la variable des builds
+        unset($this->allBuilds);
+        $this->allBuilds = array();
+
+        // On change notre variable contenant tous les builds pour sa version trié
+        foreach ($buildsToSort as $key => $value) {
+            foreach ($buildsToSort[$key] as $key2 => $value2) {
+                $this->allBuilds[] = $buildsToSort[$key][$key2];
+            }
+        }
+
+        // Puis on donne tout ça à la variable qui affiche nos builds
+        $this->buildsToShow = $this->allBuilds;
         //dd($this->buildsToShow);
     }
 
