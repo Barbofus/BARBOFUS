@@ -21,10 +21,12 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('builds', BuildController::class )
-    ->except('show', 'index');
+    // Route::resource('builds', BuildController::class )
+    // ->except('show', 'index');
 
     Route::get('/mon-compte', [UserPageController::class, 'index'])->name('userpage.index');
 });
 
-Route::get('/builds', [BuildController::class, 'index'])->name('builds.index');
+
+Route::resource('builds', BuildController::class )->middleware('can:admin-access');
+//Route::get('/builds', [BuildController::class, 'index'])->name('builds.index');
