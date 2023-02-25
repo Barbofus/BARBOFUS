@@ -30,3 +30,20 @@ Si vous n'utilisez pas Laragon ou un autre soft dans le genre, tapez la commande
 N'oubliez pas de modifier votre fichier .env pour y mettre votre connexion Database.
 
 A chaque pull depuis le git, pensez à refaire la commande 'php artisan migrate:fresh --seed' pour reset le contenu de la Database et l'avoir à jour.
+## PHP
+
+lien vers php : https://www.php.net/manual/fr/intro-whatis.php
+
+Lorsque vous installez php veuillez à ne pas oublier de l'ajouter dans vos variables d'environnements
+
+- Version PHP 8.0 minimum
+
+et pensez à activer les extension nécessaires au lancement (voir si-dessous)
+
+```
+extension=fileinfo
+```
+
+pour simplifiez votre recherche vous pouvez utilisez la touche ```f3``` et indiquez dans la barre de recherche ```;extension```
+
+![extension](readme_image/img.png)
