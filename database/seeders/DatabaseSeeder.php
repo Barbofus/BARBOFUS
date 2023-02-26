@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Build;
+use App\Models\DofusItemsSubCategorie;
 use App\Models\Element;
 use App\Models\Race;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Création des 3 roles
+        DofusItemsSubCategorie::factory()->create([
+            'name' => 'Mimibiotable',
+            'icon_path' => '',
+        ]);
+        DofusItemsSubCategorie::factory()->create([
+            'name' => 'Objet d\'apparat',
+            'icon_path' => '',
+        ]);
+        DofusItemsSubCategorie::factory()->create([
+            'name' => 'Objet vivant',
+            'icon_path' => '',
+        ]);
+
         // Création des 3 roles
         Role::factory()->create([
             'name' => 'Utilisateur',
