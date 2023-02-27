@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Actions\DofusDBApi\UpdateItemsFromDofusDBApi;
 
 class DofusDBApiController extends Controller
 {
@@ -15,7 +16,7 @@ class DofusDBApiController extends Controller
             abort(403, 'Autorisation requise');
         }
 
-        dd('DofusDBApiController - Update');
+        (new UpdateItemsFromDofusDBApi)();
 
         return back();
     }

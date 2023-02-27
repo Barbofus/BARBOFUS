@@ -24,10 +24,7 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    // Route::resource('builds', BuildController::class )
-    // ->except('show', 'index');
 
-    //Route::get('/mon-compte', [UserPageController::class, 'index'])->name('userpage.index');
     Route::get('/mon-compte/details', [DashboardUserDetailsController::class, 'index'])->name('dashboarduserdetails.index');
 });
 
@@ -37,5 +34,4 @@ Route::middleware(['can:admin-access'])->group(function () {
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });
 
-Route::resource('builds', BuildController::class )->middleware('can:admin-access');
-//Route::get('/builds', [BuildController::class, 'index'])->name('builds.index');
+Route::resource('builds', BuildController::class )->middleware('can:admin-access')->except('show');

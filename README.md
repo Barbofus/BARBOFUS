@@ -21,7 +21,7 @@ npm install
 php artisan storage:link
 cp .env.example .env
 php artisan key:generate
-php artisan migrate:fresh --seed
+php artisan migrate --seed
 npm run dev
 ```
 
@@ -29,7 +29,7 @@ Si vous n'utilisez pas Laragon ou un autre soft dans le genre, tapez la commande
 
 N'oubliez pas de modifier votre fichier .env pour y mettre votre connexion Database.
 
-A chaque pull depuis le git, pensez à refaire la commande 'php artisan migrate:fresh --seed' pour reset le contenu de la Database et l'avoir à jour.
+A chaque pull depuis le git, pensez à utiliser les INSERT bdd qui sont dans storage/app/bdd/barbofus.sql.
 ## PHP
 
 lien vers php : https://www.php.net/manual/fr/intro-whatis.php
