@@ -33,8 +33,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['can:admin-access'])->group(function () {
 
-    Route::get('/mon-compte/admin', [AdminPanelController::class, 'index'])->name('adminpanel.index');
-    Route::put('/updateDofusDBApi', [DofusDBApiController::class, 'update'])->name('dofusDBApi.update');
+    Route::get('/mon-compte/admin', AdminPanelController::class)->name('adminpanel');
+    Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });
 
 Route::resource('builds', BuildController::class )->middleware('can:admin-access');

@@ -9,12 +9,14 @@ class DofusDBApiController extends Controller
 {
     //
 
-    public function update()
+    public function __invoke()
     {
         if(!Gate::allows('admin-access')) {
             abort(403, 'Autorisation requise');
         }
 
         dd('DofusDBApiController - Update');
+
+        return back();
     }
 }

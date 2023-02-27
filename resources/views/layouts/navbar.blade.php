@@ -27,7 +27,7 @@
             @endcanany
 
             <li><a href="#" class="pr-4 hover:font-bold">Poster un skin</a></li>
-            <li class="{{ (Route::is('dashboarduserdetails.index') || Route::is('adminpanel.index')) ? "active" : "" }}"><a href="{{ route('dashboarduserdetails.index') }}" class="pr-4 hover:font-bold">Mon compte</a></li>
+            <li class="{{ (Route::is('dashboarduserdetails.index') || Route::is('adminpanel')) ? "active" : "" }}"><a href="{{ route('dashboarduserdetails.index') }}" class="pr-4 hover:font-bold">Mon compte</a></li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="hover:font-bold">Se déconnecter</button>

@@ -33,7 +33,7 @@
                 @can('admin-access')
                     <a href="#" :class="initButtonClass">Liste des utilisateurs</a>
 
-                    <a  href="{{ route('adminpanel.index') }}" class="{{ Route::is('adminpanel.index') ? 'active' : ''}}"
+                    <a  href="{{ route('adminpanel') }}" class="{{ Route::is('adminpanel') ? 'active' : ''}}"
                     :class="initButtonClass">Panel Administrateur</a>
                 @endcan
             </div>
