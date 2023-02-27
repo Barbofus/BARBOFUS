@@ -21,18 +21,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Création des 3 roles
+        // Création des sous catégorie d'items
         DofusItemsSubCategorie::factory()->create([
             'name' => 'Mimibiotable',
-            'icon_path' => '',
+            'icon_path' => 'images/icons/items/subcategories/mimibiote.png',
         ]);
         DofusItemsSubCategorie::factory()->create([
             'name' => 'Objet d\'apparat',
-            'icon_path' => '',
+            'icon_path' => 'images/icons/items/subcategories/cosmetique.png',
         ]);
         DofusItemsSubCategorie::factory()->create([
             'name' => 'Objet vivant',
-            'icon_path' => '',
+            'icon_path' => 'images/icons/items/subcategories/objet_vivant.png',
         ]);
 
         // Création des 3 roles

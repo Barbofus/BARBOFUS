@@ -7,6 +7,10 @@
         @method('PUT')
         @csrf
 
+        @if($needDofusDBUpdate)
         <button class="w-48 p-4 text-2xl text-white bg-blue-500 rounded-lg hover:bg-blue-400">Mettre à jour l'API DofusDB</button>
+        @else
+        <div class="w-48 p-4 text-2xl rounded-lg bg-slate-500">API DofusDB à jour</div>
+        @endif
     </form>
 @endsection
