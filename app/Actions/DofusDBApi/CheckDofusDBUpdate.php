@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\DofusDBApi;
 
+use App\Actions\Api\CheckApiVersion;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,8 +24,7 @@ final class CheckDofusDBUpdate
         $version = $response->body();
 
         // Get notre version de l'api
-        $currentVersionJson = Storage::disk('local')->get('dofusdb_api_version.json');
-        $currentVersion = json_decode($currentVersionJson)->version;
+        $currentVersion = (new CheckApiVersion)()->dofusDB;
 
         // Return si on a une différence entre les deux ou non
         return $currentVersion != $version;

@@ -52,21 +52,44 @@ final class SaveItemsFromDofusDB
                 }
             }
 
+            // Construit la chemin pour l'image
+            $iconPath = $imagePath.$item['iconId'];
+
+            // Pour les DD, Muldo et Volkorne, on utilise une image unique
+            switch($item['typeId']){
+                case 97:
+                    $iconPath = $imagePath.'dragodinde';
+                    break;
+
+                case 196:
+                    $iconPath = $imagePath.'muldo';
+                    break;
+
+                case 207:
+                    $iconPath = $imagePath.'volkorne';
+                    break;
+            }
+
+            $iconPath .= '.png';
 
             // Créer l'item en bdd
             $newItem = $model::create([
                 'name' => $item['name'],
                 'dofus_id' => $item['id'],
                 'level' => $item['level'],
-                'icon_path' => $imagePath.$item['iconId'],
+                'icon_path' => $iconPath,
                 'dofus_items_sub_categorie_id' => $subCategoryId,
             ]);
 
-            // Prépare l'url pour choper l'image
-            $imageUrl = 'https://api.dofusdb.fr/img/items/'.$item['iconId'].'.png';
+            // Pour les DD, Muldo et Volkorne, on ne récup pas l'image, ils ont tous la même
+            if($item['typeId'] != 97 && $item['typeId'] != 196 && $item['typeId'] != 207) {
 
-            // Récupère l'image et la stock dans l'icon_path
-            (new FetchExternalFile)($imageUrl, $newItem['icon_path'].'.png');
+                // Prépare l'url pour choper l'image
+                $imageUrl = 'https://api.dofusdb.fr/img/items/'.$item['iconId'].'.png';
+
+                // Récupère l'image et la stock dans l'icon_path
+                (new FetchExternalFile)($imageUrl, $newItem['icon_path']);
+            }
 
             $newItems[] = $newItem->name;
 
