@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\DofusDBApi;
 
 use Illuminate\Support\Facades\Http;
+use App\Actions\Api\FetchExternalFile;
 use Illuminate\Support\Facades\Storage;
 use App\Actions\DofusDBApi\GetItemsFromDofusDB;
 
@@ -60,6 +61,12 @@ final class SaveItemsFromDofusDB
                 'icon_path' => $imagePath.$item['iconId'],
                 'dofus_items_sub_categorie_id' => $subCategoryId,
             ]);
+
+            // Prépare l'url pour choper l'image
+            $imageUrl = 'https://api.dofusdb.fr/img/items/'.$item['iconId'].'.png';
+
+            // Récupère l'image et la stock dans l'icon_path
+            (new FetchExternalFile)($imageUrl, $newItem['icon_path'].'.png');
 
             $newItems[] = $newItem->name;
 
