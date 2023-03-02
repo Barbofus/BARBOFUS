@@ -66,8 +66,6 @@ class DatabaseSeeder extends Seeder
             'role_id' => Role::where('name', '=', 'Administrateur')->first()->id,
         ]);
 
-        User::factory(30)->create();
-
         // Création des 19 classes de Dofus
         $races = [
             'féca',
@@ -131,19 +129,10 @@ class DatabaseSeeder extends Seeder
             'is_elemental' => 0,
         ]);
 
-
-        // Création des builds random, 114 au total soit environ 6 par classes, ils auront aléatoirement 1 à 4
-            // élements primordiaux + 0 ou 1 élement secondaire (do cri / do pou)
-        $primaryElements = Element::where('is_elemental', 1)->get();
-        $secondaryElements = Element::where('is_elemental', 0)->get();
-
-        Build::factory(114)->create()->each(function($build) use ($primaryElements, $secondaryElements) {
-            $build->Element()->attach(
-                $primaryElements->random(rand(1, 4))->pluck('id')->toArray()
-            );
-            $build->Element()->attach(
-                $secondaryElements->random(rand(0, 1))->pluck('id')->toArray()
-            );
-        });
+        $this->call([
+            UserSeeder::class,
+            BuildSeeder::class,
+            SkinSeeder::class,
+        ]);
     }
 }
