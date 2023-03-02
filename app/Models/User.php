@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function Build(){
         return $this->hasMany('App\Models\Build');
     }
+
+    public function Skins(){
+        return $this->hasMany(Skin::class);
+    }
 }

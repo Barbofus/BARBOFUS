@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\BuildController;
 use App\Http\Controllers\DashboardUserDetailsController;
 use App\Http\Controllers\DofusDBApiController;
+use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,12 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/skins', [SkinController::class, 'index'] )->name('skins.index');
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/mon-compte/details', [DashboardUserDetailsController::class, 'index'])->name('dashboarduserdetails.index');
+    Route::resource('skins', SkinController::class )->except(['show', 'index']);
 });
 
 Route::middleware(['can:admin-access'])->group(function () {

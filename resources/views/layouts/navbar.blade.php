@@ -1,7 +1,7 @@
 <ul class="flex justify-between text-2xl border-b h-[50px]">
     <div class="flex ml-[15%] h-full items-center pb-1">
         <li class="{{ Route::is('home') ? "active" : "" }}"><a href="{{ route('home') }}" class="pr-4 hover:font-bold">Accueil</a></li>
-        <li><a href="#" class="pr-4 hover:font-bold">Les skins</a></li>
+        <li class="{{ Route::is('skins.index') ? "active" : "" }}"><a href="{{ route('skins.index') }}" class="pr-4 hover:font-bold">Les skins</a></li>
         {{-- <li class="{{ Route::is('builds.index') ? "active" : "" }}"><a href="{{ route('builds.index') }}" class="pr-4 hover:font-bold">Les builds</a></li> --}}
     </div>
 
@@ -26,7 +26,7 @@
                 <li><a href="#" class="pr-4 hover:font-bold">Skin en attente</a></li>
             @endcanany
 
-            <li><a href="#" class="pr-4 hover:font-bold">Poster un skin</a></li>
+            <li class="{{ Route::is('skins.create') ? "active" : "" }}"><a href="{{ route('skins.create') }}" class="pr-4 hover:font-bold">Poster un skin</a></li>
             <li class="{{ (Route::is('dashboarduserdetails.index') || Route::is('adminpanel')) ? "active" : "" }}"><a href="{{ route('dashboarduserdetails.index') }}" class="pr-4 hover:font-bold">Mon compte</a></li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

@@ -18,6 +18,10 @@ class DofusItemHat extends Model
     ];
 
     public function DofusItemsSubCategorie(){
-        return $this->hasOne('App\Models\DofusItemsSubCategorie');
+        return $this->hasOne(DofusItemsSubCategorie::class);
+    }
+
+    public function Skins() {
+        return $this->hasMany(Skin::class);
     }
 }

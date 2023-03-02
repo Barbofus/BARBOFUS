@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\SkinsOwnerShip;
 use App\Models\Skin;
 use App\Http\Requests\StoreSkinRequest;
 use App\Http\Requests\UpdateSkinRequest;
 
 class SkinController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(SkinsOwnerShip::class)->only(['edit', 'update', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,7 @@ class SkinController extends Controller
      */
     public function index()
     {
-        //
+        return view('skins.index');
     }
 
     /**
@@ -25,7 +31,8 @@ class SkinController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('skins.create');
     }
 
     /**
@@ -40,17 +47,6 @@ class SkinController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Skin  $skin
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Skin $skin)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Skin  $skin
@@ -58,7 +54,9 @@ class SkinController extends Controller
      */
     public function edit(Skin $skin)
     {
-        //
+
+
+        return view('skins.edit');
     }
 
     /**
@@ -70,7 +68,6 @@ class SkinController extends Controller
      */
     public function update(UpdateSkinRequest $request, Skin $skin)
     {
-        //
     }
 
     /**
