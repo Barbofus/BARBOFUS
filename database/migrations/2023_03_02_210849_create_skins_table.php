@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('skins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dofus_item_hat_id')->constrained();
-            $table->foreignId('dofus_item_shield_id')->constrained();
-            $table->foreignId('dofus_item_cloak_id')->constrained();
-            $table->foreignId('dofus_item_pet_id')->constrained();
-            $table->foreignId('dofus_item_costume_id')->constrained();
+            $table->foreignId('dofus_item_hat_id')->nullable()->constrained();
+            $table->foreignId('dofus_item_shield_id')->nullable()->constrained();
+            $table->foreignId('dofus_item_cloak_id')->nullable()->constrained();
+            $table->foreignId('dofus_item_pet_id')->nullable()->constrained();
+            $table->foreignId('dofus_item_costume_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('race_id')->constrained();
             $table->integer('face');
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('color_cloth_1');
             $table->string('color_cloth_2');
             $table->string('color_cloth_3');
+            $table->enum('status', ['Posted', 'Refused', 'Pending'])->default('Pending');
             $table->timestamps();
         });
     }
