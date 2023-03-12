@@ -13,7 +13,7 @@ class StoreSkinRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class StoreSkinRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'race_id' => 'required',
+            'face' => 'required',
+            //'image_path' => 'image|required',
+            'gender' => 'required',
+            'color_skin' => 'required',
+            'color_hair' => 'required',
+            'color_cloth_1' => 'required',
+            'color_cloth_2' => 'required',
+            'color_cloth_3' => 'required',
         ];
     }
 }

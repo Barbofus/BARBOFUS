@@ -6,6 +6,7 @@ use App\Http\Middleware\SkinsOwnerShip;
 use App\Models\Skin;
 use App\Http\Requests\StoreSkinRequest;
 use App\Http\Requests\UpdateSkinRequest;
+use App\Models\Race;
 
 class SkinController extends Controller
 {
@@ -31,8 +32,11 @@ class SkinController extends Controller
      */
     public function create()
     {
+        $races = Race::all();
 
-        return view('skins.create');
+        return view('skins.create', [
+            'races' => $races,
+        ]);
     }
 
     /**
@@ -43,7 +47,7 @@ class SkinController extends Controller
      */
     public function store(StoreSkinRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**
