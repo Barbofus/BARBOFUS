@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\SkinsOwnerShip;
-use App\Models\Skin;
-use App\Http\Requests\StoreSkinRequest;
-use App\Http\Requests\UpdateSkinRequest;
 use App\Models\Race;
+use App\Models\Skin;
+use App\Http\Middleware\SkinsOwnerShip;
+use App\Http\Requests\StoreUpdateSkinRequest;
 
 class SkinController extends Controller
 {
@@ -45,7 +44,7 @@ class SkinController extends Controller
      * @param  \App\Http\Requests\StoreSkinRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSkinRequest $request)
+    public function store(StoreUpdateSkinRequest $request)
     {
         dd($request);
     }
@@ -70,7 +69,7 @@ class SkinController extends Controller
      * @param  \App\Models\Skin  $skin
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSkinRequest $request, Skin $skin)
+    public function update(StoreUpdateSkinRequest $request, Skin $skin)
     {
     }
 

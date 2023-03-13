@@ -6,7 +6,6 @@
         x-data="{
             color: '{{$value}}',
             changePreviewColor(color){
-                console.log('changePreviewColor: ' + color);
                 $refs.colorPreview.style.backgroundColor = '#' + color;
             },
             }"
