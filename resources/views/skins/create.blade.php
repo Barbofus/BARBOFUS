@@ -9,8 +9,7 @@
 
             <div class="flex space-x-8">
                 {{-- Choix de l'image --}}
-                <div x-data="{
-                    file: '',
+                {{-- <div x-data="{
                     finaleUrl: '',
                     ChangeFile(event) {
                         this.FileToDataUrl(event, src => this.finaleUrl = src)
@@ -27,8 +26,38 @@
                     },
                 }">
                     <p class="text-xl font-semibold">Image du skin<span class="ml-2 text-lg italic font-normal">(le .png du skinator de dofusbook)</span></p>
-                    <input x-model="file" x-on:input.change="ChangeFile" name="image_path" id="image_path" type="file" accept="image/png" class="ml-6 mt-2 @error('image_path') err-border @enderror">
-                    <img x-show="file" x-transition class="mt-16" :src="finaleUrl"/>
+                    <input x-on:input.change="ChangeFile" name="image_path" id="image_path" type="file" accept="image/png" class="ml-6 mt-2 @error('image_path') err-border @enderror">
+                    <img x-show="finaleUrl" x-transition class="mt-16" :src="finaleUrl"/>
+
+                    @error('image_path')
+                        <x-requirements-error message={{$message}} />
+                    @enderror
+
+                </div> --}}
+
+                <div x-data="{
+                    finaleUrl: '',
+                    ChangeFile(event) {
+                        this.FileToDataUrl(event, src => this.finaleUrl = src)
+                    },
+
+                    FileToDataUrl(event, callback) {
+                        if (! event.target.files.length) return
+
+                        let file = event.target.files[0],
+                        reader = new FileReader()
+
+                        reader.readAsDataURL(file)
+                        reader.onload = e => callback(e.target.result)
+                    },
+                }">
+                    <p class="text-xl font-semibold">Image du skin</p>
+                    <div class="mt-2 ml-2 @error('image_path') err-border @enderror">
+                        <input x-on:input.change="ChangeFile" class="text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:bg-blue-500 file:text-white file:h-8 file:border-0 hover:file:bg-blue-300 file:cursor-pointer" type="file" name="image_path" accept="image/png">
+                        <p class="mt-1 ml-8 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG (MAX. 350x450px).</p>
+                    </div>
+
+                    <img x-show="finaleUrl" x-transition class="mt-16" width="308" height="400" :src="finaleUrl"/>
 
                     @error('image_path')
                         <x-requirements-error message={{$message}} />
