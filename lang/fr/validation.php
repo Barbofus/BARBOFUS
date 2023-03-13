@@ -61,7 +61,7 @@ return [
         'numeric' => 'The :attribute must be greater than or equal to :value.',
         'string' => 'The :attribute must be greater than or equal to :value characters.',
     ],
-    'image' => 'The :attribute must be an image.',
+    'image' => 'Le fichier doit être une image.',
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
@@ -84,7 +84,7 @@ return [
     'mac_address' => 'The :attribute must be a valid MAC address.',
     'max' => [
         'array' => 'The :attribute must not have more than :max items.',
-        'file' => 'The :attribute must not be greater than :max kilobytes.',
+        'file' => 'La taille du fichier ne doit pas dépasser :max kilo-octets.',
         'numeric' => 'The :attribute must not be greater than :max.',
         'string' => 'The :attribute must not be greater than :max characters.',
     ],

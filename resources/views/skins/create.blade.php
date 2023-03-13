@@ -8,11 +8,11 @@
             @csrf
 
             {{-- Choix de l'image --}}
-            <p class="text-xl font-semibold">Image du build</p>
-            <input name="image_path" type="file" class="ml-6 mt-2 @error('image_path') err-border @enderror">
+            <p class="text-xl font-semibold">Image du skin<span class="ml-2 text-lg font-normal italic">(le .png du skinator de dofusbook)</span></p>
+            <input name="image_path" type="file" accept="image/png" class="ml-6 mt-2 @error('image_path') err-border @enderror">
 
             @error('image_path')
-                <x-requirements-error message={{$message}} />
+                <x-requirements-error message={!!$message!!} />
             @enderror
 
             {{-- Choix du sexe --}}
