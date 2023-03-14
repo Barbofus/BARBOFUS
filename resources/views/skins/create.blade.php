@@ -8,33 +8,8 @@
             @csrf
 
             <div class="flex space-x-8">
+
                 {{-- Choix de l'image --}}
-                {{-- <div x-data="{
-                    finaleUrl: '',
-                    ChangeFile(event) {
-                        this.FileToDataUrl(event, src => this.finaleUrl = src)
-                    },
-
-                    FileToDataUrl(event, callback) {
-                        if (! event.target.files.length) return
-
-                        let file = event.target.files[0],
-                        reader = new FileReader()
-
-                        reader.readAsDataURL(file)
-                        reader.onload = e => callback(e.target.result)
-                    },
-                }">
-                    <p class="text-xl font-semibold">Image du skin<span class="ml-2 text-lg italic font-normal">(le .png du skinator de dofusbook)</span></p>
-                    <input x-on:input.change="ChangeFile" name="image_path" id="image_path" type="file" accept="image/png" class="ml-6 mt-2 @error('image_path') err-border @enderror">
-                    <img x-show="finaleUrl" x-transition class="mt-16" :src="finaleUrl"/>
-
-                    @error('image_path')
-                        <x-requirements-error message={{$message}} />
-                    @enderror
-
-                </div> --}}
-
                 <div x-data="{
                     finaleUrl: '',
                     ChangeFile(event) {
@@ -74,6 +49,9 @@
                         <input class="ml-4" id="female" name="gender" type="radio" value="female" {{ (old('gender') == 'female') ? 'checked' : '' }}>
                         <label for="female">Femelle</label>
                     </div>
+                    @error('gender')
+                        <x-requirements-error message={{$message}} />
+                    @enderror
 
 
                     {{-- Choix de la classe --}}
@@ -83,6 +61,9 @@
                             <option value="{{ $race->id }}" {{( $race->id == old('race_id')) ? 'selected' : ''}}>{{ $race->name }}</option>
                         @endforeach
                     </select>
+                    @error('race_id')
+                        <x-requirements-error message={{$message}} />
+                    @enderror
 
 
                     {{-- Choix du visage --}}
@@ -95,6 +76,9 @@
                             </label>
                         @endfor
                     </div>
+                    @error('face')
+                        <x-requirements-error message={{$message}} />
+                    @enderror
 
 
                     {{-- Choix des couleurs --}}

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Race;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUpdateSkinRequest extends FormRequest
 {
@@ -23,24 +25,40 @@ class StoreUpdateSkinRequest extends FormRequest
      */
     public function rules()
     {
+        $hexRegex =  [
+            'required',
+            'regex:/^([a-f0-9]{6}|[a-f0-9]{3})$/i'
+        ];
+
         return [
-            'race_id' => 'required',
-            'face' => 'required',
+            'race_id' => 'required|integer|between:1,'.Race::all()->count(),
+            'face' => 'required|integer|between:1,8',
             'image_path' => 'image|required|max:100|dimensions:max_width=350,max_height=450',
-            'gender' => 'required',
-            'color_skin' => 'required',
-            'color_hair' => 'required',
-            'color_cloth_1' => 'required',
-            'color_cloth_2' => 'required',
-            'color_cloth_3' => 'required',
+            'gender' => [
+                'required',
+                Rule::in(['male', 'female']),
+            ],
+
+            'color_skin' => $hexRegex,
+            'color_hair' => $hexRegex,
+            'color_cloth_1' => $hexRegex,
+            'color_cloth_2' => $hexRegex,
+            'color_cloth_3' => $hexRegex,
         ];
     }
 
     public function messages()
     {
+        $hexMsg = 'Code hexadécimal requis.';
         return [
             'image_path.dimensions' => "L'image doit être inférieur à :max_widthx:max_height pixels.",
-            'image_path.max' => "L'image ne doit pas dépasser :max ko",
+            'image_path.max' => "L'image ne doit pas dépasser :max ko.",
+
+            'color_skin.regex' => $hexMsg,
+            'color_hair.regex' => $hexMsg,
+            'color_cloth_1.regex' => $hexMsg,
+            'color_cloth_2.regex' => $hexMsg,
+            'color_cloth_3.regex' => $hexMsg,
         ];
     }
 }
