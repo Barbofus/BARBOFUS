@@ -18,7 +18,7 @@ class DofusItemShield extends Model
     ];
 
     public function DofusItemsSubCategorie(){
-        return $this->hasOne(DofusItemsSubCategorie::class);
+        return $this->belongsTo(DofusItemsSubCategorie::class);
     }
 
     public function Skins() {

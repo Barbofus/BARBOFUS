@@ -13,9 +13,9 @@
         <div x-ref="colorPreview" class="w-6 h-6 border-2 border-slate-600"></div>
         <span class="ml-2 text-xl">#</span>
         <input x-model="color" x-on:input.change="changePreviewColor(color)" maxlength="6" type="text" name="{{ $name }}" placeholder="FFFFFF" class="max-w-[75px] focus:outline-none bg-slate-100 rounded-md @error($name) err-border @enderror" value="{{ $value }}">
-    </div>
 
-    @error($name)
-        <x-requirements-error message={{$message}} />
-    @enderror
+        @error($name)
+            <x-requirements-error message={{$message}} />
+        @enderror
+    </div>
 </div>

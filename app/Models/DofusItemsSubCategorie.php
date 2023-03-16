@@ -10,22 +10,22 @@ class DofusItemsSubCategorie extends Model
     use HasFactory;
 
     public function DofusItemHat(){
-        return $this->hasMany('App\Models\DofusItemHat');
+        return $this->hasMany(DofusItemHat::class);
     }
 
     public function DofusItemCloak(){
-        return $this->hasMany('App\Models\DofusItemCloak');
+        return $this->hasMany(DofusItemCloak::class);
     }
 
     public function DofusItemShield(){
-        return $this->hasMany('App\Models\DofusItemShield');
+        return $this->hasMany(DofusItemShield::class);
     }
 
     public function DofusItemCostume(){
-        return $this->hasMany('App\Models\DofusItemCostume');
+        return $this->hasMany(DofusItemCostume::class);
     }
 
     public function DofusItemPet(){
-        return $this->hasMany('App\Models\DofusItemPet');
+        return $this->hasMany(DofusItemPet::class);
     }
 }
