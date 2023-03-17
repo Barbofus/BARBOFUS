@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Images\ResizeImages;
 use App\Models\Race;
 use App\Models\Skin;
 use App\Http\Middleware\SkinsOwnerShip;
@@ -46,7 +47,11 @@ class SkinController extends Controller
      */
     public function store(StoreUpdateSkinRequest $request)
     {
-        $imageName = $request->image_path->store('images/skins');
+
+        // Resize de l'image, on affichera que 200px max
+        $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
+            'width' => 200,
+            'height' => null ]);
 
         Skin::create([
             'dofus_item_hat_id' => $request->dofus_item_hat_id,
@@ -55,7 +60,7 @@ class SkinController extends Controller
             'dofus_item_pet_id' => $request->dofus_item_pet_id,
             'dofus_item_costume_id' => $request->dofus_item_costume_id,
             'face' => $request->face,
-            'image_path' => $imageName,
+            'image_path' => $imagePath,
             'gender' => $request->gender,
             'color_skin' => $request->color_skin,
             'color_hair' => $request->color_hair,
