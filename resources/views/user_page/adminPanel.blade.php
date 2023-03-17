@@ -11,7 +11,7 @@
             @if($needDofusDBUpdate)
             <a  href="{{ route('dofusDBApi') }}"
                 class="w-48 p-4 text-2xl text-white bg-blue-500 rounded-lg hover:bg-blue-400"
-                @click="loading = true">Mettre à jour l'API DofusDB</a>
+                x-on:click="loading = true">Mettre à jour l'API DofusDB</a>
             @else
             <div class="w-48 p-4 text-2xl rounded-lg bg-slate-500">API DofusDB à jour</div>
             @endif

@@ -16,6 +16,14 @@ class Skin extends Model
         'color_cloth_1',
         'color_cloth_2',
         'color_cloth_3',
+        'dofus_item_hat_id',
+        'dofus_item_cloak_id',
+        'dofus_item_shield_id',
+        'dofus_item_pet_id',
+        'dofus_item_costume_id',
+        'user_id',
+        'race_id',
+        'status',
     ];
 
 

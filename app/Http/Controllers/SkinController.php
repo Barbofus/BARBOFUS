@@ -46,7 +46,27 @@ class SkinController extends Controller
      */
     public function store(StoreUpdateSkinRequest $request)
     {
-        dd($request);
+        $imageName = $request->image_path->store('images/skins');
+
+        Skin::create([
+            'dofus_item_hat_id' => $request->dofus_item_hat_id,
+            'dofus_item_cloak_id' => $request->dofus_item_cloak_id,
+            'dofus_item_shield_id' => $request->dofus_item_shield_id,
+            'dofus_item_pet_id' => $request->dofus_item_pet_id,
+            'dofus_item_costume_id' => $request->dofus_item_costume_id,
+            'face' => $request->face,
+            'image_path' => $imageName,
+            'gender' => $request->gender,
+            'color_skin' => $request->color_skin,
+            'color_hair' => $request->color_hair,
+            'color_cloth_1' => $request->color_cloth_1,
+            'color_cloth_2' => $request->color_cloth_2,
+            'color_cloth_3' => $request->color_cloth_3,
+            'user_id' => $request->user()->id,
+            'race_id' => $request->race_id,
+        ]);
+
+        return view('skins.index');
     }
 
     /**

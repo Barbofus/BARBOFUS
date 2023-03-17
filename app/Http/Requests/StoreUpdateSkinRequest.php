@@ -37,24 +37,24 @@ class StoreUpdateSkinRequest extends FormRequest
 
         return [
             'race_id' => 'required|integer|between:1,'.Race::all()->count(),
-            // 'face' => 'required|integer|between:1,8',
-            // 'image_path' => 'image|required|max:100|dimensions:max_width=350,max_height=450',
-            // 'gender' => [
-            //     'required',
-            //     Rule::in(['male', 'female']),
-            //  ],
+            'face' => 'required|integer|between:1,8',
+            'image_path' => 'image|required|max:100|dimensions:max_width=350,max_height=450',
+            'gender' => [
+                'required',
+                Rule::in(['male', 'female']),
+             ],
 
-            // 'color_skin' => $hexRegex,
-            // 'color_hair' => $hexRegex,
-            // 'color_cloth_1' => $hexRegex,
-            // 'color_cloth_2' => $hexRegex,
-            // 'color_cloth_3' => $hexRegex,
+            'color_skin' => $hexRegex,
+            'color_hair' => $hexRegex,
+            'color_cloth_1' => $hexRegex,
+            'color_cloth_2' => $hexRegex,
+            'color_cloth_3' => $hexRegex,
 
-            // 'dofus_item_hat_id' => 'nullable|integer|between:1,'.DofusItemHat::all()->count(),
-            // 'dofus_item_cloak_id' => 'nullable|integer|between:1,'.DofusItemCloak::all()->count(),
-            // 'dofus_item_shield_id' => 'nullable|integer|between:1,'.DofusItemShield::all()->count(),
-            // 'dofus_item_pet_id' => 'nullable|integer|between:1,'.DofusItemPet::all()->count(),
-            // 'dofus_item_costume_id' => 'nullable|integer|between:1,'.DofusItemCostume::all()->count(),
+            'dofus_item_hat_id' => 'nullable|integer|between:1,'.DofusItemHat::all()->count(),
+            'dofus_item_cloak_id' => 'nullable|integer|between:1,'.DofusItemCloak::all()->count(),
+            'dofus_item_shield_id' => 'nullable|integer|between:1,'.DofusItemShield::all()->count(),
+            'dofus_item_pet_id' => 'nullable|integer|between:1,'.DofusItemPet::all()->count(),
+            'dofus_item_costume_id' => 'nullable|integer|between:1,'.DofusItemCostume::all()->count(),
         ];
     }
 

@@ -29,7 +29,7 @@
                     <p class="text-xl font-semibold">Image du skin</p>
                     <div class="mt-2 ml-2 @error('image_path') err-border @enderror">
                         <input x-on:input.change="ChangeFile" class="text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:bg-blue-500 file:text-white file:h-8 file:border-0 hover:file:bg-blue-300 file:cursor-pointer" type="file" name="image_path" accept="image/png">
-                        <p class="mt-1 ml-8 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG (MAX. 350x450px).</p>
+                        <p class="mt-1 ml-8 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG (MAX. 350x450px, 100ko).</p>
                     </div>
 
                     <img x-show="finaleUrl" x-transition class="mt-16" width="308" height="400" :src="finaleUrl" draggable="false"/>

@@ -21,11 +21,12 @@ class SearchbarItemsAutocomplete extends Component
 
 
     public function mount($value) {
-        $this->query = $value;
-        $this->previousQuery = $value;
 
         if($value){
-            $this->existentItem = $this->relatedModel::where('name', '=', $value)->first();
+            $this->existentItem = $this->relatedModel::where('id', '=', $value)->first();
+
+            $this->query = $this->existentItem->name;
+            $this->previousQuery = $this->query;
         }
 
         $this->updatedQuery($this->query);
@@ -80,17 +81,14 @@ class SearchbarItemsAutocomplete extends Component
 
                 // Si l'item exact est écris, on le dit pour changer le visuel
                 $this->existentItem = $this->relatedModel::where('name', '=', $query)->first();
-
-                /*if($exactItem) {
-                    $this->existentItem = true;
-                }
-                else {
-                    $this->existentItem = false;
-                }*/
             }
 
             $this->previousQuery = $query;
+
+            return;
         }
+
+        $this->itemsToShow = [];
     }
 
     // Remplace la query par l'item selectionné
