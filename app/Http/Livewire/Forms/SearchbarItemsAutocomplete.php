@@ -34,7 +34,14 @@ class SearchbarItemsAutocomplete extends Component
 
     public function resetSelection()
     {
+        // Aucun id selectionné
         $this->selectedItem = 0;
+
+        // Vide le dropdown
+        $this->itemsToShow = [];
+
+        // Aucun item selectionné
+        $this->existentItem = null;
     }
 
     public function incrementSelection()
@@ -68,32 +75,36 @@ class SearchbarItemsAutocomplete extends Component
 
     public function updatedQuery($query)
     {
-        if(strlen($query) > 2 ) {
+        // Si la recherche est trop courte
+        if(strlen($query) < 3 ) {
 
-            // Si la query à changé
-            if($this->previousQuery != $query) {
-
-                // On reset la selection
-                $this->resetSelection();
-
-                // Prend les premiers items contenant la recherche en excluant le résultat exact
-                $this->itemsToShow = $this->relatedModel::where('name', '!=', $query)->where('name', 'LIKE', '%'.$query.'%')->take(5)->get();
-
-                // Si l'item exact est écris, on le dit pour changer le visuel
-                $this->existentItem = $this->relatedModel::where('name', '=', $query)->first();
-            }
-
+            // On reset la selection
+            $this->resetSelection();
             $this->previousQuery = $query;
 
             return;
         }
 
-        $this->itemsToShow = [];
+        // Si la recherche est identique
+        if($this->previousQuery == $query) return;
+
+        // On reset la selection
+        $this->resetSelection();
+
+        // Prend les premiers items contenant la recherche en excluant le résultat exact
+        $this->itemsToShow = $this->relatedModel::where('name', '!=', $query)->where('name', 'LIKE', '%'.$query.'%')->take(5)->get();
+
+        // Si l'item exact est écris, on le dit pour changer le visuel
+        $this->existentItem = $this->relatedModel::where('name', '=', $query)->first();
+
+        $this->previousQuery = $query;
     }
 
     // Remplace la query par l'item selectionné
     public function useSelectionAsValue()
     {
+        if(!$this->itemsToShow) return;
+
         $this->query = $this->itemsToShow[$this->selectedItem]->name;
     }
 

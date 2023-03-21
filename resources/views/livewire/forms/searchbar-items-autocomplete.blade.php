@@ -13,11 +13,8 @@
     <div class="w-[300px]">
         <div class="relative w-full h-12">
             <label for="{{ $name }}">
-                @if ($existentItem)
-                    <img class="absolute h-full" src="{{ asset('storage\\'.$existentItem->icon_path) }}" draggable="false">
-                @endif
+                <img class="absolute h-full" src="{{ isset($existentItem) ? asset('storage/'.$existentItem->icon_path) : '' }}" draggable="false">
                 <input
-                x-ref="input"
                     maxlength="30" id="{{ $name }}" type="text" placeholder="{{ $placeholder }}"
                     class="w-full h-full rounded-md pl-14 focus:outline-none bg-slate-100 @error($name) err-border @enderror"
                     value="{{ $value }}"
@@ -26,7 +23,7 @@
                     wire:model="query"
                     wire:keydown.arrow-down.prevent="incrementSelection"
                     wire:keydown.arrow-up.prevent="decrementSelection"
-                    wire:keydown.enter="useSelectionAsValue"
+                    wire:keydown.enter="{{ count($items) > 0 ? 'useSelectionAsValue' : ''}}"
                     x-on:focus="focusinput = true" x-on:blur="focusinput = false" />
                 <input type="hidden" name="{{ $name }}" value="{{ ($existentItem) ? $existentItem->id : null }}" />
             </label>
