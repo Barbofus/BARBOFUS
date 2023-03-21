@@ -35,10 +35,12 @@ class StoreUpdateSkinRequest extends FormRequest
             'regex:/^([a-f0-9]{6}|[a-f0-9]{3})$/i'
         ];
 
+        $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
+
         return [
             'race_id' => 'required|integer|between:1,'.Race::all()->count(),
             'face' => 'required|integer|between:1,8',
-            'image_path' => 'image|required|max:100|dimensions:max_width=350,max_height=450',
+            'image_path' => $imageRequired . '|image|max:100|dimensions:max_width=350,max_height=450',
             'gender' => [
                 'required',
                 Rule::in(['male', 'female']),
