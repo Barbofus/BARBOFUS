@@ -25,11 +25,11 @@ php artisan migrate --seed
 npm run dev
 ```
 
-Si vous n'utilisez pas Laragon ou un autre soft dans le genre, tapez la commande 'php artisan serve' pour ouvrir le site dans le localhost:8000.
+Si vous n'utilisez pas Laragon ou un autre soft dans le genre, tapez la commande 'php artisan serve' pour ouvrir le site dans le ```localhost:8000```.
 
 N'oubliez pas de modifier votre fichier .env pour y mettre votre connexion Database.
 
-A chaque pull depuis le git, pensez à utiliser les INSERT bdd qui sont dans storage/app/bdd/barbofus.sql.
+A chaque pull depuis le git, pensez à utiliser les INSERT bdd qui sont dans ```storage/app/bdd/barbofus.sql``` et à éxecuter la commande ```php artisan migrate --seed``` encore une fois pour avoir les dernières modifications de la bdd.
 ## PHP
 
 lien vers php : https://www.php.net/manual/fr/intro-whatis.php
