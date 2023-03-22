@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Build;
 use App\Models\DofusItemsSubCategorie;
-use App\Models\Element;
 use App\Models\Race;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Création des sous catégorie d'items
+        // Création des sous-catégories d'items
         DofusItemsSubCategorie::factory()->create([
             'name' => 'Mimibiotable',
             'icon_path' => 'images/icons/items/subcategories/mimibiote.png',
@@ -46,7 +44,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrateur',
         ]);
 
-        // Création des 3 comptes de test, + des comptes random
+        // Création des 3 comptes de test
         User::factory()->create([
             'name' => 'Utilisateur',
             'email' => 'user@gmail.com',
@@ -97,41 +95,8 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Création des 6 élements
-        Element::factory()->create([
-            'name' => 'air',
-            'icon_path' => 'icon_air.png',
-            'is_elemental' => 1,
-        ]);
-        Element::factory()->create([
-            'name' => 'terre',
-            'icon_path' => 'icon_terre.png',
-            'is_elemental' => 1,
-        ]);
-        Element::factory()->create([
-            'name' => 'eau',
-            'icon_path' => 'icon_eau.png',
-            'is_elemental' => 1,
-        ]);
-        Element::factory()->create([
-            'name' => 'feu',
-            'icon_path' => 'icon_feu.png',
-            'is_elemental' => 1,
-        ]);
-        Element::factory()->create([
-            'name' => 'docri',
-            'icon_path' => 'icon_docri.png',
-            'is_elemental' => 0,
-        ]);
-        Element::factory()->create([
-            'name' => 'dopou',
-            'icon_path' => 'icon_dopou.png',
-            'is_elemental' => 0,
-        ]);
-
         $this->call([
             UserSeeder::class,
-            BuildSeeder::class,
             SkinSeeder::class,
         ]);
     }

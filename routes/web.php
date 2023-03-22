@@ -1,11 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminPanelController;
-use App\Http\Controllers\BuildController;
 use App\Http\Controllers\DashboardUserDetailsController;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\SkinController;
-use App\Http\Controllers\UserPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,5 +34,3 @@ Route::middleware(['can:admin-access'])->group(function () {
     Route::get('/mon-compte/admin', AdminPanelController::class)->name('adminpanel');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });
-
-Route::resource('builds', BuildController::class )->middleware('can:admin-access')->except('show');

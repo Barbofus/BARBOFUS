@@ -30,6 +30,8 @@ Si vous n'utilisez pas Laragon ou un autre soft dans le genre, tapez la commande
 N'oubliez pas de modifier votre fichier .env pour y mettre votre connexion Database.
 
 A chaque pull depuis le git, pensez à utiliser les INSERT bdd qui sont dans ```storage/app/bdd/barbofus.sql``` et à éxecuter la commande ```php artisan migrate --seed``` encore une fois pour avoir les dernières modifications de la bdd.
+
+Evitez d'appuyer sur le bouton ```Mettre à jour l'API DofusDB``` dans le panel admin, ça va spam l'api pour rien, les items sont déjà présent dans le fichier d'insert.
 ## PHP
 
 lien vers php : https://www.php.net/manual/fr/intro-whatis.php
