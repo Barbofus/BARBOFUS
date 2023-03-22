@@ -1,8 +1,8 @@
-@extends('layouts.userPageIndex')
+@extends('layouts.user-page-views')
 
-@section('user-page-content')
+@section('content')
     <div x-data="{
-        loading: false,
+        loading: false
     }">
         <h1 class="w-full mt-8 text-4xl text-center text-red-500">Panel Admin</h1>
 

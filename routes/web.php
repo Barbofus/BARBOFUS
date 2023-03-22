@@ -31,6 +31,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['can:admin-access'])->group(function () {
 
-    Route::get('/mon-compte/admin', AdminPanelController::class)->name('adminpanel');
+    Route::get('/panel-administrateur', AdminPanelController::class)->name('adminpanel');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });

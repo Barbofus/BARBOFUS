@@ -49,7 +49,7 @@
         </div>
 
         @error($name)
-            <x-requirements-error message={{$message}} />
+        <x-forms.requirements-error :$message />
         @enderror
     </div>
 </div>

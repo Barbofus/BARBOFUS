@@ -27,9 +27,8 @@
         <img x-show="finaleUrl" x-transition class="mt-16" width="200" height="260" :src="finaleUrl" draggable="false" />
 
         @error('image_path')
-        <x-requirements-error message={{$message}} />
+        <x-forms.requirements-error :$message />
         @enderror
-
     </div>
 
     <div>
@@ -45,9 +44,8 @@
                     <label for="female">Femelle</label>
                 </div>
                 @error('gender')
-                <x-requirements-error message={{$message}} />
+                <x-forms.requirements-error :$message />
                 @enderror
-
 
                 {{-- Choix de la classe --}}
                 <p class="mt-5 text-xl font-semibold">Choix de la classe</p>
@@ -60,9 +58,8 @@
                     @endforeach
                 </select>
                 @error('race_id')
-                <x-requirements-error message={{$message}} />
+                <x-forms.requirements-error :$message />
                 @enderror
-
 
                 {{-- Choix du visage --}}
                 <p class="mt-5 text-xl font-semibold">Choix du visage</p>
@@ -76,7 +73,7 @@
                     @endfor
                 </div>
                 @error('face')
-                <x-requirements-error message={{$message}} />
+                <x-forms.requirements-error :$message />
                 @enderror
             </div>
 
@@ -85,19 +82,19 @@
                 <p class="text-xl font-semibold">Choix des couleurs</p>
 
                 <div class="flex flex-col pl-10 gap-y-2">
-                    <x-color-input title="Peau:" name="color_skin"
+                    <x-forms.color-input title="Peau:" name="color_skin"
                                    value="{{ (old('color_skin')) ? (old('color_skin')) : (isset($skin) ? $skin['color_skin'] : '') }}" />
 
-                    <x-color-input title="Cheveux:" name="color_hair"
+                    <x-forms.color-input title="Cheveux:" name="color_hair"
                                    value="{{ (old('color_hair')) ? (old('color_hair')) : (isset($skin) ? $skin['color_hair'] : '') }}" />
 
-                    <x-color-input title="Habits 1:" name="color_cloth_1"
+                    <x-forms.color-input title="Habits 1:" name="color_cloth_1"
                                    value="{{ (old('color_cloth_1')) ? (old('color_cloth_1')) : (isset($skin) ? $skin['color_cloth_1'] : '') }}" />
 
-                    <x-color-input title="Habits 2:" name="color_cloth_2"
+                    <x-forms.color-input title="Habits 2:" name="color_cloth_2"
                                    value="{{ (old('color_cloth_2')) ? (old('color_cloth_2')) : (isset($skin) ? $skin['color_cloth_2'] : '') }}" />
 
-                    <x-color-input title="Habits 3:" name="color_cloth_3"
+                    <x-forms.color-input title="Habits 3:" name="color_cloth_3"
                                    value="{{ (old('color_cloth_3')) ? (old('color_cloth_3')) : (isset($skin) ? $skin['color_cloth_3'] : '') }}" />
                 </div>
             </div>
@@ -106,7 +103,6 @@
         {{-- Choix des items --}}
         <p class="mt-5 text-xl font-semibold">Choix des items</p>
         <div class="grid grid-flow-row grid-cols-2 gap-2 mt-2">
-
             <livewire:forms.searchbar-items-autocomplete :relatedModel="'App\Models\DofusItemHat'" :name="'dofus_item_hat_id'" :placeholder="'Choisis une coiffe...'"
                                                          :value="(old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')"  />
 
@@ -121,7 +117,6 @@
 
             <livewire:forms.searchbar-items-autocomplete :relatedModel="'App\Models\DofusItemcostume'" :name="'dofus_item_costume_id'" :placeholder="'Choisis un costume...'"
                                                          :value="(old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')" />
-
         </div>
 
         {{-- Choix des items --}}

@@ -21,8 +21,7 @@
     @livewireStyles
 </head>
 <body>
-    @include('layouts.header')
-    @yield('content')
+    @yield('app-content')
 
     @livewireScripts
 </body>

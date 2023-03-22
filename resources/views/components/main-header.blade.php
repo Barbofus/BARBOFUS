@@ -11,8 +11,4 @@
     @guest
         <h3 class="text-xl w-[25%] text-right pr-[75px] pt-[155px] italic">Tu veux <span class="font-bold">poster</span> ou <span class="font-bold">liker</span> un skin ? <span class="font-bold">Inscris-toi !</span></h3>
     @endguest
-
-
 </div>
-
-@include('layouts.navbar')
