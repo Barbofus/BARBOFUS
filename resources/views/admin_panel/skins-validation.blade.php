@@ -29,6 +29,7 @@
                 <button
                     class="flex flex-col items-center hover:bg-gray-200 rounded-md"
                     x-on:click="SwitchOpen"
+                    :class="open || inTransition ? 'bg-gray-200' : ''"
                 >
 
                     {{-- Classe + ID --}}
@@ -82,11 +83,11 @@
                         <p>{{ $skin->gender }}</p>
                         <p>Visage: {{ $skin->face }}</p>
 
-                        <x-skins-presentation.color :color="$skin->color_skin"/>
-                        <x-skins-presentation.color :color="$skin->color_hair"/>
-                        <x-skins-presentation.color :color="$skin->color_cloth_1"/>
-                        <x-skins-presentation.color :color="$skin->color_cloth_2"/>
-                        <x-skins-presentation.color :color="$skin->color_cloth_3"/>
+                        <x-skins-presentation.color :color="$skin->color_skin" :name="'Peau'"/>
+                        <x-skins-presentation.color :color="$skin->color_hair" :name="'Cheveux'"/>
+                        <x-skins-presentation.color :color="$skin->color_cloth_1" :name="'Habits 1'"/>
+                        <x-skins-presentation.color :color="$skin->color_cloth_2" :name="'Habits 2'"/>
+                        <x-skins-presentation.color :color="$skin->color_cloth_3" :name="'Habits 3'"/>
                     </div>
                 </div>
             </div>
