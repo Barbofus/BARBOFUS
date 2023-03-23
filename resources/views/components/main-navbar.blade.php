@@ -22,7 +22,7 @@
 
         @auth
             @canany(['mod-access', 'admin-access'])
-                <li><a href="#" class="pr-4 hover:font-bold">Skin en attente</a></li>
+                <li class="{{ Route::is('pendingSkins') ? "active" : "" }}"><a href="{{ Route('pendingSkins') }}" class="pr-4 hover:font-bold">Skin en attente</a></li>
             @endcanany
 
             <li class="{{ Route::is('skins.create') ? "active" : "" }}"><a href="{{ route('skins.create') }}" class="pr-4 hover:font-bold">Poster un skin</a></li>

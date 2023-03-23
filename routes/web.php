@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\DashboardUserDetailsController;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\SkinController;
+use App\Http\Controllers\SkinValidationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['can:admin-access'])->group(function () {
 
+    Route::get('/skins-en-attente', SkinValidationController::class)->name('pendingSkins');
     Route::get('/panel-administrateur', AdminPanelController::class)->name('adminpanel');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });

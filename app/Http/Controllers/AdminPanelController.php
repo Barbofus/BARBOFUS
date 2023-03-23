@@ -18,6 +18,6 @@ class AdminPanelController extends Controller
 
         $needDofusDBUpdate = (new CheckDofusDBUpdate)();
 
-        return view('user_page.adminPanel', ['needDofusDBUpdate' => $needDofusDBUpdate]);
+        return view('admin_panel.admin-panel', ['needDofusDBUpdate' => $needDofusDBUpdate]);
     }
 }

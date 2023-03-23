@@ -43,7 +43,7 @@ class StoreUpdateSkinRequest extends FormRequest
             'image_path' => $imageRequired . '|image|max:100|dimensions:max_width=350,max_height=450',
             'gender' => [
                 'required',
-                Rule::in(['male', 'female']),
+                Rule::in(['Homme', 'Femme']),
              ],
 
             'color_skin' => $hexRegex,

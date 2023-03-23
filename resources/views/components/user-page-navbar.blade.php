@@ -22,7 +22,8 @@
 
                 {{-- Onglet visible uniquement par les modérateurs et les admins --}}
                 @canany(['mod-access', 'admin-access'])
-                    <a href="#" :class="initButtonClass">Skins en attente</a>
+                    <a href="{{ route('pendingSkins') }}" class="{{ Route::is('pendingSkins') ? 'active' : ''}}"
+                       :class="initButtonClass">Skins en attente</a>
                 @endcanany
 
                 {{-- Onglet visible uniquement par les admins --}}

@@ -37,11 +37,11 @@
                 {{-- Choix du sexe --}}
                 <p class="text-xl font-semibold">Choix du sexe</p>
                 <div class="pt-2 pl-6">
-                    <input id="male" name="gender" type="radio" value="male" checked>
-                    <label for="male">Mâle</label>
-                    <input class="ml-4" id="female" name="gender" type="radio" value="female"
-                        {{ (old('gender')) ? ((old('gender') == 'female') ? 'checked' : '') : (isset($skin) ? (($skin['gender'] == 'female') ? 'checked' : '') : '') }}>
-                    <label for="female">Femelle</label>
+                    <input id="male" name="gender" type="radio" value="Homme" checked>
+                    <label for="male">Homme</label>
+                    <input class="ml-4" id="female" name="gender" type="radio" value="Femme"
+                        {{ (old('gender')) ? ((old('gender') == 'Femme') ? 'checked' : '') : (isset($skin) ? (($skin['gender'] == 'Femme') ? 'checked' : '') : '') }}>
+                    <label for="female">Femme</label>
                 </div>
                 @error('gender')
                 <x-forms.requirements-error :$message />
