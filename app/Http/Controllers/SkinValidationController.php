@@ -13,12 +13,21 @@ class SkinValidationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function index(Request $request)
     {
         $skins = Skin::where('status', '=', 'pending')->get();
 
         return view('admin_panel.skins-validation', [
             'skins' => $skins
         ]);
+    }
+
+    public function accept(Request $request, Skin $skin)
+    {
+        $skin->update([
+           'status' => 'Posted'
+        ]);
+
+        return back();
     }
 }

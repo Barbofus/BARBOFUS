@@ -6,7 +6,7 @@
     <div class="flex justify-center mt-10">
         <form autocomplete="off" method="POST" action="{{ route('skins.update', ['skin' => $skin]) }}" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
             @csrf
-            @method('PATCH')
+            @method('PUT')
 
             <x-forms.skin-form :$races :$skin/>
 

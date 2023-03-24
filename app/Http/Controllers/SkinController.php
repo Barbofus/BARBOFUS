@@ -126,6 +126,7 @@ class SkinController extends Controller
             'color_cloth_2' => $request->color_cloth_2,
             'color_cloth_3' => $request->color_cloth_3,
             'race_id' => $request->race_id,
+            'status' => 'Pending',
         ]);
 
         return view('skins.index');
@@ -139,6 +140,6 @@ class SkinController extends Controller
      */
     public function destroy(Skin $skin)
     {
-        //
+        return back();
     }
 }
