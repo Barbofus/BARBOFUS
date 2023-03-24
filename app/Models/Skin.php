@@ -24,6 +24,7 @@ class Skin extends Model
         'user_id',
         'race_id',
         'status',
+        'refused_reason',
     ];
 
 

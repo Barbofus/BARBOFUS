@@ -9,7 +9,7 @@
             <div
                 class="mt-2 flex space-y-2 flex-col"
                 x-data="{
-                    open: false,
+                    open: true,
                     inTransition: false,
                     SwitchOpen(){
                         if(!this.open) {
@@ -96,7 +96,7 @@
 
                 {{-- Bouton de validation --}}
                 <div
-                    class=""
+                    class="flex space-x-2"
                     x-show="open"
                     x-transition:enter="transition ease-out delay-300 duration-300"
                     x-transition:enter-start="opacity-0 -translate-y-full"
@@ -110,6 +110,16 @@
                         @method('PUT')
 
                         <button class="w-36 h-12 text-white bg-green-500 rounded-md text-xl hover:bg-green-400">Accepter</button>
+                    </form>
+
+                    <form method="POST" action="{{ route('refuse-skin', ['skin' => $skin]) }}" class="flex space-x-2 flex-1">
+                        @csrf
+                        @method('PUT')
+
+                        <button class="w-36 h-12 text-white bg-red-500 rounded-md text-xl hover:bg-red-400">Refuser</button>
+                        <textarea
+                            type="text" name="reason" placeholder="Raison du refus ..." maxlength="128"
+                            class="rounded-md border border-gray-400 flex-1 text-sm h-12 p-2"></textarea>
                     </form>
                 </div>
             </div>

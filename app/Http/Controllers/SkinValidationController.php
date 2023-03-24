@@ -30,4 +30,14 @@ class SkinValidationController extends Controller
 
         return back();
     }
+
+    public function refuse(Request $request, Skin $skin)
+    {
+        $skin->update([
+            'status' => 'Refused',
+            'refused_reason' => $request->reason
+        ]);
+
+        return back();
+    }
 }

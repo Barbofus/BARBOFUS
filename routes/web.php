@@ -34,6 +34,7 @@ Route::middleware(['can:admin-access'])->group(function () {
 
     Route::get('/skins-en-attente', [SkinValidationController::class, 'index'])->name('pendingSkins');
     Route::put('/accept-skin/{skin}', [SkinValidationController::class, 'accept'])->name('accept-skin');
+    Route::put('/refuse-skin/{skin}', [SkinValidationController::class, 'refuse'])->name('refuse-skin');
 
 
     Route::get('/panel-administrateur', AdminPanelController::class)->name('adminpanel');

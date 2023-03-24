@@ -1,34 +1,46 @@
 <div class="flex space-x-8">
 
-    {{-- Choix de l'image --}}
-    <div x-data="{
-        finaleUrl: '{{ isset($skin) ? asset('storage/' . $skin['image_path']) : '' }}',
+    {{-- Image + raison du refus--}}
+    <div class="w-80">
 
-        ChangeFile(event) {
-            this.FileToDataUrl(event, src => this.finaleUrl = src)
-        },
+        {{-- Choix de l'image --}}
+        <div x-data="{
+            finaleUrl: '{{ isset($skin) ? asset('storage/' . $skin['image_path']) : '' }}',
 
-        FileToDataUrl(event, callback) {
-            if (! event.target.files.length) return
+            ChangeFile(event) {
+                this.FileToDataUrl(event, src => this.finaleUrl = src)
+            },
 
-            let file = event.target.files[0],
-            reader = new FileReader()
+            FileToDataUrl(event, callback) {
+                if (! event.target.files.length) return
 
-            reader.readAsDataURL(file)
-            reader.onload = e => callback(e.target.result)
-        }
-    }">
-        <p class="text-xl font-semibold">Image du skin</p>
-        <div class="mt-2 ml-2 @error('image_path') err-border @enderror">
-            <input x-on:input.change="ChangeFile" class="text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:bg-blue-500 file:text-white file:h-8 file:border-0 hover:file:bg-blue-300 file:cursor-pointer" type="file" name="image_path" accept="image/png">
-            <p class="mt-1 ml-8 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG (MAX. 350x450px, 100ko).</p>
+                let file = event.target.files[0],
+                reader = new FileReader()
+
+                reader.readAsDataURL(file)
+                reader.onload = e => callback(e.target.result)
+            }
+        }">
+            <p class="text-xl font-semibold">Image du skin</p>
+            <div class="mt-2 ml-2 @error('image_path') err-border @enderror">
+                <input x-on:input.change="ChangeFile" class="text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:bg-blue-500 file:text-white file:h-8 file:border-0 hover:file:bg-blue-300 file:cursor-pointer" type="file" name="image_path" accept="image/png">
+                <p class="mt-1 ml-8 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG (MAX. 350x450px, 100ko).</p>
+            </div>
+
+            <div class="flex justify-center"><img x-show="finaleUrl" x-transition class="mt-16" width="200" height="260" :src="finaleUrl" draggable="false"/></div>
+
+            @error('image_path')
+            <x-forms.requirements-error :$message />
+            @enderror
         </div>
 
-        <img x-show="finaleUrl" x-transition class="mt-16" width="200" height="260" :src="finaleUrl" draggable="false" />
-
-        @error('image_path')
-        <x-forms.requirements-error :$message />
-        @enderror
+        {{-- Raison du refus --}}
+        @if(isset($skin) && $skin['status'] == 'Refused')
+            <div class="bg-red-300 border border-red-500 min-h-[6rem] p-4 bg-purple-400 rounded-md text-red-900 flex flex-col items-center justify-center mt-6">
+                <p>Ton skin à été refusé <span>{{ $skin['refused_reason'] ? ' car' : '!' }}</span></p>
+                <p class="font-bold italic break-words w-full">{{ $skin['refused_reason'] }}</p>
+            </div>
+        @endif
     </div>
 
     <div>
