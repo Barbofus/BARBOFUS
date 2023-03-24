@@ -21,9 +21,9 @@
         </style>
 
         @auth
-            @canany(['mod-access', 'admin-access'])
+            @can('validate-skin')
                 <li class="{{ Route::is('pendingSkins') ? "active" : "" }}"><a href="{{ Route('pendingSkins') }}" class="pr-4 hover:font-bold">Skin en attente</a></li>
-            @endcanany
+            @endcan
 
             <li class="{{ Route::is('skins.create') ? "active" : "" }}"><a href="{{ route('skins.create') }}" class="pr-4 hover:font-bold">Poster un skin</a></li>
             <li class="{{ (Route::is('dashboarduserdetails.index') || Route::is('adminpanel')) ? "active" : "" }}"><a href="{{ route('dashboarduserdetails.index') }}" class="pr-4 hover:font-bold">Mon compte</a></li>

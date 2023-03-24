@@ -30,12 +30,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('skins', SkinController::class )->except(['show', 'index']);
 });
 
-Route::middleware(['can:admin-access'])->group(function () {
+Route::middleware(['can:validate-skin'])->group(function() {
 
     Route::get('/skins-en-attente', [SkinValidationController::class, 'index'])->name('pendingSkins');
     Route::put('/accept-skin/{skin}', [SkinValidationController::class, 'accept'])->name('accept-skin');
     Route::put('/refuse-skin/{skin}', [SkinValidationController::class, 'refuse'])->name('refuse-skin');
+});
 
+Route::middleware(['can:admin-access'])->group(function () {
 
     Route::get('/panel-administrateur', AdminPanelController::class)->name('adminpanel');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -31,7 +32,12 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('mod-access', function ($user) {
-            return $user->role_id == Role::where('name', 'Modérateur')->first()->id;
+            return $user->role_id == Role::where('name',  '=', 'Modérateur')->first()->id;
+        });
+
+        Gate::define('validate-skin', function ($user) {
+            return $user->role_id == Role::where('name',  '=', 'Modérateur')->first()->id
+                || $user->role_id == Role::where('name', 'Administrateur')->first()->id;
         });
         //
     }

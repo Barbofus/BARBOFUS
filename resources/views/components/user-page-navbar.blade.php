@@ -21,10 +21,10 @@
                 <a href="#" :class="initButtonClass">Mes Likes</a>
 
                 {{-- Onglet visible uniquement par les modérateurs et les admins --}}
-                @canany(['mod-access', 'admin-access'])
+                @can('validate-skin')
                     <a href="{{ route('pendingSkins') }}" class="{{ Route::is('pendingSkins') ? 'active' : ''}}"
                        :class="initButtonClass">Skins en attente</a>
-                @endcanany
+                @endcan
 
                 {{-- Onglet visible uniquement par les admins --}}
                 @can('admin-access')
