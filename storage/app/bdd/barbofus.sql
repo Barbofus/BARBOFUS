@@ -12,6 +12,14 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Listage des données de la table barbofus.dofus_items_sub_categories : ~3 rows (environ)
+/*!40000 ALTER TABLE `dofus_items_sub_categories` DISABLE KEYS */;
+INSERT INTO `dofus_items_sub_categories` (`id`, `name`, `icon_path`, `created_at`, `updated_at`) VALUES
+	(1, 'Mimibiotable', 'images/icons/items/subcategories/mimibiote.png', '2023-02-27 00:32:21', '2023-02-27 00:32:21'),
+	(2, 'Objet d\'apparat', 'images/icons/items/subcategories/cosmetique.png', '2023-02-27 00:32:21', '2023-02-27 00:32:21'),
+	(3, 'Objet vivant', 'images/icons/items/subcategories/objet_vivant.png', '2023-02-27 00:32:21', '2023-02-27 00:32:21');
+/*!40000 ALTER TABLE `dofus_items_sub_categories` ENABLE KEYS */;
+
 -- Listage des données de la table barbofus.dofus_item_cloaks : ~629 rows (environ)
 /*!40000 ALTER TABLE `dofus_item_cloaks` DISABLE KEYS */;
 INSERT INTO `dofus_item_cloaks` (`id`, `name`, `dofus_id`, `level`, `dofus_items_sub_categorie_id`, `icon_path`, `created_at`, `updated_at`) VALUES
@@ -2901,14 +2909,6 @@ INSERT INTO `dofus_item_shields` (`id`, `name`, `dofus_id`, `level`, `dofus_item
 	(514, 'Égide de chevalier d\'Astrub 4', 82438, 1, 3, 'images/icons/items/shields/82438.png', '2023-02-28 17:34:53', '2023-02-28 17:34:53'),
 	(515, 'Égide de chevalier d\'Astrub 5', 82439, 1, 3, 'images/icons/items/shields/82439.png', '2023-02-28 17:34:53', '2023-02-28 17:34:53');
 /*!40000 ALTER TABLE `dofus_item_shields` ENABLE KEYS */;
-
--- Listage des données de la table barbofus.skins : ~2 rows (environ)
-/*!40000 ALTER TABLE `skins` DISABLE KEYS */;
-INSERT INTO `skins` (`id`, `dofus_item_hat_id`, `dofus_item_shield_id`, `dofus_item_cloak_id`, `dofus_item_pet_id`, `dofus_item_costume_id`, `user_id`, `race_id`, `face`, `image_path`, `gender`, `color_skin`, `color_hair`, `color_cloth_1`, `color_cloth_2`, `color_cloth_3`, `status`, `created_at`, `updated_at`) VALUES
-	(1, 798, 490, 459, 293, 17, 3, 18, 2, 'images/skins/1679432597.png', 'female', 'c5a574', 'f3f3f3', 'e39e14', 'e1d3aa', 'f3f3f3', 'Pending', '2023-03-17 09:23:10', '2023-03-21 22:05:56'),
-	(2, 511, 145, 446, 293, 34, 1, 1, 1, 'images/skins/1679041467.png', 'female', 'f5b95f', 'f3f3f3', '375e58', '805540', '375f58', 'Pending', '2023-03-17 09:24:27', '2023-03-17 09:24:27'),
-	(3, 87, 82, 115, 292, NULL, 1, 4, 1, 'images/skins/1679433979.png', 'male', 'f2e8be', '2f5476', '2f5476', '2f5476', '857e54', 'Pending', '2023-03-21 22:26:19', '2023-03-21 22:26:19');
-/*!40000 ALTER TABLE `skins` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

@@ -9,9 +9,21 @@ class NotificationsList extends Component
     public $notificationsAmount;
     public $initNotificationsAmount = 5;
 
+    public $notifications;
+
     public function mount()
     {
+        $this->GetAllNotificationsSorted();
         $this->ShowLessNotifications();
+    }
+
+    public function GetAllNotificationsSorted()
+    {
+        // Sort by created_at, unread first, then readed
+        $unreadedNotifications = auth()->user()->unreadNotifications()->get();
+        $readedNotifications = auth()->user()->readNotifications()->get();
+
+        $this->notifications = $unreadedNotifications->merge($readedNotifications);
     }
 
     public function ShowAllNotifications()
@@ -46,6 +58,7 @@ class NotificationsList extends Component
 
     public function render()
     {
+        $this->GetAllNotificationsSorted();
         return view('livewire.notifications.notifications-list');
     }
 }

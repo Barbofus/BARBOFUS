@@ -32,7 +32,7 @@
                 <button wire:click="DeleteNotifications" class="hover:text-red-300">Tout supprimer</button>
             </div>
             <div class="py-4 shadow-xl rounded-md right-0 absolute w-full bg-white">
-                @foreach( auth()->user()->notifications->take($notificationsAmount) as $notification)
+                @foreach( $notifications->take($notificationsAmount) as $notification)
                     <x-notification.template :component="'notification.' . $notification->data['component']" :notification="$notification" :item="$notification->data['model']::find($notification->data['id'])" :read="$notification->read_at"/>
                 @endforeach
 
