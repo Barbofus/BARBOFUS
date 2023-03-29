@@ -1,6 +1,8 @@
 <div class="border-b w-full border-gray-300 text-left p-2 {{ $read ? 'bg-gray-200' : 'hover:bg-gray-100'}}">
 
-    <x-dynamic-component :component="$component" :item="$item"/>
+    <div class="{{ $read ? 'opacity-40' : ''}}">
+        <x-dynamic-component :component="$component" :item="$item"/>
+    </div>
 
     <div class="w-full flex justify-between my-2 px-6">
         <p class="text-sm text-gray-500">Il y a

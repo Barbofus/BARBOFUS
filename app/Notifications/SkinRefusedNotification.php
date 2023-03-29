@@ -32,7 +32,13 @@ class SkinRefusedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        $wantMail = $notifiable->NotificationPreferences->where('notification_type', '=', 'mail_skin_validation')->where('value', '=', '0')->count() == 0;
+
+        if($wantMail) {
+            return ['database', 'mail'];
+        }
+
+        return ['database'];
     }
 
     /**

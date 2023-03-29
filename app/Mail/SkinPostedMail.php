@@ -34,7 +34,7 @@ class SkinPostedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Skin Posté ID#' . $this->skin->id,
+            subject: config('app.name') . ' - Skin Posté ID#' . $this->skin->id,
         );
     }
 
