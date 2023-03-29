@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Laravel',
+    'name' => 'Barbofus',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -239,7 +239,7 @@
         'driver' => 'octane',
       ),
     ),
-    'prefix' => 'laravel_cache_',
+    'prefix' => 'barbofus_cache_',
   ),
   'cors' => 
   array (
@@ -338,7 +338,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'laravel_database_',
+        'prefix' => 'barbofus_database_',
       ),
       'default' => 
       array (
@@ -541,11 +541,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'mailhog',
-        'port' => '1025',
-        'encryption' => NULL,
-        'username' => NULL,
-        'password' => NULL,
+        'host' => 'sandbox.smtp.mailtrap.io',
+        'port' => '2525',
+        'encryption' => 'tls',
+        'username' => 'c03126760e90ee',
+        'password' => 'f6ca05586b9782',
         'timeout' => NULL,
         'local_domain' => NULL,
       ),
@@ -587,8 +587,8 @@
     ),
     'from' => 
     array (
-      'address' => 'hello@example.com',
-      'name' => 'Laravel',
+      'address' => 'notifications@barbofus.com',
+      'name' => 'Barbofus',
     ),
     'markdown' => 
     array (
@@ -710,7 +710,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'laravel_session',
+    'cookie' => 'barbofus_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
