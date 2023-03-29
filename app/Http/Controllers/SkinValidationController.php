@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Skin;
+use App\Notifications\SkinPostedNotification;
+use App\Notifications\SkinRefusedNotification;
 use Illuminate\Http\Request;
 
 class SkinValidationController extends Controller
@@ -28,6 +30,8 @@ class SkinValidationController extends Controller
            'status' => 'Posted'
         ]);
 
+        $skin->User->notify(new SkinPostedNotification($skin));
+
         return back();
     }
 
@@ -37,6 +41,8 @@ class SkinValidationController extends Controller
             'status' => 'Refused',
             'refused_reason' => $request->reason
         ]);
+
+        $skin->User->notify(new SkinRefusedNotification($skin));
 
         return back();
     }

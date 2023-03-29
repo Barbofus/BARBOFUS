@@ -54,4 +54,8 @@ class User extends Authenticatable
     public function Skins(){
         return $this->hasMany(Skin::class);
     }
+
+    public function NotificationPreferences(){
+        return $this->hasMany(UserNotificationPreferences::class);
+    }
 }

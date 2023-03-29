@@ -9,7 +9,7 @@
             <div
                 class="mt-2 flex space-y-2 flex-col"
                 x-data="{
-                    open: true,
+                    open: false,
                     inTransition: false,
                     SwitchOpen(){
                         if(!this.open) {
@@ -45,6 +45,8 @@
 
                         {{-- Image --}}
                         <img draggable="false" width="200" src="{{ asset('storage/' . $skin->image_path) }}">
+
+                        <p class="text-gray-500 italic">{{ $skin->user->name }}</p>
                     </button>
 
                     {{-- Détails --}}

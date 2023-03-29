@@ -36,9 +36,9 @@
 
         {{-- Raison du refus --}}
         @if(isset($skin) && $skin['status'] == 'Refused')
-            <div class="bg-red-300 border border-red-500 min-h-[6rem] p-4 bg-purple-400 rounded-md text-red-900 flex flex-col items-center justify-center mt-6">
+            <div class="bg-red-300 border border-red-500 min-h-[6rem] p-4 rounded-md text-red-900 flex flex-col items-center justify-center mt-6">
                 <p>Ton skin à été refusé <span>{{ $skin['refused_reason'] ? ' car' : '!' }}</span></p>
-                <p class="font-bold italic break-words w-full">{{ $skin['refused_reason'] }}</p>
+                <p class="font-bold italic break-words max-w-full">{{ $skin['refused_reason'] }}</p>
             </div>
         @endif
     </div>

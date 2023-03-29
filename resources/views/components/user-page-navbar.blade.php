@@ -22,7 +22,7 @@
 
                 {{-- Onglet visible uniquement par les modérateurs et les admins --}}
                 @can('validate-skin')
-                    <a href="{{ route('pendingSkins') }}" class="{{ Route::is('pendingSkins') ? 'active' : ''}}"
+                    <a href="{{ route('pending-skins') }}" class="{{ Route::is('pending-skins') ? 'active' : ''}}"
                        :class="initButtonClass">Skins en attente</a>
                 @endcan
 

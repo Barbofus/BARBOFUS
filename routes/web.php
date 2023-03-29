@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['can:validate-skin'])->group(function() {
 
-    Route::get('/skins-en-attente', [SkinValidationController::class, 'index'])->name('pendingSkins');
+    Route::get('/skins-en-attente', [SkinValidationController::class, 'index'])->name('pending-skins');
     Route::put('/accept-skin/{skin}', [SkinValidationController::class, 'accept'])->name('accept-skin');
     Route::put('/refuse-skin/{skin}', [SkinValidationController::class, 'refuse'])->name('refuse-skin');
 });
