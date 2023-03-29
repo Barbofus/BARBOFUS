@@ -3,12 +3,13 @@
 namespace App\Notifications;
 
 use App\Mail\SkinRefusedMail;
+use App\Models\Skin;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SkinRefusedNotification extends Notification
+class SkinRefusedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -19,7 +20,7 @@ class SkinRefusedNotification extends Notification
      *
      * @return void
      */
-    public function __construct($skin)
+    public function __construct(Skin $skin)
     {
         $this->skin = $skin;
     }

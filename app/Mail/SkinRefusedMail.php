@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\Skin;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,17 +15,17 @@ class SkinRefusedMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $skin;
-    public $notifiable;
+    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($skin, $notifiable)
+    public function __construct(Skin $skin, User $user)
     {
         $this->skin = $skin;
-        $this->notifiable = $notifiable;
+        $this->user = $user;
     }
 
     /**
