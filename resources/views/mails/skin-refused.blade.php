@@ -1,10 +1,22 @@
-@extends('layouts.mail')
 
-@section('content')
-    Hey, your skin ID#{{ $skin->id }} en {{ $skin->race->name }} à été refusé par un membre du Staff
-    @if($skin->refused_reason)
-        car {{ $skin->refused_reason }}
-    @else
-        .
-    @endif
-@endsection
+<x-mail::message>
+# Skin refusé
+
+Salut {{ $user->name }},<br>
+<span>Ton skin ***ID#{{ $skin->id }}*** en **{{ $skin->race->name }}** à été refusé par un membre du Staff.</span>
+
+<div style="text-align: center;"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $skin->image_path ))) }}" alt="Image du skin {{ $skin->id }}"></div>
+
+@if($skin->refused_reason)
+<x-mail::panel>
+{{ $skin->refused_reason }}
+</x-mail::panel>
+@endif
+
+<x-mail::button :url="$url" :color="'gold'">
+Clique pour le modifier
+</x-mail::button>
+
+Cordialement,<br>
+<span class="font-bold">{{ config('app.name') }}</span>
+</x-mail::message>

@@ -48,7 +48,7 @@ class SkinPostedMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mails.skin-posted',
+            markdown: 'mails.skin-posted',
         );
     }
 
