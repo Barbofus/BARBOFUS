@@ -35,11 +35,18 @@ a img {
     border: none;
 }
 
+.refused-img {
+    padding: 18px;
+    background: rgba(255, 50, 50, 0.3);
+    border: solid 3px #b91c1c;
+    border-radius: 4px;
+}
+
 /* Typography */
 
 h1 {
     color: #f2e8dc;
-    font-size: 18px;
+    font-size: 36px;
     font-weight: bold;
     margin-top: 0;
     text-align: left;
@@ -72,6 +79,10 @@ p.sub {
 
 img {
     max-width: 100%;
+}
+
+.italic {
+    font-style: italic;
 }
 
 /* Layout */
