@@ -6,6 +6,6 @@
 
     <div class="pl-4">
         <p class="font-bold">Skin Refusé <span class="italic text-gray-500">ID#{{ $item->id }}</span></p>
-        <p class="indent-2">Ton skin en <span class="font-bold">{{ $item->race->name }}</span> à été refusé par un membre du staff. <a class="text-gray-400 hover:text-gray-300" href="{{ route('skins.edit', ['skin' => $item->id]) }}">Clique ici pour le modifier</a></p>
+        <p class="indent-2">Ton skin en <span class="font-bold">{{ $item->race->name }}</span> à été refusé par un membre du staff. <a wire:click="ReadNotification('{{ $notification->id }}')" class="text-gray-400 hover:text-gray-300" href="{{ route('skins.edit', ['skin' => $item->id]) }}">Clique ici pour le modifier</a></p>
     </div>
 </div>

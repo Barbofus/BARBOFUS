@@ -22,7 +22,8 @@ class SkinController extends Controller
      */
     public function index()
     {
-        return view('skins.index');
+        $skins = Skin::orderBy('updated_at', 'desc')->get();
+        return view('skins.index', ['skins' => $skins]);
     }
 
     /**
@@ -71,7 +72,7 @@ class SkinController extends Controller
             'race_id' => $request->race_id,
         ]);
 
-        return view('skins.index');
+        return redirect()->route('skins.index');
     }
 
     /**
@@ -97,7 +98,7 @@ class SkinController extends Controller
      * @param  \App\Models\Skin  $skin
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUpdateSkinRequest $request, Skin $skin)
+    public function update (StoreUpdateSkinRequest $request, Skin $skin)
     {
         $imagePath = $skin->image_path;
 
@@ -111,25 +112,25 @@ class SkinController extends Controller
                 'height' => null ]);
         }
 
-        $skin->update([
-            'dofus_item_hat_id' => $request->dofus_item_hat_id,
-            'dofus_item_cloak_id' => $request->dofus_item_cloak_id,
-            'dofus_item_shield_id' => $request->dofus_item_shield_id,
-            'dofus_item_pet_id' => $request->dofus_item_pet_id,
-            'dofus_item_costume_id' => $request->dofus_item_costume_id,
-            'face' => $request->face,
-            'image_path' => $imagePath,
-            'gender' => $request->gender,
-            'color_skin' => $request->color_skin,
-            'color_hair' => $request->color_hair,
-            'color_cloth_1' => $request->color_cloth_1,
-            'color_cloth_2' => $request->color_cloth_2,
-            'color_cloth_3' => $request->color_cloth_3,
-            'race_id' => $request->race_id,
-            'status' => 'Pending',
-        ]);
+        $skin->dofus_item_hat_id = $request->dofus_item_hat_id;
+        $skin->dofus_item_cloak_id = $request->dofus_item_cloak_id;
+        $skin->dofus_item_shield_id = $request->dofus_item_shield_id;
+        $skin->dofus_item_pet_id = $request->dofus_item_pet_id;
+        $skin->dofus_item_costume_id = $request->dofus_item_costume_id;
+        $skin->face = $request->face;
+        $skin->image_path = $imagePath;
+        $skin->gender = $request->gender;
+        $skin->color_skin = $request->color_skin;
+        $skin->color_hair = $request->color_hair;
+        $skin->color_cloth_1 = $request->color_cloth_1;
+        $skin->color_cloth_2 = $request->color_cloth_2;
+        $skin->color_cloth_3 = $request->color_cloth_3;
+        $skin->race_id = $request->race_id;
+        $skin->status = 'Pending';
 
-        return view('skins.index');
+        $skin->save();
+
+        return redirect()->route('skins.index');
     }
 
     /**
