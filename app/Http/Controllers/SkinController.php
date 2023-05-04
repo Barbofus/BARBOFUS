@@ -22,8 +22,10 @@ class SkinController extends Controller
      */
     public function index()
     {
-        $skins = Skin::orderBy('updated_at', 'desc')->get();
-        return view('skins.index', ['skins' => $skins]);
+        /*$skins = Skin::orderBy('updated_at', 'desc')->where("status", "=", "Posted")->get();
+        return view('skins.index', ['skins' => $skins]);*/
+
+        return view('skins.index');
     }
 
     /**
