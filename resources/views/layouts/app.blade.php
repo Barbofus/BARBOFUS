@@ -23,6 +23,7 @@
 <body>
     @yield('app-content')
 
+    @stack('scripts')
     @livewireScripts
 </body>
 </html>

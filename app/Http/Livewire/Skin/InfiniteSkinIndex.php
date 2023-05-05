@@ -8,36 +8,32 @@ use Termwind\Components\Dd;
 
 class InfiniteSkinIndex extends Component
 {
-    const ITEMS_PER_PAGE = 20;
+    const ITEMS_PER_PAGE = 6;
 
     public $skins;
     public $currentPage = 0;
     public $orderBy = 'updated_at';
     public $orderDirection = 'desc';
+    protected $listeners = [
+        'load-more' => 'LoadMore'
+    ];
 
     public function mount()
     {
-        $this->InitLoad();
+        $this->LoadMore();
     }
     public function render()
     {
         return view('livewire.skin.infinite-skin-index');
     }
 
-    function InitLoad()
-    {
-        $this->currentPage = 0;
-
-        $this->skins = Skin::where('status', '=', 'Posted')->orderBy($this->orderBy, $this->orderDirection)->skip(self::ITEMS_PER_PAGE * $this->currentPage)->take(self::ITEMS_PER_PAGE)->get();
-    }
-
     public function LoadMore()
     {
+        $newFetch = Skin::where('status', '=', 'Posted')->orderBy($this->orderBy, $this->orderDirection)->skip(self::ITEMS_PER_PAGE * $this->currentPage)->take(self::ITEMS_PER_PAGE)->get();
+
+        $this->skins = ($this->currentPage > 0) ? $this->skins->merge($newFetch) : $newFetch;
+
         $this->currentPage ++;
-
-        $newFetch = Skin::where('status', '=', 'Posted')->orderBy($this->orderBy)->skip(self::ITEMS_PER_PAGE * $this->currentPage)->take(self::ITEMS_PER_PAGE)->get();
-
-        $this->skins = $this->skins->merge($newFetch);
     }
 
     public function SortByID()
@@ -45,7 +41,8 @@ class InfiniteSkinIndex extends Component
         $this->orderBy = 'id';
         $this->orderDirection = 'asc';
 
+        $this->currentPage = 0;
 
-        $this->InitLoad();
+        $this->LoadMore();
     }
 }

@@ -6,6 +6,7 @@ export default defineConfig({
         laravel([
             'resources/css/app.css',
             'resources/js/app.js',
+            'resources/js/skins/infinite-scroll-listener.js',
         ]),
         {
             name: 'blade',
