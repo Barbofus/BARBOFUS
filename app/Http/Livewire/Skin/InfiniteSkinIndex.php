@@ -8,7 +8,7 @@ use Termwind\Components\Dd;
 
 class InfiniteSkinIndex extends Component
 {
-    const ITEMS_PER_PAGE = 6;
+    public const ITEMS_PER_PAGE = 20;
 
     public $skins;
     public $currentPage = 0;

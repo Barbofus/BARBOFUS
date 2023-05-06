@@ -5,8 +5,7 @@ export default defineConfig({
     plugins: [
         laravel([
             'resources/css/app.css',
-            'resources/js/app.js',
-            'resources/js/skins/infinite-scroll-listener.js',
+            'resources/js/*.js',
         ]),
         {
             name: 'blade',

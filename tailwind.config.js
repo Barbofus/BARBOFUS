@@ -8,12 +8,12 @@ module.exports = {
     extend: {
         keyframes: {
             skinApparition: {
-                '0%': { opacity: 0, transform: 'translateX(40px)' },
-                '100%': { opacity: 1, transform: 'translateX(0px)' },
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
             }
         },
         animation: {
-            skinApparition: 'skinApparition 0.5s linear',
+            skinApparition: 'skinApparition 0.5s linear forwards',
         }
     },
   },

@@ -51,7 +51,7 @@
 
                     {{-- Détails --}}
                     <div class="flex space-x-2 items-center"
-                         x-show="open"
+                         x-show="open" x-cloak
                          x-transition:enter="transition ease-out duration-300"
                          x-transition:enter-start="opacity-0 -translate-x-full"
                          x-transition:enter-end="opacity-100"
@@ -99,7 +99,7 @@
                 {{-- Bouton de validation --}}
                 <div
                     class="flex space-x-2"
-                    x-show="open"
+                    x-show="open" x-cloak
                     x-transition:enter="transition ease-out delay-300 duration-300"
                     x-transition:enter-start="opacity-0 -translate-y-full"
                     x-transition:enter-end="opacity-100"
