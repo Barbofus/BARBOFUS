@@ -12,8 +12,8 @@ class InfiniteSkinIndex extends Component
 
     public $skins;
     public $currentPage = 0;
-    public $orderBy = 'updated_at';
-    public $orderDirection = 'desc';
+    public $orderBy = 'updated_at'; // Nouveauté par défault
+    public $orderDirection = 'DESC';
     protected $listeners = [
         'load-more' => 'LoadMore'
     ];
@@ -36,10 +36,10 @@ class InfiniteSkinIndex extends Component
         $this->currentPage ++;
     }
 
-    public function SortByID()
+    public function SortBy($orderBy, $orderDir)
     {
-        $this->orderBy = 'id';
-        $this->orderDirection = 'asc';
+        $this->orderBy = $orderBy;
+        $this->orderDirection = $orderDir;
 
         $this->currentPage = 0;
 

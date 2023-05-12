@@ -2,6 +2,7 @@
 
     {{-- La grille des skins --}}
     <div class="flex justify-center">
+        <x-skins.sorter />
         <div class="grid grid-cols-[repeat(auto-fill,200px)] p-4 gap-4 max-w-[1400px] justify-center">
 
             @foreach($skins as $key => $skin)
