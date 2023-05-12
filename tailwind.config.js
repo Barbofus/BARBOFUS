@@ -7,11 +7,14 @@ module.exports = {
   theme: {
     extend: {
         colors: {
-            'anthracite': 'var(--anthracite)',
-            'anthraciteLit': 'var(--anthraciteLit)',
-
-            'ivory': 'var(--ivory)',
-            'ivoryDark': 'var(--ivoryDark)',
+            primary: {
+                DEFAULT: 'var(--anthracite)',
+                100: 'var(--anthraciteLit)',
+            },
+            secondary: {
+                DEFAULT: 'var(--ivory)',
+                100: 'var(--ivoryDark)',
+            },
 
             'goldText': 'var(--goldText)',
             'goldTextLit': 'var(--goldTextLit)',
@@ -21,6 +24,10 @@ module.exports = {
             'heartLit': 'var(--heartLit)',
 
             'inactiveText': 'var(--inactiveText)',
+        },
+        fontFamily: {
+            sans: ["MADE Okin", 'sans-serif'],
+            display: ["MV Boli", 'sans-serif'],
         },
         keyframes: {
             skinApparition: {

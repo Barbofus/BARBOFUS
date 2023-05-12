@@ -8,6 +8,38 @@
     }
 }
 
+@layer base {
+    @font-face {
+        font-weight: 100;
+        font-family: "MADE Okin";
+        src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Thin.otf") format("openType");
+    }
+
+    @font-face {
+        font-weight: 300;
+        font-family: "MADE Okin";
+        src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Light.otf") format("openType");
+    }
+
+    @font-face {
+        font-weight: 400;
+        font-family: "MADE Okin";
+        src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Regular.otf") format("openType");
+    }
+
+    @font-face {
+        font-weight: 500;
+        font-family: "MADE Okin";
+        src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Medium.otf") format("openType");
+    }
+
+    @font-face {
+
+        font-family: "MV Boli";
+        src: url("../../public/storage/fonts/mvboli.ttf") format("truetype");
+    }
+}
+
 @layer utilities {
     .cawotteGradient {
         background: linear-gradient(45deg, var(--cawotteDark) 0%, var(--cawotteLit) 100%);

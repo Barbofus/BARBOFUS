@@ -1,5 +1,5 @@
-<div class="opacity-0 animate-skinApparition" style="animation-delay: {{ ($key - (Self::ITEMS_PER_PAGE * ($currentPage - 1))) * 35 }}ms">
+<div class="opacity-0 animate-skinApparition bg-primary-100" style="animation-delay: {{ ($key - (Self::ITEMS_PER_PAGE * ($currentPage - 1))) * 35 }}ms">
     <p>{{ $skin->id }}</p>
     <img src="{{ asset('storage\/') . $skin->image_path }}">
-    <p>{{ $skin->User->name }}</p>
+    <p class="text-goldText hover:text-goldTextLit">{{ $skin->User->name }}</p>
 </div>
