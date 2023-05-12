@@ -7,4 +7,6 @@
     <x-main-navbar />
 
     @yield('content')
+
+    <x-utils.scroll-to-top />
 @endsection

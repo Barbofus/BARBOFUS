@@ -7,3 +7,60 @@
         @apply border-2 border-red-500 rounded-md;
     }
 }
+
+@layer utilities {
+    .cawotteGradient {
+        background: linear-gradient(45deg, var(--cawotteDark) 0%, var(--cawotteLit) 100%);
+    }
+
+    .emeraldGradient {
+        background: linear-gradient(45deg, var(--emeraldDark) 0%, var(--emeraldLit) 100%);
+    }
+
+    .goldGradient {
+        background: linear-gradient(45deg, var(--goldDark) 0%, var(--goldLit) 100%);
+    }
+
+    .goldGradientTop {
+        background: linear-gradient(180deg, var(--goldDark) 0%, var(--goldLit) 100%);
+    }
+
+    .goldGradientSide {
+        background: linear-gradient(90deg, var(--goldDark) 0%, var(--goldLit) 100%);
+    }
+
+    .heartGradient {
+        background: linear-gradient(45deg, var(--heartDark) 0%, var(--heartLit) 100%);
+    }
+
+    .clip-path-triangle-down {
+        clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+    }
+}
+
+:root {
+
+    /* Colors */
+    --anthracite: #292522;
+    --anthraciteLit: #332f2c;
+
+    --ivory: #fff5e9;
+    --ivoryDark: #f2e8dc;
+
+    --cawotteDark: #e2510f;
+    --cawotteLit: #ff891c;
+
+    --emeraldDark: #488911;
+    --emeraldLit: #e6ff00;
+
+    --goldDark: #fba436;
+    --goldLit: #faed61;
+    --goldText: #fcb943;
+    --goldTextLit: #fbe25b;
+
+    --heartGray: #99928b;
+    --heartDark: #b10f0f;
+    --heartLit: #f33a3a;
+
+    --inactiveText: #8b847b;
+}
