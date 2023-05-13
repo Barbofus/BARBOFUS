@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Skin;
 
+use App\Models\Like;
 use App\Models\Skin;
 use Livewire\Component;
 use Termwind\Components\Dd;
@@ -20,7 +21,8 @@ class InfiniteSkinIndex extends Component
     public $orderBy = 'updated_at'; // Nouveauté par défault
     public $orderDirection = 'DESC';
     protected $listeners = [
-        'load-more' => 'LoadMore'
+        'load-more' => 'LoadMore',
+        'refresh-me' => '$refresh'
     ];
 
     public function mount()
@@ -49,5 +51,26 @@ class InfiniteSkinIndex extends Component
         $this->currentPage = 0;
 
         $this->LoadMore();
+    }
+
+    public function SwitchHeart($skin)
+    {
+        // Si on a déjà like le skin
+        foreach (Like::where('skin_id', '=', $skin)->where('user_id', '=', \Auth::user()->id)->get() as $like) {
+            $like->delete();
+
+            $this->emit('refresh-me');
+
+            return;
+        }
+
+        // Sinon, ont le créé
+        Like::create([
+            'skin_id' => $skin,
+            'user_id' => \Auth::user()->id
+        ]);
+
+        $this->emit('refresh-me');
+
     }
 }
