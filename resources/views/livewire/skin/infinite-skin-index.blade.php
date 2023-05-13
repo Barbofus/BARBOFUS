@@ -14,4 +14,6 @@
 
     {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
     <x-utils.load-more/>
+
+    @vite(['resources/js/skins/NameScroll.js'])
 </div>
