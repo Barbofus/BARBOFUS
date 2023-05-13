@@ -73,6 +73,8 @@
                 <button type="submit" class="block w-full max-w-xs px-3 py-3 mx-auto font-semibold text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:bg-yellow-700">VALIDER</button>
             </div>
         </div>
+
+          <a href="{{ route('login') }}">Déjà enregistré ? Se connecter</a>
       </div>
     </form>
 @endsection

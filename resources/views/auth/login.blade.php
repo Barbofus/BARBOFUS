@@ -43,6 +43,8 @@
               <button type="submit" class="block w-full max-w-xs px-3 py-3 mx-auto font-semibold text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:bg-yellow-700">SE CONNECTER</button>
           </div>
       </div>
+
+        <a href="{{ route('register') }}">S'enregistrer</a>
     </div>
   </form>
 @endsection
