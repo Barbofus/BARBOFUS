@@ -23,6 +23,8 @@ class SkinFactory extends Factory
      */
     public function definition()
     {
+        $date = $this->faker->dateTimeBetween('-30 day' );
+
         return [
             'dofus_item_hat_id' => rand(0,4) ? DofusItemHat::all()->random()->id : null,
             'dofus_item_cloak_id' => rand(0,4) ? DofusItemCloak::all()->random()->id : null,
@@ -37,9 +39,11 @@ class SkinFactory extends Factory
             'color_cloth_1' => $this->GetRandomColor(),
             'color_cloth_2' => $this->GetRandomColor(),
             'color_cloth_3' => $this->GetRandomColor(),
-            'user_id' => User::all()->random()->id,
+            'user_id' => rand(0,3) ? User::where('name', '=', 'Barbe__Douce')->first() : User::all()->random()->id,
             'race_id' => Race::all()->random()->id,
             'status' => 'Posted',
+            'created_at'=>$date,
+            'updated_at'=>$date
         ];
     }
 

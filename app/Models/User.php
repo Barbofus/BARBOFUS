@@ -58,4 +58,8 @@ class User extends Authenticatable
     public function NotificationPreferences(){
         return $this->hasMany(UserNotificationPreferences::class);
     }
+
+    public function Likes(){
+        return $this->hasMany(Like::class);
+    }
 }

@@ -3,12 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Like;
-use App\Models\Reward;
-use App\Models\Skin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SkinSeeder extends Seeder
+class LikeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,9 +15,6 @@ class SkinSeeder extends Seeder
      */
     public function run()
     {
-        $count = 500;
-        Skin::factory($count)->create();
-        Like::factory($count*75)->create();
-        Reward::factory(round($count*0.02)*3)->create();
+        Like::factory(1000)->create();
     }
 }

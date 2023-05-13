@@ -57,4 +57,12 @@ class Skin extends Model
     public function Race() {
         return $this->belongsTo(Race::class);
     }
+
+    public function Rewards() {
+        return $this->hasMany(Reward::class);
+    }
+
+    public function Likes(){
+        return $this->hasMany(Like::class);
+    }
 }

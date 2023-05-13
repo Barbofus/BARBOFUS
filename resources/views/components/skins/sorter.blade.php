@@ -1,7 +1,7 @@
 <!-- Sort by -->
-<div class="relative max-[500px]:order-first"
+<div x-cloak class="relative max-[500px]:order-first"
      x-data="{
-              sortAsc: true,
+              sortAsc: false,
               showSort: false,
               selection: 'Nouveauté'
             }">
@@ -25,15 +25,15 @@
         <div class="w-40 right-0 top-[30px] overflow-hidden rounded-b-md z-50 absolute bg-secondary-100 text-[1rem] text-primary font-light transition-all duration-200 cursor-pointer "
              x-show="showSort" x-transition.opacity>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Nouveauté'; sortAsc = true; showSort = false; $wire.SortBy('updated_at', 'DESC')">Nouveauté</p>
+               x-on:mousedown="selection = 'Nouveauté'; sortAsc = false; showSort = false; $wire.SortBy(0, 'DESC')">Nouveauté</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Ancienneté'; sortAsc = false; showSort = false; $wire.SortBy('updated_at', 'ASC')">Ancienneté</p>
+               x-on:mousedown="selection = 'Ancienneté'; sortAsc = true; showSort = false; $wire.SortBy(0, 'ASC')">Ancienneté</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Plus aimé'; sortAsc = false; showSort = false">Plus aimé</p>
+               x-on:mousedown="selection = 'Plus aimé'; sortAsc = false; showSort = false; $wire.SortBy(1, 'DESC')">Plus aimé</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Moins aimé'; sortAsc = true; showSort = false">Moins aimé</p>
+               x-on:mousedown="selection = 'Moins aimé'; sortAsc = true; showSort = false; $wire.SortBy(1, 'ASC')">Moins aimé</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false">Récompenses</p>
+               x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC')">Récompenses</p>
         </div>
     </div>
 </div>
