@@ -37,11 +37,21 @@ module.exports = {
             textSlide: {
                 '0%': { transform: 'translate(0px, 0px)' },
                 '100%': { transform: 'translate(-100%, 0px)' },
+            },
+            onePing: {
+                '0%': { transform: 'scale(1)', opacity: 1 },
+                '100%': { transform: 'scale(2)', opacity: 0  },
+            },
+            pulseFast: {
+                '0%,25%,50%': { opacity: 0.25 },
+                '12%,37%': { opacity: 1 },
             }
         },
         animation: {
             skinApparition: 'skinApparition 0.5s linear forwards',
             textSlide: 'textSlide 5s linear infinite',
+            onePing: 'onePing 0.35s linear forwards',
+            pulseFast: 'pulseFast 3s linear infinite',
         }
     },
   },

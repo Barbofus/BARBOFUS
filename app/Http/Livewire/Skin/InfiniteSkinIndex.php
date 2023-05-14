@@ -36,7 +36,7 @@ class InfiniteSkinIndex extends Component
 
     public function LoadMore()
     {
-        $newFetch = Skin::where('status', '=', 'Posted')->withSum('Rewards', 'reward_value')->withCount(['Likes', 'Rewards'])->orderBy($this->orderBy, $this->orderDirection)->skip(self::ITEMS_PER_PAGE * $this->currentPage)->take(self::ITEMS_PER_PAGE)->get();
+        $newFetch = Skin::where('status', '=', 'Posted')->withSum('Rewards', 'reward_value')->withCount(['Likes', 'Rewards'])->orderBy($this->orderBy, $this->orderDirection)->orderBy('updated_at', 'DESC')->skip(self::ITEMS_PER_PAGE * $this->currentPage)->take(self::ITEMS_PER_PAGE)->get();
 
         $this->skins = ($this->currentPage > 0) ? $this->skins->merge($newFetch) : $newFetch;
 
@@ -71,6 +71,5 @@ class InfiniteSkinIndex extends Component
         ]);
 
         $this->emit('refresh-me');
-
     }
 }
