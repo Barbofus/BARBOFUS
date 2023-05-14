@@ -44,7 +44,7 @@ module.exports = {
             },
             pulseFast: {
                 '0%,25%,50%': { opacity: 0.25 },
-                '12%,37%': { opacity: 1 },
+                '12%,37%': { opacity: 0.7 },
             }
         },
         animation: {
