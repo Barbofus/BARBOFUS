@@ -19,38 +19,38 @@
     </div>
 
     {{-- Likes --}}
-    @auth
-        @if($skin->User->id === Auth::user()->id) {{-- S'il s'agit de notre propre skin, nous empêche de le liker --}}
-            <x-skins.likes :skin="$skin" :canLike="false"/>
-        @else
-            <button
-                x-data="{
-                    clicked: false,
-                    liked: (@js(count(\App\Models\Like::where('skin_id', '=', $skin->id)->where('user_id', '=', Auth::user()->id)->get()) > 0)),
-                    likeCount: @js(count($skin->Likes)),
+    <div
+        x-data="{
+            clicked: false,
+            liked: (@js(count(\App\Models\Like::where('skin_id', '=', $skin->id)->where('user_id', '=', Auth::user()->id)->get()) > 0)),
+            likeCount: @js(count($skin->Likes)),
 
-                    SwitchLike(){
-                        this.clicked = true;
-                        $wire.SwitchHeart({{ $skin->id }});
+            SwitchLike(){
+                this.clicked = true;
+                $wire.SwitchHeart({{ $skin->id }});
 
-                        this.liked = !this.liked;
+                this.liked = !this.liked;
 
-                        if(this.liked) this.likeCount++;
-                        else this.likeCount--;
+                if(this.liked) this.likeCount++;
+                else this.likeCount--;
 
-                        setTimeout(() => this.clicked = false, 350)
-                    }
-                }"
-                @click="SwitchLike"
-            >
-                <x-skins.likes :skin="$skin" :canLike="true" />
-            </button>
-        @endif
-    @endauth
+                setTimeout(() => this.clicked = false, 350)
+            }
+        }">
+        @auth
+            @if($skin->User->id === Auth::user()->id) {{-- S'il s'agit de notre propre skin, nous empêche de le liker --}}
+                <x-skins.likes :skin="$skin" :canLike="false"/>
+            @else
+                <button @click="SwitchLike">
+                    <x-skins.likes :skin="$skin" :canLike="true" />
+                </button>
+            @endif
+        @endauth
 
-    @guest
-        <a href="{{ route('login') }}">
-            <x-skins.likes :skin="$skin" :canLike="false"/>
-        </a>
-    @endguest
+        @guest
+            <a href="{{ route('login') }}">
+                <x-skins.likes :skin="$skin" :canLike="false"/>
+            </a>
+        @endguest
+    </div>
 </div>
