@@ -1,12 +1,12 @@
-<div
-    wire:poll.visible
-    class="absolute top-4 right-20 flex flex-col items-end"
-    x-data="{
-                open: false
-            }"
-    x-on:click.away="open = false"
->
-    @if( auth()->user()->notifications->count() > 0)
+@if( auth()->user()->notifications->count() > 0)
+    <div
+        wire:poll.visible
+        class="absolute top-4 right-20 flex flex-col items-end"
+        x-data="{
+                    open: false
+                }"
+        x-on:click.away="open = false"
+    >
         {{-- Notification Bell --}}
         <button class="hover:text-gray-600 transition-all active:scale-90 relative" x-on:click="open = !open">
             @if( auth()->user()->unreadNotifications->count() > 0)
@@ -47,5 +47,5 @@
                 </div>
             </div>
         </div>
-    @endif
-</div>
+    </div>
+@endif

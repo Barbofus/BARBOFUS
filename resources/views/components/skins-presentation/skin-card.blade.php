@@ -25,13 +25,20 @@
         @else
             <button
                 x-data="{
-                    liked: false,
+                    clicked: false,
+                    liked: (@js(count(\App\Models\Like::where('skin_id', '=', $skin->id)->where('user_id', '=', Auth::user()->id)->get()) > 0)),
+                    likeCount: @js(count($skin->Likes)),
 
                     SwitchLike(){
-                        this.liked = true;
+                        this.clicked = true;
                         $wire.SwitchHeart({{ $skin->id }});
 
-                        setTimeout(() => this.liked = false, 350)
+                        this.liked = !this.liked;
+
+                        if(this.liked) this.likeCount++;
+                        else this.likeCount--;
+
+                        setTimeout(() => this.clicked = false, 350)
                     }
                 }"
                 @click="SwitchLike"
