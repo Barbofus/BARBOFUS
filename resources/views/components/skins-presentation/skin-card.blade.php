@@ -26,7 +26,7 @@
             likeCount: @js(count($skin->Likes)),
 
             SwitchLike(){
-                this.clicked = true;
+                this.clicked = false;
                 $wire.SwitchHeart({{ $skin->id }});
 
                 this.liked = !this.liked;
@@ -34,7 +34,7 @@
                 if(this.liked) this.likeCount++;
                 else this.likeCount--;
 
-                setTimeout(() => this.clicked = false, 350)
+                setTimeout(() => this.clicked = true, 50)
             }
         }">
         @auth

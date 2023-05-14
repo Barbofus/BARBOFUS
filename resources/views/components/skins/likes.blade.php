@@ -4,7 +4,7 @@
     <div class="h-full w-7">
         <x-svg.heart :canLike="$canLike" />
         @if($canLike)
-            <div class="scale-0 h-full w-full" :class="(clicked) ? 'animate-onePing' : ''">
+            <div x-ref="heartPing" class="scale-0 h-full w-full" :class="(clicked) ? 'animate-onePing' : ''">
                 <x-svg.heart :canLike="'false'" />
             </div>
         @endif
