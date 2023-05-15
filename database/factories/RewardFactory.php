@@ -17,13 +17,8 @@ class RewardFactory extends Factory
      */
     public function definition()
     {
-        $arrayValues = ['Third', 'Second', 'First'];
-        $rand = rand(0,2);
-
         return [
-            'skin_id' => Skin::all()->random()->id,
-            'reward_rank' => $arrayValues[$rand],
-            'reward_value' => 2 ** ($rand + 1)
+            //
         ];
     }
 }

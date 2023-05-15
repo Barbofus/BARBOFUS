@@ -59,7 +59,7 @@ class Skin extends Model
     }
 
     public function Rewards() {
-        return $this->hasMany(Reward::class);
+        return $this->belongsToMany(Reward::class);
     }
 
     public function Likes(){

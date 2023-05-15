@@ -16,6 +16,6 @@ class Reward extends Model
     ];
 
     public function Skin() {
-        $this->belongsTo(Skin::class);
+        $this->belongsToMany(Skin::class);
     }
 }

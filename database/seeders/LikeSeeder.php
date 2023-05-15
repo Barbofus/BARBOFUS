@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Like;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,6 @@ class LikeSeeder extends Seeder
      */
     public function run()
     {
-        Like::factory(1000)->create();
+        Like::factory(count(User::all()) * 500)->create();
     }
 }

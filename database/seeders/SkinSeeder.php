@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Like;
 use App\Models\Reward;
 use App\Models\Skin;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,7 +20,13 @@ class SkinSeeder extends Seeder
     {
         $count = 500;
         Skin::factory($count)->create();
-        Like::factory($count*75)->create();
-        Reward::factory(round($count*0.02)*3)->create();
+        Like::factory(count(User::all()) * 75)->create();
+
+        for ($i = 0; $i < 30; $i++)
+        {
+            $skin = Skin::get()->random();
+
+            $skin->Rewards()->attach(rand(1,3));
+        }
     }
 }

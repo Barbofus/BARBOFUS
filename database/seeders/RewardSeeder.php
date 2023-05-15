@@ -15,6 +15,20 @@ class RewardSeeder extends Seeder
      */
     public function run()
     {
-        Reward::factory(30)->create();
+        // Création des 3 types de rewards
+        Reward::factory()->create([
+            'rank' => 'first',
+            'value' => 2
+        ]);
+
+        Reward::factory()->create([
+            'rank' => 'second',
+            'value' => 21
+        ]);
+
+        Reward::factory()->create([
+            'rank' => 'third',
+            'value' => 211
+        ]);
     }
 }

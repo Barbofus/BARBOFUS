@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Reward;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\DofusItemsSubCategorie;
@@ -94,6 +95,22 @@ class DatabaseSeeder extends Seeder
                 'banner_path' => 'banner_'. \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($value) .'.jpg',
             ]);
         }
+
+        // Création des 3 types de rewards
+        Reward::factory()->create([
+            'rank' => 'first',
+            'value' => 2
+        ]);
+
+        Reward::factory()->create([
+            'rank' => 'second',
+            'value' => 21
+        ]);
+
+        Reward::factory()->create([
+            'rank' => 'third',
+            'value' => 211
+        ]);
 
         $this->call([
             UserSeeder::class,
