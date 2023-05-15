@@ -19,7 +19,7 @@ class InfiniteSkinIndex extends Component
     protected $allOrder = [
         'updated_at',
         'Likes_count',
-        'id',
+        'Rewards_sum_value',
     ];
     public $orderBy = 'updated_at'; // Nouveauté par défault
     public $orderDirection = 'DESC';
@@ -45,8 +45,8 @@ class InfiniteSkinIndex extends Component
 
     public function PrepareChunks()
     {
-        //$this->postIdChunks = Skin::where('status', '=', 'Posted')->withSum('Rewards', 'reward_value')->withCount(['Likes', 'Rewards'])->orderBy($this->orderBy, $this->orderDirection)->orderBy('updated_at', 'DESC')->pluck('id')->chunk(self::ITEMS_PER_PAGE)->toArray();
-        $this->postIdChunks = Skin::where('status', '=', 'Posted')->withCount(['Likes'])->orderBy($this->orderBy, $this->orderDirection)->orderBy('updated_at', 'DESC')->pluck('id')->chunk(self::ITEMS_PER_PAGE)->toArray();
+        $this->postIdChunks = Skin::where('status', '=', 'Posted')->withSum('Rewards', 'value')->withCount(['Likes', 'Rewards'])->orderBy($this->orderBy, $this->orderDirection)->orderBy('updated_at', 'DESC')->pluck('id')->chunk(self::ITEMS_PER_PAGE)->toArray();
+        //$this->postIdChunks = Skin::where('status', '=', 'Posted')->withCount(['Likes'])->orderBy($this->orderBy, $this->orderDirection)->orderBy('updated_at', 'DESC')->pluck('id')->chunk(self::ITEMS_PER_PAGE)->toArray();
 
         $this->page = 1;
 

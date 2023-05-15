@@ -8,11 +8,11 @@
 
     <p class="absolute top-4">{{ $skin->created_at }}</p>
     <p class="absolute top-8">{{ count($skin->Likes) }}</p>
-    {{--<div class="absolute top-12">
+    <div class="absolute top-12">
         @foreach($skin->Rewards as $reward)
-            <p>{{ $reward->reward_rank }}</p>
+            <p>{{ $reward->rank }} -- {{ $reward->value }}</p>
         @endforeach
-    </div>--}}
+    </div>
 
     {{-- Barbe --}}
     @if($skin->User->name === 'Barbe__Douce')

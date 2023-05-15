@@ -18,7 +18,7 @@ class RewardSeeder extends Seeder
         // Création des 3 types de rewards
         Reward::factory()->create([
             'rank' => 'first',
-            'value' => 2
+            'value' => 211
         ]);
 
         Reward::factory()->create([
@@ -28,7 +28,7 @@ class RewardSeeder extends Seeder
 
         Reward::factory()->create([
             'rank' => 'third',
-            'value' => 211
+            'value' => 2
         ]);
     }
 }
