@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardUserDetailsController;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\SkinValidationController;
+use App\Models\Skin;
 use Illuminate\Support\Facades\Route;
 
 /*

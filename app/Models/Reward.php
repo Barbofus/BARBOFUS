@@ -11,11 +11,14 @@ class Reward extends Model
 
     protected $fillable = [
         'skin_id',
-        'reward_rank',
-        'reward_value'
+        'reward_price_id'
     ];
 
     public function Skin() {
-        $this->belongsToMany(Skin::class);
+        return $this->belongsTo(Skin::class);
+    }
+
+    public function RewardPrice() {
+        return $this->belongsTo(RewardPrice::class);
     }
 }

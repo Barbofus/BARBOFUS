@@ -1,5 +1,5 @@
-<div class="relative opacity-0 animate-skinApparition aspect-[14/19] h-full shadow-sm" style="animation-delay: {{ ($key - ($itemsPerPage * ($currentPage - 1))) * 25 }}ms">
-
+{{-- Nécessite un tableau de Skin en argument sous le nom :skin--}}
+<div class="aspect-[14/19] max-w-[250px] relative w-full">
     {{-- Skin + Background --}}
     <div class="group">
         <div class="absolute top-0 left-0 w-full h-full rounded-md cursor-pointer bg-primary-100 group-hover:brightness-125 transition-all"></div>
@@ -7,11 +7,12 @@
     </div>
 
     <p class="absolute top-4">{{ $skin->created_at }}</p>
-    <p class="absolute top-8">{{ count($skin->Likes) }}</p>
+    <p class="absolute top-8">{{ $skin->id }}</p>
     <div class="absolute top-12">
         @foreach($skin->Rewards as $reward)
-            <p>{{ $reward->rank }} -- {{ $reward->value }}</p>
+            <p>{{ $reward->RewardPrice->rank }} -- {{ $reward->points }}</p>
         @endforeach
+        <p>{{ $skin->Rewards->sum('points') }}</p>
     </div>
 
     {{-- Barbe --}}
@@ -30,8 +31,8 @@
     <div
         x-data="{
             clicked: false,
-            liked: (@js((Auth::user()) && (count(\App\Models\Like::where('skin_id', '=', $skin->id)->where('user_id', '=', Auth::user()->id)->get()) > 0))),
-            likeCount: @js(count($skin->Likes)),
+            liked: (@js(Auth::check() && $skin->Likes->where('user_id', Auth::user()->id)->first())),
+            likeCount: @js($skin->Likes->count()),
 
             SwitchLike(){
                 this.clicked = false;
@@ -46,7 +47,7 @@
             }
         }">
         @auth
-            @if($skin->User->id === Auth::user()->id)  S'il s'agit de notre propre skin, nous empêche de le liker
+            @if($skin->User->id === Auth::user()->id)  {{--S'il s'agit de notre propre skin, nous empêche de le liker--}}
                 <x-skins.likes :skin="$skin" :canLike="false"/>
             @else
                 <button @click="SwitchLike">

@@ -59,7 +59,11 @@ class Skin extends Model
     }
 
     public function Rewards() {
-        return $this->belongsToMany(Reward::class);
+        return $this->hasMany(Reward::class)->orderByDesc('points');
+    }
+
+    public function RewardsWinners() {
+        return $this->hasMany(Reward::class)->orderByDesc('created_at');
     }
 
     public function Likes(){

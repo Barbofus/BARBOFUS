@@ -1,18 +1,21 @@
 <div>
 
-    <div class="flex justify-center">
+    <div class="flex justify-center px-4">
 
         {{-- Menu de trie --}}
         <x-skins.sorter />
 
         {{-- La grille des skins --}}
-        <div>
+        <div class="max-w-[1400px] w-[80vw]">
 
             @for($i = 0; $i < $page && $i < $maxPage; $i++)
                 <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
             @endfor
 
         </div>
+
+        {{-- Derniers vainqueurs et date du prochain tirage Barbe' Hebdo --}}
+        <livewire:skin.last-winners />
     </div>
 
     {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}

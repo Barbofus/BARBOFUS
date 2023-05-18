@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Skin;
 
 use App\Models\Like;
+use App\Models\Reward;
+use App\Models\RewardPrice;
 use App\Models\Skin;
 use DateTime;
 use Livewire\Component;
@@ -19,7 +21,7 @@ class InfiniteSkinIndex extends Component
     protected $allOrder = [
         'updated_at',
         'Likes_count',
-        'Rewards_sum_value',
+        'Rewards_sum_points',
     ];
     public $orderBy = 'updated_at'; // Nouveauté par défault
     public $orderDirection = 'DESC';
@@ -45,8 +47,15 @@ class InfiniteSkinIndex extends Component
 
     public function PrepareChunks()
     {
-        $this->postIdChunks = Skin::where('status', '=', 'Posted')->withSum('Rewards', 'value')->withCount(['Likes', 'Rewards'])->orderBy($this->orderBy, $this->orderDirection)->orderBy('updated_at', 'DESC')->pluck('id')->chunk(self::ITEMS_PER_PAGE)->toArray();
-        //$this->postIdChunks = Skin::where('status', '=', 'Posted')->withCount(['Likes'])->orderBy($this->orderBy, $this->orderDirection)->orderBy('updated_at', 'DESC')->pluck('id')->chunk(self::ITEMS_PER_PAGE)->toArray();
+        $this->postIdChunks = Skin::query()
+            ->where('status', 'Posted')
+            ->withSum('Rewards', 'points')
+            ->withCount('Likes')
+            ->orderBy($this->orderBy, $this->orderDirection)
+            ->orderBy('updated_at', 'DESC')
+            ->pluck('id')
+            ->chunk(self::ITEMS_PER_PAGE)
+            ->toArray();
 
         $this->page = 1;
 

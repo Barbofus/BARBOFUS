@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\RewardPrice;
 use App\Models\Skin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,8 +18,14 @@ class RewardFactory extends Factory
      */
     public function definition()
     {
+        $date = $this->faker->dateTimeBetween('-30 day' );
+        $rank = RewardPrice::all()->random();
+
         return [
-            //
+            'skin_id' => Skin::all()->random(),
+            'reward_price_id' => $rank,
+            'points' => $rank->points,
+            'created_at' => $date
         ];
     }
 }

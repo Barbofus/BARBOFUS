@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Skin;
 
+use App\Actions\Likes\SwitchLikes;
 use App\Models\Like;
 use App\Models\Skin;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SkinIndexChunk extends Component
@@ -14,7 +16,10 @@ class SkinIndexChunk extends Component
 
     public function render()
     {
-        $skins = Skin::find($this->skinIds)->keyBy('id');
+        $skins = Skin::query()
+            ->with('Likes', 'Rewards', 'User', 'Rewards.RewardPrice')
+            ->find($this->skinIds)
+            ->keyBy('id');
 
         $orderedSkins = collect($this->skinIds)->map(fn ($id) => $skins[$id]);
 
@@ -25,16 +30,6 @@ class SkinIndexChunk extends Component
 
     public function SwitchHeart($skin)
     {
-        // Si on a déjà like le skin
-        foreach (Like::where('skin_id', '=', $skin)->where('user_id', '=', \Auth::user()->id)->get() as $like) {
-            $like->delete();
-            return;
-        }
-
-        // Sinon, ont le créé
-        Like::create([
-            'skin_id' => $skin,
-            'user_id' => \Auth::user()->id
-        ]);
+        (new SwitchLikes)($skin);
     }
 }

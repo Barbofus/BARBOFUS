@@ -20,13 +20,7 @@ class SkinSeeder extends Seeder
     {
         $count = 500;
         Skin::factory($count)->create();
-        Like::factory(count(User::all()) * 75)->create();
-
-        for ($i = 0; $i < 30; $i++)
-        {
-            $skin = Skin::get()->random();
-
-            $skin->Rewards()->attach(rand(1,3));
-        }
+        Like::factory($count * 40)->create();
+        Reward::factory(round($count * 0.02) * 3)->create();
     }
 }

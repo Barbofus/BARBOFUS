@@ -96,24 +96,15 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Création des 3 types de rewards
-        Reward::factory()->create([
-            'rank' => 'first',
-            'value' => 211
-        ]);
-
-        Reward::factory()->create([
-            'rank' => 'second',
-            'value' => 21
-        ]);
-
-        Reward::factory()->create([
-            'rank' => 'third',
-            'value' => 2
-        ]);
 
         $this->call([
+            // Création des 3 types de rewards
+            RewardPriceSeeder::class,
+
+            // Création des users
             UserSeeder::class,
+
+            //Création des skins avec les likes et récompenses
             SkinSeeder::class,
         ]);
     }
