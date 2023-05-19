@@ -4,7 +4,7 @@
     <div class="flex flex-col gap-y-4 items-center relative w-full">
         @foreach($skins as $skin)
             <div wire:key="skinwinner.{{ $skin->id }}" class="w-full max-w-[250px]">
-                <x-skins-presentation.skin-card :skin="$skin"/>
+                <x-skins-presentation.winners-skin-card :skin="$skin"/>
             </div>
         @endforeach
     </div>

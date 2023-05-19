@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Skin;
 use App\Actions\Likes\SwitchLikes;
 use App\Models\Reward;
 use App\Models\Skin;
+use App\Models\SkinWinner;
 use Livewire\Component;
 
 class LastWinners extends Component
@@ -23,7 +24,7 @@ class LastWinners extends Component
 
     public function FetchLastWinners()
     {
-        $winners = Reward::query()
+        /*$winners = Reward::query()
             ->orderBy('created_at','DESC')
             ->orderBy('reward_price_id', 'ASC')
             ->pluck('skin_id')
@@ -34,7 +35,11 @@ class LastWinners extends Component
             ->find($winners)
             ->keyBy('id');
 
-        $this->winners = collect($winners)->map(fn ($id) => $skins[$id]);
+        $this->winners = collect($winners)->map(fn ($id) => $skins[$id]);*/
+
+        $this->winners = SkinWinner::query()
+            ->orderBy('reward_id')
+            ->get();
     }
 
     public function SwitchHeart($skin)
