@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('color_cloth_2');
             $table->string('color_cloth_3');
             $table->enum('status', ['Posted', 'Refused', 'Pending'])->default('Pending');
+            $table->text('refused_reason')->nullable();
             $table->timestamps();
         });
     }

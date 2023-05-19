@@ -5,8 +5,7 @@
     </div>
 
     <div class="w-full flex justify-between my-2 px-6">
-        <p class="text-sm text-gray-500">Il y a
-            {{ ((time() - strtotime($notification->created_at)) < 60) ? (time() - strtotime($notification->created_at)) . ' seconde(s)' : (((time() - strtotime($notification->created_at)) < 3600) ? (round((time() - strtotime($notification->created_at)) / 60)) . ' minute(s)' : (((time() - strtotime($notification->created_at)) < 86400) ? (round((time() - strtotime($notification->created_at)) / 3600)) . ' heure(s)' : (round((time() - strtotime($notification->created_at)) / 86400)) . ' jour(s)'))}}</p>
+        <p class="text-sm text-gray-500">{{ $notification->created_at->diffForHumans()}}</p>
 
         @if($read)
             <button wire:click="DeleteNotification('{{ $notification->id }}')" class="text-red-400 text-sm hover:text-red-300">Supprimer</button>

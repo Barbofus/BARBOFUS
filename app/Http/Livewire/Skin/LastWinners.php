@@ -11,13 +11,11 @@ class LastWinners extends Component
 {
     public $winners;
 
-    public function mount()
-    {
-        $this->FetchLastWinners();
-    }
 
     public function render()
     {
+        $this->FetchLastWinners();
+
         return view('livewire.skin.last-winners', [
             'skins' => $this->winners
         ]);
@@ -25,15 +23,18 @@ class LastWinners extends Component
 
     public function FetchLastWinners()
     {
-        for ($i = 0 ; $i <= 2; $i++) {
-            $winner = Reward::query()
-                ->with('Skin')
-                ->where('reward_price_id', $i + 1)
-                ->orderBy('created_at', 'DESC')
-                ->pluck('skin_id')
-                ->first();
-            $this->winners[$i] = Skin::with('Likes', 'Rewards', 'User', 'Rewards.RewardPrice')->find($winner);
-        }
+        $winners = Reward::query()
+            ->orderBy('created_at','DESC')
+            ->orderBy('reward_price_id', 'ASC')
+            ->pluck('skin_id')
+            ->take(3)->toArray();
+
+        $skins = Skin::query()
+            ->with('Likes', 'Rewards', 'User', 'Rewards.RewardPrice')
+            ->find($winners)
+            ->keyBy('id');
+
+        $this->winners = collect($winners)->map(fn ($id) => $skins[$id]);
     }
 
     public function SwitchHeart($skin)

@@ -1,12 +1,12 @@
 {{-- Nécessite un tableau de Skin en argument sous le nom :skin--}}
-<div class="aspect-[14/19] max-w-[250px] relative w-full">
+<div class="aspect-[14/19] relative w-full">
     {{-- Skin + Background --}}
     <div class="group">
         <div class="absolute top-0 left-0 w-full h-full rounded-md cursor-pointer bg-primary-100 group-hover:brightness-125 transition-all"></div>
         <img src="{{ asset('storage\/') . $skin->image_path }}" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
     </div>
 
-    <p class="absolute top-4">{{ $skin->created_at }}</p>
+    <p class="absolute top-4">{{ $skin->created_at->diffForHumans() }}</p>
     <p class="absolute top-8">{{ $skin->id }}</p>
     <div class="absolute top-12">
         @foreach($skin->Rewards as $reward)
