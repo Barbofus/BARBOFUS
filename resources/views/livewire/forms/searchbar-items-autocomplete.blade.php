@@ -30,7 +30,7 @@
         </div>
 
         <div
-            class="absolute z-50 w-full bg-slate-50"
+            class="absolute z-50 w-full bg-slate-50 max-h-60 overflow-y-auto"
             x-show="focusinput || focusbutton"
             :id="$id('dropdown-search')">
             @foreach ($items as $key => $item)

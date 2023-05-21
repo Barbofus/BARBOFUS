@@ -131,7 +131,7 @@
                                                          :value="(old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')" />
         </div>
 
-        {{-- Choix des items --}}
+        {{-- Submit --}}
         <button type="submit" class="w-48 h-12 mt-10 text-2xl text-white bg-blue-500 hover:bg-blue-300">Valider !</button>
     </div>
 </div>

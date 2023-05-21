@@ -92,7 +92,7 @@ class SearchbarItemsAutocomplete extends Component
         $this->resetSelection();
 
         // Prend les premiers items contenant la recherche en excluant le résultat exact
-        $this->itemsToShow = $this->relatedModel::where('name', '!=', $query)->where('name', 'LIKE', '%'.$query.'%')->take(5)->get();
+        $this->itemsToShow = $this->relatedModel::where('name', '!=', $query)->where('name', 'LIKE', '%'.$query.'%')->get();
 
         // Si l'item exact est écris, on le dit pour changer le visuel
         $this->existentItem = $this->relatedModel::where('name', '=', $query)->first();
