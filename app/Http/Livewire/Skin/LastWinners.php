@@ -24,19 +24,6 @@ class LastWinners extends Component
 
     public function FetchLastWinners()
     {
-        /*$winners = Reward::query()
-            ->orderBy('created_at','DESC')
-            ->orderBy('reward_price_id', 'ASC')
-            ->pluck('skin_id')
-            ->take(3)->toArray();
-
-        $skins = Skin::query()
-            ->with('Likes', 'Rewards', 'User', 'Rewards.RewardPrice')
-            ->find($winners)
-            ->keyBy('id');
-
-        $this->winners = collect($winners)->map(fn ($id) => $skins[$id]);*/
-
         $this->winners = SkinWinner::query()
             ->orderBy('reward_id')
             ->get();
