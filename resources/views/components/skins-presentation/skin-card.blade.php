@@ -6,13 +6,15 @@
         <img src="{{ asset('storage\/') . $skin->image_path }}" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
     </div>
 
-    <p class="absolute top-4">{{ $skin->created_at->diffForHumans() }}</p>
-    <p class="absolute top-8">{{ $skin->id }}</p>
-    <div class="absolute top-12">
+    <div class="absolute top-2">
+        <p>{{ $skin->created_at->diffForHumans() }}</p>
+        <p>ID: {{ $skin->id }}</p>
         @foreach($skin->Rewards as $reward)
             <p>{{ $reward->RewardPrice->rank }} -- {{ $reward->points }}</p>
         @endforeach
-        <p>{{ $skin->Rewards->sum('points') }}</p>
+        <p>Points: {{ $skin->Rewards->sum('points') }}</p>
+        <p>Class: {{ $skin->Race->name }} -> {{ $skin->race_id }}</p>
+        <p>Genre: {{ $skin->gender }}</p>
     </div>
 
     {{-- Barbe --}}
