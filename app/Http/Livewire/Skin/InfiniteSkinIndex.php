@@ -49,9 +49,9 @@ class InfiniteSkinIndex extends Component
     {
         $this->postIdChunks = Skin::query()
             ->where('status', 'Posted')
-            ->where([])
+            /*->where([])
             ->Where([['gender', 'Homme', 'or']])
-            ->Where([['race_id', '=', '1', 'or'], ['race_id', '=', '19', 'or']])
+            ->Where([['race_id', '=', '1', 'or'], ['race_id', '=', '19', 'or']])*/
             ->withSum('Rewards', 'points')
             ->withCount('Likes')
             ->orderBy($this->orderBy, $this->orderDirection)

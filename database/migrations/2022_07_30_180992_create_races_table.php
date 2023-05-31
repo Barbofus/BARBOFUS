@@ -16,9 +16,8 @@ return new class extends Migration
         Schema::create('races', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('icon_path');
-            $table->string('banner_path');
-            $table->timestamps();
+            $table->string('ghost_icon_path');
+            $table->string('colored_icon_path');
         });
     }
 

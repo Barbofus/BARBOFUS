@@ -13,6 +13,8 @@ class Race extends Model
         'name',
     ];
 
+    public $timestamps = false;
+
     use HasFactory;
 
 

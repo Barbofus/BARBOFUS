@@ -9,4 +9,6 @@
     @yield('content')
 
     <x-utils.scroll-to-top />
+
+    <x-footer />
 @endsection

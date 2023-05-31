@@ -10,4 +10,6 @@
         @yield('content')
     </x-user-page-navbar>
 
+    <x-footer />
+
 @endsection

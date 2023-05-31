@@ -65,39 +65,13 @@ class DatabaseSeeder extends Seeder
             'role_id' => Role::where('name', '=', 'Administrateur')->first()->id,
         ]);
 
-        // Création des 19 classes de Dofus
-        $races = [
-            'féca',
-            'osamodas',
-            'enutrof',
-            'sram',
-            'xélor',
-            'ecaflip',
-            'eniripsa',
-            'iop',
-            'crâ',
-            'sadida',
-            'sacrieur',
-            'pandawa',
-            'roublard',
-            'zobal',
-            'steamer',
-            'eliotrope',
-            'huppermage',
-            'ouginak',
-            'forgelance',
-        ];
-
-        foreach ($races as $key => $value) {
-            Race::factory()->create([
-                'name' => ucfirst($value),
-                'icon_path' => 'logo-'. \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($value) .'.png',
-                'banner_path' => 'banner_'. \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($value) .'.jpg',
-            ]);
-        }
-
 
         $this->call([
+
+
+            // Création des 19 classes de Dofus
+            RaceSeeder::class,
+
             // Création des 3 types de rewards
             RewardPriceSeeder::class,
 

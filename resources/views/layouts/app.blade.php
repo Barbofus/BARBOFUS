@@ -19,7 +19,7 @@
 
     @livewireStyles
 </head>
-<body class="bg-primary text-secondary">
+<body class="bg-primary text-secondary min-h-screen max-w-screen">
     @yield('app-content')
 
     @stack('scripts')

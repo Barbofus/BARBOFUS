@@ -1,5 +1,5 @@
 {{-- Nécessite un tableau de Skin en argument sous le nom :skin--}}
-<div class="aspect-[14/19] relative w-full">
+<div class="aspect-[14/19] relative h-full">
     {{-- Skin + Background --}}
     <div class="group">
         <div class="absolute top-0 left-0 w-full h-full rounded-md cursor-pointer bg-primary-100 group-hover:brightness-125 transition-all"></div>
