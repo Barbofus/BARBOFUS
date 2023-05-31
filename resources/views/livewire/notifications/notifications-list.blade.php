@@ -1,15 +1,15 @@
 
 <div
     wire:poll.visible
-    class="absolute top-4 right-20 flex flex-col items-end"
+    class="absolute top-4 right-20 flex flex-col items-end z-50"
     x-data="{
-                open: false
+                open: true
             }"
     x-on:click.away="open = false"
 >
         @if( auth()->user()->notifications->count() > 0)
         {{-- Notification Bell --}}
-        <button class="hover:opacity-75 group text-primary transition-all active:scale-90 relative" x-on:click="open = !open">
+        <button class="hover:opacity-75 group text-secondary min-[901px]:text-primary  transition-all active:scale-90 relative" x-on:click="open = !open">
             @if( auth()->user()->unreadNotifications->count() > 0)
                 <div class="rounded-full bg-red-500 text-white text-sm w-3 h-3 absolute top-0 right-1"></div>
             @endif
@@ -19,7 +19,7 @@
         </button>
 
         {{-- Dropdown --}}
-        <div class="w-80"
+        <div class="w-80 bg-primary-100 rounded-md p-2 shadow-xl"
              x-show="open" x-cloak
              x-transition:enter="transition ease-out duration-300 origin-top-right"
              x-transition:enter-start="opacity-0 scale-0"
@@ -28,16 +28,17 @@
              x-transition:leave-start="opacity-100 scale-100"
              x-transition:leave-end="opacity-0 scale-0">
 
-            <div class="flex justify-between items-baseline text-sm text-red-400">
+            <div class="flex pb-1 justify-between items-baseline text-sm text-red-400">
                 <button wire:click="ReadNotifications" class="hover:text-red-300">Tout marquer comme "lu"</button>
                 <button wire:click="DeleteNotifications" class="hover:text-red-300">Tout supprimer</button>
             </div>
-            <div class="py-4 shadow-xl rounded-md right-0 absolute w-full bg-white">
+
+            <div class="right-0 w-full">
                 @foreach( $notifications->take($notificationsAmount) as $notification)
                     <x-notification.template :component="'notification.' . $notification->data['component']" :notification="$notification" :item="$notification->data['model']::find($notification->data['id'])" :read="$notification->read_at"/>
                 @endforeach
 
-                <div class="flex justify-center text-red-400 text-sm mt-2">
+                <div class="flex pt-1 justify-center text-red-400 text-sm">
                     @if(auth()->user()->notifications->count() > $notificationsAmount)
                         <button wire:click="ShowAllNotifications" class="hover:text-red-300">Tout afficher
                             <span>( {{ auth()->user()->notifications->count() - $notificationsAmount }} restant{{ auth()->user()->notifications->count() - $notificationsAmount == 1 ? ' ' : 's' }} )</span>

@@ -4,6 +4,11 @@
 
     <x-main-header />
 
+    {{-- Notifications --}}
+    @auth
+        <livewire:notifications.notifications-list/>
+    @endauth
+
     <x-main-navbar />
 
     <x-user-page-navbar>

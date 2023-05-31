@@ -4,7 +4,7 @@
     </svg>
 
     <div class="pl-4">
-        <p class="font-bold">Skin Posté <span class="italic text-gray-500">ID#{{ $item->id }}</span></p>
-        <p class="indent-2">Bien joué ! Ton skin en <span class="font-bold">{{ $item->race->name }}</span> à été validé par un membre du staff</p>
+        <p class="font-normal">Skin Posté <span class="italic text-inactiveText">ID#{{ $item->id }}</span></p>
+        <p class="indent-2 font-light">Bien joué ! Ton skin en <span class="font-normal">{{ $item->race->name }}</span> à été validé par un membre du staff</p>
     </div>
 </div>

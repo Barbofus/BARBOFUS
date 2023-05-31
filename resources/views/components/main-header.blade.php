@@ -5,9 +5,4 @@
     <div class="flex justify-center h-full">
         <img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.png') }}" class="h-full" draggable="false" />
     </div>
-
-    {{-- Notifications --}}
-    @auth
-        <livewire:notifications.notifications-list/>
-    @endauth
 </div>
