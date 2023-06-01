@@ -45,13 +45,18 @@ module.exports = {
             pulseFast: {
                 '0%,25%,50%': { opacity: 0.25 },
                 '12%,37%': { opacity: 0.7 },
-            }
+            },
+            pageLoad: {
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
+            },
         },
         animation: {
             skinApparition: 'skinApparition 0.5s linear forwards',
             textSlide: 'textSlide 5s linear infinite',
             onePing: 'onePing 0.35s linear forwards',
             pulseFast: 'pulseFast 3s linear infinite',
+            pageLoad: 'pageLoad 0.5s linear forwards',
         }
     },
   },

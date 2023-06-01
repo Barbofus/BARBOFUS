@@ -92,12 +92,12 @@
                     </svg>
 
                     <div class="group-hover:visible z-10 invisible cursor-text absolute -top-4 right-8
-                      min-[801px]:-right-[280px]">
+                        min-[801px]:-right-[280px]">
                         <x-utils.miss-skin />
                         <svg class="absolute h-4 top-5 text-secondary -rotate-90 -right-4
-                        min-[801px]:rotate-90 min-[801px]:-left-4" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
-                        <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
-                    </svg>
+                            min-[801px]:rotate-90 min-[801px]:-left-4" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
+                            <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+                        </svg>
                     </div>
 
                 </div>

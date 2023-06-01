@@ -3,7 +3,7 @@
     wire:poll.visible
     class="absolute top-4 right-20 flex flex-col items-end z-50"
     x-data="{
-                open: true
+                open: false
             }"
     x-on:click.away="open = false"
 >

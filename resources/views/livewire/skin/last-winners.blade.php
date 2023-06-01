@@ -56,9 +56,7 @@
                         <x-skins-presentation.winners-skin-card :skin="$skin"/>
                 </div>
             @endforeach
-
         </div>
-
     </div>
 
     <!-- Bottom border -->
