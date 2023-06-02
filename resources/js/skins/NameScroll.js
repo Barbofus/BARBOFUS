@@ -6,7 +6,6 @@ const userNamesCopy = []; // On stockera les clones des pseudos qui sont en trai
 // Fonction qui s'occupe d'ajouter ou retirer le slide
 function SlidePseudo() {
 
-    console.log('Slide');
     // Pour chaque pseudo
     for(let i = 0; i<userNames.length; i++)
     {

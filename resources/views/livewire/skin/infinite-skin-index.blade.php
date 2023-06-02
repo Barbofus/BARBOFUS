@@ -1,4 +1,3 @@
-<!-- Main content -->
 <div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.12),85px,1fr]
           [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0px,0px,1fr]
           min-[501px]:grid-rows-[theme(spacing.36),85px,1fr]
@@ -50,7 +49,7 @@
         {{-- Derniers vainqueurs et date du prochain tirage Barbe' Hebdo --}}
         <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
 
-        <div class="flex-1 flex flex-col items-center max-w-full min-[1800px]:max-w-[calc(100%-400px)]">
+        <div class="flex-1 flex flex-col items-center min-[1800px]:max-w-[calc(100%-400px)]">
             @for($i = 0; $i < $page && $i < $maxPage; $i++)
                 <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
             @endfor
@@ -60,7 +59,7 @@
 
     {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
     @if($this->HasMorePage())
-        {{--<x-utils.load-more/>--}}
+        <x-utils.load-more/>
     @endif
 
     {{-- Scroll horizontalement les pseudos trop long, s'actualise en temps réel --}}

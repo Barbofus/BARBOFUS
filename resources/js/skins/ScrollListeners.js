@@ -12,7 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
 // Actualise la taille du live au scroll et au resize de la fenêtre
 window.onscroll = function () {
 
-    console.log('Scroll');
     ResizeLeftSection();
     ResizeSkinWinners();
     SlidePseudo();

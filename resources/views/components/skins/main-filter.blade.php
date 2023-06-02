@@ -1,4 +1,3 @@
-<!-- Section gauche filtre -->
 <div id="left-section"
      x-data="{
               showFilter: (window.innerWidth > 1500),
