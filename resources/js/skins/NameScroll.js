@@ -2,23 +2,11 @@
 const userNames = document.getElementsByClassName('skinCardUserName');
 const userNamesCopy = []; // On stockera les clones des pseudos qui sont en train de slide
 
-// Attendre que tous les élements du DOM soit chargés pour modifier du CSS
-window.addEventListener('DOMContentLoaded', () => {
-    SlidePseudo();
-});
-
-window.onscroll = function () {
-    SlidePseudo();
-};
-
-window.onresize = function () {
-    SlidePseudo();
-};
-
 
 // Fonction qui s'occupe d'ajouter ou retirer le slide
 function SlidePseudo() {
 
+    console.log('Slide');
     // Pour chaque pseudo
     for(let i = 0; i<userNames.length; i++)
     {
@@ -50,5 +38,6 @@ function SlidePseudo() {
             delete userNamesCopy[i];
         }
     }
-
 }
+
+export default SlidePseudo;
