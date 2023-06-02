@@ -35,6 +35,7 @@ class InfiniteSkinIndex extends Component
     }
     public function render()
     {
+        $this->dispatchBrowserEvent('skin-index-render');
         return view('livewire.skin.infinite-skin-index');
     }
 

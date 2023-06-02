@@ -9,6 +9,13 @@ window.addEventListener('DOMContentLoaded', () => {
     SlidePseudo();
 });
 
+// Action lancez quand livewire render
+window.addEventListener('skin-index-render', () => {
+    ResizeLeftSection();
+    ResizeSkinWinners();
+    SlidePseudo();
+})
+
 // Actualise la taille du live au scroll et au resize de la fenêtre
 window.onscroll = function () {
 
