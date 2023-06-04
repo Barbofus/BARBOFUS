@@ -51,6 +51,7 @@ class InfiniteSkinIndex extends Component
     public function PrepareChunks()
     {
         $this->postIdChunks = Skin::query()
+            ->select('id')
             ->where('status', 'Posted')
             /*->where([])
             ->Where([['gender', 'Homme', 'or']])

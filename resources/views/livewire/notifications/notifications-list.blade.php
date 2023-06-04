@@ -1,6 +1,6 @@
 
 <div
-    {{--wire:poll.visible--}}
+    wire:poll.visible.30s
     class="fixed min-[901px]:absolute top-4 right-20 flex flex-col items-end z-50"
     x-data="{
                 open: false

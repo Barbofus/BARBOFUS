@@ -13,19 +13,19 @@
             <p>{{ $reward->RewardPrice->rank }} -- {{ $reward->points }}</p>
         @endforeach
         <p>Points: {{ $skin->Rewards->sum('points') }}</p>
-        <p>Class: {{ $skin->Race->name }} -> {{ $skin->race_id }}</p>
+        <p>Class: {{ $skin->Race->name }}</p>
         <p>Genre: {{ $skin->gender }}</p>
     </div>
 
     {{-- Barbe --}}
-    @if($skin->User->name === 'Barbe__Douce')
+    @if($skin->user_name === 'Barbe__Douce')
         <img class="absolute top-0 left-0 h-[25%] max-h-[64px] peer cursor-pointer" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">
     @endif
 
     {{-- Pseudo --}}
     <div class="absolute bottom-0 left-0 max-w-[calc(100%-60px)] px-1 pb-[2px]">
         <button class="flex w-full overflow-hidden font-light text-goldText text-[0.75rem] hover:text-goldTextLit whitespace-nowrap">
-            <p class="skinCardUserName">{{ $skin->User->name }}&nbsp</p>
+            <p class="skinCardUserName">{{ $skin->user_name }}&nbsp</p>
         </button>
     </div>
 
@@ -33,7 +33,7 @@
     <div
         x-data="{
             clicked: false,
-            liked: false,
+            liked: (@js($skin->is_liked)),
             likeCount: @js($skin->likes_count),
 
             SwitchLike(){
@@ -49,7 +49,7 @@
             }
         }">
         @auth
-            @if($skin->User->id === Auth::user()->id)  {{--S'il s'agit de notre propre skin, nous empêche de le liker--}}
+            @if($skin->user_id === Auth::user()->id)  {{--S'il s'agit de notre propre skin, nous empêche de le liker--}}
                 <x-skins.likes :skin="$skin" :canLike="false"/>
             @else
                 <button @click="SwitchLike">
