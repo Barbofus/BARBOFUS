@@ -28,9 +28,4 @@ class LastWinners extends Component
             ->orderBy('reward_id')
             ->get();
     }
-
-    public function SwitchHeart($skin)
-    {
-        (new SwitchLikes)($skin);
-    }
 }

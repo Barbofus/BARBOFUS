@@ -1,5 +1,5 @@
 <div class="absolute bottom-0 group right-0 flex items-center h-7 pr-1">
-    <p class="text-secondary font-normal text-[0.9rem]" x-text="likeCount">{{ count($skin->Likes) }}</p>
+    <p class="text-secondary font-normal text-[0.9rem]" x-text="likeCount"></p>
 
     <div class="h-full w-7">
         <x-svg.heart :canLike="$canLike" />

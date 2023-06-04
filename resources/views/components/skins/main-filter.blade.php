@@ -194,8 +194,8 @@
                     @foreach(\App\Models\Race::all() as $race)
                         <button class="relative"
                                 x-data="{
-                      selected: false,
-                    }"
+                                  selected: false,
+                                }"
                                 x-on:mousedown="selected = !selected">
 
                             <div class="peer" x-cloak>

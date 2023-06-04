@@ -64,6 +64,7 @@ class SkinRefusedNotification extends Notification implements ShouldQueue
         return [
             'model' => 'App\Models\Skin',
             'id' => $this->skin->id,
+            'info' => $this->skin->Race->name,
             'component' => 'skin-refused'
         ];
     }

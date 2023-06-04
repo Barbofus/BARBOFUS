@@ -7,23 +7,22 @@ use Livewire\Component;
 class NotificationsList extends Component
 {
     public $notificationsAmount;
-    public $initNotificationsAmount = 5;
+    public $initNotificationsAmount = 3;
 
     public $notifications;
 
     public function mount()
     {
-        $this->GetAllNotificationsSorted();
         $this->ShowLessNotifications();
     }
 
     public function GetAllNotificationsSorted()
     {
         // Sort by created_at, unread first, then readed
-        $unreadedNotifications = auth()->user()->unreadNotifications()->get();
-        $readedNotifications = auth()->user()->readNotifications()->get();
-
-        $this->notifications = $unreadedNotifications->merge($readedNotifications);
+        $this->notifications = auth()->user()->notifications()
+            ->orderByRaw("case when read_at IS NULL then 0 else 1 end")
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function ShowAllNotifications()

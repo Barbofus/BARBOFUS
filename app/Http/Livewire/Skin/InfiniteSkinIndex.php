@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Skin;
 
 use App\Models\Like;
+use App\Models\Race;
 use App\Models\Reward;
 use App\Models\RewardPrice;
 use App\Models\Skin;
@@ -28,6 +29,7 @@ class InfiniteSkinIndex extends Component
     protected $listeners = [
         'load-more' => 'LoadMore',
     ];
+
 
     public function mount()
     {

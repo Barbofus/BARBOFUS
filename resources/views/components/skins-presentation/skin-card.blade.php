@@ -29,12 +29,12 @@
         </button>
     </div>
 
-    {{-- Likes --}}
+    {{-- Likes @js(Auth::check() && $skin->Likes->where('user_id', Auth::user()->id)->first()) --}}
     <div
         x-data="{
             clicked: false,
-            liked: (@js(Auth::check() && $skin->Likes->where('user_id', Auth::user()->id)->first())),
-            likeCount: @js($skin->Likes->count()),
+            liked: false,
+            likeCount: @js($skin->likes_count),
 
             SwitchLike(){
                 this.clicked = false;

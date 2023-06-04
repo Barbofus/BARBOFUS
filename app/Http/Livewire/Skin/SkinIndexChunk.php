@@ -17,8 +17,15 @@ class SkinIndexChunk extends Component
     public function render()
     {
         $skins = Skin::query()
-            ->with('Likes', 'Rewards', 'User', 'Rewards.RewardPrice')
+            ->with( 'Rewards', 'User', 'Rewards.RewardPrice', 'Race')
+            ->withCount('Likes')
             ->find($this->skinIds)
+            /*->addSelect([
+                'is_liked' => Like::query()
+                    ->where('user_id', Auth::user()->id)
+                    ->whereIn('skins.id', 'skin_id')
+                    ->first()
+            ])*/
             ->keyBy('id');
 
         $orderedSkins = collect($this->skinIds)->map(fn ($id) => $skins[$id]);
