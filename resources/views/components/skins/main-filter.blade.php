@@ -179,7 +179,7 @@
                     selected: [],
 
                     FillSelected() {
-                        for (var i = 0; i < @js(count($races)); i++) {
+                        for (var i = 0; i < {{  count($races) }}; i++) {
                           this.selected[i] = false;
                         }
                     },
