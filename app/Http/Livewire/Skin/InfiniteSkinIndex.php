@@ -25,12 +25,16 @@ class InfiniteSkinIndex extends Component
         'Rewards_sum_points',
         'race_id',
     ];
+
+    protected $hasLoadMore = false;
+
     public $orderBy = 'updated_at'; // Nouveauté par défault
     public $orderDirection = 'DESC';
 
     public $races;
 
     public $raceWhere = array();
+    public $genderWhere = array();
 
     protected $listeners = [
         'load-more' => 'LoadMore',
@@ -40,10 +44,13 @@ class InfiniteSkinIndex extends Component
     public function mount()
     {
         $this->races = Race::all();
-        $this->PrepareChunks();
+
+        $this->ToggleGender('Femme');
+        $this->ToggleGender('Homme');
     }
     public function render()
     {
+        if(!$this->hasLoadMore) $this->PrepareChunks();
         $this->dispatchBrowserEvent('skin-index-render');
         return view('livewire.skin.infinite-skin-index');
     }
@@ -52,6 +59,7 @@ class InfiniteSkinIndex extends Component
     {
         if($this->HasMorePage()) {
             $this->page ++;
+            $this->hasLoadMore = true;
         }
     }
 
@@ -61,6 +69,7 @@ class InfiniteSkinIndex extends Component
             ->select('id')
             ->where('status', 'Posted')
             ->where($this->raceWhere)
+            ->where($this->genderWhere)
             /*->Where([['gender', 'Homme', 'or']])
             ->Where([['race_id', '=', '1', 'or'], ['race_id', '=', '19', 'or']])*/
             ->withSum('Rewards', 'points')
@@ -87,8 +96,6 @@ class InfiniteSkinIndex extends Component
     {
         $this->orderBy = $this->allOrder[$orderBy];
         $this->orderDirection = $orderDir;
-
-        $this->PrepareChunks();
     }
 
     public function ToggleRace($raceID)
@@ -96,17 +103,25 @@ class InfiniteSkinIndex extends Component
         // Si la classe est déjà selectionné
         if (count($this->raceWhere) > 0 && ($key = array_search(['race_id', '=', $raceID, 'or'], $this->raceWhere)) !== false) {
             unset($this->raceWhere[$key]);
-            $this->PrepareChunks();
             return;
         }
 
         $this->raceWhere[] = ['race_id', '=', $raceID, 'or'];
-        $this->PrepareChunks();
     }
 
     public function UnselectAllRaces()
     {
         $this->raceWhere = array();
-        $this->PrepareChunks();
+    }
+
+    public function ToggleGender($gender)
+    {
+        // Si la classe est déjà selectionné
+        if (count($this->genderWhere) > 0 && ($key = array_search(['gender', '=', $gender, 'or'], $this->genderWhere)) !== false) {
+            unset($this->genderWhere[$key]);
+            return;
+        }
+
+        $this->genderWhere[] = ['gender', '=', $gender, 'or'];
     }
 }

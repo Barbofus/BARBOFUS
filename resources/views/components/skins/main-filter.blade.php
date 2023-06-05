@@ -213,14 +213,14 @@
 
                     @foreach($races as $key => $race)
                         <button class="relative"
-                                x-on:mousedown="selected[@js($key)] = !selected[@js($key)]"
+                                x-on:mousedown="selected[ {{  $key }} ] = !selected[ {{  $key }} ]"
                                 wire:click="ToggleRace({{  $key + 1 }})">
 
                             <div class="peer relative h-[54px] w-[54px]" x-cloak>
-                                <img x-show="!selected[@js($key)]"
+                                <img x-show="!selected[ {{  $key }} ]"
                                      src="{{ asset('storage\/' . $race->ghost_icon_path) }}"
                                      class="absolute opacity-75 hover:opacity-100" draggable="false">
-                                <img x-show="selected[@js($key)]"
+                                <img x-show="selected[ {{  $key }} ]"
                                      x-transition:enter="transition ease-out duration-300"
                                      x-transition:enter-start="scale-0"
                                      x-transition:enter-end="scale-100"
@@ -248,12 +248,12 @@
 
                 <!-- Mâle -->
                 <div class="relative w-16">
-                    <x-forms.filter-button :label="'Homme'" />
+                    <x-forms.filter-button :label="'Homme'" wire:click="ToggleGender('Homme')" />
                 </div>
 
                 <!-- Femelle -->
                 <div class="relative w-20">
-                    <x-forms.filter-button :label="'Femme'"/>
+                    <x-forms.filter-button :label="'Femme'" wire:click="ToggleGender('Femme')" />
                 </div>
             </div>
         </div>

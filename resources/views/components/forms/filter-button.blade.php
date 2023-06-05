@@ -3,7 +3,8 @@
     x-data="{
         active: true,
     }"
-    x-on:mousedown="active = !active">
+    x-on:mousedown="active = !active"
+    {{ $attributes }}>
 
     <x-svg.checkmark />
 
