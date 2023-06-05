@@ -11,6 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Action lancez quand livewire render
 window.addEventListener('skin-index-render', () => {
+
     ResizeLeftSection();
     ResizeSkinWinners();
     SlidePseudo();

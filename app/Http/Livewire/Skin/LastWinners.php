@@ -28,4 +28,9 @@ class LastWinners extends Component
             ->orderBy('reward_id')
             ->get();
     }
+
+    public function Refresh()
+    {
+        $this->dispatchBrowserEvent('skin-index-render');
+    }
 }
