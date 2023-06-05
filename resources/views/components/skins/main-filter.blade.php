@@ -174,7 +174,23 @@
             <!-- Classes -->
             <div class="relative mt-5
                   min-|901px]:mt-0
-                  min-[1501px]:mt-5">
+                  min-[1501px]:mt-5"
+                x-data="{
+                    selected: [],
+
+                    FillSelected() {
+                        for (var i = 0; i < @js(count($races)); i++) {
+                          this.selected[i] = false;
+                        }
+                    },
+
+                    UnselectAll() {
+                        for (var i = 0; i < this.selected.length; i++) {
+                          this.selected[i] = false;
+                        }
+                    },
+                }"
+                x-init="FillSelected">
 
                 <div class="flex gap-x-2">
 
@@ -183,7 +199,11 @@
                     </div>
 
                     <!-- Bouton reset -->
-                    <button class="w-40 h-10 left-[33%] min-h-[32px] bg-secondary-100 hover:bg-secondary min-w-[144px] font-light text-[1rem] rounded-md text-primary">Reset les classes</button>
+                    <button class="w-40 h-10 left-[33%] min-h-[32px] bg-secondary-100 hover:bg-secondary min-w-[144px] font-light text-[1rem] rounded-md text-primary"
+                            @click="UnselectAll"
+                            wire:click="UnselectAllRaces" >
+                        Reset les classes
+                    </button>
                 </div>
 
                 <!-- Icones -->
@@ -191,20 +211,24 @@
                     min-[1001px]:grid-cols-8
                     min-[1501px]:grid-cols-7 min-[1501px]:max-h-[200px]">
 
-                    @foreach(\App\Models\Race::all() as $race)
+                    @foreach($races as $key => $race)
                         <button class="relative"
-                                x-data="{
-                                  selected: false,
-                                }"
-                                x-on:mousedown="selected = !selected">
+                                x-on:mousedown="selected[@js($key)] = !selected[@js($key)]"
+                                wire:click="ToggleRace({{  $key + 1 }})">
 
-                            <div class="peer" x-cloak>
-                                <img x-show="!selected"
+                            <div class="peer relative h-[54px] w-[54px]" x-cloak>
+                                <img x-show="!selected[@js($key)]"
                                      src="{{ asset('storage\/' . $race->ghost_icon_path) }}"
-                                     class="opacity-75 hover:opacity-100" draggable="false">
-                                <img x-show="selected"
+                                     class="absolute opacity-75 hover:opacity-100" draggable="false">
+                                <img x-show="selected[@js($key)]"
+                                     x-transition:enter="transition ease-out duration-300"
+                                     x-transition:enter-start="scale-0"
+                                     x-transition:enter-end="scale-100"
+                                     x-transition:leave="transition ease-out duration-300"
+                                     x-transition:leave-start="scale-100"
+                                     x-transition:leave-end="scale-0"
                                      src="{{ asset('storage\/' . $race->colored_icon_path) }}"
-                                     class="hover:opacity-80" draggable="false">
+                                     class="absolute scale hover:opacity-80" draggable="false">
                             </div>
 
                             <div class="absolute left-[calc(50%-16px-8px)] z-50 invisible peer-hover:visible -top-8">

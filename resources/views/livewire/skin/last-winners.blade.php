@@ -36,7 +36,7 @@
             </div>
 
             <!-- Sentance -->
-            <p class="w-auto text-secondary font-light">Prochain tirage <span class="font-normal">Mardi 17 à 9h</span> !</p>
+            <p class="w-auto text-secondary font-light">Prochain tirage <span class="font-normal">Mardi {{ \Carbon\Carbon::now()->next('Tuesday')->format('d') }} à 9h</span> !</p>
         </div>
 
 

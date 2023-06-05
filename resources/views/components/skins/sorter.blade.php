@@ -34,6 +34,8 @@
                x-on:mousedown="selection = 'Moins aimé'; sortAsc = true; showSort = false; $wire.SortBy(1, 'ASC')">Moins aimé</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
                x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC')">Récompenses</p>
+            <p class="w-full h-full px-4 py-1 hover:bg-secondary"
+               x-on:mousedown="selection = 'Classes'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC')">Classes</p>
         </div>
     </div>
 </div>

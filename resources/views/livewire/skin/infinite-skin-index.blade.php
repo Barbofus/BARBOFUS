@@ -38,7 +38,8 @@
         <x-skins.sorter />
     </div>
 
-    <x-skins.main-filter />
+
+    <x-skins.main-filter :races="$races" />
 
     {{-- La grille des skins --}}
     <div class="flex flex-col bg-primary pt-0
