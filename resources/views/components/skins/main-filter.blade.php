@@ -115,12 +115,7 @@
 
 
             <!-- Skin content -->
-            <div
-                class="mt-5"
-                x-data="{
-                  mimibiote: true,
-                }">
-
+            <div class="mt-5">
                 <div class="ml-4 border-b border-ivory w-[50%]">
                     <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Le skin peut contenir :</p>
                 </div>
@@ -132,38 +127,27 @@
 
                     <!-- Mimibiotes -->
                     <div class="relative w-[100px]">
-                        <button
-                            x-data="{
-                              active: true,
-                            }"
-                            class="w-[18px] h-[18px] border rounded-[3px] bg-primary-100 border-1 border-secondary"
-                            x-on:mousedown="mimibiote = !mimibiote; active = !active">
-
-                            <x-svg.checkmark />
-
-                            <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer">Mimibiotes</label>
-
-                        </button>
-                    </div>
-
-                    <!-- Objets vivants -->
-                    <div class="relative w-32">
-                        <x-forms.filter-button :label="'Objets vivants'" />
+                        <x-forms.filter-button :label="'Mimibiotes'" wire:click="ToggleSkinContent(1)" />
                     </div>
 
                     <!-- Cosmétiques -->
                     <div class="relative w-[120px]">
-                        <x-forms.filter-button :label="'Cosmétiques'" />
+                        <x-forms.filter-button :label="'Cosmétiques'" wire:click="ToggleSkinContent(2)" />
+                    </div>
+
+                    <!-- Objets vivants -->
+                    <div class="relative w-32">
+                        <x-forms.filter-button :label="'Objets vivants'" wire:click="ToggleSkinContent(3)" />
                     </div>
                 </div>
 
                 <!-- Level max -->
-                <div class="flex h-[24px] items-center mt-2 tracking-wide">
+{{--                <div class="flex h-[24px] items-center mt-2 tracking-wide">
                     <div x-show="mimibiote" class="flex items-center">
                         <p class="text-secondary font-thin text-[0.9rem]">Lvl Max: </p>
-                        <input type="text" class="border-transparent focus:outline-none rounded-[2.25px] bg-primary-100 w-[50px] ml-1 px-2 placeholder-inactiveText font-thin text-inactiveText" placeholder="200" maxlength="3">
+                        <input type="text" pattern="[0-200]" class="border-transparent focus:outline-none rounded-[2.25px] bg-primary-100 w-[50px] ml-1 px-2 placeholder-inactiveText font-thin text-inactiveText appearance-none" placeholder="200" maxlength="3">
                     </div>
-                </div>
+                </div>--}}
             </div>
         </div>
 

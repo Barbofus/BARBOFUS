@@ -51,9 +51,14 @@
         <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
 
         <div class="flex-1 flex flex-col items-center min-[1800px]:max-w-[calc(100%-400px)]">
-            @for($i = 0; $i < $page && $i < $maxPage; $i++)
-                <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
-            @endfor
+            @if(count($postIdChunks) > 0)
+                @for($i = 0; $i < $page && $i < $maxPage; $i++)
+                    <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
+                @endfor
+            @else
+                <img class="mt-8 h-[256px]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
+                <p class="text-3xl font-thin"><span class="font-normal italic text-4xl">Aïe ! </span>Aucun résultat pour ces filtres</p>
+            @endif
         </div>
     </div>
 

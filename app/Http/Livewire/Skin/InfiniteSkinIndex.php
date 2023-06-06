@@ -8,6 +8,7 @@ use App\Models\Reward;
 use App\Models\RewardPrice;
 use App\Models\Skin;
 use DateTime;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Livewire\Component;
 use Termwind\Components\Dd;
 
@@ -35,6 +36,7 @@ class InfiniteSkinIndex extends Component
 
     public $raceWhere = array();
     public $genderWhere = array();
+    public $skinContentWhere = array();
 
     protected $listeners = [
         'load-more' => 'LoadMore',
@@ -68,14 +70,44 @@ class InfiniteSkinIndex extends Component
         $this->postIdChunks = Skin::query()
             ->select('id')
             ->where('status', 'Posted')
-            ->where($this->raceWhere)
-            ->where($this->genderWhere)
-            /*->Where([['gender', 'Homme', 'or']])
-            ->Where([['race_id', '=', '1', 'or'], ['race_id', '=', '19', 'or']])*/
+
+            // Variables utiles pour les orderBy
             ->withSum('Rewards', 'points')
             ->withCount('Likes')
+
+            // Début du système de filtres
+            ->where($this->raceWhere)
+            ->where($this->genderWhere)
+
+            // Filtres en lien avec les items
+            ->where(function (Builder $query) {
+                $query->where(function (Builder $query) {
+                    $query  ->doesntHave('DofusItemHat')
+                            ->orWhereRelation('DofusItemHat', $this->skinContentWhere);
+                });
+                $query->where(function (Builder $query) {
+                    $query  ->doesntHave('DofusItemCloak')
+                            ->orWhereRelation('DofusItemCloak', $this->skinContentWhere);
+                });
+                $query->where(function (Builder $query) {
+                    $query  ->doesntHave('DofusItemShield')
+                            ->orWhereRelation('DofusItemShield', $this->skinContentWhere);
+                });
+                $query->where(function (Builder $query) {
+                    $query  ->doesntHave('DofusItemPet')
+                            ->orWhereRelation('DofusItemPet', $this->skinContentWhere);
+                });
+                $query->where(function (Builder $query) {
+                    $query  ->doesntHave('DofusItemCostume')
+                            ->orWhereRelation('DofusItemCostume', $this->skinContentWhere);
+                });
+            })
+
+            // orderBy
             ->orderBy($this->orderBy, $this->orderDirection)
             ->orderBy('updated_at', 'DESC')
+
+            // Scroll infini
             ->pluck('id')
             ->chunk(self::ITEMS_PER_PAGE)
             ->toArray();
@@ -116,12 +148,23 @@ class InfiniteSkinIndex extends Component
 
     public function ToggleGender($gender)
     {
-        // Si la classe est déjà selectionné
+        // Si le genre est déjà selectionné
         if (count($this->genderWhere) > 0 && ($key = array_search(['gender', '=', $gender, 'or'], $this->genderWhere)) !== false) {
             unset($this->genderWhere[$key]);
             return;
         }
 
         $this->genderWhere[] = ['gender', '=', $gender, 'or'];
+    }
+
+    public function ToggleSkinContent($subcategoryID)
+    {
+        // Si le subcategory est déjà exclu
+        if (count($this->skinContentWhere) > 0 && ($key = array_search(['dofus_items_sub_categorie_id', '!=', $subcategoryID], $this->skinContentWhere)) !== false) {
+            unset($this->skinContentWhere[$key]);
+            return;
+        }
+
+        $this->skinContentWhere[] = ['dofus_items_sub_categorie_id', '!=', $subcategoryID];
     }
 }

@@ -38,6 +38,15 @@
         font-family: "MV Boli";
         src: url("../../public/storage/fonts/mvboli.ttf") format("truetype");
     }
+
+    input[type=number].appearance-none::-webkit-inner-spin-button,
+    input[type=number].appearance-none::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type=number].appearance-none {
+        -moz-appearance:textfield;
+    }
 }
 
 @layer utilities {

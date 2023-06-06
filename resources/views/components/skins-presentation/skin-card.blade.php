@@ -6,8 +6,27 @@
         <img src="{{ asset('storage\/') . $skin->image_path }}" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
     </div>
 
-    <div class="absolute top-2">
-        <p>{{ $skin->created_at->diffForHumans() }}</p>
+    <div class="absolute top-2 bg-primary z-50">
+
+        @if(isset($skin->DofusItemHat))
+            <p> Hat -> {{ $skin->DofusItemHat->DofusItemsSubCategorie->name }}</p>
+        @endif
+
+        @if(isset($skin->DofusItemCloak))
+            <p> Cloak -> {{ $skin->DofusItemCloak->DofusItemsSubCategorie->name }}</p>
+        @endif
+
+        @if(isset($skin->DofusItemShield))
+            <p> Shield -> {{ $skin->DofusItemShield->DofusItemsSubCategorie->name }}</p>
+        @endif
+
+        @if(isset($skin->DofusItemPet))
+            <p> Pet -> {{ $skin->DofusItemPet->DofusItemsSubCategorie->name }}</p>
+        @endif
+
+        @if(isset($skin->DofusItemCostume))
+            <p> Costume -> {{ $skin->DofusItemCostume->DofusItemsSubCategorie->name }}</p>
+        @endif
         <p>ID: {{ $skin->id }}</p>
         @foreach($skin->Rewards as $reward)
             <p>{{ $reward->RewardPrice->rank }} -- {{ $reward->points }}</p>
