@@ -1,4 +1,4 @@
-<div wire:poll.visible.6s="Refresh" id="rewards-section"
+<div wire:poll.visible.60s="Refresh" id="rewards-section"
      class="z-0 flex flex-col items-center w-full px-8 pt-4 top-12
             min-[1800px]:fixed min-[1800px]:order-last min-[1800px]:w-[400px] min-[1800px]:flex-row min-[1800px]:px-0 min-[1800px]:min-h-[calc(100vh-15vh-16px)]
             min-[1800px]:max-h-[calc(100vh-theme(spacing.2))] min-[1800px]:top-[calc(15vh+8px)] min-[1800px]:right-0 min-[1800px]:z-30 min-[1800px]:py-8 min-[1800px]:h-full">
@@ -36,7 +36,7 @@
             </div>
 
             <!-- Sentance -->
-            <p class="w-auto text-secondary font-light">Prochain tirage <span class="font-normal">Mardi {{ \Carbon\Carbon::now()->next('Tuesday')->format('d') }} à 9h</span> !</p>
+            <p class="w-auto text-secondary font-light">Tirage tous les <span class="font-normal">Mardi à 9h</span> !</p>
         </div>
 
 

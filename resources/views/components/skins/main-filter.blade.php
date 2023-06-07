@@ -70,7 +70,7 @@
 
             <!-- Rewards Only -->
             <div class="relative mt-5 tracking-wide w-[min(90vw,380px)]">
-                <x-forms.filter-button>
+                <x-forms.filter-button x-init="active = false" wire:click="ToggleShowWinnersOnly" >
                     <label class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),350px)]">Voir uniquement les vainqueurs du <span class="font-normal">Miss'Skin</span></label>
                 </x-forms.filter-button>
 
@@ -104,11 +104,10 @@
             </div>
 
 
-
             <!-- Barb Only -->
             <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,380px)]">
-                <x-forms.filter-button>
-                    <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,380px)]">Voir uniquement les skins de <span class=" font-normal">BARBE___DOUCE</span></label>
+                <x-forms.filter-button x-init="active = {{ $barbOnly }}" wire:click="ToggleShowBarbeOnly" >
+                    <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,380px)]">Voir uniquement les skins de <span class=" font-normal">BARBE__DOUCE</span></label>
                 </x-forms.filter-button>
             </div>
 

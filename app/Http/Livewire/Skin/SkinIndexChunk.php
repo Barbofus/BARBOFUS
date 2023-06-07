@@ -29,7 +29,7 @@ class SkinIndexChunk extends Component
                     ->where('user_id', Auth::id())
                     ->take(1)
             ])
-            ->with( 'Rewards:reward_price_id', 'Rewards.RewardPrice', 'Race:name,id',
+            ->with( 'Rewards:id,skin_id,points', 'Race:name,id',
                 'DofusItemHat:id,name,dofus_items_sub_categorie_id', 'DofusItemHat.DofusItemsSubCategorie',
                 'DofusItemCloak:id,name,dofus_items_sub_categorie_id', 'DofusItemCloak.DofusItemsSubCategorie',
                 'DofusItemShield:id,name,dofus_items_sub_categorie_id', 'DofusItemShield.DofusItemsSubCategorie',

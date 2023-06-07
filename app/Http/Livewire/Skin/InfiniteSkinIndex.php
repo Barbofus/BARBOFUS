@@ -37,6 +37,8 @@ class InfiniteSkinIndex extends Component
     public $raceWhere = array();
     public $genderWhere = array();
     public $skinContentWhere = array();
+    public $barbeOnly = false;
+    public $winnersOnly = false;
 
     protected $listeners = [
         'load-more' => 'LoadMore',
@@ -46,9 +48,6 @@ class InfiniteSkinIndex extends Component
     public function mount()
     {
         $this->races = Race::all();
-
-        $this->ToggleGender('Femme');
-        $this->ToggleGender('Homme');
     }
     public function render()
     {
@@ -79,27 +78,39 @@ class InfiniteSkinIndex extends Component
             ->where($this->raceWhere)
             ->where($this->genderWhere)
 
+            // Barbe Only
+            ->when($this->barbeOnly, function ($query) {
+                $query->whereRelation('User', 'name', '=', 'BARBE__DOUCE');
+            })
+
+            // Winners Only
+            ->when($this->winnersOnly, function ($query) {
+                $query->whereHas('Rewards');
+            })
+
             // Filtres en lien avec les items
-            ->where(function (Builder $query) {
+            ->when(count($this->skinContentWhere) > 0, function ($query) {
                 $query->where(function (Builder $query) {
-                    $query  ->doesntHave('DofusItemHat')
+                    $query->where(function (Builder $query) {
+                        $query->doesntHave('DofusItemHat')
                             ->orWhereRelation('DofusItemHat', $this->skinContentWhere);
-                });
-                $query->where(function (Builder $query) {
-                    $query  ->doesntHave('DofusItemCloak')
+                    });
+                    $query->where(function (Builder $query) {
+                        $query->doesntHave('DofusItemCloak')
                             ->orWhereRelation('DofusItemCloak', $this->skinContentWhere);
-                });
-                $query->where(function (Builder $query) {
-                    $query  ->doesntHave('DofusItemShield')
+                    });
+                    $query->where(function (Builder $query) {
+                        $query->doesntHave('DofusItemShield')
                             ->orWhereRelation('DofusItemShield', $this->skinContentWhere);
-                });
-                $query->where(function (Builder $query) {
-                    $query  ->doesntHave('DofusItemPet')
+                    });
+                    $query->where(function (Builder $query) {
+                        $query->doesntHave('DofusItemPet')
                             ->orWhereRelation('DofusItemPet', $this->skinContentWhere);
-                });
-                $query->where(function (Builder $query) {
-                    $query  ->doesntHave('DofusItemCostume')
+                    });
+                    $query->where(function (Builder $query) {
+                        $query->doesntHave('DofusItemCostume')
                             ->orWhereRelation('DofusItemCostume', $this->skinContentWhere);
+                    });
                 });
             })
 
@@ -149,12 +160,12 @@ class InfiniteSkinIndex extends Component
     public function ToggleGender($gender)
     {
         // Si le genre est déjà selectionné
-        if (count($this->genderWhere) > 0 && ($key = array_search(['gender', '=', $gender, 'or'], $this->genderWhere)) !== false) {
+        if (count($this->genderWhere) > 0 && ($key = array_search(['gender', '!=', $gender], $this->genderWhere)) !== false) {
             unset($this->genderWhere[$key]);
             return;
         }
 
-        $this->genderWhere[] = ['gender', '=', $gender, 'or'];
+        $this->genderWhere[] = ['gender', '!=', $gender];
     }
 
     public function ToggleSkinContent($subcategoryID)
@@ -166,5 +177,15 @@ class InfiniteSkinIndex extends Component
         }
 
         $this->skinContentWhere[] = ['dofus_items_sub_categorie_id', '!=', $subcategoryID];
+    }
+
+    public function ToggleShowBarbeOnly()
+    {
+        $this->barbeOnly = !$this->barbeOnly;
+    }
+
+    public function ToggleShowWinnersOnly()
+    {
+        $this->winnersOnly = !$this->winnersOnly;
     }
 }

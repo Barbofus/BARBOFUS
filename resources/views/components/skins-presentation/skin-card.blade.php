@@ -28,9 +28,6 @@
             <p> Costume -> {{ $skin->DofusItemCostume->DofusItemsSubCategorie->name }}</p>
         @endif
         <p>ID: {{ $skin->id }}</p>
-        @foreach($skin->Rewards as $reward)
-            <p>{{ $reward->RewardPrice->rank }} -- {{ $reward->points }}</p>
-        @endforeach
         <p>Points: {{ $skin->Rewards->sum('points') }}</p>
         <p>Class: {{ $skin->Race->name }}</p>
         <p>Genre: {{ $skin->gender }}</p>
