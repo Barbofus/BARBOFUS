@@ -39,7 +39,7 @@
     </div>
 
 
-    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" />
+    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" />
 
     {{-- La grille des skins --}}
     <div class="flex flex-col bg-primary pt-0

@@ -70,7 +70,7 @@
 
             <!-- Rewards Only -->
             <div class="relative mt-5 tracking-wide w-[min(90vw,380px)]">
-                <x-forms.filter-button x-init="active = false" wire:click="ToggleShowWinnersOnly" >
+                <x-forms.filter-button :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly" >
                     <label class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),350px)]">Voir uniquement les vainqueurs du <span class="font-normal">Miss'Skin</span></label>
                 </x-forms.filter-button>
 
@@ -106,7 +106,7 @@
 
             <!-- Barb Only -->
             <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,380px)]">
-                <x-forms.filter-button x-init="active = {{ $barbOnly }}" wire:click="ToggleShowBarbeOnly" >
+                <x-forms.filter-button :checked="$barbOnly" wire:click="ToggleShowBarbeOnly" >
                     <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,380px)]">Voir uniquement les skins de <span class=" font-normal">BARBE__DOUCE</span></label>
                 </x-forms.filter-button>
             </div>
@@ -126,17 +126,17 @@
 
                     <!-- Mimibiotes -->
                     <div class="relative w-[100px]">
-                        <x-forms.filter-button :label="'Mimibiotes'" wire:click="ToggleSkinContent(1)" />
+                        <x-forms.filter-button :label="'Mimibiotes'" :checked="!in_array(['dofus_items_sub_categorie_id', '!=', 1], $skinContent)" wire:click="ToggleSkinContent(1)" />
                     </div>
 
                     <!-- Cosmétiques -->
                     <div class="relative w-[120px]">
-                        <x-forms.filter-button :label="'Cosmétiques'" wire:click="ToggleSkinContent(2)" />
+                        <x-forms.filter-button :label="'Cosmétiques'" :checked="!in_array(['dofus_items_sub_categorie_id', '!=', 2], $skinContent)" wire:click="ToggleSkinContent(2)" />
                     </div>
 
                     <!-- Objets vivants -->
                     <div class="relative w-32">
-                        <x-forms.filter-button :label="'Objets vivants'" wire:click="ToggleSkinContent(3)" />
+                        <x-forms.filter-button :label="'Objets vivants'" :checked="!in_array(['dofus_items_sub_categorie_id', '!=', 3], $skinContent)" wire:click="ToggleSkinContent(3)" />
                     </div>
                 </div>
 
@@ -157,23 +157,7 @@
             <!-- Classes -->
             <div class="relative mt-5
                   min-|901px]:mt-0
-                  min-[1501px]:mt-5"
-                x-data="{
-                    selected: [],
-
-                    FillSelected() {
-                        for (var i = 0; i < {{  count($races) }}; i++) {
-                          this.selected[i] = false;
-                        }
-                    },
-
-                    UnselectAll() {
-                        for (var i = 0; i < this.selected.length; i++) {
-                          this.selected[i] = false;
-                        }
-                    },
-                }"
-                x-init="FillSelected">
+                  min-[1501px]:mt-5">
 
                 <div class="flex gap-x-2">
 
@@ -183,7 +167,7 @@
 
                     <!-- Bouton reset -->
                     <button class="w-40 h-10 left-[33%] min-h-[32px] bg-secondary-100 hover:bg-secondary min-w-[144px] font-light text-[1rem] rounded-md text-primary"
-                            @click="UnselectAll"
+                            @click="FillSelected"
                             wire:click="UnselectAllRaces" >
                         Reset les classes
                     </button>
@@ -196,22 +180,16 @@
 
                     @foreach($races as $key => $race)
                         <button class="relative"
-                                x-on:mousedown="selected[ {{  $key }} ] = !selected[ {{  $key }} ]"
-                                wire:click="ToggleRace({{  $key + 1 }})">
+                                wire:click="ToggleRace({{ $key + 1 }})">
 
                             <div class="peer relative h-[54px] w-[54px]" x-cloak>
-                                <img x-show="!selected[ {{  $key }} ]"
-                                     src="{{ asset('storage\/' . $race->ghost_icon_path) }}"
-                                     class="absolute opacity-75 hover:opacity-100" draggable="false">
-                                <img x-show="selected[ {{  $key }} ]"
-                                     x-transition:enter="transition ease-out duration-300"
-                                     x-transition:enter-start="scale-0"
-                                     x-transition:enter-end="scale-100"
-                                     x-transition:leave="transition ease-out duration-300"
-                                     x-transition:leave-start="scale-100"
-                                     x-transition:leave-end="scale-0"
-                                     src="{{ asset('storage\/' . $race->colored_icon_path) }}"
-                                     class="absolute scale hover:opacity-80" draggable="false">
+                                @if(!in_array(['race_id', '=', $key + 1, 'or'], $raceSelection))
+                                    <img src="{{ asset('storage\/' . $race->ghost_icon_path) }}"
+                                         class="absolute opacity-75 hover:opacity-100" draggable="false">
+                                @else
+                                    <img src="{{ asset('storage\/' . $race->colored_icon_path) }}"
+                                         class="absolute scale hover:opacity-80" draggable="false">
+                                @endif
                             </div>
 
                             <div class="absolute left-[calc(50%-16px-8px)] z-50 invisible peer-hover:visible -top-8">
@@ -231,12 +209,12 @@
 
                 <!-- Mâle -->
                 <div class="relative w-16">
-                    <x-forms.filter-button :label="'Homme'" wire:click="ToggleGender('Homme')" />
+                    <x-forms.filter-button :label="'Homme'" :checked="!in_array(['gender', '!=', 'Homme'], $gender)" wire:click="ToggleGender('Homme')" />
                 </div>
 
                 <!-- Femelle -->
                 <div class="relative w-20">
-                    <x-forms.filter-button :label="'Femme'" wire:click="ToggleGender('Femme')" />
+                    <x-forms.filter-button :label="'Femme'" :checked="!in_array(['gender', '!=', 'Femme'], $gender)" wire:click="ToggleGender('Femme')" />
                 </div>
             </div>
         </div>
