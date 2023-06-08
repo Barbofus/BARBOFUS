@@ -39,7 +39,7 @@
     </div>
 
 
-    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" />
+    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" />
 
     {{-- La grille des skins --}}
     <div class="flex flex-col bg-primary pt-0
@@ -59,13 +59,13 @@
                 <img class="mt-8 h-[256px]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
                 <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
             @endif
+
+            {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
+            @if($this->HasMorePage())
+                <x-utils.load-more/>
+            @endif
         </div>
     </div>
-
-    {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
-    @if($this->HasMorePage())
-        <x-utils.load-more/>
-    @endif
 
     {{-- Scroll horizontalement les pseudos trop long, s'actualise en temps réel --}}
     @vite(['resources/js/skins/ResizeIndexComponent.js', 'resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js'])

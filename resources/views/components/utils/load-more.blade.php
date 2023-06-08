@@ -1,4 +1,4 @@
-<div x-data @scroll.window="if((window.scrollY + window.innerHeight) >= document.body.offsetHeight) $wire.LoadMore()">
+<div x-data @scroll.window="if((window.scrollY + window.innerHeight) >= document.body.offsetHeight) $wire.LoadMore()" class="mb-8">
 
     {{-- Spinning Loader --}}
     <div class="flex justify-center my-8">

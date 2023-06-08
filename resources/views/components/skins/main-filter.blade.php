@@ -63,7 +63,25 @@
             <!-- SearchBar -->
             <div class="text-[1.15rem]">
                 <p class="text-ivory font-thin">Recherche un item ou un pseudo :</p>
+
                 <input type="text" class="border-transparent focus:outline-none rounded-[2.25px] mt-1 bg-primary-100 w-[90%] -ml-1 px-1 placeholder-inactiveText font-thin text-inactiveText" placeholder="Nom d'item ou pseudo" maxlength="45">
+
+                <div class="flex flex-wrap justify-between items-center gap-2 w-[90%] mt-2 -ml-1">
+                    @foreach($searchFilterInput as $input)
+                        <button wire:click="$emit('ToggleSearchedText', '{{ addslashes($input) }}')"
+                                class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
+                            <p class="font-light text-[1rem] text-inactiveText">{{ $input }}</p>
+
+                            <!-- Croix -->
+                            <svg class="w-4 text-red-500 group-hover:text-red-400 ml-2"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    @endforeach
+
+                    <div class="ml-auto"></div>
+                </div>
             </div>
 
 
@@ -90,7 +108,7 @@
                       c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
                     </svg>
 
-                    <div class="group-hover:visible z-10 invisible cursor-text absolute -top-4 right-8
+                    <div class="group-hover:visible group-hover:opacity-100 z-10 opacity-0 transition-all invisible cursor-text absolute -top-4 right-8
                         min-[801px]:-right-[280px]">
                         <x-utils.miss-skin />
                         <svg class="absolute h-4 top-5 text-secondary -rotate-90 -right-4

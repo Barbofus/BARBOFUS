@@ -25,7 +25,7 @@
                       c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
                       c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
                 </svg>
-                <div class="group-hover:visible z-10 invisible cursor-text absolute top-[150%]
+                <div class="group-hover:visible group-hover:opacity-100 z-10 invisible opacity-0 transition-all cursor-text absolute top-[150%]
                       min-[901px]:-left-[280px] min-[901px]:-top-4">
                     <x-utils.miss-skin />
                     <svg class="absolute h-4 text-secondary right-[50%] rotate-180 -top-4

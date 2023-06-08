@@ -9,6 +9,7 @@ use App\Models\RewardPrice;
 use App\Models\Skin;
 use DateTime;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Termwind\Components\Dd;
 
@@ -27,6 +28,13 @@ class InfiniteSkinIndex extends Component
         'race_id',
     ];
 
+    protected $itemRelations = [
+        'DofusItemHat',
+        'DofusItemCloak',
+        'DofusItemShield',
+        'DofusItemPet',
+        'DofusItemCostume',
+    ];
     protected $hasLoadMore = false;
 
     public $orderBy = 'updated_at'; // Nouveauté par défault
@@ -39,14 +47,16 @@ class InfiniteSkinIndex extends Component
     public $skinContentWhere = array();
     public $barbeOnly = false;
     public $winnersOnly = false;
+    public $searchFilterInput = array();
 
     protected $listeners = [
-        'load-more' => 'LoadMore',
+        'ToggleSearchedText',
     ];
 
 
     public function mount()
     {
+        $this->searchFilterInput = ['barbe', 'solo', 'truk', 'brian', 'moul', 'col'];
         $this->races = Race::all();
     }
     public function render()
@@ -79,38 +89,46 @@ class InfiniteSkinIndex extends Component
             ->where($this->genderWhere)
 
             // Barbe Only
-            ->when($this->barbeOnly, function ($query) {
+            ->when($this->barbeOnly, function (Builder $query) {
                 $query->whereRelation('User', 'name', '=', 'BARBE__DOUCE');
             })
 
             // Winners Only
-            ->when($this->winnersOnly, function ($query) {
+            ->when($this->winnersOnly, function (Builder $query) {
                 $query->whereHas('Rewards');
             })
 
             // Filtres en lien avec les items
-            ->when(count($this->skinContentWhere) > 0, function ($query) {
+            ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
                 $query->where(function (Builder $query) {
-                    $query->where(function (Builder $query) {
-                        $query->doesntHave('DofusItemHat')
-                            ->orWhereRelation('DofusItemHat', $this->skinContentWhere);
-                    });
-                    $query->where(function (Builder $query) {
-                        $query->doesntHave('DofusItemCloak')
-                            ->orWhereRelation('DofusItemCloak', $this->skinContentWhere);
-                    });
-                    $query->where(function (Builder $query) {
-                        $query->doesntHave('DofusItemShield')
-                            ->orWhereRelation('DofusItemShield', $this->skinContentWhere);
-                    });
-                    $query->where(function (Builder $query) {
-                        $query->doesntHave('DofusItemPet')
-                            ->orWhereRelation('DofusItemPet', $this->skinContentWhere);
-                    });
-                    $query->where(function (Builder $query) {
-                        $query->doesntHave('DofusItemCostume')
-                            ->orWhereRelation('DofusItemCostume', $this->skinContentWhere);
-                    });
+
+                    // Parcous toutes les relations d'items (DofusItemHat etc..)
+                    foreach ($this->itemRelations as $relation) {
+                        $query->where(function (Builder $query) use ($relation) {
+                            $query->doesntHave($relation)
+                                ->orWhereRelation($relation, $this->skinContentWhere);
+                        });
+                    }
+                });
+            })
+
+            // SearchBar
+            ->when(count($this->searchFilterInput) > 0, function (Builder $query) {
+                $query->where(function (Builder $query) {
+
+                    // Pour chaque mot clef
+                    foreach ($this->searchFilterInput as $input) {
+
+                        // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
+                        $query->when(!$this->barbeOnly, function (Builder $query) use ($input){
+                            $query->orWhereRelation('User', 'name', 'LIKE', '%' . $input . '%');
+                        });
+
+                        // ensuite, on teste les noms d'items, toujours en OR
+                        foreach ($this->itemRelations as $relation) {
+                            $query->orWhereRelation($relation, 'name', 'LIKE', '%' . $input . '%');
+                        }
+                    }
                 });
             })
 
@@ -187,5 +205,16 @@ class InfiniteSkinIndex extends Component
     public function ToggleShowWinnersOnly()
     {
         $this->winnersOnly = !$this->winnersOnly;
+    }
+
+    public function ToggleSearchedText($search)
+    {
+        // Si le mot clef est déjà dans le tableau, on le retire
+        if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {
+            unset($this->searchFilterInput[$key]);
+            return;
+        }
+
+        $this->searchFilterInput[] = $search;
     }
 }

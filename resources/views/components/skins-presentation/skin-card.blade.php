@@ -9,28 +9,28 @@
     <div class="absolute top-2 bg-primary z-50">
 
         @if(isset($skin->DofusItemHat))
-            <p> Hat -> {{ $skin->DofusItemHat->DofusItemsSubCategorie->name }}</p>
+            <p> Hat -> {{ $skin->DofusItemHat->name }}</p>
         @endif
 
         @if(isset($skin->DofusItemCloak))
-            <p> Cloak -> {{ $skin->DofusItemCloak->DofusItemsSubCategorie->name }}</p>
+            <p> Cloak -> {{ $skin->DofusItemCloak->name }}</p>
         @endif
 
         @if(isset($skin->DofusItemShield))
-            <p> Shield -> {{ $skin->DofusItemShield->DofusItemsSubCategorie->name }}</p>
+            <p> Shield -> {{ $skin->DofusItemShield->name }}</p>
         @endif
 
         @if(isset($skin->DofusItemPet))
-            <p> Pet -> {{ $skin->DofusItemPet->DofusItemsSubCategorie->name }}</p>
+            <p> Pet -> {{ $skin->DofusItemPet->name }}</p>
         @endif
 
         @if(isset($skin->DofusItemCostume))
-            <p> Costume -> {{ $skin->DofusItemCostume->DofusItemsSubCategorie->name }}</p>
+            <p> Costume -> {{ $skin->DofusItemCostume->name }}</p>
         @endif
-        <p>ID: {{ $skin->id }}</p>
+        {{--<p>ID: {{ $skin->id }}</p>
         <p>Points: {{ $skin->Rewards->sum('points') }}</p>
         <p>Class: {{ $skin->Race->name }}</p>
-        <p>Genre: {{ $skin->gender }}</p>
+        <p>Genre: {{ $skin->gender }}</p>--}}
     </div>
 
     {{-- Barbe --}}
@@ -40,12 +40,12 @@
 
     {{-- Pseudo --}}
     <div class="absolute bottom-0 left-0 max-w-[calc(100%-60px)] px-1 pb-[2px]">
-        <button class="flex w-full overflow-hidden font-light text-goldText text-[0.75rem] hover:text-goldTextLit whitespace-nowrap">
+        <button class="flex w-full overflow-hidden font-light text-goldText text-[0.75rem] hover:text-goldTextLit whitespace-nowrap" wire:click="$emit('ToggleSearchedText', '{{ addslashes($skin->user_name) }}')">
             <p class="skinCardUserName">{{ $skin->user_name }}&nbsp</p>
         </button>
     </div>
 
-    {{-- Likes @js(Auth::check() && $skin->Likes->where('user_id', Auth::user()->id)->first()) --}}
+    {{-- Likes --}}
     <div
         x-data="{
             clicked: false,
