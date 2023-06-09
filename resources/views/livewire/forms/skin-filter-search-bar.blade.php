@@ -1,20 +1,20 @@
 <div class="text-[1.15rem]">
     <p class="text-ivory font-thin">Recherche un item ou un pseudo :</p>
 
-    <div class="w-[90%] -ml-1 relative">
+    <div
+        class="w-[90%] -ml-1 relative"
+        x-data
+        @click.away="{{ (count($itemToShow) > 0) ? '$wire.emptyQuery()' : '' }}">
         <input type="text"
                class="border-transparent focus:outline-none rounded-[2.25px] w-full mt-1 bg-primary-100 px-1 placeholder-inactiveText font-thin text-inactiveText"
                placeholder="Nom d'item ou pseudo"
                maxlength="45"
                wire:model="query"
-               wire:keydown.arrow-down.prevent="incrementSelection"
-               wire:keydown.arrow-up.prevent="decrementSelection"
+               wire:keydown.arrow-down.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
+               wire:keydown.arrow-up.prevent="{{ (count($itemToShow) > 0) ? 'decrementSelection' : '' }}"
                wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', \'' . addslashes($itemToShow[$selectionKey]->name) . '\')' : '' }}">
 
-        <div
-            class="absolute bg-primary-100 max-h-[300px] w-full rounded-sm z-50 overflow-auto"
-            x-data
-            @click.away="$wire.emptyQuery()">
+        <div class="absolute bg-primary-100 max-h-[300px] w-full rounded-sm z-50 overflow-auto">
             @foreach($itemToShow as $key => $items)
                 <button
                     class="flex w-full p-1 items-center group transition-all {{ ($key == $selectionKey) ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10' }}"

@@ -17,7 +17,7 @@ class SkinIndexChunk extends Component
 
     public function render()
     {
-        $skins = Skin::select('id', 'image_path', 'created_at', 'gender', 'race_id', 'user_id', 'dofus_item_hat_id', 'dofus_item_cloak_id', 'dofus_item_shield_id', 'dofus_item_pet_id', 'dofus_item_costume_id')
+        $skins = Skin::select('id', 'image_path', 'user_id')
             ->addSelect([
                 'user_name' => User::select('name')
                     ->whereColumn('id', 'skins.user_id')
@@ -29,12 +29,6 @@ class SkinIndexChunk extends Component
                     ->where('user_id', Auth::id())
                     ->take(1)
             ])
-            ->with( 'Rewards:id,skin_id,points', 'Race:name,id',
-                'DofusItemHat:id,name,dofus_items_sub_categorie_id', 'DofusItemHat.DofusItemsSubCategorie',
-                'DofusItemCloak:id,name,dofus_items_sub_categorie_id', 'DofusItemCloak.DofusItemsSubCategorie',
-                'DofusItemShield:id,name,dofus_items_sub_categorie_id', 'DofusItemShield.DofusItemsSubCategorie',
-                'DofusItemPet:id,name,dofus_items_sub_categorie_id', 'DofusItemPet.DofusItemsSubCategorie',
-                'DofusItemCostume:id,name,dofus_items_sub_categorie_id', 'DofusItemCostume.DofusItemsSubCategorie')
             ->withCount('Likes')
             ->find($this->skinIds)
             ->keyBy('id');

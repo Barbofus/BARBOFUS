@@ -32,11 +32,11 @@ class SkinFilterSearchBar extends Component
 
     public function render()
     {
-        $this->updatedQuery($this->query);
+        $this->findForItems($this->query);
         return view('livewire.forms.skin-filter-search-bar');
     }
 
-    public function updatedQuery($query)
+    public function findForItems($query)
     {
         $this->itemToShow = array();
 

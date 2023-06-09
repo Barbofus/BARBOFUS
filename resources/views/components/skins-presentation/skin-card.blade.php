@@ -6,35 +6,8 @@
         <img src="{{ asset('storage\/') . $skin->image_path }}" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
     </div>
 
-    <div class="absolute top-2 bg-primary z-50">
-
-        @if(isset($skin->DofusItemHat))
-            <p> Hat -> {{ $skin->DofusItemHat->name }}</p>
-        @endif
-
-        @if(isset($skin->DofusItemCloak))
-            <p> Cloak -> {{ $skin->DofusItemCloak->name }}</p>
-        @endif
-
-        @if(isset($skin->DofusItemShield))
-            <p> Shield -> {{ $skin->DofusItemShield->name }}</p>
-        @endif
-
-        @if(isset($skin->DofusItemPet))
-            <p> Pet -> {{ $skin->DofusItemPet->name }}</p>
-        @endif
-
-        @if(isset($skin->DofusItemCostume))
-            <p> Costume -> {{ $skin->DofusItemCostume->name }}</p>
-        @endif
-        {{--<p>ID: {{ $skin->id }}</p>
-        <p>Points: {{ $skin->Rewards->sum('points') }}</p>
-        <p>Class: {{ $skin->Race->name }}</p>
-        <p>Genre: {{ $skin->gender }}</p>--}}
-    </div>
-
     {{-- Barbe --}}
-    @if($skin->user_name === 'Barbe__Douce')
+    @if($skin->user_name === 'Barbe Douce')
         <img class="absolute top-0 left-0 h-[25%] max-h-[64px] peer cursor-pointer" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">
     @endif
 
