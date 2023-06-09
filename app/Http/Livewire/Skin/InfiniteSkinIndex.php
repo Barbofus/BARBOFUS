@@ -54,15 +54,14 @@ class InfiniteSkinIndex extends Component
     ];
 
 
-    public function mount()
-    {
-        $this->searchFilterInput = ['barbe', 'solo', 'truk', 'brian', 'moul', 'col'];
-        $this->races = Race::all();
-    }
     public function render()
     {
+        $this->races = DB::table('races')->get();
+
         if(!$this->hasLoadMore) $this->PrepareChunks();
+
         $this->dispatchBrowserEvent('skin-index-render');
+
         return view('livewire.skin.infinite-skin-index');
     }
 
@@ -90,7 +89,7 @@ class InfiniteSkinIndex extends Component
 
             // Barbe Only
             ->when($this->barbeOnly, function (Builder $query) {
-                $query->whereRelation('User', 'name', '=', 'BARBE__DOUCE');
+                $query->whereRelation('User', 'name', '=', 'Barbe Douce');
             })
 
             // Winners Only

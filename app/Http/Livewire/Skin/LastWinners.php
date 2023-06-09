@@ -6,6 +6,7 @@ use App\Actions\Likes\SwitchLikes;
 use App\Models\Reward;
 use App\Models\Skin;
 use App\Models\SkinWinner;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class LastWinners extends Component
@@ -24,7 +25,7 @@ class LastWinners extends Component
 
     public function FetchLastWinners()
     {
-        $this->winners = SkinWinner::query()
+        $this->winners = DB::table('skin_winners')
             ->orderBy('reward_id')
             ->get();
     }

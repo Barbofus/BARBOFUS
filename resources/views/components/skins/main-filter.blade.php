@@ -61,28 +61,7 @@
 
 
             <!-- SearchBar -->
-            <div class="text-[1.15rem]">
-                <p class="text-ivory font-thin">Recherche un item ou un pseudo :</p>
-
-                <input type="text" class="border-transparent focus:outline-none rounded-[2.25px] mt-1 bg-primary-100 w-[90%] -ml-1 px-1 placeholder-inactiveText font-thin text-inactiveText" placeholder="Nom d'item ou pseudo" maxlength="45">
-
-                <div class="flex flex-wrap justify-between items-center gap-2 w-[90%] mt-2 -ml-1">
-                    @foreach($searchFilterInput as $input)
-                        <button wire:click="$emit('ToggleSearchedText', '{{ addslashes($input) }}')"
-                                class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
-                            <p class="font-light text-[1rem] text-inactiveText">{{ $input }}</p>
-
-                            <!-- Croix -->
-                            <svg class="w-4 text-red-500 group-hover:text-red-400 ml-2"
-                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    @endforeach
-
-                    <div class="ml-auto"></div>
-                </div>
-            </div>
+            <livewire:forms.skin-filter-search-bar wire:key="search{{ rand() }}" :searchFilterInput="$searchFilterInput" />
 
 
 
@@ -125,7 +104,7 @@
             <!-- Barb Only -->
             <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,380px)]">
                 <x-forms.filter-button :checked="$barbOnly" wire:click="ToggleShowBarbeOnly" >
-                    <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,380px)]">Voir uniquement les skins de <span class=" font-normal">BARBE__DOUCE</span></label>
+                    <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,380px)]">Voir uniquement les skins de <span class=" font-normal">Barbe Douce</span></label>
                 </x-forms.filter-button>
             </div>
 
