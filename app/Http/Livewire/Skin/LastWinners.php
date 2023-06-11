@@ -14,6 +14,7 @@ class LastWinners extends Component
     public $winners;
 
 
+
     public function render()
     {
         $this->FetchLastWinners();
@@ -26,7 +27,7 @@ class LastWinners extends Component
     public function FetchLastWinners()
     {
         $this->winners = DB::table('skin_winners')
-            ->orderBy('reward_id')
+            ->orderBy('reward_id','DESC')
             ->get();
     }
 

@@ -7,6 +7,7 @@ use App\Models\Race;
 use App\Models\Skin;
 use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
+use Illuminate\Support\Facades\DB;
 
 class SkinController extends Controller
 {
@@ -32,7 +33,7 @@ class SkinController extends Controller
      */
     public function create()
     {
-        $races = Race::all();
+        $races = DB::table('races')->select('id', 'name')->get();
 
         return view('skins.create', [
             'races' => $races,
@@ -82,7 +83,7 @@ class SkinController extends Controller
      */
     public function edit(Skin $skin)
     {
-        $races = Race::all();
+        $races = DB::table('races')->select('id', 'name')->get();
 
         return view('skins.edit', [
             'races' => $races,

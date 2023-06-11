@@ -2,16 +2,10 @@
 
 namespace App\Http\Livewire\Skin;
 
-use App\Models\Like;
-use App\Models\Race;
-use App\Models\Reward;
-use App\Models\RewardPrice;
 use App\Models\Skin;
-use DateTime;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Termwind\Components\Dd;
 
 class InfiniteSkinIndex extends Component
 {
@@ -46,7 +40,7 @@ class InfiniteSkinIndex extends Component
     public $genderWhere = array();
     public $skinContentWhere = array();
     public $barbeOnly = false;
-    public $winnersOnly = false;
+    public $winnersOnly = true;
     public $searchFilterInput = array();
 
     protected $listeners = [
@@ -97,7 +91,7 @@ class InfiniteSkinIndex extends Component
                 $query->whereHas('Rewards');
             })
 
-            // Filtres en lien avec les items
+            // Skin content
             ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
                 $query->where(function (Builder $query) {
 

@@ -11,6 +11,7 @@ class SkinFilterSearchBar extends Component
     public $selectionKey = 0;
 
     public $query = '';
+    public $oldQuery = '';
 
     public $itemToShow = array();
 
@@ -33,12 +34,17 @@ class SkinFilterSearchBar extends Component
     public function render()
     {
         $this->findForItems($this->query);
+
         return view('livewire.forms.skin-filter-search-bar');
     }
 
     public function findForItems($query)
     {
+
         $this->itemToShow = array();
+
+        if($this->oldQuery != $this->query)
+            $this->selectionKey = 0;
 
         if(strlen($query) < 3) {
             return;
@@ -62,6 +68,8 @@ class SkinFilterSearchBar extends Component
 
         asort($this->itemToShow);
         $this->itemToShow = array_values($this->itemToShow);
+
+        $this->oldQuery = $query;
     }
 
     public function emptyQuery()

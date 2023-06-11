@@ -51,7 +51,7 @@
                     class="max-[500px]:w-[clamp(140px,90%,200px)]
                     min-[501px]:max-[1799px]:w-[200px]
                     min-[1800px]:h-[min(28%,360px)] min-[1800px]:w-full min-[1800px]:flex min-[1800px]:justify-center">
-                        <x-skins-presentation.winners-skin-card :skin="$skin"/>
+                        <x-skins-presentation.winners-skin-card :skin="$skin" />
                 </div>
             @endforeach
         </div>

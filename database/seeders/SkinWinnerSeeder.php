@@ -23,7 +23,7 @@ class SkinWinnerSeeder extends Seeder
                 'skin_id' => $skin->id,
                 'user_name' => $skin->User->name,
                 'image_path' => $skin->image_path,
-                'weekly_likes' => ($i + 1) * 17,
+                'weekly_likes' => (3 - $i) * 17,
                 'reward_id' => $i + 1,
             ]);
         }
