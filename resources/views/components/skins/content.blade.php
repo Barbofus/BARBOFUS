@@ -17,13 +17,29 @@
         @if(isset($skin->reward_id))
 
             {{-- Décoration de la carte --}}
-            <div class="absolute flex items-end justify-center h-12 w-full -top-[52px]">
+            <div class="absolute flex items-end justify-center h-10 w-full top-[-44px]">
                 @if($skin->reward_id == 1)
-                    <img id="rewardImg" src="{{ asset('storage/images/misc_ui/tofu_ocre.png') }}" draggable="false" class="w-[60%] max-w-[118px]">
+                    <img src="{{ asset('storage/images/misc_ui/tofu_ocre.png') }}" draggable="false" class="h-full">
+                    <div class="absolute h-10 w-10 left-[50%+20px]">
+                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute rotate-0 h-full top-[-8px] right-[-25px]">
+                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute scale-x-[-1] rotate-[20deg] h-full top-[5px] right-[35px]">
+                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute rotate-[-35deg] h-full top-[5px] right-[-40px]">
+                    </div>
                 @elseif($skin->reward_id == 2)
-                    <img id="rewardImg" src="{{ asset('storage/images/misc_ui/symbol_emeraude.png') }}" draggable="false" class="w-[60%] max-w-[118px]">
+                    <img src="{{ asset('storage/images/misc_ui/symbol_emeraude.png') }}" draggable="false" class="h-full">
+                    <div class="absolute h-10 w-10 left-[50%+20px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-15px] right-[-2px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.35] h-full top-[-9px] right-[17px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-9px] right-[-15px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.3] h-full top-[2px] right-[16px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.4] h-full top-[4px] right-[-15px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.3] h-full top-[5px] right-[-27px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.4] h-full top-[8px] right-[27px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.5] h-full top-[14px] right-[20px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.5] h-full top-[13px] right-[-17px]">
+                    </div>
                 @elseif($skin->reward_id == 3)
-                    <img id="rewardImg" src="{{ asset('storage/images/misc_ui/cawotte.png') }}" draggable="false" class="w-[60%] max-w-[118px] origin-bottom animate-cawotte" style="animation-delay: {{ rand(0,16) }}s">
+                    <img src="{{ asset('storage/images/misc_ui/cawotte.png') }}" draggable="false" class="h-full origin-bottom animate-cawotte" style="animation-delay: {{ rand(0,16) }}s">
                 @endif
             </div>
 

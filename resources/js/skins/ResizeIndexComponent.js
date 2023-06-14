@@ -16,6 +16,7 @@ let previousRatioWidth = true;
 let previousLeftSectionH;
 let previousRewardSectionH;
 
+
 // Fonction qui change la hauter de la section de gauche en fonction de l'espace libre
 function ResizeSkinWinners()
 {
@@ -35,14 +36,11 @@ function ResizeSkinWinners()
         nextHeight -= headerHeight;
     }
 
-    // Ensuite, si la nouvelle height et différent de l'ancienne, on envoie
-    if(previousRewardSectionH != nextHeight + "px"){
+    // Ensuite, on envoie
+    skinWinners.style.height = nextHeight + "px";
+    skinWinners.style.top = (window.innerHeight - nextHeight) + "px";
 
-        skinWinners.style.height = nextHeight + "px";
-        skinWinners.style.top = (window.innerHeight - nextHeight) + "px";
-
-        previousRewardSectionH = skinWinners.style.height;
-    }
+    previousRewardSectionH = skinWinners.style.height;
 }
 
 
