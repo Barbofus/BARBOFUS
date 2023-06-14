@@ -68,5 +68,5 @@
     </div>
 
     {{-- Scroll horizontalement les pseudos trop long, s'actualise en temps réel --}}
-    @vite(['resources/js/skins/ResizeIndexComponent.js', 'resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js'])
+    @vite(['resources/js/skins/ResizeIndexComponent.js', 'resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js', 'resources/js/skins/AnimationsManager.js'])
 </div>

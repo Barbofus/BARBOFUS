@@ -40,7 +40,7 @@ class InfiniteSkinIndex extends Component
     public $genderWhere = array();
     public $skinContentWhere = array();
     public $barbeOnly = false;
-    public $winnersOnly = true;
+    public $winnersOnly = false;
     public $searchFilterInput = array();
 
     protected $listeners = [
@@ -113,9 +113,7 @@ class InfiniteSkinIndex extends Component
                     foreach ($this->searchFilterInput as $input) {
 
                         // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
-                        $query->when(!$this->barbeOnly, function (Builder $query) use ($input){
-                            $query->orWhereRelation('User', 'name', 'LIKE', '%' . $input . '%');
-                        });
+                        $query->orWhereRelation('User', 'name', 'LIKE', '%' . $input . '%');
 
                         // ensuite, on teste les noms d'items, toujours en OR
                         foreach ($this->itemRelations as $relation) {
