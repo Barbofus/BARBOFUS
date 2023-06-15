@@ -68,6 +68,26 @@ module.exports = {
                 '0%': { top: '--tw-top' },
                 '100%': { top: '200%' },
             },
+            feather: {
+                '0%,100%': { transform: 'translateY(0px) rotate(var(--tw-rotate))' },
+                '50%': { transform: 'translateY(-10px) rotate(calc(var(--tw-rotate) - 20deg))' },
+            },
+            featherLeft: {
+                '0%,100%': { transform: 'translateY(0px) scaleX(-1) rotate(calc(var(--tw-rotate) - 40deg))' },
+                '50%': { transform: 'translateY(-10px) scaleX(-1) rotate(calc(var(--tw-rotate) - 20deg))' },
+            },
+            orb: {
+                '0%,100%': { transform: 'translate(0px,0px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+                '25%': { transform: 'translate(2px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+                '50%': { transform: 'translate(3px,-2px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+                '75%': { transform: 'translate(0px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+            },
+            orbLeft: {
+                '0%,100%': { transform: 'translate(0px,0px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+                '25%': { transform: 'translate(-2px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+                '50%': { transform: 'translate(-3px,-2px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+                '75%': { transform: 'translate(0px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+            },
         },
         animation: {
             skinApparition: 'skinApparition 0.5s linear forwards',
@@ -78,6 +98,10 @@ module.exports = {
             dofus: 'dofus 2s',
             cawotte: 'cawotte 16s ease-out infinite',
             skinReflection: 'skinReflection 0.75s linear',
+            feather: 'feather 5s ease-in-out infinite',
+            featherLeft: 'featherLeft 5s ease-in-out infinite',
+            orb: 'orb 5s ease-in-out infinite',
+            orbLeft: 'orbLeft 5s infinite',
         },
     },
   },

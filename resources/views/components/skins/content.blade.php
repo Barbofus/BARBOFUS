@@ -21,22 +21,22 @@
                 @if($skin->reward_id == 1)
                     <img src="{{ asset('storage/images/misc_ui/tofu_ocre.png') }}" draggable="false" class="h-full">
                     <div class="absolute h-10 w-10 left-[50%+20px]">
-                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute rotate-0 h-full top-[-8px] right-[-25px]">
-                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute scale-x-[-1] rotate-[20deg] h-full top-[5px] right-[35px]">
-                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute rotate-[-35deg] h-full top-[5px] right-[-40px]">
+                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute rotate-0 h-full top-[0px] right-[-25px] animate-feather" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute scale-x-[-1] rotate-[20deg] h-full top-[5px] right-[35px] animate-featherLeft" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/tofu_ocre_feather.png') }}" draggable="false" class="absolute rotate-[-35deg] h-full top-[5px] right-[-50px] animate-feather" style="animation-delay: {{ rand(0,3000) }}ms">
                     </div>
                 @elseif($skin->reward_id == 2)
                     <img src="{{ asset('storage/images/misc_ui/symbol_emeraude.png') }}" draggable="false" class="h-full">
                     <div class="absolute h-10 w-10 left-[50%+20px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-15px] right-[-2px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.35] h-full top-[-9px] right-[17px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-9px] right-[-15px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.3] h-full top-[2px] right-[16px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.4] h-full top-[4px] right-[-15px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.3] h-full top-[5px] right-[-27px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.4] h-full top-[8px] right-[27px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.5] h-full top-[14px] right-[20px]">
-                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.5] h-full top-[13px] right-[-17px]">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-15px] right-[-2px] animate-orbLeft" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.35] h-full top-[-9px] right-[17px] animate-orb" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-9px] right-[-15px] animate-orbLeft" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.3] h-full top-[2px] right-[16px] animate-orb" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.4] h-full top-[4px] right-[-15px] animate-orbLeft" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.3] h-full top-[5px] right-[-27px] animate-orb" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.4] h-full top-[8px] right-[27px] animate-orbLeft" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.5] h-full top-[14px] right-[20px] animate-orb" style="animation-delay: {{ rand(0,3000) }}ms">
+                        <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.5] h-full top-[13px] right-[-17px] animate-orbLeft" style="animation-delay: {{ rand(0,3000) }}ms">
                     </div>
                 @elseif($skin->reward_id == 3)
                     <img src="{{ asset('storage/images/misc_ui/cawotte.png') }}" draggable="false" class="h-full origin-bottom animate-cawotte" style="animation-delay: {{ rand(0,16) }}s">
