@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Forms;
 
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class SearchbarItemsAutocomplete extends Component
@@ -23,13 +24,35 @@ class SearchbarItemsAutocomplete extends Component
     public function mount($value) {
 
         if($value){
-            $this->existentItem = $this->relatedModel::where('id', '=', $value)->first();
+            $existentItem = $this->ExistentQuery($value);
+            $this->existentItem = collect($existentItem);
 
-            $this->query = $this->existentItem->name;
+            $this->query = $this->existentItem['name'];
             $this->previousQuery = $this->query;
         }
 
         $this->updatedQuery($this->query);
+    }
+
+    public function ExistentQuery($value)
+    {
+        return collect(DB::table($this->relatedModel)
+            ->select('id', 'icon_path', 'name', 'level')
+            ->where('id', '=', $value)
+            ->orWhere('name', '=', $value)
+            ->addSelect([
+                'sub_icon_path' => DB::table('dofus_items_sub_categories')
+                    ->select('icon_path')
+                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                    ->take(1)
+            ])
+            ->addSelect([
+                'sub_name' => DB::table('dofus_items_sub_categories')
+                    ->select('name')
+                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                    ->take(1)
+            ])
+            ->first());
     }
 
     public function resetSelection()
@@ -92,10 +115,26 @@ class SearchbarItemsAutocomplete extends Component
         $this->resetSelection();
 
         // Prend les premiers items contenant la recherche en excluant le résultat exact
-        $this->itemsToShow = $this->relatedModel::where('name', '!=', $query)->where('name', 'LIKE', '%'.$query.'%')->get();
+        $this->itemsToShow = collect(DB::table($this->relatedModel)
+            ->select('id', 'icon_path', 'name','level')
+            ->where('name', '!=', $query)
+            ->where('name', 'LIKE', '%'.$query.'%')
+            ->addSelect([
+                'sub_icon_path' => DB::table('dofus_items_sub_categories')
+                    ->select('icon_path')
+                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                    ->take(1)
+            ])
+            ->addSelect([
+                'sub_name' => DB::table('dofus_items_sub_categories')
+                    ->select('name')
+                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                    ->take(1)
+            ])
+            ->get());
 
         // Si l'item exact est écris, on le dit pour changer le visuel
-        $this->existentItem = $this->relatedModel::where('name', '=', $query)->first();
+        $this->existentItem = $this->ExistentQuery($query);
 
         $this->previousQuery = $query;
     }
@@ -105,7 +144,7 @@ class SearchbarItemsAutocomplete extends Component
     {
         if(!$this->itemsToShow) return;
 
-        $this->query = $this->itemsToShow[$this->selectedItem]->name;
+        $this->query = $this->itemsToShow[$this->selectedItem]['name'];
     }
 
     public function render()

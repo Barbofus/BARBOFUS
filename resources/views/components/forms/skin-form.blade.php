@@ -115,19 +115,19 @@
         {{-- Choix des items --}}
         <p class="mt-5 text-xl font-semibold">Choix des items</p>
         <div class="grid grid-flow-row grid-cols-2 gap-2 mt-2">
-            <livewire:forms.searchbar-items-autocomplete :relatedModel="'App\Models\DofusItemHat'" :name="'dofus_item_hat_id'" :placeholder="'Choisis une coiffe...'"
+            <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_hats'" :name="'dofus_item_hat_id'" :placeholder="'Choisis une coiffe...'"
                                                          :value="(old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')"  />
 
-            <livewire:forms.searchbar-items-autocomplete :relatedModel="'App\Models\DofusItemCloak'" :name="'dofus_item_cloak_id'" :placeholder="'Choisis une cape...'"
+            <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_cloaks'" :name="'dofus_item_cloak_id'" :placeholder="'Choisis une cape...'"
                                                          :value="(old('dofus_item_cloak_id')) ? old('dofus_item_cloak_id') : (isset($skin) ? $skin['dofus_item_cloak_id']: '')" />
 
-            <livewire:forms.searchbar-items-autocomplete :relatedModel="'App\Models\DofusItemShield'" :name="'dofus_item_shield_id'" :placeholder="'Choisis un bouclier...'"
+            <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_shields'" :name="'dofus_item_shield_id'" :placeholder="'Choisis un bouclier...'"
                                                          :value="(old('dofus_item_shield_id')) ? old('dofus_item_shield_id') : (isset($skin) ? $skin['dofus_item_shield_id']: '')" />
 
-            <livewire:forms.searchbar-items-autocomplete :relatedModel="'App\Models\DofusItemPet'" :name="'dofus_item_pet_id'" :placeholder="'Choisis un familier...'"
+            <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_pets'" :name="'dofus_item_pet_id'" :placeholder="'Choisis un familier...'"
                                                          :value="(old('dofus_item_pet_id')) ? old('dofus_item_pet_id') : (isset($skin) ? $skin['dofus_item_pet_id']: '')" />
 
-            <livewire:forms.searchbar-items-autocomplete :relatedModel="'App\Models\DofusItemcostume'" :name="'dofus_item_costume_id'" :placeholder="'Choisis un costume...'"
+            <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_costume_id'" :placeholder="'Choisis un costume...'"
                                                          :value="(old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')" />
         </div>
 

@@ -3,17 +3,17 @@
     x-id="['dropdown-search']"
 >
     <div class="flex items-center h-6 space-x-2 text-slate-600">
-        @if ($existentItem)
-            <img class="h-full" src="{{ asset('storage\\'.$existentItem->DofusItemsSubCategorie->icon_path) }}" draggable="false">
-            <p>{{ $existentItem->DofusItemsSubCategorie->name }}</p>
-            <p>Lvl. {{ $existentItem->level }}</p>
+        @if ($existentItem && count($existentItem) > 0)
+            <img class="h-full" src="{{ asset('storage\\'.$existentItem['sub_icon_path']) }}" draggable="false">
+            <p>{{ $existentItem['sub_name'] }}</p>
+            <p>Lvl. {{ $existentItem['level'] }}</p>
         @endif
     </div>
 
     <div class="w-[300px]">
         <div class="relative w-full h-12">
             <label for="{{ $name }}">
-                <img class="absolute h-full" src="{{ isset($existentItem) ? asset('storage/'.$existentItem->icon_path) : '' }}" draggable="false">
+                <img class="absolute h-full" src="{{ ($existentItem && count($existentItem) > 0) ? asset('storage/'.$existentItem['icon_path']) : '' }}" draggable="false">
                 <input
                     maxlength="30" id="{{ $name }}" type="text" placeholder="{{ $placeholder }}"
                     class="w-full h-full rounded-md pl-14 focus:outline-none bg-slate-100 @error($name) err-border @enderror"
@@ -25,7 +25,7 @@
                     wire:keydown.arrow-up.prevent="decrementSelection"
                     wire:keydown.enter="{{ count($items) > 0 ? 'useSelectionAsValue' : ''}}"
                     x-on:focus="focusinput = true" x-on:blur="focusinput = false" />
-                <input type="hidden" name="{{ $name }}" value="{{ ($existentItem) ? $existentItem->id : null }}" />
+                <input type="hidden" name="{{ $name }}" value="{{ ($existentItem && count($existentItem) > 0) ? $existentItem['id'] : null }}" />
             </label>
         </div>
 

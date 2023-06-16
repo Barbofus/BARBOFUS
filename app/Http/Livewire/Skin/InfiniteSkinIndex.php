@@ -77,73 +77,17 @@ class InfiniteSkinIndex extends Component
 
     public function PrepareChunks()
     {
-        /*$this->postIdChunks = Skin::query()
-            ->select('id')
-            ->where('status', 'Posted')
-
-            // Variables utiles pour les orderBy
-            ->withSum('Rewards', 'points')
-            ->withCount('Likes')
-
-            // Début du système de filtres
-            ->where($this->raceWhere)
-            ->where($this->genderWhere)
-
-            // Barbe Only
-            ->when($this->barbeOnly, function (Builder $query) {
-                $query->whereRelation('User', 'name', '=', 'Barbe Douce');
-            })
-
-            // Winners Only
-            ->when($this->winnersOnly, function (Builder $query) {
-                $query->whereHas('Rewards');
-            })
-
-            // Skin content
-            ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
-                $query->where(function (Builder $query) {
-
-                    // Parcous toutes les relations d'items (DofusItemHat etc..)
-                    foreach ($this->itemRelations as $relation) {
-                        $query->where(function (Builder $query) use ($relation) {
-                            $query->doesntHave($relation)
-                                ->orWhereRelation($relation, $this->skinContentWhere);
-                        });
-                    }
-                });
-            })
-
-            // SearchBar
-            ->when(count($this->searchFilterInput) > 0, function (Builder $query) {
-                $query->where(function (Builder $query) {
-
-                    // Pour chaque mot clef
-                    foreach ($this->searchFilterInput as $input) {
-
-                        // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
-                        $query->orWhereRelation('User', 'name', 'LIKE', '%' . $input . '%');
-
-                        // ensuite, on teste les noms d'items, toujours en OR
-                        foreach ($this->itemRelations as $relation) {
-                            $query->orWhereRelation($relation, 'name', 'LIKE', '%' . $input . '%');
-                        }
-                    }
-                });
-            })
-
-            // orderBy
-            ->orderBy($this->orderBy, $this->orderDirection)
-            ->orderBy('updated_at', 'DESC')
-
-            // Scroll infini
-            ->pluck('id')
-            ->chunk(self::ITEMS_PER_PAGE)
-            ->toArray();*/
-
         $this->postIdChunks = DB::table('skins')
-            //->leftJoin('reward_prices', 'reward_prices.id', '=', 'rewards.reward_price_id')
-            ->join('users', 'skins.user_id', '=', 'users.id')
 
+            // Les joins
+            ->join('users', 'skins.user_id', '=', 'users.id')
+            ->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0, function (Builder $query) {
+                foreach ($this->itemRelations as $item) {
+                    $query->leftJoin($item . 's', $item . 's.id', '=', 'skins.' . $item . '_id');
+                }
+            })
+
+            // select princpal
             ->select('skins.id')
 
             // Variables utiles pour les orderBy
@@ -157,14 +101,8 @@ class InfiniteSkinIndex extends Component
                     ->selectRaw('count(id)')
                     ->whereColumn('likes.skin_id', 'skins.id')
             ])
-            /*->addSelect([
-                'user_name' => DB::table('users')
-                    ->selectRaw('name')
-                    ->whereColumn('users.id', 'skins.user_id')
-            ])*/
 
             // Début du système de filtres
-            //->where('skins.id', 409)
             ->where($this->raceWhere)
             ->where($this->genderWhere)
 
@@ -184,10 +122,6 @@ class InfiniteSkinIndex extends Component
 
             // Skin content
             ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    $query->leftJoin($item . 's', $item . 's.id', '=', 'skins.' . $item . '_id');
-                }
-
                 $query->where(function (Builder $query) {
 
                     // Parcous toutes les relations d'items (DofusItemHat etc..)
@@ -207,22 +141,22 @@ class InfiniteSkinIndex extends Component
             })
 
             // SearchBar
-            /*->when(count($this->searchFilterInput) > 0, function (Builder $query) {
+            ->when(count($this->searchFilterInput) > 0, function (Builder $query) {
                 $query->where(function (Builder $query) {
 
                     // Pour chaque mot clef
                     foreach ($this->searchFilterInput as $input) {
 
                         // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
-                        $query->orWhereRelation('User', 'name', 'LIKE', '%' . $input . '%');
+                        $query->orWhere('users.name', $input);
+                    }
 
-                        // ensuite, on teste les noms d'items, toujours en OR
-                        foreach ($this->itemRelations as $relation) {
-                            $query->orWhereRelation($relation, 'name', 'LIKE', '%' . $input . '%');
-                        }
+                    // ensuite, on teste les noms d'items, toujours en OR
+                    foreach ($this->itemRelations as $item) {
+                        $query->orWhereIn($item.'s.name', $this->searchFilterInput);
                     }
                 });
-            })*/
+            })
 
             ->where('skins.status', 'Posted')
 
@@ -234,9 +168,6 @@ class InfiniteSkinIndex extends Component
             ->pluck('id')
             ->chunk(self::ITEMS_PER_PAGE)
             ->toArray();
-            //->get();
-
-        //dd($this->postIdChunks);
 
         $this->page = 1;
 

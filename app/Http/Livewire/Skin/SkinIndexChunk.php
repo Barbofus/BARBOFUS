@@ -16,8 +16,7 @@ class SkinIndexChunk extends Component
     public function render()
     {
         $skins = DB::table('skins')
-            //->select('id', 'image_path', 'user_id')
-            ->select('*')
+            ->select('id', 'image_path', 'user_id')
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')
