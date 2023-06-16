@@ -9,16 +9,15 @@ class Reward extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'skin_id',
-        'reward_price_id'
+        'rank',
+        'points',
     ];
 
     public function Skin() {
         return $this->belongsTo(Skin::class);
-    }
-
-    public function RewardPrice() {
-        return $this->belongsTo(RewardPrice::class);
     }
 }

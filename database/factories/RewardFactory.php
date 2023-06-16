@@ -23,9 +23,8 @@ class RewardFactory extends Factory
 
         return [
             'skin_id' => Skin::all()->random(),
-            'reward_price_id' => $rank,
+            'rank' => $rank,
             'points' => $rank->points,
-            'created_at' => $date
         ];
     }
 }

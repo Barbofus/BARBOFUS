@@ -12,13 +12,15 @@
                wire:model="query"
                wire:keydown.arrow-down.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
                wire:keydown.arrow-up.prevent="{{ (count($itemToShow) > 0) ? 'decrementSelection' : '' }}"
-               wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', \'' . addslashes($itemToShow[$selectionKey]->name) . '\')' : '' }}">
+               wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', \'' . addslashes($itemToShow[$selectionKey]->name) . '\')' : '' }}"
+               @keydown.enter="window.scrollTo(0,0)">
 
         <div class="absolute bg-primary-100 max-h-[300px] w-full rounded-sm z-50 overflow-auto">
             @foreach($itemToShow as $key => $items)
                 <button
                     class="flex w-full p-1 items-center group transition-all {{ ($key == $selectionKey) ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10' }}"
-                    wire:click="$emit('ToggleSearchedText', '{{ addslashes($items->name) }}')">
+                    wire:click="$emit('ToggleSearchedText', '{{ addslashes($items->name) }}')"
+                    @click="window.scrollTo(0,0)">
                     @if(@isset($items->icon_path))
                         <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('storage\/'. $items->icon_path) }}">
                     @else
@@ -35,6 +37,7 @@
         <div class="flex flex-wrap justify-start w-full max-h-[112px] overflow-auto items-center gap-2 mt-2">
             @foreach($searchFilterInput as $input)
                 <button wire:click="$emit('ToggleSearchedText', '{{ addslashes($input) }}')"
+                        @click="window.scrollTo(0,0)"
                         class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
                     <p class="font-light text-[1rem] text-inactiveText">{{ $input }}</p>
 

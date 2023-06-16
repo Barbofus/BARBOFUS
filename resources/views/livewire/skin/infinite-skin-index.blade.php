@@ -38,7 +38,6 @@
         <x-skins.sorter />
     </div>
 
-
     <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" />
 
     {{-- La grille des skins --}}
@@ -50,7 +49,7 @@
         {{-- Derniers vainqueurs et date du prochain tirage Barbe' Hebdo --}}
         <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
 
-        <div class="flex-1 flex flex-col items-center min-[1800px]:max-w-[calc(100%-400px)]">
+        <div class="flex-1 flex flex-col items-center min-[1800px]:max-w-[calc(100%-400px)] mb-10">
             @if(count($postIdChunks) > 0)
                 @for($i = 0; $i < $page && $i < $maxPage; $i++)
                     <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>

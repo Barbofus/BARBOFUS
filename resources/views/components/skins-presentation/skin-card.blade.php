@@ -3,6 +3,14 @@
 
     <x-skins.content :skin="$skin" />
 
+
+    <div class="absolute top-10">
+        <p>{{ $skin->updated_at }}</p>
+        <p>ID: {{ $skin->id }}</p>
+        <p>Classe: {{ $skin->race_id }}</p>
+        <p>{{ $skin->updated_at }}</p>
+    </div>
+
     {{-- Likes --}}
     <div
         x-data="{

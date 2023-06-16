@@ -25,17 +25,17 @@
         <div class="w-40 right-0 top-[30px] overflow-hidden rounded-b-md z-50 absolute bg-secondary-100 text-[1rem] text-primary font-light transition-all duration-200 cursor-pointer "
              x-show="showSort" x-transition.opacity>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Nouveauté'; sortAsc = false; showSort = false; $wire.SortBy(0, 'DESC')">Nouveauté</p>
+               x-on:mousedown="selection = 'Nouveauté'; sortAsc = false; showSort = false; $wire.SortBy(0, 'DESC'), window.scrollTo(0,0)">Nouveauté</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Ancienneté'; sortAsc = true; showSort = false; $wire.SortBy(0, 'ASC')">Ancienneté</p>
+               x-on:mousedown="selection = 'Ancienneté'; sortAsc = true; showSort = false; $wire.SortBy(0, 'ASC'), window.scrollTo(0,0)">Ancienneté</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Plus aimé'; sortAsc = false; showSort = false; $wire.SortBy(1, 'DESC')">Plus aimé</p>
+               x-on:mousedown="selection = 'Plus aimé'; sortAsc = false; showSort = false; $wire.SortBy(1, 'DESC'), window.scrollTo(0,0)">Plus aimé</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Moins aimé'; sortAsc = true; showSort = false; $wire.SortBy(1, 'ASC')">Moins aimé</p>
+               x-on:mousedown="selection = 'Moins aimé'; sortAsc = true; showSort = false; $wire.SortBy(1, 'ASC'), window.scrollTo(0,0)">Moins aimé</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC')">Récompenses</p>
+               x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC'), window.scrollTo(0,0)">Récompenses</p>
             <p class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Classes'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC')">Classes</p>
+               x-on:mousedown="selection = 'Classes'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC'), window.scrollTo(0,0)">Classes</p>
         </div>
     </div>
 </div>

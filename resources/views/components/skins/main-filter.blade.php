@@ -64,7 +64,6 @@
             <livewire:forms.skin-filter-search-bar wire:key="search{{ rand() }}" :searchFilterInput="$searchFilterInput" />
 
 
-
             <!-- Rewards Only -->
             <div class="relative mt-5 tracking-wide w-[min(90vw,380px)]">
                 <x-forms.filter-button :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly" >
@@ -123,27 +122,19 @@
 
                     <!-- Mimibiotes -->
                     <div class="relative w-[100px]">
-                        <x-forms.filter-button :label="'Mimibiotes'" :checked="!in_array(['dofus_items_sub_categorie_id', '!=', 1], $skinContent)" wire:click="ToggleSkinContent(1)" />
+                        <x-forms.filter-button :label="'Mimibiotes'" :checked="!in_array(1, $skinContent)" wire:click="ToggleSkinContent(1)" />
                     </div>
 
                     <!-- Cosmétiques -->
                     <div class="relative w-[120px]">
-                        <x-forms.filter-button :label="'Cosmétiques'" :checked="!in_array(['dofus_items_sub_categorie_id', '!=', 2], $skinContent)" wire:click="ToggleSkinContent(2)" />
+                        <x-forms.filter-button :label="'Cosmétiques'" :checked="!in_array(2, $skinContent)" wire:click="ToggleSkinContent(2)" />
                     </div>
 
                     <!-- Objets vivants -->
                     <div class="relative w-32">
-                        <x-forms.filter-button :label="'Objets vivants'" :checked="!in_array(['dofus_items_sub_categorie_id', '!=', 3], $skinContent)" wire:click="ToggleSkinContent(3)" />
+                        <x-forms.filter-button :label="'Objets vivants'" :checked="!in_array(3, $skinContent)" wire:click="ToggleSkinContent(3)" />
                     </div>
                 </div>
-
-                <!-- Level max -->
-{{--                <div class="flex h-[24px] items-center mt-2 tracking-wide">
-                    <div x-show="mimibiote" class="flex items-center">
-                        <p class="text-secondary font-thin text-[0.9rem]">Lvl Max: </p>
-                        <input type="text" pattern="[0-200]" class="border-transparent focus:outline-none rounded-[2.25px] bg-primary-100 w-[50px] ml-1 px-2 placeholder-inactiveText font-thin text-inactiveText appearance-none" placeholder="200" maxlength="3">
-                    </div>
-                </div>--}}
             </div>
         </div>
 
@@ -164,7 +155,7 @@
 
                     <!-- Bouton reset -->
                     <button class="w-40 h-10 left-[33%] min-h-[32px] bg-secondary-100 hover:bg-secondary min-w-[144px] font-light text-[1rem] rounded-md text-primary"
-                            @click="FillSelected"
+                            @click="window.scrollTo(0,0)"
                             wire:click="UnselectAllRaces" >
                         Reset les classes
                     </button>
@@ -177,7 +168,8 @@
 
                     @foreach($races as $key => $race)
                         <button class="relative"
-                                wire:click="ToggleRace({{ $key + 1 }})">
+                                wire:click="ToggleRace({{ $key + 1 }})"
+                                @click="window.scrollTo(0,0)">
 
                             <div class="peer relative h-[54px] w-[54px]" x-cloak>
                                 @if(!in_array(['race_id', '=', $key + 1, 'or'], $raceSelection))

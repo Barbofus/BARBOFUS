@@ -16,7 +16,4 @@ class RewardPrice extends Model
         'points'
     ];
 
-    public function Rewards() {
-        return $this->hasMany(Reward::class);
-    }
 }

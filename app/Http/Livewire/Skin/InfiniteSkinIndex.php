@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Skin;
 
 use App\Models\Skin;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -16,22 +16,30 @@ class InfiniteSkinIndex extends Component
     public $maxPage = 1;
     public $queryCount = 0;
     protected $allOrder = [
-        'updated_at',
-        'Likes_count',
-        'Rewards_sum_points',
-        'race_id',
+        'skins.updated_at',
+        'likes_count',
+        'rewards_points',
+        'skins.race_id',
     ];
 
-    protected $itemRelations = [
+    /*protected $itemRelations = [
         'DofusItemHat',
         'DofusItemCloak',
         'DofusItemShield',
         'DofusItemPet',
         'DofusItemCostume',
+    ];*/
+    protected $itemRelations = [
+        'dofus_item_hat',
+        'dofus_item_cloak',
+        'dofus_item_shield',
+        'dofus_item_pet',
+        'dofus_item_costume',
     ];
+
     protected $hasLoadMore = false;
 
-    public $orderBy = 'updated_at'; // Nouveauté par défault
+    public $orderBy = 'skins.updated_at'; // Nouveauté par défault
     public $orderDirection = 'DESC';
 
     public $races;
@@ -69,7 +77,7 @@ class InfiniteSkinIndex extends Component
 
     public function PrepareChunks()
     {
-        $this->postIdChunks = Skin::query()
+        /*$this->postIdChunks = Skin::query()
             ->select('id')
             ->where('status', 'Posted')
 
@@ -130,7 +138,105 @@ class InfiniteSkinIndex extends Component
             // Scroll infini
             ->pluck('id')
             ->chunk(self::ITEMS_PER_PAGE)
+            ->toArray();*/
+
+        $this->postIdChunks = DB::table('skins')
+            //->leftJoin('reward_prices', 'reward_prices.id', '=', 'rewards.reward_price_id')
+            ->join('users', 'skins.user_id', '=', 'users.id')
+
+            ->select('skins.id')
+
+            // Variables utiles pour les orderBy
+            ->addSelect([
+                'rewards_points' => DB::table('rewards')
+                    ->selectRaw('sum(points)')
+                    ->whereColumn('rewards.skin_id', 'skins.id')
+            ])
+            ->addSelect([
+                'likes_count' => DB::table('likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('likes.skin_id', 'skins.id')
+            ])
+            /*->addSelect([
+                'user_name' => DB::table('users')
+                    ->selectRaw('name')
+                    ->whereColumn('users.id', 'skins.user_id')
+            ])*/
+
+            // Début du système de filtres
+            //->where('skins.id', 409)
+            ->where($this->raceWhere)
+            ->where($this->genderWhere)
+
+            // Barbe Only
+            ->when($this->barbeOnly, function (Builder $query) {
+                $query->where('users.name', 'Barbe Douce');
+            })
+
+            // Winners Only
+            ->when($this->winnersOnly, function (Builder $query) {
+                $query->whereExists(function (Builder $query) {
+                    $query->select('id')
+                        ->from('rewards')
+                        ->whereColumn('rewards.skin_id', 'skins.id');
+                });
+            })
+
+            // Skin content
+            ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
+                foreach ($this->itemRelations as $item) {
+                    $query->leftJoin($item . 's', $item . 's.id', '=', 'skins.' . $item . '_id');
+                }
+
+                $query->where(function (Builder $query) {
+
+                    // Parcous toutes les relations d'items (DofusItemHat etc..)
+                    foreach ($this->itemRelations as $item) {
+                            $query->where(function (Builder $query) use ($item) {
+
+                                $query->whereNotExists(function (Builder $query) use ($item) {
+                                    $query->select('id')
+                                        ->from($item.'s')
+                                        ->whereColumn($item.'s.id', 'skins.'.$item.'_id');
+                                })
+                                    ->orWhereNotIn($item.'s.dofus_items_sub_categorie_id', $this->skinContentWhere);
+                            });
+
+                    }
+                });
+            })
+
+            // SearchBar
+            /*->when(count($this->searchFilterInput) > 0, function (Builder $query) {
+                $query->where(function (Builder $query) {
+
+                    // Pour chaque mot clef
+                    foreach ($this->searchFilterInput as $input) {
+
+                        // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
+                        $query->orWhereRelation('User', 'name', 'LIKE', '%' . $input . '%');
+
+                        // ensuite, on teste les noms d'items, toujours en OR
+                        foreach ($this->itemRelations as $relation) {
+                            $query->orWhereRelation($relation, 'name', 'LIKE', '%' . $input . '%');
+                        }
+                    }
+                });
+            })*/
+
+            ->where('skins.status', 'Posted')
+
+            // orderBy
+            ->orderBy($this->orderBy, $this->orderDirection)
+            ->orderBy('skins.updated_at', 'DESC')
+
+            // Scroll infini
+            ->pluck('id')
+            ->chunk(self::ITEMS_PER_PAGE)
             ->toArray();
+            //->get();
+
+        //dd($this->postIdChunks);
 
         $this->page = 1;
 
@@ -180,12 +286,13 @@ class InfiniteSkinIndex extends Component
     public function ToggleSkinContent($subcategoryID)
     {
         // Si le subcategory est déjà exclu
-        if (count($this->skinContentWhere) > 0 && ($key = array_search(['dofus_items_sub_categorie_id', '!=', $subcategoryID], $this->skinContentWhere)) !== false) {
+        if (count($this->skinContentWhere) > 0 && ($key = array_search($subcategoryID, $this->skinContentWhere)) !== false) {
             unset($this->skinContentWhere[$key]);
+
             return;
         }
 
-        $this->skinContentWhere[] = ['dofus_items_sub_categorie_id', '!=', $subcategoryID];
+        $this->skinContentWhere[] = $subcategoryID;
     }
 
     public function ToggleShowBarbeOnly()
