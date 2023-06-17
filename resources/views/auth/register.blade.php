@@ -29,7 +29,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </x-forms.text-input>
 
-                <button type="submit" class="block px-8 py-3 mx-auto font-thin text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:bg-yellow-700 uppercase">S'enregistrer</button>
+                <x-forms.submit>S'enregistrer</x-forms.submit>
 
                 <p class="font-thin -ml-[min(200px,20vw)]">Déjà inscrit ? <a href="{{ route('login') }}" class="font-normal text-goldText hover:text-goldTextLit text-lg">Se connecter</a></p>
             </div>
