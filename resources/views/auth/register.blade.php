@@ -1,80 +1,38 @@
 @extends('layouts.basic-views')
 
 @section('content')
-    <h1 class=" text-5xl font-bold text-center mt-[50px]">Bienvenue sur la page de création de compte !</h1>
-    <h2 class=" text-3xl italic text-center mt-[10px]">Je suis encore en construction, mais... on se reverra bientôt</h2>
+    <div class="flex items-center justify-center mt-24">
+        <form method="POST" action='{{ route('register') }}' class="flex justify-center w-[80%]">
+            @csrf
+            <div class="w-full px-5 py-10 flex flex-col items-center gap-y-8">
 
-    <form method="POST" action='{{ route('register') }}' class="flex justify-center">
-      @csrf
-      <div class="w-full px-5 py-10 md:w-1/2 md:px-10">
+                <h1 class="text-[min(5rem,15vw)] font-normal text-center uppercase">Inscription</h1>
+                <h2 class="text-2xl font-thin text-center -mt-10 mb-8 uppercase">Rejoins-nous sur Barbofus !</h2>
 
-        <div class="-mx-3 mb-5 pl-[250px]">
-            <div class="w-[50%] px-3">
-                <label for="" class="px-1 font-semibold text-l">Pseudo</label>
-                <div class="flex">
-                    <div class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"><i class="text-lg text-gray-400 mdi mdi-email-outline"></i></div>
-                    <input id="name" name="name" type="text" class="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500" placeholder="RoxxorDu92">
-                </div>
+                {{-- Pseudo --}}
+                <x-forms.text-input :placeholder="'Pseudo'" :type="'text'" :name="'name'">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </x-forms.text-input>
+
+                {{-- Email --}}
+                <x-forms.text-input :placeholder="'E-mail'" :type="'email'" :name="'email'">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </x-forms.text-input>
+
+                {{-- Password --}}
+                <x-forms.text-input :placeholder="'Mot de passe'" :type="'password'" :name="'password'">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </x-forms.text-input>
+
+                {{-- Password Confirmation --}}
+                <x-forms.text-input :placeholder="'Confirmation'" :type="'password'" :name="'password_confirmation'">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </x-forms.text-input>
+
+                <button type="submit" class="block px-8 py-3 mx-auto font-thin text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:bg-yellow-700 uppercase">S'enregistrer</button>
+
+                <p class="font-thin -ml-[min(200px,20vw)]">Déjà inscrit ? <a href="{{ route('login') }}" class="font-normal text-goldText hover:text-goldTextLit text-lg">Se connecter</a></p>
             </div>
-            @error('name')
-              <span class="text-red-400 text-l ml-[50px]">
-                <span>{{ $message }}</span>
-              </span>
-            @enderror
-        </div>
-
-        <div class="-mx-3 mb-5 pl-[250px]">
-            <div class="w-[50%] px-3">
-                <label for="" class="px-1 font-semibold text-l">Email</label>
-                <div class="flex">
-                    <div class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"><i class="text-lg text-gray-400 mdi mdi-email-outline"></i></div>
-                    <input id="email" name="email" type="email" class="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500" placeholder="theroxxordu92@gmiel.com">
-                </div>
-            </div>
-            @error('email')
-              <span class="text-red-400 text-l ml-[50px]">
-                <span>{{ $message }}</span>
-              </span>
-            @enderror
-        </div>
-
-        <div class="-mx-3 mb-5 pl-[250px]">
-            <div class="w-[50%] px-3">
-                <label for="" class="px-1 font-semibold text-l">Mot de passe</label>
-                <div class="flex">
-                    <div class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"><i class="text-lg text-gray-400 mdi mdi-lock-outline"></i></div>
-                    <input id="password" name="password" type="password" class="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500" placeholder="************">
-                </div>
-            </div>
-            @error('password')
-              <span class="text-red-400 text-l ml-[50px]">
-                <span>{{ $message }}</span>
-              </span>
-            @enderror
-        </div>
-
-        <div class="-mx-3 mb-12 pl-[250px]">
-            <div class="w-[50%] px-3">
-                <label for="" class="px-1 font-semibold text-l">Confirmation du mot de passe</label>
-                <div class="flex">
-                    <div class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"><i class="text-lg text-gray-400 mdi mdi-lock-outline"></i></div>
-                    <input id="password_confirmation" name="password_confirmation" type="password" class="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500" placeholder="************">
-                </div>
-            </div>
-            @error('password_confirmation')
-              <span class="text-red-400 text-l ml-[50px]">
-                <span>{{ $message }}</span>
-              </span>
-            @enderror
-        </div>
-
-        <div class="flex justify-center -mx-3">
-            <div class="w-full px-3 mb-5">
-                <button type="submit" class="block w-full max-w-xs px-3 py-3 mx-auto font-semibold text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:bg-yellow-700">VALIDER</button>
-            </div>
-        </div>
-
-          <a href="{{ route('login') }}">Déjà enregistré ? Se connecter</a>
-      </div>
-    </form>
+        </form>
+    </div>
 @endsection

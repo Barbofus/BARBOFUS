@@ -14,7 +14,7 @@ return [
     */
 
     'failed' => 'Les champs ne correspondent pas.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'password' => 'Mot de passe incorrect.',
+    'throttle' => 'Trop de tentatives. Attendez :seconds secondes.',
 
 ];
