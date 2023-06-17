@@ -1,4 +1,4 @@
-<div>
+<div class="h-full w-full">
 
     {{-- Pseudo --}}
     <div class="absolute bottom-0 left-0 max-w-[calc(100%-60px)] px-1 pb-[2px]">
@@ -7,7 +7,7 @@
         </button>
     </div>
 
-    <div class="group">
+    <div class="group h-full w-full">
         {{-- Barbe --}}
         @if($skin->user_name === 'Barbe Douce')
             <img class="absolute top-0 left-0 h-[25%] max-h-[64px] peer cursor-pointer" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">
