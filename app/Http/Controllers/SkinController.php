@@ -33,7 +33,16 @@ class SkinController extends Controller
      */
     public function create()
     {
-        $races = DB::table('races')->select('id', 'name')->get();
+        $races = DB::table('races')
+            ->select('*')
+            ->get()->toArray();
+
+
+        foreach ($races as $race)
+        {
+            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
+        }
 
         return view('skins.create', [
             'races' => $races,
@@ -83,7 +92,16 @@ class SkinController extends Controller
      */
     public function edit(Skin $skin)
     {
-        $races = DB::table('races')->select('id', 'name')->get();
+        $races = DB::table('races')
+            ->select('*')
+            ->get()->toArray();
+
+
+        foreach ($races as $race)
+        {
+            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
+        }
 
         return view('skins.edit', [
             'races' => $races,

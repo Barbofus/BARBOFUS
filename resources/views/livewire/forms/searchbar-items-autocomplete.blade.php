@@ -2,7 +2,7 @@
     x-data="{ focusinput: false, focusbutton: false }"
     x-id="['dropdown-search']"
 >
-    <div class="flex items-center h-6 space-x-2 text-slate-600">
+    <div class="flex items-center h-6 space-x-2 text-inactiveText">
         @if ($existentItem && count($existentItem) > 0)
             <img class="h-full" src="{{ asset('storage\\'.$existentItem['sub_icon_path']) }}" draggable="false">
             <p>{{ $existentItem['sub_name'] }}</p>
@@ -10,13 +10,15 @@
         @endif
     </div>
 
-    <div class="w-[300px]">
+    <div class="w-[min(90vw,300px)]">
+
+        {{-- Résultat --}}
         <div class="relative w-full h-12">
             <label for="{{ $name }}">
                 <img class="absolute h-full" src="{{ ($existentItem && count($existentItem) > 0) ? asset('storage/'.$existentItem['icon_path']) : '' }}" draggable="false">
                 <input
                     maxlength="30" id="{{ $name }}" type="text" placeholder="{{ $placeholder }}"
-                    class="w-full h-full rounded-md pl-14 focus:outline-none bg-slate-100 @error($name) err-border @enderror"
+                    class="w-full h-full rounded-md pl-14 focus:outline-none placeholder-inactiveText bg-primary-100 @error($name) err-border @enderror"
                     value="{{ $value }}"
                     :aria-expanded="focusinput || focusbutton"
                     :aria-controls="$id('dropdown-search')"
@@ -29,27 +31,27 @@
             </label>
         </div>
 
+        {{-- Menu déroulant --}}
         <div
-            class="absolute z-50 w-full bg-slate-50 max-h-60 overflow-y-auto"
+            class="absolute z-50 w-full bg-primary-100 max-h-60 overflow-y-auto"
             x-show="focusinput || focusbutton"
             :id="$id('dropdown-search')">
             @foreach ($items as $key => $item)
-
                 <button
                     type="button"
-                    class="flex w-full items-center h-12 space-x-2 cursor-pointer {{ ($selectedItem === $key) ? 'bg-blue-500 hover:bg-blue-400' : 'hover:bg-slate-200'}}"
+                    class="flex w-full rounded-md items-center text-inactiveText font-light transition-all border-2 border-primary-100 h-12 space-x-2 cursor-pointer {{ ($selectedItem === $key) ? 'border-secondary text-secondary font-normal' : 'hover:border-inactiveText'}}"
                     wire:click="setSelection({{$key}})"
                     x-on:focus="focusbutton = true" x-on:blur="focusbutton = false">
 
-                    <img draggable="false" class="h-full select-none" src="{{ asset('storage\\'.$item->icon_path) }}" alt="">
-                    <p class="{{ ($selectedItem === $key) ? 'font-bold text-white' : ''}} select-none">{{ $item->name }}</p>
+                    <img draggable="false" class="h-full select-none" src="{{ asset('storage\\'. $item->icon_path) }}" alt="">
+                    <p class="select-none">{{ $item->name }}</p>
                 </button>
 
             @endforeach
         </div>
 
         @error($name)
-        <x-forms.requirements-error :$message />
+            <x-forms.requirements-error :$message />
         @enderror
     </div>
 </div>

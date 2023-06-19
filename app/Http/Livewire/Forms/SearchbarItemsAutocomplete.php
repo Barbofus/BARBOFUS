@@ -26,7 +26,6 @@ class SearchbarItemsAutocomplete extends Component
         if($value){
             $existentItem = $this->ExistentQuery($value);
             $this->existentItem = collect($existentItem);
-
             $this->query = $this->existentItem['name'];
             $this->previousQuery = $this->query;
         }
@@ -108,14 +107,8 @@ class SearchbarItemsAutocomplete extends Component
             return;
         }
 
-        // Si la recherche est identique
-        if($this->previousQuery == $query) return;
-
-        // On reset la selection
-        $this->resetSelection();
-
         // Prend les premiers items contenant la recherche en excluant le résultat exact
-        $this->itemsToShow = collect(DB::table($this->relatedModel)
+        $this->itemsToShow = DB::table($this->relatedModel)
             ->select('id', 'icon_path', 'name','level')
             ->where('name', '!=', $query)
             ->where('name', 'LIKE', '%'.$query.'%')
@@ -131,12 +124,13 @@ class SearchbarItemsAutocomplete extends Component
                     ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
                     ->take(1)
             ])
-            ->get());
+            ->get();
 
-        // Si l'item exact est écris, on le dit pour changer le visuel
+        // Si l'item exact est écrit, on le dit pour changer le visuel
         $this->existentItem = $this->ExistentQuery($query);
 
         $this->previousQuery = $query;
+
     }
 
     // Remplace la query par l'item selectionné
