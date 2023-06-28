@@ -32,7 +32,7 @@ class StoreUpdateSkinRequest extends FormRequest
     {
         $hexRegex =  [
             'required',
-            'regex:/^([a-f0-9]{6}|[a-f0-9]{3})$/i'
+            'regex:/^[a-f0-9]{6}$/i'
         ];
 
         $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';

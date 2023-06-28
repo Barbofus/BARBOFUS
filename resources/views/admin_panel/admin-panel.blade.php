@@ -4,7 +4,7 @@
     <div x-data="{
         loading: false
     }">
-        <h1 class="text-[min(3.5rem,5vw)] font-normal text-center uppercase">Panel Administrateur</h1>
+        <h1 class="text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center uppercase">Panel Administrateur</h1>
         <h2 class="text-2xl font-thin text-center mb-8 uppercase">Gestion de l'API DofusDB</h2>
 
         <div class="flex justify-center w-full mt-16">
