@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="grid justify-center grid-cols-[repeat(auto-fill,200px)] p-4 gap-4 transition-all duration-300">
+    <div class="grid justify-center grid-cols-[repeat(auto-fill,200px)] p-4 gap-4">
         @foreach($skins as $key => $skin)
 
             <template x-if="true">
@@ -10,7 +10,7 @@
                 <div
                     class="mt-2 flex space-y-2 flex-col"
                     x-data="{
-                        open: false,
+                        open: true,
                         inTransition: false,
                         SwitchOpen(){
                             if(!this.open) {
@@ -30,16 +30,16 @@
 
                         {{-- L'image --}}
                         <button
-                            class="flex flex-col items-center hover:bg-gray-200 rounded-md"
+                            class="flex flex-col items-center transition-colors rounded-md"
                             x-on:click="SwitchOpen"
-                            :class="open || inTransition ? 'bg-gray-200' : ''"
+                            :class="open || inTransition ? 'bg-primary-100' : 'hover:bg-primary-100 '"
                         >
 
                             {{-- Classe + ID --}}
                             <div class="flex items-center space-x-2">
                                 <img draggable="false" width="64" src="{{ asset('storage/' . $skin->race_icon) }}">
                                 <div class="flex flex-col items-baseline">
-                                    <p class="text-gray-400 italic text-sm">ID#{{ $skin->id }}</p>
+                                    <p class="text-inactiveText italic text-sm">ID#{{ $skin->id }}</p>
                                     <p class="text-xl">{{ $skin->race_name }}</p>
                                 </div>
                             </div>
@@ -47,11 +47,11 @@
                             {{-- Image --}}
                             <img draggable="false" width="200" src="{{ asset('storage/' . $skin->image_path) }}">
 
-                            <p class="text-gray-500 italic">{{ $skin->user_name }}</p>
+                            <p class="text-inactiveText italic">{{ $skin->user_name }}</p>
                         </button>
 
                         {{-- Détails --}}
-                        <div class="flex space-x-2 items-center"
+                        <div class="flex space-x-2 items-center h-full"
                              x-show="open"
                              x-transition:enter="transition ease-out duration-300"
                              x-transition:enter-start="opacity-0 -translate-x-full"
@@ -62,32 +62,46 @@
 
                             {{-- Items --}}
                             <div>
-                                @if(isset($skin->dofus_item_hat_id))
-                                    <x-skins-presentation.item :subname="$skin->dofus_item_hat_subcategorie_name" :subicon="$skin->dofus_item_hat_subcategorie_icon" :name="$skin->dofus_item_hat_name" :level="$skin->dofus_item_hat_level" :icon="$skin->dofus_item_hat_icon"/>
-                                @endif
 
-                                @if(isset($skin->dofus_item_cloak_id))
-                                    <x-skins-presentation.item :subname="$skin->dofus_item_cloak_subcategorie_name" :subicon="$skin->dofus_item_cloak_subcategorie_icon" :name="$skin->dofus_item_cloak_name" :level="$skin->dofus_item_cloak_level" :icon="$skin->dofus_item_cloak_icon"/>
-                                @endif
+                                <div class="flex gap-x-8 justify-center items-center">
+                                    <div class="flex gap-x-2 items-center">
+                                        @if($skin->gender == 'Femme')
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
+                                            </svg>
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+                                            </svg>
+                                        @endif
+                                        <p class="text-secondary font-thin text-xl">{{ $skin->gender }}</p>
+                                    </div>
+                                    <p class="text-secondary font-thin text-xl">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
+                                </div>
 
-                                @if(isset($skin->dofus_item_shield_id))
-                                    <x-skins-presentation.item :subname="$skin->dofus_item_shield_subcategorie_name" :subicon="$skin->dofus_item_shield_subcategorie_icon" :name="$skin->dofus_item_shield_name" :level="$skin->dofus_item_shield_level" :icon="$skin->dofus_item_shield_icon"/>
-                                @endif
+                                <div>
+                                    @if(isset($skin->dofus_item_hat_id))
+                                        <x-skins-presentation.item :name="$skin->dofus_item_hat_name" :level="$skin->dofus_item_hat_level" :icon="$skin->dofus_item_hat_icon"/>
+                                    @endif
 
-                                @if(isset($skin->dofus_item_pet_id))
-                                    <x-skins-presentation.item :subname="$skin->dofus_item_pet_subcategorie_name" :subicon="$skin->dofus_item_pet_subcategorie_icon" :name="$skin->dofus_item_pet_name" :level="$skin->dofus_item_pet_level" :icon="$skin->dofus_item_pet_icon"/>
-                                @endif
+                                    @if(isset($skin->dofus_item_cloak_id))
+                                        <x-skins-presentation.item :name="$skin->dofus_item_cloak_name" :level="$skin->dofus_item_cloak_level" :icon="$skin->dofus_item_cloak_icon"/>
+                                    @endif
 
-                                @if(isset($skin->dofus_item_costume_id))
-                                    <x-skins-presentation.item :subname="$skin->dofus_item_costume_subcategorie_name" :subicon="$skin->dofus_item_costume_subcategorie_icon" :name="$skin->dofus_item_costume_name" :level="$skin->dofus_item_costume_level" :icon="$skin->dofus_item_costume_icon"/>
-                                @endif
+                                    @if(isset($skin->dofus_item_shield_id))
+                                        <x-skins-presentation.item :name="$skin->dofus_item_shield_name" :level="$skin->dofus_item_shield_level" :icon="$skin->dofus_item_shield_icon"/>
+                                    @endif
+
+                                    @if(isset($skin->dofus_item_pet_id))
+                                        <x-skins-presentation.item :name="$skin->dofus_item_pet_name" :level="$skin->dofus_item_pet_level" :icon="$skin->dofus_item_pet_icon"/>
+                                    @endif
+
+                                    @if(isset($skin->dofus_item_costume_id))
+                                        <x-skins-presentation.item :name="$skin->dofus_item_costume_name" :level="$skin->dofus_item_costume_level" :icon="$skin->dofus_item_costume_icon"/>
+                                    @endif
+                                </div>
                             </div>
 
-                            {{-- Sexe / Visage / Couleurs --}}
-                            <div class="pl-4 flex flex-col space-y-2">
-                                <p>{{ $skin->gender }}</p>
-                                <p>Visage n°{{ $skin->face }}</p>
-
+                            {{-- Couleurs --}}
+                            <div class="pl-4 flex flex-col justify-between h-full">
                                 <x-skins-presentation.color :color="$skin->color_skin" :name="'Peau'"/>
                                 <x-skins-presentation.color :color="$skin->color_hair" :name="'Cheveux'"/>
                                 <x-skins-presentation.color :color="$skin->color_cloth_1" :name="'Habits 1'"/>
@@ -122,7 +136,7 @@
                             <button class="w-36 h-12 text-white bg-red-500 rounded-md text-xl hover:bg-red-400">Refuser</button>
                             <textarea
                                 type="text" name="reason" placeholder="Raison du refus ..." maxlength="128"
-                                class="rounded-md border border-gray-400 flex-1 text-sm h-12 p-2"></textarea>
+                                class="rounded-md text-secondary placeholder:text-inactiveText bg-primary-100 flex-1 text-sm h-12 p-2"></textarea>
                         </form>
                     </div>
                 </div>

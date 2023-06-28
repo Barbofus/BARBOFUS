@@ -64,27 +64,9 @@ class SkinValidationController extends Controller
                             ->take(1)
                     ])
                     ->addSelect([
-                        $item.'_level' => DB::table($item.'s')
-                            ->select('level')
-                            ->whereColumn('id', 'skins.'.$item.'_id')
-                            ->take(1)
-                    ])
-                    ->addSelect([
                         $item.'_icon' => DB::table($item.'s')
                             ->select('icon_path')
                             ->whereColumn('id', 'skins.'.$item.'_id')
-                            ->take(1)
-                    ])
-                    ->addSelect([
-                        $item.'_subcategorie_icon' => DB::table('dofus_items_sub_categories')
-                            ->select('icon_path')
-                            ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
-                            ->take(1)
-                    ])
-                    ->addSelect([
-                        $item.'_subcategorie_name' => DB::table('dofus_items_sub_categories')
-                            ->select('name')
-                            ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
                             ->take(1)
                     ]);
                 }

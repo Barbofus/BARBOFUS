@@ -3,17 +3,19 @@
     <div class="flex items-center ml-2 h-8 relative z-10"
          x-data="{
             color: '{{$value}}',
-            dark: false,
+            dark: true,
 
             IsDark() {
 
-                console.log(this.color);
-                r = parseInt(this.color.substring(0,2), 16);
-                g = parseInt(this.color.substring(2,4), 16);
-                b = parseInt(this.color.substring(4,6), 16);
+                finalColor = '#' + this.color;
 
+                rgb = finalColor.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) => '#' + r + r + g + g + b + b)
+                            .substring(1).match(/.{2}/g)
+                            .map(x => parseInt(x, 16));
 
-                (r + g + b > 382) ? this.dark = false : this.dark = true;
+                brightness = Math.round(((parseInt(rgb[0]) * 299) + (parseInt(rgb[1]) * 587) + (parseInt(rgb[2]) * 114)) /1000);
+
+                (brightness > 125) ? this.dark = false : this.dark = true;
             },
 
             changePreviewColor(color){
