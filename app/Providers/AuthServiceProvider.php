@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -27,17 +28,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('admin-access', function ($user) {
-            return $user->role_id == Role::where('name', 'Administrateur')->first()->id;
+        $roles['user'] = DB::table('roles')->select('id')->where('name', 'Utilisateur')->pluck('id')->toArray()[0];
+        $roles['mod'] = DB::table('roles')->select('id')->where('name', 'Modérateur')->pluck('id')->toArray()[0];
+        $roles['admin'] = DB::table('roles')->select('id')->where('name', 'Administrateur')->pluck('id')->toArray()[0];
+
+        Gate::define('admin-access', function ($user) use($roles) {
+            return $user->role_id == $roles['admin'];
         });
 
-        Gate::define('mod-access', function ($user) {
-            return $user->role_id == Role::where('name',  '=', 'Modérateur')->first()->id;
+        Gate::define('mod-access', function ($user) use($roles) {
+            return $user->role_id == $roles['mod'];
         });
 
-        Gate::define('validate-skin', function ($user) {
-            return $user->role_id == Role::where('name',  '=', 'Modérateur')->first()->id
-                || $user->role_id == Role::where('name', 'Administrateur')->first()->id;
+        Gate::define('validate-skin', function ($user) use($roles) {
+            return $user->role_id == $roles['mod']
+                || $user->role_id == $roles['admin'];
         });
         //
     }

@@ -37,17 +37,17 @@
 
                             {{-- Classe + ID --}}
                             <div class="flex items-center space-x-2">
-                                <img draggable="false" width="64" src="{{ asset('storage/images/icons/classes/' . $skin->Race->icon_path) }}">
+                                <img draggable="false" width="64" src="{{ asset('storage/' . $skin->race_icon) }}">
                                 <div class="flex flex-col items-baseline">
                                     <p class="text-gray-400 italic text-sm">ID#{{ $skin->id }}</p>
-                                    <p class="text-xl">{{ $skin->Race->name }}</p>
+                                    <p class="text-xl">{{ $skin->race_name }}</p>
                                 </div>
                             </div>
 
                             {{-- Image --}}
                             <img draggable="false" width="200" src="{{ asset('storage/' . $skin->image_path) }}">
 
-                            <p class="text-gray-500 italic">{{ $skin->user->name }}</p>
+                            <p class="text-gray-500 italic">{{ $skin->user_name }}</p>
                         </button>
 
                         {{-- Détails --}}
@@ -63,23 +63,23 @@
                             {{-- Items --}}
                             <div>
                                 @if(isset($skin->dofus_item_hat_id))
-                                    <x-skins-presentation.item :item="$skin->DofusItemHat"/>
+                                    <x-skins-presentation.item :subname="$skin->dofus_item_hat_subcategorie_name" :subicon="$skin->dofus_item_hat_subcategorie_icon" :name="$skin->dofus_item_hat_name" :level="$skin->dofus_item_hat_level" :icon="$skin->dofus_item_hat_icon"/>
                                 @endif
 
                                 @if(isset($skin->dofus_item_cloak_id))
-                                    <x-skins-presentation.item :item="$skin->DofusItemCloak"/>
+                                    <x-skins-presentation.item :subname="$skin->dofus_item_cloak_subcategorie_name" :subicon="$skin->dofus_item_cloak_subcategorie_icon" :name="$skin->dofus_item_cloak_name" :level="$skin->dofus_item_cloak_level" :icon="$skin->dofus_item_cloak_icon"/>
                                 @endif
 
                                 @if(isset($skin->dofus_item_shield_id))
-                                    <x-skins-presentation.item :item="$skin->DofusItemShield"/>
+                                    <x-skins-presentation.item :subname="$skin->dofus_item_shield_subcategorie_name" :subicon="$skin->dofus_item_shield_subcategorie_icon" :name="$skin->dofus_item_shield_name" :level="$skin->dofus_item_shield_level" :icon="$skin->dofus_item_shield_icon"/>
                                 @endif
 
                                 @if(isset($skin->dofus_item_pet_id))
-                                    <x-skins-presentation.item :item="$skin->DofusItemPet"/>
+                                    <x-skins-presentation.item :subname="$skin->dofus_item_pet_subcategorie_name" :subicon="$skin->dofus_item_pet_subcategorie_icon" :name="$skin->dofus_item_pet_name" :level="$skin->dofus_item_pet_level" :icon="$skin->dofus_item_pet_icon"/>
                                 @endif
 
                                 @if(isset($skin->dofus_item_costume_id))
-                                    <x-skins-presentation.item :item="$skin->DofusItemCostume"/>
+                                    <x-skins-presentation.item :subname="$skin->dofus_item_costume_subcategorie_name" :subicon="$skin->dofus_item_costume_subcategorie_icon" :name="$skin->dofus_item_costume_name" :level="$skin->dofus_item_costume_level" :icon="$skin->dofus_item_costume_icon"/>
                                 @endif
                             </div>
 

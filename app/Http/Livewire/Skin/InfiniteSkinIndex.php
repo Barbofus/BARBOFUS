@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Skin;
 
-use App\Models\Skin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -22,13 +21,6 @@ class InfiniteSkinIndex extends Component
         'skins.race_id',
     ];
 
-    /*protected $itemRelations = [
-        'DofusItemHat',
-        'DofusItemCloak',
-        'DofusItemShield',
-        'DofusItemPet',
-        'DofusItemCostume',
-    ];*/
     protected $itemRelations = [
         'dofus_item_hat',
         'dofus_item_cloak',
