@@ -11,6 +11,10 @@ class NotificationsList extends Component
 
     public $notifications;
 
+    protected $listeners = [
+        'refresh-notifications' => '$refresh',
+    ];
+
     public function mount()
     {
         $this->ShowLessNotifications();

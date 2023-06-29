@@ -1,4 +1,4 @@
-<div class="flex justify-center mt-36 mb-10">
+<div class="flex justify-center mt-20 mb-10">
 
     {{-- Création de variable de class pour éviter les copier coller avec AlpineJS --}}
     <div
