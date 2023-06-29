@@ -7,10 +7,20 @@ use App\Models\Race;
 use App\Models\Skin;
 use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 class SkinController extends Controller
 {
+
+
+    protected $itemRelations = [
+        'dofus_item_hat',
+        'dofus_item_cloak',
+        'dofus_item_shield',
+        'dofus_item_pet',
+        'dofus_item_costume',
+    ];
 
     public function __construct()
     {
@@ -24,6 +34,78 @@ class SkinController extends Controller
     public function index()
     {
         return view('skins.index');
+    }
+
+
+    public function show(Skin $skin)
+    {
+        $toShow = DB::table('skins')
+            ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3')
+            ->where('skins.id', $skin->id)
+            ->when(true, function (Builder $query) {
+                foreach ($this->itemRelations as $item) {
+                    $query->leftJoin($item . 's', $item . 's.id', '=', 'skins.' . $item . '_id');
+                }
+            })
+
+            ->addSelect([
+                'user_name' => DB::table('users')
+                    ->select('name')
+                    ->whereColumn('id', 'skins.user_id')
+                    ->take(1)
+            ])
+            ->addSelect([
+                'race_name' => DB::table('races')
+                    ->select('name')
+                    ->whereColumn('id', 'skins.race_id')
+                    ->take(1)
+            ])
+            ->addSelect([
+                'race_icon' => DB::table('races')
+                    ->select('ghost_icon_path')
+                    ->whereColumn('id', 'skins.race_id')
+                    ->take(1)
+            ])
+
+            ->when(true, function (Builder $query) {
+                foreach ($this->itemRelations as $item) {
+                    $query->addSelect([
+                        $item.'_name' => DB::table($item.'s')
+                            ->select('name')
+                            ->whereColumn('id', 'skins.'.$item.'_id')
+                            ->take(1)
+                        ])
+                        ->addSelect([
+                            $item.'_icon' => DB::table($item.'s')
+                                ->select('icon_path')
+                                ->whereColumn('id', 'skins.'.$item.'_id')
+                                ->take(1)
+                        ])
+                        ->addSelect([
+                            $item.'_level' => DB::table($item.'s')
+                                ->select('level')
+                                ->whereColumn('id', 'skins.'.$item.'_id')
+                                ->take(1)
+                        ])
+                        ->addSelect([
+                            $item.'_subname' => DB::table('dofus_items_sub_categories')
+                                ->select('name')
+                                ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
+                                ->take(1)
+                        ])
+                        ->addSelect([
+                            $item.'_subicon' => DB::table('dofus_items_sub_categories')
+                                ->select('icon_path')
+                                ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
+                                ->take(1)
+                        ]);
+                }
+            })
+            ->first();
+
+        return view('skins.show', [
+            'skin' => $toShow
+        ]);
     }
 
     /**
@@ -60,7 +142,7 @@ class SkinController extends Controller
 
         // Resize de l'image, on affichera que 200px max
         $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
-            'width' => 200,
+            'width' => 300,
             'height' => null ]);
 
         Skin::create([
@@ -126,7 +208,7 @@ class SkinController extends Controller
 
             // Resize de l'image, on affichera que 200px max
             $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
-                'width' => 200,
+                'width' => 300,
                 'height' => null ]);
         }
 

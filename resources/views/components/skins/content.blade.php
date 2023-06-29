@@ -7,7 +7,7 @@
         </button>
     </div>
 
-    <div class="group h-full w-full">
+    <a class="group h-full w-ful" href="{{ route('skins.show', $skin->id) }}">
         {{-- Barbe --}}
         @if($skin->user_name === 'Barbe Douce')
             <img class="absolute top-0 left-0 h-[25%] max-h-[64px] peer cursor-pointer" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">
@@ -69,5 +69,5 @@
             <div class="skinBackGround bg-[linear-gradient(0deg,rgba(255,255,255,0)36%,rgba(255,255,255,0.05)40%,rgba(255,255,255,0)100%)] w-[200%] h-full rotate-[30deg] origin-bottom-right absolute right-0 top-[-200px]"></div>
         </div>
         <img src="{{ asset('storage\/') . $skin->image_path }}" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
-    </div>
+    </a>
 </div>

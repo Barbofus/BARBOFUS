@@ -30,11 +30,6 @@ class SkinValidationController extends Controller
     public function index(Request $request)
     {
         $skins = Skin::where('status', '=', 'pending')
-            ->when(true, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    $query->leftJoin($item . 's', $item . 's.id', '=', 'skins.' . $item . '_id');
-                }
-            })
 
             ->addSelect([
                 'user_name' => DB::table('users')

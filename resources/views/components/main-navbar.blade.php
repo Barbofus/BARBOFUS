@@ -15,7 +15,7 @@
              class="flex h-[max(100vh,250px)] w-screen max-[900px]:pb-2 min-[901px]:h-full min-[901px]:w-full items-center justify-center flex-col min-[901px]:flex-row bg-primary">
 
             <a href="{{ route('home') }}" :class="{{ (Route::is('home')) ? 'selectedClass' : 'unselectedClass' }}">Accueil</a>
-            <a href="{{ route('skins.index') }}" :class="{{ (Route::is('skins.index')) ? 'selectedClass' : 'unselectedClass'  }}">Les Skins</a>
+            <a href="{{ route('skins.index') }}" :class="{{ (Route::is('skins.index', 'skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Les Skins</a>
 
             @guest
                 <a href="{{ route('login') }}" :class="{{ (Route::is('login')) ? 'selectedClass' : 'unselectedClass' }}">Se connecter</a>

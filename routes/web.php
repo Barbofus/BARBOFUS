@@ -24,6 +24,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/skins', [SkinController::class, 'index'] )->name('skins.index');
+Route::get('/skin/{skin}', [SkinController::class, 'show'] )->name('skins.show');
 
 Route::middleware(['auth'])->group(function () {
 

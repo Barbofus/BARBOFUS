@@ -1,6 +1,6 @@
 <div>
     <button
-        class="w-24 rounded-md hover:bg-primary-100 group relative overflow-hidden"
+        class="w-28 rounded-md hover:bg-primary-100 group relative overflow-hidden"
         x-data="{
             color:'{{ $color }}',
             copied: false,
@@ -31,7 +31,7 @@
         x-on:click.away="copied = false"
     >
         <div class="flex justify-between">
-            <p class="font-thin group-hover:font-light italic text-md text-secondary">{{ $name }} :</p>
+            <p class="font-thin group-hover:font-light italic text-lg text-secondary">{{ $name }} :</p>
             <svg class="w-4 fill-inactiveText group-hover:fill-secondary" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 442 442" xml:space="preserve" transform="matrix(-1, 0, 0, 1, 0, 0)">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -45,7 +45,7 @@
             </svg>
         </div>
 
-        <div class="w-full rounded-md h-8 mt-1 col-span-2 flex items-center justify-center border-2 uppercase" :class="dark ? 'border-inactiveText' : 'border-primary'" :style="'background-color: #' + '{{ $color }}'">
+        <div class="w-full rounded-md  h-8 mt-1 col-span-2 group-hover:tracking-widest transition-all flex items-center justify-center border-2 uppercase" :class="dark ? 'border-inactiveText' : 'border-primary'" :style="'background-color: #' + '{{ $color }}'">
             <p x-text="'#' + color" :class="dark ? 'text-secondary' : 'text-primary' "></p>
         </div>
 

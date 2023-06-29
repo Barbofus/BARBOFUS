@@ -81,23 +81,23 @@
 
                                 <div>
                                     @if(isset($skin->dofus_item_hat_id))
-                                        <x-skins-presentation.item :name="$skin->dofus_item_hat_name" :level="$skin->dofus_item_hat_level" :icon="$skin->dofus_item_hat_icon"/>
+                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_hat_name" :level="$skin->dofus_item_hat_level" :icon="$skin->dofus_item_hat_icon"/>
                                     @endif
 
                                     @if(isset($skin->dofus_item_cloak_id))
-                                        <x-skins-presentation.item :name="$skin->dofus_item_cloak_name" :level="$skin->dofus_item_cloak_level" :icon="$skin->dofus_item_cloak_icon"/>
+                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_cloak_name" :level="$skin->dofus_item_cloak_level" :icon="$skin->dofus_item_cloak_icon"/>
                                     @endif
 
                                     @if(isset($skin->dofus_item_shield_id))
-                                        <x-skins-presentation.item :name="$skin->dofus_item_shield_name" :level="$skin->dofus_item_shield_level" :icon="$skin->dofus_item_shield_icon"/>
+                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_shield_name" :level="$skin->dofus_item_shield_level" :icon="$skin->dofus_item_shield_icon"/>
                                     @endif
 
                                     @if(isset($skin->dofus_item_pet_id))
-                                        <x-skins-presentation.item :name="$skin->dofus_item_pet_name" :level="$skin->dofus_item_pet_level" :icon="$skin->dofus_item_pet_icon"/>
+                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_pet_name" :level="$skin->dofus_item_pet_level" :icon="$skin->dofus_item_pet_icon"/>
                                     @endif
 
                                     @if(isset($skin->dofus_item_costume_id))
-                                        <x-skins-presentation.item :name="$skin->dofus_item_costume_name" :level="$skin->dofus_item_costume_level" :icon="$skin->dofus_item_costume_icon"/>
+                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_costume_name" :level="$skin->dofus_item_costume_level" :icon="$skin->dofus_item_costume_icon"/>
                                     @endif
                                 </div>
                             </div>
