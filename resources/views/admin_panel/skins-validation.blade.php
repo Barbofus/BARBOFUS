@@ -1,6 +1,8 @@
 @extends('layouts.user-page-views')
 
 @section('content')
+    <h1 class="text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center uppercase">Skins en Attente</h1>
+    <h2 class="text-2xl font-thin text-center mb-8 uppercase">Accepte ou refuse les skins</h2>
 
     <div class="grid justify-center grid-cols-[repeat(auto-fill,200px)] p-4 gap-4">
         @foreach($skins as $key => $skin)
@@ -10,7 +12,7 @@
                 <div
                     class="mt-2 flex space-y-2 flex-col"
                     x-data="{
-                        open: true,
+                        open: false,
                         inTransition: false,
                         SwitchOpen(){
                             if(!this.open) {
@@ -23,10 +25,10 @@
                             setTimeout(() => { this.inTransition = false }, 700);
                         }
                     }"
-                    :class="open || inTransition ? 'col-span-3' : ''"
+                    :class="open || inTransition ? 'min-[750px]:col-span-3' : ''"
                 >
 
-                    <div class="flex space-x-2 items-center">
+                    <div class="flex flex-col min-[750px]:flex-row max-[749px]:gap-y-2 min-[750px]:gap-x-2 items-center">
 
                         {{-- L'image --}}
                         <button
@@ -36,7 +38,7 @@
                         >
 
                             {{-- Classe + ID --}}
-                            <div class="flex items-center space-x-2">
+                            <div class="flex items-center space-x-2 w-full">
                                 <img draggable="false" width="64" src="{{ asset('storage/' . $skin->race_icon) }}">
                                 <div class="flex flex-col items-baseline">
                                     <p class="text-inactiveText italic text-sm">ID#{{ $skin->id }}</p>
@@ -51,7 +53,7 @@
                         </button>
 
                         {{-- Détails --}}
-                        <div class="flex space-x-2 items-center h-full"
+                        <div class="flex flex-col min-[750px]:flex-row min-[750px]:space-x-2 items-center min-[750px]:h-full max-[749px]:w-full"
                              x-show="open"
                              x-transition:enter="transition ease-out duration-300"
                              x-transition:enter-start="opacity-0 -translate-x-full"
@@ -72,9 +74,9 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
                                             </svg>
                                         @endif
-                                        <p class="text-secondary font-thin text-xl">{{ $skin->gender }}</p>
+                                        <p class="text-secondary font-thin text-lg min-[750px]:text-xl">{{ $skin->gender }}</p>
                                     </div>
-                                    <p class="text-secondary font-thin text-xl">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
+                                    <p class="text-secondary font-thin text-lg min-[750px]:text-xl">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
                                 </div>
 
                                 <div>
@@ -101,7 +103,7 @@
                             </div>
 
                             {{-- Couleurs --}}
-                            <div class="pl-4 flex flex-col justify-between h-full">
+                            <div class="pl-10 min-[750px]:pl-4 flex flex-col items-start justify-between min-[750px]:h-full max-[749px]:w-full">
                                 <x-skins-presentation.color :color="$skin->color_skin" :name="'Peau'"/>
                                 <x-skins-presentation.color :color="$skin->color_hair" :name="'Cheveux'"/>
                                 <x-skins-presentation.color :color="$skin->color_cloth_1" :name="'Habits 1'"/>
@@ -113,7 +115,7 @@
 
                     {{-- Bouton de validation --}}
                     <div
-                        class="flex space-x-2"
+                        class="flex flex-col min-[750px]:flex-row max-[749px]:gap-y-2 min-[750px]:gap-x-2 relative"
                         x-show="open" x-cloak
                         x-transition:enter="transition ease-out delay-300 duration-300"
                         x-transition:enter-start="opacity-0 -translate-y-full"
@@ -126,17 +128,17 @@
                             @csrf
                             @method('PUT')
 
-                            <button class="w-36 h-12 text-white bg-green-500 rounded-md text-xl hover:bg-green-400">Accepter</button>
+                            <button class="px-4 h-12 text-primary goldGradient transition-all hover:rounded-sm rounded-md text-md min-[750px]:text-xl hover:brightness-110">Accepter</button>
                         </form>
 
-                        <form method="POST" action="{{ route('refuse-skin', ['skin' => $skin]) }}" class="flex space-x-2 flex-1">
+                        <form method="POST" action="{{ route('refuse-skin', ['skin' => $skin]) }}" class="flex min-[750px]:space-x-2 flex-1">
                             @csrf
                             @method('PUT')
 
-                            <button class="w-36 h-12 text-white bg-red-500 rounded-md text-xl hover:bg-red-400">Refuser</button>
+                            <button class="px-4 h-12 absolute top-0 right-0 text-primary transition-all hover:rounded-sm heartGradient rounded-md text-md min-[750px]:text-xl hover:brightness-110 min-[750px]:static">Refuser</button>
                             <textarea
                                 type="text" name="reason" placeholder="Raison du refus ..." maxlength="128"
-                                class="rounded-md text-secondary placeholder:text-inactiveText bg-primary-100 flex-1 text-sm h-12 p-2"></textarea>
+                                class="rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100 flex-1 h-12 p-2"></textarea>
                         </form>
                     </div>
                 </div>

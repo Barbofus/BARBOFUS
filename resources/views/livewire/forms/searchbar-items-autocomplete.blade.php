@@ -33,21 +33,24 @@
 
         {{-- Menu déroulant --}}
         <div
-            class="absolute z-50 w-full bg-primary-100 max-h-60 overflow-y-auto"
+            class="h-72 w-full absolute"
             x-show="focusinput || focusbutton"
             :id="$id('dropdown-search')">
-            @foreach ($items as $key => $item)
-                <button
-                    type="button"
-                    class="flex w-full rounded-md items-center text-inactiveText font-light transition-all border-2 border-primary-100 h-12 space-x-2 cursor-pointer {{ ($selectedItem === $key) ? 'border-secondary text-secondary font-normal' : 'hover:border-inactiveText'}}"
-                    wire:click="setSelection({{$key}})"
-                    x-on:focus="focusbutton = true" x-on:blur="focusbutton = false">
 
-                    <img draggable="false" class="h-full select-none" src="{{ asset('storage\\'. $item->icon_path) }}" alt="">
-                    <p class="select-none">{{ $item->name }}</p>
-                </button>
+            <div class="absolute bg-primary-100 z-50 max-h-60 overflow-y-auto">
+                @foreach ($items as $key => $item)
+                    <button
+                        type="button"
+                        class="flex w-full rounded-md items-center text-inactiveText font-light transition-all border-2 border-primary-100 h-12 space-x-2 cursor-pointer {{ ($selectedItem === $key) ? 'border-secondary text-secondary font-normal' : 'hover:border-inactiveText'}}"
+                        wire:click="setSelection({{$key}})"
+                        x-on:focus="focusbutton = true" x-on:blur="focusbutton = false">
 
-            @endforeach
+                        <img draggable="false" class="h-full select-none" src="{{ asset('storage\\'. $item->icon_path) }}" alt="">
+                        <p class="select-none">{{ $item->name }}</p>
+                    </button>
+
+                @endforeach
+            </div>
         </div>
 
         @error($name)
