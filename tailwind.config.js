@@ -76,17 +76,37 @@ module.exports = {
                 '0%,100%': { transform: 'translateY(0px) scaleX(-1) rotate(calc(var(--tw-rotate) - 40deg))' },
                 '50%': { transform: 'translateY(-10px) scaleX(-1) rotate(calc(var(--tw-rotate) - 20deg))' },
             },
-            orb: {
-                '0%,100%': { transform: 'translate(0px,0px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
-                '25%': { transform: 'translate(2px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
-                '50%': { transform: 'translate(3px,-2px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
-                '75%': { transform: 'translate(0px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+            smallCircleX: {
+                '0%,100%': { transform: 'translateX(0px) scale(var(--tw-scale-x))' },
+                '50%': { transform: 'translateX(3px) scale(var(--tw-scale-x))' },
             },
-            orbLeft: {
-                '0%,100%': { transform: 'translate(0px,0px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
-                '25%': { transform: 'translate(-2px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
-                '50%': { transform: 'translate(-3px,-2px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
-                '75%': { transform: 'translate(0px,-3px) scale(var(--tw-scale-x))', animationTimingFunction:'linear' },
+            smallCircleY: {
+                '0%,100%': { transform: 'translateY(0px) scale(var(--tw-scale-x))' },
+                '50%': { transform: 'translateY(3px) scale(var(--tw-scale-x))' },
+            },
+            smallCircleXNeg: {
+                '0%,100%': { transform: 'translateX(0px) scale(var(--tw-scale-x))' },
+                '50%': { transform: 'translateX(-3px) scale(var(--tw-scale-x))' },
+            },
+            smallCircleYNeg: {
+                '0%,100%': { transform: 'translateY(0px) scale(var(--tw-scale-x))' },
+                '50%': { transform: 'translateY(-3px) scale(var(--tw-scale-x))' },
+            },
+            circleX: {
+                '0%,100%': { transform: 'translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y))' },
+                '50%': { transform: 'translateX(calc(var(--tw-translate-x) + 5px)) translateY(var(--tw-translate-y))' },
+            },
+            circleY: {
+                '0%,100%': { transform: 'translateY(var(--tw-translate-y)) translateX(var(--tw-translate-x))' },
+                '50%': { transform: 'translateY(calc(var(--tw-translate-y) + 5px)) translateX(var(--tw-translate-x))' },
+            },
+            circleXNeg: {
+                '0%,100%': { transform: 'translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y))' },
+                '50%': { transform: 'translateX(calc(var(--tw-translate-x) - 5px)) translateY(var(--tw-translate-y))' },
+            },
+            circleYNeg: {
+                '0%,100%': { transform: 'translateY(var(--tw-translate-y)) translateX(var(--tw-translate-x))' },
+                '50%': { transform: 'translateY(calc(var(--tw-translate-y) - 5px)) translateX(var(--tw-translate-x))' },
             },
         },
         animation: {
@@ -100,8 +120,14 @@ module.exports = {
             skinReflection: 'skinReflection 0.75s linear',
             feather: 'feather 5s ease-in-out infinite',
             featherLeft: 'featherLeft 5s ease-in-out infinite',
-            orb: 'orb 5s ease-in-out infinite',
-            orbLeft: 'orbLeft 5s infinite',
+            circleX: 'circleX 5s ease-in-out infinite',
+            circleY: 'circleY 5s ease-in-out infinite',
+            circleXNeg: 'circleXNeg 5s ease-in-out infinite',
+            circleYNeg: 'circleYNeg 5s ease-in-out infinite',
+            smallCircleX: 'smallCircleX 5s ease-in-out infinite',
+            smallCircleY: 'smallCircleY 5s ease-in-out infinite',
+            smallCircleXNeg: 'smallCircleXNeg 5s ease-in-out infinite',
+            smallCircleYNeg: 'smallCircleYNeg 5s ease-in-out infinite',
         },
     },
   },
