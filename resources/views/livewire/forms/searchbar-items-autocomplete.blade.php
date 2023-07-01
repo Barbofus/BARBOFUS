@@ -33,11 +33,11 @@
 
         {{-- Menu déroulant --}}
         <div
-            class="h-72 w-full absolute"
+            class="h-72 w-[min(90vw,300px)] absolute"
             x-show="focusinput || focusbutton"
             :id="$id('dropdown-search')">
 
-            <div class="absolute bg-primary-100 z-50 max-h-60 overflow-y-auto">
+            <div class="absolute bg-primary-100 z-50 w-full max-h-60 overflow-y-auto">
                 @foreach ($items as $key => $item)
                     <button
                         type="button"
