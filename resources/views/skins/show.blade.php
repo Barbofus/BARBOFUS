@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="flex flex-col gap-y-1 min-[950px]:gap-y-4 h-[1450px] min-[950px]:h-[850px] overflow-hidden">
+    <div class="flex flex-col gap-y-1 min-[950px]:gap-y-4 h-[1450px] min-[950px]:h-[850px] w-[min(1500px,95vw)] mx-auto overflow-hidden min-[950px]:mt-4 min-[950px]:rounded-lg min-[950px]:bg-black min-[950px]:bg-opacity-[0.09] min-[950px]:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]">
         {{-- User --}}
-        <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-8">Par <span class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
+        <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-4">Par <span class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
         {{-- Classe --}}
         <div class="grid grid-cols-2 gap-x-4 min-[420px]:gap-x-8 items-center justify-center">
             <div class="flex rounded-md justify-self-end items-center gap-x-2 border-2 text-secondary border-goldText px-2 min-[950px]:px-3 min-[950px]:h-12 bg-primary-100 py-1 min-[950px]:py-2">
