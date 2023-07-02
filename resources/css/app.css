@@ -104,4 +104,8 @@
     --heartLit: #f33a3a;
 
     --inactiveText: #8b847b;
+
+    --custom-animation-time: 5s;
+    --custom-translate-y: 5px;
+    --custom-translate-x: 5px;
 }

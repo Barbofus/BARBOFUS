@@ -76,37 +76,13 @@ module.exports = {
                 '0%,100%': { transform: 'translateY(0px) scaleX(-1) rotate(calc(var(--tw-rotate) - 40deg))' },
                 '50%': { transform: 'translateY(-10px) scaleX(-1) rotate(calc(var(--tw-rotate) - 20deg))' },
             },
-            smallCircleX: {
-                '0%,100%': { transform: 'translateX(0px) scale(var(--tw-scale-x))' },
-                '50%': { transform: 'translateX(3px) scale(var(--tw-scale-x))' },
+            slideX: {
+                '0%,100%': { transform: 'translateX(calc(var(--custom-translate-x) / 2 * -1)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
+                '50%': { transform: 'translateX(calc(var(--custom-translate-x) / 2)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
             },
-            smallCircleY: {
-                '0%,100%': { transform: 'translateY(0px) scale(var(--tw-scale-x))' },
-                '50%': { transform: 'translateY(3px) scale(var(--tw-scale-x))' },
-            },
-            smallCircleXNeg: {
-                '0%,100%': { transform: 'translateX(0px) scale(var(--tw-scale-x))' },
-                '50%': { transform: 'translateX(-3px) scale(var(--tw-scale-x))' },
-            },
-            smallCircleYNeg: {
-                '0%,100%': { transform: 'translateY(0px) scale(var(--tw-scale-x))' },
-                '50%': { transform: 'translateY(-3px) scale(var(--tw-scale-x))' },
-            },
-            circleX: {
-                '0%,100%': { transform: 'translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y))' },
-                '50%': { transform: 'translateX(calc(var(--tw-translate-x) + 5px)) translateY(var(--tw-translate-y))' },
-            },
-            circleY: {
-                '0%,100%': { transform: 'translateY(var(--tw-translate-y)) translateX(var(--tw-translate-x))' },
-                '50%': { transform: 'translateY(calc(var(--tw-translate-y) + 5px)) translateX(var(--tw-translate-x))' },
-            },
-            circleXNeg: {
-                '0%,100%': { transform: 'translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y))' },
-                '50%': { transform: 'translateX(calc(var(--tw-translate-x) - 5px)) translateY(var(--tw-translate-y))' },
-            },
-            circleYNeg: {
-                '0%,100%': { transform: 'translateY(var(--tw-translate-y)) translateX(var(--tw-translate-x))' },
-                '50%': { transform: 'translateY(calc(var(--tw-translate-y) - 5px)) translateX(var(--tw-translate-x))' },
+            slideY: {
+                '0%,100%': { transform: 'translateY(calc(var(--custom-translate-y) / 2 * -1)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
+                '50%': { transform: 'translateY(calc(var(--custom-translate-y) / 2)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
             },
         },
         animation: {
@@ -120,14 +96,8 @@ module.exports = {
             skinReflection: 'skinReflection 0.75s linear',
             feather: 'feather 5s ease-in-out infinite',
             featherLeft: 'featherLeft 5s ease-in-out infinite',
-            circleX: 'circleX 5s ease-in-out infinite',
-            circleY: 'circleY 5s ease-in-out infinite',
-            circleXNeg: 'circleXNeg 5s ease-in-out infinite',
-            circleYNeg: 'circleYNeg 5s ease-in-out infinite',
-            smallCircleX: 'smallCircleX 5s ease-in-out infinite',
-            smallCircleY: 'smallCircleY 5s ease-in-out infinite',
-            smallCircleXNeg: 'smallCircleXNeg 5s ease-in-out infinite',
-            smallCircleYNeg: 'smallCircleYNeg 5s ease-in-out infinite',
+            slideX: 'slideX var(--custom-animation-time) ease-in-out infinite',
+            slideY: 'slideY var(--custom-animation-time) ease-in-out infinite',
         },
     },
   },
