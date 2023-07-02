@@ -49,6 +49,9 @@ class SkinPostedMail extends Mailable
     {
         return new Content(
             markdown: 'mails.skin-posted',
+            with: [
+                'url' => \url()->route('skins.show', ['skin' => $this->skin->id]),
+            ],
         );
     }
 

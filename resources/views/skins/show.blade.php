@@ -39,7 +39,7 @@
                         CopyLink() {
                             if(!navigator.clipboard) return;
 
-                            navigator.clipboard.writeText(this.color);
+                            navigator.clipboard.writeText('{{ url()->current() }}');
                             this.copied = 'Copié';
                         }
                     }"
