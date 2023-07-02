@@ -1,13 +1,13 @@
 <div class="h-full w-full">
 
     {{-- Pseudo --}}
-    <div class="absolute bottom-0 left-0 max-w-[calc(100%-60px)] px-1 pb-[2px]">
+    <div class="absolute bottom-0 z-10 left-0 max-w-[calc(100%-60px)] px-1 pb-[2px]">
         <button class="flex w-full overflow-hidden font-light text-goldText text-[0.75rem] hover:text-goldTextLit whitespace-nowrap" wire:click="$emit('ToggleSearchedText', '{{ addslashes($skin->user_name) }}')">
             <p class="skinCardUserName">{{ $skin->user_name }}&nbsp</p>
         </button>
     </div>
 
-    <a class="group h-full w-ful" href="{{ route('skins.show', $skin->id) }}">
+    <a class="absolute group h-full w-full" href="{{ route('skins.show', $skin->id) }}">
         {{-- Barbe --}}
         @if($skin->user_name === 'Barbe Douce')
             <img class="absolute top-0 left-0 h-[25%] max-h-[64px] peer cursor-pointer" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">
