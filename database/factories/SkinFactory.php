@@ -39,9 +39,9 @@ class SkinFactory extends Factory
             'color_cloth_1' => $this->GetRandomColor(),
             'color_cloth_2' => $this->GetRandomColor(),
             'color_cloth_3' => $this->GetRandomColor(),
-            'user_id' => rand(0,3) ? User::all()->random()->id : User::where('name', '=', 'Barbe__Douce')->first(),
+            'user_id' => rand(0,3) ? User::all()->random()->id : User::where('name', '=', 'Barbe Douce')->first(),
             'race_id' => Race::all()->random()->id,
-            'status' => 'Posted',
+            'status' => rand(0,20) ? 'Posted' : 'Pending',
             'created_at'=>$date,
             'updated_at'=>$date
         ];

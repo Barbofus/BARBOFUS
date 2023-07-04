@@ -32,7 +32,7 @@
             <img src="{{ asset('storage/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
 
             {{-- Button Copy Link --}}
-            <button class="uppercase px-2 min-[950px]:px-4 py-1 min-[950px]:py-2 goldGradient rounded-md hover:rounded-sm group-hover:brightness-110 group transition-all"
+            <button class="uppercase px-2 min-[950px]:px-4 py-1 min-[950px]:py-2 goldGradient rounded-md hover:rounded-3xl group-hover:brightness-110 group transition-all"
                     x-data="{
                         copied: 'Copy Link',
 
@@ -44,7 +44,7 @@
                         }
                     }"
                     x-on:mousedown="CopyLink">
-                <p class="text-primary font-medium text-[min(4.5vw,1.125rem)] group-hover:-translate-y-0.5 transition-all" x-text="copied"></p>
+                <p class="text-primary font-medium text-[min(4.5vw,1.125rem)] group-hover:tracking-widest transition-all" x-text="copied"></p>
             </button>
 
             <div class="flex flex-row min-[420px]:flex-col items-center gap-x-4 gap-y-4 mt-4">

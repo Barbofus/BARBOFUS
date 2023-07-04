@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminPanelController;
-use App\Http\Controllers\DashboardUserDetailsController;
+use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\SkinController;
-use App\Http\Controllers\SkinValidationController;
 use App\Models\Skin;
 use Illuminate\Support\Facades\Route;
 
@@ -28,19 +26,11 @@ Route::get('/skin/{skin}', [SkinController::class, 'show'] )->name('skins.show')
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/mon-compte/details', [DashboardUserDetailsController::class, 'index'])->name('dashboarduserdetails.index');
+    Route::get('/mon-compte', [UserDashboardController::class, 'index'])->name('user-dashboard.index');
     Route::resource('skins', SkinController::class )->except(['show', 'index']);
-});
-
-Route::middleware(['can:validate-skin'])->group(function() {
-
-    Route::get('/skins-en-attente', [SkinValidationController::class, 'index'])->name('pending-skins');
-    Route::put('/accept-skin/{skin}', [SkinValidationController::class, 'accept'])->name('accept-skin');
-    Route::put('/refuse-skin/{skin}', [SkinValidationController::class, 'refuse'])->name('refuse-skin');
 });
 
 Route::middleware(['can:admin-access'])->group(function () {
 
-    Route::get('/panel-administrateur', AdminPanelController::class)->name('adminpanel');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });

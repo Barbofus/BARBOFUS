@@ -24,7 +24,7 @@
 
             @auth()
                 <a href="{{ route('skins.create') }}" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">Poster un Skin</a>
-                <a href="{{ route('dashboarduserdetails.index') }}" :class="{{ (Route::is(['dashboarduserdetails.index', 'pending-skins', 'adminpanel'])) ? 'selectedClass' : 'unselectedClass'  }}">Mon Compte</a>
+                <a href="{{ route('user-dashboard.index') }}" :class="{{ (Route::is('user-dashboard.index')) ? 'selectedClass' : 'unselectedClass'  }}">Mon Compte</a>
                 <form method="POST" action="{{ route('logout') }}" class="max-[900px]:h-[18%] ">
                     @csrf
                     <button type="submit" class="px-5 max-[900px]:flex max-[900px]:items-center h-full min-[901px]:h-[30px] hover:text-secondary-100 focus:outline-none">Se déconnecter</button>
