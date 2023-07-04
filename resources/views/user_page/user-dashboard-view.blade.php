@@ -1,5 +1,5 @@
 @extends('layouts.basic-views')
 
 @section('content')
-    <x-user-page-navbar />
+    <livewire:user-panel.user-dashboard />
 @endsection
