@@ -32,15 +32,15 @@ class AuthServiceProvider extends ServiceProvider
         $roles['mod'] = DB::table('roles')->select('id')->where('name', 'Modérateur')->pluck('id')->toArray()[0];
         $roles['admin'] = DB::table('roles')->select('id')->where('name', 'Administrateur')->pluck('id')->toArray()[0];
 
-        Gate::define('admin-access', function ($user) use($roles) {
+        Gate::define('admin-access', function (User $user) use($roles) {
             return $user->role_id == $roles['admin'];
         });
 
-        Gate::define('mod-access', function ($user) use($roles) {
+        Gate::define('mod-access', function (User $user) use($roles) {
             return $user->role_id == $roles['mod'];
         });
 
-        Gate::define('validate-skin', function ($user) use($roles) {
+        Gate::define('validate-skin', function (User $user) use($roles) {
             return $user->role_id == $roles['mod']
                 || $user->role_id == $roles['admin'];
         });

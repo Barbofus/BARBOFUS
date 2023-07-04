@@ -9,6 +9,7 @@ use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class SkinController extends Controller
 {
@@ -161,6 +162,7 @@ class SkinController extends Controller
             'color_cloth_3' => $request->color_cloth_3,
             'user_id' => $request->user()->id,
             'race_id' => $request->race_id,
+            'status' => (Gate::check('validate-skin')) ? 'Posted' : 'Pending',
         ]);
 
         return redirect()->route('skins.index');
@@ -226,7 +228,7 @@ class SkinController extends Controller
         $skin->color_cloth_2 = $request->color_cloth_2;
         $skin->color_cloth_3 = $request->color_cloth_3;
         $skin->race_id = $request->race_id;
-        $skin->status = 'Pending';
+        $skin->status = (Gate::check('validate-skin')) ? 'Posted' : 'Pending';
 
         $skin->save();
 
