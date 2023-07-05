@@ -93,11 +93,11 @@
                     @break
 
                 @case('my-skins')
-                    <x-user-panel.my-skins />
+                    <livewire:user-panel.myskins-infinite-load :wire:key="'my-skins-{{ rand() }}'"/>
                     @break
 
                 @case('my-likes')
-                    <x-user-panel.my-likes />
+                    <livewire:user-panel.mylikes-infinite-load :wire:key="'my-likes-{{ rand() }}'"/>
                     @break
 
                 @case('skins-validation')
@@ -108,7 +108,7 @@
 
                 @case('users-list')
                     @can('admin-access')
-                        <x-user-panel.users-list />
+                        <livewire:user-panel.users-list :wire:key="'users-list-{{ rand() }}'"/>
                     @endcan
                     @break
 

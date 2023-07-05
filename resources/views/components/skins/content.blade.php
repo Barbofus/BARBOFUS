@@ -28,31 +28,31 @@
                 @elseif($skin->reward_id == 2)
                     <img src="{{ asset('storage/images/misc_ui/symbol_emeraude.png') }}" draggable="false" class="h-full">
                     <div class="absolute h-10 w-10 left-[50%+20px]">
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-15px] right-[-2px] animate-slideX [--custom-translate-x:3px] [--custom-animation-time:5s]">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.35] h-full top-[-9px] right-[17px] animate-slideX [--custom-translate-x:-3px] [--custom-animation-time:5s]">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -2500ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -2500ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-9px] right-[-15px] animate-slideX [--custom-translate-x:3px] [--custom-animation-time:5s]" style="animation-delay: -1250ms">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -2500ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -2500ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.3] h-full top-[2px] right-[16px] animate-slideX [--custom-translate-x:-3px] [--custom-animation-time:5s]" style="animation-delay: -1250ms">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -3500ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -3500ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.4] h-full top-[4px] right-[-15px] animate-slideX [--custom-translate-x:3px] [--custom-animation-time:5s]" style="animation-delay: -2250ms">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -3500ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -3500ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-150 scale-[.3] h-full top-[5px] right-[-27px] animate-slideX [--custom-translate-x:-3px] [--custom-animation-time:5s]" style="animation-delay: -2250ms">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.4] h-full top-[8px] right-[27px] animate-slideX [--custom-translate-x:3px] [--custom-animation-time:5s]">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute scale-[.5] h-full top-[14px] right-[20px] animate-slideX [--custom-translate-x:-3px] [--custom-animation-time:5s]">
                         </div>
-                        <div class="absolute animate-slideY [--custom-translate-x:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -2750ms">
+                        <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -2750ms">
                             <img src="{{ asset('storage/images/misc_ui/symbol_emeraude_orb.png') }}" draggable="false" class="absolute brightness-125 scale-[.5] h-full top-[13px] right-[-17px] animate-slideX [--custom-translate-x:3px] [--custom-animation-time:5s]" style="animation-delay: -1500ms">
                         </div>
                     </div>

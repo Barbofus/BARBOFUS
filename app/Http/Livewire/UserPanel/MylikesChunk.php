@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Skin;
+namespace App\Http\Livewire\UserPanel;
 
 use App\Actions\Likes\SwitchLikes;
 use App\Actions\Skins\GetSkinChunk;
 use Livewire\Component;
 
-class SkinIndexChunk extends Component
+class MylikesChunk extends Component
 {
     public $skinIds;
     public $page;
@@ -16,7 +16,7 @@ class SkinIndexChunk extends Component
     {
         $orderedSkins = (new GetSkinChunk)($this->skinIds);
 
-        return view('livewire.skin.skin-index-chunk', [
+        return view('livewire.user-panel.mylikes-chunk', [
             'skins' => $orderedSkins,
         ]);
     }
@@ -24,5 +24,6 @@ class SkinIndexChunk extends Component
     public function SwitchHeart($skin)
     {
         (new SwitchLikes)($skin);
+        $this->emit('ReloadInfinite');
     }
 }
