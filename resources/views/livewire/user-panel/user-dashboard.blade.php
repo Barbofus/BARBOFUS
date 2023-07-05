@@ -2,7 +2,7 @@
 
     {{-- Création de variable de class pour éviter les copier coller avec AlpineJS --}}
     <div
-        class="w-[100vw] px-6 min-[1550px]:w-[80%] relative flex gap-x-2" x-cloak
+        class="w-[100vw] px-6 min-[1550px]:w-[80vw] relative flex gap-x-2" x-cloak
         x-data="{
             currentPage: 'user-details',
             initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-[65px] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
@@ -79,13 +79,11 @@
         <div class="min-h-[50vh] flex-grow relative">
 
             {{-- Spinning Loader --}}
-            <div wire:loading class="h-screen w-[calc(100vw-390px)] fixed top-0 z-10">
-                <div class="flex flex-col pl-96 justify-center gap-y-4 min-h-screen bg-primary
+            <div wire:loading class="h-screen w-[calc(80vw-315px)] fixed top-0 z-10">
+                <div class="flex flex-col items-center justify-center gap-y-4 min-h-screen bg-primary
                  opacity-0 animate-opacityFade [--custom-animation-time:100ms]" style="animation-delay: 200ms">
-                    <div class="flex flex-col items-center self-start">
-                        <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false" style="animation-delay: 200ms">
-                        <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center" style="animation-delay: 200ms">Chargement ...</h1>
-                    </div>
+                    <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false" style="animation-delay: 200ms">
+                    <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center" style="animation-delay: 200ms">Chargement ...</h1>
                 </div>
             </div>
 
