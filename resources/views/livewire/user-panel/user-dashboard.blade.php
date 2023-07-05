@@ -79,10 +79,13 @@
         <div class="min-h-[50vh] flex-grow relative">
 
             {{-- Spinning Loader --}}
-            <div wire:loading class="h-full w-full absolute z-50">
-                <div class="flex flex-col items-center gap-y-4 pt-32 bg-primary opacity-0 animate-opacityFade [--custom-animation-time:100ms]" style="animation-delay: 200ms">
-                    <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false" style="animation-delay: 200ms">
-                    <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center" style="animation-delay: 200ms">Chargement ...</h1>
+            <div wire:loading class="h-screen w-[calc(100vw-390px)] fixed top-0 z-10">
+                <div class="flex flex-col pl-96 justify-center gap-y-4 min-h-screen bg-primary
+                 opacity-0 animate-opacityFade [--custom-animation-time:100ms]" style="animation-delay: 200ms">
+                    <div class="flex flex-col items-center self-start">
+                        <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false" style="animation-delay: 200ms">
+                        <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center" style="animation-delay: 200ms">Chargement ...</h1>
+                    </div>
                 </div>
             </div>
 

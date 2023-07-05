@@ -1,6 +1,6 @@
 <!-- En-tête -->
 <div id="header"
-     class="w-full h-0 bg-secondary invisible [@media(min-height:950px)_and_(min-width:901px)]
+     class="w-full h-0 bg-secondary relative z-20 invisible [@media(min-height:950px)_and_(min-width:901px)]
           [@media(min-height:950px)_and_(min-width:901px)]:visible [@media(min-height:950px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:950px)_and_(min-width:901px)]:min-h-[150px]">
     <div class="flex h-full justify-center z-10 relative">
         <div class="w-1/2 h-full flex justify-center ">
