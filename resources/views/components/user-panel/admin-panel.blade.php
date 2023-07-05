@@ -1,5 +1,6 @@
 <div>
-    <div x-data="{
+    <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s]"
+         x-data="{
         loading: false
     }">
         <x-utils.userpage-title :title="'Panel Administrateur'" :subtitle="'Gestion de l\'API DofusDB'" />

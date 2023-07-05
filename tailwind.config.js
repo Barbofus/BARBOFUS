@@ -34,6 +34,14 @@ module.exports = {
                 '0%': { opacity: 0 },
                 '100%': { opacity: 1 },
             },
+            opacityFade: {
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
+            },
+            topFade: {
+                '0%': { opacity: 0, transform: 'translateY(calc(var(--custom-translate-y)*-1)) rotate(var(--tw-rotate)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
+                '100%': { opacity: 1, transform: 'translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
+            },
             textSlide: {
                 '0%': { transform: 'translate(0px, 0px)' },
                 '100%': { transform: 'translate(-100%, 0px)' },
@@ -87,6 +95,8 @@ module.exports = {
         },
         animation: {
             skinApparition: 'skinApparition 0.5s linear forwards',
+            opacityFade: 'opacityFade var(--custom-animation-time) linear forwards',
+            topFade: 'topFade var(--custom-animation-time) ease forwards',
             textSlide: 'textSlide 5s linear infinite',
             onePing: 'onePing 0.35s linear forwards',
             pulseFast: 'pulseFast 3s linear infinite',
