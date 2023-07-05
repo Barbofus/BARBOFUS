@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Skins;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,13 @@ final class GetSkinChunk
             ->addSelect([
                 'is_liked' => DB::table('likes')
                     ->select('id')
+                    ->whereColumn('skin_id', 'skins.id')
+                    ->where('user_id', Auth::id())
+                    ->take(1)
+            ])
+            ->addSelect([
+                'liked_at' => DB::table('likes')
+                    ->select('created_at')
                     ->whereColumn('skin_id', 'skins.id')
                     ->where('user_id', Auth::id())
                     ->take(1)
@@ -57,6 +65,10 @@ final class GetSkinChunk
             ])
             ->whereIn('id', $skinIds)
             ->get();
+
+        foreach ($skins as $skin) {
+            $skin->liked_at = new Carbon($skin->liked_at);
+        }
 
         return collect($skinIds)->map(function ($id) use ($skins){
             return $skins->where('id', $id)->first();

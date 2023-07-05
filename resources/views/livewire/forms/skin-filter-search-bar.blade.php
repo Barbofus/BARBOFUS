@@ -6,7 +6,7 @@
         x-data
         @click.away="{{ (count($itemToShow) > 0) ? '$wire.emptyQuery()' : '' }}">
         <input type="text"
-               class="border-transparent focus:outline-none rounded-[2.25px] w-full mt-1 bg-primary-100 px-1 placeholder-inactiveText font-thin text-inactiveText"
+               class="border-transparent py-2 pl-4 focus:outline-none rounded-[2.25px] w-full mt-1 bg-primary-100 px-1 placeholder-inactiveText font-thin text-inactiveText"
                placeholder="Nom d'item ou pseudo"
                maxlength="45"
                wire:model="query"

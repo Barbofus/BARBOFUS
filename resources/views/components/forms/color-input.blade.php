@@ -7,6 +7,8 @@
 
             IsDark() {
 
+                if(this.color.length < 6) return;
+
                 finalColor = '#' + this.color;
 
                 rgb = finalColor.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) => '#' + r + r + g + g + b + b)
@@ -19,11 +21,17 @@
             },
 
             changePreviewColor(color){
+                if(this.color.length < 6) {
+                    $refs.colorPreview.style.backgroundColor = '';
+                    return;
+                }
+
                 $refs.colorPreview.style.backgroundColor = '#' + color;
                 this.IsDark();
             },
             }"
          x-init="changePreviewColor('{{$value}}')">
+
         <div x-ref="colorPreview" class="aspect-square h-full rounded-md border-2" :class="dark ? 'border-inactiveText' : 'border-primary'"></div>
         <div class="rounded-md ml-2 @error($name) err-border @enderror flex h-full overflow-hidden">
             <span class="text-xl h-full flex items-center bg-primary-100 transition-all pl-1" :class="color ? 'text-secondary' : 'text-inactiveText'">#</span>

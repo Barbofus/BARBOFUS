@@ -8,6 +8,8 @@
 
             GetBrightness() {
 
+                if(this.color.length < 6) return;
+
                 finalColor = '#' + this.color;
 
                 rgb = finalColor.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) => '#' + r + r + g + g + b + b)

@@ -5,7 +5,7 @@
     </div>
 
     <div class="w-full flex justify-between my-2 px-6">
-        <p class="text-sm text-inactiveText">{{ $notification->created_at->diffForHumans()}}</p>
+        <p class="text-sm text-inactiveText">{{ $notification->created_at->diffForHumans() }}</p>
 
         @if($read)
             <button wire:click="DeleteNotification('{{ $notification->id }}')" class="text-red-400 text-sm hover:text-red-300">Supprimer</button>
