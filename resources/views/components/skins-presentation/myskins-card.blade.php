@@ -16,6 +16,8 @@
         </svg>
     </div>
 
+    <p class="text-inactiveText group-hover:text-secondary transition-all italic text-md absolute bottom-1 left-2">ID#{{ $skin->id }}</p>
+
     {{-- Likes --}}
     <div
         x-data="{
