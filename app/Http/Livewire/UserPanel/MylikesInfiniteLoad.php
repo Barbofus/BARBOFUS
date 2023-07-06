@@ -25,8 +25,6 @@ class MylikesInfiniteLoad extends Component
 
     public function render()
     {
-        $this->races = DB::table('races')->get();
-
         if(!$this->hasLoadMore) $this->PrepareChunks();
 
         return view('livewire.user-panel.mylikes-infinite-load');

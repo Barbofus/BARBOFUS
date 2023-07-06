@@ -9,7 +9,7 @@
                 @endfor
             @else
                 <img class="mt-8 h-[256px]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
-                <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
+                <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Tu n'as encore rien aimé !</span></p>
             @endif
 
             {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
