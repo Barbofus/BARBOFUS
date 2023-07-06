@@ -11,4 +11,10 @@ class UserDashboard extends Component
     {
         return view('livewire.user-panel.user-dashboard');
     }
+
+    public function ChangeSection($newSection)
+    {
+        $this->section = $newSection;
+        $this->dispatchBrowserEvent('user-dashboard-change');
+    }
 }

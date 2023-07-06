@@ -23,7 +23,7 @@
                 <p :class="initTextClass">Détails du compte</p>
             </button>
 
-            <button wire:click="$set('section', 'my-skins')" @click="currentPage = 'my-skins'" :class="(currentPage == 'my-skins') ? activeButtonClass : initButtonClass" x-cloak>
+            <button wire:click="ChangeSection('my-skins')" @click="currentPage = 'my-skins'" :class="(currentPage == 'my-skins') ? activeButtonClass : initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd" d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.502-.278zM6.75 13.5A3.75 3.75 0 003 17.25a1.5 1.5 0 01-1.601 1.497.75.75 0 00-.7 1.123 5.25 5.25 0 009.8-2.62 3.75 3.75 0 00-3.75-3.75z" clip-rule="evenodd" />
                 </svg>
@@ -33,7 +33,7 @@
                 <p :class="initTextClass">Mes Skins</p>
             </button>
 
-            <button wire:click="$set('section', 'my-likes')" @click="currentPage = 'my-likes'" :class="(currentPage == 'my-likes') ? activeButtonClass : initButtonClass" x-cloak>
+            <button wire:click="ChangeSection('my-likes')" @click="currentPage = 'my-likes'" :class="(currentPage == 'my-likes') ? activeButtonClass : initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                 </svg>
@@ -79,11 +79,11 @@
         <div class="min-h-[50vh] flex-grow relative">
 
             {{-- Spinning Loader --}}
-            <div wire:loading class="h-screen w-[calc(80vw-315px)] fixed top-0 z-10">
+            <div wire:loading.delay class="h-screen w-[calc(80vw-315px)] fixed top-0 z-10">
                 <div class="flex flex-col items-center justify-center gap-y-4 min-h-screen bg-primary
-                 opacity-0 animate-opacityFade [--custom-animation-time:100ms]" style="animation-delay: 200ms">
-                    <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false" style="animation-delay: 200ms">
-                    <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center" style="animation-delay: 200ms">Chargement ...</h1>
+                 opacity-0 animate-opacityFade [--custom-animation-time:100ms]">
+                    <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">
+                    <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center">Chargement ...</h1>
                 </div>
             </div>
 
@@ -122,4 +122,7 @@
 
         </div>
     </div>
+
+    {{-- Scroll horizontalement les pseudos trop long, s'actualise en temps réel --}}
+    @vite(['resources/js/skins/NameScroll.js', 'resources/js/skins/AnimationsManager.js'])
 </div>

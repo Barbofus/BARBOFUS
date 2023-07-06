@@ -2,6 +2,7 @@
 AnimateDofus();
 AnimateSkinCard();
 
+
 function IsInViewport(item)
 {
     return  item.top >= 0 &&
@@ -12,6 +13,7 @@ function IsInViewport(item)
 
 function AnimateDofus()
 {
+
     let allDofuses = document.getElementsByClassName('dofus');
     let dofusInView = [];
 
@@ -23,10 +25,12 @@ function AnimateDofus()
 
     let dofus = dofusInView[Math.floor(Math.random()*dofusInView.length)];
 
-    dofus.classList.add('animate-dofus');
+    if(dofus)
+        dofus.classList.add('animate-dofus');
 
     setTimeout(() => {
-        dofus.classList.remove('animate-dofus')
+        if(dofus)
+            dofus.classList.remove('animate-dofus')
     }, 2000);
 
     setTimeout(() => {
@@ -48,10 +52,12 @@ function AnimateSkinCard()
 
     let skinBG = skinsBGInView[Math.floor(Math.random()*skinsBGInView.length)];
 
-    skinBG.classList.add('animate-skinReflection');
+    if(skinBG)
+        skinBG.classList.add('animate-skinReflection');
 
     setTimeout(() => {
-        skinBG.classList.remove('animate-skinReflection')
+        if(skinBG)
+            skinBG.classList.remove('animate-skinReflection')
     }, 750);
 
     setTimeout(() => {
