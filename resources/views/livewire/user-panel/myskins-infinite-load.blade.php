@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ skinDeleteID: null, skinDeleteImg: '', }">
     <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s]">
         <x-utils.userpage-title :title="'Mes skins'" :subtitle="'Tes propres créations'" />
 
@@ -27,5 +27,16 @@
                 <x-utils.load-more/>
             @endif
         </div>
+    </div>
+
+    <div class="fixed top-0 right-0 bottom-0 left-0"
+         x-show="skinDeleteID"  x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 -translate-y-full"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-out duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0 -translate-y-full">
+        <x-utils.skin-delete-verification />
     </div>
 </div>

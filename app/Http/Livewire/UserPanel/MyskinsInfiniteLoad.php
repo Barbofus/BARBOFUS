@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Models\Skin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,11 @@ class MyskinsInfiniteLoad extends Component
         if(!$this->hasLoadMore) $this->PrepareChunks();
 
         return view('livewire.user-panel.myskins-infinite-load');
+    }
+
+    public function deleteSkin($skinID)
+    {
+        Skin::find($skinID)->delete();
     }
 
     public function LoadMore()

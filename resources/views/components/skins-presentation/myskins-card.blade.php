@@ -11,9 +11,11 @@
         </svg>
         </a>
 
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-10 hover:scale-125 group-hover:text-red-500 transition-all">
+        <button @click="skinDeleteID = {{ $skin->id }}, skinDeleteImg = '{{ asset('storage/' . $skin->image_path) }}'">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-10 hover:scale-125 group-hover:text-red-500 transition-all">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
+        </button>
     </div>
 
     <p class="text-inactiveText group-hover:text-secondary transition-all italic text-md absolute bottom-1 left-2">ID#{{ $skin->id }}</p>
