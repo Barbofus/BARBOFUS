@@ -9,6 +9,7 @@ use App\Models\DofusItemPet;
 use App\Models\DofusItemShield;
 use App\Models\Race;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class StoreUpdateSkinRequest extends FormRequest
@@ -52,11 +53,11 @@ class StoreUpdateSkinRequest extends FormRequest
             'color_cloth_2' => $hexRegex,
             'color_cloth_3' => $hexRegex,
 
-            'dofus_item_hat_id' => 'nullable|integer|between:1,'.DofusItemHat::all()->count(),
-            'dofus_item_cloak_id' => 'nullable|integer|between:1,'.DofusItemCloak::all()->count(),
-            'dofus_item_shield_id' => 'nullable|integer|between:1,'.DofusItemShield::all()->count(),
-            'dofus_item_pet_id' => 'nullable|integer|between:1,'.DofusItemPet::all()->count(),
-            'dofus_item_costume_id' => 'nullable|integer|between:1,'.DofusItemCostume::all()->count(),
+            'dofus_item_hat_id' => 'nullable|integer|exists:dofus_item_hats,id',
+            'dofus_item_cloak_id' => 'nullable|integer|exists:dofus_item_cloaks,id',
+            'dofus_item_shield_id' => 'nullable|integer|exists:dofus_item_shields,id',
+            'dofus_item_pet_id' => 'nullable|integer|exists:dofus_item_pets,id',
+            'dofus_item_costume_id' => 'nullable|integer|exists:dofus_item_costumes,id',
         ];
     }
 

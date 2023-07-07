@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Actions\Skins\DeleteSkin;
 use App\Models\Skin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class MyskinsInfiniteLoad extends Component
 
     public function deleteSkin($skinID)
     {
-        Skin::find($skinID)->delete();
+        (new DeleteSkin)($skinID);
     }
 
     public function LoadMore()
