@@ -19,8 +19,36 @@
 
     @livewireStyles
 </head>
-<body class="bg-primary text-secondary min-h-screen max-w-screen">
+<body class="bg-primary text-secondary min-h-screen max-w-screen"
+    x-data="{
+        alertMessage: '',
+        showAlert: false,
+        timeoutID: null,
+
+        sessionAlert: {{ session()->has('alert-message') ? 'true' : 'false' }},
+
+        newAlert(msg) {
+            clearTimeout(this.timeoutID);
+
+            this.closeAlert();
+
+            setTimeout(() => this.createAlert(msg), 300);
+        },
+        createAlert(msg) {
+            this.showAlert = true;
+            this.alertMessage = msg;
+
+            this.timeoutID = setTimeout(() => this.closeAlert(), 5000)
+        },
+        closeAlert() {
+            this.showAlert = false;
+        },
+    }"
+    @keydown.ctrl="newAlert('bruh')"
+    x-init="if(sessionAlert) setTimeout(() => newAlert('{{ session('alert-message') }}'), 300)">
     @yield('app-content')
+
+    <x-utils.custom-alert />
 
     @livewireScripts
 </body>

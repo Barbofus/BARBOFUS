@@ -55,8 +55,6 @@ class MyskinsInfiniteLoad extends Component
             // Seulement les skins que l'on a liké
             ->where('user_id', Auth::id())
 
-            ->where('skins.status', 'Posted')
-
             // orderBy
             ->orderBy('updated_at', 'DESC')
 

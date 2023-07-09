@@ -6,8 +6,7 @@ use Livewire\Component;
 
 class UserDashboard extends Component
 {
-    //public $section = 'user-details';
-    public $section = 'my-skins';
+    public $section = 'user-details';
 
     public function render()
     {

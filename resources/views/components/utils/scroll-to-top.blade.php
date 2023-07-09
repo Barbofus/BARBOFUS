@@ -7,7 +7,7 @@
     @scroll.window="(document.documentElement.scrollTop > 20 || document.body.scrollTop > 20) ? showButton = true : showButton = false"
     x-show="showButton" x-transition.opacity
     @click="window.scrollTo({top: 0, behavior: 'smooth'})"
-    class="fixed z-50 flex items-center justify-center w-16 h-16 rounded-full shadow-sm right-4 bg-secondary bottom-6 group">
+    class="fixed z-40 flex items-center justify-center w-16 h-16 rounded-full shadow-sm right-4 bg-secondary bottom-6 group">
     <svg
         class="w-10 transition-all duration-150 text-primary group-hover:-translate-y-1"
         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" >

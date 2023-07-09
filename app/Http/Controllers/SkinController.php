@@ -165,6 +165,8 @@ class SkinController extends Controller
             'status' => (Gate::check('validate-skin')) ? 'Posted' : 'Pending',
         ]);
 
+        session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
+
         return redirect()->route('skins.index');
     }
 
@@ -231,6 +233,8 @@ class SkinController extends Controller
         $skin->status = (Gate::check('validate-skin')) ? 'Posted' : 'Pending';
 
         $skin->save();
+
+        session()->flash('alert-message', 'Ton skin a été modifié. Il est en attente de validation par un Modérateur');
 
         return redirect()->route('skins.index');
     }
