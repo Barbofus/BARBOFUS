@@ -2,12 +2,16 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use Illuminate\View\View;
 use Livewire\Component;
 
 class UserDashboard extends Component
 {
-    public $section = 'user-details';
+    public string $section = 'user-details';
 
+    /**
+     * @return void
+     */
     public function mount()
     {
         if (session()->has('section')) {
@@ -15,12 +19,18 @@ class UserDashboard extends Component
         }
     }
 
+    /**
+     * @return View
+     */
     public function render()
     {
         return view('livewire.user-panel.user-dashboard');
     }
 
-    public function ChangeSection($newSection)
+    /**
+     * @return void
+     */
+    public function ChangeSection(string $newSection)
     {
         $this->section = $newSection;
         $this->dispatchBrowserEvent('user-dashboard-change');

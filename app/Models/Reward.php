@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reward extends Model
 {
@@ -17,6 +18,9 @@ class Reward extends Model
         'points',
     ];
 
+    /**
+     * @return BelongsTo<Skin, Reward>
+     */
     public function Skin()
     {
         return $this->belongsTo(Skin::class);

@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 final class DeleteSkin
 {
-    // Need update
-    public function __invoke($skinId)
+    /**
+     * @return void
+     */
+    public function __invoke(int $skinId)
     {
         $skin = Skin::find($skinId);
 

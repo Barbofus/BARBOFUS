@@ -3,16 +3,23 @@
 namespace App\Http\Livewire\UserPanel;
 
 use App\Actions\Skins\GetSkinChunk;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class MyskinsChunk extends Component
 {
+    /**
+     * @var int[]
+     */
     public $skinIds;
 
-    public $page;
+    public int $page;
 
-    public $itemsPerPage;
+    public int $itemsPerPage;
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $orderedSkins = (new GetSkinChunk)($this->skinIds);

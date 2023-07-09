@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace App\Actions\Skins;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 final class GetSkinChunk
 {
-    // Need update
+    /**
+     * @param  int[]  $skinIds
+     * @return Collection<int|string, mixed>
+     */
     public function __invoke($skinIds)
     {
         $skins = DB::table('skins')

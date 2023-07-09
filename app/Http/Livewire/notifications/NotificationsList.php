@@ -2,25 +2,36 @@
 
 namespace App\Http\Livewire\notifications;
 
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class NotificationsList extends Component
 {
-    public $notificationsAmount;
+    public int $notificationsAmount;
 
-    public $initNotificationsAmount = 3;
+    public int $initNotificationsAmount = 3;
 
-    public $notifications;
+    public mixed $notifications;
 
+    /**
+     * @var string[]
+     */
     protected $listeners = [
         'refresh-notifications' => '$refresh',
     ];
 
+    /**
+     * @return void
+     */
     public function mount()
     {
         $this->ShowLessNotifications();
     }
 
+    /**
+     * @return void
+     */
     public function GetAllNotificationsSorted()
     {
         // Sort by created_at, unread first, then readed
@@ -30,36 +41,57 @@ class NotificationsList extends Component
             ->get();
     }
 
+    /**
+     * @return void
+     */
     public function ShowAllNotifications()
     {
         $this->notificationsAmount = auth()->user()->notifications()->count();
     }
 
+    /**
+     * @return void
+     */
     public function ShowLessNotifications()
     {
         $this->notificationsAmount = $this->initNotificationsAmount;
     }
 
-    public function DeleteNotification($notification)
+    /**
+     * @return void
+     */
+    public function DeleteNotification(DatabaseNotification $notification)
     {
         auth()->user()->notifications->find($notification)->delete();
     }
 
+    /**
+     * @return void
+     */
     public function DeleteNotifications()
     {
         auth()->user()->notifications()->delete();
     }
 
-    public function ReadNotification($notification)
+    /**
+     * @return void
+     */
+    public function ReadNotification(DatabaseNotification $notification)
     {
         auth()->user()->notifications->find($notification)->markAsRead();
     }
 
+    /**
+     * @return void
+     */
     public function ReadNotifications()
     {
         auth()->user()->unreadNotifications->markAsRead();
     }
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $this->GetAllNotificationsSorted();

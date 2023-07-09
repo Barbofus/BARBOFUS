@@ -23,6 +23,7 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "nunomaduro/larastan": "2.0",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
@@ -54,6 +55,19 @@
         ],
         "pint": [
             "@php ./vendor/bin/pint"
+        ],
+        "stan": [
+            "@php ./vendor/bin/phpstan analyse"
+        ],
+        "clean": [
+            "@php ./vendor/bin/pint",
+            "@php ./vendor/bin/phpstan analyse"
+        ],
+        "cache": [
+            "@php sudo chmod -R 755 storage",
+            "@php sudo chmod -R 755 bootstrap",
+            "@php artisan cache:clear",
+            "@php artisan config:cache"
         ]
     },
     "extra": {

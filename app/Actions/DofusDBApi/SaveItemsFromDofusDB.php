@@ -8,12 +8,17 @@ use App\Actions\Api\FetchExternalFile;
 
 final class SaveItemsFromDofusDB
 {
-    // Actions qui va déterminer si on a déjà l'item ou non, puis l'enregistrer, get les items depuis une autre action
+    /**
+     * @param  int[]  $typeIDs
+     * @param  int[]  $cosmetTypeIDs
+     * @return array<int<0, max>, mixed>
+     */
+    // Action qui va déterminer si on a déjà l'item ou non, puis l'enregistrer, get les items depuis une autre action
     public function __invoke(
-        $model,
-        $typeIDs,
-        $cosmetTypeIDs,
-        $imagePath,
+        string $model,
+        array $typeIDs,
+        array $cosmetTypeIDs,
+        string $imagePath,
     ): array {
 
         $newItems = [];
@@ -84,7 +89,7 @@ final class SaveItemsFromDofusDB
                 // Prépare l'url pour choper l'image
                 $imageUrl = 'https://api.dofusdb.fr/img/items/'.$item['iconId'].'.png';
 
-                // Récupère l'image et la stock dans l'icon_path
+                // Récupère l'image et la stocke dans l'icon_path
                 (new FetchExternalFile)($imageUrl, $newItem['icon_path']);
             }
 

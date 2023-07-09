@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Race extends Model
 {
@@ -17,11 +18,9 @@ class Race extends Model
 
     use HasFactory;
 
-    public function Build()
-    {
-        return $this->hasMany('App\Models\Build');
-    }
-
+    /**
+     * @return HasMany<Skin>
+     */
     public function Skins()
     {
         return $this->hasMany(Skin::class);

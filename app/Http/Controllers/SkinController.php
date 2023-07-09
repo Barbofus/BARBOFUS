@@ -7,11 +7,16 @@ use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
 use App\Models\Skin;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class SkinController extends Controller
 {
+    /**
+     * @var string[]
+     */
     protected $itemRelations = [
         'dofus_item_hat',
         'dofus_item_cloak',
@@ -26,15 +31,16 @@ class SkinController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
         return view('skins.index');
     }
 
+    /**
+     * @return View
+     */
     public function show(Skin $skin)
     {
         if ($skin->status != 'Posted') {
@@ -111,9 +117,7 @@ class SkinController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
@@ -132,9 +136,7 @@ class SkinController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(StoreUpdateSkinRequest $request)
     {
@@ -170,9 +172,7 @@ class SkinController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function edit(Skin $skin)
     {
@@ -192,9 +192,7 @@ class SkinController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(StoreUpdateSkinRequest $request, Skin $skin)
     {
@@ -232,15 +230,5 @@ class SkinController extends Controller
         session()->flash('section', 'my-skins');
 
         return redirect()->route('user-dashboard.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Skin $skin)
-    {
-        return back();
     }
 }

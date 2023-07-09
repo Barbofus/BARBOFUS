@@ -16,8 +16,8 @@ final class CheckDofusDBUpdate
         // Get la version de l'api
         $response = Http::get('https://api.dofusdb.fr/version');
 
-        // Si aucune réponse, on dit false pour pas spam l'api pour rien
-        if ($response->getStatusCode() != 200) {
+        // Si aucune réponse, on dit qu'elle est à jour
+        if ($response->status() != 200) {
             return false;
         }
 

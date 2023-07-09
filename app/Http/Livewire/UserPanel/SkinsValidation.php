@@ -7,10 +7,14 @@ use App\Notifications\SkinPostedNotification;
 use App\Notifications\SkinRefusedNotification;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class SkinsValidation extends Component
 {
+    /**
+     * @var string[]
+     */
     protected $itemRelations = [
         'dofus_item_hat',
         'dofus_item_cloak',
@@ -19,8 +23,11 @@ class SkinsValidation extends Component
         'dofus_item_costume',
     ];
 
-    public $skins;
+    public mixed $skins;
 
+    /**
+     * @return void
+     */
     public function getSkins()
     {
         $this->skins = DB::table('skins')->select('*')
@@ -64,6 +71,9 @@ class SkinsValidation extends Component
             ->get();
     }
 
+    /**
+     * @return void
+     */
     public function acceptSkin(int $skinID)
     {
         $skin = Skin::find($skinID);
@@ -75,6 +85,9 @@ class SkinsValidation extends Component
         $skin->User->notify(new SkinPostedNotification($skin));
     }
 
+    /**
+     * @return void
+     */
     public function refuseSkin(string $reason, int $skinID)
     {
         $skin = Skin::find($skinID);
@@ -87,6 +100,9 @@ class SkinsValidation extends Component
         $skin->User->notify(new SkinRefusedNotification($skin));
     }
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $this->getSkins();

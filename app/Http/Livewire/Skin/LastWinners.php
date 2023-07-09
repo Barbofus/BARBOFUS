@@ -3,12 +3,16 @@
 namespace App\Http\Livewire\Skin;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class LastWinners extends Component
 {
-    public $winners;
+    public mixed $winners;
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $this->FetchLastWinners();
@@ -18,6 +22,9 @@ class LastWinners extends Component
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function FetchLastWinners()
     {
         $this->winners = DB::table('skin_winners')
@@ -25,6 +32,9 @@ class LastWinners extends Component
             ->get();
     }
 
+    /**
+     * @return void
+     */
     public function Refresh()
     {
         $this->dispatchBrowserEvent('skin-index-render');

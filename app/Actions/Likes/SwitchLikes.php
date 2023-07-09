@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 final class SwitchLikes
 {
-    // Need update
-    public function __invoke($skin)
+    /**
+     * @return void
+     */
+    public function __invoke(int $skinID)
     {
         // Si on a déjà like le skin
-        if ($liked = Auth::user()->Likes()->where('skin_id', $skin)->first()) {
+        if ($liked = Auth::user()->Likes()->where('skin_id', $skinID)->first()) {
             $liked->delete();
 
             return;
@@ -21,8 +23,8 @@ final class SwitchLikes
 
         // Sinon, ont le créé
         Like::create([
-            'skin_id' => $skin,
-            'user_id' => \Auth::user()->id,
+            'skin_id' => $skinID,
+            'user_id' => Auth::id(),
         ]);
     }
 }

@@ -8,9 +8,13 @@ use App\Actions\Api\GetApiBody;
 
 final class GetItemsFromDofusDB
 {
+    /**
+     * @param  int[]  $typeID
+     * @return array<int<0, max>, array<string, mixed>>
+     */
     // Actions qui va déterminer si on a déjà l'item ou non, puis l'enregistrer, get les items depuis une autre action
     public function __invoke(
-        $typeID
+        array $typeID
     ): array {
 
         $limit = 50;

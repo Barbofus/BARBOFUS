@@ -4,16 +4,23 @@ namespace App\Http\Livewire\UserPanel;
 
 use App\Actions\Likes\SwitchLikes;
 use App\Actions\Skins\GetSkinChunk;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class MylikesChunk extends Component
 {
+    /**
+     * @var int[]
+     */
     public $skinIds;
 
-    public $page;
+    public int $page;
 
-    public $itemsPerPage;
+    public int $itemsPerPage;
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $orderedSkins = (new GetSkinChunk)($this->skinIds);
@@ -23,9 +30,12 @@ class MylikesChunk extends Component
         ]);
     }
 
-    public function SwitchHeart($skin)
+    /**
+     * @return void
+     */
+    public function SwitchHeart(int $skinID)
     {
-        (new SwitchLikes)($skin);
+        (new SwitchLikes)($skinID);
         $this->emit('ReloadInfinite');
     }
 }

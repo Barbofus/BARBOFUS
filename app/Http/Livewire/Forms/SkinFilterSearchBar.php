@@ -3,20 +3,27 @@
 namespace App\Http\Livewire\Forms;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class SkinFilterSearchBar extends Component
 {
+    /**
+     * @var array<int, string>
+     */
     public $searchFilterInput;
 
-    public $selectionKey = 0;
+    public int $selectionKey = 0;
 
-    public $query = '';
+    public string $query = '';
 
-    public $oldQuery = '';
+    public string $oldQuery = '';
 
-    public $itemToShow = [];
+    public mixed $itemToShow = [];
 
+    /**
+     * @var string[]
+     */
     protected $models = [
         'users',
         'dofus_item_hats',
@@ -26,10 +33,16 @@ class SkinFilterSearchBar extends Component
         'dofus_item_costumes',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $listeners = [
         'ToggleSearchedText' => 'emptyQuery',
     ];
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $this->findForItems($this->query);
@@ -37,7 +50,10 @@ class SkinFilterSearchBar extends Component
         return view('livewire.forms.skin-filter-search-bar');
     }
 
-    public function findForItems($query)
+    /**
+     * @return void
+     */
+    public function findForItems(string $query)
     {
 
         $this->itemToShow = [];
@@ -73,12 +89,18 @@ class SkinFilterSearchBar extends Component
         $this->oldQuery = $query;
     }
 
+    /**
+     * @return void
+     */
     public function emptyQuery()
     {
         $this->query = '';
         $this->itemToShow = [];
     }
 
+    /**
+     * @return void
+     */
     public function incrementSelection()
     {
 
@@ -89,6 +111,9 @@ class SkinFilterSearchBar extends Component
         }
     }
 
+    /**
+     * @return void
+     */
     public function decrementSelection()
     {
 

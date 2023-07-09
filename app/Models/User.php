@@ -3,11 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * App\Models\User
+ *
+ * @property mixed $unreadNotifications
+ * @property mixed $notifications
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -43,31 +52,41 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return BelongsTo<Role, User>
+     */
     public function Role()
     {
         return $this->belongsTo('App\Models\Role');
     }
 
-    public function Build()
-    {
-        return $this->hasMany('App\Models\Build');
-    }
-
+    /**
+     * @return HasMany<Skin>
+     */
     public function Skins()
     {
         return $this->hasMany(Skin::class);
     }
 
+    /**
+     * @return HasMany<UserNotificationPreferences>
+     */
     public function NotificationPreferences()
     {
         return $this->hasMany(UserNotificationPreferences::class);
     }
 
+    /**
+     * @return HasMany<Like>
+     */
     public function Likes()
     {
         return $this->hasMany(Like::class);
     }
 
+    /**
+     * @return MorphMany<DatabaseNotification>
+     */
     public function notifications()
     {
         return $this->morphMany(DatabaseNotification::class, 'notifiable');

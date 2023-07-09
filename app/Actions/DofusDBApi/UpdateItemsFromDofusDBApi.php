@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 final class UpdateItemsFromDofusDBApi
 {
-    // Actions qui va pour chaque types d'item, lancer une autre action qui va get et save les items qu'il nous manque
+    // Action qui va pour chaque types d'item, lancer une autre action qui va get et save les items qu'il nous manque
     public function __invoke(): void
     {
         $newItems = [];

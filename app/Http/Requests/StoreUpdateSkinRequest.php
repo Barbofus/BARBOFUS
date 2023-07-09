@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Race;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -33,7 +32,7 @@ class StoreUpdateSkinRequest extends FormRequest
         $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
 
         return [
-            'race_id' => 'required|integer|between:1,'.Race::all()->count(),
+            'race_id' => 'required|integer|exists:races,id',
             'face' => 'required|integer|between:1,8',
             'image_path' => $imageRequired.'|image|max:100|dimensions:max_width=350,max_height=450',
             'gender' => [
@@ -55,6 +54,9 @@ class StoreUpdateSkinRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function messages()
     {
         $hexMsg = 'Code hexadécimal requis.';

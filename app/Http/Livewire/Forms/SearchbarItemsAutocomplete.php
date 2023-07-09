@@ -2,35 +2,42 @@
 
 namespace App\Http\Livewire\Forms;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class SearchbarItemsAutocomplete extends Component
 {
-    public $relatedModel;
+    public string $relatedModel;
 
-    public $name;
+    public string $name;
 
-    public $value;
+    public string|int $value;
 
-    public $placeholder;
+    public string $placeholder;
 
-    public $selectedItem = 0;
+    public int $selectedItem = 0;
 
-    public $existentItem = null;
+    /**
+     * @var Collection<int|string, mixed>
+     */
+    public $existentItem;
 
-    public $query = '';
+    public string $query = '';
 
-    public $previousQuery = '';
+    public string $previousQuery = '';
 
-    public $itemsToShow = [];
+    public mixed $itemsToShow = [];
 
-    public function mount($value)
+    /**
+     * @return void
+     */
+    public function mount(string|int $value)
     {
 
         if ($value) {
-            $existentItem = $this->ExistentQuery($value);
-            $this->existentItem = collect($existentItem);
+            $this->existentItem = $this->ExistentQuery($value);
             $this->query = $this->existentItem['name'];
             $this->previousQuery = $this->query;
         }
@@ -38,9 +45,12 @@ class SearchbarItemsAutocomplete extends Component
         $this->updatedQuery($this->query);
     }
 
-    public function ExistentQuery($value)
+    /**
+     * @return Collection<int|string, mixed>
+     */
+    public function ExistentQuery(string|int $value)
     {
-        return collect(DB::table($this->relatedModel)
+        return new Collection(DB::table($this->relatedModel)
             ->select('id', 'icon_path', 'name', 'level')
             ->where('id', '=', $value)
             ->orWhere('name', '=', $value)
@@ -59,6 +69,9 @@ class SearchbarItemsAutocomplete extends Component
             ->first());
     }
 
+    /**
+     * @return void
+     */
     public function resetSelection()
     {
         // Aucun id selectionné
@@ -68,9 +81,12 @@ class SearchbarItemsAutocomplete extends Component
         $this->itemsToShow = [];
 
         // Aucun item selectionné
-        $this->existentItem = null;
+        $this->existentItem = new Collection();
     }
 
+    /**
+     * @return void
+     */
     public function incrementSelection()
     {
         if ($this->selectedItem >= count($this->itemsToShow) - 1) {
@@ -82,6 +98,9 @@ class SearchbarItemsAutocomplete extends Component
         $this->selectedItem++;
     }
 
+    /**
+     * @return void
+     */
     public function decrementSelection()
     {
         if ($this->selectedItem <= 0) {
@@ -93,14 +112,20 @@ class SearchbarItemsAutocomplete extends Component
         $this->selectedItem--;
     }
 
-    public function setSelection($value)
+    /**
+     * @return void
+     */
+    public function setSelection(string|int $value)
     {
         $this->selectedItem = $value;
 
         $this->useSelectionAsValue();
     }
 
-    public function updatedQuery($query)
+    /**
+     * @return void
+     */
+    public function updatedQuery(string $query)
     {
         // Si la recherche est trop courte
         if (strlen($query) < 3) {
@@ -138,6 +163,9 @@ class SearchbarItemsAutocomplete extends Component
 
     }
 
+    /**
+     * @return void
+     */
     // Remplace la query par l'item selectionné
     public function useSelectionAsValue()
     {
@@ -148,6 +176,9 @@ class SearchbarItemsAutocomplete extends Component
         $this->query = $this->itemsToShow[$this->selectedItem]['name'];
     }
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $this->updatedQuery($this->query);

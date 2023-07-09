@@ -5,26 +5,36 @@ namespace App\Http\Livewire\UserPanel;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class MylikesInfiniteLoad extends Component
 {
     public const ITEMS_PER_PAGE = 60;
 
+    /**
+     * @var array<int, int[]>
+     */
     public $postIdChunks = [];
 
-    public $page = 1;
+    public int $page = 1;
 
-    public $maxPage = 1;
+    public int $maxPage = 1;
 
-    public $queryCount = 0;
+    public int  $queryCount = 0;
 
-    protected $hasLoadMore = false;
+    protected bool $hasLoadMore = false;
 
+    /**
+     * @var string[]
+     */
     protected $listeners = [
         'ReloadInfinite' => '$refresh',
     ];
 
+    /**
+     * @return View
+     */
     public function render()
     {
         if (! $this->hasLoadMore) {
@@ -34,6 +44,9 @@ class MylikesInfiniteLoad extends Component
         return view('livewire.user-panel.mylikes-infinite-load');
     }
 
+    /**
+     * @return void
+     */
     public function LoadMore()
     {
         if ($this->HasMorePage()) {
@@ -42,6 +55,9 @@ class MylikesInfiniteLoad extends Component
         }
     }
 
+    /**
+     * @return void
+     */
     public function PrepareChunks()
     {
         $this->postIdChunks = DB::table('skins')
@@ -81,6 +97,9 @@ class MylikesInfiniteLoad extends Component
         $this->queryCount++;
     }
 
+    /**
+     * @return bool
+     */
     public function HasMorePage()
     {
         return $this->page < $this->maxPage;

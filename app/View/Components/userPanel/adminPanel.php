@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 
 class adminPanel extends Component
 {
-    public $needDofusDBUpdate;
+    public bool $needDofusDBUpdate;
 
     /**
      * Create a new component instance.

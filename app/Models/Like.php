@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Like extends Model
 {
@@ -14,13 +15,19 @@ class Like extends Model
         'user_id',
     ];
 
+    /**
+     * @return BelongsTo<Skin, Like>
+     */
     public function Skin()
     {
-        $this->belongsTo(Skin::class);
+        return $this->belongsTo(Skin::class);
     }
 
+    /**
+     * @return BelongsTo<User, Like>
+     */
     public function User()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

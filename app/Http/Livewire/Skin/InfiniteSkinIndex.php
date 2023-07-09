@@ -4,20 +4,27 @@ namespace App\Http\Livewire\Skin;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class InfiniteSkinIndex extends Component
 {
     public const ITEMS_PER_PAGE = 60;
 
+    /**
+     * @var array<int, int[]>
+     */
     public $postIdChunks = [];
 
-    public $page = 1;
+    public int $page = 1;
 
-    public $maxPage = 1;
+    public int $maxPage = 1;
 
-    public $queryCount = 0;
+    public int $queryCount = 0;
 
+    /**
+     * @var string[]
+     */
     protected $allOrder = [
         'skins.updated_at',
         'likes_count',
@@ -25,6 +32,9 @@ class InfiniteSkinIndex extends Component
         'skins.race_id',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $itemRelations = [
         'dofus_item_hat',
         'dofus_item_cloak',
@@ -33,30 +43,48 @@ class InfiniteSkinIndex extends Component
         'dofus_item_costume',
     ];
 
-    protected $hasLoadMore = false;
+    protected bool $hasLoadMore = false;
 
-    public $orderBy = 'skins.updated_at'; // Nouveauté par défault
+    public string $orderBy = 'skins.updated_at'; // Nouveauté par défault
 
-    public $orderDirection = 'DESC';
+    public string $orderDirection = 'DESC';
 
-    public $races;
+    public mixed $races;
 
+    /**
+     * @var array<int, string[]>
+     */
     public $raceWhere = [];
 
+    /**
+     * @var array<int, string[]>
+     */
     public $genderWhere = [];
 
+    /**
+     * @var array<int, string[]>
+     */
     public $skinContentWhere = [];
 
-    public $barbeOnly = false;
+    public bool $barbeOnly = false;
 
-    public $winnersOnly = false;
+    public bool $winnersOnly = false;
 
+    /**
+     * @var array<int, string[]>
+     */
     public $searchFilterInput = [];
 
+    /**
+     * @var string[]
+     */
     protected $listeners = [
         'ToggleSearchedText',
     ];
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $this->races = DB::table('races')->get();
@@ -70,6 +98,9 @@ class InfiniteSkinIndex extends Component
         return view('livewire.skin.infinite-skin-index');
     }
 
+    /**
+     * @return void
+     */
     public function LoadMore()
     {
         if ($this->HasMorePage()) {
@@ -78,6 +109,9 @@ class InfiniteSkinIndex extends Component
         }
     }
 
+    /**
+     * @return void
+     */
     public function PrepareChunks()
     {
         $this->postIdChunks = DB::table('skins')
@@ -179,18 +213,27 @@ class InfiniteSkinIndex extends Component
         $this->queryCount++;
     }
 
+    /**
+     * @return bool
+     */
     public function HasMorePage()
     {
         return $this->page < $this->maxPage;
     }
 
-    public function SortBy($orderBy, $orderDir)
+    /**
+     * @return void
+     */
+    public function SortBy(string $orderBy, string $orderDir)
     {
         $this->orderBy = $this->allOrder[$orderBy];
         $this->orderDirection = $orderDir;
     }
 
-    public function ToggleRace($raceID)
+    /**
+     * @return void
+     */
+    public function ToggleRace(int $raceID)
     {
         // Si la classe est déjà selectionné
         if (count($this->raceWhere) > 0 && ($key = array_search(['race_id', '=', $raceID, 'or'], $this->raceWhere)) !== false) {
@@ -202,12 +245,18 @@ class InfiniteSkinIndex extends Component
         $this->raceWhere[] = ['race_id', '=', $raceID, 'or'];
     }
 
+    /**
+     * @return void
+     */
     public function UnselectAllRaces()
     {
         $this->raceWhere = [];
     }
 
-    public function ToggleGender($gender)
+    /**
+     * @return void
+     */
+    public function ToggleGender(string $gender)
     {
         // Si le genre est déjà selectionné
         if (count($this->genderWhere) > 0 && ($key = array_search(['gender', '!=', $gender], $this->genderWhere)) !== false) {
@@ -219,7 +268,10 @@ class InfiniteSkinIndex extends Component
         $this->genderWhere[] = ['gender', '!=', $gender];
     }
 
-    public function ToggleSkinContent($subcategoryID)
+    /**
+     * @return void
+     */
+    public function ToggleSkinContent(int $subcategoryID)
     {
         // Si le subcategory est déjà exclu
         if (count($this->skinContentWhere) > 0 && ($key = array_search($subcategoryID, $this->skinContentWhere)) !== false) {
@@ -231,17 +283,26 @@ class InfiniteSkinIndex extends Component
         $this->skinContentWhere[] = $subcategoryID;
     }
 
+    /**
+     * @return void
+     */
     public function ToggleShowBarbeOnly()
     {
         $this->barbeOnly = ! $this->barbeOnly;
     }
 
+    /**
+     * @return void
+     */
     public function ToggleShowWinnersOnly()
     {
         $this->winnersOnly = ! $this->winnersOnly;
     }
 
-    public function ToggleSearchedText($search)
+    /**
+     * @return void
+     */
+    public function ToggleSearchedText(string $search)
     {
         // Si le mot clef est déjà dans le tableau, on le retire
         if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {

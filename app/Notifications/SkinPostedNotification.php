@@ -12,7 +12,7 @@ class SkinPostedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $skin;
+    public Skin $skin;
 
     /**
      * Create a new notification instance.
@@ -28,7 +28,7 @@ class SkinPostedNotification extends Notification implements ShouldQueue
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     * @return array
+     * @return array<int, string>
      */
     public function via($notifiable)
     {
@@ -45,7 +45,7 @@ class SkinPostedNotification extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return SkinPostedMail
      */
     public function toMail($notifiable)
     {
@@ -56,7 +56,7 @@ class SkinPostedNotification extends Notification implements ShouldQueue
      * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return array
+     * @return array<string, int|string>
      */
     public function toArray($notifiable)
     {

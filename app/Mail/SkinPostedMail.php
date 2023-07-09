@@ -14,9 +14,9 @@ class SkinPostedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $skin;
+    public Skin $skin;
 
-    public $user;
+    public User $user;
 
     /**
      * Create a new message instance.
@@ -59,7 +59,7 @@ class SkinPostedMail extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function attachments()
     {

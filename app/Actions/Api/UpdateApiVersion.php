@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 final class UpdateApiVersion
 {
-    // Need update
     public function __invoke(
-        $apiName,
-        $newVersion,
+        string $apiName,
+        string $newVersion,
     ): void {
 
         // Get nos versions des Api

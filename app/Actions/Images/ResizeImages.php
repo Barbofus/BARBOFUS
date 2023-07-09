@@ -8,10 +8,12 @@ use Intervention\Image\Facades\Image;
 
 final class ResizeImages
 {
-    // Need update
+    /**
+     * @param  array<string, int>  $newSize
+     */
     public function __invoke(
-        $image,
-        $storagePath,
+        mixed $image,
+        string $storagePath,
         $newSize,
     ): string {
 
