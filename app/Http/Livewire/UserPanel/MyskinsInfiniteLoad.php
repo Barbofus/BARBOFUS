@@ -56,6 +56,7 @@ class MyskinsInfiniteLoad extends Component
             ->where('user_id', Auth::id())
 
             // orderBy
+            ->orderBy('status', 'DESC')
             ->orderBy('updated_at', 'DESC')
 
             // Scroll infini

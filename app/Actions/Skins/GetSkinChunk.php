@@ -14,7 +14,7 @@ final class GetSkinChunk
     public function __invoke($skinIds)
     {
         $skins = DB::table('skins')
-            ->select('id', 'image_path', 'user_id', 'created_at')
+            ->select('id', 'image_path', 'user_id', 'updated_at', 'status')
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')
@@ -68,7 +68,7 @@ final class GetSkinChunk
 
         foreach ($skins as $skin) {
             $skin->liked_at = new Carbon($skin->liked_at);
-            $skin->created_at = new Carbon($skin->created_at);
+            $skin->updated_at = new Carbon($skin->updated_at);
         }
 
         return collect($skinIds)->map(function ($id) use ($skins){

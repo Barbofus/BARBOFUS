@@ -85,7 +85,7 @@
         @endif
 
         {{-- Skin + Background --}}
-        <div class="-z-10 absolute top-0 left-0 w-full h-full rounded-md cursor-pointer bg-primary-100 group-hover:brightness-125 transition-all overflow-hidden">
+        <div class="-z-10 absolute top-0 left-0 w-full h-full rounded-md cursor-pointer {{ (!isset($showName) || $showName) ? 'bg-primary-100' : (($skin->status == 'Pending') ? 'bg-pendingBackground' : (($skin->status == 'Refused') ? 'bg-refusedBackground' : 'bg-primary-100'))}} group-hover:brightness-125 transition-all overflow-hidden">
             <div class="skinBackGround bg-[linear-gradient(0deg,rgba(255,255,255,0)36%,rgba(255,255,255,0.05)40%,rgba(255,255,255,0)100%)] w-[200%] h-full rotate-[30deg] origin-bottom-right absolute right-0 top-[-200px]"></div>
         </div>
         <img src="{{ asset('storage\/') . $skin->image_path }}" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">

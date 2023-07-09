@@ -16,6 +16,9 @@ module.exports = {
                 100: 'var(--ivoryDark)',
             },
 
+            'refusedBackground': 'var(--refusedBackground)',
+            'pendingBackground': 'var(--pendingBackground)',
+
             'goldText': 'var(--goldText)',
             'goldTextLit': 'var(--goldTextLit)',
 

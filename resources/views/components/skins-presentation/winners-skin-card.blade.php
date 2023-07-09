@@ -1,7 +1,7 @@
 {{-- Nécessite un tableau de Skin en argument sous le nom :skin--}}
 <div class="aspect-[14/19] relative h-full">
 
-    <x-skins.content :skin="$skin" :id="$skin->skin_id" />
+    <x-skins.content :skin="$skin" :id="$skin->skin_id" :showStatus="false" />
 
     {{-- Likes --}}
     <div class="absolute bottom-0 right-2">
