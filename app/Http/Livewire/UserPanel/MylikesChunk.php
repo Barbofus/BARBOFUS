@@ -9,7 +9,9 @@ use Livewire\Component;
 class MylikesChunk extends Component
 {
     public $skinIds;
+
     public $page;
+
     public $itemsPerPage;
 
     public function render()

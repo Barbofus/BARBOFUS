@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DofusItemShield extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -17,11 +16,13 @@ class DofusItemShield extends Model
         'dofus_items_sub_categorie_id',
     ];
 
-    public function DofusItemsSubCategorie(){
+    public function DofusItemsSubCategorie()
+    {
         return $this->belongsTo(DofusItemsSubCategorie::class);
     }
 
-    public function Skins() {
+    public function Skins()
+    {
         return $this->hasMany(Skin::class);
     }
 }

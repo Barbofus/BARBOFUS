@@ -18,7 +18,7 @@ class RewardFactory extends Factory
      */
     public function definition()
     {
-        $date = $this->faker->dateTimeBetween('-30 day' );
+        $date = $this->faker->dateTimeBetween('-30 day');
         $rank = RewardPrice::all()->random();
 
         return [

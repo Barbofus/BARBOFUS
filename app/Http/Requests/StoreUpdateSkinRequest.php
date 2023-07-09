@@ -2,14 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\DofusItemCloak;
-use App\Models\DofusItemCostume;
-use App\Models\DofusItemHat;
-use App\Models\DofusItemPet;
-use App\Models\DofusItemShield;
 use App\Models\Race;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class StoreUpdateSkinRequest extends FormRequest
@@ -31,9 +25,9 @@ class StoreUpdateSkinRequest extends FormRequest
      */
     public function rules()
     {
-        $hexRegex =  [
+        $hexRegex = [
             'required',
-            'regex:/^[a-f0-9]{6}$/i'
+            'regex:/^[a-f0-9]{6}$/i',
         ];
 
         $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
@@ -41,11 +35,11 @@ class StoreUpdateSkinRequest extends FormRequest
         return [
             'race_id' => 'required|integer|between:1,'.Race::all()->count(),
             'face' => 'required|integer|between:1,8',
-            'image_path' => $imageRequired . '|image|max:100|dimensions:max_width=350,max_height=450',
+            'image_path' => $imageRequired.'|image|max:100|dimensions:max_width=350,max_height=450',
             'gender' => [
                 'required',
                 Rule::in(['Homme', 'Femme']),
-             ],
+            ],
 
             'color_skin' => $hexRegex,
             'color_hair' => $hexRegex,

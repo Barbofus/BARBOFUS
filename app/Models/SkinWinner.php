@@ -11,8 +11,6 @@ class SkinWinner extends Model
 
     public $timestamps = false;
 
-
-
     protected $fillable = [
         'skin_id',
         'user_name',
@@ -20,5 +18,4 @@ class SkinWinner extends Model
         'weekly_likes',
         'reward_id',
     ];
-
 }

@@ -27,46 +27,55 @@ class Skin extends Model
         'refused_reason',
     ];
 
-
     use HasFactory;
 
-    public function DofusItemHat() {
+    public function DofusItemHat()
+    {
         return $this->belongsTo(DofusItemHat::class);
     }
 
-    public function DofusItemCloak() {
+    public function DofusItemCloak()
+    {
         return $this->belongsTo(DofusItemCloak::class);
     }
 
-    public function DofusItemShield() {
+    public function DofusItemShield()
+    {
         return $this->belongsTo(DofusItemShield::class);
     }
 
-    public function DofusItemCostume() {
+    public function DofusItemCostume()
+    {
         return $this->belongsTo(DofusItemCostume::class);
     }
 
-    public function DofusItemPet() {
+    public function DofusItemPet()
+    {
         return $this->belongsTo(DofusItemPet::class);
     }
 
-    public function User() {
+    public function User()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function Race() {
+    public function Race()
+    {
         return $this->belongsTo(Race::class);
     }
 
-    public function Rewards() {
+    public function Rewards()
+    {
         return $this->hasMany(Reward::class)->orderByDesc('points');
     }
 
-    public function RewardsWinners() {
+    public function RewardsWinners()
+    {
         return $this->hasMany(Reward::class)->orderByDesc('created_at');
     }
 
-    public function Likes(){
+    public function Likes()
+    {
         return $this->hasMany(Like::class);
     }
 }

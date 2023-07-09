@@ -12,8 +12,11 @@ class MylikesInfiniteLoad extends Component
     public const ITEMS_PER_PAGE = 60;
 
     public $postIdChunks = [];
+
     public $page = 1;
+
     public $maxPage = 1;
+
     public $queryCount = 0;
 
     protected $hasLoadMore = false;
@@ -22,18 +25,19 @@ class MylikesInfiniteLoad extends Component
         'ReloadInfinite' => '$refresh',
     ];
 
-
     public function render()
     {
-        if(!$this->hasLoadMore) $this->PrepareChunks();
+        if (! $this->hasLoadMore) {
+            $this->PrepareChunks();
+        }
 
         return view('livewire.user-panel.mylikes-infinite-load');
     }
 
     public function LoadMore()
     {
-        if($this->HasMorePage()) {
-            $this->page ++;
+        if ($this->HasMorePage()) {
+            $this->page++;
             $this->hasLoadMore = true;
         }
     }
@@ -49,7 +53,7 @@ class MylikesInfiniteLoad extends Component
                     ->where('likes.user_id', Auth::id())
                     ->whereColumn('likes.skin_id', 'skins.id')
                     ->orderBy('created_at')
-                    ->take(1)
+                    ->take(1),
             ])
 
             // Seulement les skins que l'on a liké
@@ -74,7 +78,7 @@ class MylikesInfiniteLoad extends Component
 
         $this->maxPage = count($this->postIdChunks);
 
-        $this->queryCount ++;
+        $this->queryCount++;
     }
 
     public function HasMorePage()

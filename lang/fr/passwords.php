@@ -17,6 +17,6 @@ return [
     'sent' => 'E-mail de réinitialisé de mot de passe envoyé !',
     'throttled' => 'Attendez avant de recommencer.',
     'token' => 'Le code de réinitialisation est invalide.',
-    'user' => "Adresse mail non enregistrée.",
+    'user' => 'Adresse mail non enregistrée.',
 
 ];

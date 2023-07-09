@@ -12,10 +12,11 @@ class UserNotificationPreferences extends Model
     protected $fillable = [
         'user_id',
         'notification_type',
-        'value'
+        'value',
     ];
 
-    public function User() {
+    public function User()
+    {
         return $this->belongsTo(User::class);
     }
 }

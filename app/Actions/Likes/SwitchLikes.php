@@ -13,16 +13,16 @@ final class SwitchLikes
     public function __invoke($skin)
     {
         // Si on a déjà like le skin
-        if($liked = Auth::user()->Likes()->where('skin_id', $skin)->first())
-        {
+        if ($liked = Auth::user()->Likes()->where('skin_id', $skin)->first()) {
             $liked->delete();
+
             return;
         }
 
         // Sinon, ont le créé
         Like::create([
             'skin_id' => $skin,
-            'user_id' => \Auth::user()->id
+            'user_id' => \Auth::user()->id,
         ]);
     }
 }

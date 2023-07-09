@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Skin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Images;
 
-use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 
 final class ResizeImages
 {
@@ -15,7 +13,7 @@ final class ResizeImages
         $image,
         $storagePath,
         $newSize,
-    ): string{
+    ): string {
 
         // Nomme l'image en fonction de l'heure actuelle
         $imageName = time().'.'.$image->getClientOriginalExtension();

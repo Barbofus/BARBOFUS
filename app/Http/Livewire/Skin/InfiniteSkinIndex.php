@@ -11,9 +11,13 @@ class InfiniteSkinIndex extends Component
     public const ITEMS_PER_PAGE = 60;
 
     public $postIdChunks = [];
+
     public $page = 1;
+
     public $maxPage = 1;
+
     public $queryCount = 0;
+
     protected $allOrder = [
         'skins.updated_at',
         'likes_count',
@@ -32,27 +36,34 @@ class InfiniteSkinIndex extends Component
     protected $hasLoadMore = false;
 
     public $orderBy = 'skins.updated_at'; // Nouveauté par défault
+
     public $orderDirection = 'DESC';
 
     public $races;
 
-    public $raceWhere = array();
-    public $genderWhere = array();
-    public $skinContentWhere = array();
+    public $raceWhere = [];
+
+    public $genderWhere = [];
+
+    public $skinContentWhere = [];
+
     public $barbeOnly = false;
+
     public $winnersOnly = false;
-    public $searchFilterInput = array();
+
+    public $searchFilterInput = [];
 
     protected $listeners = [
         'ToggleSearchedText',
     ];
 
-
     public function render()
     {
         $this->races = DB::table('races')->get();
 
-        if(!$this->hasLoadMore) $this->PrepareChunks();
+        if (! $this->hasLoadMore) {
+            $this->PrepareChunks();
+        }
 
         $this->dispatchBrowserEvent('skin-index-render');
 
@@ -61,8 +72,8 @@ class InfiniteSkinIndex extends Component
 
     public function LoadMore()
     {
-        if($this->HasMorePage()) {
-            $this->page ++;
+        if ($this->HasMorePage()) {
+            $this->page++;
             $this->hasLoadMore = true;
         }
     }
@@ -75,7 +86,7 @@ class InfiniteSkinIndex extends Component
             ->join('users', 'skins.user_id', '=', 'users.id')
             ->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
-                    $query->leftJoin($item . 's', $item . 's.id', '=', 'skins.' . $item . '_id');
+                    $query->leftJoin($item.'s', $item.'s.id', '=', 'skins.'.$item.'_id');
                 }
             })
 
@@ -86,12 +97,12 @@ class InfiniteSkinIndex extends Component
             ->addSelect([
                 'rewards_points' => DB::table('rewards')
                     ->selectRaw('sum(points)')
-                    ->whereColumn('rewards.skin_id', 'skins.id')
+                    ->whereColumn('rewards.skin_id', 'skins.id'),
             ])
             ->addSelect([
                 'likes_count' => DB::table('likes')
                     ->selectRaw('count(id)')
-                    ->whereColumn('likes.skin_id', 'skins.id')
+                    ->whereColumn('likes.skin_id', 'skins.id'),
             ])
 
             // Début du système de filtres
@@ -118,15 +129,15 @@ class InfiniteSkinIndex extends Component
 
                     // Parcous toutes les relations d'items (DofusItemHat etc..)
                     foreach ($this->itemRelations as $item) {
-                            $query->where(function (Builder $query) use ($item) {
+                        $query->where(function (Builder $query) use ($item) {
 
-                                $query->whereNotExists(function (Builder $query) use ($item) {
-                                    $query->select('id')
-                                        ->from($item.'s')
-                                        ->whereColumn($item.'s.id', 'skins.'.$item.'_id');
-                                })
-                                    ->orWhereNotIn($item.'s.dofus_items_sub_categorie_id', $this->skinContentWhere);
-                            });
+                            $query->whereNotExists(function (Builder $query) use ($item) {
+                                $query->select('id')
+                                    ->from($item.'s')
+                                    ->whereColumn($item.'s.id', 'skins.'.$item.'_id');
+                            })
+                                ->orWhereNotIn($item.'s.dofus_items_sub_categorie_id', $this->skinContentWhere);
+                        });
 
                     }
                 });
@@ -165,7 +176,7 @@ class InfiniteSkinIndex extends Component
 
         $this->maxPage = count($this->postIdChunks);
 
-        $this->queryCount ++;
+        $this->queryCount++;
     }
 
     public function HasMorePage()
@@ -184,6 +195,7 @@ class InfiniteSkinIndex extends Component
         // Si la classe est déjà selectionné
         if (count($this->raceWhere) > 0 && ($key = array_search(['race_id', '=', $raceID, 'or'], $this->raceWhere)) !== false) {
             unset($this->raceWhere[$key]);
+
             return;
         }
 
@@ -192,7 +204,7 @@ class InfiniteSkinIndex extends Component
 
     public function UnselectAllRaces()
     {
-        $this->raceWhere = array();
+        $this->raceWhere = [];
     }
 
     public function ToggleGender($gender)
@@ -200,6 +212,7 @@ class InfiniteSkinIndex extends Component
         // Si le genre est déjà selectionné
         if (count($this->genderWhere) > 0 && ($key = array_search(['gender', '!=', $gender], $this->genderWhere)) !== false) {
             unset($this->genderWhere[$key]);
+
             return;
         }
 
@@ -220,12 +233,12 @@ class InfiniteSkinIndex extends Component
 
     public function ToggleShowBarbeOnly()
     {
-        $this->barbeOnly = !$this->barbeOnly;
+        $this->barbeOnly = ! $this->barbeOnly;
     }
 
     public function ToggleShowWinnersOnly()
     {
-        $this->winnersOnly = !$this->winnersOnly;
+        $this->winnersOnly = ! $this->winnersOnly;
     }
 
     public function ToggleSearchedText($search)
@@ -233,6 +246,7 @@ class InfiniteSkinIndex extends Component
         // Si le mot clef est déjà dans le tableau, on le retire
         if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {
             unset($this->searchFilterInput[$key]);
+
             return;
         }
 

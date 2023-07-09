@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\RewardPrice;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RewardPriceSeeder extends Seeder
@@ -18,17 +17,17 @@ class RewardPriceSeeder extends Seeder
         // Création des 3 types de rewards
         RewardPrice::factory()->create([
             'rank' => 'first',
-            'points' => 211
+            'points' => 211,
         ]);
 
         RewardPrice::factory()->create([
             'rank' => 'second',
-            'points' => 21
+            'points' => 21,
         ]);
 
         RewardPrice::factory()->create([
             'rank' => 'third',
-            'points' => 2
+            'points' => 2,
         ]);
     }
 }

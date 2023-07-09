@@ -7,6 +7,7 @@ use Livewire\Component;
 class NotificationsList extends Component
 {
     public $notificationsAmount;
+
     public $initNotificationsAmount = 3;
 
     public $notifications;
@@ -24,7 +25,7 @@ class NotificationsList extends Component
     {
         // Sort by created_at, unread first, then readed
         $this->notifications = auth()->user()->notifications()
-            ->orderByRaw("case when read_at IS NULL then 0 else 1 end")
+            ->orderByRaw('case when read_at IS NULL then 0 else 1 end')
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -62,6 +63,7 @@ class NotificationsList extends Component
     public function render()
     {
         $this->GetAllNotificationsSorted();
+
         return view('livewire.notifications.notifications-list');
     }
 }

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Skin;
 use App\Models\SkinWinner;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SkinWinnerSeeder extends Seeder
@@ -16,8 +15,7 @@ class SkinWinnerSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i <= 2; $i++)
-        {
+        for ($i = 0; $i <= 2; $i++) {
             $skin = Skin::all()->random();
             SkinWinner::factory()->create([
                 'skin_id' => $skin->id,

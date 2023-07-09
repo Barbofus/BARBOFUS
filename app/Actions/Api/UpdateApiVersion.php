@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Api;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use stdClass;
 
 final class UpdateApiVersion
 {
@@ -14,11 +12,11 @@ final class UpdateApiVersion
     public function __invoke(
         $apiName,
         $newVersion,
-    ): void{
+    ): void {
 
         // Get nos versions des Api
         $file = Storage::disk('local')->get('api_versions.json');
-        $versions = (array)json_decode($file);
+        $versions = (array) json_decode($file);
 
         $versions[$apiName] = $newVersion;
 

@@ -8,22 +8,27 @@ use Livewire\Component;
 class SearchbarItemsAutocomplete extends Component
 {
     public $relatedModel;
+
     public $name;
+
     public $value;
+
     public $placeholder;
 
     public $selectedItem = 0;
+
     public $existentItem = null;
 
     public $query = '';
 
     public $previousQuery = '';
+
     public $itemsToShow = [];
 
+    public function mount($value)
+    {
 
-    public function mount($value) {
-
-        if($value){
+        if ($value) {
             $existentItem = $this->ExistentQuery($value);
             $this->existentItem = collect($existentItem);
             $this->query = $this->existentItem['name'];
@@ -43,13 +48,13 @@ class SearchbarItemsAutocomplete extends Component
                 'sub_icon_path' => DB::table('dofus_items_sub_categories')
                     ->select('icon_path')
                     ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1)
+                    ->take(1),
             ])
             ->addSelect([
                 'sub_name' => DB::table('dofus_items_sub_categories')
                     ->select('name')
                     ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1)
+                    ->take(1),
             ])
             ->first());
     }
@@ -68,24 +73,24 @@ class SearchbarItemsAutocomplete extends Component
 
     public function incrementSelection()
     {
-        if($this->selectedItem >= count($this->itemsToShow) - 1)
-        {
+        if ($this->selectedItem >= count($this->itemsToShow) - 1) {
             $this->selectedItem = 0;
+
             return;
         }
 
-        $this->selectedItem ++;
+        $this->selectedItem++;
     }
 
     public function decrementSelection()
     {
-        if($this->selectedItem <= 0)
-        {
+        if ($this->selectedItem <= 0) {
             $this->selectedItem = count($this->itemsToShow) - 1;
+
             return;
         }
 
-        $this->selectedItem --;
+        $this->selectedItem--;
     }
 
     public function setSelection($value)
@@ -98,7 +103,7 @@ class SearchbarItemsAutocomplete extends Component
     public function updatedQuery($query)
     {
         // Si la recherche est trop courte
-        if(strlen($query) < 3 ) {
+        if (strlen($query) < 3) {
 
             // On reset la selection
             $this->resetSelection();
@@ -109,20 +114,20 @@ class SearchbarItemsAutocomplete extends Component
 
         // Prend les premiers items contenant la recherche en excluant le résultat exact
         $this->itemsToShow = DB::table($this->relatedModel)
-            ->select('id', 'icon_path', 'name','level')
+            ->select('id', 'icon_path', 'name', 'level')
             ->where('name', '!=', $query)
             ->where('name', 'LIKE', '%'.$query.'%')
             ->addSelect([
                 'sub_icon_path' => DB::table('dofus_items_sub_categories')
                     ->select('icon_path')
                     ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1)
+                    ->take(1),
             ])
             ->addSelect([
                 'sub_name' => DB::table('dofus_items_sub_categories')
                     ->select('name')
                     ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1)
+                    ->take(1),
             ])
             ->get();
 
@@ -136,7 +141,9 @@ class SearchbarItemsAutocomplete extends Component
     // Remplace la query par l'item selectionné
     public function useSelectionAsValue()
     {
-        if(!$this->itemsToShow) return;
+        if (! $this->itemsToShow) {
+            return;
+        }
 
         $this->query = $this->itemsToShow[$this->selectedItem]['name'];
     }

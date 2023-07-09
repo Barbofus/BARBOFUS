@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Race;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RaceSeeder extends Seeder
@@ -42,8 +41,8 @@ class RaceSeeder extends Seeder
         foreach ($races as $key => $value) {
             Race::factory()->create([
                 'name' => ucfirst($value),
-                'ghost_icon_path' => 'images/icons/classes/ghost/L'. $key + 1 .'_'. ucfirst(\Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($value) ).'_Tr.png',
-                'colored_icon_path' => 'images/icons/classes/colored/L'. $key + 1 .'_'. ucfirst(\Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($value) ).'_Co.png',
+                'ghost_icon_path' => 'images/icons/classes/ghost/L'.$key + 1 .'_'.ucfirst(\Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($value)).'_Tr.png',
+                'colored_icon_path' => 'images/icons/classes/colored/L'.$key + 1 .'_'.ucfirst(\Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($value)).'_Co.png',
             ]);
         }
     }

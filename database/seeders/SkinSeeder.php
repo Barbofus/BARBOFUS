@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Like;
 use App\Models\Reward;
 use App\Models\Skin;
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SkinSeeder extends Seeder

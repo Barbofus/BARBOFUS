@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\UserPanel;
 
 use App\Actions\Skins\DeleteSkin;
-use App\Models\Skin;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -14,8 +12,11 @@ class MyskinsInfiniteLoad extends Component
     public const ITEMS_PER_PAGE = 60;
 
     public $postIdChunks = [];
+
     public $page = 1;
+
     public $maxPage = 1;
+
     public $queryCount = 0;
 
     protected $hasLoadMore = false;
@@ -24,10 +25,11 @@ class MyskinsInfiniteLoad extends Component
         'ReloadInfinite' => '$refresh',
     ];
 
-
     public function render()
     {
-        if(!$this->hasLoadMore) $this->PrepareChunks();
+        if (! $this->hasLoadMore) {
+            $this->PrepareChunks();
+        }
 
         return view('livewire.user-panel.myskins-infinite-load');
     }
@@ -39,8 +41,8 @@ class MyskinsInfiniteLoad extends Component
 
     public function LoadMore()
     {
-        if($this->HasMorePage()) {
-            $this->page ++;
+        if ($this->HasMorePage()) {
+            $this->page++;
             $this->hasLoadMore = true;
         }
     }
@@ -68,7 +70,7 @@ class MyskinsInfiniteLoad extends Component
 
         $this->maxPage = count($this->postIdChunks);
 
-        $this->queryCount ++;
+        $this->queryCount++;
     }
 
     public function HasMorePage()

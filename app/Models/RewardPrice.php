@@ -13,7 +13,6 @@ class RewardPrice extends Model
 
     protected $fillable = [
         'rank',
-        'points'
+        'points',
     ];
-
 }

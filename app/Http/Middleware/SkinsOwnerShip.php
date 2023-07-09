@@ -10,16 +10,12 @@ class SkinsOwnerShip
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->skin->user_id !== auth()->id()) {
-            return abort(403, 'Autorisation requise');
-        }
+        return ($request->skin->user_id !== auth()->id()) ? abort(403, 'Autorisation requise') : $next($request);
 
-        return $next($request);
     }
 }

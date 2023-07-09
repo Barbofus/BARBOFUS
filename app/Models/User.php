@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -44,23 +43,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Role(){
+    public function Role()
+    {
         return $this->belongsTo('App\Models\Role');
     }
 
-    public function Build(){
+    public function Build()
+    {
         return $this->hasMany('App\Models\Build');
     }
 
-    public function Skins(){
+    public function Skins()
+    {
         return $this->hasMany(Skin::class);
     }
 
-    public function NotificationPreferences(){
+    public function NotificationPreferences()
+    {
         return $this->hasMany(UserNotificationPreferences::class);
     }
 
-    public function Likes(){
+    public function Likes()
+    {
         return $this->hasMany(Like::class);
     }
 

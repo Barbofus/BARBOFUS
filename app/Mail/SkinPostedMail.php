@@ -5,7 +5,6 @@ namespace App\Mail;
 use App\Models\Skin;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -14,7 +13,9 @@ use Illuminate\Queue\SerializesModels;
 class SkinPostedMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $skin;
+
     public $user;
 
     /**
@@ -36,7 +37,7 @@ class SkinPostedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name') . ' - Skin Posté ID#' . $this->skin->id,
+            subject: config('app.name').' - Skin Posté ID#'.$this->skin->id,
         );
     }
 

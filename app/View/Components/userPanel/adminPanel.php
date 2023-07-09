@@ -17,7 +17,7 @@ class adminPanel extends Component
      */
     public function __construct()
     {
-        if(!Gate::allows('admin-access')) {
+        if (! Gate::allows('admin-access')) {
             abort(403, 'Autorisation requise');
         }
 

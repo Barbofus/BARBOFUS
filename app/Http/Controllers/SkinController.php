@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Images\ResizeImages;
-use App\Models\Race;
-use App\Models\Skin;
 use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
+use App\Models\Skin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class SkinController extends Controller
 {
-
-
     protected $itemRelations = [
         'dofus_item_hat',
         'dofus_item_cloak',
@@ -27,6 +24,7 @@ class SkinController extends Controller
     {
         $this->middleware(SkinsOwnerShip::class)->only(['edit', 'update', 'destroy']);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,17 +35,18 @@ class SkinController extends Controller
         return view('skins.index');
     }
 
-
     public function show(Skin $skin)
     {
-        if($skin->status != 'Posted') abort(404);
+        if ($skin->status != 'Posted') {
+            abort(404);
+        }
 
         $toShow = DB::table('skins')
             ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3')
             ->where('skins.id', $skin->id)
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
-                    $query->leftJoin($item . 's', $item . 's.id', '=', 'skins.' . $item . '_id');
+                    $query->leftJoin($item.'s', $item.'s.id', '=', 'skins.'.$item.'_id');
                 }
             })
 
@@ -55,19 +54,19 @@ class SkinController extends Controller
                 'user_name' => DB::table('users')
                     ->select('name')
                     ->whereColumn('id', 'skins.user_id')
-                    ->take(1)
+                    ->take(1),
             ])
             ->addSelect([
                 'race_name' => DB::table('races')
                     ->select('name')
                     ->whereColumn('id', 'skins.race_id')
-                    ->take(1)
+                    ->take(1),
             ])
             ->addSelect([
                 'race_icon' => DB::table('races')
                     ->select('ghost_icon_path')
                     ->whereColumn('id', 'skins.race_id')
-                    ->take(1)
+                    ->take(1),
             ])
 
             ->when(true, function (Builder $query) {
@@ -76,38 +75,38 @@ class SkinController extends Controller
                         $item.'_name' => DB::table($item.'s')
                             ->select('name')
                             ->whereColumn('id', 'skins.'.$item.'_id')
-                            ->take(1)
-                        ])
+                            ->take(1),
+                    ])
                         ->addSelect([
                             $item.'_icon' => DB::table($item.'s')
                                 ->select('icon_path')
                                 ->whereColumn('id', 'skins.'.$item.'_id')
-                                ->take(1)
+                                ->take(1),
                         ])
                         ->addSelect([
                             $item.'_level' => DB::table($item.'s')
                                 ->select('level')
                                 ->whereColumn('id', 'skins.'.$item.'_id')
-                                ->take(1)
+                                ->take(1),
                         ])
                         ->addSelect([
                             $item.'_subname' => DB::table('dofus_items_sub_categories')
                                 ->select('name')
                                 ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
-                                ->take(1)
+                                ->take(1),
                         ])
                         ->addSelect([
                             $item.'_subicon' => DB::table('dofus_items_sub_categories')
                                 ->select('icon_path')
                                 ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
-                                ->take(1)
+                                ->take(1),
                         ]);
                 }
             })
             ->first();
 
         return view('skins.show', [
-            'skin' => $toShow
+            'skin' => $toShow,
         ]);
     }
 
@@ -122,11 +121,9 @@ class SkinController extends Controller
             ->select('*')
             ->get()->toArray();
 
-
-        foreach ($races as $race)
-        {
-            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
-            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
+        foreach ($races as $race) {
+            $race->ghost_icon_path = asset('storage\/'.$race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/'.$race->colored_icon_path);
         }
 
         return view('skins.create', [
@@ -137,7 +134,6 @@ class SkinController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUpdateSkinRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUpdateSkinRequest $request)
@@ -146,7 +142,7 @@ class SkinController extends Controller
         // Resize de l'image, on affichera que 200px max
         $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
             'width' => 300,
-            'height' => null ]);
+            'height' => null]);
 
         Skin::create([
             'dofus_item_hat_id' => $request->dofus_item_hat_id,
@@ -176,7 +172,6 @@ class SkinController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Skin  $skin
      * @return \Illuminate\Http\Response
      */
     public function edit(Skin $skin)
@@ -185,11 +180,9 @@ class SkinController extends Controller
             ->select('*')
             ->get()->toArray();
 
-
-        foreach ($races as $race)
-        {
-            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
-            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
+        foreach ($races as $race) {
+            $race->ghost_icon_path = asset('storage\/'.$race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/'.$race->colored_icon_path);
         }
 
         return view('skins.edit', [
@@ -201,22 +194,20 @@ class SkinController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUpdateSkinRequest  $request
-     * @param  \App\Models\Skin  $skin
      * @return \Illuminate\Http\Response
      */
-    public function update (StoreUpdateSkinRequest $request, Skin $skin)
+    public function update(StoreUpdateSkinRequest $request, Skin $skin)
     {
         $imagePath = $skin->image_path;
 
         // Si on change l'image, supprime l'ancienne et s'occupe de la nouvelle
-        if($request->image_path) {
+        if ($request->image_path) {
             \Storage::delete($skin->image_path);
 
             // Resize de l'image, on affichera que 200px max
             $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
                 'width' => 300,
-                'height' => null ]);
+                'height' => null]);
         }
 
         $skin->dofus_item_hat_id = $request->dofus_item_hat_id;
@@ -246,7 +237,6 @@ class SkinController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Skin  $skin
      * @return \Illuminate\Http\Response
      */
     public function destroy(Skin $skin)

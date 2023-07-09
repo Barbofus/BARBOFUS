@@ -6,7 +6,6 @@ use App\Mail\SkinPostedMail;
 use App\Models\Skin;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class SkinPostedNotification extends Notification implements ShouldQueue
@@ -35,7 +34,7 @@ class SkinPostedNotification extends Notification implements ShouldQueue
     {
         $wantMail = $notifiable->NotificationPreferences->where('notification_type', '=', 'mail_skin_validation')->where('value', '=', '0')->count() == 0;
 
-        if($wantMail) {
+        if ($wantMail) {
             return ['database', 'mail'];
         }
 
@@ -65,7 +64,7 @@ class SkinPostedNotification extends Notification implements ShouldQueue
             'model' => 'App\Models\Skin',
             'id' => $this->skin->id,
             'info' => $this->skin->Race->name,
-            'component' => 'skin-posted'
+            'component' => 'skin-posted',
         ];
     }
 }

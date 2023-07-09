@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Actions\Api;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use stdClass;
 
 final class GetApiBody
@@ -13,13 +12,13 @@ final class GetApiBody
     // Need update
     public function __invoke(
         $url
-    ): stdClass{
+    ): stdClass {
 
         // Récupère les datas
         $response = Http::get($url);
 
         // Si aucune réponse, on dit false pour pas spam l'api pour rien
-        if($response->getStatusCode() != 200) {
+        if ($response->getStatusCode() != 200) {
             return [];
         }
 

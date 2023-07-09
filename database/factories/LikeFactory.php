@@ -18,13 +18,13 @@ class LikeFactory extends Factory
      */
     public function definition()
     {
-        $date = $this->faker->dateTimeBetween('-30 day' );
+        $date = $this->faker->dateTimeBetween('-30 day');
 
         return [
             'skin_id' => Skin::all()->random()->id,
             'user_id' => User::all()->random()->id,
-            'created_at'=>$date,
-            'updated_at'=>$date
+            'created_at' => $date,
+            'updated_at' => $date,
         ];
     }
 }

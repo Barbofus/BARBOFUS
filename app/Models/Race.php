@@ -17,8 +17,6 @@ class Race extends Model
 
     use HasFactory;
 
-
-
     public function Build()
     {
         return $this->hasMany('App\Models\Build');

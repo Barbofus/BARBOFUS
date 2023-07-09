@@ -14,8 +14,9 @@ final class DeleteSkin
     {
         $skin = Skin::find($skinId);
 
-        if(Storage::exists($skin->image_path))
+        if (Storage::exists($skin->image_path)) {
             Storage::delete($skin->image_path);
+        }
 
         $skin->delete();
     }

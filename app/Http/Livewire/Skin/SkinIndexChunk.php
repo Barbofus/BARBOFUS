@@ -9,7 +9,9 @@ use Livewire\Component;
 class SkinIndexChunk extends Component
 {
     public $skinIds;
+
     public $page;
+
     public $itemsPerPage;
 
     public function render()

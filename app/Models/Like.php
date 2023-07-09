@@ -11,14 +11,16 @@ class Like extends Model
 
     protected $fillable = [
         'skin_id',
-        'user_id'
+        'user_id',
     ];
 
-    public function Skin() {
+    public function Skin()
+    {
         $this->belongsTo(Skin::class);
     }
 
-    public function User() {
+    public function User()
+    {
         $this->belongsTo(User::class);
     }
 }

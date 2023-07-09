@@ -9,23 +9,28 @@ class DofusItemsSubCategorie extends Model
 {
     use HasFactory;
 
-    public function DofusItemHat(){
+    public function DofusItemHat()
+    {
         return $this->hasMany(DofusItemHat::class);
     }
 
-    public function DofusItemCloak(){
+    public function DofusItemCloak()
+    {
         return $this->hasMany(DofusItemCloak::class);
     }
 
-    public function DofusItemShield(){
+    public function DofusItemShield()
+    {
         return $this->hasMany(DofusItemShield::class);
     }
 
-    public function DofusItemCostume(){
+    public function DofusItemCostume()
+    {
         return $this->hasMany(DofusItemCostume::class);
     }
 
-    public function DofusItemPet(){
+    public function DofusItemPet()
+    {
         return $this->hasMany(DofusItemPet::class);
     }
 }

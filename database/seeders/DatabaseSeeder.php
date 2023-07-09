@@ -2,14 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Reward;
+use App\Models\DofusItemsSubCategorie;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\DofusItemsSubCategorie;
-use App\Models\Race;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -65,9 +62,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => Role::where('name', '=', 'Administrateur')->first()->id,
         ]);
 
-
         $this->call([
-
 
             // Création des 19 classes de Dofus
             RaceSeeder::class,

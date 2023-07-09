@@ -10,7 +10,7 @@ class UserDashboard extends Component
 
     public function mount()
     {
-        if(session()->has('section')){
+        if (session()->has('section')) {
             $this->section = session('section');
         }
     }

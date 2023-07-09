@@ -8,12 +8,14 @@ use Livewire\Component;
 class SkinFilterSearchBar extends Component
 {
     public $searchFilterInput;
+
     public $selectionKey = 0;
 
     public $query = '';
+
     public $oldQuery = '';
 
-    public $itemToShow = array();
+    public $itemToShow = [];
 
     protected $models = [
         'users',
@@ -24,12 +26,9 @@ class SkinFilterSearchBar extends Component
         'dofus_item_costumes',
     ];
 
-
-
     protected $listeners = [
         'ToggleSearchedText' => 'emptyQuery',
     ];
-
 
     public function render()
     {
@@ -41,25 +40,27 @@ class SkinFilterSearchBar extends Component
     public function findForItems($query)
     {
 
-        $this->itemToShow = array();
+        $this->itemToShow = [];
 
-        if($this->oldQuery != $this->query)
+        if ($this->oldQuery != $this->query) {
             $this->selectionKey = 0;
+        }
 
-        if(strlen($query) < 3) {
+        if (strlen($query) < 3) {
             return;
         }
 
         foreach ($this->models as $model) {
-            $select = array();
+            $select = [];
             $select[] = 'name';
 
-            if($model != 'users')
+            if ($model != 'users') {
                 $select[] = 'icon_path';
+            }
 
             $items = DB::table($model)
                 ->select($select)
-                ->where('name','LIKE', '%'. $query .'%')
+                ->where('name', 'LIKE', '%'.$query.'%')
                 ->get()
                 ->toArray();
 
@@ -75,23 +76,27 @@ class SkinFilterSearchBar extends Component
     public function emptyQuery()
     {
         $this->query = '';
-        $this->itemToShow = array();
+        $this->itemToShow = [];
     }
 
-    public function incrementSelection () {
+    public function incrementSelection()
+    {
 
-        $this->selectionKey ++;
+        $this->selectionKey++;
 
-        if($this->selectionKey > count($this->itemToShow) - 1)
+        if ($this->selectionKey > count($this->itemToShow) - 1) {
             $this->selectionKey = 0;
+        }
     }
 
-    public function decrementSelection () {
+    public function decrementSelection()
+    {
 
-        $this->selectionKey --;
+        $this->selectionKey--;
 
-        if($this->selectionKey < 0)
+        if ($this->selectionKey < 0) {
             $this->selectionKey = count($this->itemToShow) - 1;
+        }
 
     }
 }

@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\DofusDBApi;
 
-use Illuminate\Support\Facades\Http;
 use App\Actions\Api\FetchExternalFile;
-use Illuminate\Support\Facades\Storage;
-use App\Actions\DofusDBApi\GetItemsFromDofusDB;
 
 final class SaveItemsFromDofusDB
 {
@@ -17,7 +14,7 @@ final class SaveItemsFromDofusDB
         $typeIDs,
         $cosmetTypeIDs,
         $imagePath,
-    ): array{
+    ): array {
 
         $newItems = [];
 
@@ -28,10 +25,10 @@ final class SaveItemsFromDofusDB
         $items = (new GetItemsFromDofusDB)($typeIDToPass);
 
         // Parcour tous les items récupéré
-        foreach($items as $item) {
+        foreach ($items as $item) {
 
             // Si on l'a déjà, passe à la boucle suivante
-            if($model::where('dofus_id', '=', $item['id'])->exists()) {
+            if ($model::where('dofus_id', '=', $item['id'])->exists()) {
                 continue;
             }
 
@@ -39,13 +36,13 @@ final class SaveItemsFromDofusDB
             $subCategoryId = 1;
 
             // typeID 113 ce sont les objets vivant
-            if($item['typeId'] == 113) {
+            if ($item['typeId'] == 113) {
                 $subCategoryId = 3;
             }
 
             // Si le typeId == à l'un de ceux dans les cosmet, alors c'est objet d'apparât
-            foreach($cosmetTypeIDs as $cosmetTypeID){
-                if($item['typeId'] == $cosmetTypeID) {
+            foreach ($cosmetTypeIDs as $cosmetTypeID) {
+                if ($item['typeId'] == $cosmetTypeID) {
                     $subCategoryId = 2;
 
                     break;
@@ -56,7 +53,7 @@ final class SaveItemsFromDofusDB
             $iconPath = $imagePath.$item['iconId'];
 
             // Pour les DD, Muldo et Volkorne, on utilise une image unique
-            switch($item['typeId']){
+            switch ($item['typeId']) {
                 case 97:
                     $iconPath = $imagePath.'dragodinde';
                     break;
@@ -82,7 +79,7 @@ final class SaveItemsFromDofusDB
             ]);
 
             // Pour les DD, Muldo et Volkorne, on ne récup pas l'image, ils ont tous la même
-            if($item['typeId'] != 97 && $item['typeId'] != 196 && $item['typeId'] != 207) {
+            if ($item['typeId'] != 97 && $item['typeId'] != 196 && $item['typeId'] != 207) {
 
                 // Prépare l'url pour choper l'image
                 $imageUrl = 'https://api.dofusdb.fr/img/items/'.$item['iconId'].'.png';
@@ -93,7 +90,7 @@ final class SaveItemsFromDofusDB
 
             $newItems[] = $newItem->name;
 
-        };
+        }
 
         return $newItems;
     }

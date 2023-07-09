@@ -8,7 +8,9 @@ use Livewire\Component;
 class MyskinsChunk extends Component
 {
     public $skinIds;
+
     public $page;
+
     public $itemsPerPage;
 
     public function render()

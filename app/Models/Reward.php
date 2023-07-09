@@ -17,7 +17,8 @@ class Reward extends Model
         'points',
     ];
 
-    public function Skin() {
+    public function Skin()
+    {
         return $this->belongsTo(Skin::class);
     }
 }
