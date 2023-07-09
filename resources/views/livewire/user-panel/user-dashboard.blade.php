@@ -4,7 +4,7 @@
     <div
         class="w-[100vw] px-6 min-[1550px]:w-[80vw] relative flex gap-x-2" x-cloak
         x-data="{
-            currentPage: 'user-details',
+            currentPage: '{{ (session()->has('section')) ? session('section') : 'user-details'}}',
             initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-[65px] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
             activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-[65px] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
             initTextClass: 'absolute invisible min-[1250px]:visible min-[1250px]:static transition-transform group-hover:-skew-x-12',

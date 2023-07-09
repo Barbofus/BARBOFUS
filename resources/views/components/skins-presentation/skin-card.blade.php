@@ -21,7 +21,7 @@
 
                 setTimeout(() => this.clicked = true, 50)
             }
-        }">
+        }" x-cloak>
         @auth
             @if($skin->user_id === Auth::user()->id)  {{--S'il s'agit de notre propre skin, nous empêche de le liker--}}
                 <x-skins.likes :skin="$skin" :canLike="false"/>

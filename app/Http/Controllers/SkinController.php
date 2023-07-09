@@ -40,6 +40,8 @@ class SkinController extends Controller
 
     public function show(Skin $skin)
     {
+        if($skin->status != 'Posted') abort(404);
+
         $toShow = DB::table('skins')
             ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3')
             ->where('skins.id', $skin->id)
@@ -166,8 +168,9 @@ class SkinController extends Controller
         ]);
 
         session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
+        session()->flash('section', 'my-skins');
 
-        return redirect()->route('skins.index');
+        return redirect()->route('user-dashboard.index');
     }
 
     /**
@@ -235,8 +238,9 @@ class SkinController extends Controller
         $skin->save();
 
         session()->flash('alert-message', 'Ton skin a été modifié. Il est en attente de validation par un Modérateur');
+        session()->flash('section', 'my-skins');
 
-        return redirect()->route('skins.index');
+        return redirect()->route('user-dashboard.index');
     }
 
     /**
