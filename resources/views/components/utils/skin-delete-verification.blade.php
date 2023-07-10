@@ -12,7 +12,7 @@
 
         <div class="flex justify-between w-full">
             <button @click="skinDeleteID = null" class="uppercase text-xl text-goldText border-goldText border-2 hover:rounded-3xl transition-all hover:tracking-widest px-4 py-2 rounded-md">Annuler</button>
-            <button @click="$wire.deleteSkin(skinDeleteID), newAlert('Le skin ID#'+ skinDeleteID +' a été supprimé.'), skinDeleteID = null" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">Supprimer</button>
+            <button @click="$wire.deleteSkin(skinDeleteID), skinDeleteID = null" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">Supprimer</button>
         </div>
     </div>
 </div>

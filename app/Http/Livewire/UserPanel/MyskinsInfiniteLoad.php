@@ -50,6 +50,8 @@ class MyskinsInfiniteLoad extends Component
     public function deleteSkin(int $skinID)
     {
         (new DeleteSkin)($skinID);
+
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Le skin ID#'.$skinID.' a été supprimé.']);
     }
 
     /**
