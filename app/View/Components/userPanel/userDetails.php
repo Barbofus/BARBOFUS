@@ -2,18 +2,34 @@
 
 namespace App\View\Components\userPanel;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\Component;
 
 class userDetails extends Component
 {
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * @return object|null
      */
-    public function __construct()
+    public function QueryUser()
     {
-        //
+        $user = DB::table('users')
+            ->select('id', 'created_at', 'name', 'email')
+            ->addSelect([
+                'skin_count' => DB::table('skins')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('user_id', 'users.id'),
+
+                'like_given' => DB::table('likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('user_id', 'users.id'),
+            ])
+            ->where('id', auth()->id())
+            ->first();
+
+        $user->created_at = new Carbon($user->created_at);
+
+        return $user;
     }
 
     /**
@@ -23,6 +39,8 @@ class userDetails extends Component
      */
     public function render()
     {
-        return view('components.user-panel.user-details');
+        return view('components.user-panel.user-details', [
+            'user' => $this->QueryUser(),
+        ]);
     }
 }

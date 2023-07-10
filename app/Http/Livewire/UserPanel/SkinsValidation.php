@@ -83,6 +83,7 @@ class SkinsValidation extends Component
         ]);
 
         $skin->User->notify(new SkinPostedNotification($skin));
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Skin ID#'.$skinID.' a été accepté']);
     }
 
     /**
@@ -98,6 +99,7 @@ class SkinsValidation extends Component
         ]);
 
         $skin->User->notify(new SkinRefusedNotification($skin));
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Skin ID#'.$skinID.' a été refusé']);
     }
 
     /**

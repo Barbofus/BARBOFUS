@@ -43,7 +43,7 @@ class SkinController extends Controller
      */
     public function show(Skin $skin)
     {
-        if ($skin->status != 'Posted') {
+        if ($skin->status != 'Posted' && $skin->user_id != auth()->id()) {
             abort(404);
         }
 

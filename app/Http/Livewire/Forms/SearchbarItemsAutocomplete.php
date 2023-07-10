@@ -13,7 +13,7 @@ class SearchbarItemsAutocomplete extends Component
 
     public string $name;
 
-    public string|int $value;
+    public string|int|null $value;
 
     public string $placeholder;
 
@@ -33,7 +33,7 @@ class SearchbarItemsAutocomplete extends Component
     /**
      * @return void
      */
-    public function mount(string|int $value)
+    public function mount(string|int|null $value)
     {
 
         if ($value) {
