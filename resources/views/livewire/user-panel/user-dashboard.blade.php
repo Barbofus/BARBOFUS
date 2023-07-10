@@ -89,7 +89,7 @@
 
             @switch($section)
                 @case('user-details')
-                    <x-user-panel.user-details />
+                    <livewire:user-panel.user-details :wire:key="'user-details-{{ rand() }}'"/>
                     @break
 
                 @case('my-skins')

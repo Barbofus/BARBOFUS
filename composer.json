@@ -64,8 +64,8 @@
             "@php ./vendor/bin/phpstan analyse"
         ],
         "cache": [
-            "@php sudo chmod -R 755 storage",
-            "@php sudo chmod -R 755 bootstrap",
+            "sudo chmod -R 755 storage",
+            "sudo chmod -R 755 bootstrap",
             "@php artisan cache:clear",
             "@php artisan config:cache"
         ]

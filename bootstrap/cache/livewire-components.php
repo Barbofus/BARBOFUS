@@ -10,6 +10,7 @@
   'user-panel.myskins-infinite-load' => 'App\\Http\\Livewire\\UserPanel\\MyskinsInfiniteLoad',
   'user-panel.skins-validation' => 'App\\Http\\Livewire\\UserPanel\\SkinsValidation',
   'user-panel.user-dashboard' => 'App\\Http\\Livewire\\UserPanel\\UserDashboard',
+  'user-panel.user-details' => 'App\\Http\\Livewire\\UserPanel\\UserDetails',
   'user-panel.users-list' => 'App\\Http\\Livewire\\UserPanel\\UsersList',
   'notifications.notifications-list' => 'App\\Http\\Livewire\\notifications\\NotificationsList',
 );
