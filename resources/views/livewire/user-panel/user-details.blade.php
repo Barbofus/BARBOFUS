@@ -9,6 +9,8 @@
                 <h2 class="font-thin text-4xl uppercase">Informations</h2>
                 <div class="border-b border-secondary w-96 ml-4"></div>
 
+                <h2 class="font-light italic text-2xl mt-4 pl-60">{{ $user->name }}</h2>
+
                 <div class="flex gap-x-8 mt-8 font-light text-xl items-center pl-36">
                     <div class="flex flex-col gap-y-4">
                         <p>Inscrit <span class="italic font-normal">{{ $user->created_at->diffForHumans() }}</span></p>
