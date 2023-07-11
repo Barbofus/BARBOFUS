@@ -2,7 +2,7 @@
 <x-mail::message>
 # Skin posté
 
-Salut <span class="italic">{{ $user->name }}</span>,<br>
+Salut <span class="italic">{{ $user->name }}</span>,<br><br>
 <span>Ton skin ***ID#{{ $skin->id }}*** en **{{ $skin->race->name }}** à été validé par un membre du Staff.</span>
 
 <div style="text-align: center;"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $skin->image_path ))) }}" alt="Image du skin {{ $skin->id }}"></div>

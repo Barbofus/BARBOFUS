@@ -4,7 +4,7 @@
     'name' => 'Barbofus',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://barbofus.test',
     'asset_url' => NULL,
     'timezone' => 'Europe/Paris',
     'locale' => 'fr',
@@ -375,7 +375,7 @@
       array (
         'driver' => 'local',
         'root' => 'C:\\Travail\\Web\\_Servers\\BARBOFUS\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://barbofus.test/storage',
         'visibility' => 'public',
         'throw' => false,
       ),
@@ -701,7 +701,7 @@
       2 => '127.0.0.1',
       3 => '127.0.0.1:8000',
       4 => '::1',
-      5 => 'localhost',
+      5 => 'barbofus.test',
     ),
     'guard' => 
     array (

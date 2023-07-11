@@ -2,14 +2,40 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Actions\Fortify\UpdateUserPassword;
+use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\User;
 use App\Models\UserNotificationPreferences;
+use App\Notifications\UserNameChangeNotification;
+use App\Notifications\UserPasswordChangeNotification;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class UserDetails extends Component
 {
+    public string $current_password = '';
+
+    public string $password_confirmation = '';
+
+    public string $password = '';
+
+    public string $name = '';
+
+    public string $email = '';
+
+    public User $currentUser;
+
+    /**
+     * @return void
+     */
+    public function mount()
+    {
+        $this->currentUser = User::find(auth()->id());
+    }
+
     /**
      * @return object|null
      */
@@ -87,6 +113,44 @@ class UserDetails extends Component
         ]);
 
         $this->dispatchBrowserEvent('alert-event', ['message' => 'Préférences enregistrées']);
+    }
+
+    /**
+     * @return void
+     */
+    public function ChangeUsername()
+    {
+        (new UpdateUserProfileInformation)->update($this->currentUser, ['name' => $this->name, 'email' => $this->currentUser->email]);
+
+        $this->currentUser->notify(new UserNameChangeNotification($this->currentUser));
+
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Nouveau pseudo enregistré']);
+    }
+
+    /**
+     * @return void|null
+     */
+    public function ChangeUserEMail()
+    {
+        (new UpdateUserProfileInformation)->update($this->currentUser, ['name' => $this->currentUser->name, 'email' => $this->email]);
+
+        session()->flash('alert-message', 'Nouvelle adresse e-mail enregistrée, validez la dans vos emails pour vous reconnecter');
+
+        Auth::logout();
+
+        return $this->redirect(route('login'));
+    }
+
+    /**
+     * @return void
+     */
+    public function ChangeUserPassword()
+    {
+        (new UpdateUserPassword)->update($this->currentUser, ['current_password' => $this->current_password, 'password' => $this->password, 'password_confirmation' => $this->password_confirmation]);
+
+        $this->currentUser->notify(new UserPasswordChangeNotification($this->currentUser));
+
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Nouveau mot de passe enregistré']);
     }
 
     /**
