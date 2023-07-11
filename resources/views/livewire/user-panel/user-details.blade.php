@@ -1,18 +1,18 @@
 <div>
-    <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s] pl-12">
+    <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s] min-[800px]:pl-12">
         <x-utils.userpage-title :title="'Mon compte'" :subtitle="'Configurations et préférences'" />
 
-        <div class="w-[80%] mx-auto flex gap-x-16 gap-y-16">
+        <div class="w-[80%] min-[800px]:mx-auto flex flex-col min-[1500px]:flex-row gap-x-16 gap-y-16">
 
             <div class="flex flex-col gap-y-16">
                 {{-- Informations --}}
                 <div>
-                    <h2 class="font-thin text-4xl uppercase">Informations</h2>
-                    <div class="border-b border-secondary w-96 ml-4"></div>
+                    <h2 class="font-thin text-3xl min-[800px]:text-4xl uppercase">Informations</h2>
+                    <div class="border-b border-secondary w-[min(24rem,50vw)] ml-4"></div>
 
-                    <h2 class="font-light italic text-2xl mt-4 pl-60">{{ $user->name }}</h2>
+                    <h2 class="font-light italic text-2xl mt-4 min-[800px]:pl-60">{{ $user->name }}</h2>
 
-                    <div class="flex gap-x-8 mt-8 font-light text-xl items-center pl-36">
+                    <div class="flex flex-col min-[800px]:flex-row gap-y-8 gap-x-8 mt-8 font-light text-xl items-start min-[800px]:items-center min-[800px]:pl-36">
                         <div class="flex flex-col gap-y-4">
                             <p>Inscrit <span class="italic font-normal">{{ $user->created_at->diffForHumans() }}</span></p>
                             <p><span class="italic tracking-widest font-normal">{{ $user->skin_count }}</span> skins postés</p>
@@ -41,19 +41,19 @@
 
                 {{-- Préférences --}}
                 <div>
-                    <h2 class="font-thin text-4xl uppercase">Préférences</h2>
-                    <div class="border-b border-secondary w-96 ml-4"></div>
+                    <h2 class="font-thin text-3xl min-[800px]:text-4xl  uppercase">Préférences</h2>
+                    <div class="border-b border-secondary w-[min(24rem,50vw)] ml-4"></div>
 
                     <h3 class="font-thin text-2xl uppercase mt-8 pl-12">Notifications</h3>
 
                     <p class="font-light text-xl mt-6 mb-4 pl-24">Recevoir un e-mail pour:</p>
 
-                    <div class="flex gap-x-8">
-                        <div class="relative w-64">
+                    <div class="flex flex-col min-[800px]:flex-row gap-y-8 gap-x-8">
+                        <div class="relative w-[min(24rem,80%)]">
                             <x-forms.filter-button wire:click="togglePreference('mail_skin_validation', '{{ ($user->mail_skin_validation_preference !== 0) }}')" :checked="($user->mail_skin_validation_preference !== 0)"><p class="absolute italic font-thin text-secondary text-lg left-7 top-1 cursor-pointer">Validation / Refus d'un skin</p></x-forms.filter-button>
                         </div>
 
-                        <div class="relative w-56">
+                        <div class="relative w-[min(14rem,80%)]">
                             <x-forms.filter-button wire:click="togglePreference('mail_skin_winner', '{{  $user->mail_skin_winner_preference !== 0 }}')" :checked="($user->mail_skin_winner_preference !== 0)"><p class="absolute italic font-thin text-secondary text-lg left-7 top-1 cursor-pointer">Victoire d'un Miss'SKin</p></x-forms.filter-button>
                         </div>
                     </div>
@@ -62,8 +62,8 @@
 
             {{-- Paramètres --}}
             <div>
-                <h2 class="font-thin text-4xl uppercase">Paramètres</h2>
-                <div class="border-b border-secondary w-96 ml-4"></div>
+                <h2 class="font-thin text-3xl min-[800px]:text-4xl  uppercase">Paramètres</h2>
+                <div class="border-b border-secondary w-[min(24rem,50vw)] ml-4"></div>
 
                 <h3 class="font-thin text-2xl uppercase mt-8 pl-12">Changer de mot de passe</h3>
 

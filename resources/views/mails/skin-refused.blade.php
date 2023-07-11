@@ -17,6 +17,10 @@ Salut <span class="italic">{{ $user->name }}</span>,<br><br>
 Clique pour le modifier
 </x-mail::button>
 
+<br><br>
+
+Si le bouton ne fonctionne pas, copiez collez ce line dans votre barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
+
 Cordialement,<br>
 <span class="font-bold">{{ config('app.name') }}</span>
 </x-mail::message>

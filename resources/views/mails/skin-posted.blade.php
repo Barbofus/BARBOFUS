@@ -8,8 +8,12 @@ Salut <span class="italic">{{ $user->name }}</span>,<br><br>
 <div style="text-align: center;"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('storage/' . $skin->image_path ))) }}" alt="Image du skin {{ $skin->id }}"></div>
 
 <x-mail::button :url="$url" :color="'gold'">
-    Clique pour le voir en action !
+Clique pour le voir en action !
 </x-mail::button>
+
+<br><br>
+
+Si le bouton ne fonctionne pas, copiez collez ce line dans votre barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
 
 Cordialement,<br>
 <span class="font-bold">{{ config('app.name') }}</span>

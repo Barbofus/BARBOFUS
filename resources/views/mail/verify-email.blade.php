@@ -1,11 +1,11 @@
 <x-mail::message>
-# Pseudo modifié
+# Vérification d'E-mail
 
-Salut <span class="italic">{{ $user->name }}</span>,<br><br>
-<span>Ton pseudo vient d'être modifié, si tu n'es pas à l'origine de cette modification, clique sur le bouton pour changer ton mot de passe.</span>
+Salut <span class="italic">{{ $notifiable->name }}</span>,<br><br>
+<span>Merci de cliquer sur ce lien pour valider ton adresse e-mail et te connecter à Barbofus.</span>
 
 <x-mail::button :url="$url" :color="'gold'">
-Changer mon mot de passe
+Valider l'E-mail
 </x-mail::button>
 
 <br><br>

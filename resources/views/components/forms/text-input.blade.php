@@ -1,5 +1,5 @@
 <div class="-mx-3" x-data="{ text: '{{ (old($name)) ? old($name) : '' }}'}">
-    <div class="w-[min(90vw,350px)] px-3">
+    <div class="w-[min(90%,350px)] px-3">
         <div class="flex w-full h-12 group rounded-md @error($name) err-border @enderror">
             <input x-model="text" id="{{ $name }}" name="{{ $name }}" type="{{ $type }}" maxlength="30"
                    class="h-full peer w-full p-2 pr-3 bg-primary-100 border-y-2 border-r-2 border-primary-100 rounded-r-md outline-none focus:border-goldText placeholder-inactiveText transition-all"

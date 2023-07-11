@@ -85,6 +85,10 @@ img {
     font-style: italic;
 }
 
+.blue {
+    color: cornflowerblue;
+}
+
 /* Layout */
 
 .wrapper {
