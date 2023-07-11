@@ -1,6 +1,6 @@
 <!-- Footer -->
-<footer id="footer" class="fixed bottom-0 z-50 w-full h-2 transition-all duration-200 group hover:bottom-12">
-    <div class="relative w-full h-16 p-2 bg-secondary">
+<footer id="footer" class="fixed bottom-0 z-50 w-full h-2 transition-all duration-200 group hover:bottom-20">
+    <div class="relative w-full p-2 bg-secondary">
 
         <!-- Hovered extension -->
         <div class="flex justify-between absolute w-36 h-4 -top-4 left-[calc(50%-4.5rem)]">
@@ -12,15 +12,19 @@
         </div>
 
         <!-- Footer content -->
-        <div class="flex items-center justify-center h-10 gap-x-4">
+        <div>
 
             <!-- Réseaux sociaux -->
-            <div class="relative w-48 h-full">
-                <a href="https://www.tiktok.com/@barbe___douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_TikTok.png') }}" class="absolute left-0 h-8 transition-all duration-100 top-1 hover:top-0 hover:-left-1 hover:h-10"></a>
-                <a href="https://www.instagram.com/barbe.douce.twitch/" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Instagram.webp') }}" class="absolute left-[25%] h-8 transition-all duration-100 top-1 hover:top-0 hover:left-[calc(25%-4px)] hover:h-10"></a>
-                <a href="https://twitter.com/DouceBarbe" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Twitter.png') }}" class="absolute left-[50%] h-8 transition-all duration-100 top-1 hover:top-0 hover:left-[calc(50%-4px)] hover:h-10"></a>
-                <a href="https://www.youtube.com/channel/UCJIBwLWxtdrVCwuX-F3W9bA?view_as=subscriber" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Youtube.png') }}" class="absolute right-0 h-8 transition-all duration-100 top-1 hover:top-0 hover:-right-1 hover:h-10"></a>
+            <div class="flex gap-x-4 items-center justify-center relative h-10 mx-auto">
+                <a href="https://www.tiktok.com/@barbe___douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_TikTok.png') }}" class="h-8 transition-all duration-100 hover:-translate-y-1"></a>
+                <a href="https://www.instagram.com/barbe.douce.twitch/" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Instagram.webp') }}" class="h-8 transition-all duration-100 hover:-translate-y-1"></a>
+                <a href="https://twitter.com/DouceBarbe" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Twitter.png') }}" class="h-8 transition-all duration-100 hover:-translate-y-1"></a>
+                <a href="https://www.youtube.com/channel/UCJIBwLWxtdrVCwuX-F3W9bA?view_as=subscriber" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Youtube.png') }}" class="h-8 transition-all duration-100 hover:-translate-y-1"></a>
+                <a href="https://www.twitch.tv/barbe___douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Twitch.png') }}" class="h-8 transition-all duration-100 hover:-translate-y-1"></a>
+                <a href="https://discord.gg/YKHc4RD" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Discord.png') }}" class="h-8 transition-all duration-100 hover:-translate-y-1"></a>
             </div>
+            <p class="text-primary text-center text-sm font-light">Dofus est un MMORPG édité par <a target="_blank" href="https://www.ankama.com/fr" class="underline">Ankama</a>. "BARBOFUS" est un site non-officiel sans aucun lien avec Ankama.<br>
+                Certaines illustrations sont la propriété d'Ankama Studio et de Dofus - Tous droits réservés</p>
         </div>
     </div>
 </footer>
