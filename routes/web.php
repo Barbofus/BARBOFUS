@@ -3,6 +3,7 @@
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mon-compte', [UserDashboardController::class, 'index'])->name('user-dashboard.index');
     Route::resource('skins', SkinController::class)->except(['show', 'index']);
 });
+
+Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
 
 Route::middleware(['can:admin-access'])->group(function () {
 

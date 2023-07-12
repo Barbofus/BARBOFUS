@@ -134,7 +134,7 @@ class UserDetails extends Component
     {
         (new UpdateUserProfileInformation)->update($this->currentUser, ['name' => $this->currentUser->name, 'email' => $this->email]);
 
-        session()->flash('alert-message', 'Nouvelle adresse e-mail enregistrée, validez la dans vos emails pour vous reconnecter');
+        session()->flash('alert-message', 'Nouvelle adresse e-mail enregistrée, valide-la dans tes emails pour te reconnecter');
 
         Auth::logout();
 
