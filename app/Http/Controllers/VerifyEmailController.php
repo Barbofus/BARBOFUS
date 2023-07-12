@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\VerifyEmailResponse;
 
@@ -12,8 +13,7 @@ class VerifyEmailController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return VerifyEmailResponse|RedirectResponse
      */
     public function __invoke(Request $request)
     {
@@ -27,8 +27,8 @@ class VerifyEmailController extends Controller
             event(new Verified($user));
         }
 
-        session()->flash('alert-message', 'Ton E-mail, ' . $user->email . ' a été validé, tu peux te connecter et profiter pleinement de Barbofus !');
+        session()->flash('alert-message', 'Ton email, '.$user->email.' a été validé, tu peux te connecter et profiter pleinement de Barbofus !');
 
-        return app(VerifyEmailResponse::class);
+        return redirect()->route('login');
     }
 }

@@ -1,5 +1,5 @@
 <x-mail::message>
-# Pseudo modifié
+# Mot de passe modifié
 
 Salut <span class="italic">{{ $user->name }}</span>,<br><br>
 <span>Ton mot de passe vient d'être changé, si tu n'es pas à l'origine de ce changement, réinitialise-le avec ce bouton.</span>

@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <a class="absolute group h-full w-full" href="{{ route('skins.show', $id) }}">
+    <a class="absolute group h-full w-full" target="_blank" href="{{ route('skins.show', $id) }}">
         {{-- Barbe --}}
         @if($skin->user_name === 'Barbe Douce' &! isset($showBarbe))
             <img class="absolute top-0 left-0 h-[25%] max-h-[64px] peer cursor-pointer" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">

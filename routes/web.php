@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DofusDBApiController;
+use App\Http\Controllers\EmailVerificationPromptController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
@@ -34,7 +35,10 @@ Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
     ->middleware(['signed', 'throttle:6,1'])
     ->name('verification.verify');
 
-Route::middleware(['can:admin-access'])->group(function () {
+Route::get('/email/verify/{id}', EmailVerificationPromptController::class)->name('verification.notice');
+Route::post('/email/verification-notification/{id}', [EmailVerificationPromptController::class, 'store'])->name('verification.send');
+
+Route::middleware(['can:admin-access', 'auth'])->group(function () {
 
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });

@@ -136,9 +136,11 @@ class UserDetails extends Component
 
         session()->flash('alert-message', 'Nouvelle adresse e-mail enregistrée, valide-la dans tes emails pour te reconnecter');
 
+        $id = auth()->id();
+
         Auth::logout();
 
-        return $this->redirect(route('login'));
+        return $this->redirect(route('verification.notice', ['id' => $id]));
     }
 
     /**
