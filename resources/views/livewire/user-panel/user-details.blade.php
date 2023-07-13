@@ -48,8 +48,8 @@
 
                     <p class="font-light text-xl mt-6 mb-4 pl-24">Recevoir un e-mail pour:</p>
 
-                    <div class="flex flex-col min-[800px]:flex-row gap-y-8 gap-x-8">
-                        <div class="relative w-[min(24rem,80%)]">
+                    <div class="flex flex-col gap-y-6 pt-6 pl-4">
+                        <div class="relative w-[min(17rem,80%)]">
                             <x-forms.filter-button wire:click="togglePreference('mail_skin_validation', '{{ ($user->mail_skin_validation_preference !== 0) }}')" :checked="($user->mail_skin_validation_preference !== 0)"><p class="absolute italic font-thin text-secondary text-lg left-7 top-1 cursor-pointer">Validation / Refus d'un skin</p></x-forms.filter-button>
                         </div>
 
