@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\MissSkin;
 
-use App\Models\Like;
-use App\Models\Skin;
 use App\Models\SkinWinner;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 final class FindWinners
@@ -28,7 +24,7 @@ final class FindWinners
 
                 'user_name' => DB::table('users')
                     ->select('name')
-                    ->whereColumn('id', 'skins.user_id')
+                    ->whereColumn('id', 'skins.user_id'),
             ])
             ->orderByRaw('weekly_like_count DESC')
             ->orderBy('updated_at', 'ASC')
@@ -44,7 +40,7 @@ final class FindWinners
                 'reward_id' => $key + 1,
                 'user_name' => $winner->user_name,
                 'image_path' => $winner->image_path,
-                'weekly_likes' => $winner->weekly_like_count
+                'weekly_likes' => $winner->weekly_like_count,
             ]);
         }
     }

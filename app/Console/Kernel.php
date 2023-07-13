@@ -3,10 +3,9 @@
 namespace App\Console;
 
 use App\Actions\MissSkin\FindWinners;
-use App\Models\User;
+use DateTimeZone;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use DateTimeZone;
 
 class Kernel extends ConsoleKernel
 {
