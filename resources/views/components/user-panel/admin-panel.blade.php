@@ -25,5 +25,19 @@
             <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">
             <p class="text-2xl text-secondary animate-pulseFast opacity-25 font-light">Récupération des items</p>
         </div>
+
+        <h2 class="text-2xl font-thin text-center mt-16 mb-8 uppercase">Gestion du miss'skin</h2>
+
+        <div class="w-full flex justify-center">
+            @if(session('miss-skin'))
+                <p class="mb-8 text-center px-8 py-4 border-2 border-green-600 bg-green-200 font-light rounded-md text-md text-green-600">{{ session('miss-skin') }}</p>
+            @endif
+        </div>
+
+        <div class="flex justify-center w-full mt-8">
+            <a  href="{{ route('miss-skin') }}"
+                class="w-48 p-4 text-2xl text-primary text-center font-light goldGradient rounded-md hover:brightness-110">Lancer le concours</a>
+        </div>
+
     </div>
 </div>

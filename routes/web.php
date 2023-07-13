@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\EmailVerificationPromptController;
+use App\Http\Controllers\MissSkinController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
@@ -40,5 +41,6 @@ Route::post('/email/verification-notification/{id}', [EmailVerificationPromptCon
 
 Route::middleware(['can:admin-access', 'auth'])->group(function () {
 
+    Route::get('/miss-skin', MissSkinController::class)->name('miss-skin');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
 });
