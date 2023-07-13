@@ -1,17 +1,17 @@
+
 @extends('layouts.basic-views')
 
 @section('content')
     <div class="flex items-center justify-center mt-24">
-        <form method="POST" action='{{ route('login') }}' class="flex justify-center w-[80%]">
+        <form method="POST" action='{{ route('password.update') }}' class="flex justify-center w-[80%]">
             @csrf
             <div class="w-full px-5 py-10 flex flex-col items-center gap-y-8">
 
-                <h1 class="text-[min(5rem,15vw)] font-normal text-center uppercase">Connexion</h1>
-                <h2 class="text-2xl font-thin text-center -mt-10 mb-8 uppercase">Bienvenue sur Barbofus !</h2>
+                <h1 class="text-[min(5rem,15vw)] font-normal text-center uppercase">Mot de passe oublié</h1>
+                <h2 class="text-2xl font-thin text-center -mt-10 mb-8 uppercase">Réinitialise ton mot de passe</h2>
 
-                @if (session('status'))
-                    <p class="mb-8 text-center px-8 py-4 border-2 border-green-600 bg-green-200 font-light rounded-md text-md text-green-600">Ton mot de passe a bien été réinitilisé</p>
-                @endif
+                {{-- Pseudo --}}
+                <input hidden="" name="token" value="{{ request()->route('token') }}">
 
                 {{-- Email --}}
                 <x-forms.text-input :placeholder="'E-mail'" :type="'email'" :name="'email'">
@@ -23,12 +23,14 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </x-forms.text-input>
 
-                <x-forms.submit>Se connecter</x-forms.submit>
+                {{-- Password Confirmation --}}
+                <x-forms.text-input :placeholder="'Confirmation'" :type="'password'" :name="'password_confirmation'">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </x-forms.text-input>
 
-                <div class="flex flex-col gap-y-4 items-start -ml-[min(200px,20vw)]">
-                    <a href="{{ route('password.request') }}" class="font-normal text-goldText hover:text-goldTextLit text-lg">Mot de passe oublié ?</a>
-                    <p class="font-thin">Aucun compte ? <a href="{{ route('register') }}" class="font-normal text-goldText hover:text-goldTextLit text-lg">S'enregistrer</a></p>
-                </div>
+                <x-forms.submit>Envoyer</x-forms.submit>
+
+                <p class="font-thin -ml-[min(200px,20vw)]">Mot de passe retrouvé ? <a href="{{ route('login') }}" class="font-normal text-goldText hover:text-goldTextLit text-lg">Se connecter</a></p>
             </div>
         </form>
     </div>

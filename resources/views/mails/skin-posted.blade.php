@@ -13,7 +13,7 @@ Clique pour le voir en action !
 
 <br><br>
 
-Si le bouton ne fonctionne pas, copiez collez ce line dans votre barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
+Si le bouton ne fonctionne pas, copie colle ce lien dans ta barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
 
 Cordialement,<br>
 <span class="font-bold">{{ config('app.name') }}</span>

@@ -878,6 +878,123 @@
   array (
     'driver' => 'gd',
   ),
+  'lang-publisher-private' => 
+  array (
+    'plugins' => 
+    array (
+      'C:\\Travail\\Web\\_Servers\\BARBOFUS\\vendor\\laravel-lang\\attributes' => 
+      array (
+        0 => 'LaravelLang\\Attributes\\Plugins\\Laravel',
+        1 => 'LaravelLang\\Attributes\\Plugins\\Lumen',
+      ),
+      'C:\\Travail\\Web\\_Servers\\BARBOFUS\\vendor\\laravel-lang\\http-statuses' => 
+      array (
+        0 => 'LaravelLang\\HttpStatuses\\Plugins\\Main',
+      ),
+      'C:\\Travail\\Web\\_Servers\\BARBOFUS\\vendor\\laravel-lang\\lang' => 
+      array (
+        0 => 'LaravelLang\\Lang\\Plugins\\Breeze\\Master',
+        1 => 'LaravelLang\\Lang\\Plugins\\Breeze\\V1',
+        2 => 'LaravelLang\\Lang\\Plugins\\Cashier\\Stripe\\Master',
+        3 => 'LaravelLang\\Lang\\Plugins\\Cashier\\Stripe\\V12',
+        4 => 'LaravelLang\\Lang\\Plugins\\Cashier\\Stripe\\V13',
+        5 => 'LaravelLang\\Lang\\Plugins\\Cashier\\Stripe\\V14',
+        6 => 'LaravelLang\\Lang\\Plugins\\Fortify\\Master',
+        7 => 'LaravelLang\\Lang\\Plugins\\Fortify\\V1',
+        8 => 'LaravelLang\\Lang\\Plugins\\Jetstream\\Master',
+        9 => 'LaravelLang\\Lang\\Plugins\\Jetstream\\V1',
+        10 => 'LaravelLang\\Lang\\Plugins\\Jetstream\\V2',
+        11 => 'LaravelLang\\Lang\\Plugins\\Jetstream\\V3',
+        12 => 'LaravelLang\\Lang\\Plugins\\Laravel\\Master',
+        13 => 'LaravelLang\\Lang\\Plugins\\Laravel\\V10',
+        14 => 'LaravelLang\\Lang\\Plugins\\Laravel\\V9',
+        15 => 'LaravelLang\\Lang\\Plugins\\Lumen\\Master',
+        16 => 'LaravelLang\\Lang\\Plugins\\Lumen\\V10',
+        17 => 'LaravelLang\\Lang\\Plugins\\Lumen\\V9',
+        18 => 'LaravelLang\\Lang\\Plugins\\Nova\\DuskSuite\\Main',
+        19 => 'LaravelLang\\Lang\\Plugins\\Nova\\LogViewer\\Main',
+        20 => 'LaravelLang\\Lang\\Plugins\\Nova\\V3',
+        21 => 'LaravelLang\\Lang\\Plugins\\Nova\\V4',
+        22 => 'LaravelLang\\Lang\\Plugins\\Spark\\Aurelius\\Master',
+        23 => 'LaravelLang\\Lang\\Plugins\\Spark\\Aurelius\\V11',
+        24 => 'LaravelLang\\Lang\\Plugins\\Spark\\Aurelius\\V12',
+        25 => 'LaravelLang\\Lang\\Plugins\\Spark\\AureliusMollie\\V2',
+        26 => 'LaravelLang\\Lang\\Plugins\\Spark\\Paddle',
+        27 => 'LaravelLang\\Lang\\Plugins\\Spark\\Stripe',
+        28 => 'LaravelLang\\Lang\\Plugins\\UI\\Master',
+        29 => 'LaravelLang\\Lang\\Plugins\\UI\\V3',
+        30 => 'LaravelLang\\Lang\\Plugins\\UI\\V4',
+      ),
+    ),
+    'packages' => 
+    array (
+      'C:\\Travail\\Web\\_Servers\\BARBOFUS\\vendor\\laravel-lang\\attributes' => 
+      array (
+        'class' => 'LaravelLang\\Attributes\\Plugin',
+        'name' => 'laravel-lang/attributes',
+      ),
+      'C:\\Travail\\Web\\_Servers\\BARBOFUS\\vendor\\laravel-lang\\http-statuses' => 
+      array (
+        'class' => 'LaravelLang\\HttpStatuses\\Plugin',
+        'name' => 'laravel-lang/http-statuses',
+      ),
+      'C:\\Travail\\Web\\_Servers\\BARBOFUS\\vendor\\laravel-lang\\lang' => 
+      array (
+        'class' => 'LaravelLang\\Lang\\Plugin',
+        'name' => 'laravel-lang/lang',
+      ),
+    ),
+  ),
+  'lang-publisher' => 
+  array (
+    'inline' => false,
+    'align' => true,
+    'smart_punctuation' => 
+    array (
+      'enable' => false,
+      'common' => 
+      array (
+        'double_quote_opener' => '“',
+        'double_quote_closer' => '”',
+        'single_quote_opener' => '‘',
+        'single_quote_closer' => '’',
+      ),
+      'locales' => 
+      array (
+        'fr' => 
+        array (
+          'double_quote_opener' => '«&nbsp;',
+          'double_quote_closer' => '&nbsp;»',
+          'single_quote_opener' => '‘',
+          'single_quote_closer' => '’',
+        ),
+        'ru' => 
+        array (
+          'double_quote_opener' => '«',
+          'double_quote_closer' => '»',
+          'single_quote_opener' => '‘',
+          'single_quote_closer' => '’',
+        ),
+        'uk' => 
+        array (
+          'double_quote_opener' => '«',
+          'double_quote_closer' => '»',
+          'single_quote_opener' => '‘',
+          'single_quote_closer' => '’',
+        ),
+        'be' => 
+        array (
+          'double_quote_opener' => '«',
+          'double_quote_closer' => '»',
+          'single_quote_opener' => '‘',
+          'single_quote_closer' => '’',
+        ),
+      ),
+    ),
+    'aliases' => 
+    array (
+    ),
+  ),
   'flare' => 
   array (
     'key' => NULL,

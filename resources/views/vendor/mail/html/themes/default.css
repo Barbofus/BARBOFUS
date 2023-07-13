@@ -87,6 +87,7 @@ img {
 
 .blue {
     color: cornflowerblue;
+    word-break: break-all;
 }
 
 /* Layout */
