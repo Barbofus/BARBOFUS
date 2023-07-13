@@ -2,8 +2,11 @@
 
 namespace App\Console;
 
+use App\Actions\MissSkin\FindWinners;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use DateTimeZone;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,7 +17,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        //$schedule->command('inspire')->everyMinute()->onOneServer();
+        $schedule->call(function () {
+            (new FindWinners())();
+        })->weeklyOn(2, '09:00'); // Mardi 9h
+    }
+
+    /**
+     * Get the timezone that should be used by default for scheduled events.
+     */
+    protected function scheduleTimezone(): DateTimeZone|string|null
+    {
+        return 'Europe/Paris';
     }
 
     /**
