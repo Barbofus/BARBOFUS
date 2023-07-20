@@ -229,7 +229,7 @@
                             <p class=" font-thin text-secondary text-[0.9rem]">Stream <span id="twitchOnlineText">OFF</span></p>
                         </div>
 
-                        <p class="group-hover:text-goldTextLit group-hover:-translate-y-1 font-thin text-goldText text-[0.8rem]">Rejoins-moi sur Twitch !</p>
+                        <p class="group-hover:text-goldTextLit group-hover:-translate-y-1 font-thin text-goldText text-[0.8rem] transition-all">Rejoins-moi sur Twitch !</p>
 
                         <div class="absolute z-10 w-full h-[calc(100%-20px)] rounded-md top-[20px] goldGradient"></div>
                     </div>

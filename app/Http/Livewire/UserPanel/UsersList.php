@@ -53,6 +53,19 @@ class UsersList extends Component
     }
 
     /**
+     * @param int $userID
+     * @return void
+     */
+    public function deleteUser(int $userID)
+    {
+        $user = User::find($userID);
+
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Le compte de '.$user->name.' a été supprimé.']);
+
+        $user->delete();
+    }
+
+    /**
      * @return void
      */
     public function ChangeRole(int $userID, int $newRoleID)

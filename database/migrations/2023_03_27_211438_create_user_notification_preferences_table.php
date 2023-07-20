@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('user_notification_preferences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('notification_type', ['mail_skin_validation', 'mail_skin_winner']);
             $table->boolean('value')->default(true);
             $table->timestamps();

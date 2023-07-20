@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('dofus_item_cloak_id')->nullable()->constrained();
             $table->foreignId('dofus_item_pet_id')->nullable()->constrained();
             $table->foreignId('dofus_item_costume_id')->nullable()->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('race_id')->constrained();
             $table->integer('face');
             $table->string('image_path');
