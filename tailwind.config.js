@@ -49,6 +49,10 @@ module.exports = {
                 '0%': { transform: 'translate(0px, 0px)' },
                 '100%': { transform: 'translate(-100%, 0px)' },
             },
+            skinSlide: {
+                '0%': { transform: 'translate(0px, 0px)' },
+                '100%': { transform: 'translate(-50%, 0px)' },
+            },
             onePing: {
                 '0%': { transform: 'scale(1)', opacity: 1 },
                 '100%': { transform: 'scale(2)', opacity: 0  },
@@ -101,6 +105,7 @@ module.exports = {
             opacityFade: 'opacityFade var(--custom-animation-time) linear forwards',
             topFade: 'topFade var(--custom-animation-time) ease forwards',
             textSlide: 'textSlide 5s linear infinite',
+            skinSlide: 'skinSlide var(--custom-animation-time) linear infinite',
             onePing: 'onePing 0.35s linear forwards',
             pulseFast: 'pulseFast 3s linear infinite',
             pageLoad: 'pageLoad 0.5s linear forwards',
