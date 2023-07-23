@@ -2,6 +2,7 @@
 const userNames = document.getElementsByClassName('skinCardUserName');
 const userNamesCopy = []; // On stockera les clones des pseudos qui sont en train de slide
 
+
 // Action lancez quand livewire render
 window.addEventListener('user-dashboard-change', () => {
     SlidePseudo();

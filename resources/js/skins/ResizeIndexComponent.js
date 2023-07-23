@@ -20,6 +20,8 @@ let previousRewardSectionH;
 // Fonction qui change la hauter de la section de gauche en fonction de l'espace libre
 function ResizeSkinWinners()
 {
+    if(!skinWinners) return;
+
     if(window.innerWidth < 1800 ) {
         if(skinWinners.style.height != '100%') {
             skinWinners.style.height = "100%";
@@ -47,6 +49,8 @@ function ResizeSkinWinners()
 // Fonction qui change la hauter de la section de gauche en fonction de l'espace libre
 function ResizeLeftSection()
 {
+    if(!leftSection) return;
+
     if(window.innerWidth < 1501 ) {
         if(leftSection.style.height != '100%') {
             leftSection.style.height = "100%";

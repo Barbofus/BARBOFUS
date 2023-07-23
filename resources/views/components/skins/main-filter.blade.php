@@ -218,35 +218,6 @@
               [@media(min-height:701px)_and_(min-width:801px)]:visible
               max-[1500px]:aspect-video
               min-[1501px]:static min-[1501px]:w-full min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:pl-6 min-[1501px]:flex-1">
-        <div id="twitch-container" class="relative w-full h-full min-h-[125px]">
-            <a href="https://www.twitch.tv/barbe___douce" target="_blank" class="cursor-pointer group">
-                <div id="twitch-screen"  class="absolute bottom-0 left-0 w-full aspect-video">
-
-                    <div class="bg-primary absolute flex justify-between -left-[3px] z-0 h-[calc(100%+6px+20px)] w-[calc(100%+6px)] -top-[23px] rounded-md">
-
-                        <div class="flex justify-start gap-x-1">
-                            <div id="twitchOnlineCircle" class="w-4 h-4 m-0.5 bg-red-500 rounded-full"></div>
-                            <p class=" font-thin text-secondary text-[0.9rem]">Stream <span id="twitchOnlineText">OFF</span></p>
-                        </div>
-
-                        <p class="group-hover:text-goldTextLit group-hover:-translate-y-1 font-thin text-goldText text-[0.8rem] transition-all">Rejoins-moi sur Twitch !</p>
-
-                        <div class="absolute z-10 w-full h-[calc(100%-20px)] rounded-md top-[20px] goldGradient"></div>
-                    </div>
-
-                    <img src="{{ asset('storage/images/misc_ui/Stream_Offlin.jpeg') }}" class="relative z-20 object-cover h-full rounded-[4px]">
-
-                    <!-- Embed -->
-                    <script src= "https://embed.twitch.tv/embed/v1.js"></script>
-
-                    <!-- Stream container -->
-                    <div id="twitchStreamEmbed" class="absolute top-0 left-0 z-30 w-full h-full opacity-0"></div>
-
-
-                    <!-- Script pour l'embed de Twitch -->
-                    @vite(['resources/js/twitch/twitch_embed.js'])
-                </div>
-            </a>
-        </div>
+        <x-utils.twitch-embed />
     </div>
 </div>

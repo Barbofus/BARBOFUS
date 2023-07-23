@@ -27,7 +27,7 @@
                 <p class="ml-10 text-xl font-light">Image du skin</p>
                 <div class="mt-2 @error('image_path') err-border @enderror">
                     <input x-on:input.change="ChangeFile" class="w-[min(300px,90vw)] text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
-                    <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">PNG (MAX. 350x450px, 100ko).</p>
+                    <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">Export PNG de DofusBook<br> (MAX. 350x450px, 100ko).</p>
                 </div>
 
                 <div class="flex justify-center"><img x-show="finaleUrl" x-cloak x-transition class="mt-4" width="200" height="260" :src="finaleUrl" draggable="false"/></div>

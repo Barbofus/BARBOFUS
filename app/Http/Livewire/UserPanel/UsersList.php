@@ -53,7 +53,6 @@ class UsersList extends Component
     }
 
     /**
-     * @param int $userID
      * @return void
      */
     public function deleteUser(int $userID)

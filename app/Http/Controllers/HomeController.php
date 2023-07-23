@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function __invoke(Request $request)
     {
@@ -22,6 +21,9 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Support\Collection<int, array<string, mixed>>
+     */
     public function GetLastSkins()
     {
         return DB::table('skins')
