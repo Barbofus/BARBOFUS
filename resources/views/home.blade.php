@@ -3,11 +3,11 @@
 @section('content')
 
     <div class="pb-16">
-        <h1 class="text-[min(4rem,5vw)] mt-16 font-normal text-center uppercase">Bienvenue sur Barbofus !</h1>
+        <h1 class="text-[min(4rem,12vw)] mt-16 font-normal text-center uppercase">Bienvenue sur Barbofus !</h1>
         <h2 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">L'endroit parfait pour chercher et partager tes skins Dofus</h2>
 
         {{-- Présentation du site --}}
-        <div class="h-[max(20vh,150px)] mx-auto w-[min(90vw,1000px)] mt-16 px-1 rounded-md goldGradient">
+        <div class="h-[max(20vh,220px)] mx-auto w-[min(90vw,1000px)] mt-16 px-1 rounded-md goldGradient">
             <div class="h-full w-full bg-primary overflow-hidden">
                 <div class="flex pl-4 gap-x-4 h-full w-fit animate-skinSlide [--custom-animation-time:20s] hover:[animation-play-state:paused]">
                     @foreach($skins as $skin)
@@ -41,7 +41,7 @@
         <h1 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Découvre Barbe Douce</h1>
         <h2 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">Le Streameur à l'origine de ce site</h2>
 
-        <div class="w-[min(90vw,1000px)] aspect-video mx-auto mt-16">
+        <div class="w-[min(90vw,1000px)] aspect-video mx-auto mt-16 relative -z-10">
             <x-utils.twitch-embed />
         </div>
 
@@ -70,7 +70,7 @@
         </div>
 
         {{-- Remerciements --}}
-        <h1 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Remerciement</h1>
+        <h1 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Remerciements</h1>
 
         <div class="flex min-[800px]:flex-row flex-col gap-x-16 gap-y-8 justify-center items-center">
             <a href="https://dofusdb.fr/fr/" target="_blank" class="flex gap-x-4 items-center hover:bg-primary-100 hover:rounded-md bg-primary transition-all p-2">
