@@ -41,7 +41,7 @@
         <h1 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Découvre Barbe Douce</h1>
         <h2 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">Le Streameur à l'origine de ce site</h2>
 
-        <div class="w-[min(90vw,1000px)] aspect-video mx-auto mt-16 relative -z-10">
+        <div class="w-[min(90vw,1000px)] aspect-video mx-auto mt-16 relative">
             <x-utils.twitch-embed />
         </div>
 

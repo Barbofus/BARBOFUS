@@ -1,7 +1,7 @@
 
 <!-- Navbar -->
 <nav id="navbar"
-     class="fixed min-[901px]:sticky min-[901px]:z-30 z-40 top-0 min-[901px]:border-t-8 min-[901px]:border-secondary h-12 w-full tracking-tight text-[1.35rem] text-inactiveText font-thin bg-primary pb-[12px] min-[901px]:pt-2"
+     class="fixed min-[901px]:sticky min-[901px]:z-40 z-40 top-0 min-[901px]:border-t-8 min-[901px]:border-secondary h-12 w-full tracking-tight text-[1.35rem] text-inactiveText font-thin bg-primary pb-[12px] min-[901px]:pt-2"
      x-data="{
             showNavbar: (window.innerWidth > 900),
             selectedClass: 'max-[900px]:border-y max-[900px]:border-secondary max-[900px]:flex max-[900px]:items-center max-[900px]:px-5 min-[901px]:pl-5 h-[18%] min-[901px]:h-[30px] text-secondary-100 font-light flex min-[901px]:after:ml-5 min-[901px]:after:-mt-1 min-[901px]:after:clip-path-triangle-down min-[901px]:after:block min-[901px]:after:h-[36px] min-[901px]:after:w-[80px] min-[901px]:after:bg-secondary focus:outline-none',
