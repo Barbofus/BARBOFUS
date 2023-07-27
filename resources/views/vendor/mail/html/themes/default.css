@@ -77,10 +77,6 @@ p.sub {
     font-size: 12px;
 }
 
-img {
-    max-width: 100%;
-}
-
 .italic {
     font-style: italic;
 }
@@ -114,7 +110,6 @@ img {
 /* Header */
 
 .header {
-    padding: 25px 0;
     text-align: center;
 }
 
@@ -125,10 +120,13 @@ img {
     text-decoration: none;
 }
 
-/* Logo */
+img {
+    max-width: 100%;
+}
 
-.logo {
-    max-height: 150px;
+.header-logo {
+    width: 570px;
+    border-radius: 3px 3px 0 0;
 }
 
 /* Body */
@@ -155,7 +153,7 @@ img {
     -premailer-width: 570px;
     background-color: #292522;
     border-color: red;
-    border-radius: 3px;
+    border-radius: 0 0 3px 3px;
     border-width: 1px;
     box-shadow: 1px 2px 3px #292522;
     margin: 0 auto;
