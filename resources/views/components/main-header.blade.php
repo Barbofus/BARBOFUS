@@ -29,7 +29,7 @@
     </div>
 
     {{-- Décoration gauche --}}
-    <div class="h-[2vw] w-1/2 absolute bottom-[-1px] left-0 z-10">
+    <div class="h-[min(2vw,30%)] w-1/2 absolute bottom-[-1px] left-0 z-10">
 
         {{-- Pente --}}
         <div class="h-full w-full bg-secondary [clip-path:polygon(0%_0%,100%_80%,100%_100%,0%_100%)] js-slope"></div>
@@ -42,7 +42,7 @@
     </div>
 
     {{-- Décoration droite --}}
-    <div class="h-[2vw] w-[calc(50%+1px)] absolute bottom-[-1px] right-0 z-10">
+    <div class="h-[min(2vw,30%)] w-[calc(50%+1px)] absolute bottom-[-1px] right-0 z-10">
 
         {{-- Pente --}}
         <div class="h-full w-full bg-secondary [clip-path:polygon(0%_80%,100%_0%,100%_100%,0%_100%)]"></div>
