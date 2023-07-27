@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Rules\Recaptcha;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -31,6 +32,7 @@ class CreateNewUser implements CreatesNewUsers
             ],
             'password' => $this->passwordRules(),
             'password_confirmation' => ['Required', 'same:password', 'min:8'],
+            'g-recaptcha-response' => ['required', new Recaptcha()],
         ])->validate();
 
         return User::create([

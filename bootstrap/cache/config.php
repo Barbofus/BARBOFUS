@@ -733,6 +733,11 @@
       'secret' => '',
       'region' => 'us-east-1',
     ),
+    'recaptcha' => 
+    array (
+      'site_key' => '6Lft4VonAAAAABGPm1NKSYLw3qSFnDJRpU5fYmhd',
+      'secret_key' => '6Lft4VonAAAAACn2N1W6fPktt6nz3h-Thfs580wQ',
+    ),
   ),
   'session' => 
   array (
