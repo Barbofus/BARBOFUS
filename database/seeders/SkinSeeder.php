@@ -21,9 +21,9 @@ class SkinSeeder extends Seeder
         Like::factory($count * 40)->create();
         Reward::factory(round($count * 0.02) * 3)->create();
 
-        $this->call([
+        /*$this->call([
             // Création des 3 vainqueurs
             SkinWinnerSeeder::class,
-        ]);
+        ]);*/
     }
 }

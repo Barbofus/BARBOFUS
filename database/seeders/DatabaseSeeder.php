@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Création des 3 comptes de test
-        User::factory()->create([
+        /*User::factory()->create([
             'name' => 'Utilisateur',
             'email' => 'user@gmail.com',
             'password' => Hash::make('testtest'),
@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('testtest'),
             'role_id' => Role::where('name', '=', 'Administrateur')->first()->id,
-        ]);
+        ]);*/
 
         $this->call([
 
@@ -71,10 +71,10 @@ class DatabaseSeeder extends Seeder
             RewardPriceSeeder::class,
 
             // Création des users
-            UserSeeder::class,
+            //UserSeeder::class,
 
             //Création des skins avec les likes et récompenses
-            SkinSeeder::class,
+            //SkinSeeder::class,
         ]);
     }
 }
