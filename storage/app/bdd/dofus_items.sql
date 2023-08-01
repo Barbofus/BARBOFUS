@@ -5,23 +5,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS `barbofus` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `barbofus`;
-
-CREATE TABLE IF NOT EXISTS `dofus_item_cloaks` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dofus_id` int NOT NULL,
-  `level` int NOT NULL,
-  `dofus_items_sub_categorie_id` bigint unsigned NOT NULL,
-  `icon_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dofus_item_cloaks_dofus_items_sub_categorie_id_foreign` (`dofus_items_sub_categorie_id`),
-  CONSTRAINT `dofus_item_cloaks_dofus_items_sub_categorie_id_foreign` FOREIGN KEY (`dofus_items_sub_categorie_id`) REFERENCES `dofus_items_sub_categories` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 /*!40000 ALTER TABLE `dofus_item_cloaks` DISABLE KEYS */;
 INSERT INTO `dofus_item_cloaks` (`id`, `name`, `dofus_id`, `level`, `dofus_items_sub_categorie_id`, `icon_path`, `created_at`, `updated_at`) VALUES
 	(1, 'Cape du Pirate', 677, 1, 1, 'images/icons/items/cloaks/17011.png', '2023-02-28 17:31:15', '2023-02-28 17:31:15'),
@@ -710,20 +693,6 @@ INSERT INTO `dofus_item_cloaks` (`id`, `name`, `dofus_id`, `level`, `dofus_items
 	(684, 'Pelle à sable du plagiste', 28565, 1, 2, 'images/icons/items/cloaks/17589.png', '2023-07-31 23:19:58', '2023-07-31 23:19:58');
 /*!40000 ALTER TABLE `dofus_item_cloaks` ENABLE KEYS */;
 
-CREATE TABLE IF NOT EXISTS `dofus_item_costumes` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dofus_id` int NOT NULL,
-  `level` int NOT NULL,
-  `dofus_items_sub_categorie_id` bigint unsigned NOT NULL,
-  `icon_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dofus_item_costumes_dofus_items_sub_categorie_id_foreign` (`dofus_items_sub_categorie_id`),
-  CONSTRAINT `dofus_item_costumes_dofus_items_sub_categorie_id_foreign` FOREIGN KEY (`dofus_items_sub_categorie_id`) REFERENCES `dofus_items_sub_categories` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 /*!40000 ALTER TABLE `dofus_item_costumes` DISABLE KEYS */;
 INSERT INTO `dofus_item_costumes` (`id`, `name`, `dofus_id`, `level`, `dofus_items_sub_categorie_id`, `icon_path`, `created_at`, `updated_at`) VALUES
 	(1, 'Costume de Guilde', 18525, 100, 2, 'images/icons/items/costumes/164133.png', '2023-02-28 17:34:54', '2023-02-28 17:34:54'),
@@ -790,20 +759,6 @@ INSERT INTO `dofus_item_costumes` (`id`, `name`, `dofus_id`, `level`, `dofus_ite
 	(62, 'Épaulières du Shushu Sombre', 28520, 1, 2, 'images/icons/items/costumes/164906.png', '2023-07-10 17:24:42', '2023-07-10 17:24:42'),
 	(63, 'Brassard du plagiste', 28566, 1, 2, 'images/icons/items/costumes/164909.png', '2023-07-31 23:20:08', '2023-07-31 23:20:08');
 /*!40000 ALTER TABLE `dofus_item_costumes` ENABLE KEYS */;
-
-CREATE TABLE IF NOT EXISTS `dofus_item_hats` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dofus_id` int NOT NULL,
-  `level` int NOT NULL,
-  `dofus_items_sub_categorie_id` bigint unsigned NOT NULL,
-  `icon_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dofus_item_hats_dofus_items_sub_categorie_id_foreign` (`dofus_items_sub_categorie_id`),
-  CONSTRAINT `dofus_item_hats_dofus_items_sub_categorie_id_foreign` FOREIGN KEY (`dofus_items_sub_categorie_id`) REFERENCES `dofus_items_sub_categories` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `dofus_item_hats` DISABLE KEYS */;
 INSERT INTO `dofus_item_hats` (`id`, `name`, `dofus_id`, `level`, `dofus_items_sub_categorie_id`, `icon_path`, `created_at`, `updated_at`) VALUES
@@ -1654,20 +1609,6 @@ INSERT INTO `dofus_item_hats` (`id`, `name`, `dofus_id`, `level`, `dofus_items_s
 	(845, 'Nimb\'Heaume', 29031, 1, 2, 'images/icons/items/hats/16777.png', '2023-07-31 23:19:49', '2023-07-31 23:19:49');
 /*!40000 ALTER TABLE `dofus_item_hats` ENABLE KEYS */;
 
-CREATE TABLE IF NOT EXISTS `dofus_item_pets` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dofus_id` int NOT NULL,
-  `level` int NOT NULL,
-  `dofus_items_sub_categorie_id` bigint unsigned NOT NULL,
-  `icon_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dofus_item_pets_dofus_items_sub_categorie_id_foreign` (`dofus_items_sub_categorie_id`),
-  CONSTRAINT `dofus_item_pets_dofus_items_sub_categorie_id_foreign` FOREIGN KEY (`dofus_items_sub_categorie_id`) REFERENCES `dofus_items_sub_categories` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 /*!40000 ALTER TABLE `dofus_item_pets` DISABLE KEYS */;
 INSERT INTO `dofus_item_pets` (`id`, `name`, `dofus_id`, `level`, `dofus_items_sub_categorie_id`, `icon_path`, `created_at`, `updated_at`) VALUES
 	(3, 'Dragodinde Ebène', 7808, 60, 1, 'images/icons/items/pets/dragodinde.png', '2023-02-28 17:07:12', '2023-02-28 17:07:12'),
@@ -2467,20 +2408,6 @@ INSERT INTO `dofus_item_pets` (`id`, `name`, `dofus_id`, `level`, `dofus_items_s
 	(818, 'Vromto de Nidania Josne', 28562, 1, 2, 'images/icons/items/pets/121111.png', '2023-07-10 17:24:47', '2023-07-10 17:24:47'),
 	(819, 'Dragodinde Gonflable', 28563, 1, 2, 'images/icons/items/pets/121109.png', '2023-07-31 23:20:13', '2023-07-31 23:20:13');
 /*!40000 ALTER TABLE `dofus_item_pets` ENABLE KEYS */;
-
-CREATE TABLE IF NOT EXISTS `dofus_item_shields` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dofus_id` int NOT NULL,
-  `level` int NOT NULL,
-  `dofus_items_sub_categorie_id` bigint unsigned NOT NULL,
-  `icon_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dofus_item_shields_dofus_items_sub_categorie_id_foreign` (`dofus_items_sub_categorie_id`),
-  CONSTRAINT `dofus_item_shields_dofus_items_sub_categorie_id_foreign` FOREIGN KEY (`dofus_items_sub_categorie_id`) REFERENCES `dofus_items_sub_categories` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `dofus_item_shields` DISABLE KEYS */;
 INSERT INTO `dofus_item_shields` (`id`, `name`, `dofus_id`, `level`, `dofus_items_sub_categorie_id`, `icon_path`, `created_at`, `updated_at`) VALUES

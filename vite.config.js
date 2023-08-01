@@ -5,7 +5,13 @@ export default defineConfig({
     plugins: [
         laravel([
             'resources/css/app.css',
-            'resources/js/*.js',
+            'resources/js/app.js',
+            'resources/js/header/OnSlope.js',
+            'resources/js/skins/AnimationsManager.js',
+            'resources/js/skins/NameScroll.js',
+            'resources/js/skins/ResizeIndexComponent.js',
+            'resources/js/skins/ScrollListeners.js',
+            'resources/js/twitch/twitch_embed.js',
         ]),
         {
             name: 'blade',

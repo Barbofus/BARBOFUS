@@ -1,0 +1,1 @@
+document.getElementById("header");const e=document.getElementById("navbar");document.getElementById("left-section");document.getElementById("twitch-screen");document.getElementById("twitch-container");document.getElementById("rewards-section");const t=document.getElementById("footer");e.getBoundingClientRect().height+t.getBoundingClientRect().height;
