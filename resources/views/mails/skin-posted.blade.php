@@ -3,7 +3,7 @@
 # Skin posté
 
 Salut <span class="italic">{{ $user->name }}</span>,<br><br>
-<span>Ton skin ***ID#{{ $skin->id }}*** en **{{ $skin->race->name }}** à été validé par un membre du Staff.</span>
+<span>Ton skin ***ID#{{ $skin->id }}*** en **{{ $skin->race->name }}** a été validé par un membre du Staff.</span>
 
 <div style="text-align: center;"><img src="{{ asset('storage/' . $skin->image_path ) }}" alt="Image du skin {{ $skin->id }}"></div>
 

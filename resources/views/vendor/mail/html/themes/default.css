@@ -67,6 +67,7 @@ h3 {
 }
 
 p {
+    color: #fff5e9;
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
@@ -84,6 +85,10 @@ p.sub {
 .blue {
     color: cornflowerblue;
     word-break: break-all;
+}
+
+.ivory-text {
+    color: #fff5e9;
 }
 
 /* Layout */
@@ -136,6 +141,7 @@ img {
 }
 
 .body {
+    color: #fff5e9;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
@@ -148,6 +154,7 @@ img {
 }
 
 .inner-body {
+    color: #fff5e9;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
@@ -164,12 +171,14 @@ img {
 /* Subcopy */
 
 .subcopy {
+    color: #fff5e9;
     border-top: 1px solid #e8e5ef;
     margin-top: 25px;
     padding-top: 25px;
 }
 
 .subcopy p {
+    color: #fff5e9;
     font-size: 14px;
 }
 
