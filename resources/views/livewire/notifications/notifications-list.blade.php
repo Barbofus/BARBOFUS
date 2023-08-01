@@ -9,7 +9,7 @@
 >
     @if( count($notifications) > 0)
         {{-- Notification Bell --}}
-        <button class="hover:opacity-75 group text-secondary min-[901px]:text-primary  transition-all active:scale-90 relative" x-on:click="open = !open">
+        <button class="hover:opacity-75 group text-secondary transition-all active:scale-90 relative" x-on:click="open = !open">
             @if( $notifications->contains('read_at', null) > 0)
                 <div class="rounded-full bg-red-500 text-white text-sm w-3 h-3 absolute top-0 right-1"></div>
             @endif
