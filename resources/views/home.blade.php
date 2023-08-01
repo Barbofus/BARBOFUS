@@ -29,10 +29,10 @@
 
             <div class="flex min-[800px]:flex-row gap-y-4 flex-col w-fit h-fit">
                 <div class="w-96 flex justify-center">
-                    <a href="{{ route('skins.index') }}" target="_blank" class="top-0 px-8 py-3 h-fit text-xl mx-auto font-normal text-goldText border-4 border-primary bg-primary rounded-lg hover:bg-primary-100 hover:border-primary-100 hover:tracking-widest transition-all uppercase">Explorer les skins</a>
+                    <a href="{{ route('skins.index') }}" class="top-0 px-8 py-3 h-fit text-xl mx-auto font-normal text-goldText border-4 border-primary bg-primary rounded-lg hover:bg-primary-100 hover:border-primary-100 hover:tracking-widest transition-all uppercase">Explorer les skins</a>
                 </div>
                 <div class="w-96 flex justify-center">
-                    <a href="{{ route('skins.create') }}" target="_blank" class="px-8 py-3 h-fit text-xl mx-auto font-medium text-primary border-4 border-primary rounded-lg hover:border-primary-100 hover:tracking-widest transition-all uppercase">Poster un skin</a>
+                    <a href="{{ route('skins.create') }}" class="px-8 py-3 h-fit text-xl mx-auto font-medium text-primary border-4 border-primary rounded-lg hover:border-primary-100 hover:tracking-widest transition-all uppercase">Poster un skin</a>
                 </div>
             </div>
         </div>

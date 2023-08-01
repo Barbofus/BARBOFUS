@@ -114,7 +114,7 @@
 
                 @case('admin-panel')
                     @can('admin-access')
-                        <x-user-panel.admin-panel />
+                        <x-user-panel.admin-panel :need-dofus-update="(new \App\Actions\DofusDBApi\CheckDofusDBUpdate)()" />
                     @endcan
                     @break
 

@@ -1,3 +1,4 @@
+@props(['needDofusUpdate' => false])
 <div>
     <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s]"
          x-data="{
@@ -7,7 +8,7 @@
 
         <div class="flex justify-center w-full mt-16">
 
-            @if($needDofusDBUpdate)
+            @if($needDofusUpdate)
                 <a  href="{{ route('dofusDBApi') }}"
                     class="w-48 p-4 text-2xl text-primary text-center font-light goldGradient rounded-md hover:brightness-110"
                     x-on:click="loading = true">Récupérer les items</a>
