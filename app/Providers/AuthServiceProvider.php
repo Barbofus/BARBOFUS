@@ -27,21 +27,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $roles['user'] = DB::table('roles')->select('id')->where('name', 'Utilisateur')->pluck('id')->toArray()[0];
+        /*$roles['user'] = DB::table('roles')->select('id')->where('name', 'Utilisateur')->pluck('id')->toArray()[0];
         $roles['mod'] = DB::table('roles')->select('id')->where('name', 'Modérateur')->pluck('id')->toArray()[0];
-        $roles['admin'] = DB::table('roles')->select('id')->where('name', 'Administrateur')->pluck('id')->toArray()[0];
+        $roles['admin'] = DB::table('roles')->select('id')->where('name', 'Administrateur')->pluck('id')->toArray()[0];*/
 
-        Gate::define('admin-access', function (User $user) use ($roles) {
-            return $user->role_id == $roles['admin'];
+        Gate::define('admin-access', function (User $user) {
+            return $user->role_id == DB::table('roles')->select('id')->where('name', 'Administrateur')->pluck('id')->toArray()[0];
         });
 
-        Gate::define('mod-access', function (User $user) use ($roles) {
-            return $user->role_id == $roles['mod'];
+        Gate::define('mod-access', function (User $user) {
+            return $user->role_id == DB::table('roles')->select('id')->where('name', 'Modérateur')->pluck('id')->toArray()[0];
         });
 
-        Gate::define('validate-skin', function (User $user) use ($roles) {
-            return $user->role_id == $roles['mod']
-                || $user->role_id == $roles['admin'];
+        Gate::define('validate-skin', function (User $user) {
+            return $user->role_id == DB::table('roles')->select('id')->where('name', 'Modérateur')->pluck('id')->toArray()[0]
+                || $user->role_id == DB::table('roles')->select('id')->where('name', 'Administrateur')->pluck('id')->toArray()[0];
         });
         //
     }
