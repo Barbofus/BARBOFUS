@@ -7,17 +7,17 @@
     "file": "assets/MADEOkineSansPERSONALUSE-Light.e02b1f88.otf",
     "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Light.otf"
   },
-  "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Medium.otf": {
-    "file": "assets/MADEOkineSansPERSONALUSE-Medium.f6ff607e.otf",
-    "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Medium.otf"
+  "storage/app/public/fonts/mvboli.ttf": {
+    "file": "assets/mvboli.f868204f.ttf",
+    "src": "storage/app/public/fonts/mvboli.ttf"
   },
   "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Regular.otf": {
     "file": "assets/MADEOkineSansPERSONALUSE-Regular.3694a453.otf",
     "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Regular.otf"
   },
-  "storage/app/public/fonts/mvboli.ttf": {
-    "file": "assets/mvboli.f868204f.ttf",
-    "src": "storage/app/public/fonts/mvboli.ttf"
+  "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Medium.otf": {
+    "file": "assets/MADEOkineSansPERSONALUSE-Medium.f6ff607e.otf",
+    "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Medium.otf"
   },
   "resources/js/app.js": {
     "file": "assets/app.4aac652e.js",
@@ -55,7 +55,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app.d6d287c4.css",
+    "file": "assets/app.1ea063da.css",
     "src": "resources/css/app.css",
     "isEntry": true
   }

@@ -1,7 +1,7 @@
 <div>
     <div class="grid grid-cols-1 grid-rows-[34.375rem,37.5rem,32.5rem] gap-4
             md:grid-cols-[18.75rem,18.75rem] md:grid-rows-[35rem,18rem]
-            lg:grid-cols-[18.75rem,40.625rem] lg:grid-rows-[repeat(2,23rem)]">
+            lg:grid-cols-[18.75rem,40.625rem] lg:grid-rows-[23rem,18rem]">
         {{-- Image + raison du refus--}}
         <div class="lg:row-span-2 flex items-center gap-4 flex-col p-2">
 
