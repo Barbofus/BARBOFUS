@@ -1,8 +1,7 @@
 <div>
-
-    <div class="grid grid-cols-1 grid-rows-[550px,600px,520px] gap-4
-            md:grid-cols-[300px,300px] md:grid-rows-[550px,320px]
-            lg:grid-cols-[300px,650px] lg:grid-rows-[repeat(2,350px)]">
+    <div class="grid grid-cols-1 grid-rows-[34.375rem,37.5rem,32.5rem] gap-4
+            md:grid-cols-[18.75rem,18.75rem] md:grid-rows-[35rem,18rem]
+            lg:grid-cols-[18.75rem,40.625rem] lg:grid-rows-[repeat(2,23rem)]">
         {{-- Image + raison du refus--}}
         <div class="lg:row-span-2 flex items-center gap-4 flex-col p-2">
 
@@ -26,7 +25,7 @@
             }">
                 <p class="ml-10 text-xl font-light">Image du skin</p>
                 <div class="mt-2 @error('image_path') err-border @enderror">
-                    <input x-on:input.change="ChangeFile" class="w-[min(300px,90vw)] text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
+                    <input x-on:input.change="ChangeFile" class="w-[min(18.75rem,90vw)] text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
                     <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">Export PNG de DofusBook<br> (MAX. 350x450px, 100ko).</p>
                 </div>
 
@@ -39,7 +38,7 @@
 
             {{-- Raison du refus --}}
             @if(isset($skin) && $skin['status'] == 'Refused')
-                <div class="bg-red-300 border border-red-500 h-[clamp(6rem,8rem)] p-4 rounded-md text-red-900 max-w-[300px] flex flex-col items-center justify-center order-first md:order-2">
+                <div class="bg-red-300 border border-red-500 h-[clamp(6rem,8rem)] p-4 rounded-md text-red-900 max-w-[18.75rem] flex flex-col items-center justify-center order-first md:order-2">
                     <p class="font-light">Ton skin a été refusé <span>{{ $skin['refused_reason'] ? ' car' : '!' }}</span></p>
                     <p class="font-normal italic break-words max-w-full">{{ $skin['refused_reason'] }}</p>
                 </div>
@@ -91,13 +90,13 @@
 
                                 <!-- Resultat -->
                                 <div x-on:mousedown="showSort = !showSort"
-                                     class="flex transition-all rounded-md w-[200px] items-center justify-left gap-x-2 border-2 text-secondary border-goldText hover:border-secondary cursor-pointer h-12 bg-primary-100 p-2">
+                                     class="flex transition-all rounded-md w-[15rem] items-center justify-left gap-x-2 border-2 text-secondary border-goldText hover:border-secondary cursor-pointer h-12 bg-primary-100 p-2">
                                     <img :src="races[selection-1]['ghost_icon_path']" class="h-11">
                                     <p x-text="races[selection-1]['name']"></p>
                                 </div>
 
                                 <!-- Menu déroulant -->
-                                <div class="left-0 top-12 w-[200px] max-h-[300px] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer "
+                                <div class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer "
                                      x-show="showSort" x-transition.opacity x-cloak >
                                     @foreach ($races as $race)
                                         <div>
@@ -164,8 +163,8 @@
         <div class="p-2
                     md:col-span-2 md:row-start-2
                     lg:col-start-2">
-            <p class="text-xl font-light">Choix des items</p>
-            <div class="grid grid-flow-row grid-cols-1 gap-4 mt-2
+            <p class="text-xl ml-10 font-light">Choix des items</p>
+            <div class="grid grid-flow-row grid-cols-1 gap-4
                         md:grid-cols-2">
                 <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_hats'" :name="'dofus_item_hat_id'" :placeholder="'Choisis une coiffe...'"
                                                              :value="(old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')"  />

@@ -1,5 +1,5 @@
 <button
-    class="w-[18px] h-[18px] border rounded-[3px] bg-anthraciteLit border-1 border-ivory"
+    class="w-[1.125rem] h-[1.125rem] border rounded-[3px] bg-anthraciteLit border-1 border-ivory"
     @click="window.scrollTo(0,0)"
     {{ $attributes }}>
 

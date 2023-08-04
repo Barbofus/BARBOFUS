@@ -15,7 +15,7 @@
                wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', \'' . addslashes($itemToShow[$selectionKey]->name) . '\')' : '' }}"
                @keydown.enter="window.scrollTo(0,0)">
 
-        <div class="absolute bg-primary-100 max-h-[300px] w-full rounded-sm z-50 overflow-auto">
+        <div class="absolute bg-primary-100 max-h-[18.75rem] w-full rounded-sm z-50 overflow-auto">
             @foreach($itemToShow as $key => $items)
                 <button
                     class="flex w-full p-1 items-center group transition-all {{ ($key == $selectionKey) ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10' }}"
@@ -34,7 +34,7 @@
             @endforeach
         </div>
 
-        <div class="flex flex-wrap justify-start w-full max-h-[112px] overflow-auto items-center gap-2 mt-2">
+        <div class="flex flex-wrap justify-start w-full max-h-[7rem] overflow-auto items-center gap-2 mt-2">
             @foreach($searchFilterInput as $input)
                 <button wire:click="$emit('ToggleSearchedText', '{{ addslashes($input) }}')"
                         @click="window.scrollTo(0,0)"

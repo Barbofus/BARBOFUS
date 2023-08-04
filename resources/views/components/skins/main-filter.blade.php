@@ -16,8 +16,8 @@
 
     <!-- Header -->
     <div class="flex py-3 items-end justify-center transition-all duration-150 group
-              max-[1500px]:cursor-pointer max-[1500px]:bg-primary-100 max-[1500px]:w-[290px] max-[1500px]:rounded-lg max-[1500px]:shadow-md
-              min-[1501px]:justify-start min-[1501px]:pl-10 min-[1501px]:h-[65px]"
+              max-[1500px]:cursor-pointer max-[1500px]:bg-primary-100 max-[1500px]:w-[18.125rem] max-[1500px]:rounded-lg max-[1500px]:shadow-md
+              min-[1501px]:justify-start min-[1501px]:pl-10 min-[1501px]:h-[4rem]"
          @click="if(window.innerWidth <= 1500) {showFilter = !showFilter; if(window.innerHeight > 700) showLive = !showFilter}">
         <div class="flex items-center transition-all duration-150"
              :class="showFilter ? 'max-[1500px]:group-hover:-translate-y-1' : 'max-[1500px]:group-hover:translate-y-1'">
@@ -46,7 +46,7 @@
               max-[900px]:h-[100vh]
               min-[901px]:flex-row min-[901px]:justify-center min-[901px]:gap-x-8 min-[901px]:pl-0
               max-[1500px]:shadow-lg
-              min-[1501px]:flex-col min-[1501px]:max-h-[600px] min-[1501px]:border-r-2 min-[1501px]:border-ivory min-[1501px]:pl-6 min-[1501px]:pt-0 min-[1501px]:pb-4">
+              min-[1501px]:flex-col min-[1501px]:max-h-[37.5rem] min-[1501px]:border-r-2 min-[1501px]:border-ivory min-[1501px]:pl-6 min-[1501px]:pt-0 min-[1501px]:pb-4">
 
         <!-- Bottom border -->
         <div class="absolute h-full top-0 left-[10%] w-[80%] border-b-4 border-secondary invisible
@@ -65,9 +65,9 @@
 
 
             <!-- Rewards Only -->
-            <div class="relative mt-5 tracking-wide w-[min(90vw,380px)]">
+            <div class="relative mt-5 tracking-wide w-[min(90vw,23.75rem)]">
                 <x-forms.filter-button :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly" >
-                    <label class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),350px)]">Voir uniquement les vainqueurs du <span class="font-normal">Miss'Skin</span></label>
+                    <label class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),22rem)]">Voir uniquement les vainqueurs du <span class="font-normal">Miss'Skin</span></label>
                 </x-forms.filter-button>
 
                 <div class="absolute right-0 w-6 h-6 cursor-pointer group top-1">
@@ -87,7 +87,7 @@
                     </svg>
 
                     <div class="group-hover:visible group-hover:opacity-100 z-10 opacity-0 transition-all invisible cursor-text absolute -top-4 right-8
-                        min-[801px]:-right-[280px]">
+                        min-[801px]:-right-[17.5rem]">
                         <x-utils.miss-skin />
                         <svg class="absolute h-4 top-5 text-secondary -rotate-90 -right-4
                             min-[801px]:rotate-90 min-[801px]:-left-4" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
@@ -101,9 +101,9 @@
 
 
             <!-- Barb Only -->
-            <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,380px)]">
+            <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,23.75rem)]">
                 <x-forms.filter-button :checked="$barbOnly" wire:click="ToggleShowBarbeOnly" >
-                    <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,380px)]">Voir uniquement les skins de <span class=" font-normal">Barbe Douce</span></label>
+                    <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">Voir uniquement les skins de <span class=" font-normal">Barbe Douce</span></label>
                 </x-forms.filter-button>
             </div>
 
@@ -121,12 +121,12 @@
                 <div class="flex flex-col min-[450px]:flex-row justify-start pt-2 pr-5 ml-2 tracking-wide gap-x-4 gap-y-2">
 
                     <!-- Mimibiotes -->
-                    <div class="relative w-[100px]">
+                    <div class="relative w-[6.25rem]">
                         <x-forms.filter-button :label="'Mimibiotes'" :checked="!in_array(1, $skinContent)" wire:click="ToggleSkinContent(1)" />
                     </div>
 
                     <!-- Cosmétiques -->
-                    <div class="relative w-[120px]">
+                    <div class="relative w-[7.5rem]">
                         <x-forms.filter-button :label="'Cosmétiques'" :checked="!in_array(2, $skinContent)" wire:click="ToggleSkinContent(2)" />
                     </div>
 
@@ -140,21 +140,21 @@
 
 
         <!-- Second part -->
-        <div class="max-[1500px]:max-w-[620px] min-[901px]:max-[1500px]:overflow-hidden max-[900px]:pb-8">
+        <div class="max-[1500px]:max-w-[38.75rem] min-[901px]:max-[1500px]:overflow-hidden max-[900px]:pb-8">
 
             <!-- Classes -->
             <div class="relative mt-5
-                  min-|901px]:mt-0
+                  min-[901px]:mt-0
                   min-[1501px]:mt-5">
 
                 <div class="flex gap-x-2">
 
-                    <div class="ml-4 border-b border-secondary w-[clamp(150px,200px,50%)]">
+                    <div class="ml-4 border-b border-secondary w-[clamp(9.375rem,12.5rem,50%)]">
                         <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Choisis tes classes :</p>
                     </div>
 
                     <!-- Bouton reset -->
-                    <button class="w-40 h-10 left-[33%] min-h-[32px] bg-secondary-100 hover:bg-secondary min-w-[144px] font-light text-[1rem] rounded-md text-primary"
+                    <button class="w-40 h-10 left-[33%] min-h-[2rem] bg-secondary-100 hover:bg-secondary min-w-[9rem] font-light text-[1rem] rounded-md text-primary"
                             @click="window.scrollTo(0,0)"
                             wire:click="UnselectAllRaces" >
                         Reset les classes
@@ -164,14 +164,14 @@
                 <!-- Icones -->
                 <div class="grid grid-cols-6 pr-8 mt-2
                     min-[1001px]:grid-cols-8
-                    min-[1501px]:grid-cols-7 min-[1501px]:max-h-[200px]">
+                    min-[1501px]:grid-cols-7 min-[1501px]:max-h-[12.5rem]">
 
                     @foreach($races as $key => $race)
                         <button class="relative"
                                 wire:click="ToggleRace({{ $key + 1 }})"
                                 @click="window.scrollTo(0,0)">
 
-                            <div class="peer relative h-[54px] w-[54px]" x-cloak>
+                            <div class="peer relative h-[3.375rem] w-[3.375rem]" x-cloak>
                                 @if(!in_array(['race_id', '=', $key + 1, 'or'], $raceSelection))
                                     <img src="{{ asset('storage\/' . $race->ghost_icon_path) }}"
                                          class="absolute opacity-75 hover:opacity-100" draggable="false">
@@ -181,7 +181,7 @@
                                 @endif
                             </div>
 
-                            <div class="absolute left-[calc(50%-16px-8px)] z-50 invisible peer-hover:visible -top-8">
+                            <div class="absolute left-[calc(50%-1rem-0.5rem)] z-50 invisible peer-hover:visible -top-8">
                                 <div class="font-light text-[0.9rem] px-4 py-1 text-primary bg-secondary rounded">{{ $race->name }}</div>
                                 <svg class="absolute h-4 -bottom-4 left-4 text-secondary" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
                                     <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>

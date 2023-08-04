@@ -7,7 +7,7 @@
         <h2 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">L'endroit parfait pour chercher et partager tes skins Dofus</h2>
 
         {{-- Présentation du site --}}
-        <div class="h-[max(20vh,220px)] mx-auto w-[min(90vw,1000px)] mt-16 px-1 rounded-md goldGradient">
+        <div class="h-[max(20vh,13.75rem)] mx-auto w-[min(90vw,62.5rem)] mt-16 px-1 rounded-md goldGradient">
             <div class="h-full w-full bg-primary overflow-hidden">
                 <div class="flex pl-4 gap-x-4 h-full w-fit animate-skinSlide [--custom-animation-time:20s] hover:[animation-play-state:paused]">
                     @foreach($skins as $skin)
@@ -41,11 +41,11 @@
         <h1 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Découvre Barbe Douce</h1>
         <h2 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">Le Streameur à l'origine de ce site</h2>
 
-        <div class="w-[min(90vw,1000px)] aspect-video mx-auto mt-16 relative">
+        <div class="w-[min(90vw,62.5rem)] aspect-video mx-auto mt-16 relative">
             <x-utils.twitch-embed />
         </div>
 
-        <div class="w-[min(90vw,1000px)] mx-auto mt-16 flex min-[800px]:flex-row flex-col justify-between gap-8">
+        <div class="w-[min(90vw,62.5rem)] mx-auto mt-16 flex min-[800px]:flex-row flex-col justify-between gap-8">
             <div>
                 <div class="text-secondary text-xl font-thin flex flex-col gap-y-4">
                     <p class="mb-4 font-normal uppercase">Petite présentation rapide & efficace :</p>
@@ -66,7 +66,7 @@
                     <a href="https://discord.gg/YKHc4RD" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Discord.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1"></a>
                 </div>
             </div>
-            <img class="w-[min(90vw,300px)] max-[799px]:rounded-full max-[799px]:mx-auto" src="{{ asset('storage/images/misc_ui/portrait.webp') }}">
+            <img class="h-[22rem] max-[799px]:rounded-full max-[799px]:mx-auto" src="{{ asset('storage/images/misc_ui/portrait.webp') }}">
         </div>
 
         {{-- Remerciements --}}

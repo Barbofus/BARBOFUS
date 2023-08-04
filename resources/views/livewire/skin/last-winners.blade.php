@@ -1,16 +1,16 @@
 <div wire:poll.visible.60s="Refresh" id="rewards-section"
      class="z-0 flex flex-col items-center w-full px-8 pt-4 top-12
-            min-[1800px]:fixed min-[1800px]:order-last min-[1800px]:w-[400px] min-[1800px]:flex-row min-[1800px]:px-0 min-[1800px]:min-h-[calc(100vh-15vh-16px)]
-            min-[1800px]:max-h-[calc(100vh-theme(spacing.2))] min-[1800px]:top-[calc(15vh+8px)] min-[1800px]:right-0 min-[1800px]:z-30 min-[1800px]:py-8 min-[1800px]:h-full">
+            min-[1800px]:fixed min-[1800px]:order-last min-[1800px]:w-[25rem] min-[1800px]:flex-row min-[1800px]:px-0 min-[1800px]:min-h-[calc(100vh-15vh-1rem)]
+            min-[1800px]:max-h-[calc(100vh-theme(spacing.2))] min-[1800px]:top-[calc(15vh+0.5rem)] min-[1800px]:right-0 min-[1800px]:z-30 min-[1800px]:py-8 min-[1800px]:h-full">
 
     <!-- Content -->
-    <div class="flex flex-col items-start justify-center flex-1 w-full py-4 min-[1800px]:h-[min(100%,1500px)]">
+    <div class="flex flex-col items-start justify-center flex-1 w-full py-4 min-[1800px]:h-[min(100%,93rem)]">
 
         <!-- Header -->
         <div class="relative flex items-center justify-center w-full pl-4 gap-x-2">
 
             <!-- Icone Info -->
-            <div class="relative h-6 cursor-pointer min-w-[24px] group">
+            <div class="relative h-6 cursor-pointer min-w-[1.5rem] group">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-secondary">
                     <path d="M11.812,0C5.289,0,0,5.289,0,11.812s5.289,11.813,11.812,11.813s11.813-5.29,11.813-11.813
                       S18.335,0,11.812,0z M14.271,18.307c-0.608,0.24-1.092,0.422-1.455,0.548c-0.362,0.126-0.783,0.189-1.262,0.189
@@ -26,7 +26,7 @@
                       c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
                 </svg>
                 <div class="group-hover:visible group-hover:opacity-100 z-10 invisible opacity-0 transition-all cursor-text absolute top-[150%]
-                      min-[901px]:-left-[280px] min-[901px]:-top-4">
+                      min-[901px]:-left-[17.5rem] min-[901px]:-top-4">
                     <x-utils.miss-skin />
                     <svg class="absolute h-4 text-secondary right-[50%] rotate-180 -top-4
                         min-[901px]:-rotate-90 min-[901px]:top-5 min-[901px]:-right-4 " x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
@@ -48,9 +48,9 @@
 
             @foreach($skins as $skin)
                 <div wire:key="skinwinner.{{ $skin->id }}"
-                    class="max-[500px]:w-[clamp(140px,90%,200px)]
-                    min-[501px]:max-[1799px]:w-[200px]
-                    min-[1800px]:h-[min(28%,360px)] min-[1800px]:w-full min-[1800px]:flex min-[1800px]:justify-center">
+                    class="max-[500px]:w-[clamp(8.75rem,90%,12.5rem)]
+                    min-[501px]:max-[1799px]:w-[12.5rem]
+                    min-[1800px]:h-[min(28%,22.5rem)] min-[1800px]:w-full min-[1800px]:flex min-[1800px]:justify-center">
                         <x-skins-presentation.winners-skin-card :skin="$skin" />
                 </div>
             @endforeach
@@ -59,6 +59,6 @@
 
     <!-- Bottom border -->
     <div class="h-1 mt-4 rounded-full goldGradientSide w-[80%]
-                min-[1101px]:w-[max(200px,80%)]
+                min-[1101px]:w-[max(12.5rem,80%)]
                 min-[1800px]:goldGradientTop min-[1800px]:w-1 min-[1800px]:h-[80%] min-[1800px]:order-first min-[1800px]:mt-0"></div>
 </div>

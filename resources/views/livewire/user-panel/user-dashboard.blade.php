@@ -5,14 +5,14 @@
         class="w-[100vw] px-6 min-[1550px]:w-[80vw] relative flex gap-x-2" x-cloak
         x-data="{
             currentPage: '{{ (session()->has('section')) ? session('section') : 'user-details'}}',
-            initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-[65px] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
-            activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-[65px] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
+            initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-[4rem] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
+            activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-[4rem] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
             initTextClass: 'absolute invisible min-[1250px]:visible min-[1250px]:static transition-transform group-hover:-skew-x-12',
 
         }">
 
         {{-- Pseudo navbar pour afficher tel ou tel onglet --}}
-        <div class="min-[1250px]:w-[315px] max-h-[390px] font-light sticky top-32">
+        <div class="min-[1250px]:w-[20rem] max-h-[25rem] font-light sticky top-32">
 
             <button wire:click="$set('section', 'user-details')" @click="currentPage = 'user-details', window.scrollTo(0,0)" :class="(currentPage == 'user-details') ? activeButtonClass : initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -79,7 +79,7 @@
         <div class="min-h-[50vh] flex-grow relative">
 
             {{-- Spinning Loader --}}
-            <div wire:loading.delay class="h-screen w-[calc(80vw-315px)] fixed top-0 z-10">
+            <div wire:loading.delay class="h-screen w-[calc(80vw-20rem)] fixed top-0 z-10">
                 <div class="flex flex-col items-center justify-center gap-y-4 min-h-screen bg-primary
                  opacity-0 animate-opacityFade [--custom-animation-time:100ms]">
                     <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">

@@ -1,4 +1,4 @@
-<div class="relative mt-2"
+<div class="relative"
     x-data="{ focusinput: false, focusbutton: false }"
     x-id="['dropdown-search']"
 >

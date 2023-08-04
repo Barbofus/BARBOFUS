@@ -19,7 +19,7 @@
                 <thead class="flex w-full mb-8">
                     <tr class="flex justify-between pl-[5%] pr-[5%] py-2 gap-x-8 w-full border-b border-secondary">
                         <th class="text-2xl font-normal w-full">Pseudo</th>
-                        <th class="text-2xl font-normal w-[200px]">Rôle</th>
+                        <th class="text-2xl font-normal w-[12.5rem]">Rôle</th>
                         <th class="text-2xl font-normal">Supprimer</th>
                     </tr>
                 </thead>
@@ -28,7 +28,7 @@
                         <tr class="odd:bg-primary-100 flex justify-between gap-x-8 items-center px-12 py-4">
                             <td class="font-light text-xl w-full">{{ $user->name }}</td>
                             <td>
-                                <div x-data="{ showRoles: false, }" class="relative w-[200px]"
+                                <div x-data="{ showRoles: false, }" class="relative w-[12.5rem]"
                                      x-on:mousedown.outside="if(showRoles) showRoles = false">
 
                                     <!-- Trier par: Texte -->

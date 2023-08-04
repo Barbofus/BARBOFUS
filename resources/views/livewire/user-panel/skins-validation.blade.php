@@ -3,7 +3,7 @@
         <x-utils.userpage-title :title="'Skins en Attente'" :subtitle="'Accepte ou refuse les skins'" />
 
 
-        <div class="grid justify-center grid-cols-[repeat(auto-fill,200px)] p-4 gap-4">
+        <div class="grid justify-center grid-cols-[repeat(auto-fill,12.5rem)] p-4 gap-4">
             @foreach($skins as $key => $skin)
 
                 {{-- Gros container d'un skin --}}

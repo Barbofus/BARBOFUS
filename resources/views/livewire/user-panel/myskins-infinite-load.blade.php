@@ -18,7 +18,7 @@
                     <livewire:user-panel.myskins-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
                 @endfor
             @else
-                <img class="mt-8 h-[256px]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
+                <img class="mt-8 h-[16rem]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
                 <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Encore aucun skin posté !</span></p>
             @endif
 

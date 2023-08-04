@@ -3,7 +3,7 @@
          @click.away="skinDeleteID = null">
 
         {{-- Skin image + icon classe --}}
-        <img :src="skinDeleteImg" draggable="false" class="w-[200px]">
+        <img :src="skinDeleteImg" draggable="false" class="w-[12.5rem]">
 
         <div>
             <p class="text-2xl text-secondary font-light text-center italic">Es-tu sûr de vouloir supprimer le skin <span class="pl-2 font-normal not-italic">ID#<span x-text="skinDeleteID"></span></span></p>

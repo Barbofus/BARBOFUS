@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="flex flex-col gap-y-1 min-[950px]:gap-y-4 h-[1450px] min-[950px]:h-[850px] w-[min(1500px,95vw)] mx-auto overflow-hidden min-[950px]:mt-4 min-[950px]:rounded-lg min-[950px]:bg-black min-[950px]:bg-opacity-[0.09] min-[950px]:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]">
+    <div class="flex flex-col gap-y-1 min-[950px]:gap-y-4 h-[91rem] min-[950px]:h-[53rem] w-[min(95rem,95vw)] mx-auto overflow-hidden min-[950px]:mt-4 min-[950px]:rounded-lg min-[950px]:bg-black min-[950px]:bg-opacity-[0.09] min-[950px]:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]">
         {{-- User --}}
         <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-4">Par <span class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
         {{-- Classe --}}
@@ -28,7 +28,7 @@
 
         <div class="flex flex-col gap-y-4 items-center min-[950px]:pt-24 relative h-full">
             {{-- Skin image + icon classe --}}
-            <img src="{{ asset('storage/' . $skin->image_path) }}" draggable="false" class="max-[949px]:h-[min(50vh,390px)] min-[950px]:w-[300px]">
+            <img src="{{ asset('storage/' . $skin->image_path) }}" draggable="false" class="max-[949px]:h-[min(50vh,25rem)] min-[950px]:w-[18.75rem]">
             <img src="{{ asset('storage/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
 
             {{-- Button Copy Link --}}
@@ -78,8 +78,8 @@
             <div class="flex flex-col gap-y-4 mt-4">
                 {{-- Items --}}
                 @if(isset($skin->dofus_item_costume_level))
-                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-45.5rem)] top-[7.5rem] order-4 w-[500px] flex justify-center min-[950px]:justify-end" style="animation-delay: -2500ms">
-                        <div class="w-[clamp(90vw,200px,500px)] min-[950px]:w-[clamp(25vw,200px,500px)] flex justify-center min-[950px]:justify-end">
+                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-45.5rem)] top-[7.5rem] order-4 w-[31.25rem] flex justify-center min-[950px]:justify-end" style="animation-delay: -2500ms">
+                        <div class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_costume_subicon" :subname="$skin->dofus_item_costume_subname" :name="$skin->dofus_item_costume_name" :level="$skin->dofus_item_costume_level" :icon="$skin->dofus_item_costume_icon"/>
                         </div>
 
@@ -88,8 +88,8 @@
                 @endif
 
                 @if(isset($skin->dofus_item_shield_level))
-                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-39.5rem)] top-[16rem] order-3 w-[500px] flex justify-center min-[950px]:justify-end" style="animation-delay: -1250ms">
-                        <div class="w-[clamp(90vw,200px,500px)] min-[950px]:w-[clamp(25vw,200px,500px)] flex justify-center min-[950px]:justify-end">
+                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-39.5rem)] top-[16rem] order-3 w-[31.25rem] flex justify-center min-[950px]:justify-end" style="animation-delay: -1250ms">
+                        <div class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_shield_subicon" :subname="$skin->dofus_item_shield_subname" :name="$skin->dofus_item_shield_name" :level="$skin->dofus_item_shield_level" :icon="$skin->dofus_item_shield_icon"/>
                         </div>
 
@@ -98,8 +98,8 @@
                 @endif
 
                 @if(isset($skin->dofus_item_pet_level))
-                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-43.5rem)] top-[24rem] order-5 w-[500px] flex justify-center min-[950px]:justify-end" style="animation-delay: -1250ms">
-                        <div class="w-[clamp(90vw,200px,500px)] min-[950px]:w-[clamp(25vw,200px,500px)] flex justify-center min-[950px]:justify-end">
+                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-43.5rem)] top-[24rem] order-5 w-[31.25rem] flex justify-center min-[950px]:justify-end" style="animation-delay: -1250ms">
+                        <div class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
                                 <x-skins-presentation.item :subicon="$skin->dofus_item_pet_subicon" :subname="$skin->dofus_item_pet_subname" :name="$skin->dofus_item_pet_name" :level="$skin->dofus_item_pet_level" :icon="$skin->dofus_item_pet_icon"/>
                         </div>
 
@@ -108,8 +108,8 @@
                 @endif
 
                 @if(isset($skin->dofus_item_hat_level))
-                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%+11.5rem)] top-[8.5rem] order-1 w-[500px] flex justify-center min-[950px]:justify-start" style="animation-delay: -1250ms">
-                        <div class="w-[clamp(90vw,200px,500px)] min-[950px]:w-[clamp(25vw,200px,500px)] flex justify-center min-[950px]:justify-start">
+                    <div class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%+11.5rem)] top-[8.5rem] order-1 w-[31.25rem] flex justify-center min-[950px]:justify-start" style="animation-delay: -1250ms">
+                        <div class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_hat_subicon" :subname="$skin->dofus_item_hat_subname" :name="$skin->dofus_item_hat_name" :level="$skin->dofus_item_hat_level" :icon="$skin->dofus_item_hat_icon"/>
                         </div>
 
@@ -118,8 +118,8 @@
                 @endif
 
                 @if(isset($skin->dofus_item_cloak_level))
-                    <div class="min-[950px]:absolute min-[950px]:animate-slideX [--custom-translate-x:5px] [--custom-animation-time:5s] left-[calc(50%+14.5rem)] top-[19rem] order-2 w-[500px] flex justify-center min-[950px]:justify-start" style="animation-delay: -1250ms">
-                        <div class="w-[clamp(90vw,200px,500px)] min-[950px]:w-[clamp(25vw,200px,500px)] flex justify-center min-[950px]:justify-start">
+                    <div class="min-[950px]:absolute min-[950px]:animate-slideX [--custom-translate-x:5px] [--custom-animation-time:5s] left-[calc(50%+14.5rem)] top-[19rem] order-2 w-[31.25rem] flex justify-center min-[950px]:justify-start" style="animation-delay: -1250ms">
+                        <div class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_cloak_subicon" :subname="$skin->dofus_item_cloak_subname" :name="$skin->dofus_item_cloak_name" :level="$skin->dofus_item_cloak_level" :icon="$skin->dofus_item_cloak_icon"/>
                         </div>
 
