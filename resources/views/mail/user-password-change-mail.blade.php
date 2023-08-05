@@ -1,17 +1,17 @@
-<x-mail::message>
-# Mot de passe modifié
+@extends('layouts.mail')
 
-Salut <span class="italic">{{ $user->name }}</span>,<br><br>
-<span>Ton mot de passe vient d'être changé, si tu n'es pas à l'origine de ce changement, réinitialise-le avec ce bouton.</span>
+@section('mail-subject')
+    Mot de passe modifié
+@endsection
 
-<x-mail::button :url="$url" :color="'gold'">
-Réinitialiser mon mot de passe
-</x-mail::button>
+@section('mail-sentence')
+    Ton mot de passe vient d'être changé, si tu n'es pas à l'origine de ce changement, réinitialise-le avec ce bouton.
+@endsection
 
-<br><br>
+@section('mail-button')
+    <a href="{{ $url }}">Réinitialiser mon mot de passe</a>
+@endsection
 
-Si le bouton ne fonctionne pas, copie colle ce lien dans ta barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
-
-Cordialement,<br>
-<span class="font-bold">{{ config('app.name') }}</span>
-</x-mail::message>
+@section('mail-url')
+    <a href="{{ $url }}">{{ $url }}</a>
+@endsection

@@ -1,26 +1,24 @@
+@extends('layouts.mail')
 
-<x-mail::message>
-# Skin refusé
+@section('mail-subject')
+    Skin refusé
+@endsection
 
-Salut <span class="italic">{{ $user->name }}</span>,<br><br>
-<span>Ton skin ***ID#{{ $skin->id }}*** en **{{ $skin->race->name }}** a été refusé par un membre du Staff.</span>
+@section('mail-sentence')
+    Ton skin <span class="font-normal italic">ID#{{ $skin->id }}</span> en <span class="font-normal">{{ $skin->race->name }}</span> a été refusé par un membre du Staff.
+@endsection
 
-<div style="text-align: center;"><img class="refused-img" src="{{ asset('storage/' . $skin->image_path ) }}" alt="Image du skin {{ $skin->id }}"></div>
+@section('mail-body')
+    @if($skin->refused_reason)
+        <div class="py-4 px-6 bg-[rgba(255,50,50,0.3)] text-red-500 border-l-[3px] border-red-500 rounded-r-md mb-6">{{ $skin->refused_reason }}</div>
+    @endif
+    <div class="flex justify-center"><img class="p-4 bg-[rgba(255,50,50,0.3)] border-[3px] border-red-500 rounded-md" src="{{ asset('storage/' . $skin->image_path ) }}" alt="Image du skin {{ $skin->id }}"></div>
+@endsection
 
-@if($skin->refused_reason)
-<x-mail::panel>
-{{ $skin->refused_reason }}
-</x-mail::panel>
-@endif
+@section('mail-button')
+    <a href="{{ $url }}">Clique pour le modifier</a>
+@endsection
 
-<x-mail::button :url="$url" :color="'gold'">
-Clique pour le modifier
-</x-mail::button>
-
-<br><br>
-
-Si le bouton ne fonctionne pas, copie colle ce lien dans ta barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
-
-Cordialement,<br>
-<span class="font-bold">{{ config('app.name') }}</span>
-</x-mail::message>
+@section('mail-url')
+    <a href="{{ $url }}">{{ $url }}</a>
+@endsection

@@ -49,7 +49,7 @@ class SkinRefusedMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'mails.skin-refused',
+            view: 'mails.skin-refused',
             with: [
                 'url' => \url()->route('skins.edit', ['skin' => $this->skin->id]),
             ],

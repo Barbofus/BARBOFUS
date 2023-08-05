@@ -6,6 +6,7 @@
             showNavbar: (window.innerWidth > 900),
             selectedClass: 'max-[900px]:border-y max-[900px]:border-secondary max-[900px]:flex max-[900px]:items-center max-[900px]:px-5 min-[901px]:pl-5 h-[18%] min-[901px]:h-[2rem] text-secondary-100 font-light flex min-[901px]:after:ml-5 min-[901px]:after:-mt-1 min-[901px]:after:clip-path-triangle-down min-[901px]:after:block min-[901px]:after:h-[2.25rem] min-[901px]:after:w-[5rem] min-[901px]:after:bg-secondary focus:outline-none',
             unselectedClass: 'px-5 transition-all max-[900px]:flex max-[900px]:items-center h-[18%] min-[901px]:h-[2rem] min-[901px]:border-r hover:text-secondary-100 border-r-inactiveText focus:outline-none',
+            unselectedClassLast: 'px-5 transition-all max-[900px]:flex max-[900px]:items-center h-[18%] min-[901px]:h-[2rem] hover:text-secondary-100 focus:outline-none',
           }"
      @resize.window="
             if(window.innerWidth > 900) showNavbar = true;">
@@ -24,7 +25,7 @@
             @auth()
                 <a href="{{ route('skins.create') }}" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">Poster un Skin</a>
                 <a href="{{ route('user-dashboard.index') }}" :class="{{ (Route::is('user-dashboard.index')) ? 'selectedClass' : 'unselectedClass'  }}">Mon Compte</a>
-                <form method="POST" action="{{ route('logout') }}" class="max-[900px]:h-[18%] ">
+                <form method="POST" action="{{ route('logout') }}" class="max-[900px]:h-[18%]">
                     @csrf
                     <button type="submit" class="px-5 max-[900px]:flex max-[900px]:items-center h-full min-[901px]:h-[2rem] hover:text-secondary-100 focus:outline-none">Se déconnecter</button>
                 </form>

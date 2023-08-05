@@ -1,17 +1,17 @@
-<x-mail::message>
-# Vérification d'E-mail
+@extends('layouts.mail')
 
-Salut <span class="italic">{{ $notifiable->name }}</span>,<br><br>
-<span>Merci de cliquer sur ce lien pour valider ton adresse e-mail et te connecter à Barbofus.</span>
+@section('mail-subject')
+    Vérification d'E-mail
+@endsection
 
-<x-mail::button :url="$url" :color="'gold'">
-Valider l'E-mail
-</x-mail::button>
+@section('mail-sentence')
+    Merci de cliquer sur ce lien pour valider ton adresse e-mail et te connecter à Barbofus.
+@endsection
 
-<br><br>
+@section('mail-button')
+    <a href="{{ $url }}">Valider l'E-mail</a>
+@endsection
 
-Si le bouton ne fonctionne pas, copie colle ce lien dans ta barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
-
-Cordialement,<br>
-<span class="font-bold">{{ config('app.name') }}</span>
-</x-mail::message>
+@section('mail-url')
+    <a href="{{ $url }}">{{ $url }}</a>
+@endsection
