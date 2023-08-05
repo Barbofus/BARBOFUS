@@ -3,10 +3,6 @@
     "file": "assets/MADEOkineSansPERSONALUSE-Thin.6870ec0b.otf",
     "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Thin.otf"
   },
-  "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Light.otf": {
-    "file": "assets/MADEOkineSansPERSONALUSE-Light.e02b1f88.otf",
-    "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Light.otf"
-  },
   "storage/app/public/fonts/mvboli.ttf": {
     "file": "assets/mvboli.f868204f.ttf",
     "src": "storage/app/public/fonts/mvboli.ttf"
@@ -14,6 +10,10 @@
   "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Regular.otf": {
     "file": "assets/MADEOkineSansPERSONALUSE-Regular.3694a453.otf",
     "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Regular.otf"
+  },
+  "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Light.otf": {
+    "file": "assets/MADEOkineSansPERSONALUSE-Light.e02b1f88.otf",
+    "src": "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Light.otf"
   },
   "storage/app/public/fonts/MADEOkineSansPERSONALUSE-Medium.otf": {
     "file": "assets/MADEOkineSansPERSONALUSE-Medium.f6ff607e.otf",
@@ -55,7 +55,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app.1ea063da.css",
+    "file": "assets/app.22e53919.css",
     "src": "resources/css/app.css",
     "isEntry": true
   }

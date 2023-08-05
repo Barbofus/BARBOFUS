@@ -12,6 +12,7 @@
                wire:model="query"
                wire:keydown.arrow-down.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
                wire:keydown.arrow-up.prevent="{{ (count($itemToShow) > 0) ? 'decrementSelection' : '' }}"
+               wire:keydown.tab.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
                wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', \'' . addslashes($itemToShow[$selectionKey]->name) . '\')' : '' }}"
                @keydown.enter="window.scrollTo(0,0)">
 

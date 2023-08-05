@@ -46,6 +46,15 @@ class SearchbarItemsAutocomplete extends Component
     }
 
     /**
+     * @return void
+     */
+    public function emptyQuery()
+    {
+        $this->query = '';
+        $this->itemsToShow = [];
+    }
+
+    /**
      * @return Collection<int|string, mixed>
      */
     public function ExistentQuery(string|int $value)
@@ -158,6 +167,10 @@ class SearchbarItemsAutocomplete extends Component
 
         // Si l'item exact est écrit, on le dit pour changer le visuel
         $this->existentItem = $this->ExistentQuery($query);
+
+        if ($this->query != $this->previousQuery) {
+            $this->selectedItem = 0;
+        }
 
         $this->previousQuery = $query;
 
