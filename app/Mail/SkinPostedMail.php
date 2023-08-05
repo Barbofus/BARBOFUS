@@ -49,7 +49,7 @@ class SkinPostedMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mails.skin-posted',
+            markdown: 'mails.skin-posted',
             with: [
                 'url' => \url()->route('skins.show', ['skin' => $this->skin->id]),
             ],

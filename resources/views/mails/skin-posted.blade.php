@@ -1,21 +1,20 @@
-@extends('layouts.mail')
 
-@section('mail-subject')
-    Skin posté
-@endsection
+<x-mail::message>
+# Skin posté
 
-@section('mail-sentence')
-    Ton skin <span class="font-normal italic">ID#{{ $skin->id }}</span> en <span class="font-normal">{{ $skin->race->name }}</span> a été validé par un membre du Staff.
-@endsection
+Salut <span class="italic">{{ $user->name }}</span>,<br><br>
+<span>Ton skin ***ID#{{ $skin->id }}*** en **{{ $skin->race->name }}** a été validé par un membre du Staff.</span>
 
-@section('mail-body')
-    <div class="flex justify-center"><img class="p-4" src="{{ asset('storage/' . $skin->image_path ) }}" alt="Image du skin {{ $skin->id }}"></div>
-@endsection
+<div style="text-align: center;"><img src="{{ asset('storage/' . $skin->image_path ) }}" alt="Image du skin {{ $skin->id }}"></div>
 
-@section('mail-button')
-    <a href="{{ $url }}">Clique pour le voir en action !</a>
-@endsection
+<x-mail::button :url="$url" :color="'gold'">
+Clique pour le voir en action !
+</x-mail::button>
 
-@section('mail-url')
-    <a href="{{ $url }}">{{ $url }}</a>
-@endsection
+<br><br>
+
+Si le bouton ne fonctionne pas, copie colle ce lien dans ta barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
+
+Cordialement,<br>
+<span class="font-bold">{{ config('app.name') }}</span>
+</x-mail::message>

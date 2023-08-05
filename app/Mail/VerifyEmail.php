@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,8 +20,6 @@ class VerifyEmail extends Mailable implements ShouldQueue
      */
     public $notifiable;
 
-    public User $user;
-
     /**
      * Verification email URL
      *
@@ -38,7 +35,6 @@ class VerifyEmail extends Mailable implements ShouldQueue
     public function __construct(mixed $notifiable, mixed $url)
     {
         $this->notifiable = $notifiable;
-        $this->user = User::find($notifiable->id);
         $this->url = $url;
     }
 
@@ -62,7 +58,7 @@ class VerifyEmail extends Mailable implements ShouldQueue
     public function content()
     {
         return new Content(
-            view: 'mail.verify-email',
+            markdown: 'mail.verify-email',
         );
     }
 }

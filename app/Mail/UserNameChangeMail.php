@@ -45,7 +45,7 @@ class UserNameChangeMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.user-name-change-mail',
+            markdown: 'mail.user-name-change-mail',
             with: [
                 'url' => \url()->route('user-dashboard.index'),
             ],
