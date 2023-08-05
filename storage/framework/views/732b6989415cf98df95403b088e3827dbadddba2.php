@@ -1,0 +1,2 @@
+<img src="<?php echo e(asset('storage/images/misc_ui/checkmark.png')); ?>" alt="" class="absolute min-w-[1.875rem] h-[1.875rem] -left-1 -top-[2px] <?php echo e(($checked) ? 'opacity-100' : 'opacity-0'); ?> transition-all">
+<?php /**PATH C:\Travail\Web\_Servers\BARBOFUS\resources\views/components/svg/checkmark.blade.php ENDPATH**/ ?>
