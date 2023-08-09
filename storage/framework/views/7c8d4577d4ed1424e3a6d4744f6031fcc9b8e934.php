@@ -12,7 +12,17 @@
 
         <div class="flex justify-between w-full">
             <button @click="skinDeleteID = null" class="uppercase text-xl text-goldText border-goldText border-2 hover:rounded-3xl transition-all hover:tracking-widest px-4 py-2 rounded-md">Annuler</button>
-            <button @click="$wire.deleteSkin(skinDeleteID), skinDeleteID = null" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">Supprimer</button>
+
+            <?php if(isset($useController)): ?>
+                <form action="<?php echo e(route('skins.delete', $skin->id)); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('DELETE'); ?>
+
+                    <button type="submit" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">Supprimer</button>
+                </form>
+            <?php else: ?>
+                <button @click="$wire.deleteSkin(skinDeleteID), skinDeleteID = null" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">Supprimer</button>
+            <?php endif; ?>
         </div>
     </div>
 </div>

@@ -25,7 +25,7 @@
             <?php if(auth()->guard()->check()): ?>
                 <a href="<?php echo e(route('skins.create')); ?>" :class="<?php echo e((Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'); ?>">Poster un Skin</a>
                 <a href="<?php echo e(route('user-dashboard.index')); ?>" :class="<?php echo e((Route::is('user-dashboard.index')) ? 'selectedClass' : 'unselectedClass'); ?>">Mon Compte</a>
-                <form method="POST" action="<?php echo e(route('logout')); ?>" class="max-[900px]:h-[18%]">
+                <form method="POST" action="<?php echo e(route('logout')); ?>" class="max-[900px]:h-[18%] ">
                     <?php echo csrf_field(); ?>
                     <button type="submit" class="px-5 max-[900px]:flex max-[900px]:items-center h-full min-[901px]:h-[2rem] hover:text-secondary-100 focus:outline-none">Se déconnecter</button>
                 </form>

@@ -24,7 +24,7 @@
             <div class="bg-[linear-gradient(90deg,transparent_0%,rgba(0,0,0,0.65)_25%,rgba(0,0,0,.65)_75%,transparent_100%)] via-primary h-full w-full absolute -z-10"></div>
 
             
-            <a href="<?php echo e(route('home')); ?>" target="_blank"><img src="<?php echo e(asset('storage/images/misc_ui/Barbofus_Logo.png')); ?>" class="h-full" draggable="false" /></a>
+            <a href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('storage/images/misc_ui/Barbofus_Logo.png')); ?>" class="h-full" draggable="false" /></a>
         </div>
     </div>
 
@@ -56,6 +56,24 @@
 
     
     <div class="relative z-10">
+    </div>
+
+    <div class="opacity-0">
+        <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.utils.twitch-embed','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('utils.twitch-embed'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
     </div>
 
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/header/OnSlope.js'); ?>
