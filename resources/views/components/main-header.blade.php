@@ -24,7 +24,7 @@
             <div class="bg-[linear-gradient(90deg,transparent_0%,rgba(0,0,0,0.65)_25%,rgba(0,0,0,.65)_75%,transparent_100%)] via-primary h-full w-full absolute -z-10"></div>
 
             {{-- Logo --}}
-            <a href="{{ route('home') }}" target="_blank"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.png') }}" class="h-full" draggable="false" /></a>
+            <a href="{{ route('home') }}"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.png') }}" class="h-full" draggable="false" /></a>
         </div>
     </div>
 
@@ -56,6 +56,10 @@
 
     {{-- Décorations (monstres / dofus) --}}
     <div class="relative z-10">
+    </div>
+
+    <div class="opacity-0">
+        <x-utils.twitch-embed />
     </div>
 
     @vite('resources/js/header/OnSlope.js')

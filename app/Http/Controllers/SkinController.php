@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Images\ResizeImages;
+use App\Actions\Skins\DeleteSkin;
 use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
 use App\Models\Skin;
@@ -48,7 +49,7 @@ class SkinController extends Controller
         }
 
         $toShow = DB::table('skins')
-            ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3')
+            ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'skins.id')
             ->where('skins.id', $skin->id)
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
@@ -230,5 +231,20 @@ class SkinController extends Controller
         session()->flash('section', 'my-skins');
 
         return redirect()->route('user-dashboard.index');
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function delete(int $skinID)
+    {
+        $skin = Skin::find($skinID);
+        $skinUserName = $skin->User->name;
+
+        (new DeleteSkin)($skinID);
+
+        session()->flash('alert-message', 'Le Skin ID#'.$skinID.' posté par '.$skinUserName.' a bien été supprimé.');
+
+        return redirect()->route('skins.index');
     }
 }

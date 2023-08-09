@@ -27,7 +27,7 @@ Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/mon-compte', [UserDashboardController::class, 'index'])->name('user-dashboard.index');
-    Route::resource('skins', SkinController::class)->except(['show', 'index']);
+    Route::resource('skins', SkinController::class)->except(['show', 'index', 'destroy']);
 });
 
 Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
@@ -41,4 +41,9 @@ Route::middleware(['can:admin-access', 'auth'])->group(function () {
 
     Route::get('/miss-skin', MissSkinController::class)->name('miss-skin');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
+});
+
+Route::middleware(['can:validate-skin', 'auth'])->group(function () {
+
+    Route::delete('/skin/{skin}/delete', [SkinController::class, 'delete'])->name('skins.delete');
 });
