@@ -50,8 +50,8 @@ module.exports = {
                 '100%': { transform: 'translate(-100%, 0px)' },
             },
             skinSlide: {
-                '0%': { transform: 'translate(0px, 0px)' },
-                '100%': { transform: 'translate(-50%, 0px)' },
+                '0%': { transform: 'translateX(var(--custom-translate-x))' },
+                '100%': { transform: 'translateX(calc(var(--custom-translate-x) - 50%))' },
             },
             onePing: {
                 '0%': { transform: 'scale(1)', opacity: 1 },

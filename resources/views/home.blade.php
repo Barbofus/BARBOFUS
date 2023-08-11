@@ -9,7 +9,7 @@
         {{-- Présentation du site --}}
         <div class="h-[max(20vh,13.75rem)] mx-auto w-[min(90vw,62.5rem)] mt-16 px-1 rounded-md goldGradient">
             <div class="h-full w-full bg-primary overflow-hidden">
-                <div class="flex pl-4 gap-x-4 h-full w-fit animate-skinSlide [--custom-animation-time:20s] hover:[animation-play-state:paused]">
+                <div class="slider flex pl-4 gap-x-4 h-full w-fit translate-x-0">
                     @foreach($skins as $skin)
 
                         <x-skins-presentation.home-skin-card :skin="$skin" />
@@ -91,5 +91,5 @@
         </div>
     </div>
 
-    @vite(['resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js'])
+    @vite(['resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js', 'resources/js/skins/InfiniteDragSlide.js'])
 @endsection

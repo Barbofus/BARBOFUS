@@ -7,7 +7,7 @@
         
         <div class="h-[max(20vh,13.75rem)] mx-auto w-[min(90vw,62.5rem)] mt-16 px-1 rounded-md goldGradient">
             <div class="h-full w-full bg-primary overflow-hidden">
-                <div class="flex pl-4 gap-x-4 h-full w-fit animate-skinSlide [--custom-animation-time:20s] hover:[animation-play-state:paused]">
+                <div class="slider flex pl-4 gap-x-4 h-full w-fit translate-x-0">
                     <?php $__currentLoopData = $skins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $skin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                         <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
@@ -131,7 +131,7 @@
         </div>
     </div>
 
-    <?php echo app('Illuminate\Foundation\Vite')(['resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js']); ?>
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js', 'resources/js/skins/InfiniteDragSlide.js']); ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.basic-views', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Travail\Web\_Servers\BARBOFUS\resources\views/home.blade.php ENDPATH**/ ?>
