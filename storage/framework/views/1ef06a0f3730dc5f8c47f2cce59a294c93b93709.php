@@ -9,7 +9,7 @@
         </div>
     <?php endif; ?>
 
-    <a class="absolute group h-full w-full" href="<?php echo e(route('skins.show', $id)); ?>">
+    <a class="slidingCard absolute group h-full w-full" href="<?php echo e(route('skins.show', $id)); ?>">
         
         <?php if($skin->user_name === 'Barbe Douce' &! isset($showBarbe)): ?>
             <img class="absolute top-0 left-0 h-[25%] max-h-[64px] peer cursor-pointer" src="<?php echo e(asset('storage/images/misc_ui/logo_barbe.png')); ?>" draggable="false">

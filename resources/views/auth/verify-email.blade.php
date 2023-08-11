@@ -12,6 +12,7 @@
                 <h2 class="text-2xl font-thin text-center -mt-10 mb-8">L'adresse mail doit être validé pour se conencter.</h2>
                 <h2 class="text-2xl font-thin text-center -mt-10 mb-8">Un email de vérification a été envoyé.</h2>
                 <h2 class="text-2xl font-light text-center -mt-10 mb-8">Merci de cliquer sur le lien dans le mail.</h2>
+                    <h2 class="text-xl font-thin text-center -mt-10 mb-8">Pense à vérifier tes spams/indésirables.</h2>
 
                 <x-forms.submit>Réenvoyer l'e-mail de validation</x-forms.submit>
             </div>
