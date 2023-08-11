@@ -13,13 +13,14 @@ slider.addEventListener('mousedown', (e) => {
 });
 
 window.addEventListener('mouseup', () => {
-    isDown = false;
-    done = false;
 
     for (let i =0; i< slidingCards.length; i++)
         slidingCards[i].style.pointerEvents = '';
 
-    window.requestAnimationFrame(slide);
+    if(isDown) window.requestAnimationFrame(slide);
+
+    isDown = false;
+    done = false;
 });
 
 window.addEventListener('mousemove', (e) => {

@@ -12,6 +12,7 @@ export default defineConfig({
             'resources/js/skins/ResizeIndexComponent.js',
             'resources/js/skins/ScrollListeners.js',
             'resources/js/twitch/twitch_embed.js',
+            'resources/js/skins/InfiniteDragSlide.js',
         ]),
         {
             name: 'blade',

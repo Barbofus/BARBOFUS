@@ -1,6 +1,3 @@
-
-
-
 <?php $__env->startSection('content'); ?>
     <div class="flex items-center justify-center mt-24">
         <form method="POST" action='<?php echo e(route('password.email')); ?>' class="flex justify-center w-[80%]">
@@ -11,7 +8,7 @@
                 <h2 class="text-2xl font-thin text-center -mt-10 mb-8 uppercase">Reçoit un lien de réinitialisation par email</h2>
 
                 <?php if(session('status')): ?>
-                    <p class="mb-8 text-center px-8 py-4 border-2 border-green-600 bg-green-200 font-light rounded-md text-md text-green-600">Un e-mail de réinitialisation a été envoyé !</p>
+                    <p class="mb-8 text-center px-8 py-4 border-2 border-green-600 bg-green-200 font-light rounded-md text-md text-green-600">Un e-mail de réinitialisation a été envoyé !<br>Pense à regarder tes spams / indésirables.</p>
                 <?php endif; ?>
 
                 

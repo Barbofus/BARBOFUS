@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
     <div class="flex items-center justify-center mt-24">
         <form method="POST" action='<?php echo e(route('verification.send', ['id' => Route::current()->parameter('id')])); ?>' class="flex justify-center w-[80%]">
@@ -12,6 +10,7 @@
                 <h2 class="text-2xl font-thin text-center -mt-10 mb-8">L'adresse mail doit être validé pour se conencter.</h2>
                 <h2 class="text-2xl font-thin text-center -mt-10 mb-8">Un email de vérification a été envoyé.</h2>
                 <h2 class="text-2xl font-light text-center -mt-10 mb-8">Merci de cliquer sur le lien dans le mail.</h2>
+                    <h2 class="text-xl font-thin text-center -mt-10 mb-8">Pense à vérifier tes spams/indésirables.</h2>
 
                 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.forms.submit','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
