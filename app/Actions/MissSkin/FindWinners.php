@@ -19,6 +19,7 @@ final class FindWinners
     {
         // Trouve les 3 skins ayant le plus de likes durant la semaine
         $winners = DB::table('skins')
+            ->join('users', 'skins.user_id', '=', 'users.id')
             ->addSelect([
                 'weekly_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
@@ -29,6 +30,7 @@ final class FindWinners
                     ->select('name')
                     ->whereColumn('id', 'skins.user_id'),
             ])
+            ->where('users.name', '!=', 'Barbe Douce')
             ->orderByRaw('weekly_like_count DESC')
             ->orderBy('updated_at', 'ASC')
             ->take(3)

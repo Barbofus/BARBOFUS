@@ -8,7 +8,7 @@
             <div class="w-full px-5 py-10 flex flex-col items-center gap-y-8">
 
                 <h1 class="text-[min(5rem,15vw)] font-normal text-center uppercase">Mot de passe oublié</h1>
-                <h2 class="text-2xl font-thin text-center -mt-10 mb-8 uppercase">Reçoit un lien de réinitialisation par email</h2>
+                <h2 class="text-2xl font-thin text-center -mt-10 mb-8 uppercase">Reçois un lien de réinitialisation par email</h2>
 
                 @if (session('status'))
                     <p class="mb-8 text-center px-8 py-4 border-2 border-green-600 bg-green-200 font-light rounded-md text-md text-green-600">Un e-mail de réinitialisation a été envoyé !<br>Pense à regarder tes spams / indésirables.</p>

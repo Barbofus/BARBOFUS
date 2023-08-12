@@ -27,7 +27,7 @@ class VerifyEmailController extends Controller
             event(new Verified($user));
         }
 
-        session()->flash('alert-message', 'Ton email, '.$user->email.' a été validé, tu peux te connecter et profiter pleinement de Barbofus !');
+        session()->flash('alert-message', 'Ton e-mail, '.$user->email.' a été validé, tu peux te connecter et profiter pleinement de Barbofus !');
 
         return redirect()->route('login');
     }
