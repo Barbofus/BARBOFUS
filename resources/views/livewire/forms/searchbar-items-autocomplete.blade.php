@@ -12,7 +12,7 @@
         {{-- Résultat --}}
         <div class="relative w-full h-12"
             x-data="{show: false}"
-            @click.away="show = false">
+            @mousedown.away="show = false">
             <label for="{{ $name }}">
                 <img class="absolute h-full" src="{{ ($existentItem && count($existentItem) > 0) ? asset('storage/'.$existentItem['icon_path']) : '' }}" draggable="false">
                 <input x-ref="input"
@@ -24,7 +24,7 @@
                     wire:keydown.arrow-up.prevent="{{ (count($items) > 0) ? 'decrementSelection' : '' }}"
                     wire:keydown.enter="{{ count($items) > 0 ? 'useSelectionAsValue' : ''}}"
                     wire:keydown.tab.prevent="{{ (count($items) > 0) ? 'incrementSelection' : '' }}"
-                    @click="show = true"
+                    @mousedown="show = true"
                     @keydown.enter.prevent="show = false, $refs.input.blur()"/>
                 <input type="hidden" name="{{ $name }}" value="{{ ($existentItem && count($existentItem) > 0) ? $existentItem['id'] : null }}" />
             </label>

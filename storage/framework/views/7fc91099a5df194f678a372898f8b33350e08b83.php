@@ -6,7 +6,7 @@
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0 translate-y-48">
 
-    <p class="font-normal text-2xl">Succé !</p>
+    <p class="font-normal text-2xl">Succès !</p>
     <p x-text="alertMessage" class="font-light"></p>
 
     <button class="absolute top-2 right-2" @click="closeAlert()">

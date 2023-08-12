@@ -1,7 +1,7 @@
 const slider = document.querySelector('.slider');
 const slidingCards = document.getElementsByClassName('slidingCard');
 const fullWidth = (slider.getBoundingClientRect().width - slider.parentElement.getBoundingClientRect().width) * -1;
-let slideSpeed = 2;
+let slideSpeed = 0.8;
 let isDown = false;
 let done = false;
 let walk = 0;
