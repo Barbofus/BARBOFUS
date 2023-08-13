@@ -12,7 +12,7 @@
         
         <div class="relative w-full h-12"
             x-data="{show: false}"
-            @click.away="show = false">
+            @mousedown.away="show = false">
             <label for="<?php echo e($name); ?>">
                 <img class="absolute h-full" src="<?php echo e(($existentItem && count($existentItem) > 0) ? asset('storage/'.$existentItem['icon_path']) : ''); ?>" draggable="false">
                 <input x-ref="input"
@@ -31,7 +31,7 @@ unset($__errorArgs, $__bag); ?>"
                     wire:keydown.arrow-up.prevent="<?php echo e((count($items) > 0) ? 'decrementSelection' : ''); ?>"
                     wire:keydown.enter="<?php echo e(count($items) > 0 ? 'useSelectionAsValue' : ''); ?>"
                     wire:keydown.tab.prevent="<?php echo e((count($items) > 0) ? 'incrementSelection' : ''); ?>"
-                    @click="show = true"
+                    @mousedown="show = true"
                     @keydown.enter.prevent="show = false, $refs.input.blur()"/>
                 <input type="hidden" name="<?php echo e($name); ?>" value="<?php echo e(($existentItem && count($existentItem) > 0) ? $existentItem['id'] : null); ?>" />
             </label>
