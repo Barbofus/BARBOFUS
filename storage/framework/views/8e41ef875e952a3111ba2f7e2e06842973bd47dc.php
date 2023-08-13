@@ -50,7 +50,7 @@
             </div>
 
             <!-- Sentance -->
-            <p class="w-auto text-secondary font-light">Tirage tous les <span class="font-normal">Mardi à 9h</span> !</p>
+            <p class="w-auto text-secondary font-light">Classement tous les <span class="font-normal">Mardi à 9h</span> !</p>
         </div>
 
 

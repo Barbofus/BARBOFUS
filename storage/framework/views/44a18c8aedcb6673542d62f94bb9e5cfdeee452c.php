@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
     <div class="flex items-center justify-center mt-24">
         <form method="POST" action='<?php echo e(route('login')); ?>' class="flex justify-center w-[80%]">
@@ -63,6 +61,12 @@
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
+
+                <div class="relative flex gap-x-2 items-center -mt-12 -ml-16 hover:text-secondary transition-all text-inactiveText text-lg font-light cursor-pointer">
+                    <input class="border rounded-md w-5 h-5 appearance-none border-inactiveText hover:border-secondary bg-opacity-0 accent-goldText transition-all cursor-pointer checked:border-secondary peer" type="checkbox" id="remember" name="remember" />
+                    <label class="peer-checked:text-secondary cursor-pointer" for="remember">Se souvenir de moi</label>
+                    <img src="<?php echo e(asset('storage/images/misc_ui/checkmark.png')); ?>" class="absolute min-w-[1.875rem] h-[1.875rem] -z-10 -left-1 -top-1 transition-all opacity-0 invisible peer-checked:visible peer-checked:opacity-100">
+                </div>
 
                 <div class="flex flex-col gap-y-4 items-start -ml-[min(200px,20vw)]">
                     <a href="<?php echo e(route('password.request')); ?>" class="font-normal text-goldText hover:text-goldTextLit text-lg">Mot de passe oublié ?</a>
