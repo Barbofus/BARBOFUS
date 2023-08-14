@@ -1,4 +1,6 @@
-
+<?php $__env->startSection('app-meta-image'); ?>
+    <?php echo $__env->yieldContent('meta-image', asset('storage/images/misc_ui/Barbofus_Logo_Full.png')); ?>
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('app-content'); ?>
 
@@ -23,15 +25,15 @@
         <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('notifications.notifications-list', [])->html();
-} elseif ($_instance->childHasBeenRendered('7KLU38n')) {
-    $componentId = $_instance->getRenderedChildComponentId('7KLU38n');
-    $componentTag = $_instance->getRenderedChildComponentTagName('7KLU38n');
+} elseif ($_instance->childHasBeenRendered('jcoGcVv')) {
+    $componentId = $_instance->getRenderedChildComponentId('jcoGcVv');
+    $componentTag = $_instance->getRenderedChildComponentTagName('jcoGcVv');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('7KLU38n');
+    $_instance->preserveRenderedChild('jcoGcVv');
 } else {
     $response = \Livewire\Livewire::mount('notifications.notifications-list', []);
     $html = $response->html();
-    $_instance->logRenderedChild('7KLU38n', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('jcoGcVv', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <meta property="og:title" content="Barbofus" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<?php echo e(Request::url()); ?>" />
+    <meta property="og:image" content="<?php echo $__env->yieldContent('app-meta-image'); ?>" /> 
+    <meta property="og:description" content="Partage les meilleurs skins du monde des douze !" />
+    <meta name="theme-color" content="#fcb943">
+    <meta name="twitter:card" content="summary_large_image">
+
     <script src="https://www.google.com/recaptcha/api.js"></script>
 
     

@@ -59,7 +59,9 @@
     </div>
 
     <div class="opacity-0">
-        <x-utils.twitch-embed />
+        @if(Route::currentRouteName() != 'skins.index' && Route::currentRouteName() != 'home')
+            <x-utils.twitch-embed />
+        @endif
     </div>
 
     @vite('resources/js/header/OnSlope.js')

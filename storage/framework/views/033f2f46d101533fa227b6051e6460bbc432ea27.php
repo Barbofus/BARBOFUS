@@ -59,7 +59,8 @@
     </div>
 
     <div class="opacity-0">
-        <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+        <?php if(Route::currentRouteName() != 'skins.index' && Route::currentRouteName() != 'home'): ?>
+            <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.utils.twitch-embed','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('utils.twitch-embed'); ?>
 <?php if ($component->shouldRender()): ?>
@@ -74,6 +75,7 @@
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
+        <?php endif; ?>
     </div>
 
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/header/OnSlope.js'); ?>

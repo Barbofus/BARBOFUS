@@ -61,8 +61,6 @@ function slide()
 
     walk -= slideSpeed;
 
-    console.log(walk);
-
     // Si on arrive à la limite gauche
     if(walk > 0) {
         walk = (slider.getBoundingClientRect().width / 2)* -1;
