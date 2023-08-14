@@ -217,4 +217,11 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
+
+    /*
+     * Discord webhooks url
+     */
+    'pending_webhook_url' => env('APP_DISCORD_PENDING_WEBHOOK_URL'),
+    'posted_webhook_url' => env('APP_DISCORD_POSTED_WEBHOOK_URL'),
+
 ];

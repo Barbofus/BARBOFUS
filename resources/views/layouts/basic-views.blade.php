@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('app-meta-image')
+    @yield('meta-image', asset('storage/images/misc_ui/Barbofus_Logo_Full.png'))
+@endsection
+
 @section('app-content')
 
     <x-main-header />

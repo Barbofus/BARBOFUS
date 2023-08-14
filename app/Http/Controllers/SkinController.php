@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Images\ResizeImages;
 use App\Actions\Skins\DeleteSkin;
+use App\Actions\Skins\SendDiscordPendingWebhook;
 use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
 use App\Models\Skin;
@@ -147,7 +148,7 @@ class SkinController extends Controller
             'width' => 300,
             'height' => null]);
 
-        Skin::create([
+        $skin = Skin::create([
             'dofus_item_hat_id' => $request->dofus_item_hat_id,
             'dofus_item_cloak_id' => $request->dofus_item_cloak_id,
             'dofus_item_shield_id' => $request->dofus_item_shield_id,
@@ -168,6 +169,10 @@ class SkinController extends Controller
 
         session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
         session()->flash('section', 'my-skins');
+
+        if(!Gate::check('validate-skin')) {
+            (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
+        }
 
         return redirect()->route('user-dashboard.index');
     }
@@ -229,6 +234,10 @@ class SkinController extends Controller
 
         session()->flash('alert-message', 'Ton skin a été modifié. Il est en attente de validation par un Modérateur');
         session()->flash('section', 'my-skins');
+
+        if(!Gate::check('validate-skin')) {
+            (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
+        }
 
         return redirect()->route('user-dashboard.index');
     }

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <meta property="og:title" content="Barbofus" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:image" content="@yield('app-meta-image')" /> {{-- {{ asset('storage/images/misc_ui/Barbofus_Logo_Full.png') }} --}}
+    <meta property="og:description" content="Partage les meilleurs skins du monde des douze !" />
+    <meta name="theme-color" content="#fcb943">
+    <meta name="twitter:card" content="summary_large_image">
+
     <script src="https://www.google.com/recaptcha/api.js"></script>
 
     {{--<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>--}}

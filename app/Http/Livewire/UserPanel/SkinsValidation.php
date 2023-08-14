@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Actions\Skins\SendDiscordPostedWebhook;
 use App\Models\Skin;
 use App\Notifications\SkinPostedNotification;
 use App\Notifications\SkinRefusedNotification;
@@ -84,6 +85,8 @@ class SkinsValidation extends Component
 
         $skin->User->notify(new SkinPostedNotification($skin));
         $this->dispatchBrowserEvent('alert-event', ['message' => 'Skin ID#'.$skinID.' a été accepté']);
+
+        (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin);
     }
 
     /**
