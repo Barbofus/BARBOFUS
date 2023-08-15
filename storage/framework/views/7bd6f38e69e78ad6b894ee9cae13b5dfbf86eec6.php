@@ -14,9 +14,10 @@
 
 
         <!-- Tuto poste -->
-        <div class="invisible flex items-center justify-around cursor-pointer gap-x-2
-            [@media(min-height:501px)_and_(min-width:501px)]:invisible
-            min-[901px]:invisible">
+        <a class="invisible flex items-center justify-around cursor-pointer gap-x-2
+            [@media(min-height:501px)_and_(min-width:501px)]:visible
+            min-[901px]:visible"
+            href="https://www.youtube.com/watch?v=teuDOhkgIaM" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 fill-secondary">
                 <path d="M11.812,0C5.289,0,0,5.289,0,11.812s5.289,11.813,11.812,11.813s11.813-5.29,11.813-11.813
                 S18.335,0,11.812,0z M14.271,18.307c-0.608,0.24-1.092,0.422-1.455,0.548c-0.362,0.126-0.783,0.189-1.262,0.189
@@ -32,7 +33,7 @@
                 c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
             </svg>
             <p class="font-display text-secondary text-[1rem]">Comment créer et poster un skin sur le site ?</p>
-        </div>
+        </a>
 
         
         <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>

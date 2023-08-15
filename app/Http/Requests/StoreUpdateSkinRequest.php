@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Recaptcha;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -39,6 +40,7 @@ class StoreUpdateSkinRequest extends FormRequest
                 'required',
                 Rule::in(['Homme', 'Femme']),
             ],
+            'g-recaptcha-response' => ['required', new Recaptcha()],
 
             'color_skin' => $hexRegex,
             'color_hair' => $hexRegex,

@@ -207,8 +207,24 @@
         </div>
     </div>
 
-    {{-- Submit --}}
     <div class="mt-8">
-        <x-forms.submit>Valider</x-forms.submit>
+        <button class="g-recaptcha block px-8 py-3 text-lg mx-auto font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
+                data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                data-callback='onSubmit'
+                data-action='{{ $action }}'>
+            Valider
+        </button>
+
+        @error('g-recaptcha-response')
+        <x-forms.requirements-error :message="$message"/>
+        @enderror
     </div>
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+    <script>
+        function onSubmit(token) {
+            document.getElementById("skin-form").submit();
+        }
+    </script>
 </div>

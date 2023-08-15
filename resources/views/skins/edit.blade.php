@@ -5,11 +5,11 @@
     <h2 class="text-2xl font-thin text-center -mt-3 mb-8 uppercase">Présente nous tes skins !</h2>
 
     <div class="flex justify-center mt-10">
-        <form autocomplete="off" method="POST" action="{{ route('skins.update', ['skin' => $skin]) }}" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
+        <form autocomplete="off" method="POST" id="skin-form" action="{{ route('skins.update', ['skin' => $skin]) }}" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
             @csrf
             @method('PUT')
 
-            <x-forms.skin-form :$races :$skin/>
+            <x-forms.skin-form :$races :$skin :action="'update'"/>
 
         </form>
     </div>

@@ -348,15 +348,15 @@ unset($__errorArgs, $__bag); ?>
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_hats','name' => 'dofus_item_hat_id','placeholder' => 'Choisis une coiffe...','value' => (old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('Z0vN6ZN')) {
-    $componentId = $_instance->getRenderedChildComponentId('Z0vN6ZN');
-    $componentTag = $_instance->getRenderedChildComponentTagName('Z0vN6ZN');
+} elseif ($_instance->childHasBeenRendered('usOeDZU')) {
+    $componentId = $_instance->getRenderedChildComponentId('usOeDZU');
+    $componentTag = $_instance->getRenderedChildComponentTagName('usOeDZU');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('Z0vN6ZN');
+    $_instance->preserveRenderedChild('usOeDZU');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_hats','name' => 'dofus_item_hat_id','placeholder' => 'Choisis une coiffe...','value' => (old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('Z0vN6ZN', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('usOeDZU', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -364,15 +364,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_cloaks','name' => 'dofus_item_cloak_id','placeholder' => 'Choisis une cape...','value' => (old('dofus_item_cloak_id')) ? old('dofus_item_cloak_id') : (isset($skin) ? $skin['dofus_item_cloak_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('Ioyt4M6')) {
-    $componentId = $_instance->getRenderedChildComponentId('Ioyt4M6');
-    $componentTag = $_instance->getRenderedChildComponentTagName('Ioyt4M6');
+} elseif ($_instance->childHasBeenRendered('r453fBt')) {
+    $componentId = $_instance->getRenderedChildComponentId('r453fBt');
+    $componentTag = $_instance->getRenderedChildComponentTagName('r453fBt');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('Ioyt4M6');
+    $_instance->preserveRenderedChild('r453fBt');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_cloaks','name' => 'dofus_item_cloak_id','placeholder' => 'Choisis une cape...','value' => (old('dofus_item_cloak_id')) ? old('dofus_item_cloak_id') : (isset($skin) ? $skin['dofus_item_cloak_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('Ioyt4M6', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('r453fBt', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -380,15 +380,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_shields','name' => 'dofus_item_shield_id','placeholder' => 'Choisis un bouclier...','value' => (old('dofus_item_shield_id')) ? old('dofus_item_shield_id') : (isset($skin) ? $skin['dofus_item_shield_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('t3e5fhU')) {
-    $componentId = $_instance->getRenderedChildComponentId('t3e5fhU');
-    $componentTag = $_instance->getRenderedChildComponentTagName('t3e5fhU');
+} elseif ($_instance->childHasBeenRendered('ALCy9Cj')) {
+    $componentId = $_instance->getRenderedChildComponentId('ALCy9Cj');
+    $componentTag = $_instance->getRenderedChildComponentTagName('ALCy9Cj');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('t3e5fhU');
+    $_instance->preserveRenderedChild('ALCy9Cj');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_shields','name' => 'dofus_item_shield_id','placeholder' => 'Choisis un bouclier...','value' => (old('dofus_item_shield_id')) ? old('dofus_item_shield_id') : (isset($skin) ? $skin['dofus_item_shield_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('t3e5fhU', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('ALCy9Cj', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -396,15 +396,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_pets','name' => 'dofus_item_pet_id','placeholder' => 'Choisis un familier...','value' => (old('dofus_item_pet_id')) ? old('dofus_item_pet_id') : (isset($skin) ? $skin['dofus_item_pet_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('fVirSdV')) {
-    $componentId = $_instance->getRenderedChildComponentId('fVirSdV');
-    $componentTag = $_instance->getRenderedChildComponentTagName('fVirSdV');
+} elseif ($_instance->childHasBeenRendered('jLttoAt')) {
+    $componentId = $_instance->getRenderedChildComponentId('jLttoAt');
+    $componentTag = $_instance->getRenderedChildComponentTagName('jLttoAt');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('fVirSdV');
+    $_instance->preserveRenderedChild('jLttoAt');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_pets','name' => 'dofus_item_pet_id','placeholder' => 'Choisis un familier...','value' => (old('dofus_item_pet_id')) ? old('dofus_item_pet_id') : (isset($skin) ? $skin['dofus_item_pet_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('fVirSdV', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('jLttoAt', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -412,15 +412,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_costumes','name' => 'dofus_item_costume_id','placeholder' => 'Choisis un costume...','value' => (old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('2w4aSKa')) {
-    $componentId = $_instance->getRenderedChildComponentId('2w4aSKa');
-    $componentTag = $_instance->getRenderedChildComponentTagName('2w4aSKa');
+} elseif ($_instance->childHasBeenRendered('HuapSwy')) {
+    $componentId = $_instance->getRenderedChildComponentId('HuapSwy');
+    $componentTag = $_instance->getRenderedChildComponentTagName('HuapSwy');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('2w4aSKa');
+    $_instance->preserveRenderedChild('HuapSwy');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_costumes','name' => 'dofus_item_costume_id','placeholder' => 'Choisis un costume...','value' => (old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('2w4aSKa', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('HuapSwy', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -428,22 +428,46 @@ echo $html;
         </div>
     </div>
 
-    
     <div class="mt-8">
+        <button class="g-recaptcha block px-8 py-3 text-lg mx-auto font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
+                data-sitekey="<?php echo e(config('services.recaptcha.site_key')); ?>"
+                data-callback='onSubmit'
+                data-action='<?php echo e($action); ?>'>
+            Valider
+        </button>
+
+        <?php $__errorArgs = ['g-recaptcha-response'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
         <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.forms.submit','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('forms.submit'); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.forms.requirements-error','data' => ['message' => $message]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('forms.requirements-error'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>Valider <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['message' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($message)]); ?>
+<?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
     </div>
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+    <script>
+        function onSubmit(token) {
+            document.getElementById("skin-form").submit();
+        }
+    </script>
 </div>
 <?php /**PATH C:\Travail\Web\_Servers\BARBOFUS\resources\views/components/forms/skin-form.blade.php ENDPATH**/ ?>

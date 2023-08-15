@@ -24,10 +24,18 @@ Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
 
+Route::middleware(['auth', 'throttle:uploads'])->group(function () {
+
+    Route::post('/skins', [SkinController::class, 'store'])->name('skins.store');
+    Route::put('/skins/{skin}', [SkinController::class, 'update'])->name('skins.update');
+});
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/mon-compte', [UserDashboardController::class, 'index'])->name('user-dashboard.index');
-    Route::resource('skins', SkinController::class)->except(['show', 'index', 'destroy']);
+
+    Route::get('/skins/create', [SkinController::class, 'create'])->name('skins.create');
+    Route::get('/skins/{skin}/edit', [SkinController::class, 'edit'])->name('skins.edit');
 });
 
 Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
