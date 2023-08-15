@@ -7,10 +7,10 @@
                     <p class="mb-8 text-center px-8 py-4 border-2 border-green-600 bg-green-200 font-light rounded-md text-md text-green-600">Un e-mail de vérification a été réenvoyer !</p>
                 <?php endif; ?>
 
-                <h2 class="text-2xl font-thin text-center -mt-10 mb-8">L'adresse mail doit être validé pour se conencter.</h2>
+                <h2 class="text-2xl font-thin text-center -mt-10 mb-8">L'adresse mail doit être validée pour se connecter.</h2>
                 <h2 class="text-2xl font-thin text-center -mt-10 mb-8">Un email de vérification a été envoyé.</h2>
                 <h2 class="text-2xl font-light text-center -mt-10 mb-8">Merci de cliquer sur le lien dans le mail.</h2>
-                    <h2 class="text-xl font-thin text-center -mt-10 mb-8">Pense à vérifier tes spams/indésirables.</h2>
+                <h2 class="text-xl font-light text-center -mt-10 mb-8">Pense à vérifier tes spams/indésirables.</h2>
 
                 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.forms.submit','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>

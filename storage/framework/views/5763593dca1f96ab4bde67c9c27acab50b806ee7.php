@@ -8,7 +8,7 @@ $message = $__bag->first($__errorArgs[0]); ?> err-border <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
-            <input x-model="text" id="<?php echo e($name); ?>" name="<?php echo e($name); ?>" type="<?php echo e($type); ?>" maxlength="30"
+            <input x-model="text" id="<?php echo e($name); ?>" name="<?php echo e($name); ?>" type="<?php echo e($type); ?>" maxlength="<?php echo e((isset($maxSize)) ? $maxSize : '255'); ?>"
                    class="h-full peer w-full p-2 pr-3 bg-primary-100 border-y-2 border-r-2 border-primary-100 rounded-r-md outline-none focus:border-goldText placeholder-inactiveText transition-all"
                    placeholder="<?php echo e($placeholder); ?>"
                     <?php echo e($attributes); ?>>

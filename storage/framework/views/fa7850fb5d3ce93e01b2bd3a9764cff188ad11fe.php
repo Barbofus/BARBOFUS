@@ -32,6 +32,7 @@ unset($__errorArgs, $__bag); ?>"
                     wire:keydown.enter="<?php echo e(count($items) > 0 ? 'useSelectionAsValue' : ''); ?>"
                     wire:keydown.tab.prevent="<?php echo e((count($items) > 0) ? 'incrementSelection' : ''); ?>"
                     @mousedown="show = true"
+                    @focusin="show = true"
                     @keydown.enter.prevent="show = false, $refs.input.blur()"/>
                 <input type="hidden" name="<?php echo e($name); ?>" value="<?php echo e(($existentItem && count($existentItem) > 0) ? $existentItem['id'] : null); ?>" />
             </label>
