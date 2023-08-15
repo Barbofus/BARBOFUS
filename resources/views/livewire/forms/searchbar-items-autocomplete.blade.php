@@ -25,6 +25,7 @@
                     wire:keydown.enter="{{ count($items) > 0 ? 'useSelectionAsValue' : ''}}"
                     wire:keydown.tab.prevent="{{ (count($items) > 0) ? 'incrementSelection' : '' }}"
                     @mousedown="show = true"
+                    @focusin="show = true"
                     @keydown.enter.prevent="show = false, $refs.input.blur()"/>
                 <input type="hidden" name="{{ $name }}" value="{{ ($existentItem && count($existentItem) > 0) ? $existentItem['id'] : null }}" />
             </label>

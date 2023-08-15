@@ -59,7 +59,7 @@
 
                 {{-- Connections --}}
                 <div>
-                    <h2 class="font-thin text-3xl min-[800px]:text-4xl  uppercase">Connections</h2>
+                    <h2 class="font-thin text-3xl min-[800px]:text-4xl  uppercase">Connexions</h2>
                     <div class="border-b border-secondary w-[min(24rem,50vw)] ml-4"></div>
 
                     {{-- Bouton pour link son discord --}}

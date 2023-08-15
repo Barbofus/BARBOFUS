@@ -77,6 +77,7 @@
                     <x-forms.requirements-error :$message />
                     @enderror
 
+
                     {{-- Choix de la classe --}}
                     <div class="mt-5">
                         <p class="ml-10 text-xl font-light">Choix de la classe</p>
