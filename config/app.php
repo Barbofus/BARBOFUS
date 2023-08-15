@@ -217,11 +217,19 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
-
     /*
      * Discord webhooks url
      */
     'pending_webhook_url' => env('APP_DISCORD_PENDING_WEBHOOK_URL'),
     'posted_webhook_url' => env('APP_DISCORD_POSTED_WEBHOOK_URL'),
+    'miss_skin_webhook_url' => env('APP_DISCORD_MISS_SKIN_WEBHOOK_URL'),
+
+    /*
+     * Connections
+     */
+    'discord_connection_url' => env('APP_DISCORD_CONNECTION_URL'),
+    'discord_connection_id' => env('APP_DISCORD_CLIENT_ID'),
+    'discord_connection_secret' => env('APP_DISCORD_CLIENT_SECRET'),
+    'discord_redirect_uri' => env('APP_DISCORD_REDIRECT_URI'),
 
 ];

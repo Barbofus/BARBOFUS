@@ -19,17 +19,17 @@
         <?php if(isset($skin->reward_id)): ?>
 
             
-            <div class="absolute flex items-end justify-center h-10 w-full top-[-44px]">
+            <div class="absolute flex items-end justify-center h-10 w-full top-[-2.75rem]">
                 <?php if($skin->reward_id == 1): ?>
                     <img src="<?php echo e(asset('storage/images/misc_ui/tofu_ocre.png')); ?>" draggable="false" class="h-full">
-                    <div class="absolute h-10 w-10 left-[50%+20px]">
-                        <img src="<?php echo e(asset('storage/images/misc_ui/tofu_ocre_feather.png')); ?>" draggable="false" class="absolute rotate-0 h-full top-[0px] right-[-25px] animate-feather" style="animation-delay: -<?php echo e(rand(0,3000)); ?>ms">
-                        <img src="<?php echo e(asset('storage/images/misc_ui/tofu_ocre_feather.png')); ?>" draggable="false" class="absolute scale-x-[-1] rotate-[20deg] h-full top-[5px] right-[35px] animate-featherLeft" style="animation-delay: -<?php echo e(rand(0,3000)); ?>ms">
-                        <img src="<?php echo e(asset('storage/images/misc_ui/tofu_ocre_feather.png')); ?>" draggable="false" class="absolute rotate-[-35deg] h-full top-[5px] right-[-50px] animate-feather" style="animation-delay: -<?php echo e(rand(0,3000)); ?>ms">
+                    <div class="absolute h-10 w-10 left-[50%+1.25rem]">
+                        <img src="<?php echo e(asset('storage/images/misc_ui/tofu_ocre_feather.png')); ?>" draggable="false" class="absolute rotate-0 h-full top-[0rem] right-[-1.563rem] animate-feather" style="animation-delay: -<?php echo e(rand(0,3000)); ?>ms">
+                        <img src="<?php echo e(asset('storage/images/misc_ui/tofu_ocre_feather.png')); ?>" draggable="false" class="absolute scale-x-[-1] rotate-[20deg] h-full top-[0.3125rem] right-[2.188rem] animate-featherLeft" style="animation-delay: -<?php echo e(rand(0,3000)); ?>ms">
+                        <img src="<?php echo e(asset('storage/images/misc_ui/tofu_ocre_feather.png')); ?>" draggable="false" class="absolute rotate-[-35deg] h-full top-[0.3125rem] right-[-3.125rem] animate-feather" style="animation-delay: -<?php echo e(rand(0,3000)); ?>ms">
                     </div>
                 <?php elseif($skin->reward_id == 2): ?>
                     <img src="<?php echo e(asset('storage/images/misc_ui/symbol_emeraude.png')); ?>" draggable="false" class="h-full">
-                    <div class="absolute h-10 w-10 left-[50%+20px]">
+                    <div class="absolute h-10 w-10 left-[50%+1.25rem]">
                         <div class="absolute animate-slideY [--custom-translate-y:3px] [--custom-animation-time:5s] h-full w-full" style="animation-delay: -1250ms">
                             <img src="<?php echo e(asset('storage/images/misc_ui/symbol_emeraude_orb.png')); ?>" draggable="false" class="absolute brightness-200 scale-[.3] h-full top-[-15px] right-[-2px] animate-slideX [--custom-translate-x:3px] [--custom-animation-time:5s]">
                         </div>
@@ -64,7 +64,7 @@
             </div>
 
             
-            <div class="absolute -top-1 -left-1 w-[calc(100%+8px)] h-[calc(100%+8px)] rounded-lg -z-20 <?php echo e((($skin->reward_id == 1) ? 'goldGradient' : (($skin->reward_id == 2) ? 'emeraldGradient' : 'cawotteGradient'))); ?>"></div>
+            <div class="absolute -top-1 -left-1 w-[calc(100%+0.5rem)] h-[calc(100%+0.5rem)] rounded-lg -z-20 <?php echo e((($skin->reward_id == 1) ? 'goldGradient' : (($skin->reward_id == 2) ? 'emeraldGradient' : 'cawotteGradient'))); ?>"></div>
 
             
             <?php if(!isset($skin->second_reward_id)): ?>

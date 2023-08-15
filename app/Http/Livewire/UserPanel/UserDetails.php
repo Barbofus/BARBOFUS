@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Actions\Discord\ConnectToDiscord;
+use App\Actions\Discord\GetDiscordUserInfo;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\Connection;
 use App\Models\User;
 use App\Models\UserNotificationPreferences;
 use App\Notifications\UserNameChangeNotification;
@@ -26,6 +29,11 @@ class UserDetails extends Component
 
     public string $email = '';
 
+    /**
+     * @var Connection|void
+     */
+    public $discord;
+
     public User $currentUser;
 
     /**
@@ -34,6 +42,11 @@ class UserDetails extends Component
     public function mount()
     {
         $this->currentUser = User::find(auth()->id());
+
+        // Si on reçoit le code de l'auth discord
+        if (isset($_GET['code'])) {
+            $this->GetDiscordConnection($_GET['code']);
+        }
     }
 
     /**
@@ -156,10 +169,37 @@ class UserDetails extends Component
     }
 
     /**
+     * @return void
+     */
+    public function DiscordConnectionUrl()
+    {
+        $this->redirect(config('app.discord_connection_url'));
+    }
+
+    /**
+     * @return void
+     */
+    public function GetDiscordConnection(string $code)
+    {
+        (new ConnectToDiscord)($code);
+    }
+
+    /**
+     * @return void
+     */
+    public function DisconnectDiscord()
+    {
+        Auth::user()->Connections()->where('name', 'discord')->delete();
+    }
+
+    /**
      * @return View
      */
     public function render()
     {
+        // Récupère le compte discord (s'il est link)
+        $this->discord = (new GetDiscordUserInfo)(Auth::id());
+
         return view('livewire.user-panel.user-details', [
             'user' => $this->QueryUser(),
         ]);

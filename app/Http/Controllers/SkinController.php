@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Discord\GetDiscordUserInfo;
+use App\Actions\Discord\SendDiscordPendingWebhook;
+use App\Actions\Discord\SendDiscordPostedWebhook;
 use App\Actions\Images\ResizeImages;
 use App\Actions\Skins\DeleteSkin;
-use App\Actions\Skins\SendDiscordPendingWebhook;
 use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Requests\StoreUpdateSkinRequest;
 use App\Models\Skin;
@@ -113,8 +115,11 @@ class SkinController extends Controller
             })
             ->first();
 
+        $discord = (new GetDiscordUserInfo)($skin->user_id);
+
         return view('skins.show', [
             'skin' => $toShow,
+            'discord' => $discord,
         ]);
     }
 
@@ -170,8 +175,10 @@ class SkinController extends Controller
         session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
         session()->flash('section', 'my-skins');
 
-        if(!Gate::check('validate-skin')) {
+        if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
+        } else {
+            (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin);
         }
 
         return redirect()->route('user-dashboard.index');
@@ -235,8 +242,10 @@ class SkinController extends Controller
         session()->flash('alert-message', 'Ton skin a été modifié. Il est en attente de validation par un Modérateur');
         session()->flash('section', 'my-skins');
 
-        if(!Gate::check('validate-skin')) {
+        if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
+        } else {
+            (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin);
         }
 
         return redirect()->route('user-dashboard.index');

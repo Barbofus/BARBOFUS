@@ -30,7 +30,16 @@
         @endcan
 
         {{-- User --}}
-        <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-4">Par <span class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
+        <div class="flex gap-x-4 items-center justify-center">
+            <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-4">Par <span class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
+
+            @can('admin-access')
+                @if(isset($discord))
+                    <x-utils.small-discord-card :$discord />
+                @endif
+            @endcan
+        </div>
+
         {{-- Classe --}}
         <div class="grid grid-cols-2 gap-x-4 min-[420px]:gap-x-8 items-center justify-center">
             <div class="flex rounded-md justify-self-end items-center gap-x-2 border-2 text-secondary border-goldText px-2 min-[950px]:px-3 min-[950px]:h-12 bg-primary-100 py-1 min-[950px]:py-2">

@@ -93,6 +93,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return HasMany<Connection>
+     */
+    public function Connections()
+    {
+        return $this->hasMany(Connection::class);
+    }
+
+    /**
      * @return HasMany<UserNotificationPreferences>
      */
     public function NotificationPreferences()
