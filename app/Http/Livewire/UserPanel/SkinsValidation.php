@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\UserPanel;
 
-use App\Actions\Skins\SendDiscordPostedWebhook;
+use App\Actions\Discord\SendDiscordPostedWebhook;
 use App\Models\Skin;
 use App\Notifications\SkinPostedNotification;
 use App\Notifications\SkinRefusedNotification;

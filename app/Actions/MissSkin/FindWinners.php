@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\MissSkin;
 
+use App\Actions\Discord\SendDiscordMissSkinWebhook;
 use App\Models\Reward;
 use App\Models\RewardPrice;
 use App\Models\SkinWinner;
@@ -57,5 +58,7 @@ final class FindWinners
                 'points' => RewardPrice::find($key + 1)->points,
             ]);
         }
+
+        (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'));
     }
 }

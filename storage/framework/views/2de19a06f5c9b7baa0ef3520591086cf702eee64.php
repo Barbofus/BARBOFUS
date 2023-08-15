@@ -43,7 +43,30 @@
         <?php endif; ?>
 
         
-        <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-4">Par <span class="text-[min(6vw,1.5rem)] font-light"><?php echo e($skin->user_name); ?></span></h2>
+        <div class="flex gap-x-4 items-center justify-center">
+            <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-4">Par <span class="text-[min(6vw,1.5rem)] font-light"><?php echo e($skin->user_name); ?></span></h2>
+
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('admin-access')): ?>
+                <?php if(isset($discord)): ?>
+                    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.utils.small-discord-card','data' => ['discord' => $discord]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('utils.small-discord-card'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['discord' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($discord)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+
         
         <div class="grid grid-cols-2 gap-x-4 min-[420px]:gap-x-8 items-center justify-center">
             <div class="flex rounded-md justify-self-end items-center gap-x-2 border-2 text-secondary border-goldText px-2 min-[950px]:px-3 min-[950px]:h-12 bg-primary-100 py-1 min-[950px]:py-2">
