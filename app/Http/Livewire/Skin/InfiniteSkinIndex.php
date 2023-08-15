@@ -32,6 +32,7 @@ class InfiniteSkinIndex extends Component
         'skins.race_id',
     ];
 
+
     /**
      * @var string[]
      */
@@ -46,6 +47,7 @@ class InfiniteSkinIndex extends Component
     protected bool $hasLoadMore = false;
 
     public string $orderBy = 'skins.updated_at'; // Nouveauté par défault
+    public bool $randSort = false; // Trié aléatoirement par défault
 
     public string $orderDirection = 'DESC';
 
@@ -198,8 +200,13 @@ class InfiniteSkinIndex extends Component
             ->where('skins.status', 'Posted')
 
             // orderBy
-            ->orderBy($this->orderBy, $this->orderDirection)
-            ->orderBy('skins.updated_at', 'DESC')
+            ->when(!$this->randSort, function (Builder $query) {
+                $query->orderBy($this->orderBy, $this->orderDirection)
+                ->orderBy('skins.updated_at', 'DESC');
+            })
+            ->when($this->randSort, function (Builder $query) {
+                $query->inRandomOrder();
+            })
 
             // Scroll infini
             ->pluck('id')
@@ -224,8 +231,14 @@ class InfiniteSkinIndex extends Component
     /**
      * @return void
      */
-    public function SortBy(string $orderBy, string $orderDir)
+    public function SortBy(int $orderBy, string $orderDir)
     {
+        if($orderBy == 4) { // Si on choisi aléatoire
+            $this->randSort = true;
+            return;
+        }
+
+        $this->randSort = false;
         $this->orderBy = $this->allOrder[$orderBy];
         $this->orderDirection = $orderDir;
     }

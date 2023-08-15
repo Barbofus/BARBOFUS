@@ -18,6 +18,9 @@
                             <p><span class="italic tracking-widest font-normal">{{ $user->skin_count }}</span> skins postés</p>
                             <p><span class="italic tracking-widest font-normal">{{ $user->like_given }}</span> likes donnés</p>
                             <p><span class="italic tracking-widest font-normal">{{ $user->like_received }}</span> likes reçus</p>
+                            @canany(['mod-access', 'admin-access'])
+                                <p><span class="italic tracking-widest font-normal">{{ \App\Models\Skin::all()->count() }}</span> skins total sur le site</p>
+                            @endcan
                         </div>
 
                         <div class="flex flex-col gap-y-4">

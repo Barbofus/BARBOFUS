@@ -35,7 +35,7 @@ class HomeController extends Controller
                     ->whereColumn('id', 'skins.user_id')
                     ->take(1),
             ])
-            ->orderBy('updated_at', 'DESC')
+            ->inRandomOrder()
             ->take(10)
             ->get();
     }
