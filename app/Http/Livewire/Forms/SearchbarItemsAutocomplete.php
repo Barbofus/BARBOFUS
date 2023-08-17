@@ -186,7 +186,7 @@ class SearchbarItemsAutocomplete extends Component
             return;
         }
 
-        $this->query = $this->itemsToShow[$this->selectedItem]['name'];
+        $this->query = array($this->itemsToShow[$this->selectedItem])[0]['name'];
     }
 
     /**

@@ -24,7 +24,7 @@ Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
 
-Route::middleware(['auth', 'throttle:uploads'])->group(function () {
+Route::middleware(['auth', 'throttle:skins-upload'])->group(function () {
 
     Route::post('/skins', [SkinController::class, 'store'])->name('skins.store');
     Route::put('/skins/{skin}', [SkinController::class, 'update'])->name('skins.update');
