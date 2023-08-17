@@ -5,12 +5,11 @@
           min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),1fr]">
 
     <!-- Header skin section -->
-    <div class="bg-primary sticky z-30 flex flex-col gap-y-4 items-center justify-between w-full h-full pl-4 pr-12 py-8 top-12
+    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-between w-full h-full px-4 py-8 top-12 z-20
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             [@media(max-height:700px)_and_(max-width:900px)]:top-0
             min-[801px]:flex-row min-[801px]:py-4 min-[801px]:gap-y-0
-            min-[1500px]:col-start-2 min-[1500px]:px-[calc(calc(100%-calc(calc(clamp(140px,calc(100%/6)-theme(spacing.8),200px)*6)+calc(theme(spacing.8)*5)))/2)]
-            min-[1800px]:pl-[calc(calc(calc(100%-400px)-calc(calc(clamp(140px,calc(calc(100%-400px)/6)-theme(spacing.8),200px)*6)+calc(theme(spacing.8)*5)))/2)] min-[1800px]:pr-[calc(calc(calc(calc(100%-400px)-calc(calc(clamp(140px,calc(calc(100%-400px)/6)-theme(spacing.8),200px)*6)+calc(theme(spacing.8)*5)))/2)+400px)]">
+            min-[1500px]:col-start-2 min-[1500px]:px-8 min-[1800px]:w-[calc(100%-25rem)]">
 
 
         <!-- Tuto poste -->
@@ -70,7 +69,7 @@
 <?php endif; ?>
 
     
-    <div class="flex flex-col bg-primary pt-0
+    <div class="flex flex-col bg-primary pt-0 relative z-10
             [@media(min-height:501px)_and_(max-width:900px)]:pt-0
             [@media(min-height:701px)_and_(max-width:900px)]:pt-16
             min-[1800px]:flex-row ">

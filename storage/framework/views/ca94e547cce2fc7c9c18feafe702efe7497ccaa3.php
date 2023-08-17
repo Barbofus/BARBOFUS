@@ -154,10 +154,15 @@ unset($__errorArgs, $__bag); ?>
                         <p class="ml-10 text-xl font-light">Choix de la classe</p>
                         <div class="relative"
                              x-data="{
-                                  races: <?php echo e(json_encode(array_values($races))); ?>,
-                                  showSort: false,
-                                  selection: <?php echo e((old('race_id')) ? old('race_id') : (isset($skin) ? $skin['race_id'] : 1)); ?>,
-                                }" x-init="console.log(races)">
+                                races: <?php echo e(json_encode(array_values($races))); ?>,
+                                showSort: false,
+                                selection: <?php echo e((old('race_id')) ? old('race_id') : (isset($skin) ? $skin['race_id'] : 1)); ?>,
+
+                                KeyPressed()
+                                {
+                                   console.log('test');
+                                }
+                                }">
                             <div x-on:mousedown.outside="if(showSort) showSort = false">
 
                                 <!-- Resultat -->
@@ -174,8 +179,9 @@ unset($__errorArgs, $__bag); ?>
                                         <div>
                                             <input type="radio" value="<?php echo e($race->id); ?>" class="hidden peer" name="race_id" id="race_id_<?php echo e($race->id); ?>"
                                                 <?php echo e((old('race_id')) ? ((old('race_id') == $race->id) ? 'checked' : '') : (isset($skin) ? (($skin['race_id'] == $race->id) ? 'checked' : '') : (($race->id == 1) ? 'checked' : ''))); ?>>
-                                            <label for="race_id_<?php echo e($race->id); ?>"
+                                            <label for="race_id_<?php echo e($race->id); ?>" id="label_race_id_<?php echo e($race->id); ?>"
                                                    @click="selection = <?php echo e($race->id); ?>, showSort = false"
+                                                   @keydown.enter="selection = <?php echo e($race->id); ?>, showSort = false"
                                                    class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-secondary hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2">
                                                 <img src="<?php echo e($race->ghost_icon_path); ?>" class="h-11">
                                                 <p><?php echo e($race->name); ?></p>
@@ -185,6 +191,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
                         </div>
+
                         <?php $__errorArgs = ['race_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -348,15 +355,15 @@ unset($__errorArgs, $__bag); ?>
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_hats','name' => 'dofus_item_hat_id','placeholder' => 'Choisis une coiffe...','value' => (old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('6IgP0wy')) {
-    $componentId = $_instance->getRenderedChildComponentId('6IgP0wy');
-    $componentTag = $_instance->getRenderedChildComponentTagName('6IgP0wy');
+} elseif ($_instance->childHasBeenRendered('z3T3DiM')) {
+    $componentId = $_instance->getRenderedChildComponentId('z3T3DiM');
+    $componentTag = $_instance->getRenderedChildComponentTagName('z3T3DiM');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('6IgP0wy');
+    $_instance->preserveRenderedChild('z3T3DiM');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_hats','name' => 'dofus_item_hat_id','placeholder' => 'Choisis une coiffe...','value' => (old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('6IgP0wy', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('z3T3DiM', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -364,15 +371,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_cloaks','name' => 'dofus_item_cloak_id','placeholder' => 'Choisis une cape...','value' => (old('dofus_item_cloak_id')) ? old('dofus_item_cloak_id') : (isset($skin) ? $skin['dofus_item_cloak_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('9u0faqS')) {
-    $componentId = $_instance->getRenderedChildComponentId('9u0faqS');
-    $componentTag = $_instance->getRenderedChildComponentTagName('9u0faqS');
+} elseif ($_instance->childHasBeenRendered('H7RRqDL')) {
+    $componentId = $_instance->getRenderedChildComponentId('H7RRqDL');
+    $componentTag = $_instance->getRenderedChildComponentTagName('H7RRqDL');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('9u0faqS');
+    $_instance->preserveRenderedChild('H7RRqDL');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_cloaks','name' => 'dofus_item_cloak_id','placeholder' => 'Choisis une cape...','value' => (old('dofus_item_cloak_id')) ? old('dofus_item_cloak_id') : (isset($skin) ? $skin['dofus_item_cloak_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('9u0faqS', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('H7RRqDL', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -380,15 +387,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_shields','name' => 'dofus_item_shield_id','placeholder' => 'Choisis un bouclier...','value' => (old('dofus_item_shield_id')) ? old('dofus_item_shield_id') : (isset($skin) ? $skin['dofus_item_shield_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('wb4Tu7Y')) {
-    $componentId = $_instance->getRenderedChildComponentId('wb4Tu7Y');
-    $componentTag = $_instance->getRenderedChildComponentTagName('wb4Tu7Y');
+} elseif ($_instance->childHasBeenRendered('WosKfXW')) {
+    $componentId = $_instance->getRenderedChildComponentId('WosKfXW');
+    $componentTag = $_instance->getRenderedChildComponentTagName('WosKfXW');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('wb4Tu7Y');
+    $_instance->preserveRenderedChild('WosKfXW');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_shields','name' => 'dofus_item_shield_id','placeholder' => 'Choisis un bouclier...','value' => (old('dofus_item_shield_id')) ? old('dofus_item_shield_id') : (isset($skin) ? $skin['dofus_item_shield_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('wb4Tu7Y', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('WosKfXW', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -396,15 +403,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_pets','name' => 'dofus_item_pet_id','placeholder' => 'Choisis un familier...','value' => (old('dofus_item_pet_id')) ? old('dofus_item_pet_id') : (isset($skin) ? $skin['dofus_item_pet_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('uhH0Srj')) {
-    $componentId = $_instance->getRenderedChildComponentId('uhH0Srj');
-    $componentTag = $_instance->getRenderedChildComponentTagName('uhH0Srj');
+} elseif ($_instance->childHasBeenRendered('RsUO27L')) {
+    $componentId = $_instance->getRenderedChildComponentId('RsUO27L');
+    $componentTag = $_instance->getRenderedChildComponentTagName('RsUO27L');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('uhH0Srj');
+    $_instance->preserveRenderedChild('RsUO27L');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_pets','name' => 'dofus_item_pet_id','placeholder' => 'Choisis un familier...','value' => (old('dofus_item_pet_id')) ? old('dofus_item_pet_id') : (isset($skin) ? $skin['dofus_item_pet_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('uhH0Srj', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('RsUO27L', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -412,15 +419,15 @@ echo $html;
                 <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_costumes','name' => 'dofus_item_costume_id','placeholder' => 'Choisis un costume...','value' => (old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')])->html();
-} elseif ($_instance->childHasBeenRendered('Z7DfdAt')) {
-    $componentId = $_instance->getRenderedChildComponentId('Z7DfdAt');
-    $componentTag = $_instance->getRenderedChildComponentTagName('Z7DfdAt');
+} elseif ($_instance->childHasBeenRendered('htOj0M6')) {
+    $componentId = $_instance->getRenderedChildComponentId('htOj0M6');
+    $componentTag = $_instance->getRenderedChildComponentTagName('htOj0M6');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('Z7DfdAt');
+    $_instance->preserveRenderedChild('htOj0M6');
 } else {
     $response = \Livewire\Livewire::mount('forms.searchbar-items-autocomplete', ['relatedModel' => 'dofus_item_costumes','name' => 'dofus_item_costume_id','placeholder' => 'Choisis un costume...','value' => (old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')]);
     $html = $response->html();
-    $_instance->logRenderedChild('Z7DfdAt', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('htOj0M6', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

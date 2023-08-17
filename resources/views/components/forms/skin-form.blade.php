@@ -105,10 +105,15 @@
                         <p class="ml-10 text-xl font-light">Choix de la classe</p>
                         <div class="relative"
                              x-data="{
-                                  races: {{ json_encode(array_values($races)) }},
-                                  showSort: false,
-                                  selection: {{ (old('race_id')) ? old('race_id') : (isset($skin) ? $skin['race_id'] : 1) }},
-                                }" x-init="console.log(races)">
+                                races: {{ json_encode(array_values($races)) }},
+                                showSort: false,
+                                selection: {{ (old('race_id')) ? old('race_id') : (isset($skin) ? $skin['race_id'] : 1) }},
+
+                                KeyPressed()
+                                {
+                                   console.log('test');
+                                }
+                                }">
                             <div x-on:mousedown.outside="if(showSort) showSort = false">
 
                                 <!-- Resultat -->
@@ -125,8 +130,9 @@
                                         <div>
                                             <input type="radio" value="{{ $race->id }}" class="hidden peer" name="race_id" id="race_id_{{ $race->id }}"
                                                 {{ (old('race_id')) ? ((old('race_id') == $race->id) ? 'checked' : '') : (isset($skin) ? (($skin['race_id'] == $race->id) ? 'checked' : '') : (($race->id == 1) ? 'checked' : '')) }}>
-                                            <label for="race_id_{{ $race->id }}"
+                                            <label for="race_id_{{ $race->id }}" id="label_race_id_{{ $race->id }}"
                                                    @click="selection = {{ $race->id }}, showSort = false"
+                                                   @keydown.enter="selection = {{ $race->id }}, showSort = false"
                                                    class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-secondary hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2">
                                                 <img src="{{ $race->ghost_icon_path }}" class="h-11">
                                                 <p>{{ $race->name }}</p>
@@ -136,6 +142,7 @@
                                 </div>
                             </div>
                         </div>
+
                         @error('race_id')
                         <x-forms.requirements-error :$message />
                         @enderror

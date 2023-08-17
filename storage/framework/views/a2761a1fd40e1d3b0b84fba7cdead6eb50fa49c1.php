@@ -32,6 +32,9 @@
                             <p><span class="italic tracking-widest font-normal"><?php echo e($user->skin_count); ?></span> skins postés</p>
                             <p><span class="italic tracking-widest font-normal"><?php echo e($user->like_given); ?></span> likes donnés</p>
                             <p><span class="italic tracking-widest font-normal"><?php echo e($user->like_received); ?></span> likes reçus</p>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['mod-access', 'admin-access'])): ?>
+                                <p><span class="italic tracking-widest font-normal"><?php echo e(\App\Models\Skin::all()->count()); ?></span> skins total sur le site</p>
+                            <?php endif; ?>
                         </div>
 
                         <div class="flex flex-col gap-y-4">

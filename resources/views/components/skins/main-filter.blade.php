@@ -7,7 +7,7 @@
               if(window.innerWidth > 1500) showFilter = true;
               showLive=!(window.innerWidth <= 1500 && showFilter);"
      :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-16 [@media(min-height:701px)_and_(max-width:501px)]:top-28 min-[501px]:top-36 [@media(min-height:701px)_and_(min-width:501px)_and_(max-width:800px)]:top-48 min-[801px]:top-32 [@media(max-height:700px)_and_(min-width:801px)_and_(max-width:900px)]:top-20'"
-     class="z-10 flex sticky flex-col w-full h-full items-center bg-primary
+     class="flex sticky flex-col w-full h-full items-center bg-primary z-20
             max-[1500px]:shadow-lg
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             min-[1501px]:min-h-[calc(100vh-15vh-theme(spacing.14))] min-[1501px]:max-h-[calc(100vh-theme(spacing.14))] min-[1501px]:top-12 min-[1501px]:row-span-2">
@@ -61,7 +61,9 @@
 
 
             <!-- SearchBar -->
-            <livewire:forms.skin-filter-search-bar wire:key="search{{ rand() }}" :searchFilterInput="$searchFilterInput" />
+            <div>
+                <livewire:forms.skin-filter-search-bar wire:key="search{{ rand() }}" :searchFilterInput="$searchFilterInput" />
+            </div>
 
 
             <!-- Rewards Only -->
@@ -149,7 +151,7 @@
 
                 <div class="flex gap-x-2">
 
-                    <div class="ml-4 border-b border-secondary w-[clamp(9.375rem,12.5rem,50%)]">
+                    <div class="ml-4 border-b border-secondary pt-2 w-[clamp(9.375rem,12.5rem,50%)]">
                         <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Choisis tes classes :</p>
                     </div>
 
@@ -171,7 +173,7 @@
                                 wire:click="ToggleRace({{ $key + 1 }})"
                                 @click="window.scrollTo(0,0)">
 
-                            <div class="peer relative h-[3.375rem] w-[3.375rem]" x-cloak>
+                            <div class="peer relative h-[3.375rem] w-[3.375rem]">
                                 @if(!in_array(['race_id', '=', $key + 1, 'or'], $raceSelection))
                                     <img src="{{ asset('storage\/' . $race->ghost_icon_path) }}"
                                          class="absolute opacity-75 hover:opacity-100" draggable="false">
@@ -216,8 +218,7 @@
     <div x-show="showLive"
          class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 invisible
               [@media(min-height:701px)_and_(min-width:801px)]:visible
-              max-[1500px]:aspect-video
-              min-[1501px]:static min-[1501px]:w-full min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:pl-6 min-[1501px]:flex-1">
-        <x-utils.twitch-embed />
+              min-[1501px]:static min-[1501px]:w-[min(100%,27rem)] min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:pl-6 min-[1501px]:flex-1">
+        <x-utils.twitch-embed :can-close="true"/>
     </div>
 </div>

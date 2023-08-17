@@ -47,7 +47,7 @@ function ResizeSkinWinners()
 
 
 // Fonction qui change la hauter de la section de gauche en fonction de l'espace libre
-function ResizeLeftSection()
+function ResizeLeftSection(readPreviousH = true)
 {
     if(!leftSection) return;
 
@@ -68,7 +68,7 @@ function ResizeLeftSection()
     }
 
     // Ensuite, si le nouvel height et différent de l'ancienne, on envoie
-    if(previousLeftSectionH != nextHeight + "px"){
+    if(previousLeftSectionH != nextHeight + "px" || !readPreviousH){
 
         leftSection.style.height = nextHeight + "px";
 
@@ -79,7 +79,6 @@ function ResizeLeftSection()
     }
 }
 
-
 // Fonction qui actualise sur quel axe l'aspect-video du live se base (width or height)
 function ResizeTwitchScreen()
 {
@@ -88,6 +87,7 @@ function ResizeTwitchScreen()
 
     // S'il doit être basé sur la hauteur et ne l'es pas déjà
     if(ratioWidth != previousRatioWidth) {
+
         twitchScreen.classList.toggle("h-full");
         twitchScreen.classList.toggle("w-full");
         previousRatioWidth = !previousRatioWidth;

@@ -7,7 +7,7 @@
               if(window.innerWidth > 1500) showFilter = true;
               showLive=!(window.innerWidth <= 1500 && showFilter);"
      :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-16 [@media(min-height:701px)_and_(max-width:501px)]:top-28 min-[501px]:top-36 [@media(min-height:701px)_and_(min-width:501px)_and_(max-width:800px)]:top-48 min-[801px]:top-32 [@media(max-height:700px)_and_(min-width:801px)_and_(max-width:900px)]:top-20'"
-     class="z-10 flex sticky flex-col w-full h-full items-center bg-primary
+     class="flex sticky flex-col w-full h-full items-center bg-primary z-20
             max-[1500px]:shadow-lg
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             min-[1501px]:min-h-[calc(100vh-15vh-theme(spacing.14))] min-[1501px]:max-h-[calc(100vh-theme(spacing.14))] min-[1501px]:top-12 min-[1501px]:row-span-2">
@@ -61,7 +61,8 @@
 
 
             <!-- SearchBar -->
-            <?php
+            <div>
+                <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('forms.skin-filter-search-bar', ['searchFilterInput' => $searchFilterInput])->html();
 } elseif ($_instance->childHasBeenRendered('search'.e(rand()).'')) {
@@ -76,6 +77,7 @@ if (! isset($_instance)) {
 }
 echo $html;
 ?>
+            </div>
 
 
             <!-- Rewards Only -->
@@ -245,7 +247,7 @@ echo $html;
 
                 <div class="flex gap-x-2">
 
-                    <div class="ml-4 border-b border-secondary w-[clamp(9.375rem,12.5rem,50%)]">
+                    <div class="ml-4 border-b border-secondary pt-2 w-[clamp(9.375rem,12.5rem,50%)]">
                         <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Choisis tes classes :</p>
                     </div>
 
@@ -267,7 +269,7 @@ echo $html;
                                 wire:click="ToggleRace(<?php echo e($key + 1); ?>)"
                                 @click="window.scrollTo(0,0)">
 
-                            <div class="peer relative h-[3.375rem] w-[3.375rem]" x-cloak>
+                            <div class="peer relative h-[3.375rem] w-[3.375rem]">
                                 <?php if(!in_array(['race_id', '=', $key + 1, 'or'], $raceSelection)): ?>
                                     <img src="<?php echo e(asset('storage\/' . $race->ghost_icon_path)); ?>"
                                          class="absolute opacity-75 hover:opacity-100" draggable="false">
@@ -340,17 +342,16 @@ echo $html;
     <div x-show="showLive"
          class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 invisible
               [@media(min-height:701px)_and_(min-width:801px)]:visible
-              max-[1500px]:aspect-video
-              min-[1501px]:static min-[1501px]:w-full min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:pl-6 min-[1501px]:flex-1">
+              min-[1501px]:static min-[1501px]:w-[min(100%,27rem)] min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:pl-6 min-[1501px]:flex-1">
         <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.utils.twitch-embed','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.utils.twitch-embed','data' => ['canClose' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('utils.twitch-embed'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['can-close' => true]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
