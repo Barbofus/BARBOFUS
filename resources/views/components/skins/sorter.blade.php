@@ -8,7 +8,7 @@
     <div class="flex items-center justify-around gap-x-2"
          x-on:mousedown.outside="if(showSort) showSort = false">
 
-        <button class="h-10 w-10 mr-4"
+        <button class="h-10 w-10 mr-4" :class="selection == 'Aléatoire' ? 'animate-dice [--custom-animation-time:0.7s]' : ''"
                 x-on:mousedown="selection = 'Aléatoire'; sortAsc = true; showSort = false; $wire.SortBy(4, 'ASC'), window.scrollTo(0,0)">
             <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" class="h-full hover:scale-90 transition-all">
         </button>

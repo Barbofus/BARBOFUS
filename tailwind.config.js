@@ -99,6 +99,10 @@ module.exports = {
                 '0%,100%': { transform: 'translateY(calc(var(--custom-translate-y) / 2 * -1)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
                 '50%': { transform: 'translateY(calc(var(--custom-translate-y) / 2)) scale(var(--tw-scale-x), var(--tw-scale-y))' },
             },
+            dice: {
+                '0%': { transform: 'rotate(0deg)' },
+                '100%': { transform: 'rotate(720deg)' },
+            },
         },
         animation: {
             skinApparition: 'skinApparition 0.5s linear forwards',
@@ -116,6 +120,7 @@ module.exports = {
             featherLeft: 'featherLeft 5s ease-in-out infinite',
             slideX: 'slideX var(--custom-animation-time) ease-in-out infinite',
             slideY: 'slideY var(--custom-animation-time) ease-in-out infinite',
+            dice: 'dice var(--custom-animation-time) ease-in-out',
         },
     },
   },
