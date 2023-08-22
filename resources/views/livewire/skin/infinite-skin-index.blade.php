@@ -1,15 +1,15 @@
-<div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.12),5.5rem,1fr]
-          [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0rem,0rem,1fr]
-          min-[501px]:grid-rows-[theme(spacing.36),5.5rem,1fr]
-          min-[801px]:grid-rows-[theme(spacing.20),5.5rem,1fr]
-          min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),1fr]">
+<div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.20),5.5rem,70rem,1fr]
+          [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0rem,0rem,70rem,1fr]
+          min-[501px]:grid-rows-[theme(spacing.36),5.5rem,70rem,1fr]
+          min-[851px]:grid-rows-[theme(spacing.20),5.5rem,27rem,1fr]
+          min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),27rem,1fr]
+          min-[1801px]:grid-cols-[27rem,1fr,25rem] min-[1801px]:grid-rows-[theme(spacing.20),1fr]">
 
     <!-- Header skin section -->
-    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-between w-full h-full px-4 py-8 top-12 z-20
+    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 z-30
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
-            [@media(max-height:700px)_and_(max-width:900px)]:top-0
-            min-[801px]:flex-row min-[801px]:py-4 min-[801px]:gap-y-0
-            min-[1500px]:col-start-2 min-[1500px]:px-8 min-[1800px]:w-[calc(100%-25rem)]">
+            min-[851px]:flex-row min-[851px]:py-4 min-[851px]:gap-y-0 min-[851px]:justify-between
+            min-[1501px]:col-start-2 min-[1501px]:px-8 min-[1501px]:z-20">
 
 
         <!-- Tuto poste -->
@@ -41,30 +41,25 @@
     <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" />
 
     {{-- La grille des skins --}}
-    <div class="flex flex-col bg-primary pt-0 relative z-10
-            [@media(min-height:501px)_and_(max-width:900px)]:pt-0
-            [@media(min-height:701px)_and_(max-width:900px)]:pt-16
-            min-[1800px]:flex-row ">
+    <div class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mb-10 bg-primary">
+        @if(count($postIdChunks) > 0)
+            @for($i = 0; $i < $page && $i < $maxPage; $i++)
+                <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
+            @endfor
+        @else
+            <img class="mt-8 h-[16rem]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
+            <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
+        @endif
 
-        {{-- Derniers vainqueurs et date du prochain tirage Barbe' Hebdo --}}
-        <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
-
-        <div class="flex-1 flex flex-col items-center min-[1800px]:max-w-[calc(100%-25rem)] mb-10">
-            @if(count($postIdChunks) > 0)
-                @for($i = 0; $i < $page && $i < $maxPage; $i++)
-                    <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
-                @endfor
-            @else
-                <img class="mt-8 h-[16rem]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
-                <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
-            @endif
-
-            {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
-            @if($this->HasMorePage())
-                <x-utils.load-more/>
-            @endif
-        </div>
+        {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
+        @if($this->HasMorePage())
+            <x-utils.load-more/>
+        @endif
     </div>
+
+    {{-- Derniers vainqueurs et date du prochain tirage Miss'Skin --}}
+    <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
+
 
     {{-- Scroll horizontalement les pseudos trop long, s'actualise en temps réel --}}
     @vite(['resources/js/skins/ResizeIndexComponent.js', 'resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js', 'resources/js/skins/AnimationsManager.js'])

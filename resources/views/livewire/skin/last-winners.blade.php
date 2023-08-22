@@ -1,13 +1,14 @@
 <div wire:poll.visible.60s="Refresh" id="rewards-section"
-     class="flex flex-col items-center w-full px-8 pt-4 top-12
-            min-[1800px]:fixed min-[1800px]:order-last min-[1800px]:w-[25rem] min-[1800px]:flex-row min-[1800px]:px-0 min-[1800px]:min-h-[calc(100vh-15vh-1rem)]
-            min-[1800px]:max-h-[calc(100vh-theme(spacing.2))] min-[1800px]:top-[calc(15vh+0.5rem)] min-[1800px]:right-0 min-[1800px]:z-30 min-[1800px]:py-8 min-[1800px]:h-full">
+     class="flex flex-col items-center w-full px-8 pt-4 top-12 z-10 row-start-3 bg-primary
+            min-[1501px]:row-start-2 min-[1501px]:col-start-2
+            min-[1801px]:fixed min-[1801px]:order-last min-[1801px]:w-[25rem] min-[1801px]:flex-row min-[1801px]:px-0 min-[1801px]:min-h-[calc(100vh-15vh-1rem)] min-[1801px]:row-span-2
+            min-[1801px]:max-h-[calc(100vh-theme(spacing.2))] min-[1801px]:top-[calc(15vh+0.5rem)] min-[1801px]:right-0 min-[1801px]:z-30 min-[1801px]:py-8 min-[1801px]:h-full">
 
     <!-- Content -->
-    <div class="flex flex-col items-start justify-center flex-1 w-full py-4 min-[1800px]:h-[min(100%,93rem)]">
+    <div class="flex flex-col items-start justify-center flex-1 w-full p-4 min-[1800px]:h-[min(100%,93rem)]">
 
         <!-- Header -->
-        <div class="relative flex items-center justify-center w-full pl-4 gap-x-2">
+        <div class="relative mt-6 flex items-center justify-center w-full pl-4 gap-x-2">
 
             <!-- Icone Info -->
             <div class="relative h-6 cursor-pointer min-w-[1.5rem] group">
@@ -58,7 +59,6 @@
     </div>
 
     <!-- Bottom border -->
-    <div class="h-1 mt-4 rounded-full goldGradientSide w-[80%]
-                min-[1101px]:w-[max(12.5rem,80%)]
+    <div class="h-1 rounded-full goldGradientSide w-[80%]
                 min-[1800px]:goldGradientTop min-[1800px]:w-1 min-[1800px]:h-[80%] min-[1800px]:order-first min-[1800px]:mt-0"></div>
 </div>

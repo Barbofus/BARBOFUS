@@ -6,9 +6,9 @@
      @resize.window="
               if(window.innerWidth > 1500) showFilter = true;
               showLive=!(window.innerWidth <= 1500 && showFilter);"
-     :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-16 [@media(min-height:701px)_and_(max-width:501px)]:top-28 min-[501px]:top-36 [@media(min-height:701px)_and_(min-width:501px)_and_(max-width:800px)]:top-48 min-[801px]:top-32 [@media(max-height:700px)_and_(min-width:801px)_and_(max-width:900px)]:top-20'"
-     class="flex sticky flex-col w-full h-full items-center bg-primary z-20
-            max-[1500px]:shadow-lg
+     :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-32 [@media(min-height:701px)_and_(max-width:501px)]:top-28 min-[501px]:top-48 min-[851px]:top-32'"
+     class="flex sticky flex-col w-full h-full items-center z-20 row-start-2 bg-primary
+            max-[1500px]:shadow-lg min-[1501px]:z-10
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             min-[1501px]:min-h-[calc(100vh-15vh-theme(spacing.14))] min-[1501px]:max-h-[calc(100vh-theme(spacing.14))] min-[1501px]:top-12 min-[1501px]:row-span-2">
 
@@ -217,8 +217,8 @@
     <!-- Twitch section -->
     <div x-show="showLive"
          class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 invisible
-              [@media(min-height:701px)_and_(min-width:801px)]:visible
-              min-[1501px]:static min-[1501px]:w-[min(100%,27rem)] min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:pl-6 min-[1501px]:flex-1">
+              [@media(min-height:801px)_and_(min-width:801px)]:visible
+              min-[1501px]:static min-[1501px]:w-[min(100%,27rem)] min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:px-1 min-[1501px]:flex-1">
         <x-utils.twitch-embed :can-close="true"/>
     </div>
 </div>

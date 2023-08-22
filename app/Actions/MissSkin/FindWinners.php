@@ -25,7 +25,7 @@ final class FindWinners
                 'weekly_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->toDateString()),
+                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
 
                 'user_name' => DB::table('users')
                     ->select('name')

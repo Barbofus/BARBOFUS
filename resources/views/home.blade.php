@@ -50,8 +50,8 @@
                 <div class="text-secondary text-xl font-thin flex flex-col gap-y-4">
                     <p class="mb-4 font-normal uppercase">Petite présentation rapide & efficace :</p>
 
-                    <p>• Mathieu - Barbe douce.</p>
-                    <p>• Je suis partenaire Twitch, Ankama & <a href="https://www.topachat.com/accueil/index.php?mtm_campaign=mkstrm" target="_blank" class="text-goldText hover:text-goldTextLit">TopAchat</a></p>
+                    <p>• Mathieu - Barbe Douce</p>
+                    <p>• Je suis partenaire <a href="https://www.twitch.tv/barbe___douce" target="_blank" class="text-goldText hover:text-goldTextLit">Twitch</a>, <a href="https://www.ankama.com/fr" target="_blank" class="text-goldText hover:text-goldTextLit">Ankama</a> & <a href="https://www.topachat.com/accueil/index.php?mtm_campaign=mkstrm" target="_blank" class="text-goldText hover:text-goldTextLit">TopAchat</a></p>
                     <p>• En live chaque jour dès 7-8h sur : <a href="https://twitch.tv/barbe___douce" target="_blank" class="text-goldText hover:text-goldTextLit">twitch.tv/barbe___douce</a></p>
                     <p>• Contact Pro : <span class="text-goldText">mathieu.lehr@gmail.com</span></p>
                 </div>
