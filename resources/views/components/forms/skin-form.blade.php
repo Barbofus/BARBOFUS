@@ -103,45 +103,158 @@
                     {{-- Choix de la classe --}}
                     <div class="mt-5">
                         <p class="ml-10 text-xl font-light">Choix de la classe</p>
-                        <div class="relative"
-                             x-data="{
-                                races: {{ json_encode(array_values($races)) }},
-                                showSort: false,
-                                selection: {{ (old('race_id')) ? old('race_id') : (isset($skin) ? $skin['race_id'] : 1) }},
+                        <div class="relative w-fit">
 
-                                KeyPressed()
-                                {
-                                   console.log('test');
-                                }
-                                }">
-                            <div x-on:mousedown.outside="if(showSort) showSort = false">
+                            <!-- Resultat -->
+                            <button type="button" onclick="toggle()" id="races_result"
+                                 class="flex transition-all rounded-md w-[15rem] items-center justify-left gap-x-2 border-2 text-secondary border-goldText hover:border-secondary cursor-pointer h-12 bg-primary-100 p-2">
+                                <img id="rr_img" class="h-11">
+                                <p id="rr_name"></p>
+                            </button>
 
-                                <!-- Resultat -->
-                                <div x-on:mousedown="showSort = !showSort"
-                                     class="flex transition-all rounded-md w-[15rem] items-center justify-left gap-x-2 border-2 text-secondary border-goldText hover:border-secondary cursor-pointer h-12 bg-primary-100 p-2">
-                                    <img :src="races[selection-1]['ghost_icon_path']" class="h-11">
-                                    <p x-text="races[selection-1]['name']"></p>
-                                </div>
-
-                                <!-- Menu déroulant -->
-                                <div class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer "
-                                     x-show="showSort" x-transition.opacity x-cloak >
-                                    @foreach ($races as $race)
-                                        <div>
-                                            <input type="radio" value="{{ $race->id }}" class="hidden peer" name="race_id" id="race_id_{{ $race->id }}"
-                                                {{ (old('race_id')) ? ((old('race_id') == $race->id) ? 'checked' : '') : (isset($skin) ? (($skin['race_id'] == $race->id) ? 'checked' : '') : (($race->id == 1) ? 'checked' : '')) }}>
-                                            <label for="race_id_{{ $race->id }}" id="label_race_id_{{ $race->id }}"
-                                                   @click="selection = {{ $race->id }}, showSort = false"
-                                                   @keydown.enter="selection = {{ $race->id }}, showSort = false"
-                                                   class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-secondary hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2">
-                                                <img src="{{ $race->ghost_icon_path }}" class="h-11">
-                                                <p>{{ $race->name }}</p>
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </div>
+                            <!-- Menu déroulant -->
+                            <div class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer" id="races_dropdown">
+                                @foreach ($races as $race)
+                                    <div>
+                                        <input type="radio" value="{{ $race->id }}" class="hidden peer" name="race_id" id="race_id_{{ $race->id }}"
+                                            {{ (old('race_id')) ? ((old('race_id') == $race->id) ? 'checked' : '') : (isset($skin) ? (($skin['race_id'] == $race->id) ? 'checked' : '') : (($race->id == 1) ? 'checked' : '')) }}>
+                                        <label for="race_id_{{ $race->id }}" id="label_race_id_{{ $race->id }}"
+                                               onclick="setSelection({{ $race->id }})"
+                                               @keydown.enter="selection = {{ $race->id }}, showSort = false"
+                                               class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
+                                            <img src="{{ $race->ghost_icon_path }}" class="h-11">
+                                            <p>{{ $race->name }}</p>
+                                        </label>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
+
+                        <script>
+                            const races_result = document.getElementById('races_result');
+                            const races_dropdown = document.getElementById('races_dropdown');
+                            const rr_img = document.getElementById('rr_img');
+                            const rr_name = document.getElementById('rr_name');
+                            const races = @json($races);
+                            const searchResetTime = 500; // in ms
+                            let to;
+                            let searchResult;
+                            let searchedLetters = [];
+                            let showSort = true;
+                            let selection = {{ (old('race_id')) ? old('race_id') : (isset($skin) ? $skin['race_id'] : 1) }};
+
+                            init();
+
+                            // Affiche la bonne classe de base et masque le menu
+                            function init()
+                            {
+                                selection -= 1; // id partent de 1 en php, 0 en js
+                                refreshResult();
+                                toggle();
+                            }
+
+                            // Set l'image et le texte de la classe selectionné
+                            function refreshResult()
+                            {
+                                rr_img.src = races[selection]['ghost_icon_path']
+                                rr_name.textContent = races[selection]['name']
+                            }
+
+                            // Toggle la variable showSort
+                            function toggle()
+                            {
+                                showSort = !showSort;
+                                races_dropdown.hidden = !showSort;
+                            }
+
+                            // Change la classe selectionné
+                            function setSelection(newSelection)
+                            {
+                                selection = newSelection-1;
+                                showSort = false;
+                                races_dropdown.hidden = !showSort;
+                                document.getElementById('race_id_' + newSelection).checked = true;
+                                refreshResult();
+                            }
+
+                            function pushedLetter(key)
+                            {
+                                // Ajoute la lettre au tableau de la recherche
+                                searchedLetters.push(key);
+
+                                // Reset le timeout
+                                if(to) clearTimeout(to);
+
+                                // Lance un timeout qui vide le tableau après un delai
+                                to = setTimeout(function (){
+                                    searchedLetters = [];
+                                    //setSelection(searchResult);
+                                }, searchResetTime);
+
+                                // Va prendre la première classe qu'il trouve avec cette recherche
+                                searchForResult();
+                            }
+
+                            function searchForResult()
+                            {
+                                const search = searchedLetters.join("");
+                                let result = null;
+
+                                for (let i=0; i<races.length; i++)
+                                {
+                                    if(races[i]['name'].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().startsWith(search)){
+                                        result = i;
+                                        break;
+                                    }
+                                }
+
+                                if(result == null) return;
+
+                                searchResult = result + 1;
+
+                                // Enlève la classe active à toutes les classes
+                                for (let i=0; i<races.length; i++)
+                                {
+                                    document.getElementById('label_race_id_' + (i+1)).classList.remove('active');
+                                }
+
+                                // Puis l'ajoute et scroll sur la classe choisie
+                                const race = document.getElementById('label_race_id_' + searchResult);
+                                race.classList.add('active');
+                                race.scrollIntoView();
+                            }
+
+                            // Detecte si on clique hors du choix de classe
+                            document.addEventListener('click', event => {
+                                const isClickInside = races_result.parentElement.contains(event.target)
+
+                                // Si on clique bien dehors, on ferme tout
+                                if (!isClickInside) {
+                                    showSort = false;
+                                    races_dropdown.hidden = !showSort;
+                                }
+                            })
+
+                            // On check chaque touche du clavier
+                            window.addEventListener('keydown', function (e) {
+
+                                let key;
+
+                                // Si on est dans le menu du choix de classe, on récupère la touche
+                                if(showSort){
+
+                                    if(e.key.length == 1)
+                                        key = e.key.toLowerCase();
+
+                                    if (key >= 'a' && key <= 'z'){ // Si on a une lettre
+                                        pushedLetter(key);
+                                    }
+                                    else if (e.code == 'Enter') {
+                                        setSelection(searchResult);
+                                    }
+                                }
+                            }, false);
+                        </script>
 
                         @error('race_id')
                         <x-forms.requirements-error :$message />

@@ -9,9 +9,10 @@
     <div class="flex items-center justify-around gap-x-2"
          x-on:mousedown.outside="if(showSort) showSort = false">
 
+        {{-- Randomizer --}}
         <button class="h-10 w-10 mr-4 invisible min-[361px]:visible" :class="diceAnim ? 'animate-dice [--custom-animation-time:0.7s]' : ''" wire:ignore wire:key="dice"
                 @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = 'Aléatoire'; sortAsc = true; showSort = false; $wire.SortBy(4, 'ASC'), window.scrollTo(0,0)">
-            <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" class="h-full hover:scale-90 transition-all">
+            <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" draggable="false" class="h-full hover:scale-90 transition-all">
         </button>
 
         <!-- Icone -->
