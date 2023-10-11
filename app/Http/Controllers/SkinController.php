@@ -147,7 +147,6 @@ class SkinController extends Controller
      */
     public function store(StoreUpdateSkinRequest $request)
     {
-
         // Resize de l'image, on affichera que 200px max
         $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
             'width' => 300,

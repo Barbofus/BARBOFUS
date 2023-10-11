@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Forms;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -18,6 +19,7 @@ class SearchbarItemsAutocomplete extends Component
     public string $placeholder;
 
     public int $selectedItem = 0;
+    public int $selectedItemID = 0;
 
     /**
      * @var Collection<int|string, mixed>
@@ -37,6 +39,8 @@ class SearchbarItemsAutocomplete extends Component
     {
 
         if ($value) {
+
+            $this->selectedItemID = $value;
             $this->existentItem = $this->ExistentQuery($value);
             $this->query = $this->existentItem['name'];
             $this->previousQuery = $this->query;
@@ -59,7 +63,7 @@ class SearchbarItemsAutocomplete extends Component
      */
     public function ExistentQuery(string|int $value)
     {
-        return new Collection(DB::table($this->relatedModel)
+        return ($this->ExistentQueryCount($value) > 1) ? null : new Collection(DB::table($this->relatedModel)
             ->select('id', 'icon_path', 'name', 'level')
             ->where('id', '=', $value)
             ->orWhere('name', '=', $value)
@@ -76,6 +80,34 @@ class SearchbarItemsAutocomplete extends Component
                     ->take(1),
             ])
             ->first());
+    }
+
+    /**
+     * @param string|int $value
+     * @return int
+     */
+    public function ExistentQueryCount(string|int $value) : int
+    {
+        $found = DB::table($this->relatedModel)
+            ->select('id', 'icon_path', 'name', 'level')
+            ->where('id', '=', $value)
+            ->orWhere('name', '=', $value)
+            ->addSelect([
+                'sub_icon_path' => DB::table('dofus_items_sub_categories')
+                    ->select('icon_path')
+                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                    ->take(1),
+            ])
+            ->addSelect([
+                'sub_name' => DB::table('dofus_items_sub_categories')
+                    ->select('name')
+                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                    ->take(1),
+            ])->get();
+
+        if (!$found) return 0;
+
+        return $found->count();
     }
 
     /**
@@ -146,10 +178,14 @@ class SearchbarItemsAutocomplete extends Component
             return;
         }
 
+        $resultCount = $this->ExistentQueryCount($query);
+
         // Prend les premiers items contenant la recherche en excluant le résultat exact
         $this->itemsToShow = DB::table($this->relatedModel)
             ->select('id', 'icon_path', 'name', 'level')
-            ->where('name', '!=', $query)
+            ->when($resultCount == 1, function (Builder $q) use ($query) {
+                $q->where('name', '!=', $query);
+            })
             ->where('name', 'LIKE', '%'.$query.'%')
             ->addSelect([
                 'sub_icon_path' => DB::table('dofus_items_sub_categories')
@@ -166,7 +202,7 @@ class SearchbarItemsAutocomplete extends Component
             ->get();
 
         // Si l'item exact est écrit, on le dit pour changer le visuel
-        $this->existentItem = $this->ExistentQuery($query);
+        $this->existentItem = $this->ExistentQuery(($this->selectedItemID > 0) ? $this->selectedItemID : $query);
 
         if ($this->query != $this->previousQuery) {
             $this->selectedItem = 0;
@@ -187,6 +223,7 @@ class SearchbarItemsAutocomplete extends Component
         }
 
         $this->query = [$this->itemsToShow[$this->selectedItem]][0]['name'];
+        $this->selectedItemID = [$this->itemsToShow[$this->selectedItem]][0]['id'];
     }
 
     /**
