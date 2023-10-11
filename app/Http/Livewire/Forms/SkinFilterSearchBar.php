@@ -67,8 +67,7 @@ class SkinFilterSearchBar extends Component
         }
 
         foreach ($this->models as $model) {
-            $select = [];
-            $select[] = 'name';
+            $select = ['name', 'id'];
 
             if ($model != 'users') {
                 $select[] = 'icon_path';
@@ -79,6 +78,11 @@ class SkinFilterSearchBar extends Component
                 ->where('name', 'LIKE', '%'.$query.'%')
                 ->get()
                 ->toArray();
+
+
+            foreach ($items as $item)
+                $item->is_user = ($model == 'users');
+
 
             $this->itemToShow = array_merge($this->itemToShow, $items);
         }

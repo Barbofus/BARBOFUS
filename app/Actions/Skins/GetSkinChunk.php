@@ -26,6 +26,12 @@ final class GetSkinChunk
                     ->take(1),
             ])
             ->addSelect([
+                'race_name' => DB::table('races')
+                    ->select('name')
+                    ->whereColumn('id', 'skins.race_id')
+                    ->take(1),
+            ])
+            ->addSelect([
                 'is_liked' => DB::table('likes')
                     ->select('id')
                     ->whereColumn('skin_id', 'skins.id')

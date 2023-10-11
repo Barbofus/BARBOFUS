@@ -35,6 +35,12 @@ class HomeController extends Controller
                     ->whereColumn('id', 'skins.user_id')
                     ->take(1),
             ])
+            ->addSelect([
+                'race_name' => DB::table('races')
+                    ->select('name')
+                    ->whereColumn('id', 'skins.race_id')
+                    ->take(1),
+            ])
             ->inRandomOrder()
             ->take(10)
             ->get();

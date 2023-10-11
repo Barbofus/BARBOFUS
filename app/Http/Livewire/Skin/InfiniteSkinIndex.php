@@ -188,12 +188,24 @@ class InfiniteSkinIndex extends Component
 
                         // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
                         $query->orWhere('users.name', $input);
+
+                        // ensuite, on teste les noms d'items, toujours en OR
+                        foreach ($this->itemRelations as $item) {
+                            //$query->orWhereIn($item.'s.id', $this->searchFilterInput);
+                            $query->orWhere(function (Builder $query) use ($item, $input) {
+                                $query->where($item.'s.id', $input[1])
+                                    ->where($item.'s.name', $input[0]);
+                            });
+                        }
                     }
 
                     // ensuite, on teste les noms d'items, toujours en OR
-                    foreach ($this->itemRelations as $item) {
-                        $query->orWhereIn($item.'s.name', $this->searchFilterInput);
-                    }
+                    /*foreach ($this->itemRelations as $item) {
+                        //$query->orWhereIn($item.'s.id', $this->searchFilterInput);
+                        $query->orWhere(function (Builder $query) {
+                           $query->whereIn();
+                        });
+                    }*/
                 });
             })
 
@@ -316,7 +328,7 @@ class InfiniteSkinIndex extends Component
     /**
      * @return void
      */
-    public function ToggleSearchedText(string $search)
+    public function ToggleSearchedText(string|array $search)
     {
         // Si le mot clef est déjà dans le tableau, on le retire
         if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {

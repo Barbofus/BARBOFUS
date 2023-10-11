@@ -28,6 +28,19 @@ class LastWinners extends Component
     public function FetchLastWinners()
     {
         $this->winners = DB::table('skin_winners')
+            ->join('skins', 'skin_winners.skin_id', '=', 'skins.id')
+            ->addSelect([
+                'race_name' => DB::table('races')
+                    ->select('name')
+                    ->whereColumn('id', 'skins.race_id')
+                    ->take(1),
+            ])
+            ->addSelect([
+                'user_id' => DB::table('users')
+                    ->select('id')
+                    ->whereColumn('id', 'skins.user_id')
+                    ->take(1),
+            ])
             ->orderBy('reward_id', 'ASC')
             ->get();
     }
