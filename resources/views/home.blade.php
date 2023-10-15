@@ -66,7 +66,7 @@
                     <a href="https://discord.gg/YKHc4RD" title="Serveur Discord de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Discord.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" alt="Logo Discord"></a>
                 </div>
             </div>
-            <img class="h-[22rem] max-[799px]:rounded-full max-[799px]:mx-auto" src="{{ asset('storage/images/misc_ui/portrait.webp') }}" height="352" alt="Portrait de Barbe Douce">
+            <img class="h-[22rem] max-[799px]:rounded-full max-[799px]:mx-auto" src="{{ asset('storage/images/misc_ui/portrait.avif') }}" height="352" alt="Portrait de Barbe Douce">
         </div>
 
         {{-- Remerciements --}}

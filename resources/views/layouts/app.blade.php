@@ -2,10 +2,16 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="theme-color" content="#fcb943">
+
+    <meta name="keywords" content="skin, dofus, barbe douce, barbofus, miss skin">
+    <meta name="robots" content="noindex, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="French">
 
     <!-- Primary Meta Tags -->
     <title>Barbofus - Découverte et partage de skin dofus</title>
@@ -26,11 +32,8 @@
     <meta property="twitter:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="twitter:image" content="@yield('app-meta-image')" />
 
-    <!-- Meta Tags Generated with https://metatags.io -->
-
     <script src="https://www.google.com/recaptcha/api.js"></script>
 
-    {{--<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>--}}
     <style>
         [x-cloak] {
             display: none;

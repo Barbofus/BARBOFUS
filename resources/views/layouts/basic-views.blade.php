@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('app-meta-image')
-    @yield('meta-image', asset('storage/images/misc_ui/Barbofus_Meta_image.webp'))
+    @yield('meta-image', asset('storage/images/misc_ui/Barbofus_Meta_image.avif'))
 @endsection
 
 @section('app-content')

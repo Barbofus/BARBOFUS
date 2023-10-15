@@ -2,7 +2,7 @@
 {{-- Header --}}
 <x-slot:header>
 <x-mail::header :url="config('app.url')">
-<img src="{{ asset('storage/images/misc_ui/Barbofus_Logo_Full.png') }}" alt="">
+<img src="{{ asset('storage/images/misc_ui/Barbofus_Logo_Full.avif') }}" alt="">
 </x-mail::header>
 </x-slot:header>
 

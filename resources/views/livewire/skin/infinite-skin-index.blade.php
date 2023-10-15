@@ -47,7 +47,7 @@
                 <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
             @endfor
         @else
-            <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
+            <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.webp') }}">
             <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
         @endif
 
