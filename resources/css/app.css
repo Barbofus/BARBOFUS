@@ -13,30 +13,35 @@
         font-weight: 100;
         font-family: "MADE Okin";
         src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Thin.otf") format("openType");
+        font-display: swap;
     }
 
     @font-face {
         font-weight: 300;
         font-family: "MADE Okin";
         src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Light.otf") format("openType");
+        font-display: swap;
     }
 
     @font-face {
         font-weight: 400;
         font-family: "MADE Okin";
         src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Regular.otf") format("openType");
+        font-display: swap;
     }
 
     @font-face {
         font-weight: 500;
         font-family: "MADE Okin";
         src: url("../../public/storage/fonts/MADEOkineSansPERSONALUSE-Medium.otf") format("openType");
+        font-display: swap;
     }
 
     @font-face {
 
         font-family: "MV Boli";
         src: url("../../public/storage/fonts/mvboli.ttf") format("truetype");
+        font-display: swap;
     }
 
     input[type=number].appearance-none::-webkit-inner-spin-button,
