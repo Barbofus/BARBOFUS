@@ -1,4 +1,4 @@
-<div class="flex flex-wrap gap-x-4 items-center justify-center relative h-24 mx-auto">
+<div class="flex flex-wrap gap-x-4 items-center justify-center relative my-2 mx-auto">
     <a href="https://www.tiktok.com/@barbe___douce" title="Page TikTok de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_TikTok.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" width="48" alt="Logo TikTok" loading="lazy"></a>
     <a href="https://www.instagram.com/barbe.douce.twitch/" title="Page Instagram de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Instagram.webp') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" width="48" alt="Logo Instagram" loading="lazy"></a>
     <a href="https://twitter.com/DouceBarbe" title="Page Twitter de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Twitter.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" width="59" alt="Logo Twitter" loading="lazy"></a>
