@@ -326,9 +326,10 @@ class InfiniteSkinIndex extends Component
     }
 
     /**
+     * @param  string|array<int, string>  $search
      * @return void
      */
-    public function ToggleSearchedText(string|array $search)
+    public function ToggleSearchedText($search)
     {
         // Si le mot clef est déjà dans le tableau, on le retire
         if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {

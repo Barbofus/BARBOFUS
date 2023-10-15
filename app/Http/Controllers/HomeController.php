@@ -6,6 +6,7 @@ use App\Models\Race;
 use App\Models\Skin;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -28,7 +29,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @return Race[]|\LaravelIdea\Helper\App\Models\_IH_Race_C
+     * @return Collection<int, Race>
      */
     public function getRacesName()
     {
@@ -40,7 +41,7 @@ class HomeController extends Controller
      */
     public function getSkinCount()
     {
-        return floor(Skin::all()->count() / 10) * 10;
+        return floor(Skin::count() / 10) * 10;
     }
 
     /**
@@ -48,7 +49,7 @@ class HomeController extends Controller
      */
     public function getUserCount()
     {
-        return floor(User::all()->count() / 10) * 10;
+        return floor(User::count() / 10) * 10;
     }
 
     /**

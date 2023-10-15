@@ -79,10 +79,9 @@ class SkinFilterSearchBar extends Component
                 ->get()
                 ->toArray();
 
-
-            foreach ($items as $item)
+            foreach ($items as $item) {
                 $item->is_user = ($model == 'users');
-
+            }
 
             $this->itemToShow = array_merge($this->itemToShow, $items);
         }

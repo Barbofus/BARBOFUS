@@ -19,6 +19,7 @@ class SearchbarItemsAutocomplete extends Component
     public string $placeholder;
 
     public int $selectedItem = 0;
+
     public int $selectedItemID = 0;
 
     /**
@@ -82,11 +83,7 @@ class SearchbarItemsAutocomplete extends Component
             ->first());
     }
 
-    /**
-     * @param string|int $value
-     * @return int
-     */
-    public function ExistentQueryCount(string|int $value) : int
+    public function ExistentQueryCount(string|int $value): int
     {
         $found = DB::table($this->relatedModel)
             ->select('id', 'icon_path', 'name', 'level')
@@ -105,7 +102,9 @@ class SearchbarItemsAutocomplete extends Component
                     ->take(1),
             ])->get();
 
-        if (!$found) return 0;
+        if ($found->count() > 0) {
+            return 0;
+        }
 
         return $found->count();
     }

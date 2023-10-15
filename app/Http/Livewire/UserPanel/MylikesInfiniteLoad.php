@@ -21,7 +21,7 @@ class MylikesInfiniteLoad extends Component
 
     public int $maxPage = 1;
 
-    public int  $queryCount = 0;
+    public int $queryCount = 0;
 
     protected bool $hasLoadMore = false;
 

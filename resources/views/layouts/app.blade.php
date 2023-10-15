@@ -14,22 +14,22 @@
     <meta name="language" content="French">
 
     <!-- Primary Meta Tags -->
-    <title>Barbofus - Galerie de skins dofus, avec tous les items, classes, familier</title>
-    <meta name="title" content="Barbofus - Galerie de skins dofus, avec tous les items, classes, familier" />
+    <title>Barbofus - Galerie de skins dofus</title>
+    <meta name="title" content="Barbofus - Galerie de skins dofus" />
     <meta name="description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ route('home') }}" />
-    <meta property="og:title" content="Barbofus - Galerie de skins dofus, avec tous les items, classes, familier" />
+    <meta property="og:title" content="Barbofus - Galerie de skins dofus" />
     <meta property="og:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="og:image" content="@yield('app-meta-image')" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="{{ route('home') }}" />
-    <meta property="twitter:title" content="Barbofus - Galerie de skins dofus, avec tous les items, classes, familier" />
+    <meta property="twitter:title" content="Barbofus - Galerie de skins dofus" />
     <meta property="twitter:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="twitter:image" content="@yield('app-meta-image')" />
 
