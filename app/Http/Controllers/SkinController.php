@@ -150,7 +150,7 @@ class SkinController extends Controller
         // Resize de l'image, on affichera que 200px max
         $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
             'width' => 300,
-            'height' => null]);
+            'height' => 390]);
 
         $skin = Skin::create([
             'dofus_item_hat_id' => $request->dofus_item_hat_id,
@@ -217,7 +217,7 @@ class SkinController extends Controller
             // Resize de l'image, on affichera que 200px max
             $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
                 'width' => 300,
-                'height' => null]);
+                'height' => 390]);
         }
 
         $skin->dofus_item_hat_id = $request->dofus_item_hat_id;
