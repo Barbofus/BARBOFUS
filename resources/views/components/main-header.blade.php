@@ -1,6 +1,6 @@
 <!-- En-tête -->
 <div id="header"
-     class="w-full h-0 bg-secondary relative z-20 hidden [@media(min-height:950px)_and_(min-width:901px)]
+     class="w-full h-0 bg-secondary relative z-20 hidden
           [@media(min-height:950px)_and_(min-width:901px)]:block [@media(min-height:950px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:950px)_and_(min-width:901px)]:min-h-[150px] overflow-hidden">
 
     {{-- Arrière plan --}}
@@ -24,7 +24,7 @@
             <div class="bg-[linear-gradient(90deg,transparent_0%,rgba(0,0,0,0.65)_25%,rgba(0,0,0,.65)_75%,transparent_100%)] via-primary h-full w-full absolute -z-10"></div>
 
             {{-- Logo --}}
-            <a href="{{ route('home') }}" title="Accueil Barbofus"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.webp') }}" loading="lazy" height="217" width="746" alt="Logo Barbofus" class="h-full" draggable="false" /></a>
+            <a href="{{ route('home') }}" title="Accueil Barbofus"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.webp') }}" loading="lazy" height="15vh" alt="Logo Barbofus" class="h-full" draggable="false" /></a>
         </div>
     </div>
 
@@ -58,6 +58,7 @@
     <div class="relative z-10">
     </div>
 
+    {{-- Live partout--}}
     <div class="opacity-0">
         @if(Route::currentRouteName() != 'skins.index' && Route::currentRouteName() != 'home')
             <x-utils.twitch-embed />

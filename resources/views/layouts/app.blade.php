@@ -32,8 +32,6 @@
     <meta property="twitter:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="twitter:image" content="@yield('app-meta-image')" />
 
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-
     <style>
         [x-cloak] {
             display: none;
@@ -79,6 +77,23 @@
     @yield('app-content')
 
     <x-utils.custom-alert />
+
+
+
+    <script>
+        {
+            const load = () => {
+                document.querySelectorAll("script[data-type='lazy']").forEach(el => el.setAttribute("src", el.getAttribute("data-src")));
+            }
+            const timer = setTimeout(load, 5000);
+            const trigger = () => {
+                load();
+                clearTimeout(timer);
+            }
+            const events = ["mouseover","keydown","touchmove","touchstart"];
+            events.forEach(e => window.addEventListener(e, trigger, {passive: true, once: true}));
+        }
+    </script>
 
     @livewireScripts
 </body>

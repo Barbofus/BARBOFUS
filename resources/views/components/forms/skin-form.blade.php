@@ -340,7 +340,7 @@
         @enderror
     </div>
 
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script data-type="lazy" data-src="https://www.google.com/recaptcha/api.js"></script>
 
     <script>
         function onSubmit(token) {

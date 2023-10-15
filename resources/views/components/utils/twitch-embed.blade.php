@@ -1,12 +1,14 @@
-<div id="twitch-container" class="relative w-full h-full min-h-[125px]" x-data="{ open: true, }">
+<div id="twitch-container" class="relative w-full h-full min-h-[125px]"
+     x-show="open" x-data="{ open: true, }">
 
 
+    {{-- Stream big container --}}
     <div id="twitch-screen"  class="absolute bottom-0 left-0 w-full aspect-video group"
-         x-show="open"
          x-transition:leave="transition ease-out duration-300"
          x-transition:leave-start="translate-y-0 opacity-100"
-         x-transition:leave-end="translate-y-full opacity-0">
+         x-transition:leave-end="translate-y-full opacity-0 hidden">
 
+        {{-- Close button (when needed) --}}
         @if(isset($canClose) && $canClose)
             <button aria-label="Ferme le live" class="opacity-0 group-hover:opacity-100 absolute top-0 right-0 p-2 h-12 w-12 bg-primary z-40 rounded-bl-xl hover:bg-primary-100 transition-all group"
                 @click="open = false">
@@ -16,6 +18,7 @@
             </button>
         @endif
 
+        {{-- Header --}}
         <div class="bg-primary absolute flex justify-between -left-[3px] z-0 h-[calc(100%+6px+20px)] w-[calc(100%+6px)] -top-[23px] rounded-md">
 
             <div class="flex justify-start gap-x-1">
@@ -31,9 +34,9 @@
         <img src="{{ asset('storage/images/misc_ui/Stream_Offlin.avif') }}" height="450" width="800" alt="Live Offline" class="relative z-20 object-cover h-full rounded-[4px]">
 
         <!-- Embed -->
-        <script src= "https://embed.twitch.tv/embed/v1.js"></script>
+        <script id="twitch-embed-script" data-type="lazy" data-src= "https://embed.twitch.tv/embed/v1.js" onload="window.dispatchEvent(new Event('twitch-embed-loaded'))"></script>
 
-        <!-- Stream container -->
+        <!-- Stream screen container -->
         <div id="twitchStreamEmbed" class="absolute top-0 left-0 z-30 w-full h-full opacity-0"></div>
 
 

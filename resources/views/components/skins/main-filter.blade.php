@@ -68,8 +68,8 @@
 
             <!-- Rewards Only -->
             <div class="relative mt-5 tracking-wide w-[min(90vw,23.75rem)]">
-                <x-forms.filter-button :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly" >
-                    <label class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),22rem)]">Voir uniquement les vainqueurs du <span class="font-normal">Miss'Skin</span></label>
+                <x-forms.filter-button :name="'missskin'" :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly" >
+                    <label for="missskin" class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),22rem)]">Voir uniquement les vainqueurs du <span class="font-normal">Miss'Skin</span></label>
                 </x-forms.filter-button>
 
                 <div class="absolute right-0 w-6 h-6 cursor-pointer group top-1">
@@ -104,8 +104,8 @@
 
             <!-- Barb Only -->
             <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,23.75rem)]">
-                <x-forms.filter-button :checked="$barbOnly" wire:click="ToggleShowBarbeOnly" >
-                    <label class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">Voir uniquement les skins de <span class=" font-normal">Barbe Douce</span></label>
+                <x-forms.filter-button :name="'barbe only'" :checked="$barbOnly" wire:click="ToggleShowBarbeOnly" >
+                    <label for="barbe only" class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">Voir uniquement les skins de <span class=" font-normal">Barbe Douce</span></label>
                 </x-forms.filter-button>
             </div>
 
@@ -124,17 +124,17 @@
 
                     <!-- Mimibiotes -->
                     <div class="relative w-[6.25rem]">
-                        <x-forms.filter-button :label="'Mimibiotes'" :checked="!in_array(1, $skinContent)" wire:click="ToggleSkinContent(1)" />
+                        <x-forms.filter-button :name="'Mimibiotes'" :label="'Mimibiotes'" :checked="!in_array(1, $skinContent)" wire:click="ToggleSkinContent(1)" />
                     </div>
 
                     <!-- Cosmétiques -->
                     <div class="relative w-[7.5rem]">
-                        <x-forms.filter-button :label="'Cosmétiques'" :checked="!in_array(2, $skinContent)" wire:click="ToggleSkinContent(2)" />
+                        <x-forms.filter-button :name="'Cosmétiques'" :label="'Cosmétiques'" :checked="!in_array(2, $skinContent)" wire:click="ToggleSkinContent(2)" />
                     </div>
 
                     <!-- Objets vivants -->
                     <div class="relative w-32">
-                        <x-forms.filter-button :label="'Objets vivants'" :checked="!in_array(3, $skinContent)" wire:click="ToggleSkinContent(3)" />
+                        <x-forms.filter-button :name="'Objets vivants'" :label="'Objets vivants'" :checked="!in_array(3, $skinContent)" wire:click="ToggleSkinContent(3)" />
                     </div>
                 </div>
             </div>
@@ -200,12 +200,12 @@
 
                 <!-- Mâle -->
                 <div class="relative w-16">
-                    <x-forms.filter-button :label="'Homme'" :checked="!in_array(['gender', '!=', 'Homme'], $gender)" wire:click="ToggleGender('Homme')" />
+                    <x-forms.filter-button :name="'Homme'" :label="'Homme'" :checked="!in_array(['gender', '!=', 'Homme'], $gender)" wire:click="ToggleGender('Homme')" />
                 </div>
 
                 <!-- Femelle -->
                 <div class="relative w-20">
-                    <x-forms.filter-button :label="'Femme'" :checked="!in_array(['gender', '!=', 'Femme'], $gender)" wire:click="ToggleGender('Femme')" />
+                    <x-forms.filter-button :name="'Femme'" :label="'Femme'" :checked="!in_array(['gender', '!=', 'Femme'], $gender)" wire:click="ToggleGender('Femme')" />
                 </div>
             </div>
         </div>
@@ -216,8 +216,8 @@
 
     <!-- Twitch section -->
     <div x-show="showLive"
-         class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 invisible
-              [@media(min-height:801px)_and_(min-width:801px)]:visible
+         class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 hidden
+              [@media(min-height:801px)_and_(min-width:801px)]:block
               min-[1501px]:static min-[1501px]:w-[min(100%,27rem)] min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:px-1 min-[1501px]:flex-1">
         <x-utils.twitch-embed :can-close="true"/>
     </div>

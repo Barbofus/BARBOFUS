@@ -1,30 +1,38 @@
-var options = {
+const options = {
     width: '100%',
     height: '100%',
-    channel: "barbe___douce",
+    channel: "barbe___douce", //barbe___douce
     layout: "video", //"video-with-chat"
 };
+let player;
 
-var embed = new Twitch.Embed("twitchStreamEmbed", options);
-var player;
+window.addEventListener('twitch-embed-loaded', () => {
+    loadTwitchEmbed();
+});
 
 const twitchStreamEmbed = document.getElementById("twitchStreamEmbed");
 const twitchOnlineCircle = document.getElementById("twitchOnlineCircle");
 const twitchOnlineText = document.getElementById("twitchOnlineText");
 
-// Si le stream est prêt
-embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+// Quand le script est initialisé
+function loadTwitchEmbed(){
 
-    // On get le Player, met le volume et lance
-    player = embed.getPlayer();
-    player.setVolume(1);
-    player.setMuted(true);
-    player.play();
-});
+    let embed = new Twitch.Embed("twitchStreamEmbed", options);
 
-// On check pour la fin du live ou le début (permet aussi d'initialiser le stream au lancement de la page)
-embed.addEventListener(Twitch.Player.OFFLINE, HideStream);
-embed.addEventListener(Twitch.Player.ONLINE, ShowStream);
+    // Si le stream est prêt
+    embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+
+        // On get le Player, met le volume et lance
+        player = embed.getPlayer();
+        player.setVolume(1);
+        player.setMuted(true);
+        player.play();
+    });
+
+    // On check pour la fin du live ou le début (permet aussi d'initialiser le stream au lancement de la page)
+    embed.addEventListener(Twitch.Player.OFFLINE, HideStream);
+    embed.addEventListener(Twitch.Player.ONLINE, ShowStream);
+}
 
 // Stream OFF, on le cache pour afficher une image custom
 function HideStream()
@@ -53,3 +61,5 @@ function ShowStream()
 
     twitchOnlineText.textContent = 'ON';
 }
+
+export default loadTwitchEmbed;
