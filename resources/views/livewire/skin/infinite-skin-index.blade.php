@@ -16,7 +16,7 @@
         <a class="invisible flex items-center justify-around cursor-pointer gap-x-2
             [@media(min-height:501px)_and_(min-width:501px)]:visible
             min-[901px]:visible"
-            href="https://www.youtube.com/watch?v=teuDOhkgIaM" target="_blank">
+            href="https://www.youtube.com/watch?v=teuDOhkgIaM" title="Tutoriel pour poster un skin" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 fill-secondary">
                 <path d="M11.812,0C5.289,0,0,5.289,0,11.812s5.289,11.813,11.812,11.813s11.813-5.29,11.813-11.813
                 S18.335,0,11.812,0z M14.271,18.307c-0.608,0.24-1.092,0.422-1.455,0.548c-0.362,0.126-0.783,0.189-1.262,0.189
@@ -47,7 +47,7 @@
                 <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
             @endfor
         @else
-            <img class="mt-8 h-[16rem]" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
+            <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.png') }}">
             <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
         @endif
 

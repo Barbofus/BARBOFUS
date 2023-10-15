@@ -26,14 +26,14 @@
             @if($skin->user_id === Auth::user()->id)  {{--S'il s'agit de notre propre skin, nous empêche de le liker--}}
                 <x-skins.likes :skin="$skin" :canLike="false"/>
             @else
-                <button @click="SwitchLike">
+                <button aria-label="Aimer un skin" @click="SwitchLike">
                     <x-skins.likes :skin="$skin" :canLike="true" />
                 </button>
             @endif
         @endauth
 
         @guest
-            <a href="{{ route('login') }}">
+            <a href="{{ route('login') }}" title="Page de connexion">
                 <x-skins.likes :skin="$skin" :canLike="false"/>
             </a>
         @endguest

@@ -35,6 +35,7 @@
 
     <!-- Croix -->
     <button x-show="showNavbar" x-transition
+            aria-label="Fermeture du menu de navigation"
             @click="showNavbar = !showNavbar"
             class="h-10 z-50 w-10 visible min-[901px]:invisible fixed top-2 right-2 text-secondary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -44,6 +45,7 @@
 
     <!-- Hamburger -->
     <button x-show="!showNavbar" x-transition
+            aria-label="Ouverture du menu de navigation"
             @click="showNavbar = !showNavbar"
             class="h-10 w-10 visible min-[901px]:invisible fixed top-2 right-2 text-secondary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

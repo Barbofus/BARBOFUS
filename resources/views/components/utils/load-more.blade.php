@@ -3,13 +3,13 @@
     {{-- Spinning Loader --}}
     <div class="flex justify-center my-8">
 
-        <img wire:loading wire:target="LoadMore" class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">
+        <img wire:loading wire:target="LoadMore" class="animate-pulseFast h-32 w-32 opacity-25" height="128" width="128" alt="Loader" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">
 
     </div>
 
     {{-- Bouton Charger plus ... --}}
     <div class="p-4 flex flex-col items-center">
-        <button class="py-4 px-8 rounded-md bg-secondary mt-4 hover:bg-secondary-100"
+        <button aria-label="Charger plus" class="py-4 px-8 rounded-md bg-secondary mt-4 hover:bg-secondary-100"
                 wire:click="LoadMore">
             <svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  viewBox="0 0 316.513 316.513" class="h-8 w-8 fill-primary"
