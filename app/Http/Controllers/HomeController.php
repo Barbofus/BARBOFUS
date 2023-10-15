@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Race;
+use App\Models\Skin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -18,7 +21,34 @@ class HomeController extends Controller
 
         return view('home', [
             'skins' => $this->GetLastSkins(),
+            'skinCount' => $this->getSkinCount(),
+            'userCount' => $this->getUserCount(),
+            'racesName' => $this->getRacesName(),
         ]);
+    }
+
+    /**
+     * @return Race[]|\LaravelIdea\Helper\App\Models\_IH_Race_C
+     */
+    public function getRacesName()
+    {
+        return Race::select('name')->get();
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getSkinCount()
+    {
+        return floor(Skin::all()->count() / 10) * 10;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getUserCount()
+    {
+        return floor(User::all()->count() / 10) * 10;
     }
 
     /**

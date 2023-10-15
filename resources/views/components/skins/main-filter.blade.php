@@ -175,10 +175,10 @@
 
                             <div class="peer relative h-[3.375rem] w-[3.375rem]">
                                 @if(!in_array(['race_id', '=', $key + 1, 'or'], $raceSelection))
-                                    <img src="{{ asset('storage\/' . $race->ghost_icon_path) }}"
+                                    <img src="{{ asset('storage\/' . $race->ghost_icon_path) }}" loading="lazy" height="54" width="54"
                                          class="absolute opacity-75 hover:opacity-100" draggable="false">
                                 @else
-                                    <img src="{{ asset('storage\/' . $race->colored_icon_path) }}"
+                                    <img src="{{ asset('storage\/' . $race->colored_icon_path) }}" loading="lazy" height="54" width="54"
                                          class="absolute scale hover:opacity-80" draggable="false">
                                 @endif
                             </div>

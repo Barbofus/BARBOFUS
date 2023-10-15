@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <a class="slidingCard absolute group h-full w-full" title="Skin {{ $skin->race_name }} de {{ $skin->user_name }}" href="{{ route('skins.show', $id) }}">
+    <a class="slidingCard absolute group h-full w-full" title="Skin dofus {{ $skin->race_name }}" href="{{ route('skins.show', $id) }}">
         {{-- Barbe --}}
         @if($skin->user_name === 'Barbe Douce' &! isset($showBarbe))
             <img class="absolute top-0 left-0 h-16 w-16 aspect-square peer cursor-pointer" width="64" height="64" alt="Logo Barbe" loading="lazy" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">
@@ -88,6 +88,6 @@
         <div class="-z-10 absolute top-0 left-0 w-full h-full rounded-md cursor-pointer {{ (!isset($showName) || $showName) ? 'bg-primary-100' : (($skin->status == 'Pending') ? 'bg-pendingBackground' : (($skin->status == 'Refused') ? 'bg-refusedBackground' : 'bg-primary-100'))}} group-hover:brightness-125 transition-all overflow-hidden">
             <div class="skinBackGround bg-[linear-gradient(0deg,rgba(255,255,255,0)36%,rgba(255,255,255,0.05)40%,rgba(255,255,255,0)100%)] w-[200%] h-full rotate-[30deg] origin-bottom-right absolute right-0 top-[-200px]"></div>
         </div>
-        <img src="{{ asset('storage\/') . $skin->image_path }}" title="Skin {{ $skin->race_name }} de {{ $skin->user_name }}" loading="lazy" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
+        <img src="{{ asset('storage\/') . $skin->image_path }}" title="Skin dofus {{ $skin->race_name }}" loading="lazy" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
     </a>
 </div>

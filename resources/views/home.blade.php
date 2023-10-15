@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="pb-16">
-        <h1 class="text-[min(4rem,12vw)] mt-16 font-normal text-center uppercase">Découvre et partage les skins dofus</h1>
-        <h2 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">Bienvenue sur le site, explore la gallerie de skin, ou poste les tiens et deviens la miss'skin de Dofus !</h2>
+        <h1 class="text-[min(4rem,8vw)] mt-16 font-normal text-center uppercase">Barbofus, la galerie de skins dofus</h1>
+        <h2 class="text-2xl font-thin text-center mt-2 mb-8 uppercase">Bienvenue sur le site, explore la gallerie de skin, ou poste les tiens et deviens la miss'skin de Dofus !</h2>
 
         {{-- Présentation du site --}}
         <div class="h-[max(20vh,13.75rem)] mx-auto w-[min(90vw,62.5rem)] mt-16 px-1 rounded-md goldGradient">
@@ -24,6 +24,7 @@
             </div>
         </div>
 
+        {{-- Bouton call to action --}}
         <div class="h-48 mt-28 max-w-screen relative flex justify-center items-center">
             <div class="-z-10 bg-[linear-gradient(rgba(0,0,0,0.05)_50%,0,transparent_100%),linear-gradient(-135deg,var(--goldLit),var(--goldDark))] [background-size:.5em_.5em,100%_100%] absolute w-full h-full skew-y-[1.5deg]"></div>
 
@@ -38,7 +39,7 @@
         </div>
 
         {{-- Présentation Barbe --}}
-        <h2 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Découvre Barbe Douce</h2>
+        <h2 class="text-[min(4rem,7vw)] mt-32 font-normal text-center uppercase">Découvre Barbe Douce</h2>
         <h3 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">Le Streameur à l'origine de ce site</h3>
 
         <div class="w-[min(90vw,50rem)] aspect-video mx-auto mt-16 relative">
@@ -62,8 +63,21 @@
             <img class="h-[22rem] max-[799px]:rounded-full max-[799px]:mx-auto" src="{{ asset('storage/images/misc_ui/portrait.avif') }}" height="352" width="300" alt="Portrait de Barbe Douce">
         </div>
 
+        {{--  Présentation textuel --}}
+        <div class="py-20 my-28 max-w-screen relative justify-center items-center text-primary">
+            <div class="-z-10 bg-[linear-gradient(rgba(0,0,0,0.05)_50%,0,transparent_100%),linear-gradient(-135deg,var(--goldLit),var(--goldDark))] [background-size:.5em_.5em,100%_100%] top-0 absolute w-full h-full skew-y-[1.5deg]"></div>
+
+            <div class="max-w-screen-xl px-2 mx-auto [&>p]:text-[min(1.25rem,4vw)] [&>p]:indent-12 [&>p]:font-light [&>p]:mt-2">
+                <h2 class="text-[min(4rem,8vw)] font-normal text-center uppercase">Des skins en veux-tu, en voilà !</h2>
+                <p>Avec une galerie de plus de <strong>{{ $skinCount }} skins</strong> postés par <strong>{{ $userCount }} joueurs</strong>, Barbofus te permet de trouver le meilleur skin Dofus pour ton personnage en jeu, ou de montrer à tout le monde tes propres créations !</p>
+                <p>Découvre toute la variété du monde des douzes, peu importe le sexe, la classe, les couleurs ou le choix d'items, tous les skins sont présentés pour le plus grand plaisir des joueurs.</p>
+                <p>Tu veux montrer à la commu' de Barbe que c'est toi le plus fashion ? Tous les mardis, le <strong>concours Miss'Skin</strong> choisira les 3 skins ayant reçu le plus de like dans la semaine, alors prépare ton meilleur outfit et impressionne le monde des douzes !</p>
+                <p>@foreach($racesName as $race) {{ $race->name }}, @endforeach vous êtes tous bienvenu !</p>
+            </div>
+        </div>
+
         {{-- Remerciements --}}
-        <h2 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Remerciements</h2>
+        <h2 class="text-[min(4rem,7vw)] mt-32 font-normal text-center uppercase">Remerciements</h2>
 
         <div class="flex min-[800px]:flex-row flex-col gap-x-16 gap-y-8 justify-center items-center">
             <a href="https://dofusdb.fr/fr/" title="DofusDB" target="_blank" class="flex gap-x-4 items-center hover:bg-primary-100 hover:rounded-md bg-primary transition-all p-2">
