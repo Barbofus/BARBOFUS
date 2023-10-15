@@ -41,7 +41,7 @@
         <h2 class="text-[min(4rem,5vw)] mt-32 font-normal text-center uppercase">Découvre Barbe Douce</h2>
         <h3 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">Le Streameur à l'origine de ce site</h3>
 
-        <div class="w-[min(90vw,62.5rem)] aspect-video mx-auto mt-16 relative">
+        <div class="w-[min(90vw,50rem)] aspect-video mx-auto mt-16 relative">
             <x-utils.twitch-embed />
         </div>
 
@@ -57,16 +57,9 @@
                 </div>
 
                 <!-- Réseaux sociaux -->
-                <div class="flex flex-wrap gap-x-4 items-center justify-center relative h-24 mx-auto">
-                    <a href="https://www.tiktok.com/@barbe___douce" title="Page TikTok de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_TikTok.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" alt="Logo TikTok"></a>
-                    <a href="https://www.instagram.com/barbe.douce.twitch/" title="Page Instagram de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Instagram.webp') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" alt="Logo Instagram"></a>
-                    <a href="https://twitter.com/DouceBarbe" title="Page Twitter de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Twitter.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" alt="Logo Twitter"></a>
-                    <a href="https://www.youtube.com/channel/UCJIBwLWxtdrVCwuX-F3W9bA?view_as=subscriber" title="Page Youtube de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Youtube.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" alt="Logo Youtube"></a>
-                    <a href="https://www.twitch.tv/barbe___douce" title="Page Twitch de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Twitch.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" alt="Logo Twitch"></a>
-                    <a href="https://discord.gg/YKHc4RD" title="Serveur Discord de Barbe Douce" target="_blank"><img src="{{ asset('storage/images/misc_ui/Logo_Discord.png') }}" class="h-12 transition-all duration-100 hover:-translate-y-1" height="48" alt="Logo Discord"></a>
-                </div>
+                <x-utils.socials />
             </div>
-            <img class="h-[22rem] max-[799px]:rounded-full max-[799px]:mx-auto" src="{{ asset('storage/images/misc_ui/portrait.avif') }}" height="352" alt="Portrait de Barbe Douce">
+            <img class="h-[22rem] max-[799px]:rounded-full max-[799px]:mx-auto" src="{{ asset('storage/images/misc_ui/portrait.avif') }}" height="352" width="300" alt="Portrait de Barbe Douce">
         </div>
 
         {{-- Remerciements --}}

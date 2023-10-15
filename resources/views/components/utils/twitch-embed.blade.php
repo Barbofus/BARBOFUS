@@ -28,7 +28,7 @@
             <div class="absolute z-10 w-full h-[calc(100%-20px)] rounded-md top-[20px] goldGradient"></div>
         </div>
 
-        <img src="{{ asset('storage/images/misc_ui/Stream_Offlin.avif') }}" alt="Live Offline" class="relative z-20 object-cover h-full rounded-[4px]">
+        <img src="{{ asset('storage/images/misc_ui/Stream_Offlin.avif') }}" height="450" width="800" alt="Live Offline" class="relative z-20 object-cover h-full rounded-[4px]">
 
         <!-- Embed -->
         <script src= "https://embed.twitch.tv/embed/v1.js"></script>

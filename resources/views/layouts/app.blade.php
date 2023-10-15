@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#fcb943">
 
     <meta name="keywords" content="skin, dofus, barbe douce, barbofus, miss skin">
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="French">
 
@@ -20,14 +20,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://barbofus.com/" />
+    <meta property="og:url" content="{{ route('home') }}" />
     <meta property="og:title" content="Barbofus - Découverte et partage de skin dofus" />
     <meta property="og:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="og:image" content="@yield('app-meta-image')" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://barbofus.com/" />
+    <meta property="twitter:url" content="{{ route('home') }}" />
     <meta property="twitter:title" content="Barbofus - Découverte et partage de skin dofus" />
     <meta property="twitter:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="twitter:image" content="@yield('app-meta-image')" />

@@ -1,14 +1,14 @@
 <!-- En-tête -->
 <div id="header"
-     class="w-full h-0 bg-secondary relative z-20 invisible [@media(min-height:950px)_and_(min-width:901px)]
-          [@media(min-height:950px)_and_(min-width:901px)]:visible [@media(min-height:950px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:950px)_and_(min-width:901px)]:min-h-[150px] overflow-hidden">
+     class="w-full h-0 bg-secondary relative z-20 hidden [@media(min-height:950px)_and_(min-width:901px)]
+          [@media(min-height:950px)_and_(min-width:901px)]:block [@media(min-height:950px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:950px)_and_(min-width:901px)]:min-h-[150px] overflow-hidden">
 
     {{-- Arrière plan --}}
     <div class="absolute w-full h-full flex items-center justify-center bg-primary">
         <div class="w-[min(100vw,1500px)] relative">
 
             {{-- Image arrière plan --}}
-            <img src="{{ asset('storage/images/misc_ui/header-background.avif') }}" alt="Barbofus Background" class="animate-slideY [--custom-translate-y:-35px] [--custom-animation-time:20s]">
+            <img src="{{ asset('storage/images/misc_ui/header-background.avif') }}" alt="Barbofus Background" loading="lazy" width="1500" height="783" class="animate-slideY [--custom-translate-y:-35px] [--custom-animation-time:20s]">
 
             {{-- Fondu avec le fond de couleur unis --}}
             <div class="bg-gradient-to-r from-primary via-primary to-transparent h-full w-[300px] absolute left-0 top-0 z-10"></div>
@@ -24,7 +24,7 @@
             <div class="bg-[linear-gradient(90deg,transparent_0%,rgba(0,0,0,0.65)_25%,rgba(0,0,0,.65)_75%,transparent_100%)] via-primary h-full w-full absolute -z-10"></div>
 
             {{-- Logo --}}
-            <a href="{{ route('home') }}" title="Accueil Barbofus"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.webp') }}" class="h-full" draggable="false" /></a>
+            <a href="{{ route('home') }}" title="Accueil Barbofus"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.webp') }}" loading="lazy" height="217" width="746" alt="Logo Barbofus" class="h-full" draggable="false" /></a>
         </div>
     </div>
 
@@ -35,10 +35,10 @@
         <div class="h-full w-full bg-secondary [clip-path:polygon(0%_0%,100%_80%,100%_100%,0%_100%)] js-slope"></div>
 
         {{-- Dofus / créatures --}}
-        <img src="{{ asset('storage/images/misc_ui/dofus_ocre.png') }}" alt="Dofus Ocre" draggable="false" class="js-subject absolute h-20 right-[min(calc(65%+71px),571px)] bottom-0 translate-y-[2px] rotate-45 opacity-0">
-        <img src="{{ asset('storage/images/misc_ui/dofus_emeraude.png') }}" alt="Dofus Emeraude" draggable="false" class="js-subject absolute h-20 right-[min(65%,500px)] bottom-0 translate-y-[11px] rotate-[115deg] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/dofus_ocre.webp') }}" alt="Dofus Ocre" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(calc(65%+71px),571px)] bottom-0 translate-y-[2px] rotate-45 opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/dofus_emeraude.webp') }}" alt="Dofus Emeraude" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(65%,500px)] bottom-0 translate-y-[11px] rotate-[115deg] opacity-0">
 
-        <img src="{{ asset('storage/images/misc_ui/tofu.png') }}" alt="Tofu" draggable="false" class="js-subject absolute h-16 right-[750px] bottom-0 -translate-y-[40px] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/tofu.webp') }}" alt="Tofu" loading="lazy" draggable="false" width="64" height="64" class="js-subject absolute h-16 right-[750px] bottom-0 -translate-y-[40px] opacity-0">
     </div>
 
     {{-- Décoration droite --}}
@@ -48,10 +48,10 @@
         <div class="h-full w-full bg-secondary [clip-path:polygon(0%_80%,100%_0%,100%_100%,0%_100%)]"></div>
 
         {{-- Dofus / créatures --}}
-        <img src="{{ asset('storage/images/misc_ui/dofus_cawotte.png') }}" alt="Dofus Cawotte" draggable="false" class="js-subject-r absolute h-20 left-[650px] bottom-0 translate-y-[1px] -rotate-[25deg] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/dofus_cawotte.webp') }}" alt="Dofus Cawotte" draggable="false" width="65" height="80" loading="lazy" class="js-subject-r absolute h-20 left-[650px] bottom-0 translate-y-[1px] -rotate-[25deg] opacity-0">
 
-        <img src="{{ asset('storage/images/misc_ui/champchamp.png') }}" alt="Champ Champ" draggable="false" class="js-subject-r absolute h-[4.5rem] scale-x-[-1] left-[min(70%,400px)] bottom-0 translate-y-[14px] opacity-0">
-        <img src="{{ asset('storage/images/misc_ui/wabbit.png') }}" alt="Wabbit" draggable="false" class="js-subject-r absolute h-16 left-[600px] bottom-0 translate-y-[19px] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/champchamp.webp') }}" alt="Champ Champ" draggable="false" width="64" height="64" loading="lazy" class="js-subject-r absolute h-[4.5rem] scale-x-[-1] left-[min(70%,400px)] bottom-0 translate-y-[14px] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="51" height="64" class="js-subject-r absolute h-16 left-[600px] bottom-0 translate-y-[19px] opacity-0">
     </div>
 
     {{-- Décorations (monstres / dofus) --}}
