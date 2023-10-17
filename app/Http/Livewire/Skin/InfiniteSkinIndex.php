@@ -82,6 +82,7 @@ class InfiniteSkinIndex extends Component
      */
     protected $listeners = [
         'ToggleSearchedText',
+        'ToggleRace',
     ];
 
     /**
@@ -198,14 +199,6 @@ class InfiniteSkinIndex extends Component
                             });
                         }
                     }
-
-                    // ensuite, on teste les noms d'items, toujours en OR
-                    /*foreach ($this->itemRelations as $item) {
-                        //$query->orWhereIn($item.'s.id', $this->searchFilterInput);
-                        $query->orWhere(function (Builder $query) {
-                           $query->whereIn();
-                        });
-                    }*/
                 });
             })
 

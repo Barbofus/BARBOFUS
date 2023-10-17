@@ -42,7 +42,7 @@
 
 
     <!-- Container -->
-    <div x-show="showFilter" x-transition class="bg-primary relative w-full flex flex-col py-4 pl-6
+    <div x-show="showFilter" x-transition class="bg-primary relative z-[51] w-full flex flex-col py-4 pl-6
               max-[900px]:h-[100vh]
               min-[901px]:flex-row min-[901px]:justify-center min-[901px]:gap-x-8 min-[901px]:pl-0
               max-[1500px]:shadow-lg
@@ -108,11 +108,16 @@
                     <label for="barbe only" class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">Voir uniquement les skins de <span class=" font-normal">Barbe Douce</span></label>
                 </x-forms.filter-button>
             </div>
+        </div>
+
+
+        <!-- Second part -->
+        <div class="max-[1500px]:max-w-[38.75rem] max-[900px]:pb-8">
 
 
 
             <!-- Skin content -->
-            <div class="mt-5">
+            <div>
                 <div class="ml-4 border-b border-ivory w-[50%]">
                     <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Le skin peut contenir :</p>
                 </div>
@@ -138,65 +143,17 @@
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        <!-- Second part -->
-        <div class="max-[1500px]:max-w-[38.75rem] min-[901px]:max-[1500px]:overflow-hidden max-[900px]:pb-8">
 
             <!-- Classes -->
-            <div class="relative mt-5
-                  min-[901px]:mt-0
-                  min-[1501px]:mt-5">
+            <div class="relative mt-5">
 
-                <div class="flex gap-x-2">
-
-                    <div class="ml-4 border-b border-secondary pt-2 w-[clamp(9.375rem,12.5rem,50%)]">
-                        <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Choisis tes classes :</p>
-                    </div>
-
-                    <!-- Bouton reset -->
-                    <button class="w-40 h-10 left-[33%] min-h-[2rem] bg-secondary-100 hover:bg-secondary min-w-[9rem] font-light text-[1rem] rounded-md text-primary"
-                            @click="window.scrollTo(0,0)"
-                            wire:click="UnselectAllRaces" >
-                        Reset les classes
-                    </button>
-                </div>
-
-                <!-- Icones -->
-                <div class="grid grid-cols-6 pr-8 mt-2
-                    min-[1001px]:grid-cols-8
-                    min-[1501px]:grid-cols-7 min-[1501px]:max-h-[12.5rem]">
-
-                    @foreach($races as $key => $race)
-                        <button class="relative"
-                                wire:click="ToggleRace({{ $key + 1 }})"
-                                @click="window.scrollTo(0,0)">
-
-                            <div class="peer relative h-[3.375rem] w-[3.375rem]">
-                                @if(!in_array(['race_id', '=', $key + 1, 'or'], $raceSelection))
-                                    <img src="{{ asset('storage\/' . $race->ghost_icon_path) }}" loading="lazy" height="54" width="54"
-                                         class="absolute opacity-75 hover:opacity-100" draggable="false">
-                                @else
-                                    <img src="{{ asset('storage\/' . $race->colored_icon_path) }}" loading="lazy" height="54" width="54"
-                                         class="absolute scale hover:opacity-80" draggable="false">
-                                @endif
-                            </div>
-
-                            <div class="absolute left-[calc(50%-1rem-0.5rem)] z-50 invisible peer-hover:visible -top-8">
-                                <div class="font-light text-[0.9rem] px-4 py-1 text-primary bg-secondary rounded">{{ $race->name }}</div>
-                                <svg class="absolute h-4 -bottom-4 left-4 text-secondary" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
-                                    <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
-                                </svg>
-                            </div>
-                        </button>
-                    @endforeach
-
-                </div>
+                <livewire:forms.skin-filter-races wire:key="races{{ rand() }}" :races="$races" :raceWhere="$raceWhere" />
             </div>
 
             <!-- Sexe -->
-            <div class="flex items-center justify-center gap-x-20">
+            <div class="flex items-center justify-center gap-x-20 mt-2">
 
                 <!-- Mâle -->
                 <div class="relative w-16">

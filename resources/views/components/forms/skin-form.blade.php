@@ -221,7 +221,7 @@
                                 // Puis l'ajoute et scroll sur la classe choisie
                                 const race = document.getElementById('label_race_id_' + searchResult);
                                 race.classList.add('active');
-                                race.scrollIntoView();
+                                race.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
                             }
 
                             // Detecte si on clique hors du choix de classe

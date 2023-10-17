@@ -38,7 +38,7 @@
         <x-skins.sorter />
     </div>
 
-    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" />
+    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere />
 
     {{-- La grille des skins --}}
     <div class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mb-10 bg-primary">
