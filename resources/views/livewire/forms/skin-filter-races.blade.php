@@ -99,7 +99,7 @@
     </div>
 
     {{-- Affichage des classes actuels --}}
-    <div class="flex flex-wrap justify-start w-full max-h-[7rem] overflow-auto items-center gap-2 mt-2">
+    <div class="flex flex-wrap justify-start w-full max-h-[3.5rem] overflow-auto items-center gap-2 mt-2">
         @foreach($raceWhere as $race)
             <button wire:click="$emit('ToggleRace', {{ $race[2] }})"
                     @click="window.scrollTo(0,0)"
