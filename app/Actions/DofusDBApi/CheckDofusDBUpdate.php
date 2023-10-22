@@ -12,7 +12,6 @@ final class CheckDofusDBUpdate
     // Need update
     public function __invoke(): bool
     {
-
         // Get la version de l'api
         $response = Http::get('https://api.dofusdb.fr/version');
 
