@@ -10,9 +10,9 @@
             {{-- Image arrière plan --}}
             <img src="{{ asset('storage/images/misc_ui/header-background.avif') }}" alt="Barbofus Background" loading="lazy" width="1500" height="783" class="animate-slideY [--custom-translate-y:-35px] [--custom-animation-time:20s]">
 
-            {{-- Fondu avec le fond de couleur unis --}}
-            <div class="bg-gradient-to-r from-primary via-primary to-transparent h-full w-[300px] absolute left-0 top-0 z-10"></div>
-            <div class="bg-gradient-to-l from-primary via-primary to-transparent h-full w-[300px] absolute right-0 top-0 z-10"></div>
+            {{-- Fondu avec le fond de couleur unis w-[300px] --}}
+            <div class="bg-gradient-to-r from-primary via-primary to-transparent h-full w-[150px] absolute left-0 top-0 z-10"></div>
+            <div class="bg-gradient-to-l from-primary via-primary to-transparent h-full w-[150px] absolute right-0 top-0 z-10"></div>
         </div>
     </div>
 
@@ -35,10 +35,10 @@
         <div class="h-full w-full bg-secondary [clip-path:polygon(0%_0%,100%_80%,100%_100%,0%_100%)] js-slope"></div>
 
         {{-- Dofus / créatures --}}
-        <img src="{{ asset('storage/images/misc_ui/dofus_ocre.webp') }}" alt="Dofus Ocre" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(calc(65%+71px),571px)] bottom-0 translate-y-[2px] rotate-45 opacity-0">
-        <img src="{{ asset('storage/images/misc_ui/dofus_emeraude.webp') }}" alt="Dofus Emeraude" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(65%,500px)] bottom-0 translate-y-[11px] rotate-[115deg] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/dofus_ocre.webp') }}" alt="Dofus Ocre" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(calc(65%+71px),35.6875rem)] bottom-0 translate-y-[2px] rotate-45 opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/dofus_emeraude.webp') }}" alt="Dofus Emeraude" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(65%,31.25rem)] bottom-0 translate-y-[11px] rotate-[115deg] opacity-0">
 
-        <img src="{{ asset('storage/images/misc_ui/tofu.webp') }}" alt="Tofu" loading="lazy" draggable="false" width="64" height="64" class="js-subject absolute h-16 right-[750px] bottom-0 -translate-y-[40px] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/tofu.webp') }}" alt="Tofu" loading="lazy" draggable="false" width="64" height="64" class="js-subject absolute h-16 right-[46.875rem] bottom-0 -translate-y-[40px] opacity-0">
     </div>
 
     {{-- Décoration droite --}}
@@ -48,10 +48,12 @@
         <div class="h-full w-full bg-secondary [clip-path:polygon(0%_80%,100%_0%,100%_100%,0%_100%)]"></div>
 
         {{-- Dofus / créatures --}}
-        <img src="{{ asset('storage/images/misc_ui/dofus_cawotte.webp') }}" alt="Dofus Cawotte" draggable="false" width="65" height="80" loading="lazy" class="js-subject-r absolute h-20 left-[650px] bottom-0 translate-y-[1px] -rotate-[25deg] opacity-0">
+        <img src="{{ asset('storage/images/misc_ui/dofus_cawotte.webp') }}" alt="Dofus Cawotte" draggable="false" width="65" height="80" loading="lazy" class="js-subject-r absolute h-20 left-[40.625rem] bottom-0 translate-y-[1px] -rotate-[25deg] opacity-0">
 
-        <img src="{{ asset('storage/images/misc_ui/champchamp.webp') }}" alt="Champ Champ" draggable="false" width="64" height="64" loading="lazy" class="js-subject-r absolute h-[4.5rem] scale-x-[-1] left-[min(70%,400px)] bottom-0 translate-y-[14px] opacity-0">
-        <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="51" height="64" class="js-subject-r absolute h-16 left-[600px] bottom-0 translate-y-[19px] opacity-0">
+        {{--  width="64" height="64"  --}}
+        <img src="{{ asset('storage/images/misc_ui/champchamp.webp') }}" alt="Champ Champ" draggable="false" width="96" height="75" loading="lazy" class="js-subject-r absolute scale-x-[-1] left-[min(70%,25rem)] bottom-0 translate-y-[14px] opacity-0">
+        {{--  width="51" height="64"  left-[37.5rem]--}}
+        <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="96" height="114" class="js-subject-r absolute left-[34.375rem] bottom-0 translate-y-[19px] opacity-0">
     </div>
 
     {{-- Décorations (monstres / dofus) --}}

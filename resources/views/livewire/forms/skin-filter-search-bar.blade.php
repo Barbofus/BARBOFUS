@@ -17,7 +17,7 @@
                wire:keydown.arrow-up.prevent="{{ (count($itemToShow) > 0) ? 'decrementSelection' : '' }}"
                wire:keydown.tab.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
                wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', [\'' . addslashes($itemToShow[$selectionKey]->name) . '\',' . $itemToShow[$selectionKey]->id . '])' : '' }}"
-               @keydown.enter="window.scrollTo(0,0)">
+               @keydown.enter="window.scrollTo({top: 0, behavior: 'smooth'})">
 
         {{-- Liste des résultats de la recherche --}}
         <div class="absolute bg-primary-100 max-h-[18.75rem] w-full rounded-sm z-50 overflow-auto">
@@ -25,7 +25,7 @@
                 <button
                     class="flex w-full p-1 items-center group transition-all {{ ($key == $selectionKey) ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10' }}"
                     wire:click="$emit('ToggleSearchedText', ['{{ addslashes($item->name) }}', {{ $item->id }}])"
-                    @click="window.scrollTo(0,0)"
+                    @click="window.scrollTo({top: 0, behavior: 'smooth'})"
                     wire:key="{{ addslashes($item->name) . rand() }}">
                     @if(@isset($item->icon_path))
                         <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('storage\/'. $item->icon_path) }}">
@@ -44,7 +44,7 @@
         <div class="flex flex-wrap justify-start w-full max-h-[7rem] overflow-auto items-center gap-2 mt-2">
             @foreach($searchFilterInput as $input)
                 <button wire:click="$emit('ToggleSearchedText', ['{{ addslashes($input[0]) }}', {{ $input[1] }}])"
-                        @click="window.scrollTo(0,0)"
+                        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
                         class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
                     <p class="font-light text-[1rem] text-inactiveText">{{ $input[0] }}</p>
 

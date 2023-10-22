@@ -50,6 +50,8 @@
 
         searchForResult()
         {
+            if(searchedLetters.length < 2) return;
+
             const search = searchedLetters.join('');
             let result = null;
 
@@ -73,14 +75,14 @@
 
             // Puis l'ajoute et scroll sur la classe choisie
             const race = document.getElementById('label_race_id_' + this.searchResult);
-            scrollTo(race);
+            goScrollTo(race);
         },
     }">
 
     <!-- Resultat -->
     <button type="button"
             @click="showSort = !showSort"
-            @keydown="if(showSort) keyPressed($event), window.scrollTo(0,0)"
+            @keydown="if(showSort) keyPressed($event), window.scrollTo({top: 0, behavior: 'smooth'})"
             class="flex transition-all rounded-md w-[15rem] text-inactiveText hover:text-secondary font-light items-center justify-left gap-x-2 border-2 border-inactiveText hover:border-secondary cursor-pointer h-12 bg-primary-100 p-2">
         <p>Choisis une classe ...</p>
     </button>
@@ -90,7 +92,7 @@
         @foreach ($races as $race)
             <button id="label_race_id_{{ $race->id }}"
                     aria-label="Filtre {{ $race->name }}"
-                    @click="setSelection( {{ $race->id }}), window.scrollTo(0,0)"
+                    @click="setSelection( {{ $race->id }}), window.scrollTo({top: 0, behavior: 'smooth'})"
                     class="flex rounded-md items-center transition-all w-full justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
                 <img src="{{ asset('storage/' . $race->ghost_icon_path) }}" class="h-11">
                 <p>{{ $race->name }}</p>
@@ -102,7 +104,7 @@
     <div class="flex flex-wrap justify-start w-full max-h-[3.5rem] overflow-auto items-center gap-2 mt-2">
         @foreach($raceWhere as $race)
             <button wire:click="$emit('ToggleRace', {{ $race[2] }})"
-                    @click="window.scrollTo(0,0)"
+                    @click="window.scrollTo({top: 0, behavior: 'smooth'})"
                     class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
                 <p class="font-light text-[1rem] text-inactiveText">{{ $races[$race[2]-1]->name  }}</p>
 
@@ -120,12 +122,13 @@
         let to;
         let searchedLetters = [];
 
-        function scrollTo(el)
+        function goScrollTo(el)
         {
             if(!el) return;
 
             el.classList.add('active');
-            el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+
+            el.parentElement.scrollTo({ behavior: 'smooth', top: el.offsetTop});
         }
     </script>
 </div>

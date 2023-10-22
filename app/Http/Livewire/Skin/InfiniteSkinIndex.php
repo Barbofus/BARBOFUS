@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Skin;
 
+use App\Actions\Utils\DoColorsMatch;
+use App\Models\Skin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -43,6 +45,15 @@ class InfiniteSkinIndex extends Component
         'dofus_item_costume',
     ];
 
+    /**
+     * @var string[]
+     */
+    protected $skinColors = [
+        'color_cloth_1',
+        'color_cloth_2',
+        'color_cloth_3',
+    ];
+
     protected bool $hasLoadMore = false;
 
     public string $orderBy = 'skins.updated_at'; // Nouveauté par défault
@@ -68,6 +79,11 @@ class InfiniteSkinIndex extends Component
      */
     public $skinContentWhere = [];
 
+    /**
+     * @var array<int, string>
+     */
+    public $skinPetTypeWhere = [];
+
     public bool $barbeOnly = false;
 
     public bool $winnersOnly = false;
@@ -76,6 +92,8 @@ class InfiniteSkinIndex extends Component
      * @var array<int, string[]>
      */
     public $searchFilterInput = [];
+
+    public string $filterColor = '';
 
     /**
      * @var string[]
@@ -121,7 +139,7 @@ class InfiniteSkinIndex extends Component
 
             // Les joins
             ->join('users', 'skins.user_id', '=', 'users.id')
-            ->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0, function (Builder $query) {
+            ->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0 || count($this->skinPetTypeWhere) > 0, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
                     $query->leftJoin($item.'s', $item.'s.id', '=', 'skins.'.$item.'_id');
                 }
@@ -129,6 +147,13 @@ class InfiniteSkinIndex extends Component
 
             // select princpal
             ->select('skins.id')
+
+            ->when($this->skinColors != '', function (Builder $query) {
+                foreach ($this->skinColors as $color)
+                {
+                    $query->addSelect('skins.' . $color);
+                }
+            })
 
             // Variables utiles pour les orderBy
             ->addSelect([
@@ -180,7 +205,33 @@ class InfiniteSkinIndex extends Component
                 });
             })
 
-            // SearchBar
+            // Skin pet type
+            ->when(count($this->skinPetTypeWhere) > 0, function (Builder $query) {
+                $query->where(function (Builder $query) {
+
+                    $query->when(in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
+                        $query->whereExists(function (Builder $query) {
+                            $query->select('id')
+                                ->from('dofus_item_pets')
+
+                                ->whereColumn('dofus_item_pets.id', 'skins.dofus_item_pet_id');
+                        })
+                            ->WhereNotIn('dofus_item_pets.type', $this->skinPetTypeWhere);
+                    });
+
+                    $query->when(!in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
+                        $query->whereNotExists(function (Builder $query) {
+                            $query->select('id')
+                                ->from('dofus_item_pets')
+
+                                ->whereColumn('dofus_item_pets.id', 'skins.dofus_item_pet_id');
+                        })
+                            ->OrWhereNotIn('dofus_item_pets.type', $this->skinPetTypeWhere);
+                    });
+                });
+            })
+
+            // SearchBar x
             ->when(count($this->searchFilterInput) > 0, function (Builder $query) {
                 $query->where(function (Builder $query) {
 
@@ -213,10 +264,49 @@ class InfiniteSkinIndex extends Component
                 $query->inRandomOrder();
             })
 
-            // Scroll infini
+            // Récupère les ID
             ->pluck('id')
-            ->chunk(self::ITEMS_PER_PAGE)
             ->toArray();
+
+
+        // Si on a une couleur à filtrer
+        if($this->filterColor != '') {
+            $toRemove = [];
+
+            // On reprend tous les skins basé sur les précédents ID, et on select l'id + les couleurs
+            $skins = DB::table('skins')
+                ->whereIn('id', $this->postIdChunks)
+                ->select('id')
+                ->when($this->skinColors != '', function (Builder $query) {
+                    foreach ($this->skinColors as $color)
+                    {
+                        $query->addSelect('skins.' . $color);
+                    }
+                })->get()->toArray();
+
+            // Pour chacun d'entre eux, on test le colormatch sur chaque couleur, s'il y en a au moins une de bonne on passe à la boucle suivant
+            foreach ($skins as $skin) {
+                foreach ($this->skinColors as $color) {
+                    if ((new DoColorsMatch)($this->filterColor, $skin->$color)) {
+                        continue 2;
+                    }
+                }
+
+                // Sinon on ajoute dans le tableau des IDs à supprimer
+                $toRemove[] = $skin->id;
+            }
+
+            // On supprime tous les IDs dont la couleur de match pas
+            foreach ($toRemove as $rem)
+            {
+                if (($key = array_search($rem, $this->postIdChunks)) !== false) {
+                    unset($this->postIdChunks[$key]);
+                }
+            }
+        }
+
+        // On chunk et on envoie !
+        $this->postIdChunks = array_chunk($this->postIdChunks,  self::ITEMS_PER_PAGE);
 
         $this->page = 1;
 
@@ -300,6 +390,54 @@ class InfiniteSkinIndex extends Component
         }
 
         $this->skinContentWhere[] = $subcategoryID;
+    }
+
+    /**
+     * @param  string|string[]  $petType
+     * @return void
+     */
+    public function TogglePetType(string|array $petType)
+    {
+        if (is_array($petType)) {
+            foreach ($petType as $pt) {
+                // Si le subcategory est déjà exclu
+                if (count($this->skinPetTypeWhere) > 0 && ($key = array_search($pt, $this->skinPetTypeWhere)) !== false) {
+                    unset($this->skinPetTypeWhere[$key]);
+
+                    continue;
+                }
+
+                $this->skinPetTypeWhere[] = $pt;
+            }
+
+            return;
+        }
+        // Si le subcategory est déjà exclu
+        if (count($this->skinPetTypeWhere) > 0 && ($key = array_search($petType, $this->skinPetTypeWhere)) !== false) {
+            unset($this->skinPetTypeWhere[$key]);
+
+            return;
+        }
+
+        $this->skinPetTypeWhere[] = $petType;
+    }
+
+    /**
+     * @param string $hex
+     * @return void
+     */
+    public function updateFilterColor(string $hex)
+    {
+        $hex = ltrim($hex, '#');
+        $this->filterColor = $hex;
+    }
+
+    /**
+     * @return void
+     */
+    public function resetFilterColor()
+    {
+        $this->filterColor = '';
     }
 
     /**

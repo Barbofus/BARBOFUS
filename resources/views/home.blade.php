@@ -6,9 +6,9 @@
         <h1 class="text-[min(4rem,8vw)] mt-16 font-normal text-center uppercase">Barbofus, la galerie de skins dofus</h1>
         <h2 class="text-2xl font-thin text-center mt-2 mb-8 uppercase">Bienvenue sur le site, explore la gallerie de skin, ou poste les tiens et deviens la miss'skin de Dofus !</h2>
 
-        {{-- Présentation du site --}}
+        {{-- Présentation des skins --}}
         <div class="h-[max(20vh,13.75rem)] mx-auto w-[min(90vw,62.5rem)] mt-16 px-1 rounded-md goldGradient">
-            <div class="h-full w-full bg-primary overflow-hidden">
+            <div class="h-full w-full bg-primary overflow-x-clip">
                 <div class="slider flex pl-4 gap-x-4 h-full w-fit translate-x-0">
                     @foreach($skins as $skin)
 

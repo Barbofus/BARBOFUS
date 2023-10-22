@@ -197,6 +197,8 @@
 
                             function searchForResult()
                             {
+                                if(searchedLetters.length < 2) return;
+
                                 const search = searchedLetters.join("");
                                 let result = null;
 

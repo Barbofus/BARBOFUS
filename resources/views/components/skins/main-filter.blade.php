@@ -118,8 +118,8 @@
 
             <!-- Skin content -->
             <div>
-                <div class="ml-4 border-b border-ivory w-[50%]">
-                    <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Le skin peut contenir :</p>
+                <div class="ml-4 mt-2 border-b border-ivory w-[50%]">
+                    <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Les items peuvent être :</p>
                 </div>
 
 
@@ -142,6 +142,30 @@
                         <x-forms.filter-button :name="'Objets vivants'" :label="'Objets vivants'" :checked="!in_array(3, $skinContent)" wire:click="ToggleSkinContent(3)" />
                     </div>
                 </div>
+
+
+                <div class="ml-4 mt-4 border-b border-ivory w-[65%]">
+                    <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Voir uniquement les :</p>
+                </div>
+
+                <!-- Checkboxs -->
+                <div class="flex flex-wrap flex-col min-[450px]:flex-row justify-start pt-2 pr-5 ml-2 tracking-wide gap-x-4 gap-y-2">
+
+                    <!-- Familier -->
+                    <div class="relative w-[5rem]">
+                        <x-forms.filter-button :name="'Familier'" :label="'Familier'" :checked="!in_array('familier', $petTypeContent)" wire:click="TogglePetType('familier')" />
+                    </div>
+
+                    <!-- Montilier -->
+                    <div class="relative w-[5.25rem]">
+                        <x-forms.filter-button :name="'Montilier'" :label="'Montilier'" :checked="!in_array('montilier', $petTypeContent)" wire:click="TogglePetType('montilier')" />
+                    </div>
+
+                    <!-- Mnture -->
+                    <div class="relative w-[7rem]">
+                        <x-forms.filter-button :name="'Monture'" :label="'Monture'" :checked="!in_array('dragodinde', $petTypeContent)" wire:click="TogglePetType(['dragodinde', 'muldo', 'volkorne'])" />
+                    </div>
+                </div>
             </div>
 
 
@@ -150,6 +174,20 @@
             <div class="relative mt-5">
 
                 <livewire:forms.skin-filter-races wire:key="races{{ rand() }}" :races="$races" :raceWhere="$raceWhere" />
+            </div>
+
+            {{-- Couleurs --}}
+            <div class="flex items-center gap-x-2 mt-2" x-data="{ color: '' }">
+                <label for="color" class="font-thin text-secondary text-[1.15rem]">Couleurs :</label>
+                <input id="color" type="color"
+                       x-model="color"
+                       class="rounded cursor-pointer"
+                       @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'})">
+                <button
+                    aria-label="Réinitialiser les couleurs"
+                    @click="window.scrollTo({top: 0, behavior: 'smooth'}), color = '#000000'"
+                    wire:click="resetFilterColor"
+                    class="text-primary font-light text-lg py-1 px-4 bg-secondary rounded-lg hover:rounded-2xl transition-all hover:bg-secondary-100 {{ ($filterColor == '') ? 'hidden' : '' }}">Reset</button>
             </div>
 
             <!-- Sexe -->
@@ -172,7 +210,7 @@
 
 
     <!-- Twitch section -->
-    <div x-show="showLive"
+    <div x-show="showLive" wire:ignore
          class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 hidden
               [@media(min-height:801px)_and_(min-width:801px)]:block
               min-[1501px]:static min-[1501px]:w-[min(100%,27rem)] min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:px-1 min-[1501px]:flex-1">

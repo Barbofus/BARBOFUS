@@ -22,7 +22,7 @@ final class UpdateItemsFromDofusDBApi
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemPet', [18, 121], [190, 255, 256, 249, 250], 'images/icons/items/pets/'));
 
         // Cette ligne fetch les DD, Muldo et Volkorne, ils ne changeront pas, donc pas besoin de la relancer
-        //$newPets = (new SaveItemsFromDofusDB)('App\Models\DofusItemPet', [97,196,207], [], 'images/icons/items/pets/');
+        //$newPets = (new SaveItemsFromDofusDB)('App\Models\DofusItemPet', [97, 196, 207], [], 'images/icons/items/pets/');
 
         // Sauvegarde la nouvelle version dans notre fichier
         $newVersion = Http::get('https://api.dofusdb.fr/version')->body();

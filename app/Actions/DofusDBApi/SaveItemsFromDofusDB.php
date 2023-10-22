@@ -75,13 +75,49 @@ final class SaveItemsFromDofusDB
             $iconPath .= '.png';
 
             // Créer l'item en bdd
-            $newItem = $model::create([
-                'name' => $item['name'],
-                'dofus_id' => $item['id'],
-                'level' => $item['level'],
-                'icon_path' => $iconPath,
-                'dofus_items_sub_categorie_id' => $subCategoryId,
-            ]);
+            if ($model != 'App\Models\DofusItemPet') {
+                $newItem = $model::create([
+                    'name' => $item['name'],
+                    'dofus_id' => $item['id'],
+                    'level' => $item['level'],
+                    'icon_path' => $iconPath,
+                    'dofus_items_sub_categorie_id' => $subCategoryId,
+                ]);
+            } else {
+                $petType = '';
+
+                switch ($item['typeId']) {
+                    case 97:
+                    case 190:
+                        $petType = 'dragodinde';
+                        break;
+                    case 196:
+                    case 255:
+                        $petType = 'muldo';
+                        break;
+                    case 207:
+                    case 256:
+                        $petType = 'volkorne';
+                        break;
+                    case 18:
+                    case 249:
+                        $petType = 'familier';
+                        break;
+                    case 121:
+                    case 250:
+                        $petType = 'montilier';
+                        break;
+                }
+
+                $newItem = $model::create([
+                    'name' => $item['name'],
+                    'dofus_id' => $item['id'],
+                    'level' => $item['level'],
+                    'icon_path' => $iconPath,
+                    'dofus_items_sub_categorie_id' => $subCategoryId,
+                    'type' => $petType,
+                ]);
+            }
 
             // Pour les DD, Muldo et Volkorne, on ne récup pas l'image, ils ont tous la même
             if ($item['typeId'] != 97 && $item['typeId'] != 196 && $item['typeId'] != 207) {

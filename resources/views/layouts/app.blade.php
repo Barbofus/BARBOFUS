@@ -75,10 +75,10 @@
     }"
     x-init="if(sessionAlert) setTimeout(() => newAlert('{{ session('alert-message') }}'), 300)"
     x-on:alert-event="newAlert($event.detail.message)">
+
     @yield('app-content')
 
     <x-utils.custom-alert />
-
 
 
     <script>

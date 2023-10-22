@@ -82,11 +82,35 @@
                 <img src="{{ asset('storage/images/misc_ui/'. (($skin->second_reward_id == 1) ? 'dofus_ocre.webp' : (($skin->second_reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.webp'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="w-[18%] rotate-6 top-2 right-4 absolute cursor-pointer">
                 <img src="{{ asset('storage/images/misc_ui/'. (($skin->reward_id == 1) ? 'dofus_ocre.webp' : (($skin->reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.png'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="dofus w-[20%] rotate-12 top-4 right-1 absolute cursor-pointer" >
             @endif
+        @elseif(rand(0,1) == 1)  {{-- Deco Halouine --}}
+
+            {{-- Décoration de la carte --}}
+            <div class="absolute flex items-end justify-center h-14 w-full top-[-3.5rem]">
+
+                @if(rand(0,2) >= 1)
+                    <img src="{{ asset('storage/images/misc_ui/citrouille.webp') }}" width="200" height="72" alt="Citrouille" loading="lazy" draggable="false" class="origin-bottom absolute -bottom-[0.875rem]">
+                @else
+                    <div class="absolute -bottom-4">
+                        <img src="{{ asset('storage/images/misc_ui/bougies.webp') }}" width="156" height="85" alt="Bougies" loading="lazy" draggable="false" class="h-full origin-bottom">
+                        <img src="{{ asset('storage/images/misc_ui/bougies-lueur.webp') }}" width="156" height="85" alt="Lumières bougies" loading="lazy" draggable="false" class="h-full absolute top-0 origin-bottom animate-pulse" style="animation-delay: {{ rand(0,2000) }}ms">
+                    </div>
+                @endif
+            </div>
         @endif
 
         {{-- Skin + Background --}}
         <div class="-z-10 absolute top-0 left-0 w-full h-full rounded-md cursor-pointer {{ (!isset($showName) || $showName) ? 'bg-primary-100' : (($skin->status == 'Pending') ? 'bg-pendingBackground' : (($skin->status == 'Refused') ? 'bg-refusedBackground' : 'bg-primary-100'))}} group-hover:brightness-125 transition-all overflow-hidden">
-            <div class="skinBackGround bg-[linear-gradient(0deg,rgba(255,255,255,0)36%,rgba(255,255,255,0.05)40%,rgba(255,255,255,0)100%)] w-[200%] h-full rotate-[30deg] origin-bottom-right absolute right-0 top-[-200px]"></div>
+            <div class="skinBackGround bg-[linear-gradient(0deg,rgba(255,255,255,0)36%,rgba(255,255,255,0.05)40%,rgba(255,255,255,0)100%)] w-[200%] h-full rotate-[30deg] origin-bottom-right absolute right-0 top-[-12.5rem]">
+            </div>
+
+            {{-- Halouine --}}
+            @if(rand(0,2) == 2)
+                @if(rand(0,1) == 1)
+                    <img src="{{ asset('storage/images/misc_ui/scary-face.webp') }}" width="250" height="250" alt="Scary Face" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20">
+                @else
+                    <img src="{{ asset('storage/images/misc_ui/bat.webp') }}" width="200" height="103" alt="Chauve souris" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20">
+                @endif
+            @endif
         </div>
         <img src="{{ asset('storage\/') . $skin->image_path }}" title="Skin dofus {{ $skin->race_name }}" loading="lazy" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
     </a>
