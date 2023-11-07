@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 
+Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
+
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
 

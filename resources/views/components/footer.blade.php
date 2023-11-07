@@ -24,6 +24,7 @@
                 <a href="{{ route('home') }}" title="Accueil du site">Accueil</a>
                 <a href="{{ route('skins.index') }}" title="Gallerie de skin">Les skins</a>
                 <a href="{{ route('skins.create') }}" title="Partage ton skin">Poster un skin</a>
+                <a href="{{ route('mentions-legales') }}" title="Mentions légales">Mentions légales</a>
             </div>
         </div>
     </div>
