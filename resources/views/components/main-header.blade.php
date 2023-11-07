@@ -50,14 +50,10 @@
         {{-- Dofus / créatures --}}
         <img src="{{ asset('storage/images/misc_ui/dofus_cawotte.webp') }}" alt="Dofus Cawotte" draggable="false" width="65" height="80" loading="lazy" class="js-subject-r absolute h-20 left-[40.625rem] bottom-0 translate-y-[1px] -rotate-[25deg] opacity-0">
 
-        {{--  width="64" height="64"  --}}
-        <img src="{{ asset('storage/images/misc_ui/champchamp.webp') }}" alt="Champ Champ" draggable="false" width="96" height="75" loading="lazy" class="js-subject-r absolute scale-x-[-1] left-[min(70%,25rem)] bottom-0 translate-y-[14px] opacity-0">
-        {{--  width="51" height="64"  left-[37.5rem]--}}
-        <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="96" height="114" class="js-subject-r absolute left-[34.375rem] bottom-0 translate-y-[19px] opacity-0">
-    </div>
 
-    {{-- Décorations (monstres / dofus) --}}
-    <div class="relative z-10">
+        <img src="{{ asset('storage/images/misc_ui/champchamp.webp') }}" alt="Champ Champ" draggable="false" width="64" height="64" loading="lazy" class="js-subject-r absolute scale-x-[-1] left-[min(70%,25rem)] bottom-0 translate-y-[14px] opacity-0">
+
+        <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="51" height="64" class="js-subject-r absolute left-[37.5rem] bottom-0 translate-y-[19px] opacity-0">
     </div>
 
     {{-- Live partout--}}
