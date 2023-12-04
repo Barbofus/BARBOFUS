@@ -3,16 +3,16 @@
      class="w-full h-0 bg-secondary relative z-20 hidden
           [@media(min-height:950px)_and_(min-width:901px)]:block [@media(min-height:950px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:950px)_and_(min-width:901px)]:min-h-[150px] overflow-hidden">
 
-    {{-- Arrière plan --}}
-    <div class="absolute w-full h-full flex items-center justify-center bg-primary">
-        <div class="w-[min(100vw,1500px)] relative">
+    {{-- Arrière plan bg-primary --}}
+    <div class="absolute w-full h-full flex items-center justify-center bg-[#d2e4eb]">
+        <div class="w-[min(100vw,1500px)] relative h-full">
 
             {{-- Image arrière plan --}}
-            <img src="{{ asset('storage/images/misc_ui/header-background.avif') }}" alt="Barbofus Background" loading="lazy" width="1500" height="783" class="animate-slideY [--custom-translate-y:-35px] [--custom-animation-time:20s]">
+            <img src="{{ asset('storage/images/misc_ui/header-background.avif') }}" alt="Barbofus Background" loading="lazy" width="1500" height="783" class="animate-slideY [--custom-translate-y:-35px] [--custom-animation-time:20s] absolute left-0 bottom-[-200px]">
 
-            {{-- Fondu avec le fond de couleur unis w-[300px] --}}
-            <div class="bg-gradient-to-r from-primary via-primary to-transparent h-full w-[150px] absolute left-0 top-0 z-10"></div>
-            <div class="bg-gradient-to-l from-primary via-primary to-transparent h-full w-[150px] absolute right-0 top-0 z-10"></div>
+            {{-- Fondu avec le fond de couleur unis w-[300px] degradé primary --}}
+            <div class="bg-gradient-to-r from-[#d2e4eb] via-[#d2e4eb] to-transparent h-full w-[150px] absolute left-0 top-0 z-10"></div>
+            <div class="bg-gradient-to-l from-[#d2e4eb] via-[#d2e4eb] to-transparent h-full w-[150px] absolute right-0 top-0 z-10"></div>
         </div>
     </div>
 
@@ -20,8 +20,8 @@
     <div class="flex h-full justify-center z-10 relative">
         <div class="max-w-1/2 h-full flex justify-center relative overflow-hidden">
 
-            {{-- Degradé derrière logo --}}
-            <div class="bg-[linear-gradient(90deg,transparent_0%,rgba(0,0,0,0.65)_25%,rgba(0,0,0,.65)_75%,transparent_100%)] via-primary h-full w-full absolute -z-10"></div>
+            {{-- Degradé derrière logo 0.65 --}}
+            <div class="bg-[linear-gradient(90deg,transparent_0%,rgba(0,0,0,0.35)_25%,rgba(0,0,0,.35)_75%,transparent_100%)] via-primary h-full w-full absolute -z-10"></div>
 
             {{-- Logo --}}
             <a href="{{ route('home') }}" title="Accueil Barbofus"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.webp') }}" loading="lazy" height="15vh" alt="Logo Barbofus" class="h-full" draggable="false" /></a>
@@ -38,7 +38,8 @@
         <img src="{{ asset('storage/images/misc_ui/dofus_ocre.webp') }}" alt="Dofus Ocre" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(calc(65%+71px),35.6875rem)] bottom-0 translate-y-[2px] rotate-45 opacity-0">
         <img src="{{ asset('storage/images/misc_ui/dofus_emeraude.webp') }}" alt="Dofus Emeraude" draggable="false" width="65" height="80" loading="lazy" class="js-subject absolute h-20 right-[min(65%,31.25rem)] bottom-0 translate-y-[11px] rotate-[115deg] opacity-0">
 
-        <img src="{{ asset('storage/images/misc_ui/tofu.webp') }}" alt="Tofu" loading="lazy" draggable="false" width="64" height="64" class="js-subject absolute h-16 right-[46.875rem] bottom-0 -translate-y-[40px] opacity-0">
+        {{-- 64 64 --}}
+        <img src="{{ asset('storage/images/misc_ui/tofu.webp') }}" alt="Tofu" loading="lazy" draggable="false" width="100" height="100" class="js-subject absolute right-[46.875rem] bottom-0 -translate-y-[40px] opacity-0">
     </div>
 
     {{-- Décoration droite --}}
@@ -50,10 +51,11 @@
         {{-- Dofus / créatures --}}
         <img src="{{ asset('storage/images/misc_ui/dofus_cawotte.webp') }}" alt="Dofus Cawotte" draggable="false" width="65" height="80" loading="lazy" class="js-subject-r absolute h-20 left-[40.625rem] bottom-0 translate-y-[1px] -rotate-[25deg] opacity-0">
 
+        {{-- 64 64 scale-x-[-1] translate-y-[14px] --}}
+        <img src="{{ asset('storage/images/misc_ui/champchamp.webp') }}" alt="Champ Champ" draggable="false" width="128" height="128" loading="lazy" class="js-subject-r absolute left-[min(70%,25rem)] bottom-0 translate-y-[30px] opacity-0">
 
-        <img src="{{ asset('storage/images/misc_ui/champchamp.webp') }}" alt="Champ Champ" draggable="false" width="64" height="64" loading="lazy" class="js-subject-r absolute scale-x-[-1] left-[min(70%,25rem)] bottom-0 translate-y-[14px] opacity-0">
-
-        <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="51" height="64" class="js-subject-r absolute left-[37.5rem] bottom-0 translate-y-[19px] opacity-0">
+        {{-- 51 64 left-[37.5rem] --}}
+        <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="70" height="70" class="js-subject-r absolute left-[36.5rem] bottom-0 translate-y-[19px] opacity-0">
     </div>
 
     {{-- Live partout--}}

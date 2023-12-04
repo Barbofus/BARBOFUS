@@ -82,7 +82,10 @@
                 <img src="{{ asset('storage/images/misc_ui/'. (($skin->second_reward_id == 1) ? 'dofus_ocre.webp' : (($skin->second_reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.webp'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="w-[18%] rotate-6 top-2 right-4 absolute cursor-pointer">
                 <img src="{{ asset('storage/images/misc_ui/'. (($skin->reward_id == 1) ? 'dofus_ocre.webp' : (($skin->reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.png'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="dofus w-[20%] rotate-12 top-4 right-1 absolute cursor-pointer" >
             @endif
-        @elseif(rand(0,1) == 1)  {{-- Deco Halouine --}}
+        @elseif(rand(0,1) == 1)  {{-- Deco Evenementielle --}}
+
+
+            {{-- Halouine --}}
 
             {{-- Décoration de la carte --}}
             {{--<div class="absolute flex items-end justify-center h-14 w-full top-[-3.5rem]">
@@ -96,6 +99,19 @@
                     </div>
                 @endif
             </div>--}}
+
+
+        {{-- Nowel --}}
+
+        {{-- Décoration de la carte --}}
+            <div class="absolute flex items-end w-[15.125rem] h-32 justify-center -ml-4">
+
+                @if(rand(0,2) >= 1)
+                    <img src="{{ asset('storage/images/misc_ui/bonhomme_neige.webp') }}" width="242" height="128" alt="Bonhomme de neige" loading="lazy" draggable="false" class="origin-bottom absolute -top-16">
+                @else
+                    <img src="{{ asset('storage/images/misc_ui/sapin_cadeaux.webp') }}" width="242" height="128" alt="Sapin" loading="lazy" draggable="false" class="origin-bottom absolute -top-16">
+                @endif
+            </div>
         @endif
 
         {{-- Skin + Background --}}
@@ -103,7 +119,10 @@
             <div class="skinBackGround bg-[linear-gradient(0deg,rgba(255,255,255,0)36%,rgba(255,255,255,0.05)40%,rgba(255,255,255,0)100%)] w-[200%] h-full rotate-[30deg] origin-bottom-right absolute right-0 top-[-12.5rem]">
             </div>
 
+
+
             {{-- Halouine --}}
+
             {{--@if(rand(0,2) == 2)
                 @if(rand(0,1) == 1)
                     <img src="{{ asset('storage/images/misc_ui/scary-face.webp') }}" width="250" height="250" alt="Scary Face" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20">
@@ -111,6 +130,22 @@
                     <img src="{{ asset('storage/images/misc_ui/bat.webp') }}" width="200" height="103" alt="Chauve souris" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20">
                 @endif
             @endif--}}
+
+
+
+            {{-- Nowel --}}
+
+            @if(rand(0,2) == 2)
+                @if(rand(0,3) == 1)
+                    <img src="{{ asset('storage/images/misc_ui/cloches.webp') }}" width="250" height="250" alt="Scary Face" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20 mt-8">
+                @else
+                    @if(rand(0,2) == 1)
+                        <img src="{{ asset('storage/images/misc_ui/cadeau.webp') }}" width="250" height="250" alt="Scary Face" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20 mt-8">
+                    @else
+                        <img src="{{ asset('storage/images/misc_ui/sapin.webp') }}" width="200" height="103" alt="Chauve souris" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20 mt-8">
+                    @endif
+                @endif
+            @endif
         </div>
         <img src="{{ asset('storage\/') . $skin->image_path }}" title="Skin dofus {{ $skin->race_name }}" loading="lazy" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
     </a>

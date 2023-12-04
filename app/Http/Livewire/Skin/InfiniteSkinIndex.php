@@ -149,9 +149,8 @@ class InfiniteSkinIndex extends Component
             ->select('skins.id')
 
             ->when($this->skinColors != '', function (Builder $query) {
-                foreach ($this->skinColors as $color)
-                {
-                    $query->addSelect('skins.' . $color);
+                foreach ($this->skinColors as $color) {
+                    $query->addSelect('skins.'.$color);
                 }
             })
 
@@ -219,7 +218,7 @@ class InfiniteSkinIndex extends Component
                             ->WhereNotIn('dofus_item_pets.type', $this->skinPetTypeWhere);
                     });
 
-                    $query->when(!in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
+                    $query->when(! in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
                         $query->whereNotExists(function (Builder $query) {
                             $query->select('id')
                                 ->from('dofus_item_pets')
@@ -268,9 +267,8 @@ class InfiniteSkinIndex extends Component
             ->pluck('id')
             ->toArray();
 
-
         // Si on a une couleur à filtrer
-        if($this->filterColor != '') {
+        if ($this->filterColor != '') {
             $toRemove = [];
 
             // On reprend tous les skins basé sur les précédents ID, et on select l'id + les couleurs
@@ -278,9 +276,8 @@ class InfiniteSkinIndex extends Component
                 ->whereIn('id', $this->postIdChunks)
                 ->select('id')
                 ->when($this->skinColors != '', function (Builder $query) {
-                    foreach ($this->skinColors as $color)
-                    {
-                        $query->addSelect('skins.' . $color);
+                    foreach ($this->skinColors as $color) {
+                        $query->addSelect('skins.'.$color);
                     }
                 })->get()->toArray();
 
@@ -297,8 +294,7 @@ class InfiniteSkinIndex extends Component
             }
 
             // On supprime tous les IDs dont la couleur de match pas
-            foreach ($toRemove as $rem)
-            {
+            foreach ($toRemove as $rem) {
                 if (($key = array_search($rem, $this->postIdChunks)) !== false) {
                     unset($this->postIdChunks[$key]);
                 }
@@ -306,7 +302,7 @@ class InfiniteSkinIndex extends Component
         }
 
         // On chunk et on envoie !
-        $this->postIdChunks = array_chunk($this->postIdChunks,  self::ITEMS_PER_PAGE);
+        $this->postIdChunks = array_chunk($this->postIdChunks, self::ITEMS_PER_PAGE);
 
         $this->page = 1;
 
@@ -423,7 +419,6 @@ class InfiniteSkinIndex extends Component
     }
 
     /**
-     * @param string $hex
      * @return void
      */
     public function updateFilterColor(string $hex)

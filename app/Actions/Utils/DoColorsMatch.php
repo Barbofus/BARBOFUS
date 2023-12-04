@@ -11,7 +11,7 @@ namespace App\Actions\Utils;
  */
 final class DoColorsMatch
 {
-    /*
+    /**
      * @var array<string, int[]>
      */
     public $colorsSize = [
