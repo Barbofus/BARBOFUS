@@ -104,7 +104,7 @@
         {{-- Nowel --}}
 
         {{-- Décoration de la carte --}}
-            <div class="absolute flex items-end w-[15.125rem] h-32 justify-center -ml-4">
+            <div class="absolute flex items-end w-[calc(100%+2rem)] h-32 justify-center -ml-4">
 
                 @if(rand(0,2) >= 1)
                     <img src="{{ asset('storage/images/misc_ui/bonhomme_neige.webp') }}" width="242" height="128" alt="Bonhomme de neige" loading="lazy" draggable="false" class="origin-bottom absolute -top-16">
