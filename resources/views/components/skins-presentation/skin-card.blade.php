@@ -33,9 +33,12 @@
         @endauth
 
         @guest
-            <a href="{{ route('login') }}" title="Page de connexion">
+           {{-- <a href="{{ route('login') }}" title="Page de connexion">
                 <x-skins.likes :skin="$skin" :canLike="false"/>
-            </a>
+            </a>--}}
+            <button aria-label="Aimer un skin" @click="SwitchLike">
+                <x-skins.likes :skin="$skin" :canLike="true" />
+            </button>
         @endguest
     </div>
 </div>

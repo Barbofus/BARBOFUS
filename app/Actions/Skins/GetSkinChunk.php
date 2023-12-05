@@ -36,6 +36,8 @@ final class GetSkinChunk
                     ->select('id')
                     ->whereColumn('skin_id', 'skins.id')
                     ->where('user_id', Auth::id())
+                    ->orWhereColumn('skin_id', 'skins.id')
+                    ->where('ip_adress', request()->ip())
                     ->take(1),
             ])
             ->addSelect([
