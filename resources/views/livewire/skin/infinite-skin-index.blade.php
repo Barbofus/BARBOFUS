@@ -35,7 +35,7 @@
         </a>
 
         {{-- Menu de trie --}}
-        <x-skins.sorter />
+        <x-skins.sorter :$orderByID :$orderDirection />
     </div>
 
     <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere />
@@ -61,6 +61,90 @@
 
     {{-- Derniers vainqueurs et date du prochain tirage Miss'Skin --}}
     <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
+
+
+
+    <script>
+        function AddParamToUrl(name, value)
+        {
+            // Récupère les paramètres
+            const params = new URLSearchParams(window.location.search);
+
+            // On supprime l'ancien pour le remplacer par le nouveau
+            params.delete(name);
+            params.set(name, value);
+
+            // On prend l'url de la page vierge, sans paramètre
+            const url = new URL(window.location.href);
+            url.search = "";
+
+            // Puis, on affiche le nouvel URL avec tous les paramètres
+            const newUrl = url + '?' + params.toString();
+            window.history.pushState({ path: newUrl }, '', newUrl);
+        }
+
+        function ToggleArrayParamToUrl(name, value)
+        {
+            // Récupère les paramètres
+            const params = new URLSearchParams(window.location.search);
+
+            let finalArray = [];
+
+
+            // Check si le paramètre du tableau est déjà dans celui-ci
+            if(params.get(name))
+            {
+                // Transforme le paramètre en réel tableau
+                finalArray = params.get(name).split(',').map(decodeURIComponent);
+
+                let index = finalArray.indexOf(value.toString());
+                // Si oui, on la retire
+                if(index != -1)
+                {
+                    finalArray.splice(index, 1);
+
+                    // Si le tableau est vide, on supprime le paramètre
+                    if(finalArray.length == 0) {
+
+                        RemoveParamUrl(name);
+                        return;
+                    }
+                }
+                else// Si la valeur n'y était pas, on l'ajoute
+                {
+                    finalArray.push(value);
+                }
+            }
+            else // Si le paramètre n'existe pas, on l'ajoute
+            {
+                finalArray.push(value);
+            }
+
+            // Encodage du tableau + ajout de virgule entre chaque valeur
+            const encodedValue = finalArray.map(encodeURIComponent);
+            const valueString = finalArray.join(',');
+            params.set(name, valueString);
+
+            // On prend l'url de la page vierge, sans paramètre
+            const url = new URL(window.location.href);
+            url.search = "";
+
+            // Puis, on affiche le nouvel URL avec tous les paramètres
+            const newUrl = url + '?' + params.toString();
+            window.history.pushState({ path: newUrl }, '', newUrl);
+        }
+
+        function RemoveParamUrl(name)
+        {
+            const url = new URL(window.location.href);
+            url.search = "";
+            const params = new URLSearchParams(window.location.search);
+            params.delete(name);
+
+            const newUrl = url + '?' + params.toString();
+            window.history.pushState({ path: newUrl }, '', newUrl);
+        }
+    </script>
 
 
     {{-- Scroll horizontalement les pseudos trop long, s'actualise en temps réel --}}

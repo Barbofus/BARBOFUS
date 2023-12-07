@@ -177,15 +177,15 @@
             </div>
 
             {{-- Couleurs --}}
-            <div class="flex items-center gap-x-2 mt-2" x-data="{ color: '' }">
+            <div class="flex items-center gap-x-2 mt-2" x-data="{ color: '{{ ($filterColor) ? '#' . $filterColor : '#000000' }}' }">
                 <label for="color" class="font-thin text-secondary text-[1.15rem]">Couleurs :</label>
                 <input id="color" type="color"
                        x-model="color"
                        class="rounded cursor-pointer"
-                       @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'})">
+                       @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'}), AddParamToUrl('color', color)">
                 <button
                     aria-label="Réinitialiser les couleurs"
-                    @click="window.scrollTo({top: 0, behavior: 'smooth'}), color = '#000000'"
+                    @click="window.scrollTo({top: 0, behavior: 'smooth'}), color = '#000000', RemoveParamUrl('color')"
                     wire:click="resetFilterColor"
                     class="text-primary font-light text-lg py-1 px-4 bg-secondary rounded-lg hover:rounded-2xl transition-all hover:bg-secondary-100 {{ ($filterColor == '') ? 'hidden' : '' }}">Reset</button>
             </div>
@@ -204,7 +204,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 

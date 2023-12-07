@@ -3,7 +3,16 @@
 
     <div
         class="w-[90%] -ml-1 relative"
-        x-data
+        x-data="{
+            EnterPressedOnSearchBar(name, id)
+            {
+                console.log('EnterPressedOnSearchBar - AFTER ' + name);
+                window.scrollTo({top: 0, behavior: 'smooth'});
+
+                ToggleArrayParamToUrl('search', name);
+                ToggleArrayParamToUrl('searchID', id);
+            }
+        }"
         @click.away="{{ (count($itemToShow) > 0) ? '$wire.emptyQuery()' : '' }}">
 
         {{-- La barre de recherche --}}
@@ -12,12 +21,14 @@
                class="border-transparent py-2 pl-4 focus:outline-none rounded-[2.25px] w-full mt-1 bg-primary-100 px-1 placeholder-inactiveText font-thin text-inactiveText"
                placeholder="Nom d'item ou pseudo"
                maxlength="45"
+               autocomplete="off"
+               @keydown.enter="{{ (count($itemToShow) > 0) ? 'EnterPressedOnSearchBar(\'' . addslashes($itemToShow[$selectionKey]->name) . '\',\'' . $itemToShow[$selectionKey]->id .'\')' : '' }}"
+               {{--@keydown.enter="window.scrollTo({top: 0, behavior: 'smooth'}), {{ (count($itemToShow) > 0) ? 'ToggleArrayParamToUrl(\'search\', \'' . addslashes($itemToShow[$selectionKey]->name) . '\'), ToggleArrayParamToUrl(\'searchID\', \'' . $itemToShow[$selectionKey]->id . '\')' : '' }}"--}}
                wire:model="query"
                wire:keydown.arrow-down.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
                wire:keydown.arrow-up.prevent="{{ (count($itemToShow) > 0) ? 'decrementSelection' : '' }}"
                wire:keydown.tab.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
-               wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', [\'' . addslashes($itemToShow[$selectionKey]->name) . '\',' . $itemToShow[$selectionKey]->id . '])' : '' }}"
-               @keydown.enter="window.scrollTo({top: 0, behavior: 'smooth'})">
+               wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', [\'' . addslashes($itemToShow[$selectionKey]->name) . '\',' . $itemToShow[$selectionKey]->id . '])' : '' }}">
 
         {{-- Liste des résultats de la recherche --}}
         <div class="absolute bg-primary-100 max-h-[18.75rem] w-full rounded-sm z-50 overflow-auto">
@@ -25,7 +36,7 @@
                 <button
                     class="flex w-full p-1 items-center group transition-all {{ ($key == $selectionKey) ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10' }}"
                     wire:click="$emit('ToggleSearchedText', ['{{ addslashes($item->name) }}', {{ $item->id }}])"
-                    @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+                    @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', '{{ addslashes($item->name) }}'), ToggleArrayParamToUrl('searchID', '{{ $item->id }}')"
                     wire:key="{{ addslashes($item->name) . rand() }}">
                     @if(@isset($item->icon_path))
                         <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('storage\/'. $item->icon_path) }}">
@@ -44,7 +55,7 @@
         <div class="flex flex-wrap justify-start w-full max-h-[7rem] overflow-auto items-center gap-2 mt-2">
             @foreach($searchFilterInput as $input)
                 <button wire:click="$emit('ToggleSearchedText', ['{{ addslashes($input[0]) }}', {{ $input[1] }}])"
-                        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+                        @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', '{{ addslashes($input[0]) }}'), ToggleArrayParamToUrl('searchID', '{{ $input[1] }}')"
                         class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
                     <p class="font-light text-[1rem] text-inactiveText">{{ $input[0] }}</p>
 

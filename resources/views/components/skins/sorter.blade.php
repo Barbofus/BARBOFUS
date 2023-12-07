@@ -4,14 +4,28 @@
               sortAsc: false,
               showSort: false,
               diceAnim: false,
-              selection: 'Nouveauté'
-            }">
+              selection: '',
+
+              SetFirstSelection()
+              {
+                const orderID = @js($orderByID);
+                const orderDir = @js($orderDirection);
+
+                if(orderID == 0 && orderDir == 'DESC') this.selection = 'Nouveauté';
+                if(orderID == 0 && orderDir == 'ASC') this.selection = 'Ancienneté';
+                if(orderID == 1 && orderDir == 'DESC') this.selection = 'Plus aimé';
+                if(orderID == 1 && orderDir == 'ASC') this.selection = 'Moins aimé';
+                if(orderID == 2 && orderDir == 'DESC') this.selection = 'Récompenses';
+                if(orderID == 3 && orderDir == 'ASC') this.selection = 'Classes';
+                if(orderID == 4 && orderDir == 'ASC') this.selection = 'Aléatoire';
+              }
+            }" x-init="SetFirstSelection()">
     <div class="flex items-center justify-around gap-x-2"
          x-on:mousedown.outside="if(showSort) showSort = false">
 
         {{-- Randomizer --}}
         <button aria-label="Skins Aléatoire" class="h-10 w-10 mr-4 invisible min-[361px]:visible" :class="diceAnim ? 'animate-dice [--custom-animation-time:0.7s]' : ''" wire:ignore wire:key="dice"
-                @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = 'Aléatoire'; sortAsc = true; showSort = false; $wire.SortBy(4, 'ASC'), window.scrollTo(0,0)">
+                @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = 'Aléatoire'; sortAsc = true; showSort = false; $wire.SortBy(4, 'ASC'), AddParamToUrl('sort', '4,ASC'), window.scrollTo(0,0)">
             <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" alt="Skin Aléatoire" height="40" width="40" draggable="false" class="h-full hover:scale-90 transition-all">
         </button>
 
@@ -32,17 +46,17 @@
         <div class="w-40 right-0 top-[2.25rem] overflow-hidden rounded-b-md absolute bg-secondary-100 text-[1rem] text-primary font-light transition-all duration-200 cursor-pointer"
              x-show="showSort" x-transition.opacity x-cloak>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Nouveauté'; sortAsc = false; showSort = false; $wire.SortBy(0, 'DESC'), window.scrollTo(0,0)">Nouveauté</button>
+               x-on:mousedown="selection = 'Nouveauté'; sortAsc = false; showSort = false; $wire.SortBy(0, 'DESC'), AddParamToUrl('sort', '0,DESC'), window.scrollTo(0,0)">Nouveauté</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Ancienneté'; sortAsc = true; showSort = false; $wire.SortBy(0, 'ASC'), window.scrollTo(0,0)">Ancienneté</button>
+               x-on:mousedown="selection = 'Ancienneté'; sortAsc = true; showSort = false; $wire.SortBy(0, 'ASC'), AddParamToUrl('sort', '0,ASC'), window.scrollTo(0,0)">Ancienneté</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Plus aimé'; sortAsc = false; showSort = false; $wire.SortBy(1, 'DESC'), window.scrollTo(0,0)">Plus aimé</button>
+               x-on:mousedown="selection = 'Plus aimé'; sortAsc = false; showSort = false; $wire.SortBy(1, 'DESC'), AddParamToUrl('sort', '1,DESC'), window.scrollTo(0,0)">Plus aimé</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Moins aimé'; sortAsc = true; showSort = false; $wire.SortBy(1, 'ASC'), window.scrollTo(0,0)">Moins aimé</button>
+               x-on:mousedown="selection = 'Moins aimé'; sortAsc = true; showSort = false; $wire.SortBy(1, 'ASC'), AddParamToUrl('sort', '1,ASC'), window.scrollTo(0,0)">Moins aimé</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC'), window.scrollTo(0,0)">Récompenses</button>
+               x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC'), AddParamToUrl('sort', '2,DESC'), window.scrollTo(0,0)">Récompenses</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-               x-on:mousedown="selection = 'Classes'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC'), window.scrollTo(0,0)">Classes</button>
+               x-on:mousedown="selection = 'Classes'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC'), AddParamToUrl('sort', '3,ASC'), window.scrollTo(0,0)">Classes</button>
         </div>
     </div>
 </div>

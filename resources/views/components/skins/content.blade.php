@@ -3,7 +3,10 @@
     {{-- Pseudo --}}
     @if(!isset($showName) || $showName)
         <div class="absolute bottom-0 z-10 left-0 w-[calc(100%-3.75rem)] px-1 pb-[2px]">
-            <button aria-label="Filtrer le nom sur {{ $skin->user_name }}" class="flex w-full h-12 items-end overflow-hidden font-light text-goldText text-[0.75rem] hover:text-goldTextLit whitespace-nowrap" wire:click="$emit('ToggleSearchedText', ['{{ addslashes($skin->user_name) }}', {{ addslashes($skin->user_id) }}])">
+            <button aria-label="Filtrer le nom sur {{ $skin->user_name }}"
+                    class="flex w-full h-12 items-end overflow-hidden font-light text-goldText text-[0.75rem] hover:text-goldTextLit whitespace-nowrap"
+                    wire:click="$emit('ToggleSearchedText', ['{{ addslashes($skin->user_name) }}', {{ addslashes($skin->user_id) }}])"
+                    @click="ToggleArrayParamToUrl('search', '{{ addslashes($skin->user_name) }}'), ToggleArrayParamToUrl('searchID', '{{ $skin->user_id }}')">
                 <p class="skinCardUserName">{{ $skin->user_name }}&nbsp</p>
             </button>
         </div>

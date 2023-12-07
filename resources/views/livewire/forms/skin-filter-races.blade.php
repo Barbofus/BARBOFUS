@@ -13,6 +13,8 @@
             this.showSort = false;
 
             Livewire.emit('ToggleRace', this.selection);
+
+            ToggleArrayParamToUrl('classe', this.selection);
         },
 
         keyPressed(e)
@@ -104,7 +106,7 @@
     <div class="flex flex-wrap justify-start w-full max-h-[3.5rem] overflow-auto items-center gap-2 mt-2">
         @foreach($raceWhere as $race)
             <button wire:click="$emit('ToggleRace', {{ $race[2] }})"
-                    @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+                    @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('classe', {{ $race[2] }})"
                     class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
                 <p class="font-light text-[1rem] text-inactiveText">{{ $races[$race[2]-1]->name  }}</p>
 
