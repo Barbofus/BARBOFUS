@@ -105,7 +105,7 @@ module.exports = {
             },
         },
         animation: {
-            skinApparition: 'skinApparition 0.5s linear forwards',
+            skinApparition: 'skinApparition .5s linear forwards',
             opacityFade: 'opacityFade var(--custom-animation-time) linear forwards',
             topFade: 'topFade var(--custom-animation-time) ease forwards',
             textSlide: 'textSlide 5s linear infinite',

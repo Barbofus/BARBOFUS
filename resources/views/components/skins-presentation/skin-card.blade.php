@@ -1,5 +1,5 @@
 {{-- Nécessite un tableau de Skin en argument sous le nom :skin--}}
-<div class="aspect-[14/19] h-full relative w-full">
+<div class="aspect-[14/19] h-full relative w-full z-10">
 
     <x-skins.content :skin="$skin" :id="$skin->id" />
 
