@@ -17,6 +17,7 @@ final class GetApiBody
 
         // Si aucune réponse, on dit false pour pas spam l'api pour rien
         if ($response->status() != 200) {
+            dd('bug', $url);
             return [];
         }
 
