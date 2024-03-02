@@ -18,7 +18,7 @@ final class GetSkinChunk
     public function __invoke($skinIds)
     {
         $skins = DB::table('skins')
-            ->select('id', 'image_path', 'user_id', 'updated_at', 'status')
+            ->select('id', 'image_path', 'user_id', 'updated_at', 'status', 'name')
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')

@@ -41,8 +41,9 @@
         @endcan
 
         {{-- User --}}
-        <div class="flex gap-x-4 items-center justify-center">
-            <h2 class="text-[min(5vw,1.25rem)] font-thin text-center mt-11 min-[950px]:mt-4">Par <span class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
+        <div class="flex gap-x-4 items-center justify-center mt-11 min-[950px]:mt-4">
+            <h2 class="bg-gradient-to-r from-[var(--goldDark)] to-[var(--goldLit)] bg-clip-text inline-block font-normal italic text-[min(6vw,1.5rem)] text-transparent">{{ $skin->name }}</h2>
+            <h2 class="text-[min(5vw,1.25rem)] font-thin text-center">Par <span class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
 
             @can('admin-access')
                 @if(isset($discord))

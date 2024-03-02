@@ -12,6 +12,11 @@
         </div>
     @endif
 
+    {{-- Nom du skin --}}
+    @if(isset($skin->name) && !isset($showName) || isset($skin->name) && $showName)
+        <p class="skinCardUserName absolute top-0 w-full text-center font-thin text-inactiveText italic">{{ $skin->name }}&nbsp</p>
+    @endif
+
     <a class="slidingCard absolute group h-full w-full" title="Skin dofus {{ $skin->race_name }}" href="{{ route('skins.show', $id) }}">
         {{-- Barbe --}}
         @if($skin->user_name === 'Barbe Douce' &! isset($showBarbe))

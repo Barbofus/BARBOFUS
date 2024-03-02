@@ -41,7 +41,13 @@
                             <div class="flex items-center space-x-2 w-full">
                                 <img draggable="false" width="64" src="{{ asset('storage/' . $skin->race_icon) }}">
                                 <div class="flex flex-col items-baseline">
-                                    <p class="text-inactiveText italic text-sm">ID#{{ $skin->id }}</p>
+                                    <p class="text-inactiveText italic text-sm">
+                                        @if(isset($skin->name))
+                                            {{ $skin->name }}
+                                        @else
+                                            ID#{{ $skin->id }}
+                                        @endif
+                                    </p>
                                     <p class="text-xl">{{ $skin->race_name }}</p>
                                 </div>
                             </div>

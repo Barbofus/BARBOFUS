@@ -18,7 +18,13 @@
         </button>
     </div>
 
-    <p class="text-inactiveText group-hover:text-secondary transition-all italic text-md absolute bottom-1 left-2">ID#{{ $skin->id }}</p>
+    <p class="text-inactiveText group-hover:text-secondary transition-all italic text-md absolute bottom-1 left-2">
+        @if(isset($skin->name))
+            {{ $skin->name }}
+        @else
+            ID#{{ $skin->id }}
+        @endif
+    </p>
 
     {{-- Likes --}}
     <div

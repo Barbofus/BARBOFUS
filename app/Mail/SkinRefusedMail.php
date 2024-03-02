@@ -37,7 +37,7 @@ class SkinRefusedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Skin Refusé ID#'.$this->skin->id,
+            subject: config('app.name').' - Skin Refusé '.(($this->skin->name) ?: 'ID#'.$this->skin->id),
         );
     }
 
@@ -51,7 +51,10 @@ class SkinRefusedMail extends Mailable
         return new Content(
             markdown: 'mails.skin-refused',
             with: [
-                'url' => \url()->route('skins.edit', ['skin' => $this->skin->id]),
+                'url' => \url()->route('skins.edit', [
+                    'skin' => $this->skin->id,
+                    'name' => $this->skin->name,
+                ]),
             ],
         );
     }

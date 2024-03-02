@@ -40,6 +40,8 @@ class StoreUpdateSkinRequest extends FormRequest
                 'required',
                 Rule::in(['Homme', 'Femme']),
             ],
+            'name' => 'nullable|max:30',
+
             'g-recaptcha-response' => ['required', new Recaptcha()],
 
             'color_skin' => $hexRegex,

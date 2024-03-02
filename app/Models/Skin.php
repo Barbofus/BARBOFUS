@@ -27,6 +27,7 @@ class Skin extends Model
         'race_id',
         'status',
         'refused_reason',
+        'name',
     ];
 
     use HasFactory;

@@ -24,8 +24,18 @@
                 }
             }">
 
+                {{-- Nom du skin--}}
+                <p class="ml-2 text-[1.5rem] bg-gradient-to-r from-[var(--goldDark)] to-[var(--goldLit)] inline-block bg-clip-text text-transparent font-bold">NOUVEAU !</p>
+                <div class="goldGradient p-2 rounded-md">
+                    <p class="ml-10 text-xl text-primary font-light">Nom du skin (optionnel)</p>
+                    <input x-ref="input"
+                           maxlength="30" name="name" id="name" type="text" placeholder="Nom"
+                           class="w-full h-10 rounded-md pl-14 focus:outline-none placeholder-inactiveText bg-primary-100 @error('name') err-border @enderror"
+                           value="{{ (old('name')) ? (old('name')) : (isset($skin) ? $skin['name'] : '') }}"/>
+                </div>
+
                 <!-- Tuto poste -->
-                <a class="invisible flex items-center justify-left mb-4 cursor-pointer gap-x-2
+                <a class="invisible flex items-center justify-left my-4 cursor-pointer gap-x-2
                     [@media(min-height:501px)_and_(min-width:501px)]:visible
                     min-[901px]:visible"
                    href="https://www.youtube.com/watch?v=teuDOhkgIaM" target="_blank">
@@ -45,6 +55,8 @@
                     </svg>
                     <p class="font-display text-secondary text-[1rem]">Tuto pour l'export PNG</p>
                 </a>
+
+                {{-- Image du skin--}}
                 <p class="ml-10 text-xl font-light">Image du skin</p>
                 <div class="mt-2 @error('image_path') err-border @enderror">
                     <input x-on:input.change="ChangeFile" class="w-[min(18.75rem,90vw)] text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">

@@ -52,7 +52,7 @@ class SkinController extends Controller
         }
 
         $toShow = DB::table('skins')
-            ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'skins.id')
+            ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'skins.id', 'skins.name')
             ->where('skins.id', $skin->id)
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
@@ -169,6 +169,7 @@ class SkinController extends Controller
             'user_id' => $request->user()->id,
             'race_id' => $request->race_id,
             'status' => (Gate::check('validate-skin')) ? 'Posted' : 'Pending',
+            'name' => $request->name,
         ]);
 
         session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
@@ -235,6 +236,7 @@ class SkinController extends Controller
         $skin->color_cloth_3 = $request->color_cloth_3;
         $skin->race_id = $request->race_id;
         $skin->status = (Gate::check('validate-skin')) ? 'Posted' : 'Pending';
+        $skin->name = $request->name;
 
         $skin->save();
 
@@ -260,7 +262,7 @@ class SkinController extends Controller
 
         (new DeleteSkin)($skinID);
 
-        session()->flash('alert-message', 'Le Skin ID#'.$skinID.' posté par '.$skinUserName.' a bien été supprimé.');
+        session()->flash('alert-message', 'Le Skin '.(($skin->name) ? $skin->name : 'ID#'.$skinID).' posté par '.$skinUserName.' a bien été supprimé.');
 
         return redirect()->route('skins.index');
     }

@@ -57,6 +57,7 @@ class InfiniteSkinIndex extends Component
     protected bool $hasLoadMore = false;
 
     public string $orderBy = 'skins.updated_at'; // Nouveauté par défault
+
     public int $orderByID = 0;
 
     public bool $randSort = false; // Trié aléatoirement par défault
@@ -104,33 +105,29 @@ class InfiniteSkinIndex extends Component
         'ToggleRace',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         // Si on a des paramètres dans l'url
-        if(request()->all())
-        {
+        if (request()->all()) {
             //dd(request()->all());
-            foreach (request()->all() as $key => $param)
-            {
+            foreach (request()->all() as $key => $param) {
                 switch ($key) {
                     case 'color':
                         $this->updateFilterColor($param);
                         break;
                     case 'classe':
-                        foreach (explode(',', $param) as $race_id)
-                        {
-                            $this->ToggleRace($race_id);
+                        foreach (explode(',', $param) as $race_id) {
+                            $this->ToggleRace(intval($race_id));
                         }
                         break;
                     case 'search':
-                        foreach (explode(',', $param) as $searchKey => $searchedName)
-                        {
+                        foreach (explode(',', $param) as $searchKey => $searchedName) {
                             $this->ToggleSearchedText([urldecode($searchedName), explode(',', request()->input('searchID'))[$searchKey]]);
                         }
                         break;
                     case 'sort':
                         $values = explode(',', $param);
-                        $this->SortBy($values[0], $values[1]);
+                        $this->SortBy(intval($values[0]), $values[1]);
                         //dd(explode(',', $param));
                         break;
                 }

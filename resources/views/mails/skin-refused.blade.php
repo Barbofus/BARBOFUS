@@ -3,7 +3,7 @@
 # Skin refusé
 
 Salut <span class="italic">{{ $user->name }}</span>,<br><br>
-<span>Ton skin ***ID#{{ $skin->id }}*** en **{{ $skin->race->name }}** a été refusé par un membre du Staff.</span>
+<span>Ton skin ***{{ ($skin->name) ?: 'ID#'.$skin->id }}*** en **{{ $skin->race->name }}** a été refusé par un membre du Staff.</span>
 
 <div style="text-align: center;"><img class="refused-img" src="{{ asset('storage/' . $skin->image_path ) }}" alt="Image du skin {{ $skin->id }}"></div>
 

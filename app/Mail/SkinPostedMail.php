@@ -37,7 +37,7 @@ class SkinPostedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Skin Posté ID#'.$this->skin->id,
+            subject: config('app.name').' - Skin Posté '.(($this->skin->name) ?: 'ID#'.$this->skin->id),
         );
     }
 
@@ -51,7 +51,10 @@ class SkinPostedMail extends Mailable
         return new Content(
             markdown: 'mails.skin-posted',
             with: [
-                'url' => \url()->route('skins.show', ['skin' => $this->skin->id]),
+                'url' => \url()->route('skins.show', [
+                    'skin' => $this->skin->id,
+                    'name' => $this->skin->name,
+                ]),
             ],
         );
     }
