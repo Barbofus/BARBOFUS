@@ -7,6 +7,8 @@ use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\RoutePath;
 
 /*
 |--------------------------------------------------------------------------
