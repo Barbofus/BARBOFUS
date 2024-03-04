@@ -4,7 +4,7 @@
     </svg>
 
     <div class="pl-4">
-        <p class="font-normal">Skin Posté <span class="italic text-inactiveText">{{ ($notification->data['name']) ?: 'ID#' . $notification->data['id'] }}</span></p>
+        <p class="font-normal">Skin Posté <span class="italic text-inactiveText">{{ ((isset($notification->data['name'])) ? $notification->data['name'] : 'ID#' . $notification->data['id']) }}</span></p>
         <p class="indent-2 font-light">Bien joué ! Ton skin en <span class="font-normal">{{ $notification->data['info'] }}</span> à été validé par un membre du staff</p>
     </div>
 </div>
