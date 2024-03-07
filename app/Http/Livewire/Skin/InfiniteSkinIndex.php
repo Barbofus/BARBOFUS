@@ -28,7 +28,7 @@ class InfiniteSkinIndex extends Component
      * @var string[]
      */
     protected $allOrder = [
-        'skins.updated_at',
+        'skins.created_at',
         'likes_count',
         'rewards_points',
         'skins.race_id',
@@ -56,7 +56,7 @@ class InfiniteSkinIndex extends Component
 
     protected bool $hasLoadMore = false;
 
-    public string $orderBy = 'skins.updated_at'; // Nouveauté par défault
+    public string $orderBy = 'skins.created_at'; // Nouveauté par défault
 
     public int $orderByID = 0;
 
@@ -289,7 +289,7 @@ class InfiniteSkinIndex extends Component
             // orderBy
             ->when(! $this->randSort, function (Builder $query) {
                 $query->orderBy($this->orderBy, $this->orderDirection)
-                    ->orderBy('skins.updated_at', 'DESC');
+                    ->orderBy('skins.created_at', 'DESC');
             })
             ->when($this->randSort, function (Builder $query) {
                 $query->inRandomOrder();

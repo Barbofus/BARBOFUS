@@ -7,7 +7,7 @@
             @elseif($skin->status == 'Refused')
                 <p class="absolute mt-2 text-lg text-red-400 italic">Skin Refusé</p>
             @else
-                <p class="absolute mt-2 text-lg text-inactiveText italic">Posté {{ $skin->updated_at->diffForHumans() }}</p>
+                <p class="absolute mt-2 text-lg text-inactiveText italic">Posté {{ $skin->created_at->diffForHumans() }}</p>
             @endif
         </div>
     @endforeach

@@ -80,7 +80,7 @@ class MyskinsInfiniteLoad extends Component
 
             // orderBy
             ->orderBy('status', 'DESC')
-            ->orderBy('updated_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
 
             // Scroll infini
             ->pluck('id')
