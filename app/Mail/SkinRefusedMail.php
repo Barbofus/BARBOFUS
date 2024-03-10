@@ -53,7 +53,6 @@ class SkinRefusedMail extends Mailable
             with: [
                 'url' => \url()->route('skins.edit', [
                     'skin' => $this->skin->id,
-                    'name' => $this->skin->name,
                 ]),
             ],
         );

@@ -53,7 +53,6 @@ class SkinPostedMail extends Mailable
             with: [
                 'url' => \url()->route('skins.show', [
                     'skin' => $this->skin->id,
-                    'name' => $this->skin->name,
                 ]),
             ],
         );
