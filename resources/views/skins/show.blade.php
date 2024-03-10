@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="relative flex flex-col gap-y-1 min-[950px]:gap-y-4 h-[91rem] min-[950px]:h-[53rem] w-[min(95rem,95vw)] mx-auto overflow-hidden min-[950px]:mt-4 min-[950px]:rounded-lg min-[950px]:bg-black min-[950px]:bg-opacity-[0.09] min-[950px]:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+    <div class="relative flex flex-col gap-y-1 min-[950px]:gap-y-4 h-[91rem] min-[950px]:h-fit py-4 w-[min(95rem,95vw)] mx-auto overflow-hidden min-[950px]:mt-4 min-[950px]:rounded-lg min-[950px]:bg-black min-[950px]:bg-opacity-[0.09] min-[950px]:shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
          x-data="{ skinDeleteID: null, skinDeleteImg:''}">
 
         @can('validate-skin')
