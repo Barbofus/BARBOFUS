@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\Http;
 
 final class UpdateItemsFromDofusDBApi
 {
+    /**
+     * @return string[]
+     */
     // Action qui va pour chaque types d'item, lancer une autre action qui va get et save les items qu'il nous manque
-    public function __invoke(): void
+    public function __invoke(): array
     {
         $newItems = [];
 
@@ -28,5 +31,7 @@ final class UpdateItemsFromDofusDBApi
         $newVersion = Http::get('https://api.dofusdb.fr/version')->body();
 
         (new UpdateApiVersion)('dofusDB', $newVersion);
+
+        return $newItems;
     }
 }

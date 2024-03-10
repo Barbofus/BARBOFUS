@@ -14,8 +14,8 @@ class UserDashboard extends Component
      */
     public function mount()
     {
-        if (session()->has('section')) {
-            $this->section = session('section');
+        if (request()->has('section')) {
+            $this->ChangeSection(request('section'));
         }
     }
 

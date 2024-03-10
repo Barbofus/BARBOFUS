@@ -173,7 +173,6 @@ class SkinController extends Controller
         ]);
 
         session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
-        session()->flash('section', 'my-skins');
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
@@ -181,7 +180,7 @@ class SkinController extends Controller
             (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin);
         }
 
-        return redirect()->route('user-dashboard.index');
+        return redirect()->route('user-dashboard.index', 'section=my-skins');
     }
 
     /**
@@ -241,7 +240,6 @@ class SkinController extends Controller
         $skin->save();
 
         session()->flash('alert-message', 'Ton skin a été modifié. Il est en attente de validation par un Modérateur');
-        session()->flash('section', 'my-skins');
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
@@ -249,7 +247,7 @@ class SkinController extends Controller
             (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin);
         }
 
-        return redirect()->route('user-dashboard.index');
+        return redirect()->route('user-dashboard.index', 'section=my-skins');
     }
 
     /**

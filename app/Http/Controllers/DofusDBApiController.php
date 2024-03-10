@@ -17,8 +17,25 @@ class DofusDBApiController extends Controller
             abort(403, 'Autorisation requise');
         }
 
-        (new UpdateItemsFromDofusDBApi)();
+        $newItems = (new UpdateItemsFromDofusDBApi)();
 
-        return back();
+        /*$testArray = [
+            [
+                'Crâne de Truche',
+                'images/icons/items/hats/16814.png',
+            ],
+            [
+                'Crâne de Trouche',
+                'images/icons/items/hats/16346.png',
+            ],
+            [
+                'Croune de Trâche',
+                'images/icons/items/hats/16804.png',
+            ],
+        ];*/
+
+        //dd($newItems, $testArray);
+
+        return redirect()->route('user-dashboard.index', 'section=admin-panel')->with('newItems', $newItems);
     }
 }

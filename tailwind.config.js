@@ -58,8 +58,8 @@ module.exports = {
                 '100%': { transform: 'scale(2)', opacity: 0  },
             },
             pulseFast: {
-                '0%,25%,50%': { opacity: 0.25 },
-                '12%,37%': { opacity: 0.7 },
+                '0%,100%': { opacity: 0.25 },
+                '50%': { opacity: 0.7 },
             },
             pageLoad: {
                 '0%': { opacity: 0 },
@@ -111,7 +111,7 @@ module.exports = {
             textSlide: 'textSlide 5s linear infinite',
             skinSlide: 'skinSlide var(--custom-animation-time) linear infinite',
             onePing: 'onePing 0.35s linear forwards',
-            pulseFast: 'pulseFast 3s linear infinite',
+            pulseFast: 'pulseFast 0.5s linear infinite',
             pageLoad: 'pageLoad 0.5s linear forwards',
             dofus: 'dofus 2s',
             cawotte: 'cawotte 16s ease-out infinite',

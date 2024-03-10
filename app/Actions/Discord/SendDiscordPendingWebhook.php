@@ -18,7 +18,7 @@ final class SendDiscordPendingWebhook
             'embeds' => [
                 [
                     'description' => 'Nouveau skin en attente.
-                        [Clique pour le vérifier]('.route('user-dashboard.index').')
+                        [Clique pour le vérifier]('.route('user-dashboard.index', 'section=skins-validation').')
 
                         **'.$skin->User->name.'**
                         *'.ucfirst(\Carbon\Carbon::now()->isoFormat('dddd D MMMM à HH:mm')).'*',

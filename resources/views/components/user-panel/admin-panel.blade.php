@@ -40,5 +40,20 @@
                 class="w-48 p-4 text-2xl text-primary text-center font-light goldGradient rounded-md hover:brightness-110">Lancer le concours</a>
         </div>
 
+
+        @if(session()->has('newItems'))
+            <div class="rounded-xl mt-16 mx-auto border-2 border-goldText p-16 text-center w-fit">
+                <h2 class="text-2xl font-thin mb-8 uppercase">Nouveaux Ajouts</h2>
+                <div class="grid grid-cols-3 gap-4 text-left">
+                    @foreach(session('newItems') as $newItem)
+                        <div class="flex space-x-2 items-center bg-primary-100 rounded-md pr-4">
+                            <img class="w-14" draggable="false" src="{{ asset('storage/' . $newItem[1] )}}">
+                            <p class="font-light italic text-secondary text-md min-[750px]:text-lg">{{ $newItem[0] }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
     </div>
 </div>
