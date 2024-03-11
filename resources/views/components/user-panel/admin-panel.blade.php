@@ -43,7 +43,7 @@
 
         @if(session()->has('newItems'))
             <div class="rounded-xl mt-16 mx-auto border-2 border-goldText p-16 text-center w-fit">
-                <h2 class="text-2xl font-thin mb-8 uppercase">Nouveaux Ajouts</h2>
+                <h2 class="text-2xl font-thin mb-8 uppercase">Derniers Ajouts</h2>
                 <div class="grid grid-cols-3 gap-4 text-left">
                     @foreach(session('newItems') as $newItem)
                         <div class="flex space-x-2 items-center bg-primary-100 rounded-md pr-4">
