@@ -123,7 +123,7 @@ final class SaveItemsFromDofusDB
             if ($item['typeId'] != 97 && $item['typeId'] != 196 && $item['typeId'] != 207) {
 
                 // Prépare l'url pour choper l'image
-                $imageUrl = 'https://api.dofusdb.fr/img/items/250/'.$item['iconId'].'.png';
+                $imageUrl = 'https://api.beta.dofusdb.fr/img/items/250/'.$item['iconId'].'.png';
 
                 // Récupère l'image et la stocke dans l'icon_path
                 (new FetchExternalFile)($imageUrl, $newItem['icon_path']);

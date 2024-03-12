@@ -28,7 +28,7 @@ final class GetItemsFromDofusDB
         }
 
         // Construit l'url
-        $url = 'https://api.dofusdb.fr/items?'.$typeIDString.'&$limit=0';
+        $url = 'https://api.beta.dofusdb.fr/items?'.$typeIDString.'&$limit=0';
 
         // Récupère tous les items des typeID et cosmetTypeID
         $totalItems = (new GetApiBody)($url)->total;
@@ -37,8 +37,8 @@ final class GetItemsFromDofusDB
         for ($i = 0; $i < $totalItems / $limit; $i++) {
 
             // Construit l'url
-            //$url = 'https://api.dofusdb.fr/items?'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit).'&$select[]=id&$select[]=iconId&$select[]=name.fr&$select[]=level&$select[]=typeId';
-            $url = 'https://api.dofusdb.fr/items?'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit);
+            //$url = 'https://api.beta.dofusdb.fr/items?'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit).'&$select[]=id&$select[]=iconId&$select[]=name.fr&$select[]=level&$select[]=typeId';
+            $url = 'https://api.beta.dofusdb.fr/items?'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit);
 
             // Récupère tous les items des typeID et cosmetTypeID
             $result = (new GetApiBody)($url)->data;
@@ -66,7 +66,7 @@ final class GetItemsFromDofusDB
             }
 
             // Construit l'url
-            $url = 'https://api.dofusdb.fr/items?typeId=113'.$typeIDString.'&$limit=0';
+            $url = 'https://api.beta.dofusdb.fr/items?typeId=113'.$typeIDString.'&$limit=0';
 
             // Récupère tous les items des typeID et cosmetTypeID
             $totalItems = (new GetApiBody)($url)->total;
@@ -75,15 +75,15 @@ final class GetItemsFromDofusDB
             for ($i = 0; $i < $totalItems / $limit; $i++) {
 
                 // Construit l'url pour les objets vivant
-                //$url = 'https://api.dofusdb.fr/items?typeId=113'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit).'&$select[]=id&$select[]=name.fr&$select[]=level';
-                $url = 'https://api.dofusdb.fr/items?typeId=113'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit);
+                //$url = 'https://api.beta.dofusdb.fr/items?typeId=113'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit).'&$select[]=id&$select[]=name.fr&$select[]=level';
+                $url = 'https://api.beta.dofusdb.fr/items?typeId=113'.$typeIDString.'&$limit='.$limit.'&$skip='.($i * $limit);
 
                 // Récupère tous les objets vivants du même typeId
                 $livingObjects = (new GetApiBody)($url)->data;
 
                 // Pour chaque objets vivant, on veux récupérer les différents niveaux (stocké ailleurs)
                 foreach ($livingObjects as $livingObject) {
-                    $url = 'https://api.dofusdb.fr/living-object-skin-jnt-mood/'.$livingObject->id.'?lang=fr';
+                    $url = 'https://api.beta.dofusdb.fr/living-object-skin-jnt-mood/'.$livingObject->id.'?lang=fr';
 
                     // Récupère tous les objets vivants du même typeId
                     $result = (new GetApiBody)($url);
