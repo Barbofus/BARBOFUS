@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\HeavenBag;
+use App\Models\HavenBag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class HeavenBagSeeder extends Seeder
+class HavenBagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class HeavenBagSeeder extends Seeder
      */
     public function run()
     {
-        HeavenBag::factory(50)->create();
+        HavenBag::factory(50)->create();
     }
 }

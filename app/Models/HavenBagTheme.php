@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class HeavenBagTheme extends Model
+class HavenBagTheme extends Model
 {
     protected $fillable = [
         'dofus_id',
@@ -16,10 +16,10 @@ class HeavenBagTheme extends Model
     ];
 
     /**
-     * @return HasMany<HeavenBag>
+     * @return HasMany<HavenBag>
      */
-    public function heavenBags()
+    public function havenBags()
     {
-        return $this->hasMany(HeavenBag::class);
+        return $this->hasMany(HavenBag::class);
     }
 }

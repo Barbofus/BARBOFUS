@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HeavenBagController extends Controller
+class HavenBagController extends Controller
 {
     //
 }

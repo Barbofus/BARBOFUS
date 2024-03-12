@@ -23,7 +23,7 @@ final class UpdateItemsFromDofusDBApi
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemShield', [82], [248], 'images/icons/items/shields/'));
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemCostume', [], [199], 'images/icons/items/costumes/'));
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemPet', [18, 121], [190, 255, 256, 249, 250], 'images/icons/items/pets/'));
-        $newItems = array_merge($newItems, (new SaveHeavenBagsFromDofusDB)('images/icons/heaven_bags'));
+        $newItems = array_merge($newItems, (new SaveHavenBagsFromDofusDB)('images/icons/heaven_bags'));
 
         // Cette ligne fetch les DD, Muldo et Volkorne, ils ne changeront pas, donc pas besoin de la relancer
         //$newPets = (new SaveItemsFromDofusDB)('App\Models\DofusItemPet', [97, 196, 207], [], 'images/icons/items/pets/');

@@ -7,27 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class HeavenBag extends Model
+class HavenBag extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'heaven_bag_theme_id',
+        'haven_bag_theme_id',
         'user_id',
         'name',
         'image_path',
     ];
 
     /**
-     * @return BelongsTo<HeavenBagTheme, HeavenBag>
+     * @return BelongsTo<HavenBagTheme, HavenBag>
      */
-    public function heavenBags()
+    public function havenBags()
     {
-        return $this->belongsTo(HeavenBag::class);
+        return $this->belongsTo(HavenBag::class);
     }
 
     /**
-     * @return BelongsTo<User, HeavenBag>
+     * @return BelongsTo<User, HavenBag>
      */
     public function users()
     {

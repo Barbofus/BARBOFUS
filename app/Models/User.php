@@ -125,10 +125,10 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<HeavenBag>
+     * @return HasMany<HavenBag>
      */
-    public function heavenBags()
+    public function havenBags()
     {
-        return $this->hasMany(HeavenBag::class);
+        return $this->hasMany(HavenBag::class);
     }
 }

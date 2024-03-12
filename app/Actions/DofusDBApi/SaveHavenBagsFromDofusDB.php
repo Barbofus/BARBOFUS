@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Actions\DofusDBApi;
 
 use App\Actions\Api\FetchExternalFile;
-use App\Models\HeavenBagTheme;
+use App\Models\HavenBagTheme;
 
-final class SaveHeavenBagsFromDofusDB
+final class SaveHavenBagsFromDofusDB
 {
     /**
      * @return array<int<0, max>, mixed>
@@ -20,22 +20,22 @@ final class SaveHeavenBagsFromDofusDB
         $newItems = [];
 
         // Action qui récupère les items contenus dans les typesID entré
-        $items = (new GetHeavenBagsFromDofusDB)();
+        $items = (new GetHavenBagsFromDofusDB)();
 
         // Parcour tous les items récupérés
         foreach ($items as $item) {
 
             // Si on l'a déjà, passe à la boucle suivante
-            if (HeavenBagTheme::where('dofus_id', '=', $item['id'])->exists()) {
+            if (HavenBagTheme::where('dofus_id', '=', $item['id'])->exists()) {
                 continue;
             }
 
             // Créer l'item en bdd
-            $newItem = HeavenBagTheme::create([
+            $newItem = HavenBagTheme::create([
                 'name' => $item['name'],
                 'dofus_id' => $item['id'],
-                'image_path' => 'images/icons/heaven_bags/backgrounds/'. $item['mapId'] .'.jpg',
-                'popocket_icon_path' => 'images/icons/heaven_bags/popockets/'. $item['popocket_iconId'] .'.png',
+                'image_path' => 'images/icons/haven_bags/backgrounds/'. $item['mapId'] .'.jpg',
+                'popocket_icon_path' => 'images/icons/haven_bags/popockets/'. $item['popocket_iconId'] .'.png',
             ]);
 
             // Récupère l'image et la stocke dans l'icon_path

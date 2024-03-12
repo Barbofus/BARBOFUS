@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('heaven_bag_themes', function (Blueprint $table) {
+        Schema::create('haven_bag_themes', function (Blueprint $table) {
             $table->id();
             $table->integer('dofus_id');
             $table->tinyText('name');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('heaven_bag_themes');
+        Schema::dropIfExists('haven_bag_themes');
     }
 };

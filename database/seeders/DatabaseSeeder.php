@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
             //SkinSeeder::class,
 
             //Création des havres sacs
-            HeavenBagSeeder::class,
+            HavenBagSeeder::class,
         ]);
     }
 }

@@ -6,7 +6,7 @@ namespace App\Actions\DofusDBApi;
 
 use App\Actions\Api\GetApiBody;
 
-final class GetHeavenBagsFromDofusDB
+final class GetHavenBagsFromDofusDB
 {
     /**
      * @return array<int<0, max>, array<string, mixed>>

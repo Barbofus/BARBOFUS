@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('heaven_bags', function (Blueprint $table) {
+        Schema::create('haven_bags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('heaven_bag_theme_id')->constrained();
+            $table->foreignId('haven_bag_theme_id')->constrained();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->tinyText('name')->nullable();
             $table->text('image_path');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('heaven_bags');
+        Schema::dropIfExists('haven_bags');
     }
 };
