@@ -75,6 +75,9 @@ class DatabaseSeeder extends Seeder
 
             //Création des skins avec les likes et récompenses
             //SkinSeeder::class,
+
+            //Création des havres sacs
+            HeavenBagSeeder::class,
         ]);
     }
 }

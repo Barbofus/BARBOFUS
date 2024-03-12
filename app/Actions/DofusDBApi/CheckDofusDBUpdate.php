@@ -26,6 +26,7 @@ final class CheckDofusDBUpdate
         $currentVersion = (new CheckApiVersion)()->dofusDB;
 
         // Return si on a une différence entre les deux ou non
-        return $currentVersion != $version;
+        return true;
+        //return $currentVersion != $version;
     }
 }

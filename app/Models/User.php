@@ -123,4 +123,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->morphMany(DatabaseNotification::class, 'notifiable');
     }
+
+    /**
+     * @return HasMany<HeavenBag>
+     */
+    public function heavenBags()
+    {
+        return $this->hasMany(HeavenBag::class);
+    }
 }
