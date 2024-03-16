@@ -21,7 +21,7 @@ class HavenBag extends Model
     /**
      * @return BelongsTo<HavenBagTheme, HavenBag>
      */
-    public function havenBags()
+    public function havenBag()
     {
         return $this->belongsTo(HavenBag::class);
     }
@@ -29,7 +29,7 @@ class HavenBag extends Model
     /**
      * @return BelongsTo<User, HavenBag>
      */
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

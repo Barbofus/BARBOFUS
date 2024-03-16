@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->tinyText('name')->nullable();
             $table->text('image_path');
+            $table->enum('status', ['Posted', 'Refused', 'Pending'])->default('Pending');
             $table->timestamps();
         });
     }

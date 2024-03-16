@@ -2,6 +2,8 @@
   'forms.searchbar-items-autocomplete' => 'App\\Http\\Livewire\\Forms\\SearchbarItemsAutocomplete',
   'forms.skin-filter-races' => 'App\\Http\\Livewire\\Forms\\SkinFilterRaces',
   'forms.skin-filter-search-bar' => 'App\\Http\\Livewire\\Forms\\SkinFilterSearchBar',
+  'haven-bag.havenbag-index-chunk' => 'App\\Http\\Livewire\\HavenBag\\HavenbagIndexChunk',
+  'haven-bag.infinite-havenbag-index' => 'App\\Http\\Livewire\\HavenBag\\InfiniteHavenbagIndex',
   'skin.infinite-skin-index' => 'App\\Http\\Livewire\\Skin\\InfiniteSkinIndex',
   'skin.last-winners' => 'App\\Http\\Livewire\\Skin\\LastWinners',
   'skin.skin-index-chunk' => 'App\\Http\\Livewire\\Skin\\SkinIndexChunk',

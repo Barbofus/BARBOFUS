@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\EmailVerificationPromptController;
+use App\Http\Controllers\HavenBagController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MissSkinController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserDashboardController;
@@ -19,9 +21,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
+
+Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('haven-bag.index');
 
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
@@ -30,6 +34,9 @@ Route::middleware(['auth', 'throttle:skins-upload'])->group(function () {
 
     Route::post('/skins', [SkinController::class, 'store'])->name('skins.store');
     Route::put('/skins/{skin}', [SkinController::class, 'update'])->name('skins.update');
+
+    Route::post('/havre-sacs', [HavenBagController::class, 'store'])->name('havre-sacs.store');
+    Route::put('/havre-sacs/{havenBag}', [HavenBagController::class, 'update'])->name('havre-sacs.update');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -38,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/skins/create', [SkinController::class, 'create'])->name('skins.create');
     Route::get('/skins/{skin}/edit', [SkinController::class, 'edit'])->name('skins.edit');
+
+    Route::get('/havre-sacs/create', [HavenBagController::class, 'create'])->name('havre-sacs.create');
+    Route::get('/havre-sacs/{havenBag}/edit', [HavenBagController::class, 'edit'])->name('havre-sacs.edit');
 });
 
 Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
