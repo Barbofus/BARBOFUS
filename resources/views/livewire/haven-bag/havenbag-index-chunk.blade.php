@@ -13,7 +13,7 @@
                     AddToUrl('show', {{ $havenBag->id }})"
         >
             <div class="flex justify-left items-center relative p-2">
-                <img src="{{ asset('storage/'. $havenBag->popocket_icon_path) }}" class="h-[clamp(3rem,8vw,6rem)] min-[900px]:h-[clamp(3rem,5vw,6rem)] aspect-square invisible min-[400px]:visible" alt="Popoche du havre sac">
+                <img src="{{ asset('storage/'. $havenBag->popocket_icon_path) }}" class="h-[clamp(3rem,8vw,6rem)] min-[900px]:h-[clamp(3rem,5vw,6rem)] aspect-square invisible min-[400px]:visible" alt="Popoche du havre sac" draggable="false">
 
                 <div class="text-[calc(clamp(3rem,8vw,6rem)/100*22)] min-[900px]:text-[calc(clamp(3rem,5vw,6rem)/100*22)] text-center w-full">
                     <div class="absolute top-0 h-full px-1 pb-[2px] left-0 w-full flex flex-col justify-between
@@ -39,7 +39,7 @@
             </div>
 
             <div class="relative w-full aspect-video overflow-hidden">
-                <img src="{{ asset('storage/'. $havenBag->image_path) }}"
+                <img src="{{ asset('storage/'. $havenBag->image_path) }}" draggable="false"
                      alt="Image du havre sac"
                      class="animate-slideY absolute top-[-12.5%] h-[125%] w-full object-cover group-hover:top-[-7.5%] group-hover:h-[115%] transition-all duration-1000"
                      style="animation-delay: -{{ rand(0,5000) }}ms">

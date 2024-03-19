@@ -34,8 +34,8 @@ final class SaveHavenBagsFromDofusDB
             $newItem = HavenBagTheme::create([
                 'name' => $item['name'],
                 'dofus_id' => $item['id'],
-                'image_path' => 'images/icons/haven_bags/backgrounds/'. $item['mapId'] .'.jpg',
-                'popocket_icon_path' => 'images/icons/haven_bags/popockets/'. $item['popocket_iconId'] .'.png',
+                'image_path' => 'images/icons/haven_bags/backgrounds/'.$item['mapId'].'.jpg',
+                'popocket_icon_path' => 'images/icons/haven_bags/popockets/'.$item['popocket_iconId'].'.png',
             ]);
 
             // Récupère l'image et la stocke dans l'icon_path
@@ -44,7 +44,7 @@ final class SaveHavenBagsFromDofusDB
 
             // Sauvegarde les nouveautés pour les montrer après la MAJ
             $newItems[] = [
-                'Havre-Sac '. $newItem->name,
+                'Havre-Sac '.$newItem->name,
                 $newItem->popocket_icon_path,
             ];
         }

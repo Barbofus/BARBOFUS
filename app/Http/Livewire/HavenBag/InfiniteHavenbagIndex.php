@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\HavenBag;
 
-use App\Actions\Utils\DoColorsMatch;
-use App\Models\HavenBag;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class InfiniteHavenbagIndex extends Component
@@ -21,19 +21,75 @@ class InfiniteHavenbagIndex extends Component
 
     public int $maxPage = 1;
 
+    /**
+     * @var Collection<string, array<int, Collection<string, mixed>>>
+     */
     public $initHavenBag;
+
+    /**
+     * @var Collection<int, array<string, int|string>>
+     */
+    public $unselectedThemes;
+
+    /**
+     * @var Collection<int, array<string, int|string>>
+     */
+    public $selectedThemes;
+
+    /**
+     * @var int[]
+     */
+    public $selectedThemesID = [];
 
     protected bool $hasLoadMore = false;
 
+    public function mount(): void
+    {
+        $this->CheckForRequest();
+    }
 
-
+    /**
+     * @return View
+     */
     public function render()
     {
+        $this->PrepareThemes();
+
         if (! $this->hasLoadMore) {
             $this->PrepareChunks();
         }
 
-        if(request()->has('show')) {
+        return view('livewire.haven-bag.infinite-havenbag-index');
+    }
+
+    public function ToggleTheme(int $id): void
+    {
+        // Si le thème est déjà selectionné
+        if (count($this->selectedThemesID) > 0 && ($key = array_search($id, $this->selectedThemesID)) !== false) {
+            unset($this->selectedThemesID[$key]);
+
+            return;
+        }
+
+        $this->selectedThemesID[] = $id;
+    }
+
+    protected function PrepareThemes(): void
+    {
+        $this->unselectedThemes = DB::table('haven_bag_themes')
+            ->whereNotIn('id', $this->selectedThemesID)
+            ->select('id', 'name', 'image_path')
+            ->get();
+
+        $this->selectedThemes = DB::table('haven_bag_themes')
+            ->whereIn('id', $this->selectedThemesID)
+            ->select('id', 'name', 'image_path')
+            ->get();
+    }
+
+    protected function CheckForRequest(): void
+    {
+        if (request()->has('show')) {
             $this->initHavenBag = DB::table('haven_bags')
                 ->select('id', 'image_path', 'haven_bag_theme_id', 'user_id', 'name')
                 ->addSelect([
@@ -57,14 +113,9 @@ class InfiniteHavenbagIndex extends Component
                 ->where('id', request('show'))
                 ->get();
         }
-
-        return view('livewire.haven-bag.infinite-havenbag-index');
     }
 
-    /**
-     * @return void
-     */
-    public function LoadMore()
+    public function LoadMore(): void
     {
         if ($this->HasMorePage()) {
             $this->page++;
@@ -72,15 +123,16 @@ class InfiniteHavenbagIndex extends Component
         }
     }
 
-    /**
-     * @return void
-     */
-    public function PrepareChunks()
+    public function PrepareChunks(): void
     {
         $this->postIdChunks = DB::table('haven_bags')
+            ->join('haven_bag_themes', 'haven_bags.haven_bag_theme_id', '=', 'haven_bag_themes.id')
             ->where('status', 'Posted')
-            ->orderBy('created_at', 'DESC')
-            ->pluck('id')
+            ->when(count($this->selectedThemesID) > 0, function (Builder $query) {
+                $query->whereIn('haven_bag_themes.id', $this->selectedThemesID);
+            })
+            ->orderBy('haven_bags.created_at', 'DESC')
+            ->pluck('haven_bags.id')
             ->toArray();
 
         // On chunk et on envoie !
@@ -91,10 +143,7 @@ class InfiniteHavenbagIndex extends Component
         $this->maxPage = count($this->postIdChunks);
     }
 
-    /**
-     * @return bool
-     */
-    public function HasMorePage()
+    public function HasMorePage(): bool
     {
         return $this->page < $this->maxPage;
     }

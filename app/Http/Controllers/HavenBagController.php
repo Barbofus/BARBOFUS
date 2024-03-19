@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\HavenBagsOwnerShip;
 use App\Models\HavenBag;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HavenBagController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(HavenBagsOwnerShip::class)->only(['edit', 'update', 'destroy']);
@@ -23,7 +21,7 @@ class HavenBagController extends Controller
         return view('haven-bags.index');
     }
 
-    public function edit(HavenBag $havenBag)
+    public function edit(HavenBag $havenBag): void
     {
 
     }

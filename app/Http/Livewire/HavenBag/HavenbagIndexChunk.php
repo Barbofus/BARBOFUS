@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\HavenBag;
 
-use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class HavenbagIndexChunk extends Component
@@ -13,12 +14,18 @@ class HavenbagIndexChunk extends Component
      */
     public $havenBagIds;
 
+    /**
+     * @var Collection<int, array<string, mixed>>
+     */
     public $orderedHavenBags;
 
     public int $page;
 
     public int $itemsPerPage;
 
+    /**
+     * @return View
+     */
     public function render()
     {
         $this->orderedHavenBags = $this->getHavenBags();
@@ -26,6 +33,9 @@ class HavenbagIndexChunk extends Component
         return view('livewire.haven-bag.havenbag-index-chunk');
     }
 
+    /**
+     * @return Collection<int, array<string, mixed>>
+     */
     protected function getHavenBags()
     {
         $havenBags = DB::table('haven_bags')

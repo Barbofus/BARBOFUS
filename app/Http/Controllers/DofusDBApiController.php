@@ -20,6 +20,7 @@ class DofusDBApiController extends Controller
         $newItems = (new UpdateItemsFromDofusDBApi)();
 
         session()->put('newItems', $newItems);
+
         return redirect()->route('user-dashboard.index', 'section=admin-panel');
     }
 }
