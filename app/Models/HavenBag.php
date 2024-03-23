@@ -15,6 +15,7 @@ class HavenBag extends Model
         'user_id',
         'name',
         'image_path',
+        'status',
     ];
 
     /**

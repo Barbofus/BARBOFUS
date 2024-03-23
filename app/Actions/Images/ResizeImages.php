@@ -33,6 +33,6 @@ final class ResizeImages
         })->save($destinationPath.'/'.$imageName);
 
         // On return le chemin d'accés
-        return 'images/skins/'.$imageName;
+        return $storagePath.'/'.$imageName;
     }
 }

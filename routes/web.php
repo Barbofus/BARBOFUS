@@ -25,7 +25,7 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
 
-Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('haven-bag.index');
+Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
 
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
