@@ -22,7 +22,7 @@ class InfiniteHavenbagIndex extends Component
     public int $maxPage = 1;
 
     /**
-     * @var Collection<string, array<int, Collection<string, mixed>>>
+     * @var null|Collection<string, array<int, Collection<string, mixed>>>
      */
     public $initHavenBag;
 
@@ -45,7 +45,6 @@ class InfiniteHavenbagIndex extends Component
 
     public function mount(): void
     {
-        $this->CheckForRequest();
     }
 
     /**
@@ -54,10 +53,13 @@ class InfiniteHavenbagIndex extends Component
     public function render()
     {
         $this->PrepareThemes();
+        $this->CheckForRequest();
 
         if (! $this->hasLoadMore) {
             $this->PrepareChunks();
         }
+
+        $this->dispatchBrowserEvent('haven-bag-change');
 
         return view('livewire.haven-bag.infinite-havenbag-index');
     }
@@ -89,6 +91,8 @@ class InfiniteHavenbagIndex extends Component
 
     protected function CheckForRequest(): void
     {
+        $this->initHavenBag = null;
+
         if (request()->has('show')) {
             $this->initHavenBag = DB::table('haven_bags')
                 ->select('id', 'image_path', 'haven_bag_theme_id', 'user_id', 'name', 'status')

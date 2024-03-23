@@ -10,7 +10,8 @@
                     username = '{{ $havenBag->user_name }}',
                     havenBagName = '{{ $havenBag->name }}',
                     havenBagThemeName = '{{ $havenBag->haven_bag_theme_name }}',
-                    AddToUrl('show', {{ $havenBag->id }})"
+                    AddToUrl('show', {{ $havenBag->id }}),
+                    $dispatch('haven-bag-change')"
         >
             <div class="flex justify-left items-center relative p-2">
                 <img src="{{ asset('storage/'. $havenBag->popocket_icon_path) }}" class="h-[clamp(3rem,8vw,6rem)] min-[900px]:h-[clamp(3rem,5vw,6rem)] aspect-square invisible min-[400px]:visible" alt="Popoche du havre sac" draggable="false">

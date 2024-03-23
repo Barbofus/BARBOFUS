@@ -66,7 +66,7 @@
     </div>
 
     {{-- Main section --}}
-    <div class="flex flex-col items-center w-full mb-10"
+    <div class="flex flex-col items-center w-full mb-10" wire:key="{{ 'main'.rand() }}"
         x-data="{
             showHavenBag: {{ isset($initHavenBag[0]) ? 'true' : 'false' }},
             havenBagImagePath: '{{ isset($initHavenBag[0]) ? asset('storage/'). '/'. $initHavenBag[0]->image_path : '' }}',

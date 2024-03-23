@@ -10,6 +10,9 @@ const userNamesCenterCopy = []; // On stockera les clones des pseudos qui sont e
 window.addEventListener('user-dashboard-change', () => {
     SlideText();
 })
+window.addEventListener('haven-bag-change', () => {
+    SlideText();
+})
 
 // Fonction qui s'occupe d'ajouter ou retirer le slide
 function SlideText() {
