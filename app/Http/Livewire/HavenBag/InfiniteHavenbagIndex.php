@@ -2,12 +2,9 @@
 
 namespace App\Http\Livewire\HavenBag;
 
-use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -90,7 +87,7 @@ class InfiniteHavenbagIndex extends Component
             ->get();
     }
 
-    protected function CheckForRequest()
+    protected function CheckForRequest(): void
     {
         if (request()->has('show')) {
             $this->initHavenBag = DB::table('haven_bags')
