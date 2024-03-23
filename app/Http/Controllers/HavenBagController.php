@@ -60,7 +60,7 @@ class HavenBagController extends Controller
             (new SendDiscordHavenBagPendingWebhook)(config('app.pending_webhook_url'), $havenBag);
         }
 
-        return redirect()->route('user-dashboard.index', 'section=my-haven-bags');
+        return redirect()->route('user-dashboard.index', 'section=my-havenbags');
     }
 
     public function edit(HavenBag $havenBag): View
@@ -106,6 +106,6 @@ class HavenBagController extends Controller
             (new SendDiscordHavenBagPendingWebhook)(config('app.pending_webhook_url'), $havenBag);
         }
 
-        return redirect()->route('user-dashboard.index', 'section=my-haven-bags');
+        return redirect()->route('user-dashboard.index', 'section=my-havenbags');
     }
 }

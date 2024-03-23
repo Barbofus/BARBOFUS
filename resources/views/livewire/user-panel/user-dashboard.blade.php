@@ -2,17 +2,17 @@
 
     {{-- Création de variable de class pour éviter les copier coller avec AlpineJS --}}
     <div
-        class="w-[100vw] px-6 min-[1550px]:w-[80vw] relative flex gap-x-2" x-cloak
+        class="w-[100vw] min-[400px]:px-6 min-[1550px]:w-[80vw] relative flex gap-x-2" x-cloak
         x-data="{
             currentPage: '{{ (request()->has('section')) ? request('section') : 'user-details'}}',
-            initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-[4rem] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
-            activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-[4rem] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
+            initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
+            activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
             initTextClass: 'absolute invisible min-[1250px]:visible min-[1250px]:static transition-transform group-hover:-skew-x-12',
 
         }">
 
         {{-- Pseudo navbar pour afficher tel ou tel onglet --}}
-        <div class="min-[1250px]:w-[20rem] max-h-[25rem] font-light sticky top-32">
+        <div class="min-[1250px]:w-[20rem] max-h-[25rem] font-light fixed min-[400px]:sticky top-16 min-[400px]:top-32">
 
             <button wire:click="$set('section', 'user-details')" @click="currentPage = 'user-details', window.scrollTo(0,0)" :class="(currentPage == 'user-details') ? activeButtonClass : initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -31,6 +31,18 @@
 
 
                 <p :class="initTextClass">Mes Skins</p>
+            </button>
+
+            <button wire:click="ChangeSection('my-havenbags')" @click="currentPage = 'my-havenbags', window.scrollTo(0,0)" :class="(currentPage == 'my-havenbags') ? activeButtonClass : initButtonClass" x-cloak>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                    <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                </svg>
+
+
+
+
+                <p :class="initTextClass">Mes Havre-sac</p>
             </button>
 
             <button wire:click="ChangeSection('my-likes')" @click="currentPage = 'my-likes', window.scrollTo(0,0)" :class="(currentPage == 'my-likes') ? activeButtonClass : initButtonClass" x-cloak>
@@ -85,7 +97,7 @@
             @endcan
         </div>
 
-        <div class="min-h-[50vh] flex-1 relative">
+        <div class="min-h-[50vh] max-[399px]:ml-12 flex-1 relative">
 
             {{-- Spinning Loader --}}
             <div wire:loading.delay class="h-screen w-[calc(80vw-20rem)] fixed top-0 z-10">
@@ -103,6 +115,10 @@
 
                 @case('my-skins')
                     <livewire:user-panel.myskins-infinite-load :wire:key="'my-skins-{{ rand() }}'"/>
+                    @break
+
+                @case('my-havenbags')
+                    <livewire:user-panel.myhavenbags-infinite-load :wire:key="'my-havenbags-{{ rand() }}'"/>
                     @break
 
                 @case('my-likes')

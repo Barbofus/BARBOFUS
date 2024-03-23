@@ -22,7 +22,7 @@
                             <img src="{{ asset('storage/' . $havenBag->haven_bag_theme_image_path) }}" alt="" draggable="false" class="w-full">
                         </div>
 
-                        <div class="flex-1 bg-green-400 overflow-hidden">
+                        <div class="flex-1">
                             <img src="{{ asset('storage/' . $havenBag->image_path) }}" draggable="false" alt="">
                         </div>
                     </div>

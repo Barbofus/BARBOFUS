@@ -68,12 +68,12 @@
     {{-- Main section --}}
     <div class="flex flex-col items-center w-full mb-10"
         x-data="{
-            showHavenBag: {{ request()->has('show') ? 'true' : 'false' }},
-            havenBagImagePath: '{{ request()->has('show') ? asset('storage/'). '/'. $initHavenBag[0]->image_path : '' }}',
-            popocketIconPath: '{{ request()->has('show') ? asset('storage/'). '/'. $initHavenBag[0]->popocket_icon_path : '' }}',
-            username: '{{ request()->has('show') ? $initHavenBag[0]->user_name : '' }}',
-            havenBagName: '{{ request()->has('show') ? $initHavenBag[0]->name : '' }}',
-            havenBagThemeName: '{{ request()->has('show') ? $initHavenBag[0]->haven_bag_theme_name : '' }}',
+            showHavenBag: {{ isset($initHavenBag[0]) ? 'true' : 'false' }},
+            havenBagImagePath: '{{ isset($initHavenBag[0]) ? asset('storage/'). '/'. $initHavenBag[0]->image_path : '' }}',
+            popocketIconPath: '{{ isset($initHavenBag[0]) ? asset('storage/'). '/'. $initHavenBag[0]->popocket_icon_path : '' }}',
+            username: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->user_name : '' }}',
+            havenBagName: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->name : '' }}',
+            havenBagThemeName: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->haven_bag_theme_name : '' }}',
 
             AddToUrl(name, value) {
                 // Récupère les paramètres
