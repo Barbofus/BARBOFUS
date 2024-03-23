@@ -16,12 +16,13 @@ class HavenBag extends Model
         'name',
         'image_path',
         'status',
+        'refused_reason',
     ];
 
     /**
      * @return BelongsTo<HavenBagTheme, HavenBag>
      */
-    public function havenBag()
+    public function havenBagTheme()
     {
         return $this->belongsTo(HavenBagTheme::class);
     }

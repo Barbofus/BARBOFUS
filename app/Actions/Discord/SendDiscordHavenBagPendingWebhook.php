@@ -18,7 +18,7 @@ final class SendDiscordHavenBagPendingWebhook
             'embeds' => [
                 [
                     'description' => 'Nouveau havre-sac en attente.
-                        [Clique pour le vérifier]('.route('user-dashboard.index', 'section=skins-validation').')
+                        [Clique pour le vérifier]('.route('user-dashboard.index', 'section=haven-bags-validation').')
 
                         **'.$havenBag->user->name.'**
                         *'.ucfirst(\Carbon\Carbon::now()->isoFormat('dddd D MMMM à HH:mm')).'*',

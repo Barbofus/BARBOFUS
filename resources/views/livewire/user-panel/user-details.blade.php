@@ -51,7 +51,12 @@
 
                     <div class="flex flex-col gap-y-6 pt-6 pl-4">
                         <div class="relative w-[min(17rem,80%)]">
-                            <x-forms.filter-button :name="'skin-validation'" wire:click="togglePreference('mail_skin_validation', '{{ ($user->mail_skin_validation_preference !== 0) }}')" :checked="($user->mail_skin_validation_preference !== 0)"><p class="absolute italic font-thin text-secondary text-lg left-7 top-1 cursor-pointer">Validation / Refus d'un skin</p></x-forms.filter-button>
+                            <x-forms.filter-button
+                                :name="'skin-validation'"
+                                wire:click="togglePreference('mail_skin_validation', '{{ ($user->mail_skin_validation_preference !== 0) }}')"
+                                :checked="!(isset($user->mail_skin_validation_preference) ? $user->mail_skin_validation_preference : 1)">
+                                <p class="absolute italic font-thin text-secondary text-lg left-7 top-1 cursor-pointer">Validation / Refus d'un skin</p>
+                            </x-forms.filter-button>
                         </div>
                     </div>
                 </div>

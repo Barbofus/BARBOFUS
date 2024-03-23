@@ -99,10 +99,10 @@ class UserDetails extends Component
                     ->whereColumn('user_id', 'users.id')
                     ->where('notification_type', 'mail_skin_validation'),
 
-                'mail_skin_winner_preference' => DB::table('user_notification_preferences')
+                'mail_haven_bag_validation_preference' => DB::table('user_notification_preferences')
                     ->selectRaw('value')
                     ->whereColumn('user_id', 'users.id')
-                    ->where('notification_type', 'mail_skin_winner'),
+                    ->where('notification_type', 'mail_haven_bag_validation'),
             ])
             ->where('id', auth()->id())
             ->first();
