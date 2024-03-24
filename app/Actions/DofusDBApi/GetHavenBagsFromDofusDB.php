@@ -41,6 +41,17 @@ final class GetHavenBagsFromDofusDB
                 $popocket_result = (new GetApiBody)($popocket_url)->data;
 
                 if (count($popocket_result) == 0) {
+
+                    $items[] = [
+                        'id' => $value->id,
+                        'name' => $value->name->fr,
+                        'mapId' => $value->mapId,
+                        'image_path' => 'https://api.beta.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
+                        'has_popocket' => false,
+                        'popocket_iconId' => 0,
+                        'popocket_icon_path' => '',
+                    ];
+
                     continue;
                 }
 
@@ -49,6 +60,7 @@ final class GetHavenBagsFromDofusDB
                     'name' => $value->name->fr,
                     'mapId' => $value->mapId,
                     'image_path' => 'https://api.beta.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
+                    'has_popocket' => true,
                     'popocket_iconId' => $popocket_result[0]->iconId,
                     'popocket_icon_path' => 'https://api.beta.dofusdb.fr/img/items/250/'.$popocket_result[0]->iconId.'.png',
                 ];
