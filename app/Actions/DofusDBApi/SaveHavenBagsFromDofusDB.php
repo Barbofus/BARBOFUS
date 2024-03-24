@@ -35,13 +35,13 @@ final class SaveHavenBagsFromDofusDB
                 'name' => $item['name'],
                 'dofus_id' => $item['id'],
                 'image_path' => 'images/icons/haven_bags/backgrounds/'.$item['mapId'].'.jpg',
-                'popocket_icon_path' => 'images/icons/haven_bags/popockets/'. (($item['has_popocket']) ? $item['popocket_iconId'] : 'no_icon') .'.png',
+                'popocket_icon_path' => 'images/icons/haven_bags/popockets/'.(($item['has_popocket']) ? $item['popocket_iconId'] : 'no_icon').'.png',
             ]);
 
             // Récupère l'image et la stocke dans l'icon_path
             (new FetchExternalFile)($item['image_path'], $newItem['image_path']);
 
-            if($item['has_popocket']) {
+            if ($item['has_popocket']) {
                 (new FetchExternalFile)($item['popocket_icon_path'], $newItem['popocket_icon_path']);
             }
 
