@@ -72,7 +72,7 @@
             havenBagImagePath: '{{ isset($initHavenBag[0]) ? asset('storage/'). '/'. $initHavenBag[0]->image_path : '' }}',
             popocketIconPath: '{{ isset($initHavenBag[0]) ? asset('storage/'). '/'. $initHavenBag[0]->popocket_icon_path : '' }}',
             username: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->user_name : '' }}',
-            havenBagName: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->name : '' }}',
+            havenBagName: '{{ isset($initHavenBag[0]) ? addslashes($initHavenBag[0]->name) : '' }}',
             havenBagThemeName: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->haven_bag_theme_name : '' }}',
 
             AddToUrl(name, value) {
@@ -102,6 +102,18 @@
                 window.history.pushState({ path: newUrl }, '', newUrl);
             }
         }">
+
+
+        <div class="bg-primary w-full flex justify-center mt-6">
+            <a href="{{ route('havre-sacs.create') }}" class="goldGradient px-4 py-2 rounded-md text-primary flex flex-col transition-all items-center text-lg min-[400px]:text-2xl hover:rounded-3xl group hover:brightness-110">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+
+                <p class="group-hover:-translate-y-2 transition-all">Poster un havre-sac</p>
+            </a>
+        </div>
+
         @if(count($postIdChunks) > 0)
             @for($i = 0; $i < $page && $i < $maxPage; $i++)
                 <div class="w-full">

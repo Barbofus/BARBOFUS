@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 min-[900px]:grid-cols-2 pt-[4.5rem] px-4 gap-x-8 gap-y-16 w-[min(95%,130rem)] mx-auto justify-center">
+<div class="grid grid-cols-1 min-[900px]:grid-cols-2 pt-[2rem] px-4 gap-x-8 gap-y-16 w-[min(95%,130rem)] mx-auto justify-center">
     @foreach($orderedHavenBags as $key => $havenBag)
         <button wire:key="haven-bag.{{ $havenBag->id }}"
                 class="group relative opacity-0 animate-skinApparition w-full h-full shadow-sm bg-primary-100 rounded-xl overflow-hidden hover:brightness-110 transition-all duration-1000"
@@ -8,7 +8,7 @@
                     havenBagImagePath = '{{ asset('storage/'. $havenBag->image_path) }}',
                     popocketIconPath = '{{ asset('storage/'. $havenBag->popocket_icon_path) }}',
                     username = '{{ $havenBag->user_name }}',
-                    havenBagName = '{{ $havenBag->name }}',
+                    havenBagName = '{{ addslashes($havenBag->name) }}',
                     havenBagThemeName = '{{ $havenBag->haven_bag_theme_name }}',
                     AddToUrl('show', {{ $havenBag->id }}),
                     $dispatch('haven-bag-change')"

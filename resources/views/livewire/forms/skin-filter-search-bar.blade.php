@@ -6,7 +6,6 @@
         x-data="{
             EnterPressedOnSearchBar(name, id)
             {
-                console.log('EnterPressedOnSearchBar - AFTER ' + name);
                 window.scrollTo({top: 0, behavior: 'smooth'});
 
                 ToggleArrayParamToUrl('search', name);
@@ -23,7 +22,6 @@
                maxlength="45"
                autocomplete="off"
                @keydown.enter="{{ (count($itemToShow) > 0) ? 'EnterPressedOnSearchBar(\'' . addslashes($itemToShow[$selectionKey]->name) . '\',\'' . $itemToShow[$selectionKey]->id .'\')' : '' }}"
-               {{--@keydown.enter="window.scrollTo({top: 0, behavior: 'smooth'}), {{ (count($itemToShow) > 0) ? 'ToggleArrayParamToUrl(\'search\', \'' . addslashes($itemToShow[$selectionKey]->name) . '\'), ToggleArrayParamToUrl(\'searchID\', \'' . $itemToShow[$selectionKey]->id . '\')' : '' }}"--}}
                wire:model="query"
                wire:keydown.arrow-down.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
                wire:keydown.arrow-up.prevent="{{ (count($itemToShow) > 0) ? 'decrementSelection' : '' }}"

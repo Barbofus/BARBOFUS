@@ -23,9 +23,6 @@ final class SendDiscordHavenBagPendingWebhook
                         **'.$havenBag->user->name.'**
                         *'.ucfirst(\Carbon\Carbon::now()->isoFormat('dddd D MMMM à HH:mm')).'*',
                     'color' => 16562499,
-                    'thumbnail' => [
-                        'url' => asset('storage/'.$havenBag->image_path),
-                    ],
                 ],
             ],
         ];
