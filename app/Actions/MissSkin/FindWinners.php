@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Actions\MissSkin;
 
 use App\Actions\Discord\SendDiscordMissSkinWebhook;
+use App\Actions\Images\ResizeImages;
 use App\Models\Reward;
 use App\Models\RewardPrice;
 use App\Models\SkinWinner;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 final class FindWinners
 {
@@ -38,17 +40,29 @@ final class FindWinners
             ->get()
             ->toArray();
 
+        $previousWinners = SkinWinner::all();
+
+        foreach ($previousWinners as $previousWinner) {
+            if (Storage::exists($previousWinner->image_path)) {
+                Storage::delete($previousWinner->image_path);
+            }
+        }
+
         SkinWinner::truncate();
 
         foreach ($winners as $key => $winner) {
+
+            $newPath = 'images/winners/winner_'. $key .'.png';
+            Storage::copy($winner->image_path, $newPath);
 
             // Créer les 3 skins à afficher
             SkinWinner::create([
                 'skin_id' => $winner->id,
                 'reward_id' => $key + 1,
                 'user_name' => $winner->user_name,
-                'image_path' => $winner->image_path,
+                'image_path' => $newPath,
                 'weekly_likes' => $winner->weekly_like_count,
+                'skin_name' => $winner->name,
             ]);
 
             // Ajoute les vainqueurs dans la table des vainqueurs

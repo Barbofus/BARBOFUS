@@ -43,6 +43,10 @@ class LastWinners extends Component
             ])
             ->orderBy('reward_id', 'ASC')
             ->get();
+
+        foreach ($this->winners as $winner) {
+            $winner->name = $winner->skin_name;
+        }
     }
 
     /**
