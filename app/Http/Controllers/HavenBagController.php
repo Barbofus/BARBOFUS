@@ -28,7 +28,6 @@ class HavenBagController extends Controller
     {
         $hbThemes = DB::table('haven_bag_themes')
             ->select('*')
-            ->orderBy('dofus_id', 'ASC')
             ->get()->toArray();
 
         foreach ($hbThemes as $hbTheme) {
@@ -68,7 +67,6 @@ class HavenBagController extends Controller
     {
         $hbThemes = DB::table('haven_bag_themes')
             ->select('*')
-            ->orderBy('dofus_id', 'ASC')
             ->get()->toArray();
 
         foreach ($hbThemes as $hbTheme) {
