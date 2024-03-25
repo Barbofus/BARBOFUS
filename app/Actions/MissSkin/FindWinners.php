@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Actions\MissSkin;
 
 use App\Actions\Discord\SendDiscordMissSkinWebhook;
-use App\Actions\Images\ResizeImages;
 use App\Models\Reward;
 use App\Models\RewardPrice;
 use App\Models\SkinWinner;
@@ -52,7 +51,7 @@ final class FindWinners
 
         foreach ($winners as $key => $winner) {
 
-            $newPath = 'images/winners/winner_'. $key .'.png';
+            $newPath = 'images/winners/winner_'.$key.'.png';
             Storage::copy($winner->image_path, $newPath);
 
             // Créer les 3 skins à afficher

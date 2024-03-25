@@ -51,6 +51,12 @@ class SkinsValidation extends Component
                     ->whereColumn('id', 'skins.race_id')
                     ->take(1),
             ])
+            ->addSelect([
+                'race_dofus_id' => DB::table('races')
+                    ->select('dofus_id')
+                    ->whereColumn('id', 'skins.race_id')
+                    ->take(1),
+            ])
 
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {

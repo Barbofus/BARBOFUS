@@ -31,7 +31,7 @@
             </label>
 
             {{-- Menu déroulant --}}
-            <div class="h-72 w-full absolute" x-show="show">
+            <div class="max-h-72 w-full absolute bg-red-500" x-show="show">
 
                 <div class="absolute bg-primary-100 z-50 w-full max-h-60 overflow-y-auto">
                     @foreach ($items as $key => $item)

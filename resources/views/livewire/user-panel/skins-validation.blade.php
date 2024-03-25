@@ -11,7 +11,7 @@
                     wire:key="'skins-validation-{{ $skin->id }}-{{ rand() }}'"
                     class="mt-2 flex space-y-2 flex-col"
                     x-data="{
-                    open: false,
+                    open: true,
                     inTransition: false,
                     SwitchOpen(){
                         console.log('SwitchOpen');
@@ -82,7 +82,12 @@
                                         @endif
                                         <p class="text-secondary font-thin text-lg min-[750px]:text-xl">{{ $skin->gender }}</p>
                                     </div>
-                                    <p class="text-secondary font-thin text-lg min-[750px]:text-xl">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
+
+                                    <div class="flex items-center justify-center space-x-4">
+                                        <p class="text-secondary font-thin text-md min-[750px]:text-lg">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
+                                        <img src="{{  asset(sprintf("storage/images/icons/classes/faces/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
+                                             alt="Visage {{ $skin->race_name }} n° {{ $skin->face }}" draggable="false" class="h-12">
+                                    </div>
                                 </div>
 
                                 <div>
