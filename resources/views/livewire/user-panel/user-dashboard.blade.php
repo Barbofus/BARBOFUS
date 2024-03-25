@@ -2,7 +2,7 @@
 
     {{-- Création de variable de class pour éviter les copier coller avec AlpineJS --}}
     <div
-        class="w-[100vw] min-[400px]:px-6 min-[1550px]:w-[80vw] relative flex gap-x-2" x-cloak
+        class="w-[100vw] min-[400px]:px-6 min-[1550px]:pl-[5vw] relative flex gap-x-2" x-cloak
         x-data="{
             currentPage: '{{ (request()->has('section')) ? request('section') : 'user-details'}}',
             initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',

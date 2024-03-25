@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\Discord;
 
+use App\Jobs\SendDiscordWebhook;
 use App\Models\HavenBag;
-use Illuminate\Support\Facades\Http;
 
 final class SendDiscordHavenBagPendingWebhook
 {
@@ -27,6 +27,6 @@ final class SendDiscordHavenBagPendingWebhook
             ],
         ];
 
-        Http::post($url, $body);
+        dispatch(new SendDiscordWebhook($url, $body));
     }
 }

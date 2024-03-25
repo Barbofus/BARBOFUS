@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\Discord;
 
+use App\Jobs\SendDiscordWebhook;
 use App\Models\Skin;
-use Illuminate\Support\Facades\Http;
 
 final class SendDiscordPostedWebhook
 {
@@ -29,6 +29,6 @@ final class SendDiscordPostedWebhook
             ],
         ];
 
-        Http::post($url, $body);
+        dispatch(new SendDiscordWebhook($url, $body));
     }
 }

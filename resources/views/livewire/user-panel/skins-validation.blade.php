@@ -3,39 +3,18 @@
         <x-utils.userpage-title :title="'Skins en Attente'" :subtitle="'Accepte ou refuse les skins'" />
 
 
-        <div class="grid justify-center grid-cols-[repeat(auto-fill,12.5rem)] p-4 gap-4">
+        <div class="grid justify-center grid-cols-[repeat(auto-fill,40rem)] p-4 gap-4">
             @foreach($skins as $key => $skin)
 
                 {{-- Gros container d'un skin --}}
                 <div
                     wire:key="'skins-validation-{{ $skin->id }}-{{ rand() }}'"
-                    class="mt-2 flex space-y-2 flex-col"
-                    x-data="{
-                    open: true,
-                    inTransition: false,
-                    SwitchOpen(){
-                        console.log('SwitchOpen');
-                        if(!this.open) {
-                            this.open = true;
-                            return;
-                        }
-
-                        this.open = false;
-                        this.inTransition = true;
-                        setTimeout(() => { this.inTransition = false }, 700);
-                    }
-                }"
-                    :class="open || inTransition ? 'min-[750px]:col-span-3' : ''"
-                >
+                    class="mt-2 flex space-y-2 flex-col">
 
                     <div class="flex flex-col min-[750px]:flex-row max-[749px]:gap-y-2 min-[750px]:gap-x-2 items-center">
 
                         {{-- L'image --}}
-                        <button
-                            class="flex flex-col items-center transition-colors rounded-md"
-                            x-on:click="SwitchOpen"
-                            :class="open || inTransition ? 'bg-primary-100' : 'hover:bg-primary-100 '"
-                        >
+                        <div class="flex flex-col items-center rounded-md">
 
                             {{-- Classe + ID --}}
                             <div class="flex items-center space-x-2 w-full">
@@ -56,17 +35,10 @@
                             <img draggable="false" width="200" src="{{ asset('storage/' . $skin->image_path) }}">
 
                             <p class="text-inactiveText italic">{{ $skin->user_name }}</p>
-                        </button>
+                        </div>
 
                         {{-- Détails --}}
-                        <div class="flex flex-col min-[750px]:flex-row min-[750px]:space-x-2 items-center min-[750px]:h-full max-[749px]:w-full"
-                             x-show="open"
-                             x-transition:enter="transition ease-out duration-300"
-                             x-transition:enter-start="opacity-0 -translate-x-full"
-                             x-transition:enter-end="opacity-100"
-                             x-transition:leave="transition ease-in delay-300 duration-300"
-                             x-transition:leave-start="opacity-100"
-                             x-transition:leave-end="opacity-0 -translate-x-1/2">
+                        <div class="flex flex-col min-[750px]:flex-row min-[750px]:space-x-2 items-center min-[750px]:h-full max-[749px]:w-full">
 
                             {{-- Items --}}
                             <div>
@@ -125,15 +97,7 @@
                     </div>
 
                     {{-- Bouton de validation --}}
-                    <div
-                        class="flex flex-col min-[750px]:flex-row max-[749px]:gap-y-2 min-[750px]:gap-x-2 relative pb-8"
-                        x-show="open" x-cloak
-                        x-transition:enter="transition ease-out delay-300 duration-300"
-                        x-transition:enter-start="opacity-0 -translate-y-full"
-                        x-transition:enter-end="opacity-100"
-                        x-transition:leave="transition ease-in duration-300"
-                        x-transition:leave-start="opacity-100"
-                        x-transition:leave-end="opacity-0 -translate-y-1/2">
+                    <div class="flex flex-col min-[750px]:flex-row max-[749px]:gap-y-2 min-[750px]:gap-x-2 relative pb-8">
 
                         <button wire:click="acceptSkin({{ $skin->id }})"
                                 class="px-4 h-12 text-primary goldGradient transition-all hover:rounded-3xl hover:tracking-widest rounded-md text-md min-[750px]:text-xl hover:brightness-110">Accepter</button>

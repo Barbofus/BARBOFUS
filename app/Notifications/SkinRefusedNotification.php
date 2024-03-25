@@ -32,7 +32,7 @@ class SkinRefusedNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        $wantMail = $notifiable->NotificationPreferences->where('notification_type', '=', 'mail_skin_validation')->where('value', '=', '0')->count() == 0;
+        $wantMail = $notifiable->NotificationPreferences->where('notification_type', '=', 'mail_skin_validation')->where('value', '=', '0')->count() == 1;
 
         if ($wantMail) {
             return ['database', 'mail'];
