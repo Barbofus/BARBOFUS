@@ -15,16 +15,17 @@
              class="flex h-[max(100vh,15.625rem)] w-screen max-[900px]:pb-2 min-[901px]:h-full min-[901px]:w-full items-center justify-center flex-col min-[901px]:flex-row bg-primary">
 
             <a href="{{ route('home') }}" title="Accueil Barbofus" :class="{{ (Route::is('home')) ? 'selectedClass' : 'unselectedClass' }}">Accueil</a>
-            <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
             <a href="{{ route('skins.index') }}" title="Galleri de skins" :class="{{ (Route::is('skins.index', 'skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Les Skins</a>
 
             @guest
+                <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
                 <a href="{{ route('login') }}" title="Page de connexion" :class="{{ (Route::is('login')) ? 'selectedClass' : 'unselectedClass' }}">Se connecter</a>
                 <a href="{{ route('register') }}" title="Formulaire d'inscription" :class="{{ (Route::is('register')) ? 'selectedClass' : 'unselectedClassLast' }}">S'enregistrer</a>
             @endguest
 
             @auth()
                 <a href="{{ route('skins.create') }}" title="Partage de skin" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">Poster un Skin</a>
+                <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
                 <a href="{{ route('user-dashboard.index') }}" title="Espace mon compte" :class="{{ (Route::is('user-dashboard.index')) ? 'selectedClass' : 'unselectedClass'  }}">Mon Compte</a>
                 <form method="POST" action="{{ route('logout') }}" class="max-[900px]:h-[18%] ">
                     @csrf
