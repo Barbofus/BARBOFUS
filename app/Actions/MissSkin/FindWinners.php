@@ -51,7 +51,7 @@ final class FindWinners
 
         foreach ($winners as $key => $winner) {
 
-            $newPath = 'images/winners/winner_'.$key.'.png';
+            $newPath = 'images/winners/winner_'.$key.'_'.time().'png';
             Storage::copy($winner->image_path, $newPath);
 
             // Créer les 3 skins à afficher
