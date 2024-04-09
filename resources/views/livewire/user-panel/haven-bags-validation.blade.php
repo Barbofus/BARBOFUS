@@ -1,6 +1,6 @@
 <div>
     <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s]">
-        <x-utils.userpage-title :title="'Skins en Attente'" :subtitle="'Accepte ou refuse les skins'" />
+        <x-utils.userpage-title :title="'Havre-sacs en Attente'" :subtitle="'Accepte ou refuse les havre-sacs'" />
 
 
         <div class="p-4">
