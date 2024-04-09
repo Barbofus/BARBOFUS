@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Discord\SendDiscordMissSkinWebhook;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\EmailVerificationPromptController;
 use App\Http\Controllers\HavenBagController;

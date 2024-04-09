@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Discord;
 
 use App\Models\SkinWinner;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 final class SendDiscordMissSkinWebhook
@@ -14,7 +15,15 @@ final class SendDiscordMissSkinWebhook
      */
     public function __invoke(string $url)
     {
-        $winners = SkinWinner::query()->orderBy('reward_id', 'ASC')->get();
+        $winners = SkinWinner::query()
+            ->addSelect([
+                'skin_image_path' => DB::table('skins')
+                    ->select('image_path')
+                    ->whereColumn('id', 'skin_winners.skin_id')
+                    ->take(1),
+            ])
+            ->orderBy('reward_id', 'ASC')
+            ->get();
 
         $body = [
             'embeds' => [
@@ -26,7 +35,7 @@ final class SendDiscordMissSkinWebhook
                         [Aller sur la page du skin]('.route('skins.show', $winners[0]['skin_id']).')',
                     'color' => 16562499,
                     'image' => [
-                        'url' => asset('storage/'.$winners[0]['image_path']),
+                        'url' => asset('storage/'.$winners[0]['skin_image_path']),
                     ],
                     'thumbnail' => [
                         'url' => asset('storage/images/misc_ui/dofus_ocre.png'),
@@ -40,7 +49,7 @@ final class SendDiscordMissSkinWebhook
                         [Aller sur la page du skin]('.route('skins.show', $winners[1]['skin_id']).')',
                     'color' => 8041236,
                     'image' => [
-                        'url' => asset('storage/'.$winners[1]['image_path']),
+                        'url' => asset('storage/'.$winners[1]['skin_image_path']),
                     ],
                     'thumbnail' => [
                         'url' => asset('storage/images/misc_ui/dofus_emeraude.png'),
@@ -54,7 +63,7 @@ final class SendDiscordMissSkinWebhook
                         [Aller sur la page du skin]('.route('skins.show', $winners[2]['skin_id']).')',
                     'color' => 14831887,
                     'image' => [
-                        'url' => asset('storage/'.$winners[2]['image_path']),
+                        'url' => asset('storage/'.$winners[2]['skin_image_path']),
                     ],
                     'thumbnail' => [
                         'url' => asset('storage/images/misc_ui/dofus_cawotte.png'),
