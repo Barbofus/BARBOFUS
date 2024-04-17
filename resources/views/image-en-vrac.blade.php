@@ -9,7 +9,13 @@
             <form method="POST" action="{{ route('image-en-vrac.upload') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="w-fit flex flex-col space-y-4 mx-auto">
-                    <input x-on:input.change="ChangeFile" class="text-inactiveText h-fit rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="files[]" required multiple accept="image/*">
+                    <div class="flex items-center space-x-4">
+                        <input x-on:input.change="ChangeFile" class="text-inactiveText h-fit rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="files[]" required multiple accept="image/*">
+
+                        <input x-ref="input"
+                               maxlength="30" name="name" id="name" type="text" placeholder="Nom" required
+                               class="w-56 h-10 rounded-md pl-4 focus:outline-none placeholder-inactiveText bg-primary-100"/>
+                    </div>
 
                     <x-forms.submit>ENVOYER</x-forms.submit>
                 </div>

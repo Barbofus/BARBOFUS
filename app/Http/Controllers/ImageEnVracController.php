@@ -56,10 +56,10 @@ class ImageEnVracController extends Controller
             foreach ($files as $key => $file) {
                 if ($file->isValid()) {
 
-                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $finaleName = str_replace(' ', '_', $request->all()['name']);
 
                     // Nomme l'image en fonction de l'heure actuelle
-                    $imageName = time().$key.'_n_'.$originalName.'.'.$file->getClientOriginalExtension();
+                    $imageName = time().$key.'_n_'.$finaleName.'.'.$file->getClientOriginalExtension();
 
                     // On range ça dans le public
                     $destinationPath = storage_path('app/public/images/imagenvrac');
