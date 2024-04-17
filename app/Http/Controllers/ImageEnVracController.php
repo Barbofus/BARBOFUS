@@ -13,7 +13,7 @@ class ImageEnVracController extends Controller
     /**
      * @var array<int, string[]>
      */
-    public array $images;
+    public array $images = [];
 
     public function index(): View
     {
