@@ -1,10 +1,10 @@
 <?php
 
-use App\Actions\Discord\SendDiscordMissSkinWebhook;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\EmailVerificationPromptController;
 use App\Http\Controllers\HavenBagController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserDashboardController;
@@ -62,6 +62,9 @@ Route::middleware(['can:admin-access', 'auth'])->group(function () {
 
     Route::get('/miss-skin', MissSkinController::class)->name('miss-skin');
     Route::get('/updateDofusDBApi', DofusDBApiController::class)->name('dofusDBApi');
+
+    Route::get('/image-en-vrac', [ImageEnVracController::class, 'index'])->name('image-en-vrac.index');
+    Route::post('/image-en-vrac/upload', [ImageEnVracController::class, 'upload'])->name('image-en-vrac.upload');
 });
 
 Route::middleware(['can:validate-skin', 'auth'])->group(function () {

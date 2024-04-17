@@ -53,17 +53,17 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "artisan key:generate --ansi"
         ],
         "pint": [
-            "@php ./vendor/bin/pint"
+            "./vendor/bin/pint --ansi"
         ],
         "stan": [
-            "@php ./vendor/bin/phpstan analyse"
+            "./vendor/bin/phpstan analyse --ansi"
         ],
         "clean": [
-            "@php ./vendor/bin/pint",
-            "@php ./vendor/bin/phpstan analyse"
+            "./vendor/bin/pint --ansi",
+            "./vendor/bin/phpstan analyse --ansi"
         ],
         "cache": [
             "sudo chmod -R 755 storage",
