@@ -28,14 +28,14 @@ final class GetHavenBagsFromDofusDB
         for ($i = 0; $i < $totalItems / $limit; $i++) {
 
             // Construit l'url
-            $url = 'https://api.beta.dofusdb.fr/havenbag-themes?$limit='.$limit.'&$skip='.($i * $limit);
+            $url = 'https://api.dofusdb.fr/havenbag-themes?$limit='.$limit.'&$skip='.($i * $limit);
 
             // Récupère tous les items des typeID et cosmetTypeID
             $result = (new GetApiBody)($url)->data;
 
             // On remplit un tableau à nous, plus facilement éditable
             foreach ($result as $value) {
-                $popocket_url = 'https://api.beta.dofusdb.fr/items?typeId=203&typeId=218&possibleEffects.value='.$value->id.'&$limit=1';
+                $popocket_url = 'https://api.dofusdb.fr/items?typeId=203&typeId=218&possibleEffects.value='.$value->id.'&$limit=1';
 
                 // Récupère tous les items des typeID et cosmetTypeID
                 $popocket_result = (new GetApiBody)($popocket_url)->data;
@@ -46,7 +46,7 @@ final class GetHavenBagsFromDofusDB
                         'id' => $value->id,
                         'name' => $value->name->fr,
                         'mapId' => $value->mapId,
-                        'image_path' => 'https://api.beta.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
+                        'image_path' => 'https://api.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
                         'has_popocket' => false,
                         'popocket_iconId' => 0,
                         'popocket_icon_path' => '',
@@ -59,10 +59,10 @@ final class GetHavenBagsFromDofusDB
                     'id' => $value->id,
                     'name' => $value->name->fr,
                     'mapId' => $value->mapId,
-                    'image_path' => 'https://api.beta.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
+                    'image_path' => 'https://api.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
                     'has_popocket' => true,
                     'popocket_iconId' => $popocket_result[0]->iconId,
-                    'popocket_icon_path' => 'https://api.beta.dofusdb.fr/img/items/250/'.$popocket_result[0]->iconId.'.png',
+                    'popocket_icon_path' => 'https://api.dofusdb.fr/img/items/250/'.$popocket_result[0]->iconId.'.png',
                 ];
             }
         }
