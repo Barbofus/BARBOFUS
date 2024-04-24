@@ -10,10 +10,10 @@
                 @csrf
                 <div class="w-fit flex flex-col space-y-4 mx-auto">
                     <div class="flex items-center space-x-4">
-                        <input x-on:input.change="ChangeFile" class="text-inactiveText h-fit rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="files[]" required multiple accept="image/*">
+                        <input id="image_en_vrac_input" class="text-inactiveText h-fit rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="files[]" required multiple accept="image/*">
 
                         <input x-ref="input"
-                               maxlength="30" name="name" id="name" type="text" placeholder="Nom" required
+                               maxlength="30" name="name" id="name" type="text" placeholder="Nom"
                                class="w-56 h-10 rounded-md pl-4 focus:outline-none placeholder-inactiveText bg-primary-100"/>
                     </div>
 
@@ -55,5 +55,13 @@
                 </button>
             @endforeach
         </div>
+
+        <script>
+            const image_en_vrac_input = document.getElementById('image_en_vrac_input');
+
+            window.addEventListener('paste', e => {
+                image_en_vrac_input.files = e.clipboardData.files;
+            })
+        </script>
     </div>
 @endsection
