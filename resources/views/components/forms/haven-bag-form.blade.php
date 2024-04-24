@@ -1,20 +1,4 @@
-<div class="flex flex-col items-center" x-data="{
-        finaleUrl: '{{ isset($havenBag) ? asset('storage/' . $havenBag['image_path']) : '' }}',
-
-        ChangeFile(event) {
-            this.FileToDataUrl(event, src => this.finaleUrl = src)
-        },
-
-        FileToDataUrl(event, callback) {
-            if (! event.target.files.length) return
-
-            let file = event.target.files[0],
-            reader = new FileReader()
-
-            reader.readAsDataURL(file)
-            reader.onload = e => callback(e.target.result)
-        }
-    }">
+<div class="flex flex-col items-center">
 
     {{-- Début form --}}
     <div class="flex items-center gap-10 flex-col p-2 w-[min(24rem,90vw)]">
@@ -225,7 +209,7 @@
         <div class="w-full">
             <p class="ml-10 text-xl font-light">Image du havre-sac</p>
             <div class="mt-2 @error('image_path') err-border @enderror">
-                <input x-on:input.change="ChangeFile" class="w-full text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
+                <input id="image_input" class="w-full text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
                 <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">Minimum 1200x650</p>
             </div>
 
@@ -235,7 +219,7 @@
         </div>
     </div>
 
-    <div class="flex justify-center"><img x-show="finaleUrl" x-cloak x-transition class="mt-4 max-w-[75rem]" :src="finaleUrl" draggable="false"/></div>
+    <div class="flex justify-center"><img id="image_preview" class="mt-4 max-w-[75rem]" hidden draggable="false"/></div>
 
 
     {{-- Bouton valider, avec google recaptcha--}}
@@ -255,6 +239,45 @@
     <script data-type="lazy" data-src="https://www.google.com/recaptcha/api.js"></script>
 
     <script>
+        const image_input = document.getElementById('image_input');
+        const image_preview = document.getElementById('image_preview');
+        let  finaleUrl = '{{ isset($skin) ? asset('storage/' . $skin['image_path']) : '' }}';
+
+        if(finaleUrl) ShowFile();
+
+        window.addEventListener('paste', e => {
+            if(!e.clipboardData.files.length > 0) return;
+
+            image_input.files = e.clipboardData.files;
+            ChangeFile(e.clipboardData.files[0]);
+        });
+
+        image_input.addEventListener('change', e => {
+            ChangeFile(e.target.files[0]);
+        })
+
+        function ChangeFile(file) {
+            FileToDataUrl(file)
+        }
+
+        function FileToDataUrl(file) {
+            if (! file) return
+
+            let reader = new FileReader()
+
+            reader.onload = e => {
+                finaleUrl = e.target.result;
+
+                ShowFile();
+            }
+            reader.readAsDataURL(file)
+        }
+
+        function ShowFile() {
+            image_preview.hidden = false;
+            image_preview.src = finaleUrl;
+        }
+
         function onSubmit(token) {
             document.getElementById("havenbag-form").submit();
         }
