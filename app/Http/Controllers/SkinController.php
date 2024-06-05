@@ -12,6 +12,7 @@ use App\Http\Requests\StoreUpdateSkinRequest;
 use App\Models\Skin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -52,7 +53,7 @@ class SkinController extends Controller
         }
 
         $toShow = DB::table('skins')
-            ->select('face', 'image_path', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'skins.id', 'skins.name')
+            ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'skins.id', 'skins.name')
             ->where('skins.id', $skin->id)
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
@@ -82,6 +83,15 @@ class SkinController extends Controller
                 'race_dofus_id' => DB::table('races')
                     ->select('dofus_id')
                     ->whereColumn('id', 'skins.race_id')
+                    ->take(1),
+            ])
+            ->addSelect([
+                'is_liked' => DB::table('likes')
+                    ->select('id')
+                    ->whereColumn('skin_id', 'skins.id')
+                    ->where('user_id', Auth::id())
+                    ->orWhereColumn('skin_id', 'skins.id')
+                    ->where('ip_adress', request()->ip())
                     ->take(1),
             ])
 

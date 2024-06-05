@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Likes\SwitchLikes;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\EmailVerificationPromptController;
 use App\Http\Controllers\HavenBagController;
@@ -39,6 +40,11 @@ Route::middleware(['auth', 'throttle:skins-upload'])->group(function () {
     Route::post('/havre-sacs', [HavenBagController::class, 'store'])->name('havre-sacs.store');
     Route::put('/havre-sacs/{havenBag}', [HavenBagController::class, 'update'])->name('havre-sacs.update');
 });
+
+Route::post('/skin/{id}/like', function (int $id) {
+    (new SwitchLikes)($id);
+    return redirect()->back();
+})->name('skins.like');
 
 Route::middleware(['auth'])->group(function () {
 
