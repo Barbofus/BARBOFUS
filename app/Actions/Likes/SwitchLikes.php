@@ -28,11 +28,11 @@ final class SwitchLikes
         }
 
         // Si on a déjà like le skin par ip
-        if ($liked = Like::where('skin_id', $skinID)->where('ip_adress', $ipAdress)->first()) {
+        /*if ($liked = Like::where('skin_id', $skinID)->where('ip_adress', $ipAdress)->first()) {
             $liked->delete();
 
             return;
-        }
+        }*/
 
         // Si aucun like trouvé, ont le créé
         Like::create([

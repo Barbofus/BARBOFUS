@@ -9,7 +9,7 @@
         {{-- Présentation des skins --}}
         <div class="h-[max(20vh,13.75rem)] mx-auto w-[min(90vw,62.5rem)] mt-16 px-1 rounded-md goldGradient">
             <div class="h-full w-full bg-primary overflow-x-clip">
-                <div class="slider flex pl-4 gap-x-4 h-full w-fit translate-x-0">
+                <div class="slider hover:animate-none flex pl-4 gap-x-4 h-full w-fit translate-x-0">
                     @foreach($skins as $skin)
 
                         <x-skins-presentation.home-skin-card :skin="$skin" />
