@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Skin;
 
 use App\Actions\Utils\DoColorsMatch;
 use App\Models\Skin;
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -32,6 +33,8 @@ class InfiniteSkinIndex extends Component
         'likes_count',
         'rewards_points',
         'skins.race_id',
+        'weekly_like_count',
+        'tuesday_like_count',
     ];
 
     /**
@@ -197,6 +200,18 @@ class InfiniteSkinIndex extends Component
                     ->selectRaw('count(id)')
                     ->whereColumn('likes.skin_id', 'skins.id'),
             ])
+            ->addSelect([
+                'weekly_like_count' => DB::table('likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('skin_id', 'skins.id')
+                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+            ])
+            ->addSelect([
+                'tuesday_like_count' => DB::table('likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('skin_id', 'skins.id')
+                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
+            ])
 
             // Début du système de filtres
             ->where($this->raceWhere)
@@ -356,7 +371,7 @@ class InfiniteSkinIndex extends Component
      */
     public function SortBy(int $orderBy, string $orderDir)
     {
-        if ($orderBy == 4) { // Si on choisi aléatoire
+        if ($orderBy == count($this->allOrder)) { // Si on choisi aléatoire
             $this->randSort = true;
             $this->orderByID = $orderBy;
             $this->orderDirection = $orderDir;

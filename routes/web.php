@@ -43,6 +43,7 @@ Route::middleware(['auth', 'throttle:skins-upload'])->group(function () {
 
 Route::post('/skin/{id}/like', function (int $id) {
     (new SwitchLikes)($id);
+
     return redirect()->back();
 })->name('skins.like');
 

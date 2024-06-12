@@ -56,10 +56,9 @@ class ImageEnVracController extends Controller
             foreach ($files as $key => $file) {
                 if ($file->isValid()) {
 
-                    if($request->all()['name']) { // Si on a mis un nom custom, on le choisi
+                    if ($request->all()['name']) { // Si on a mis un nom custom, on le choisi
                         $finaleName = str_replace(' ', '_', $request->all()['name']);
-                    }
-                    else { // Sinon on garde le nom original du fichier
+                    } else { // Sinon on garde le nom original du fichier
                         $finaleName = str_replace(' ', '_', $file->getClientOriginalName());
                     }
 

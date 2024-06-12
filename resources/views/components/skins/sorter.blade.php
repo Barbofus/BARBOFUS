@@ -17,7 +17,9 @@
                 if(orderID == 1 && orderDir == 'ASC') this.selection = 'Moins aimé';
                 if(orderID == 2 && orderDir == 'DESC') this.selection = 'Récompenses';
                 if(orderID == 3 && orderDir == 'ASC') this.selection = 'Classes';
-                if(orderID == 4 && orderDir == 'ASC') this.selection = 'Aléatoire';
+                if(orderID == 4 && orderDir == 'DESC') this.selection = 'Likes hebdo';
+                if(orderID == 5 && orderDir == 'DESC') this.selection = 'Likes depuis mardi';
+                if(orderID == 6 && orderDir == 'ASC') this.selection = 'Aléatoire';
               }
             }" x-init="SetFirstSelection()">
     <div class="flex items-center justify-around gap-x-2"
@@ -25,7 +27,7 @@
 
         {{-- Randomizer --}}
         <button aria-label="Skins Aléatoire" class="h-10 w-10 mr-4 invisible min-[361px]:visible" :class="diceAnim ? 'animate-dice [--custom-animation-time:0.7s]' : ''" wire:ignore wire:key="dice"
-                @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = 'Aléatoire'; sortAsc = true; showSort = false; $wire.SortBy(4, 'ASC'), AddParamToUrl('sort', '4,ASC'), window.scrollTo(0,0)">
+                @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = 'Aléatoire'; sortAsc = true; showSort = false; $wire.SortBy(6, 'ASC'), AddParamToUrl('sort', '6,ASC'), window.scrollTo(0,0)">
             <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" alt="Skin Aléatoire" height="40" width="40" draggable="false" class="h-full hover:scale-90 transition-all">
         </button>
 
@@ -38,12 +40,12 @@
 
         <!-- Trier par: Texte -->
         <p class="text-secondary font-thin text-[1rem]">Trier par: </p>
-        <p class="cursor-pointer rounded-t-md w-40 px-4 text-[1.15rem] font-normal transition-all duration-200 border-t border-primary"
+        <p class="cursor-pointer rounded-t-md w-48 px-4 text-[1.15rem] font-normal transition-all duration-200 border-t border-primary"
            :class="showSort ? 'text-primary bg-secondary' : 'text-secondary hover:bg-primary-100 '"
            x-on:mousedown="showSort = !showSort" x-text="selection"></p>
 
         <!-- Menu déroulant -->
-        <div class="w-40 right-0 top-[2.25rem] overflow-hidden rounded-b-md absolute bg-secondary-100 text-[1rem] text-primary font-light transition-all duration-200 cursor-pointer"
+        <div class="w-48 right-0 top-[2.25rem] overflow-hidden rounded-b-md absolute bg-secondary-100 text-[1rem] text-primary font-light transition-all duration-200 cursor-pointer"
              x-show="showSort" x-transition.opacity x-cloak>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
                x-on:mousedown="selection = 'Nouveauté'; sortAsc = false; showSort = false; $wire.SortBy(0, 'DESC'), AddParamToUrl('sort', '0,DESC'), window.scrollTo(0,0)">Nouveauté</button>
@@ -57,6 +59,10 @@
                x-on:mousedown="selection = 'Récompenses'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC'), AddParamToUrl('sort', '2,DESC'), window.scrollTo(0,0)">Récompenses</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
                x-on:mousedown="selection = 'Classes'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC'), AddParamToUrl('sort', '3,ASC'), window.scrollTo(0,0)">Classes</button>
+            <button class="w-full h-full px-4 py-1 hover:bg-secondary"
+                    x-on:mousedown="selection = 'Likes hebdo'; sortAsc = true; showSort = false; $wire.SortBy(4, 'DESC'), AddParamToUrl('sort', '4,DESC'), window.scrollTo(0,0)">Likes hebdo</button>
+            <button class="w-full h-full px-4 py-1 hover:bg-secondary"
+                    x-on:mousedown="selection = 'Likes depuis mardi'; sortAsc = true; showSort = false; $wire.SortBy(5, 'DESC'), AddParamToUrl('sort', '5,DESC'), window.scrollTo(0,0)">Likes depuis mardi</button>
         </div>
     </div>
 </div>
