@@ -33,7 +33,6 @@ class InfiniteSkinIndex extends Component
         'likes_count',
         'rewards_points',
         'skins.race_id',
-        'weekly_like_count',
         'tuesday_like_count',
     ];
 
@@ -199,12 +198,6 @@ class InfiniteSkinIndex extends Component
                 'likes_count' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('likes.skin_id', 'skins.id'),
-            ])
-            ->addSelect([
-                'weekly_like_count' => DB::table('likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
             ])
             ->addSelect([
                 'tuesday_like_count' => DB::table('likes')
