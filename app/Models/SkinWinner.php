@@ -17,5 +17,6 @@ class SkinWinner extends Model
         'image_path',
         'weekly_likes',
         'reward_id',
+        'skin_name',
     ];
 }

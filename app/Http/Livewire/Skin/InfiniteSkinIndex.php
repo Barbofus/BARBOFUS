@@ -180,7 +180,7 @@ class InfiniteSkinIndex extends Component
             })
 
             // select princpal
-            ->select('skins.id')
+            ->select('skins.id', 'skins.user_id')
 
             ->when($this->skinColors != '', function (Builder $query) {
                 foreach ($this->skinColors as $color) {
@@ -297,7 +297,12 @@ class InfiniteSkinIndex extends Component
             // orderBy
             ->when(! $this->randSort, function (Builder $query) {
                 $query->orderBy($this->orderBy, $this->orderDirection)
-                    ->orderBy('skins.created_at', 'DESC');
+                    ->when($this->orderByID == 4, function (Builder $query) {
+                        $query->orderBy('skins.created_at', 'ASC');
+                    })
+                    ->when($this->orderByID != 4, function (Builder $query) {
+                        $query->orderBy('skins.created_at', 'DESC');
+                    });
             })
             ->when($this->randSort, function (Builder $query) {
                 $query->inRandomOrder();
@@ -306,6 +311,45 @@ class InfiniteSkinIndex extends Component
             // Récupère les ID
             ->pluck('id')
             ->toArray();
+
+        // Parti qui supprime les doublons de pseudo, pour les concours organisé par Barbe
+        if ($this->orderByID == 4) {
+            $skins = DB::table('skins')
+                ->whereIn('id', $this->postIdChunks)
+                ->select('id')
+                ->addSelect([
+                    'user_name' => DB::table('users')
+                        ->select('name')
+                        ->whereColumn('id', 'skins.user_id')
+                        ->take(1),
+                ])
+                ->addSelect([
+                    'tuesday_like_count' => DB::table('likes')
+                        ->selectRaw('count(id)')
+                        ->whereColumn('skin_id', 'skins.id')
+                        ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
+                ])
+                ->orderBy('tuesday_like_count', 'DESC')
+                ->get()->toArray();
+
+            $toRemove = [];
+            $foundName = [];
+
+            foreach ($skins as $skin) {
+                if (in_array($skin->user_name, $foundName)) {
+                    $toRemove[] = $skin->id;
+
+                    continue;
+                }
+                $foundName[] = $skin->user_name;
+            }
+
+            foreach ($toRemove as $rem) {
+                if (($key = array_search($rem, $this->postIdChunks)) !== false) {
+                    unset($this->postIdChunks[$key]);
+                }
+            }
+        }
 
         // Si on a une couleur à filtrer
         if ($this->filterColor != '') {

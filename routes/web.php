@@ -10,6 +10,7 @@ use App\Http\Controllers\MissSkinController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/foo', function () {
+    $newUser = \DB::table('users')->select('name')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->pluck('name')->toArray();
+    $newLikes = \App\Models\Like::select('id')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->count();
+    $newSkins = \App\Models\Skin::select('id')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->count();
+    dd('Nouveaux Comptes = ', $newUser, 'Nouveaux Likes = '.$newLikes, 'Nouveaux Skins = '.$newSkins);
+});
 
 Route::get('/', HomeController::class)->name('home');
 
