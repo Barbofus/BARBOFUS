@@ -12,10 +12,9 @@ use Illuminate\Support\Facades\Http;
 final class SendDiscordMissSkinWebhook
 {
     /**
-     * @param  array<int, Skin>  $topTen
      * @return void
      */
-    public function __invoke(string $url, $topTen)
+    public function __invoke(string $url)
     {
         $winners = SkinWinner::query()
             ->addSelect([
@@ -71,7 +70,7 @@ final class SendDiscordMissSkinWebhook
                         'url' => asset('storage/images/misc_ui/dofus_cawotte.png'),
                     ],
                 ],
-                [
+                /*[
                     'title' => 'Top 10 :sparkles:',
                     'description' => 'Le concours est terminé ! Bien joué à tous les participants, voici le top 10 des meilleurs créateurs de skins de cette semaine !
 
@@ -88,7 +87,7 @@ final class SendDiscordMissSkinWebhook
 
                         *Continuez à partager vos skins sur [Barbofus]('.route('home').'), on les adore* :sparkling_heart:',
                     'color' => 16562499,
-                ],
+                ],*/
             ],
         ];
 

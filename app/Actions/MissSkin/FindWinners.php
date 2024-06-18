@@ -20,35 +20,16 @@ final class FindWinners
      */
     public function __invoke()
     {
-        // Trouve les 3 skins ayant le plus de likes durant la semaine
-        /*$winners = DB::table('skins')
-            ->join('users', 'skins.user_id', '=', 'users.id')
-            ->addSelect([
-                'weekly_like_count' => DB::table('likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
-
-                'user_name' => DB::table('users')
-                    ->select('name')
-                    ->whereColumn('id', 'skins.user_id'),
-            ])
-            ->where('users.name', '!=', 'Barbe Douce')
-            ->orderByRaw('weekly_like_count DESC')
-            ->orderBy('updated_at', 'ASC')
-            ->take(3)
-            ->get()
-            ->toArray();*/
 
         // Utilisé pour les concours avec une participation par personne, jusqu'à $topTen inclut
-        $winnerIds = DB::table('skins')
+        /*$winnerIds = DB::table('skins')
             ->join('users', 'skins.user_id', '=', 'users.id')
             ->select('skins.id')
             ->addSelect([
                 'weekly_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
             ])
             ->where('users.name', '!=', 'Barbe Douce')
             ->orderByRaw('weekly_like_count DESC')
@@ -69,7 +50,7 @@ final class FindWinners
                 'weekly_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
             ])
             ->orderBy('weekly_like_count', 'DESC')
             ->get()->toArray();
@@ -98,7 +79,7 @@ final class FindWinners
                 'weekly_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
 
                 'user_name' => DB::table('users')
                     ->select('name')
@@ -117,7 +98,7 @@ final class FindWinners
                 'weekly_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
 
                 'user_name' => DB::table('users')
                     ->select('name')
@@ -126,6 +107,28 @@ final class FindWinners
             ->orderByRaw('weekly_like_count DESC')
             ->orderBy('updated_at', 'ASC')
             ->take(10)
+            ->get()
+            ->toArray();*/
+
+
+
+        // Trouve les 3 skins ayant le plus de likes durant la semaine
+        $winners = DB::table('skins')
+            ->join('users', 'skins.user_id', '=', 'users.id')
+            ->addSelect([
+                'weekly_like_count' => DB::table('likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('skin_id', 'skins.id')
+                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+
+                'user_name' => DB::table('users')
+                    ->select('name')
+                    ->whereColumn('id', 'skins.user_id'),
+            ])
+            ->where('users.name', '!=', 'Barbe Douce')
+            ->orderByRaw('weekly_like_count DESC')
+            ->orderBy('updated_at', 'ASC')
+            ->take(3)
             ->get()
             ->toArray();
 
@@ -162,7 +165,7 @@ final class FindWinners
             ]);
         }
 
-        (new SendDiscordMissSkinWebhook)('https://discord.com/api/webhooks/1140419957021212742/EneLeNPWG1VktiVPex8zLHLlB8O1X5yyszezQeUrCOx0gj0BeBp8y31lcNbQqkWr-KjP', $topTen);
-        //(new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'));
+        //(new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), $topTen);
+        (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'));
     }
 }

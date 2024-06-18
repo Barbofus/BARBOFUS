@@ -203,7 +203,7 @@ class InfiniteSkinIndex extends Component
                 'tuesday_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
+                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
             ])
 
             // Début du système de filtres
@@ -313,7 +313,7 @@ class InfiniteSkinIndex extends Component
             ->toArray();
 
         // Parti qui supprime les doublons de pseudo, pour les concours organisé par Barbe
-        if ($this->orderByID == 4) {
+        /*if ($this->orderByID == 4) {
             $skins = DB::table('skins')
                 ->whereIn('id', $this->postIdChunks)
                 ->select('id')
@@ -349,7 +349,7 @@ class InfiniteSkinIndex extends Component
                     unset($this->postIdChunks[$key]);
                 }
             }
-        }
+        }*/
 
         // Si on a une couleur à filtrer
         if ($this->filterColor != '') {
