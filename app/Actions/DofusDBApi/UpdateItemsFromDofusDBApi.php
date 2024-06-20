@@ -21,7 +21,7 @@ final class UpdateItemsFromDofusDBApi
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemHat', [16], [246], 'images/icons/items/hats/'));
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemCloak', [17], [247], 'images/icons/items/cloaks/'));
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemShield', [82], [248], 'images/icons/items/shields/'));
-        $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemCostume', [], [199], 'images/icons/items/costumes/'));
+        $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemCostume', [], [199, 299, 300], 'images/icons/items/costumes/'));
         $newItems = array_merge($newItems, (new SaveItemsFromDofusDB)('App\Models\DofusItemPet', [18, 121], [190, 255, 256, 249, 250], 'images/icons/items/pets/'));
         $newItems = array_merge($newItems, (new SaveHavenBagsFromDofusDB)('images/icons/heaven_bags'));
 

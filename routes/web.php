@@ -24,12 +24,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/foo', function () {
+/*Route::get('/foo', function () {
     $newUser = \DB::table('users')->select('name')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->pluck('name')->toArray();
     $newLikes = \App\Models\Like::select('id')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->count();
     $newSkins = \App\Models\Skin::select('id')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->count();
     dd('Nouveaux Comptes = ', $newUser, 'Nouveaux Likes = '.$newLikes, 'Nouveaux Skins = '.$newSkins);
-});
+});*/
 
 Route::get('/', HomeController::class)->name('home');
 
