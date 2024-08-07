@@ -46,7 +46,7 @@
                 <p class="ml-10 mt-4 text-xl font-light">Image du skin</p>
                 <div class="mt-2 @error('image_path') err-border @enderror">
                     <input id="image_input" class="w-[min(18.75rem,90vw)] text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
-                    <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">Export PNG de DofusBook<br> (MAX. 350x450px, 100ko).</p>
+                    <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">Export PNG de DofusBook<br> (MAX. 350x450px, 150ko).</p>
                 </div>
 
                 <div class="flex justify-center"><img id="image_preview" hidden class="mt-4" width="200" height="260" draggable="false"/></div>
