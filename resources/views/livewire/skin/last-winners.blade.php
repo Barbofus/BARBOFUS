@@ -5,7 +5,7 @@
             min-[1801px]:max-h-[calc(100vh-theme(spacing.2))] min-[1801px]:top-[calc(15vh+0.5rem)] min-[1801px]:right-0 min-[1801px]:z-30 min-[1801px]:py-8 min-[1801px]:h-full">
 
     <!-- Content -->
-    <div class="flex flex-col items-start justify-center flex-1 w-full p-4 min-[1800px]:h-[min(100%,93rem)]">
+    <div class="flex flex-col items-start justify-center flex-1 w-full p-4 min-[1801px]:h-[min(100%,93rem)]">
 
         <!-- Header -->
         <div class="relative mt-6 flex items-center justify-center w-full pl-4 gap-x-2">
@@ -44,14 +44,14 @@
 
         <!-- Skins -->
         <div class="relative flex flex-col gap-y-12 items-center justify-center flex-1 w-full pt-14
-                  min-[851px]:max-[1799px]:flex-row min-[501px]:gap-x-8
-                  min-[701px]:max-[1799px]:gap-x-16">
+                  min-[851px]:max-[1800px]:flex-row min-[501px]:gap-x-8
+                  min-[701px]:max-[1800px]:gap-x-16">
 
             @foreach($skins as $skin)
                 <div wire:key="skinwinner.{{ $skin->id }}"
                     class="max-[500px]:w-[clamp(8.75rem,90%,12.5rem)]
-                    min-[501px]:max-[1799px]:w-[12.5rem]
-                    min-[1800px]:h-[min(28%,22.5rem)] min-[1800px]:w-full min-[1800px]:flex min-[1800px]:justify-center">
+                    min-[501px]:max-[1800px]:w-[12.5rem]
+                    min-[1801px]:h-[min(28%,22.5rem)] min-[1801px]:w-full min-[1801px]:flex min-[1801px]:justify-center">
                         <x-skins-presentation.winners-skin-card :skin="$skin" />
                 </div>
             @endforeach
@@ -60,5 +60,5 @@
 
     <!-- Bottom border -->
     <div class="h-1 rounded-full goldGradientSide w-[80%]
-                min-[1800px]:goldGradientTop min-[1800px]:w-1 min-[1800px]:h-[80%] min-[1800px]:order-first min-[1800px]:mt-0"></div>
+                min-[1801px]:goldGradientTop min-[1801px]:w-1 min-[1801px]:h-[80%] min-[1801px]:order-first min-[1801px]:mt-0"></div>
 </div>

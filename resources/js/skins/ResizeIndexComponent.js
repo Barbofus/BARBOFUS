@@ -22,7 +22,7 @@ function ResizeSkinWinners()
 {
     if(!skinWinners) return;
 
-    if(window.innerWidth < 1800 ) {
+    if(window.innerWidth < 1801 ) {
         if(skinWinners.style.height != '100%') {
             skinWinners.style.height = "100%";
         }
