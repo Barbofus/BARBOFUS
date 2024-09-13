@@ -8,6 +8,8 @@
   'skin.last-winners' => 'App\\Http\\Livewire\\Skin\\LastWinners',
   'skin.skin-index-chunk' => 'App\\Http\\Livewire\\Skin\\SkinIndexChunk',
   'user-panel.haven-bags-validation' => 'App\\Http\\Livewire\\UserPanel\\HavenBagsValidation',
+  'user-panel.my-unityskins-chunk' => 'App\\Http\\Livewire\\UserPanel\\MyUnityskinsChunk',
+  'user-panel.my-unityskins-infinite-load' => 'App\\Http\\Livewire\\UserPanel\\MyUnityskinsInfiniteLoad',
   'user-panel.myhavenbags-infinite-load' => 'App\\Http\\Livewire\\UserPanel\\MyhavenbagsInfiniteLoad',
   'user-panel.mylikes-chunk' => 'App\\Http\\Livewire\\UserPanel\\MylikesChunk',
   'user-panel.mylikes-infinite-load' => 'App\\Http\\Livewire\\UserPanel\\MylikesInfiniteLoad',

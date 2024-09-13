@@ -2,9 +2,9 @@
 
     {{-- Création de variable de class pour éviter les copier coller avec AlpineJS --}}
     <div
-        class="w-[100vw] min-[400px]:px-6 min-[1550px]:pl-[5vw] relative flex gap-x-2" x-cloak
+        class="w-[100vw] min-[400px]:px-6 min-[1550px]:pl-[5vw] relative flex gap-x-2" x-cloak wire:ignore.self
         x-data="{
-            currentPage: '{{ (request()->has('section')) ? request('section') : 'user-details'}}',
+            currentPage: '{{ $section }}',
             initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
             activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
             initTextClass: 'absolute invisible min-[1250px]:visible min-[1250px]:static transition-transform group-hover:-skew-x-12',
@@ -31,6 +31,16 @@
 
 
                 <p :class="initTextClass">Mes Skins</p>
+            </button>
+
+            <button wire:click="ChangeSection('my-unity-skins')" @click="currentPage = 'my-unity-skins', window.scrollTo(0,0)" :class="(currentPage == 'my-unity-skins') ? activeButtonClass : initButtonClass" x-cloak>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.502-.278zM6.75 13.5A3.75 3.75 0 003 17.25a1.5 1.5 0 01-1.601 1.497.75.75 0 00-.7 1.123 5.25 5.25 0 009.8-2.62 3.75 3.75 0 00-3.75-3.75z" clip-rule="evenodd" />
+                </svg>
+
+
+
+                <p :class="initTextClass">Mes Skins UNITY</p>
             </button>
 
             <button wire:click="ChangeSection('my-havenbags')" @click="currentPage = 'my-havenbags', window.scrollTo(0,0)" :class="(currentPage == 'my-havenbags') ? activeButtonClass : initButtonClass" x-cloak>
@@ -125,6 +135,10 @@
 
                 @case('my-skins')
                     <livewire:user-panel.myskins-infinite-load :wire:key="'my-skins-{{ rand() }}'"/>
+                    @break
+
+                @case('my-unity-skins')
+                    <livewire:user-panel.my-unityskins-infinite-load :wire:key="'my-unity-skins-{{ rand() }}'"/>
                     @break
 
                 @case('my-havenbags')

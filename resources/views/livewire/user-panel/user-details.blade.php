@@ -15,11 +15,11 @@
                     <div class="flex flex-col min-[800px]:flex-row gap-y-8 gap-x-8 mt-8 font-light text-xl items-start min-[800px]:items-center min-[800px]:pl-36">
                         <div class="flex flex-col gap-y-4">
                             <p>Inscrit <span class="italic font-normal">{{ $user->created_at->diffForHumans() }}</span></p>
-                            <p><span class="italic tracking-widest font-normal">{{ $user->skin_count }}</span> skins postés</p>
+                            <p><span class="italic tracking-widest font-normal">{{ $user->skin_count + $user->unity_skin_count }}</span> skins postés</p>
                             <p><span class="italic tracking-widest font-normal">{{ $user->like_given }}</span> likes donnés</p>
                             <p><span class="italic tracking-widest font-normal">{{ $user->like_received }}</span> likes reçus</p>
                             @canany(['mod-access', 'admin-access'])
-                                <p><span class="italic tracking-widest font-normal">{{ \App\Models\Skin::all()->count() }}</span> skins total sur le site</p>
+                                <p><span class="italic tracking-widest font-normal">{{ \App\Models\Skin::all()->count() + \App\Models\UnitySkin::all()->count() }}</span> skins total sur le site</p>
                             @endcan
                         </div>
 

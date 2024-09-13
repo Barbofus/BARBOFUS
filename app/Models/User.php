@@ -93,6 +93,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return HasMany<UnitySkin>
+     */
+    public function UnitySkins()
+    {
+        return $this->hasMany(UnitySkin::class);
+    }
+
+    /**
      * @return HasMany<Connection>
      */
     public function Connections()

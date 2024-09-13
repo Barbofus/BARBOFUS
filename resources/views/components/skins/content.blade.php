@@ -17,7 +17,7 @@
         <p class="skinCardUserName absolute top-0 w-full text-center font-thin text-inactiveText italic">{{ $skin->name }}&nbsp</p>
     @endif
 
-    <a class="slidingCard absolute group h-full w-full" title="Skin dofus {{ $skin->race_name }}" href="{{ route('skins.show', $id) }}">
+    <a class="slidingCard absolute group h-full w-full" title="Skin dofus {{ $skin->race_name }}" href="{{ route((isset($skin->is_unity_skin)) ? 'unity-skins.show' : 'skins.show', $id) }}">
         {{-- Barbe --}}
         @if($skin->user_name === 'Barbe Douce' &! isset($showBarbe))
             <img class="absolute top-0 left-0 h-16 w-16 aspect-square peer cursor-pointer" width="64" height="64" alt="Logo Barbe" loading="lazy" src="{{ asset('storage/images/misc_ui/logo_barbe.png') }}" draggable="false">

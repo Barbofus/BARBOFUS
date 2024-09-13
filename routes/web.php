@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
 use App\Http\Controllers\SkinController;
+use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
 use Carbon\Carbon;
@@ -40,10 +41,16 @@ Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sac
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
 
+Route::get('/unity-skins', [UnitySkinController::class, 'index'])->name('unity-skins.index');
+Route::get('/unity-skin/{skin}', [UnitySkinController::class, 'show'])->name('unity-skins.show');
+
 Route::middleware(['auth', 'throttle:skins-upload'])->group(function () {
 
     Route::post('/skins', [SkinController::class, 'store'])->name('skins.store');
     Route::put('/skins/{skin}', [SkinController::class, 'update'])->name('skins.update');
+
+    Route::post('/unity-skins', [UnitySkinController::class, 'store'])->name('unity-skins.store');
+    Route::put('/unity-skins/{skin}', [UnitySkinController::class, 'update'])->name('unity-skins.update');
 
     Route::post('/havre-sacs', [HavenBagController::class, 'store'])->name('havre-sacs.store');
     Route::put('/havre-sacs/{havenBag}', [HavenBagController::class, 'update'])->name('havre-sacs.update');
@@ -61,6 +68,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/skins/create', [SkinController::class, 'create'])->name('skins.create');
     Route::get('/skins/{skin}/edit', [SkinController::class, 'edit'])->name('skins.edit');
+
+    Route::get('/unity-skins/create', [UnitySkinController::class, 'create'])->name('unity-skins.create');
+    Route::get('/unity-skins/{skin}/edit', [UnitySkinController::class, 'edit'])->name('unity-skins.edit');
 
     Route::get('/havre-sacs/create', [HavenBagController::class, 'create'])->name('havre-sacs.create');
     Route::get('/havre-sacs/{havenBag}/edit', [HavenBagController::class, 'edit'])->name('havre-sacs.edit');
@@ -85,4 +95,5 @@ Route::middleware(['can:admin-access', 'auth'])->group(function () {
 Route::middleware(['can:validate-skin', 'auth'])->group(function () {
 
     Route::delete('/skin/{skin}/delete', [SkinController::class, 'delete'])->name('skins.delete');
+    Route::delete('/unity-skin/{skin}/delete', [UnitySkinController::class, 'delete'])->name('unity-skins.delete');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Race;
 use App\Models\Skin;
+use App\Models\UnitySkin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -41,7 +42,7 @@ class HomeController extends Controller
      */
     public function getSkinCount()
     {
-        return floor(Skin::count() / 10) * 10;
+        return floor((Skin::count() + UnitySkin::count()) / 10) * 10;
     }
 
     /**

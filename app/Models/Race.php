@@ -25,4 +25,12 @@ class Race extends Model
     {
         return $this->hasMany(Skin::class);
     }
+
+    /**
+     * @return HasMany<UnitySkin>
+     */
+    public function UnitySkins()
+    {
+        return $this->hasMany(UnitySkin::class);
+    }
 }

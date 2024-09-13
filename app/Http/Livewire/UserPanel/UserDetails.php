@@ -71,6 +71,10 @@ class UserDetails extends Component
                     ->selectRaw('count(id)')
                     ->whereColumn('user_id', 'users.id'),
 
+                'unity_skin_count' => DB::table('unity_skins')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('user_id', 'users.id'),
+
                 'like_given' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('user_id', 'users.id'),

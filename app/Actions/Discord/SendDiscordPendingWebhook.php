@@ -6,13 +6,14 @@ namespace App\Actions\Discord;
 
 use App\Jobs\SendDiscordWebhook;
 use App\Models\Skin;
+use App\Models\UnitySkin;
 
 final class SendDiscordPendingWebhook
 {
     /**
      * @return void
      */
-    public function __invoke(string $url, Skin $skin)
+    public function __invoke(string $url, Skin|UnitySkin $skin)
     {
         $body = [
             'embeds' => [
