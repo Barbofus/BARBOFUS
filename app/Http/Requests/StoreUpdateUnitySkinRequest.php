@@ -35,7 +35,7 @@ class StoreUpdateUnitySkinRequest extends FormRequest
         return [
             'race_id' => 'required|integer|exists:races,id',
             'face' => 'required|integer|between:1,8',
-            'image_path' => $imageRequired.'|image|max:150|dimensions:max_width=350,max_height=450',
+            'image_path' => $imageRequired.'|image|max:150|dimensions:max_width=450,max_height=550',
             'gender' => [
                 'required',
                 Rule::in(['Homme', 'Femme']),

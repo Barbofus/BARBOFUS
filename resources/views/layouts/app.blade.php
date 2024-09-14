@@ -8,29 +8,29 @@
 
     <meta name="theme-color" content="#fcb943">
 
-    <meta name="keywords" content="skin, dofus, barbe douce, barbofus, Féca, Osamodas, Enutrof, Sram, Xélor, Ecaflip, Eniripsa, Iop, Crâ, Sadida, Sacrieur, Pandawa, Roublard, Zobal, Steamer, Eliotrope, Huppermage, Ouginak, Forgelance">
+    <meta name="keywords" content="skin, dofus, unity, barbe douce, barbofus, Féca, Osamodas, Enutrof, Sram, Xélor, Ecaflip, Eniripsa, Iop, Crâ, Sadida, Sacrieur, Pandawa, Roublard, Zobal, Steamer, Eliotrope, Huppermage, Ouginak, Forgelance">
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="French">
 
     <!-- Primary Meta Tags -->
-    <title>Barbofus - Galerie de skins dofus</title>
+    <title>Barbofus - Galerie de skins Dofus 2 et Unity</title>
     <meta name="title" content="Barbofus - Galerie de skins dofus" />
-    <meta name="description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
+    <meta name="description" content="Nouveau ! Les skins Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ route('home') }}" />
-    <meta property="og:title" content="Barbofus - Galerie de skins dofus" />
-    <meta property="og:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
+    <meta property="og:title" content="Barbofus - Galerie de skins Dofus 2 et Unity" />
+    <meta property="og:description" content="Nouveau ! Les skins Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="og:image" content="@yield('app-meta-image')" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="{{ route('home') }}" />
-    <meta property="twitter:title" content="Barbofus - Galerie de skins dofus" />
-    <meta property="twitter:description" content="Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
+    <meta property="twitter:title" content="Barbofus - Galerie de skins Dofus 2 et Unity" />
+    <meta property="twitter:description" content="Nouveau ! Les skins Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="twitter:image" content="@yield('app-meta-image')" />
 
     <style>

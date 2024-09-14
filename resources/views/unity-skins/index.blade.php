@@ -2,6 +2,6 @@
 
 @section('content')
 
-    <livewire:skin.infinite-skin-index wire:key="skin-index{{ rand() }}"/>
+    <livewire:unity-skin.infinite-unity-skin-index wire:key="skin-index{{ rand() }}"/>
 
 @endsection

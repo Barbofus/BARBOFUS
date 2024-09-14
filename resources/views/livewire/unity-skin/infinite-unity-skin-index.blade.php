@@ -1,9 +1,8 @@
 <div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.20),5.5rem,70rem,1fr]
           [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0rem,0rem,70rem,1fr]
           min-[501px]:grid-rows-[theme(spacing.36),5.5rem,70rem,1fr]
-          min-[851px]:grid-rows-[theme(spacing.20),5.5rem,27rem,1fr]
-          min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),27rem,1fr]
-          min-[1801px]:grid-cols-[27rem,1fr,25rem] min-[1801px]:grid-rows-[theme(spacing.20),1fr]">
+          min-[851px]:grid-rows-[theme(spacing.20),5.5rem,1fr]
+          min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),1fr]">
 
     <!-- Header skin section -->
     <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 pt-8 z-30
@@ -31,24 +30,24 @@
                     c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
                     c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
                 </svg>
-                <p class="font-display text-secondary text-[1rem]">Comment créer et poster un skin sur le site ?</p>
+                <p class="font-display text-secondary text-[1rem]">Suivez le tutoriel pour poster un skin Unity</p>
             </a>
 
-            <a href="https://www.dofusbook.net/fr/outils/skinator/draft" target="_blank" class="w-fit mt-2 font-display text-primary text-[1rem] bg-inactiveText hover:bg-secondary transition-all rounded-md px-4">Accès au skinator Dofusbook</a>
+            <a href="https://www.remove.bg/" target="_blank" class="w-fit mt-2 font-display text-primary text-[1rem] bg-inactiveText hover:bg-secondary transition-all rounded-md px-4">Accès à remove.bg</a>
         </div>
 
         {{-- Menu de trie --}}
-        <x-skins.sorter :$orderByID :$orderDirection />
+        <x-skins.unity-sorter :$orderByID :$orderDirection />
     </div>
 
-    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere :canWinnersOnly="true" />
+    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere :canWinnersOnly="false" />
 
     {{-- La grille des skins --}}
-    <div class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mb-10 bg-primary">
+    <div class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-2 w-full mb-10 bg-primary">
         @if(count($postIdChunks) > 0)
             @for($i = 0; $i < $page && $i < $maxPage; $i++)
                 <div class="w-full">
-                    <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
+                    <livewire:unity-skin.unity-skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
                 </div>
             @endfor
         @else
@@ -61,9 +60,6 @@
             <x-utils.load-more/>
         @endif
     </div>
-
-    {{-- Derniers vainqueurs et date du prochain tirage Miss'Skin --}}
-    <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
 
 
 
