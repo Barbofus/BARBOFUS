@@ -26,6 +26,13 @@
                     return;
                 }
 
+                if(this.color.length > 6) {
+                    color = color.slice(1);
+                    this.color = color;
+
+                    console.log(color);
+                }
+
                 $refs.colorPreview.style.backgroundColor = '#' + color;
                 this.IsDark();
             },
@@ -35,7 +42,7 @@
         <div x-ref="colorPreview" class="aspect-square h-full rounded-md border-2" :class="dark ? 'border-inactiveText' : 'border-primary'"></div>
         <div class="rounded-md ml-2 @error($name) err-border @enderror flex h-full overflow-hidden">
             <span class="text-xl h-full flex items-center bg-primary-100 transition-all pl-1" :class="color ? 'text-secondary' : 'text-inactiveText'">#</span>
-            <input x-model="color" x-on:input.change="changePreviewColor(color)" maxlength="6" type="text" name="{{ $name }}" placeholder="FFFFFF" class="pl-1 h-full max-w-[75px] placeholder-inactiveText placeholder:font-thin placeholder:italic font-light uppercase bg-primary-100 focus:outline-none" value="{{ $value }}">
+            <input x-model="color" x-on:input.change="changePreviewColor(color)" maxlength="7" type="text" name="{{ $name }}" placeholder="FFFFFF" class="pl-1 h-full max-w-[75px] placeholder-inactiveText placeholder:font-thin placeholder:italic font-light uppercase bg-primary-100 focus:outline-none" value="{{ $value }}">
         </div>
 
         <div class="absolute -right-32 top-1 w-full">

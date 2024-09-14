@@ -35,8 +35,10 @@
                     <p class="font-display text-secondary text-[1rem]">Tuto obligatoire pour Unity</p>
                 </a>
 
+                <a href="https://www.remove.bg/" target="_blank" class="w-fit font-display text-primary text-[1rem] bg-inactiveText hover:bg-secondary transition-all rounded-md px-4">Accès à remove.bg</a>
+
                 {{-- Nom du skin--}}
-                <p class="ml-10 text-xl text-secondary font-light">Nom du skin (optionnel)</p>
+                <p class="ml-10 mt-4 text-xl text-secondary font-light">Nom du skin (optionnel)</p>
                 <input x-ref="input"
                        maxlength="30" name="name" id="name" type="text" placeholder="Nom"
                        class="w-full h-10 rounded-md pl-14 focus:outline-none placeholder-inactiveText bg-primary-100 @error('name') err-border @enderror"

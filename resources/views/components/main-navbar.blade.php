@@ -16,7 +16,7 @@
 
             <a href="{{ route('home') }}" title="Accueil Barbofus" :class="{{ (Route::is('home')) ? 'selectedClass' : 'unselectedClass' }}">Accueil</a>
             <a href="{{ route('skins.index') }}" title="Galleri de skins" :class="{{ (Route::is('skins.index', 'skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins 2.0</a>
-            <a href="{{ route('unity-skins.index') }}" title="Galleri de skins" class="relative" :class="{{ (Route::is('unity-skins.index', 'unity-skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins UNITY</a>
+            <a href="{{ route('unity-skins.index') }}" title="Galleri de skins" class="relative" :class="{{ (Route::is('unity-skins.index', 'unity-skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins UNITY <p class="absolute text-red-500 font-medium text-md rotate-[20deg] left-24 -top-3">BÊTA</p></a>
 
             @guest
                 <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
