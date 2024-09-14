@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Skin;
+use App\Models\UnitySkin;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -14,19 +15,22 @@ class SkinPostedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Skin $skin;
+    public Skin|UnitySkin $skin;
 
     public User $user;
+
+    public bool $isUnitySkin = false;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Skin $skin, User $user)
+    public function __construct(Skin|UnitySkin $skin, User $user, bool $isUnitySkin = false)
     {
         $this->skin = $skin;
         $this->user = $user;
+        $this->isUnitySkin = $isUnitySkin;
     }
 
     /**
@@ -51,7 +55,7 @@ class SkinPostedMail extends Mailable
         return new Content(
             markdown: 'mails.skin-posted',
             with: [
-                'url' => \url()->route('skins.show', [
+                'url' => \url()->route($this->isUnitySkin ? 'unity-skins.show' : 'skins.show', [
                     'skin' => $this->skin->id,
                 ]),
             ],

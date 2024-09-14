@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Skin;
+use App\Models\UnitySkin;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -14,19 +15,21 @@ class SkinRefusedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Skin $skin;
+    public Skin|UnitySkin $skin;
 
     public User $user;
+    public bool $isUnitySkin = false;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Skin $skin, User $user)
+    public function __construct(Skin|UnitySkin $skin, User $user, bool $isUnitySkin = false)
     {
         $this->skin = $skin;
         $this->user = $user;
+        $this->isUnitySkin = $isUnitySkin;
     }
 
     /**
@@ -51,7 +54,7 @@ class SkinRefusedMail extends Mailable
         return new Content(
             markdown: 'mails.skin-refused',
             with: [
-                'url' => \url()->route('skins.edit', [
+                'url' => \url()->route($this->isUnitySkin ? 'unity-skins.edit' : 'skins.edit', [
                     'skin' => $this->skin->id,
                 ]),
             ],

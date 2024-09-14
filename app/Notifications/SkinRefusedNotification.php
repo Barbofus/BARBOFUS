@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Mail\SkinRefusedMail;
 use App\Models\Skin;
+use App\Models\UnitySkin;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -12,16 +13,18 @@ class SkinRefusedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public Skin $skin;
+    public Skin|UnitySkin $skin;
+    public bool $isUnitySkin = false;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Skin $skin)
+    public function __construct(Skin|UnitySkin $skin, bool $isUnitySkin = false)
     {
         $this->skin = $skin;
+        $this->isUnitySkin = $isUnitySkin;
     }
 
     /**
@@ -49,7 +52,7 @@ class SkinRefusedNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new SkinRefusedMail($this->skin, $notifiable))->to($notifiable->email);
+        return (new SkinRefusedMail($this->skin, $notifiable, $this->isUnitySkin))->to($notifiable->email);
     }
 
     /**
@@ -61,7 +64,7 @@ class SkinRefusedNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'model' => 'App\Models\Skin',
+            'model' => $this->isUnitySkin ? 'App\Models\UnitySkin' : 'App\Models\Skin',
             'id' => $this->skin->id,
             'name' => $this->skin->name,
             'info' => $this->skin->Race->name,
