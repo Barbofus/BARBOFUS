@@ -375,7 +375,7 @@
         </div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-8 relative z-10">
         <button class="g-recaptcha block px-8 py-3 text-lg mx-auto font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
                 data-sitekey="{{ config('services.recaptcha.site_key') }}"
                 data-callback='onSubmit'

@@ -35,7 +35,7 @@
                     <p class="font-display text-secondary text-[1rem]">Tuto obligatoire pour Unity</p>
                 </a>
 
-                <a href="https://www.remove.bg/" target="_blank" class="w-fit font-display text-primary text-[1rem] bg-inactiveText hover:bg-secondary transition-all rounded-md px-4">Accès à remove.bg</a>
+                <a href="https://www.remove.bg/" target="_blank" class="w-fit font-display text-secondary text-[1rem] bg-red-500 hover:bg-secondary transition-all rounded-md px-4">Accès à remove.bg</a>
 
                 {{-- Nom du skin--}}
                 <p class="ml-10 mt-4 text-xl text-secondary font-light">Nom du skin (optionnel)</p>
@@ -386,7 +386,7 @@
         </div>
     </div>
 
-    <div class="mt-8">
+    <div class="my-8 relative z-10">
         <button class="g-recaptcha block px-8 py-3 text-lg mx-auto font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
                 data-sitekey="{{ config('services.recaptcha.site_key') }}"
                 data-callback='onSubmit'

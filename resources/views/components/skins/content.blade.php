@@ -156,6 +156,8 @@
             @endif--}}
         </div>
 
-        <img src="{{ asset('storage\/') . $skin->image_path }}" title="Skin dofus {{ $skin->race_name }}" loading="lazy" class="absolute top-[10%] left-[5%] h-[80%] cursor-pointer group-hover:scale-105 transition-transform" draggable="false">
+        <div class="absolute top-[10%] w-full h-[80%] cursor-pointer">
+            <img src="{{ asset('storage\/') . $skin->image_path }}" title="Skin dofus {{ $skin->race_name }}" loading="lazy" class="group-hover:scale-105 h-full mx-auto transition-transform" draggable="false">
+        </div>
     </a>
 </div>
