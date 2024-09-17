@@ -6,8 +6,8 @@
 
     <a href="{{ route('unity-skins.create') }}" class="w-fit mx-auto flex flex-col items-center">
         <p class="text-2xl font-medium">NOUVEAU !</p>
-        <div class="px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase">
-            Poster un skin Unity
+        <div class="px-8 py-3 text-lg text-center font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase">
+            Clique pour poster  <br> un skin Unity
         </div>
     </a>
 
