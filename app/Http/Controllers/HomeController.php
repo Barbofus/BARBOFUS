@@ -58,19 +58,19 @@ class HomeController extends Controller
      */
     public function GetLastSkins()
     {
-        return DB::table('skins')
+        return DB::table('unity_skins')
             ->select('id', 'image_path', 'user_id', 'updated_at', 'status')
             ->where('status', 'posted')
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')
-                    ->whereColumn('id', 'skins.user_id')
+                    ->whereColumn('id', 'unity_skins.user_id')
                     ->take(1),
             ])
             ->addSelect([
                 'race_name' => DB::table('races')
                     ->select('name')
-                    ->whereColumn('id', 'skins.race_id')
+                    ->whereColumn('id', 'unity_skins.race_id')
                     ->take(1),
             ])
             ->inRandomOrder()
