@@ -95,8 +95,7 @@
 
         <div class="flex flex-col gap-y-4 items-center min-[950px]:pt-24 relative h-full">
             {{-- Skin image + icon classe --}}
-            <img src="{{ asset('storage/' . $skin->image_path) }}" draggable="false"
-                 class="max-[949px]:h-[min(50vh,25rem)] min-[950px]:w-[18.75rem]">
+            <img src="{{ asset('storage/' . $skin->image_path) }}" draggable="false">
             <img src="{{ asset('storage/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
 
             {{-- Button Copy Link --}}
