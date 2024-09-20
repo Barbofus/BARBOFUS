@@ -57,7 +57,7 @@
 
                                     <div class="flex items-center justify-center space-x-4">
                                         <p class="text-secondary font-thin text-md min-[750px]:text-lg">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
-                                        <img src="{{  asset(sprintf("storage/images/icons/classes/faces/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
+                                        <img src="{{  asset(sprintf("storage/images/icons/classes/faces/unity/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
                                              alt="Visage {{ $skin->race_name }} n° {{ $skin->face }}" draggable="false" class="h-12">
                                     </div>
                                 </div>

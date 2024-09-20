@@ -317,7 +317,7 @@
                             <label>
                                 <input type="radio" name="face" value="{{ $i }}" class="absolute opacity-0 peer"
                                     {{ (old('face')) ? ((old('face') == $i) ? 'checked' : '') : (isset($skin) ? ($skin['face'] == $i ? 'checked' : '') : (($i == 1) ? 'checked' : '')) }}>
-                                <img :src="'{{ asset('storage/images/icons/classes/faces/') }}/' + currentRaceDofusID + currentGender + '_' + '{{$i}}.png'" alt="Visage n° {{ $i }}"
+                                <img :src="'{{ asset('storage/images/icons/classes/faces/unity/') }}/' + currentRaceDofusID + currentGender + '_' + '{{$i}}.png'" alt="Visage n° {{ $i }}"
                                     class="flex rounded-md items-center justify-center w-full h-full text-3xl bg-primary-100 border-2 border-inactiveText cursor-pointer hover:border-secondary peer-checked:border-goldText">
                             </label>
                         @endfor
