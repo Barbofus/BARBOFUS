@@ -60,7 +60,7 @@ class MylikesInfiniteLoad extends Component
      */
     public function PrepareChunks()
     {
-        $this->postIdChunks = DB::table('skins')
+        /*$this->postIdChunks = DB::table('skins')
 
             // select princpal
             ->select('skins.id')
@@ -88,7 +88,67 @@ class MylikesInfiniteLoad extends Component
             // Scroll infini
             ->pluck('id')
             ->chunk(self::ITEMS_PER_PAGE)
+            ->toArray();*/
+
+        $likedSkins = DB::table('skins')
+
+            // select princpal
+            ->select('skins.id')
+            ->addSelect([
+                'like_created_at' => DB::table('likes')->select('created_at')
+                    ->where('likes.user_id', Auth::id())
+                    ->whereColumn('likes.skin_id', 'skins.id')
+                    ->orderBy('created_at')
+                    ->take(1),
+            ])
+            ->addSelect([DB::raw('false as is_unity_skin')])
+
+            // Seulement les skins que l'on a liké
+            ->whereExists(function (Builder $query) {
+                $query->select('id')
+                    ->from('likes')
+                    ->where('likes.user_id', Auth::id())
+                    ->whereColumn('likes.skin_id', 'skins.id');
+            })
+
+            ->where('skins.status', 'Posted')
+            ->get()
+
+            // Scroll infini
             ->toArray();
+
+        $unityLikedSkins = DB::table('unity_skins')
+
+            // select princpal
+            ->select('unity_skins.id')
+            ->addSelect([
+                'like_created_at' => DB::table('unity_likes')->select('created_at')
+                    ->where('unity_likes.user_id', Auth::id())
+                    ->whereColumn('unity_likes.unity_skin_id', 'unity_skins.id')
+                    ->orderBy('created_at')
+                    ->take(1),
+            ])
+            ->addSelect([DB::raw('true as is_unity_skin')])
+
+            // Seulement les skins que l'on a liké
+            ->whereExists(function (Builder $query) {
+                $query->select('id')
+                    ->from('unity_likes')
+                    ->where('unity_likes.user_id', Auth::id())
+                    ->whereColumn('unity_likes.unity_skin_id', 'unity_skins.id');
+            })
+
+            ->where('unity_skins.status', 'Posted')
+            ->get()
+
+            // Scroll infini
+            ->toArray();
+
+        $likedSkins = array_merge($likedSkins, $unityLikedSkins);
+
+        array_multisort(array_column($likedSkins, 'like_created_at'), SORT_DESC, $likedSkins);
+
+        $this->postIdChunks = array_chunk($likedSkins, self::ITEMS_PER_PAGE);
 
         $this->page = 1;
 

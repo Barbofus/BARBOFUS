@@ -28,6 +28,7 @@ class SkinsValidation extends Component
     ];
 
     public mixed $skins;
+
     public mixed $unitySkins;
 
     /**
@@ -64,7 +65,7 @@ class SkinsValidation extends Component
 
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
-                    if($item == "dofus_item_wing" || $item == "dofus_item_shoulder") {
+                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
                         continue;
                     }
                     $query->addSelect([
@@ -84,7 +85,6 @@ class SkinsValidation extends Component
 
             ->orderBy('updated_at', 'DESC')
             ->get();
-
 
         $this->unitySkins = DB::table('unity_skins')->select('*')
             ->where('status', '=', 'pending')
@@ -116,15 +116,15 @@ class SkinsValidation extends Component
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
                     $tableItem = $item;
-                    if($item == "dofus_item_wing" || $item == "dofus_item_shoulder") {
-                        $tableItem = "dofus_item_costume";
+                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
+                        $tableItem = 'dofus_item_costume';
                     }
                     $query->addSelect([
                         $item.'_name' => DB::table($tableItem.'s')
                             ->select('name')
                             ->whereColumn('id', 'unity_skins.'.$item.'_id')
                             ->take(1),
-                        ])
+                    ])
                         ->addSelect([
                             $item.'_icon' => DB::table($tableItem.'s')
                                 ->select('icon_path')

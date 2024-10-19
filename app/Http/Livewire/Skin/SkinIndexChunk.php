@@ -35,6 +35,6 @@ class SkinIndexChunk extends Component
      */
     public function SwitchHeart(int $skinID)
     {
-        (new SwitchLikes)($skinID);
+        (new SwitchLikes)($skinID, false);
     }
 }

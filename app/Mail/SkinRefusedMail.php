@@ -18,6 +18,7 @@ class SkinRefusedMail extends Mailable
     public Skin|UnitySkin $skin;
 
     public User $user;
+
     public bool $isUnitySkin = false;
 
     /**

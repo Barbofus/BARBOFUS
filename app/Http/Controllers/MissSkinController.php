@@ -20,7 +20,7 @@ class MissSkinController extends Controller
             abort(403, 'Autorisation requise');
         }
 
-        (new FindWinners())();
+        (new FindWinners)();
 
         session()->flash('miss-skin', 'Les nouveaux vainqueurs Miss\'Skin ont bien été désignés');
         session()->flash('section', 'admin-panel');

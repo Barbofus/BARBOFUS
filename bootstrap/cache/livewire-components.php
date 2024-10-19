@@ -7,6 +7,7 @@
   'skin.infinite-skin-index' => 'App\\Http\\Livewire\\Skin\\InfiniteSkinIndex',
   'skin.last-winners' => 'App\\Http\\Livewire\\Skin\\LastWinners',
   'skin.skin-index-chunk' => 'App\\Http\\Livewire\\Skin\\SkinIndexChunk',
+  'skin.unity-last-winners' => 'App\\Http\\Livewire\\Skin\\UnityLastWinners',
   'unity-skin.infinite-unity-skin-index' => 'App\\Http\\Livewire\\UnitySkin\\InfiniteUnitySkinIndex',
   'unity-skin.unity-skin-index-chunk' => 'App\\Http\\Livewire\\UnitySkin\\UnitySkinIndexChunk',
   'user-panel.haven-bags-validation' => 'App\\Http\\Livewire\\UserPanel\\HavenBagsValidation',

@@ -1,8 +1,9 @@
 <div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.20),5.5rem,70rem,1fr]
           [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0rem,0rem,70rem,1fr]
           min-[501px]:grid-rows-[theme(spacing.36),5.5rem,70rem,1fr]
-          min-[851px]:grid-rows-[theme(spacing.20),5.5rem,1fr]
-          min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),1fr]">
+          min-[851px]:grid-rows-[theme(spacing.20),5.5rem,27rem,1fr]
+          min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),27rem,1fr]
+          min-[1801px]:grid-cols-[27rem,1fr,25rem] min-[1801px]:grid-rows-[theme(spacing.20),1fr]">
 
     <!-- Header skin section -->
     <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 pt-8 z-30
@@ -37,7 +38,7 @@
         </div>
 
         {{-- Menu de trie --}}
-        <x-skins.unity-sorter :$orderByID :$orderDirection />
+        <x-skins.sorter :$orderByID :$orderDirection />
     </div>
 
     <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere :canWinnersOnly="false" />
@@ -61,7 +62,8 @@
         @endif
     </div>
 
-
+    {{-- Derniers vainqueurs et date du prochain tirage Miss'Skin --}}
+    <livewire:skin.unity-last-winners :wire:key="'winners-{{ rand() }}'"/>
 
     <script>
         function AddParamToUrl(name, value)

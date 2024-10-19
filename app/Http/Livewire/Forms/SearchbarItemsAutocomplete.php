@@ -121,7 +121,7 @@ class SearchbarItemsAutocomplete extends Component
         $this->itemsToShow = [];
 
         // Aucun item selectionné
-        $this->existentItem = new Collection();
+        $this->existentItem = new Collection;
     }
 
     /**

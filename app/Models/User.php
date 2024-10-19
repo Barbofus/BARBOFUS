@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmailQueued());
+        $this->notify(new VerifyEmailQueued);
     }
 
     /**
@@ -122,6 +122,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function Likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    /**
+     * @return HasMany<UnityLike>
+     */
+    public function UnityLikes()
+    {
+        return $this->hasMany(UnityLike::class);
     }
 
     /**

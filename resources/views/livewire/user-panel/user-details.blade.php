@@ -16,8 +16,8 @@
                         <div class="flex flex-col gap-y-4">
                             <p>Inscrit <span class="italic font-normal">{{ $user->created_at->diffForHumans() }}</span></p>
                             <p><span class="italic tracking-widest font-normal">{{ $user->skin_count + $user->unity_skin_count }}</span> skins postés</p>
-                            <p><span class="italic tracking-widest font-normal">{{ $user->like_given }}</span> likes donnés</p>
-                            <p><span class="italic tracking-widest font-normal">{{ $user->like_received }}</span> likes reçus</p>
+                            <p><span class="italic tracking-widest font-normal">{{ $user->like_given + $user->unity_like_given }}</span> likes donnés</p>
+                            <p><span class="italic tracking-widest font-normal">{{ $user->like_received + $user->unity_like_received }}</span> likes reçus</p>
                             @canany(['mod-access', 'admin-access'])
                                 <p><span class="italic tracking-widest font-normal">{{ \App\Models\Skin::all()->count() + \App\Models\UnitySkin::all()->count() }}</span> skins total sur le site</p>
                             @endcan
@@ -26,17 +26,17 @@
                         <div class="flex flex-col gap-y-4">
                             <div class="flex gap-x-4 items-center">
                                 <img src="{{ asset('storage/images/misc_ui/dofus_ocre.webp') }}" class="h-12">
-                                <p><span class="italic tracking-widest font-normal">{{ $user->ocre_wins }}</span> victoires</p>
+                                <p><span class="italic tracking-widest font-normal">{{ $user->ocre_wins + $user->unity_ocre_wins }}</span> victoires</p>
                             </div>
 
                             <div class="flex gap-x-4 items-center">
                                 <img src="{{ asset('storage/images/misc_ui/dofus_emeraude.webp') }}" class="h-12">
-                                <p><span class="italic tracking-widest font-normal">{{ $user->emerald_wins }}</span> victoires</p>
+                                <p><span class="italic tracking-widest font-normal">{{ $user->emerald_wins + $user->unity_emerald_wins }}</span> victoires</p>
                             </div>
 
                             <div class="flex gap-x-4 items-center">
                                 <img src="{{ asset('storage/images/misc_ui/dofus_cawotte.webp') }}" class="h-12">
-                                <p><span class="italic tracking-widest font-normal">{{ $user->cawotte_wins }}</span> victoires</p>
+                                <p><span class="italic tracking-widest font-normal">{{ $user->cawotte_wins + $user->unity_cawotte_wins }}</span> victoires</p>
                             </div>
                         </div>
                     </div>

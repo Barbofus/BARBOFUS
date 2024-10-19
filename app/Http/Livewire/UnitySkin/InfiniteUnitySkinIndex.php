@@ -30,7 +30,10 @@ class InfiniteUnitySkinIndex extends Component
      */
     protected $allOrder = [
         'unity_skins.created_at',
+        'likes_count',
+        'rewards_points',
         'unity_skins.race_id',
+        'tuesday_like_count',
     ];
 
     /**
@@ -177,9 +180,10 @@ class InfiniteUnitySkinIndex extends Component
                 foreach ($this->itemRelations as $item) {
                     $tableItem = $item;
 
-                    if($item == "dofus_item_shoulder" || $item == "dofus_item_wing") {
-                        if ($item == "dofus_item_wing") {
+                    if ($item == 'dofus_item_shoulder' || $item == 'dofus_item_wing') {
+                        if ($item == 'dofus_item_wing') {
                             $query->leftJoin('dofus_item_costumes as wings', 'wings.id', '=', 'unity_skins.dofus_item_wing_id');
+
                             continue;
                         }
 
@@ -199,6 +203,24 @@ class InfiniteUnitySkinIndex extends Component
                     $query->addSelect('unity_skins.'.$color);
                 }
             })
+
+            // Variables utiles pour les orderBy
+            ->addSelect([
+                'rewards_points' => DB::table('unity_rewards')
+                    ->selectRaw('sum(points)')
+                    ->whereColumn('unity_rewards.unity_skin_id', 'unity_skins.id'),
+            ])
+            ->addSelect([
+                'likes_count' => DB::table('unity_likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('unity_likes.unity_skin_id', 'unity_skins.id'),
+            ])
+            ->addSelect([
+                'tuesday_like_count' => DB::table('unity_likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('unity_skin_id', 'unity_skins.id')
+                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+            ])
 
             // Début du système de filtres
             ->where($this->raceWhere)
@@ -269,24 +291,24 @@ class InfiniteUnitySkinIndex extends Component
                         foreach ($this->itemRelations as $item) {
                             $tableItem = $item;
 
-                            if ($item == "dofus_item_shoulder" || $item == "dofus_item_wing") {
+                            if ($item == 'dofus_item_shoulder' || $item == 'dofus_item_wing') {
                                 // Gestion des alias pour les ailes et les épaulettes
-                                if ($item == "dofus_item_wing") {
-                                    $tableItem = "wings";
+                                if ($item == 'dofus_item_wing') {
+                                    $tableItem = 'wings';
                                 }
-                                if ($item == "dofus_item_shoulder") {
-                                    $tableItem = "shoulders";
+                                if ($item == 'dofus_item_shoulder') {
+                                    $tableItem = 'shoulders';
                                 }
 
                                 // Recherche avec les alias sur dofus_item_costumes
                                 $query->orWhere(function (Builder $query) use ($tableItem, $input) {
-                                    $query->where($tableItem . '.name', $input[0])
+                                    $query->where($tableItem.'.name', $input[0])
                                         ->where($tableItem.'.id', $input[1]);
                                 });
                             } else {
                                 // Pour les autres items (hat, cloak, etc.), on utilise la table normale
                                 $query->orWhere(function (Builder $query) use ($item, $input) {
-                                    $query->where($item . 's.name',  $input[0])
+                                    $query->where($item.'s.name', $input[0])
                                         ->where($item.'s.id', $input[1]);
                                 });
                             }
@@ -300,7 +322,12 @@ class InfiniteUnitySkinIndex extends Component
             // orderBy
             ->when(! $this->randSort, function (Builder $query) {
                 $query->orderBy($this->orderBy, $this->orderDirection)
-                    ->orderBy('unity_skins.created_at', 'DESC');
+                    ->when($this->orderByID == 4, function (Builder $query) {
+                        $query->orderBy('unity_skins.created_at', 'ASC');
+                    })
+                    ->when($this->orderByID != 4, function (Builder $query) {
+                        $query->orderBy('unity_skins.created_at', 'DESC');
+                    });
             })
             ->when($this->randSort, function (Builder $query) {
                 $query->inRandomOrder();

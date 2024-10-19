@@ -57,10 +57,16 @@ Route::middleware(['auth', 'throttle:skins-upload'])->group(function () {
 });
 
 Route::post('/skin/{id}/like', function (int $id) {
-    (new SwitchLikes)($id);
+    (new SwitchLikes)($id, false);
 
     return redirect()->back();
 })->name('skins.like');
+
+Route::post('/unity-skin/{id}/like', function (int $id) {
+    (new SwitchLikes)($id, true);
+
+    return redirect()->back();
+})->name('unity-skins.like');
 
 Route::middleware(['auth'])->group(function () {
 

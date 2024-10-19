@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->everyMinute()->onOneServer();
         $schedule->call(function () {
-            (new FindWinners())();
+            (new FindWinners)();
         })->weeklyOn(2, '09:00'); // Mardi 9h
     }
 

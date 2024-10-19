@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Likes;
 
 use App\Models\Like;
+use App\Models\UnityLike;
 use Illuminate\Support\Facades\Auth;
 
 final class SwitchLikes
@@ -12,7 +13,7 @@ final class SwitchLikes
     /**
      * @return void
      */
-    public function __invoke(int $skinID)
+    public function __invoke(int $skinID, bool $isUnity = false)
     {
         $ipAdress = request()->ip();
 
@@ -20,10 +21,18 @@ final class SwitchLikes
         if (auth()->check()) {
 
             // Si on a déjà like le skin
-            if ($liked = Auth::user()->Likes()->where('skin_id', $skinID)->first()) {
-                $liked->delete();
+            if (! $isUnity) {
+                if ($liked = Auth::user()->Likes()->where('skin_id', $skinID)->first()) {
+                    $liked->delete();
 
-                return;
+                    return;
+                }
+            } else {
+                if ($liked = Auth::user()->UnityLikes()->where('unity_skin_id', $skinID)->first()) {
+                    $liked->delete();
+
+                    return;
+                }
             }
         }
 
@@ -34,11 +43,20 @@ final class SwitchLikes
             return;
         }*/
 
-        // Si aucun like trouvé, ont le créé
-        Like::create([
-            'skin_id' => $skinID,
-            'user_id' => auth()->check() ? Auth::id() : null,
-            'ip_adress' => $ipAdress,
-        ]);
+        if (! $isUnity) {
+            // Si aucun like trouvé, ont le créé
+            Like::create([
+                'skin_id' => $skinID,
+                'user_id' => auth()->check() ? Auth::id() : null,
+                'ip_adress' => $ipAdress,
+            ]);
+        } else {
+            // Si aucun like trouvé, ont le créé
+            UnityLike::create([
+                'unity_skin_id' => $skinID,
+                'user_id' => auth()->check() ? Auth::id() : null,
+                'ip_adress' => $ipAdress,
+            ]);
+        }
     }
 }

@@ -75,6 +75,7 @@ final class GetSkinChunk
                     ->skip(2)
                     ->take(1),
             ])
+            ->addSelect([DB::raw('false as is_unity_skin')])
             ->whereIn('id', $skinIds)
             ->get();
 

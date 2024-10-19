@@ -42,7 +42,7 @@ class StoreUpdateSkinRequest extends FormRequest
             ],
             'name' => 'nullable|max:30',
 
-            'g-recaptcha-response' => ['required', new Recaptcha()],
+            'g-recaptcha-response' => ['required', new Recaptcha],
 
             'color_skin' => $hexRegex,
             'color_hair' => $hexRegex,

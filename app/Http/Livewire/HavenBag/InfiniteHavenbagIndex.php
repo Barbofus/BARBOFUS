@@ -43,9 +43,7 @@ class InfiniteHavenbagIndex extends Component
 
     protected bool $hasLoadMore = false;
 
-    public function mount(): void
-    {
-    }
+    public function mount(): void {}
 
     /**
      * @return View

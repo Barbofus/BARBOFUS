@@ -31,7 +31,7 @@ class StoreUpdateHavenBagRequest extends FormRequest
             'image_path' => $imageRequired.'|image|max:10000|dimensions:min_width=1200,min_height=650',
             'name' => 'nullable|max:30',
 
-            'g-recaptcha-response' => ['required', new Recaptcha()],
+            'g-recaptcha-response' => ['required', new Recaptcha],
         ];
     }
 

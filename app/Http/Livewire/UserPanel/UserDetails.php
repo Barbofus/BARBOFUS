@@ -64,6 +64,16 @@ class UserDetails extends Component
             $skinIDs[] = $skinIDCol->id;
         }
 
+        $skinsIDCol = DB::table('unity_skins')
+            ->select('id')
+            ->where('user_id', auth()->id())->get();
+
+        $unitySkinIDs = [];
+
+        foreach ($skinsIDCol as $skinIDCol) {
+            $unitySkinIDs[] = $skinIDCol->id;
+        }
+
         $user = DB::table('users')
             ->select('id', 'created_at', 'name', 'email')
             ->addSelect([
@@ -79,13 +89,26 @@ class UserDetails extends Component
                     ->selectRaw('count(id)')
                     ->whereColumn('user_id', 'users.id'),
 
+                'unity_like_given' => DB::table('unity_likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('user_id', 'users.id'),
+
                 'like_received' => DB::table('likes')
                     ->selectRaw('count(id)')
                     ->whereIn('skin_id', $skinIDs),
 
+                'unity_like_received' => DB::table('unity_likes')
+                    ->selectRaw('count(id)')
+                    ->whereIn('unity_skin_id', $unitySkinIDs),
+
                 'ocre_wins' => DB::table('rewards')
                     ->selectRaw('count(id)')
                     ->whereIn('skin_id', $skinIDs)
+                    ->where('rank', 1),
+
+                'unity_ocre_wins' => DB::table('unity_rewards')
+                    ->selectRaw('count(id)')
+                    ->whereIn('unity_skin_id', $unitySkinIDs)
                     ->where('rank', 1),
 
                 'emerald_wins' => DB::table('rewards')
@@ -93,9 +116,19 @@ class UserDetails extends Component
                     ->whereIn('skin_id', $skinIDs)
                     ->where('rank', 2),
 
+                'unity_emerald_wins' => DB::table('unity_rewards')
+                    ->selectRaw('count(id)')
+                    ->whereIn('unity_skin_id', $unitySkinIDs)
+                    ->where('rank', 2),
+
                 'cawotte_wins' => DB::table('rewards')
                     ->selectRaw('count(id)')
                     ->whereIn('skin_id', $skinIDs)
+                    ->where('rank', 3),
+
+                'unity_cawotte_wins' => DB::table('unity_rewards')
+                    ->selectRaw('count(id)')
+                    ->whereIn('unity_skin_id', $unitySkinIDs)
                     ->where('rank', 3),
 
                 'mail_skin_validation_preference' => DB::table('user_notification_preferences')

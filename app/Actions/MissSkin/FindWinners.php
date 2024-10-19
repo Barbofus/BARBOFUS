@@ -9,6 +9,7 @@ use App\Models\Reward;
 use App\Models\RewardPrice;
 use App\Models\Skin;
 use App\Models\SkinWinner;
+use App\Models\UnityReward;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -110,8 +111,6 @@ final class FindWinners
             ->get()
             ->toArray();*/
 
-
-
         // Trouve les 3 skins ayant le plus de likes durant la semaine
         $winners = DB::table('skins')
             ->join('users', 'skins.user_id', '=', 'users.id')
@@ -127,10 +126,31 @@ final class FindWinners
             ])
             ->where('users.name', '!=', 'Barbe Douce')
             ->orderByRaw('weekly_like_count DESC')
-            ->orderBy('updated_at', 'ASC')
+            ->orderBy('created_at', 'ASC')
             ->take(3)
             ->get()
             ->toArray();
+
+        $unityWinners = DB::table('unity_skins')
+            ->join('users', 'unity_skins.user_id', '=', 'users.id')
+            ->addSelect([
+                'weekly_like_count' => DB::table('unity_likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('unity_skin_id', 'unity_skins.id')
+                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+
+                'user_name' => DB::table('users')
+                    ->select('name')
+                    ->whereColumn('id', 'unity_skins.user_id'),
+            ])
+            ->where('users.name', '!=', 'Barbe Douce')
+            ->orderByRaw('weekly_like_count DESC')
+            ->orderBy('created_at', 'ASC')
+            ->take(3)
+            ->get()
+            ->toArray();
+
+        $winners = array_merge($winners, $unityWinners);
 
         $previousWinners = SkinWinner::all();
 
@@ -142,7 +162,7 @@ final class FindWinners
 
         SkinWinner::truncate();
 
-        foreach ($winners as $key => $winner) {
+        /*foreach ($winners as $key => $winner) {
 
             $newPath = 'images/winners/winner_'.$key.'_'.time().'png';
             Storage::copy($winner->image_path, $newPath);
@@ -163,9 +183,56 @@ final class FindWinners
                 'rank' => $key + 1,
                 'points' => RewardPrice::find($key + 1)->points,
             ]);
+        }*/
+
+        // Reward 2.0
+        for ($i = 0; $i < 3; $i++) {
+            $newPath = 'images/winners/winner_'.$i.'_'.time().'png';
+            Storage::copy($winners[$i]->image_path, $newPath);
+
+            // Créer les 3 skins à afficher
+            SkinWinner::create([
+                'skin_id' => $winners[$i]->id,
+                'reward_id' => $i + 1,
+                'user_name' => $winners[$i]->user_name,
+                'image_path' => $newPath,
+                'weekly_likes' => $winners[$i]->weekly_like_count,
+                'skin_name' => $winners[$i]->name,
+            ]);
+
+            // Ajoute les vainqueurs dans la table des vainqueurs
+            Reward::create([
+                'skin_id' => $winners[$i]->id,
+                'rank' => $i + 1,
+                'points' => RewardPrice::find($i + 1)->points,
+            ]);
+        }
+
+        // Reward Unity
+        for ($i = 0; $i < 3; $i++) {
+            $newPath = 'images/winners/winner_'.($i + 3).'_'.time().'png';
+            Storage::copy($winners[$i + 3]->image_path, $newPath);
+
+            // Créer les 3 skins à afficher
+            SkinWinner::create([
+                'skin_id' => $winners[$i + 3]->id,
+                'reward_id' => $i + 1,
+                'user_name' => $winners[$i + 3]->user_name,
+                'image_path' => $newPath,
+                'weekly_likes' => $winners[$i + 3]->weekly_like_count,
+                'skin_name' => $winners[$i + 3]->name,
+            ]);
+
+            // Ajoute les vainqueurs dans la table des vainqueurs
+            UnityReward::create([
+                'unity_skin_id' => $winners[$i + 3]->id,
+                'rank' => $i + 1,
+                'points' => RewardPrice::find($i + 1)->points,
+            ]);
         }
 
         //(new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), $topTen);
-        (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'));
+        (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), false);
+        (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), true);
     }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire\UserPanel;
 
-use App\Actions\Skins\GetSkinChunk;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -39,7 +37,7 @@ class MyUnityskinsChunk extends Component
                     ->whereColumn('id', 'unity_skins.race_id')
                     ->take(1),
             ])
-            ->addSelect([ DB::raw('true as is_unity_skin') ])
+            ->addSelect([DB::raw('true as is_unity_skin')])
             ->whereIn('id', $this->skinIds)
             ->get();
 

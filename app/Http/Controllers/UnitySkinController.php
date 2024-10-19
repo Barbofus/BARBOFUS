@@ -7,11 +7,8 @@ use App\Actions\Discord\SendDiscordPendingWebhook;
 use App\Actions\Discord\SendDiscordPostedWebhook;
 use App\Actions\Images\ResizeImages;
 use App\Actions\Skins\DeleteSkin;
-use App\Http\Middleware\SkinsOwnerShip;
 use App\Http\Middleware\UnitySkinsOwnerShip;
-use App\Http\Requests\StoreUpdateSkinRequest;
 use App\Http\Requests\StoreUpdateUnitySkinRequest;
-use App\Models\Skin;
 use App\Models\UnitySkin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -62,7 +59,7 @@ class UnitySkinController extends Controller
             ->where('unity_skins.id', $skin->id)
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
-                    if($item == "dofus_item_wing" || $item == "dofus_item_shoulder") {
+                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
                         continue;
                     }
                     $query->leftJoin($item.'s', $item.'s.id', '=', 'unity_skins.'.$item.'_id');
@@ -93,12 +90,21 @@ class UnitySkinController extends Controller
                     ->whereColumn('id', 'unity_skins.race_id')
                     ->take(1),
             ])
+            ->addSelect([
+                'is_liked' => DB::table('unity_likes')
+                    ->select('id')
+                    ->whereColumn('unity_skin_id', 'unity_skins.id')
+                    ->where('user_id', Auth::id())
+                    ->orWhereColumn('unity_skin_id', 'unity_skins.id')
+                    ->where('ip_adress', request()->ip())
+                    ->take(1),
+            ])
 
             ->when(true, function (Builder $query) {
                 foreach ($this->itemRelations as $item) {
                     $tableItem = $item;
-                    if($item == "dofus_item_wing" || $item == "dofus_item_shoulder") {
-                        $tableItem = "dofus_item_costume";
+                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
+                        $tableItem = 'dofus_item_costume';
                     }
 
                     $query->addSelect([

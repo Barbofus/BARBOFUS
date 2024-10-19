@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class LastWinners extends Component
+class UnityLastWinners extends Component
 {
     public mixed $winners;
 
@@ -28,17 +28,17 @@ class LastWinners extends Component
     public function FetchLastWinners()
     {
         $this->winners = DB::table('skin_winners')
-            ->join('skins', 'skin_winners.skin_id', '=', 'skins.id')
+            ->join('unity_skins', 'skin_winners.skin_id', '=', 'unity_skins.id')
             ->addSelect([
                 'race_name' => DB::table('races')
                     ->select('name')
-                    ->whereColumn('id', 'skins.race_id')
+                    ->whereColumn('id', 'unity_skins.race_id')
                     ->take(1),
             ])
             ->addSelect([
                 'user_id' => DB::table('users')
                     ->select('id')
-                    ->whereColumn('id', 'skins.user_id')
+                    ->whereColumn('id', 'unity_skins.user_id')
                     ->take(1),
             ])
             ->take(3)

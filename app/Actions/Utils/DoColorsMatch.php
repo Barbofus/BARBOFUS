@@ -26,8 +26,8 @@ final class DoColorsMatch
     ];
 
     /**
-     * @param  string  $inputColor The input hex color, given by the user
-     * @param  string  $colorToMatch The hex color to compare the input with
+     * @param  string  $inputColor  The input hex color, given by the user
+     * @param  string  $colorToMatch  The hex color to compare the input with
      * @return bool
      */
     public function __invoke(string $inputColor, string $colorToMatch)

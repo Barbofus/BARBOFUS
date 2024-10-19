@@ -14,6 +14,7 @@ class SkinPostedNotification extends Notification implements ShouldQueue
     use Queueable;
 
     public Skin|UnitySkin $skin;
+
     public bool $isUnitySkin = false;
 
     /**
