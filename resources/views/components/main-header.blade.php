@@ -60,7 +60,7 @@
 
     {{-- Live partout--}}
     <div class="opacity-0">
-        @if(Route::currentRouteName() != 'skins.index' && Route::currentRouteName() != 'home')
+        @if(Route::currentRouteName() != 'skins.index' && Route::currentRouteName() != 'home' && Route::currentRouteName() != 'unity-skins.index')
             <x-utils.twitch-embed />
         @endif
     </div>

@@ -224,6 +224,7 @@ class SkinController extends Controller
      */
     public function update(StoreUpdateSkinRequest $request, Skin $skin)
     {
+        dd($request->all());
         $imagePath = $skin->image_path;
 
         // Si on change l'image, supprime l'ancienne et s'occupe de la nouvelle
