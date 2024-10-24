@@ -147,44 +147,23 @@
                    x-text="copied"></p>
             </button>
 
-            <div class="flex flex-row min-[420px]:flex-col items-center gap-x-4 gap-y-4 mt-4">
+            <div class="flex flex-col min-[901px]:flex-row min-[901px]:absolute min-[901px]:-top-2 items-center gap-x-4 gap-y-4 mt-4">
                 {{-- Colors --}}
 
-                <div class="flex flex-col min-[420px]:flex-row gap-x-4">
-                    <div
-                        class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:-translate-x-[19.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:-translate-x-[7.5rem]">
-                        <x-skins-presentation.color name="Peau" color="{{ $skin->color_skin }}"/>
-                    </div>
-
-                    <div
-                        class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:-translate-x-[11.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-x-[0.5rem]">
-                        <x-skins-presentation.color name="Cheveux" color="{{ $skin->color_hair }}"/>
-                    </div>
+                <div class="flex flex-col min-[201px]:flex-row gap-x-4">
+                    <x-skins-presentation.color name="Peau" color="{{ $skin->color_skin }}"/>
+                    <x-skins-presentation.color name="Cheveux" color="{{ $skin->color_hair }}"/>
                 </div>
 
-                <div class="flex flex-col min-[420px]:flex-row gap-x-4">
-                    <div>
-                        <div
-                            class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:-translate-x-[3.25rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-y-[35rem] [@media(min-height:920px)_and_(min-width:1100px)]:-translate-x-[15rem]">
-                            <x-skins-presentation.color name="Habits 1" color="{{ $skin->color_cloth_1 }}"/>
-                        </div>
-
-                        <div
-                            class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:translate-x-[4.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-y-[35rem] [@media(min-height:920px)_and_(min-width:1100px)]:-translate-x-[7rem]">
-                            <x-skins-presentation.color name="Habits 2" color="{{ $skin->color_cloth_2 }}"/>
-                        </div>
+                <div class="flex flex-col min-[551px]:flex-row gap-x-4">
+                    <div class="flex flex-col min-[201px]:flex-row gap-x-4">
+                        <x-skins-presentation.color name="Habits 1" color="{{ $skin->color_cloth_1 }}"/>
+                        <x-skins-presentation.color name="Habits 2" color="{{ $skin->color_cloth_2 }}"/>
                     </div>
 
-                    <div>
-                        <div
-                            class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:translate-x-[11rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-y-[35rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-x-[0rem]">
-                            <x-skins-presentation.color name="Habits 3" color="{{ $skin->color_cloth_3 }}"/>
-                        </div>
-
-                        <div
-                            class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:translate-x-[18.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-y-[35rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-x-[8rem]">
-                            <x-skins-presentation.color name="Habits 4" color="{{ $skin->color_cloth_4 }}"/>
-                        </div>
+                    <div class="flex flex-col min-[201px]:flex-row gap-x-4">
+                        <x-skins-presentation.color name="Habits 3" color="{{ $skin->color_cloth_3 }}"/>
+                        <x-skins-presentation.color name="Habits 4" color="{{ $skin->color_cloth_4 }}"/>
                     </div>
                 </div>
             </div>

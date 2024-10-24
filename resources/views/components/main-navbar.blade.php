@@ -3,13 +3,20 @@
 <nav id="navbar"
      class="fixed min-[1201px]:sticky min-[1201px]:z-40 z-40 top-0 min-[1201px]:border-t-8 min-[1201px]:border-secondary h-12 w-full tracking-tight text-[1.35rem] text-inactiveText font-thin bg-primary pb-[0.75rem] min-[1201px]:pt-2"
      x-data="{
-            showNavbar: (window.innerWidth > 900),
+            title: {
+                'skins.index': 'Skins',
+                'skins.show': 'Skins',
+                'unity-skins.index': 'Skins UNITY',
+                'unity-skins.show': 'Skins UNITY',
+                'havre-sacs.index': 'Havre-sacs',
+            },
+            showNavbar: (window.innerWidth > 1200),
             selectedClass: 'max-[1200px]:border-y max-[1200px]:border-secondary max-[1200px]:flex max-[1200px]:items-center max-[1200px]:px-5 min-[1201px]:pl-5 h-[12%] min-[1201px]:h-[2rem] text-secondary-100 font-light flex min-[1201px]:after:ml-5 min-[1201px]:after:-mt-1 min-[1201px]:after:clip-path-triangle-down min-[1201px]:after:block min-[1201px]:after:h-[2.25rem] min-[1201px]:after:w-[5rem] min-[1201px]:after:bg-secondary focus:outline-none',
             unselectedClass: 'px-5 transition-all max-[1200px]:flex max-[1200px]:items-center h-[12%] min-[1201px]:h-[2rem] min-[1201px]:border-r hover:text-secondary-100 border-r-inactiveText focus:outline-none',
             unselectedClassLast: 'px-5 transition-all max-[1200px]:flex max-[1200px]:items-center h-[12%] min-[1201px]:h-[2rem] hover:text-secondary-100 focus:outline-none',
           }"
      @resize.window="
-            if(window.innerWidth > 900) showNavbar = true;">
+            showNavbar = (window.innerWidth > 1200);">
     <template x-if="true">
         <div x-show="showNavbar" x-transition
              class="flex h-[max(100vh,15.625rem)] w-screen max-[1200px]:pb-2 min-[1201px]:h-full min-[1201px]:w-full items-center justify-center flex-col min-[1201px]:flex-row bg-primary">
@@ -55,4 +62,16 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
     </button>
+
+    {{-- Header --}}
+    <div x-show="!showNavbar" x-transition
+            aria-label="Ouverture du menu de navigation"
+            @click="showNavbar = !showNavbar"
+            class="h-12 visible min-[1201px]:invisible fixed top-0 left-2 text-secondary flex">
+        <a href="{{ route('home') }}" title="Accueil Barbofus"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.webp') }}" loading="lazy" height="48" alt="Logo Barbofus" class="h-full" draggable="false" /></a>
+
+        @if(Route::is('skins.index', 'skins.show', 'unity-skins.index', 'unity-skins.show', 'havre-sacs.index'))
+            <p class="pt-2 p-10 font-medium italic" x-text="title['{{ Route::currentRouteName() }}']"/>
+        @endif
+    </div>
 </nav>

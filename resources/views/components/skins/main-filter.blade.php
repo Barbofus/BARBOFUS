@@ -6,7 +6,7 @@
      @resize.window="
               if(window.innerWidth > 1500) showFilter = true;
               showLive=!(window.innerWidth <= 1500 && showFilter);"
-     :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-32 [@media(min-height:701px)_and_(max-width:501px)]:top-28 min-[501px]:top-48 min-[851px]:top-32'"
+     :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-24 min-[851px]:top-32'"
      class="flex sticky flex-col w-full h-full items-center z-20 row-start-2 bg-primary
             max-[1500px]:shadow-lg min-[1501px]:z-10
             [@media(max-height:500px)_and_(max-width:900px)]:invisible

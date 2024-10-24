@@ -1,5 +1,5 @@
 <!-- Sort by -->
-<div class="relative max-[500px]:order-first"
+<div class="relative max-[850px]:order-first"
      x-data="{
               sortAsc: false,
               showSort: false,
@@ -25,7 +25,7 @@
          x-on:mousedown.outside="if(showSort) showSort = false">
 
         {{-- Randomizer --}}
-        <button aria-label="Skins Aléatoire" class="h-10 w-10 mr-4 invisible min-[361px]:visible" :class="diceAnim ? 'animate-dice [--custom-animation-time:0.7s]' : ''" wire:ignore wire:key="dice"
+        <button aria-label="Skins Aléatoire" class="h-10 w-10 mr-4 max-[400px]:hidden" :class="diceAnim ? 'animate-dice [--custom-animation-time:0.7s]' : ''" wire:ignore wire:key="dice"
                 @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = 'Aléatoire'; sortAsc = true; showSort = false; $wire.SortBy(5, 'ASC'), AddParamToUrl('sort', '5,ASC'), window.scrollTo(0,0)">
             <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" alt="Skin Aléatoire" height="40" width="40" draggable="false" class="h-full hover:scale-90 transition-all">
         </button>

@@ -1,5 +1,5 @@
 {{-- Global container --}}
-<div class="flex">
+<div class="flex pt-10">
 
     {{-- Aside section--}}
     <div class="w-96 h-[calc(100vh-15vh-4rem)] sticky top-16 overflow-y-scroll p-2 no-scrollbar border-r-2 border-secondary hidden min-[600px]:block">

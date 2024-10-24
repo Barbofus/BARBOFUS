@@ -1,6 +1,5 @@
-<div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.20),5.5rem,70rem,1fr]
+<div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.12),5.5rem,70rem,1fr]
           [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0rem,0rem,70rem,1fr]
-          min-[501px]:grid-rows-[theme(spacing.36),5.5rem,70rem,1fr]
           min-[851px]:grid-rows-[theme(spacing.20),5.5rem,27rem,1fr]
           min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),27rem,1fr]
           min-[1801px]:grid-cols-[27rem,1fr,25rem] min-[1801px]:grid-rows-[theme(spacing.20),1fr]">
@@ -13,8 +12,8 @@
 
 
         <!-- Tuto poste -->
-        <div class="invisible [@media(min-height:501px)_and_(min-width:501px)]:visible
-                min-[901px]:visible h-full w-fit py-2 flex flex-col items-center justify-between">
+        <div class="invisible [@media(min-height:501px)_and_(min-width:851px)]:visible
+                min-[851px]:visible h-full w-fit py-2 flex flex-col items-start min-[975px]:items-center justify-between">
             <a class="flex items-center justify-around cursor-pointer gap-x-2"
                 href="https://www.youtube.com/watch?v=teuDOhkgIaM" title="Tutoriel pour poster un skin" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 fill-secondary">
