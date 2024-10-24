@@ -6,7 +6,7 @@
      @resize.window="
               if(window.innerWidth > 1500) showFilter = true;
               showLive=!(window.innerWidth <= 1500 && showFilter);"
-     :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-24 min-[851px]:top-32'"
+     :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-24'"
      class="flex sticky flex-col w-full h-full items-center z-20 row-start-2 bg-primary
             max-[1500px]:shadow-lg min-[1501px]:z-10
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
@@ -16,25 +16,25 @@
 
     <!-- Header -->
     <div class="flex py-3 items-end justify-center transition-all duration-150 group
-              max-[1500px]:cursor-pointer max-[1500px]:bg-primary-100 max-[1500px]:w-[18.125rem] max-[1500px]:rounded-lg max-[1500px]:shadow-md
+              max-[1500px]:cursor-pointer max-[1500px]:bg-primary-100 max-[1500px]:w-[16rem] max-[1500px]:rounded-lg max-[1500px]:shadow-md
               min-[1501px]:justify-start min-[1501px]:pl-10 min-[1501px]:h-[4rem]"
          @click="if(window.innerWidth <= 1500) {showFilter = !showFilter; if(window.innerHeight > 700) showLive = !showFilter}">
         <div class="flex items-center transition-all duration-150"
              :class="showFilter ? 'max-[1500px]:group-hover:-translate-y-1' : 'max-[1500px]:group-hover:translate-y-1'">
-            <div class="relative w-10 h-10">
-                <svg class="absolute top-0 left-0 w-10 fill-secondary invisible min-[1501px]:visible"
+            <div class="relative w-6 h-6 min-[1501px]:w-10 min-[1501px]:h-10">
+                <svg class="absolute top-0 left-0 h-full fill-secondary invisible min-[1501px]:visible"
                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M17 2.75a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM17 15.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5zM3.75 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM4.5 2.75a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM10 11a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-5.5A.75.75 0 0110 11zM10.75 2.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5zM10 6a2 2 0 100 4 2 2 0 000-4zM3.75 10a2 2 0 100 4 2 2 0 000-4zM16.25 10a2 2 0 100 4 2 2 0 000-4z" />
                 </svg>
 
-                <svg class="rotate-180 absolute top-1 left-0 w-8 text-secondary min-[1501px]:invisible transition-all duration-150" viewBox="256 256 512 512" fill="currentColor"
+                <svg class="rotate-180 absolute top-1 left-0 h-full text-secondary min-[1501px]:invisible transition-all duration-150" viewBox="256 256 512 512" fill="currentColor"
                      :class="showFilter ? 'rotate-0' : 'rotate-180'">
                     <path d="m512 256 144.8 144.8-36.2 36.2-83-83v311.6h-51.2V354l-83 83-36.2-36.2L512      256zM307.2 716.8V768h409.6v-51.2H307.2z"/>
                 </svg>
 
             </div>
 
-            <p class="ml-2 text-[1.35rem] text-secondary font-medium tracking-wide">Affine ta recherche</p>
+            <p class="ml-2 text-[1rem] min-[1501px]:text-[1.35rem] text-secondary font-medium tracking-wide">Affine ta recherche</p>
         </div>
 
     </div>

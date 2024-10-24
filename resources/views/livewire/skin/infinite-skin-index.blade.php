@@ -1,11 +1,11 @@
-<div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.12),5.5rem,70rem,1fr]
+<div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.12),4rem,70rem,1fr]
           [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0rem,0rem,70rem,1fr]
-          min-[851px]:grid-rows-[theme(spacing.20),5.5rem,27rem,1fr]
+          min-[851px]:grid-rows-[theme(spacing.12),4rem,27rem,1fr]
           min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),27rem,1fr]
           min-[1801px]:grid-cols-[27rem,1fr,25rem] min-[1801px]:grid-rows-[theme(spacing.20),1fr]">
 
     <!-- Header skin section -->
-    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 pt-8 z-30
+    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 pt-8 min-[851px]:pt-0 min-[1501px]:pt-8 z-30
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             min-[851px]:flex-row min-[851px]:gap-y-0 min-[851px]:justify-between
             min-[1501px]:col-start-2 min-[1501px]:px-8 min-[1501px]:z-20">
