@@ -41,6 +41,7 @@ class UnityLastWinners extends Component
                     ->whereColumn('id', 'unity_skins.user_id')
                     ->take(1),
             ])
+            ->addSelect([DB::raw('true as is_unity_skin')])
             ->take(3)
             ->get();
 
