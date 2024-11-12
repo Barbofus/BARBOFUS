@@ -1,6 +1,6 @@
 <div x-data="{ skinDeleteID: null, skinDeleteImg: '', }">
     <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s]">
-        <x-utils.userpage-title :title="'Mes skins UNITY'" :subtitle="'Tes propres créations'" />
+        <x-utils.userpage-title :title="'Mes skins 3.0'" :subtitle="'Tes propres créations'" />
 
         <div class="bg-primary w-full flex justify-center sticky top-12 py-8 z-10">
             <a href="{{ route('unity-skins.create') }}" class="goldGradient px-4 py-2 rounded-md text-primary flex flex-col transition-all items-center text-2xl hover:rounded-3xl group hover:brightness-110">

@@ -40,7 +40,7 @@
 
 
 
-                <p :class="initTextClass">Mes Skins UNITY</p>
+                <p :class="initTextClass">Mes Skins 3.0</p>
             </button>
 
             <button wire:click="ChangeSection('my-havenbags')" @click="currentPage = 'my-havenbags', window.scrollTo(0,0)" :class="(currentPage == 'my-havenbags') ? activeButtonClass : initButtonClass" x-cloak>

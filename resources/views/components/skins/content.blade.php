@@ -96,7 +96,7 @@
             {{-- Halouine --}}
 
             {{-- Décoration de la carte --}}
-            <div class="absolute flex items-end justify-center h-14 w-full top-[-3.5rem]">
+            {{--<div class="absolute flex items-end justify-center h-14 w-full top-[-3.5rem]">
 
                 @if(rand(0,2) >= 1)
                     <img src="{{ asset('storage/images/misc_ui/citrouille.webp') }}" width="200" height="72" alt="Citrouille" loading="lazy" draggable="false" class="origin-bottom absolute -bottom-[0.875rem]">
@@ -106,7 +106,7 @@
                         <img src="{{ asset('storage/images/misc_ui/bougies-lueur.webp') }}" width="156" height="85" alt="Lumières bougies" loading="lazy" draggable="false" class="h-full absolute top-0 origin-bottom animate-pulse" style="animation-delay: {{ rand(0,2000) }}ms">
                     </div>
                 @endif
-            </div>
+            </div>--}}
 
 
         {{-- Nowel --}}
@@ -131,13 +131,13 @@
 
             {{-- Halouine --}}
 
-            @if(rand(0,2) == 2)
+            {{--@if(rand(0,2) == 2)
                 @if(rand(0,1) == 1)
                     <img src="{{ asset('storage/images/misc_ui/scary-face.webp') }}" width="250" height="250" alt="Scary Face" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20">
                 @else
                     <img src="{{ asset('storage/images/misc_ui/bat.webp') }}" width="200" height="103" alt="Chauve souris" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20">
                 @endif
-            @endif
+            @endif--}}
 
 
 

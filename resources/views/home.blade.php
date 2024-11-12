@@ -7,12 +7,34 @@
         <h2 class="text-2xl font-thin text-center mt-2 mb-8 uppercase">Bienvenue sur le site, explore la galerie de skin, ou poste les tiens et deviens la miss'skin de Dofus !</h2>
 
         {{-- Bouton call to action --}}
-        <div class="h-48 mt-14 max-w-screen relative flex justify-center items-center">
+        <div class="h-80 mt-14 max-w-screen relative flex justify-center items-center">
             <div class="-z-10 bg-[linear-gradient(rgba(0,0,0,0.05)_50%,0,transparent_100%),linear-gradient(-135deg,var(--goldLit),var(--goldDark))] [background-size:.5em_.5em,100%_100%] absolute w-full h-full -skew-y-[1.5deg]"></div>
 
             <div class="w-fit h-fit text-primary text-center">
-                <h2 class="font-medium text-[min(4rem,8vw)]">NOUVEAU !</h2>
-                <p class="text-2xl font-light">Profitez désormais des skins de la version Unity sur Barbofus</p>
+                <h2 class="font-medium text-[min(4rem,8vw)]">EVENEMENT !</h2>
+                {{--<div class="flex space-x-2">
+                    <p class="text-2xl font-light">Pour fêter l'ouverture de Dofus 3.0, Ankama a mis un event
+                        <a href="" target="_blank" class="italic underline font-medium">"Back to Rush" !</a>
+                    </p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+
+                </div>--}}
+                <p class="text-2xl font-light">Pour fêter l'ouverture de Dofus 3.0, Ankama a mis un event "Back to Rush" !</p>
+                <p class="text-2xl font-light">Soutenez la team Aegis en portant fiérement leurs couleurs sur vos skins !</p>
+
+                <div class="flex items-center justify-center mx-auto mt-6 space-x-12">
+                    <div class="bg-secondary object-contain rounded-full h-24 aspect-square flex items-center justify-center">
+                        <img src="{{ asset('storage/images/misc_ui/Logo_AEGIS.png') }}" alt="Logo aegis" class="h-16">
+                    </div>
+
+                    <a href="{{ route('unity-skins.index', ['search' => \App\Models\User::find(1)->name, 'searchID' => 1]) }}" title="Galerie de skins dofus" class="px-8 py-3 h-fit text-xl mx-auto font-normal text-goldText border-4 border-primary bg-primary rounded-lg hover:bg-primary-100 hover:border-primary-100 hover:tracking-widest transition-all uppercase">Trouver ma classe</a>
+
+                    <div class="bg-primary object-contain rounded-full h-24 aspect-square flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('storage/images/misc_ui/portrait.avif') }}" alt="Barbe douce" class="object-cover">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -45,7 +67,7 @@
                 <div class="w-96 flex justify-center">
                     <a href="{{ route('unity-skins.index') }}" title="Galerie de skins dofus" class="top-0 px-8 py-3 h-fit text-xl mx-auto font-normal text-goldText border-4 border-primary bg-primary rounded-lg hover:bg-primary-100 hover:border-primary-100 hover:tracking-widest transition-all uppercase">
                         <p class="text-2xl font-medium text-center text-white">NOUVEAU !</p>
-                        Explorer les skins UNITY</a>
+                        Explorer les skins 3.0</a>
                 </div>
                 <div class="w-96 flex justify-center">
                     <a href="{{ route('skins.create') }}" title="Partage ton skin dofus" class="px-8 py-3 h-fit text-xl mx-auto font-medium text-primary border-4 border-primary rounded-lg hover:border-primary-100 hover:tracking-widest transition-all uppercase">Poster un skin</a>
@@ -88,7 +110,7 @@
                 <p>Découvre toute la variété du monde des douzes, peu importe le sexe, la classe, les couleurs ou le choix d'items, tous les skins sont présentés pour le plus grand plaisir des joueurs.</p>
                 <p>Tu veux montrer à la commu' de Barbe que c'est toi le plus fashion ? Tous les mardis, le <strong>concours Miss'Skin</strong> choisira les 3 skins ayant reçu le plus de like dans la semaine, alors prépare ton meilleur outfit et impressionne le monde des douzes !</p>
                 <p>@foreach($racesName as $race) {{ $race->name }}, @endforeach vous êtes tous bienvenu !</p>
-                <p>Désormais, partagez vos skins de la version Unity de Dofus sur Barbofus !</p>
+                <p>Désormais, partagez vos skins de la version 3.0 sous Unity de Dofus sur Barbofus !</p>
             </div>
         </div>
 

@@ -16,21 +16,21 @@
     <!-- Primary Meta Tags -->
     <title>Barbofus - Galerie de skins Dofus 2 et Unity</title>
     <meta name="title" content="Barbofus - Galerie de skins dofus" />
-    <meta name="description" content="Nouveau ! Les skins Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
+    <meta name="description" content="Nouveau ! Les skins 3.0 sous Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ route('home') }}" />
     <meta property="og:title" content="Barbofus - Galerie de skins Dofus 2 et Unity" />
-    <meta property="og:description" content="Nouveau ! Les skins Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
+    <meta property="og:description" content="Nouveau ! Les skins 3.0 sous Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="og:image" content="@yield('app-meta-image')" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="{{ route('home') }}" />
     <meta property="twitter:title" content="Barbofus - Galerie de skins Dofus 2 et Unity" />
-    <meta property="twitter:description" content="Nouveau ! Les skins Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
+    <meta property="twitter:description" content="Nouveau ! Les skins 3.0 sous Unity sont disponible ! Tu cherches un skin dofus, ou tu préfères partager les tiens ? Toutes les classes, tous les items, tous les familiers t'attendent !" />
     <meta property="twitter:image" content="@yield('app-meta-image')" />
 
     <style>
