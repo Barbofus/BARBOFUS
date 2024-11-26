@@ -29,7 +29,7 @@ final class UpdateItemsFromDofusDBApi
         //$newPets = (new SaveItemsFromDofusDB)('App\Models\DofusItemPet', [97, 196, 207], [], 'images/icons/items/pets/');
 
         // Sauvegarde la nouvelle version dans notre fichier
-        $newVersion = Http::get('https://api.dofusdb.fr/version')->body();
+        $newVersion = Http::get('https://api.beta.dofusdb.fr/version')->body();
 
         (new UpdateApiVersion)('dofusDB', $newVersion);
 
