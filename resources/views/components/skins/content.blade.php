@@ -112,14 +112,14 @@
         {{-- Nowel --}}
 
             {{-- Décoration de la carte --}}
-            {{--<div class="absolute flex items-end w-[calc(100%+2rem)] h-32 justify-center -ml-4">
+            <div class="absolute flex items-end w-[calc(100%+2rem)] h-32 justify-center -ml-4">
 
                 @if(rand(0,2) >= 1)
                     <img src="{{ asset('storage/images/misc_ui/bonhomme_neige.webp') }}" width="242" height="128" alt="Bonhomme de neige" loading="lazy" draggable="false" class="origin-bottom absolute -top-16">
                 @else
                     <img src="{{ asset('storage/images/misc_ui/sapin_cadeaux.webp') }}" width="242" height="128" alt="Sapin" loading="lazy" draggable="false" class="origin-bottom absolute -top-16">
                 @endif
-            </div>--}}
+            </div>
         @endif
 
         {{-- Skin + Background --}}
@@ -143,7 +143,7 @@
 
             {{-- Nowel --}}
 
-            {{--@if(rand(0,2) == 2)
+            @if(rand(0,2) == 2)
                 @if(rand(0,3) == 1)
                     <img src="{{ asset('storage/images/misc_ui/cloches.webp') }}" width="250" height="250" alt="Scary Face" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20 mt-8">
                 @else
@@ -153,7 +153,7 @@
                         <img src="{{ asset('storage/images/misc_ui/sapin.webp') }}" width="200" height="103" alt="Chauve souris" loading="lazy" draggable="false" class="mx-auto origin-bottom opacity-20 mt-8">
                     @endif
                 @endif
-            @endif--}}
+            @endif
         </div>
 
         <div class="absolute top-[10%] w-full h-[80%] cursor-pointer">
