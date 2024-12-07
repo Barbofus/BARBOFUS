@@ -38,6 +38,10 @@ Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
 
 Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
 
+Route::get('/outils', function () {
+    return view('tools');
+})->name('tools');
+
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
 
