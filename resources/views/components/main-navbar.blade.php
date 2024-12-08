@@ -23,8 +23,8 @@
              class="flex h-[max(100vh,15.625rem)] w-screen max-[1250px]:pb-2 min-[1251px]:h-full min-[1251px]:w-full items-center justify-center flex-col min-[1251px]:flex-row bg-primary">
 
             <a href="{{ route('home') }}" title="Accueil Barbofus" :class="{{ (Route::is('home')) ? 'selectedClass' : 'unselectedClass' }}">Accueil</a>
+            <a href="{{ route('unity-skins.index') }}" title="Galleri de skins" class="relative" :class="{{ (Route::is('unity-skins.index', 'unity-skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins <p class="absolute text-red-500 font-medium text-md rotate-[20deg] left-11 -top-3">BÊTA</p></a>
             <a href="{{ route('skins.index') }}" title="Galleri de skins" :class="{{ (Route::is('skins.index', 'skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins 2.0</a>
-            <a href="{{ route('unity-skins.index') }}" title="Galleri de skins" class="relative" :class="{{ (Route::is('unity-skins.index', 'unity-skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins 3.0 <p class="absolute text-red-500 font-medium text-md rotate-[20deg] left-20 -top-3">BÊTA</p></a>
 
             @guest
                 <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
@@ -34,7 +34,7 @@
             @endguest
 
             @auth()
-                <a href="{{ route('skins.create') }}" title="Partage de skin" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">Poster un Skin</a>
+                <a href="{{ route('unity-skins.create') }}" title="Partage de skin" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">Poster un Skin</a>
                 <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
                 <a href="{{ route('tools') }}" title="Outils" :class="{{ (Route::is('tools')) ? 'selectedClass' : 'unselectedClass'  }}">Barb'Outils</a>
                 <a href="{{ route('user-dashboard.index') }}" title="Espace mon compte" :class="{{ (Route::is('user-dashboard.index')) ? 'selectedClass' : 'unselectedClass'  }}">Mon Compte</a>
