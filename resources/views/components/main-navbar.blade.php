@@ -9,7 +9,7 @@
                 'unity-skins.index': 'Skins UNITY',
                 'unity-skins.show': 'Skins UNITY',
                 'havre-sacs.index': 'Havre-sacs',
-                'tools': 'Outils',
+                'tools': 'Barb\'Outils',
             },
             showNavbar: (window.innerWidth > 1200),
             selectedClass: 'max-[1250px]:border-y max-[1250px]:border-secondary max-[1250px]:flex max-[1250px]:items-center max-[1250px]:px-5 min-[1251px]:pl-5 h-[12%] min-[1251px]:h-[2rem] text-secondary-100 font-light flex min-[1251px]:after:ml-5 min-[1251px]:after:-mt-1 min-[1251px]:after:clip-path-triangle-down min-[1251px]:after:block min-[1251px]:after:h-[2.25rem] min-[1251px]:after:w-[5rem] min-[1251px]:after:bg-secondary focus:outline-none',
@@ -24,11 +24,11 @@
 
             <a href="{{ route('home') }}" title="Accueil Barbofus" :class="{{ (Route::is('home')) ? 'selectedClass' : 'unselectedClass' }}">Accueil</a>
             <a href="{{ route('skins.index') }}" title="Galleri de skins" :class="{{ (Route::is('skins.index', 'skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins 2.0</a>
-            <a href="{{ route('unity-skins.index') }}" title="Galleri de skins" class="relative" :class="{{ (Route::is('unity-skins.index', 'unity-skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins 3.0 <p class="absolute text-red-500 font-medium text-md rotate-[20deg] left-24 -top-3">BÊTA</p></a>
+            <a href="{{ route('unity-skins.index') }}" title="Galleri de skins" class="relative" :class="{{ (Route::is('unity-skins.index', 'unity-skins.show')) ? 'selectedClass' : 'unselectedClass'  }}">Skins 3.0 <p class="absolute text-red-500 font-medium text-md rotate-[20deg] left-20 -top-3">BÊTA</p></a>
 
             @guest
                 <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
-                <a href="{{ route('tools') }}" title="Outils" :class="{{ (Route::is('tools')) ? 'selectedClass' : 'unselectedClass'  }}">Outils</a>
+                <a href="{{ route('tools') }}" title="Outils" :class="{{ (Route::is('tools')) ? 'selectedClass' : 'unselectedClass'  }}">Barb'Outils</a>
                 <a href="{{ route('login') }}" title="Page de connexion" :class="{{ (Route::is('login')) ? 'selectedClass' : 'unselectedClass' }}">Se connecter</a>
                 <a href="{{ route('register') }}" title="Formulaire d'inscription" :class="{{ (Route::is('register')) ? 'selectedClass' : 'unselectedClassLast' }}">S'enregistrer</a>
             @endguest
@@ -36,7 +36,7 @@
             @auth()
                 <a href="{{ route('skins.create') }}" title="Partage de skin" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">Poster un Skin</a>
                 <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">Havre-Sacs</a>
-                <a href="{{ route('tools') }}" title="Outils" :class="{{ (Route::is('tools')) ? 'selectedClass' : 'unselectedClass'  }}">Outils</a>
+                <a href="{{ route('tools') }}" title="Outils" :class="{{ (Route::is('tools')) ? 'selectedClass' : 'unselectedClass'  }}">Barb'Outils</a>
                 <a href="{{ route('user-dashboard.index') }}" title="Espace mon compte" :class="{{ (Route::is('user-dashboard.index')) ? 'selectedClass' : 'unselectedClass'  }}">Mon Compte</a>
                 <form method="POST" action="{{ route('logout') }}" class="max-[900px]:h-[18%] ">
                     @csrf

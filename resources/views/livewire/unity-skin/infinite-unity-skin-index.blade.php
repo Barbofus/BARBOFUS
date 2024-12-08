@@ -33,7 +33,7 @@
                 <p class="font-display text-secondary text-[1rem]">Suivez le tutoriel pour poster un skin 3.0</p>
             </a>
 
-            <a href="https://www.remove.bg/" target="_blank" class="w-fit mt-2 font-display text-secondary text-[1rem] bg-red-500 hover:bg-secondary transition-all rounded-md px-4">Accès à remove.bg</a>
+            <a href="https://www.remove.bg/" target="_blank" class="w-fit mt-2 font-display text-secondary text-[1rem] bg-red-500 hover:bg-red-300 transition-all rounded-md px-4">Accès à remove.bg</a>
         </div>
 
         {{-- Menu de trie --}}
