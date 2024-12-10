@@ -237,14 +237,18 @@ class InfiniteUnitySkinIndex extends Component
 
                     // Parcous toutes les relations d'items (DofusItemHat etc..)
                     foreach ($this->itemRelations as $item) {
-                        $query->where(function (Builder $query) use ($item) {
+                        $tableItem = $item;
+                        if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
+                            $tableItem = 'dofus_item_costume';
+                        }
+                        $query->where(function (Builder $query) use ($item, $tableItem) {
 
-                            $query->whereNotExists(function (Builder $query) use ($item) {
+                            $query->whereNotExists(function (Builder $query) use ($item, $tableItem) {
                                 $query->select('id')
-                                    ->from($item.'s')
-                                    ->whereColumn($item.'s.id', 'unity_skins.'.$item.'_id');
+                                    ->from($tableItem.'s')
+                                    ->whereColumn($tableItem.'s.id', 'unity_skins.'.$item.'_id');
                             })
-                                ->orWhereNotIn($item.'s.dofus_items_sub_categorie_id', $this->skinContentWhere);
+                                ->orWhereNotIn($tableItem.'s.dofus_items_sub_categorie_id', $this->skinContentWhere);
                         });
 
                     }
