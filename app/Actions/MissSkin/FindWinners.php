@@ -117,8 +117,7 @@ final class FindWinners
             ->addSelect([
                 'weekly_like_count' => DB::table('likes')
                     ->selectRaw('count(id)')
-                    ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
+                    ->whereColumn('skin_id', 'skins.id'),
 
                 'user_name' => DB::table('users')
                     ->select('name')
@@ -232,7 +231,7 @@ final class FindWinners
         }
 
         //(new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), $topTen);
-        (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), false);
+        //(new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), false);
         (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), true);
     }
 }

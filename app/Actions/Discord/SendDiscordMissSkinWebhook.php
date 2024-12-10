@@ -31,7 +31,7 @@ final class SendDiscordMissSkinWebhook
         $body = [
             'embeds' => [
                 [
-                    'title' => '1ère place '.(($isUnity) ? '3.0 ' : '').'- Ocre',
+                    'title' => '1ère place - Ocre',
                     'description' => 'Bravo à ***'.$winners[0]['user_name'].'***, :crown: grand
                         vainqueur de ce *Miss\'Skin* :kiss:
                         Avec '.$winners[0]['weekly_likes'].' :sparkling_heart:
@@ -45,7 +45,7 @@ final class SendDiscordMissSkinWebhook
                     ],
                 ],
                 [
-                    'title' => '2ème place '.(($isUnity) ? '3.0 ' : '').'- Émeraude',
+                    'title' => '2ème place - Émeraude',
                     'description' => 'Bravo à ***'.$winners[1]['user_name'].'***, :trophy: pour cet
                         incroyable skin :tada:
                         Avec '.$winners[1]['weekly_likes'].' :sparkling_heart:
@@ -59,7 +59,7 @@ final class SendDiscordMissSkinWebhook
                     ],
                 ],
                 [
-                    'title' => '3ème place '.(($isUnity) ? '3.0 ' : '').'- Cawotte',
+                    'title' => '3ème place - Cawotte',
                     'description' => 'Bravo à ***'.$winners[2]['user_name'].'***, :medal: pour ce
                         magnifique skin :confetti_ball:
                         Avec '.$winners[2]['weekly_likes'].' :sparkling_heart:
