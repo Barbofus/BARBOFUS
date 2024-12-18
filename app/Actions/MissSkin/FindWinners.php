@@ -186,7 +186,7 @@ final class FindWinners
 
         // Reward 2.0
         for ($i = 0; $i < 3; $i++) {
-            $newPath = 'images/winners/winner_'.$i.'_'.time().'png';
+            $newPath = 'images/winners/winner_'.$i.'_'.time().'.png';
             Storage::copy($winners[$i]->image_path, $newPath);
 
             // Créer les 3 skins à afficher
@@ -200,16 +200,16 @@ final class FindWinners
             ]);
 
             // Ajoute les vainqueurs dans la table des vainqueurs
-            Reward::create([
+            /*Reward::create([
                 'skin_id' => $winners[$i]->id,
                 'rank' => $i + 1,
                 'points' => RewardPrice::find($i + 1)->points,
-            ]);
+            ]);*/
         }
 
         // Reward Unity
         for ($i = 0; $i < 3; $i++) {
-            $newPath = 'images/winners/winner_'.($i + 3).'_'.time().'png';
+            $newPath = 'images/winners/winner_'.($i + 3).'_'.time().'.png';
             Storage::copy($winners[$i + 3]->image_path, $newPath);
 
             // Créer les 3 skins à afficher

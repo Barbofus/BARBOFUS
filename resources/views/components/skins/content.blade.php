@@ -88,7 +88,7 @@
             @if(isset($skin->third_reward_id))
                 <img src="{{ asset('storage/images/misc_ui/'. (($skin->third_reward_id == 1) ? 'dofus_ocre.webp' : (($skin->third_reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.webp'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="w-[16%] -rotate-12 top-2 right-8 absolute cursor-pointer">
                 <img src="{{ asset('storage/images/misc_ui/'. (($skin->second_reward_id == 1) ? 'dofus_ocre.webp' : (($skin->second_reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.webp'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="w-[18%] rotate-6 top-2 right-4 absolute cursor-pointer">
-                <img src="{{ asset('storage/images/misc_ui/'. (($skin->reward_id == 1) ? 'dofus_ocre.webp' : (($skin->reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.png'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="dofus w-[20%] rotate-12 top-4 right-1 absolute cursor-pointer" >
+                <img src="{{ asset('storage/images/misc_ui/'. (($skin->reward_id == 1) ? 'dofus_ocre.webp' : (($skin->reward_id == 2) ? 'dofus_emeraude.webp' : 'dofus_cawotte.webp'))) }}" width="119" height="157" loading="lazy" alt="Dofus" class="dofus w-[20%] rotate-12 top-4 right-1 absolute cursor-pointer" >
             @endif
         @elseif(rand(0,1) == 1)  {{-- Deco Evenementielle --}}
 
