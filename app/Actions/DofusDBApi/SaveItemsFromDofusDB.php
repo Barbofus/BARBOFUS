@@ -83,6 +83,7 @@ final class SaveItemsFromDofusDB
                     'icon_path' => $iconPath,
                     'dofus_items_sub_categorie_id' => $subCategoryId,
                 ]);
+
             } else {
                 $petType = '';
 
@@ -123,13 +124,13 @@ final class SaveItemsFromDofusDB
             if ($item['typeId'] != 97 && $item['typeId'] != 196 && $item['typeId'] != 207) {
 
                 // Prépare l'url pour choper l'image
-                $imageUrl = 'https://api.beta.dofusdb.fr/img/items/'.$item['iconId'].'.png';
+                $imageUrl = 'https://api.dofusdb.fr/img/items/'.$item['iconId'].'.png';
 
                 // Récupère l'image et la stocke dans l'icon_path
                 $imageFetched = (new FetchExternalFile)($imageUrl, $newItem['icon_path']);
-                if(!$imageFetched) {
+                if (! $imageFetched) {
                     $newItem->update([
-                       'icon_path' => 'images/misc_ui/question_mark.png',
+                        'icon_path' => 'images/misc_ui/question_mark.png',
                     ]);
                 }
             }
@@ -138,7 +139,6 @@ final class SaveItemsFromDofusDB
                 $newItem->name,
                 $newItem->icon_path,
             ];
-
         }
 
         return $newItems;

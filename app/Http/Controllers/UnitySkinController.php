@@ -61,6 +61,7 @@ class UnitySkinController extends Controller
                 foreach ($this->itemRelations as $item) {
                     if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
                         $query->leftJoin('dofus_item_costumes as '.$item.'s', $item.'s.id', '=', 'unity_skins.'.$item.'_id');
+
                         continue;
                     }
                     $query->leftJoin($item.'s', $item.'s.id', '=', 'unity_skins.'.$item.'_id');
@@ -113,7 +114,7 @@ class UnitySkinController extends Controller
                             ->select('name')
                             ->whereColumn('id', 'unity_skins.'.$item.'_id')
                             ->take(1),
-                        ])
+                    ])
                         ->addSelect([
                             $item.'_icon' => DB::table($tableItem.'s')
                                 ->select('icon_path')

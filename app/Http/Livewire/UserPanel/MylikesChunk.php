@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class MylikesChunk extends Component
 {
-    public $skinIds;
+    public mixed $skinIds;
 
     public int $page;
 

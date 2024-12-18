@@ -17,13 +17,12 @@ final class FetchExternalFile
         try {
             $file = file_get_contents($url);
 
-            if($file === false){
+            if ($file === false) {
                 return false;
             }
 
             return Storage::put($storage, $file);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }

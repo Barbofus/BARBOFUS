@@ -32,7 +32,7 @@ class UnitySkin extends Model
     ];
 
     /**
-     * @return BelongsTo<DofusItemHat, Skin>
+     * @return BelongsTo<DofusItemHat, UnitySkin>
      */
     public function DofusItemHat()
     {
@@ -40,7 +40,7 @@ class UnitySkin extends Model
     }
 
     /**
-     * @return BelongsTo<DofusItemCloak, Skin>
+     * @return BelongsTo<DofusItemCloak, UnitySkin>
      */
     public function DofusItemCloak()
     {
@@ -48,7 +48,7 @@ class UnitySkin extends Model
     }
 
     /**
-     * @return BelongsTo<DofusItemShield, Skin>
+     * @return BelongsTo<DofusItemShield, UnitySkin>
      */
     public function DofusItemShield()
     {
@@ -56,7 +56,7 @@ class UnitySkin extends Model
     }
 
     /**
-     * @return BelongsTo<DofusItemCostume, Skin>
+     * @return BelongsTo<DofusItemCostume, UnitySkin>
      */
     public function DofusItemCostume()
     {
@@ -64,7 +64,7 @@ class UnitySkin extends Model
     }
 
     /**
-     * @return BelongsTo<DofusItemPet, Skin>
+     * @return BelongsTo<DofusItemPet, UnitySkin>
      */
     public function DofusItemPet()
     {
@@ -72,7 +72,7 @@ class UnitySkin extends Model
     }
 
     /**
-     * @return BelongsTo<User, Skin>
+     * @return BelongsTo<User, UnitySkin>
      */
     public function User()
     {
@@ -80,7 +80,7 @@ class UnitySkin extends Model
     }
 
     /**
-     * @return BelongsTo<Race, Skin>
+     * @return BelongsTo<Race, UnitySkin>
      */
     public function Race()
     {

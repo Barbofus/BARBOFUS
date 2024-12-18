@@ -16,7 +16,7 @@ class UnityReward extends Model
     ];
 
     /**
-     * @return BelongsTo<UnitySkin, Reward>
+     * @return BelongsTo<UnitySkin, UnityReward>
      */
     public function Skin()
     {

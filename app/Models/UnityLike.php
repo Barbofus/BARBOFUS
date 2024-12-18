@@ -17,7 +17,7 @@ class UnityLike extends Model
     ];
 
     /**
-     * @return BelongsTo<UnitySkin, Like>
+     * @return BelongsTo<UnitySkin, UnityLike>
      */
     public function Skin()
     {
@@ -25,7 +25,7 @@ class UnityLike extends Model
     }
 
     /**
-     * @return BelongsTo<User, Like>
+     * @return BelongsTo<User, UnityLike>
      */
     public function User()
     {
