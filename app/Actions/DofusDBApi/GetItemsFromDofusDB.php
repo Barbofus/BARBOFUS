@@ -56,7 +56,7 @@ final class GetItemsFromDofusDB
         }
 
         // Récupère tous les objets vivants qui sont compatible avec typeID
-        if (in_array(16, $typeID) || in_array(17, $typeID) || in_array(82, $typeID)) {
+        if (in_array(16, $typeID) || in_array(17, $typeID) || in_array(82, $typeID) || in_array(300, $typeID)) {
 
             // Construit un string avec les &typesID= pour la requête
             $typeIDString = '';
