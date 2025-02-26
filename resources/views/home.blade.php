@@ -34,7 +34,7 @@
                         Explorer les skins</a>
                 </div>
                 <div class="w-96 flex justify-center">
-                    <a href="{{ route('skins.create') }}" title="Partage ton skin dofus" class="px-8 py-3 h-fit text-xl mx-auto font-medium text-primary border-4 border-primary rounded-lg hover:border-primary-100 hover:tracking-widest transition-all uppercase">Poster un skin</a>
+                    <a href="{{ route('unity-skins.create') }}" title="Partage ton skin dofus" class="px-8 py-3 h-fit text-xl mx-auto font-medium text-primary border-4 border-primary rounded-lg hover:border-primary-100 hover:tracking-widest transition-all uppercase">Poster un skin</a>
                 </div>
             </div>
         </div>
