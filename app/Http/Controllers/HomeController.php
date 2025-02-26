@@ -73,6 +73,7 @@ class HomeController extends Controller
                     ->whereColumn('id', 'unity_skins.race_id')
                     ->take(1),
             ])
+            ->addSelect([DB::raw('true as is_unity_skin')])
             ->inRandomOrder()
             ->take(10)
             ->get();
