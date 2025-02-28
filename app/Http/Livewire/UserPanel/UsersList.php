@@ -24,7 +24,7 @@ class UsersList extends Component
     }
 
     /**
-     * @return Collection<int, array<string, string|int>>
+     * @return Collection<int, \stdClass>
      */
     public function GetRoles()
     {
@@ -34,7 +34,7 @@ class UsersList extends Component
     }
 
     /**
-     * @return Collection<int, array<string, string|int>>
+     * @return Collection<int, \stdClass>
      */
     public function GetAllUsers()
     {

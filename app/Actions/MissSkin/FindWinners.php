@@ -230,8 +230,8 @@ final class FindWinners
             ]);
         }
 
-        //(new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), $topTen);
-        //(new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), false);
+        // (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), $topTen);
+        // (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), false);
         (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), true);
     }
 }

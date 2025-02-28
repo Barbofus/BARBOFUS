@@ -1,5 +1,5 @@
 <div class="text-[1.15rem]">
-    <p class="text-ivory font-thin">Recherche un item ou un pseudo :</p>
+    <p class="text-ivory font-thin">{{ __('barbofus.labelSearchItemUsername') }}</p>
 
     <div
         class="w-[90%] -ml-1 relative"
@@ -18,7 +18,7 @@
         <input type="text"
                id="main-filter-search"
                class="border-transparent py-2 pl-4 focus:outline-none rounded-[2.25px] w-full mt-1 bg-primary-100 px-1 placeholder-inactiveText font-thin text-inactiveText"
-               placeholder="Nom d'item ou pseudo"
+               placeholder="{{ __('barbofus.inputSearchItemUsername') }}"
                maxlength="45"
                autocomplete="off"
                @keydown.enter="{{ (count($itemToShow) > 0) ? 'EnterPressedOnSearchBar(\'' . addslashes($itemToShow[$selectionKey]->name) . '\',\'' . $itemToShow[$selectionKey]->id .'\')' : '' }}"

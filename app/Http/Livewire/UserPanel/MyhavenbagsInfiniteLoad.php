@@ -12,7 +12,7 @@ use Livewire\Component;
 class MyhavenbagsInfiniteLoad extends Component
 {
     /**
-     * @var Collection<int, array<string, int|string>>
+     * @var Collection<int, \stdClass>
      */
     public $havenBags;
 
@@ -53,6 +53,6 @@ class MyhavenbagsInfiniteLoad extends Component
     {
         (new DeleteHavenBag)($havenBagID);
 
-        $this->dispatchBrowserEvent('alert-event', ['message' => 'Le havre-sac ID#'.$havenBagID.' a été supprimé.']);
+        $this->dispatchBrowserEvent('alert-event', ['message' => __('barbofus.alertDeleteHS', ['id' => $havenBagID])]);
     }
 }

@@ -144,9 +144,14 @@ class UserDetails extends Component
             ->where('id', auth()->id())
             ->first();
 
-        $user->created_at = new Carbon($user->created_at);
+        // $user->created_at = new Carbon($user->created_at);
 
-        return $user;
+        // return $user;
+
+        $user = (array) $user;
+        $user['created_at'] = new Carbon($user['created_at']);
+
+        return (object) $user;
     }
 
     /**
@@ -162,7 +167,7 @@ class UserDetails extends Component
             'value' => ! $currentValue,
         ]);
 
-        $this->dispatchBrowserEvent('alert-event', ['message' => 'Préférences enregistrées']);
+        $this->dispatchBrowserEvent('alert-event', ['message' => __('barbofus.alertPreferences')]);
     }
 
     /**
@@ -174,7 +179,7 @@ class UserDetails extends Component
 
         $this->currentUser->notify(new UserNameChangeNotification($this->currentUser));
 
-        $this->dispatchBrowserEvent('alert-event', ['message' => 'Nouveau pseudo enregistré']);
+        $this->dispatchBrowserEvent('alert-event', ['message' => __('barbofus.alertNewName')]);
     }
 
     /**
@@ -184,7 +189,7 @@ class UserDetails extends Component
     {
         (new UpdateUserProfileInformation)->update($this->currentUser, ['name' => $this->currentUser->name, 'email' => $this->email]);
 
-        session()->flash('alert-message', 'Nouvelle adresse e-mail enregistrée, valide-la dans tes emails pour te reconnecter');
+        session()->flash('alert-message', __('barbofus.alertNewEmail'));
 
         $id = auth()->id();
 
@@ -202,7 +207,7 @@ class UserDetails extends Component
 
         $this->currentUser->notify(new UserPasswordChangeNotification($this->currentUser));
 
-        $this->dispatchBrowserEvent('alert-event', ['message' => 'Nouveau mot de passe enregistré']);
+        $this->dispatchBrowserEvent('alert-event', ['message' => __('barbofus.alertNewPassword')]);
     }
 
     /**
@@ -235,7 +240,7 @@ class UserDetails extends Component
     public function render()
     {
         // Récupère le compte discord (s'il est link)
-        $this->discord = (new GetDiscordUserInfo)(Auth::id());
+        $this->discord = (new GetDiscordUserInfo)(auth()->user()->id);
 
         return view('livewire.user-panel.user-details', [
             'user' => $this->QueryUser(),

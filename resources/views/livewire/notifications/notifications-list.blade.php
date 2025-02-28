@@ -1,7 +1,7 @@
 
 <div
     wire:poll.visible.30s
-    class="fixed min-[901px]:absolute top-4 right-20 flex flex-col items-end z-50"
+    class="fixed min-[901px]:absolute top-3 right-[6.5rem] flex flex-col items-end z-50"
     x-data="{
                 open: false
             }"
@@ -29,8 +29,8 @@
              x-transition:leave-end="opacity-0 scale-0">
 
             <div class="flex pb-1 justify-between items-baseline text-sm text-red-400">
-                <button wire:click="ReadNotifications" class="hover:text-red-300">Tout marquer comme "lu"</button>
-                <button wire:click="DeleteNotifications" class="hover:text-red-300">Tout supprimer</button>
+                <button wire:click="ReadNotifications" class="hover:text-red-300">{{ __('barbofus.notifButtonMarkAllAsRead') }}</button>
+                <button wire:click="DeleteNotifications" class="hover:text-red-300">{{ __('barbofus.notifButtonDeleteAll') }}</button>
             </div>
 
             <div class="right-0 w-full max-h-[80vh] overflow-auto">
@@ -41,11 +41,9 @@
 
             <div class="flex pt-1 justify-center text-red-400 text-sm">
                 @if(count($notifications) > $notificationsAmount)
-                    <button wire:click="ShowAllNotifications" class="hover:text-red-300">Tout afficher
-                        <span>( {{ count($notifications) - $notificationsAmount }} restant{{ count($notifications) - $notificationsAmount == 1 ? ' ' : 's' }} )</span>
-                    </button>
+                    <button wire:click="ShowAllNotifications" class="hover:text-red-300">{{ __('barbofus.notifButtonShowAll', ['count' => count($notifications) - $notificationsAmount]) }}</button>
                 @elseif(count($notifications) > $initNotificationsAmount)
-                    <button wire:click="ShowLessNotifications" class="hover:text-red-300">Afficher moins</button>
+                    <button wire:click="ShowLessNotifications" class="hover:text-red-300">{{ __('barbofus.notifButtonShowLess') }}</button>
                 @endif
             </div>
         </div>

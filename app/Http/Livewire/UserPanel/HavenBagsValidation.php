@@ -13,7 +13,7 @@ use Livewire\Component;
 class HavenBagsValidation extends Component
 {
     /**
-     * @var Collection<int, array<string, int|string>>
+     * @var Collection<int, \stdClass>
      */
     public $havenBags;
 

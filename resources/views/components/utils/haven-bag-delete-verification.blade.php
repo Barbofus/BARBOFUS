@@ -5,14 +5,14 @@
         <img :src="havenBagDeleteImg" draggable="false" class="rounded-xl">
 
         <div>
-            <p class="text-2xl text-secondary font-light text-center italic">Es-tu sûr de vouloir supprimer le havre-sac ?</p>
-            <p class="text-inactiveText italic text-md text-center">Cette opération est irréversible.</p>
+            <p class="text-2xl text-secondary font-light text-center italic">{{ __('barbofus.descriptionDeleteHSVerif') }}</p>
+            <p class="text-inactiveText italic text-md text-center">{{ __('barbofus.descriptionOperationIrreversible') }}</p>
         </div>
 
         <div class="flex justify-center space-x-10 w-full">
-            <button @click="havenBagDeleteID = null" class="uppercase text-sm min-[400px]:text-xl text-goldText border-goldText border-2 hover:rounded-3xl transition-all hover:tracking-widest px-4 py-2 rounded-md">Annuler</button>
+            <button @click="havenBagDeleteID = null" class="uppercase text-sm min-[400px]:text-xl text-goldText border-goldText border-2 hover:rounded-3xl transition-all hover:tracking-widest px-4 py-2 rounded-md">{{ __('barbofus.buttonCancel') }}</button>
 
-            <button @click="$wire.deleteHavenBag(havenBagDeleteID), havenBagDeleteID = null" class="uppercase text-sm min-[400px]:text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">Supprimer</button>
+            <button @click="$wire.deleteHavenBag(havenBagDeleteID), havenBagDeleteID = null" class="uppercase text-sm min-[400px]:text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">{{ __('barbofus.buttonDelete') }}</button>
         </div>
     </div>
 </div>

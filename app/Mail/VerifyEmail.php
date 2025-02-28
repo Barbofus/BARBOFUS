@@ -46,7 +46,7 @@ class VerifyEmail extends Mailable implements ShouldQueue
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Verification d\'E-mail',
+            subject: config('app.name').' - '.__('barbofus.emailTitleVerifyEmail'),
         );
     }
 

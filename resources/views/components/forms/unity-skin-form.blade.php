@@ -1,7 +1,7 @@
 <div>
     <div class="grid grid-cols-1 grid-rows-[35rem,40rem,40rem] gap-4
             md:grid-cols-[18.75rem,18.75rem] md:grid-rows-[37rem,23rem]
-            lg:grid-cols-[18.75rem,40.625rem] lg:grid-rows-[27rem,23rem]"
+            lg:grid-cols-[18.75rem,40.625rem] lg:grid-rows-[29rem,23rem]"
         x-data="{
             currentGender: {{ (old('gender')) ? ((old('gender') == 'Femme') ? '1' : '0') : (isset($skin) ? (($skin['gender'] == 'Femme') ? '1' : '0') : '0') }},
             currentRaceDofusID: {{ (old('race_id')) ? ((old('race_id') == 19) ? '20' : old('race_id')) : (isset($skin) ? (($skin['race_id'] == 19) ? '20' : $skin['race_id']) : '1') }},
@@ -32,23 +32,23 @@
                             c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
                             c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
                     </svg>
-                    <p class="font-display text-secondary text-[1rem]">Tuto obligatoire pour Unity</p>
+                    <p class="font-display text-secondary text-[1rem]">{{ __('barbofus.buttonSkinPostTuto') }}</p>
                 </a>
 
-                <a href="https://www.remove.bg/" target="_blank" class="w-fit font-display text-secondary text-[1rem] bg-red-500 hover:bg-secondary transition-all rounded-md px-4">Accès à remove.bg</a>
+                <a href="https://www.remove.bg/" target="_blank" class="w-fit font-display text-secondary text-[1rem] bg-red-500 hover:bg-secondary transition-all rounded-md px-4">{{ __('barbofus.contentAccessTo') }} remove.bg</a>
 
                 {{-- Nom du skin--}}
-                <p class="ml-10 mt-4 text-xl text-secondary font-light">Nom du skin (optionnel)</p>
+                <p class="ml-10 mt-4 text-xl text-secondary font-light">{{ __('barbofus.labelSkinName') }}</p>
                 <input x-ref="input"
-                       maxlength="30" name="name" id="name" type="text" placeholder="Nom"
+                       maxlength="30" name="name" id="name" type="text" placeholder="{{ __('barbofus.inputName') }}"
                        class="w-full h-10 rounded-md pl-14 focus:outline-none placeholder-inactiveText bg-primary-100 @error('name') err-border @enderror"
                        value="{{ (old('name')) ? (old('name')) : (isset($skin) ? $skin['name'] : '') }}"/>
 
                 {{-- Image du skin--}}
-                <p class="ml-10 mt-4 text-xl font-light">Image du skin</p>
+                <p class="ml-10 mt-4 text-xl font-light">{{ __('barbofus.labelSkinImage') }}</p>
                 <div class="mt-2 @error('image_path') err-border @enderror">
                     <input id="image_input" class="w-[min(18.75rem,90vw)] text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
-                    <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">Image sans fond (voir tuto au dessus)<br> (MAX. 450x550px, 500ko).</p>
+                    <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">{{ __('barbofus.labelSkinImageDetails') }}<br> (MAX. 450x550px, 500ko).</p>
                 </div>
 
                 <div class="flex justify-center"><img id="image_preview" hidden class="mt-4" width="200" height="260" draggable="false"/></div>
@@ -102,7 +102,7 @@
             {{-- Raison du refus --}}
             @if(isset($skin) && $skin['status'] == 'Refused')
                 <div class="bg-red-300 border border-red-500 h-[clamp(6rem,8rem)] p-4 rounded-md text-red-900 max-w-[18.75rem] flex flex-col items-center justify-center order-first md:order-2">
-                    <p class="font-light">Ton skin a été refusé <span>{{ $skin['refused_reason'] ? ' car' : '!' }}</span></p>
+                    <p class="font-light">{{ __('barbofus.alertRefusedSkin') }} <span>{{ $skin['refused_reason'] ? ' '.  __('barbofus.contentBecause')  : '!' }}</span></p>
                     <p class="font-normal italic break-words max-w-full">{{ $skin['refused_reason'] }}</p>
                 </div>
             @endif
@@ -114,7 +114,7 @@
 
                 {{-- Choix du sexe --}}
                 <div>
-                    <p class="text-xl ml-10 font-light">Choix du sexe</p>
+                    <p class="text-xl ml-10 font-light">{{ __('barbofus.labelSkinGender') }}</p>
                     <div class="flex gap-x-4">
 
                         <div>
@@ -122,7 +122,7 @@
                             <label for="male" class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-full" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
                                 </svg>
-                                <p>Homme</p>
+                                <p>{{ __('barbofus.inputSkinMale') }}</p>
                             </label>
                         </div>
 
@@ -133,7 +133,7 @@
                                    class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
                                 </svg>
-                                <p>Femme</p>
+                                <p>{{ __('barbofus.inputSkinFemale') }}</p>
                             </label>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
 
                     {{-- Choix de la classe --}}
                     <div class="mt-5">
-                        <p class="ml-10 text-xl font-light">Choix de la classe</p>
+                        <p class="ml-10 text-xl font-light">{{ __('barbofus.labelSkinClass') }}</p>
                         <div class="relative w-fit">
 
 
@@ -311,7 +311,7 @@
                     </div>
 
                     {{-- Choix du visage --}}
-                    <p class="mt-5 ml-10 text-xl font-light">Choix du visage</p>
+                    <p class="mt-5 ml-10 text-xl font-light">{{ __('barbofus.labelSkinFace') }}</p>
                     <div class="grid grid-cols-4 gap-4 mt-4 w-[90%]">
                         @for ($i = 1; $i <= 8; $i++)
                             <label>
@@ -328,27 +328,27 @@
                 </div>
 
                 {{-- Choix des couleurs --}}
-                <div class="lg:ml-10">
-                    <p class="text-xl ml-10 font-light">Choix des couleurs</p>
+                <div class="lg:ml-4 w-[15rem]">
+                    <p class="text-xl ml-10 font-light">{{ __('barbofus.labelSkinColors') }}</p>
 
                     <div class="grid grid-flow-row grid-cols-2 gap-4
                         lg:grid-cols-1">
-                        <x-forms.color-input title="Peau:" name="color_skin"
+                        <x-forms.color-input title="{{ __('barbofus.labelSkinColorsSkin') }}:" name="color_skin"
                                        value="{{ (old('color_skin')) ? (old('color_skin')) : (isset($skin) ? $skin['color_skin'] : '') }}" />
 
-                        <x-forms.color-input title="Cheveux:" name="color_hair"
+                        <x-forms.color-input title="{{ __('barbofus.labelSkinColorsHair') }}:" name="color_hair"
                                        value="{{ (old('color_hair')) ? (old('color_hair')) : (isset($skin) ? $skin['color_hair'] : '') }}" />
 
-                        <x-forms.color-input title="Habits 1:" name="color_cloth_1"
+                        <x-forms.color-input title="{{ __('barbofus.labelSkinColorsClothes') }} 1:" name="color_cloth_1"
                                        value="{{ (old('color_cloth_1')) ? (old('color_cloth_1')) : (isset($skin) ? $skin['color_cloth_1'] : '') }}" />
 
-                        <x-forms.color-input title="Habits 2:" name="color_cloth_2"
+                        <x-forms.color-input title="{{ __('barbofus.labelSkinColorsClothes') }} 2:" name="color_cloth_2"
                                        value="{{ (old('color_cloth_2')) ? (old('color_cloth_2')) : (isset($skin) ? $skin['color_cloth_2'] : '') }}" />
 
-                        <x-forms.color-input title="Habits 3:" name="color_cloth_3"
+                        <x-forms.color-input title="{{ __('barbofus.labelSkinColorsClothes') }} 3:" name="color_cloth_3"
                                        value="{{ (old('color_cloth_3')) ? (old('color_cloth_3')) : (isset($skin) ? $skin['color_cloth_3'] : '') }}" />
 
-                        <x-forms.color-input title="Habits 4:" name="color_cloth_4"
+                        <x-forms.color-input title="{{ __('barbofus.labelSkinColorsClothes') }} 4:" name="color_cloth_4"
                                              value="{{ (old('color_cloth_4')) ? (old('color_cloth_4')) : (isset($skin) ? $skin['color_cloth_4'] : '') }}" />
                     </div>
                 </div>
@@ -359,28 +359,28 @@
         <div class="p-2
                     md:col-span-2 md:row-start-2
                     lg:col-start-2">
-            <p class="text-xl ml-10 font-light">Choix des items</p>
+            <p class="text-xl ml-10 font-light">{{ __('barbofus.labelSkinItems') }}</p>
             <div class="grid grid-flow-row grid-cols-1 gap-4
                         md:grid-cols-2 pb-72">
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_hats'" :name="'dofus_item_hat_id'" :placeholder="'Choisis une coiffe...'"
+                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_hats'" :name="'dofus_item_hat_id'" :placeholder="__('barbofus.inputSkinHat')"
                                                              :value="(old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')"  />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_cloaks'" :name="'dofus_item_cloak_id'" :placeholder="'Choisis une cape...'"
+                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_cloaks'" :name="'dofus_item_cloak_id'" :placeholder="__('barbofus.inputSkinCape')"
                                                              :value="(old('dofus_item_cloak_id')) ? old('dofus_item_cloak_id') : (isset($skin) ? $skin['dofus_item_cloak_id']: '')" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_shields'" :name="'dofus_item_shield_id'" :placeholder="'Choisis un bouclier...'"
+                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_shields'" :name="'dofus_item_shield_id'" :placeholder="__('barbofus.inputSkinShield')"
                                                              :value="(old('dofus_item_shield_id')) ? old('dofus_item_shield_id') : (isset($skin) ? $skin['dofus_item_shield_id']: '')" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_pets'" :name="'dofus_item_pet_id'" :placeholder="'Choisis un familier...'"
+                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_pets'" :name="'dofus_item_pet_id'" :placeholder="__('barbofus.inputSkinPet')"
                                                              :value="(old('dofus_item_pet_id')) ? old('dofus_item_pet_id') : (isset($skin) ? $skin['dofus_item_pet_id']: '')" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_wing_id'" :placeholder="'Choisis des ailes...'"
+                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_wing_id'" :placeholder="__('barbofus.inputSkinWing')"
                                                              :value="(old('dofus_item_wing_id')) ? old('dofus_item_wing_id') : (isset($skin) ? $skin['dofus_item_wing_id']: '')" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_shoulder_id'" :placeholder="'Choisis des épaulettes...'"
+                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_shoulder_id'" :placeholder="__('barbofus.inputSkinShoulderPads')"
                                                              :value="(old('dofus_item_shoulder_id')) ? old('dofus_item_shoulder_id') : (isset($skin) ? $skin['dofus_item_shoulder_id']: '')" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_costume_id'" :placeholder="'Choisis un costume...'"
+                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_costume_id'" :placeholder="__('barbofus.inputSkinCostume')"
                                                              :value="(old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')" />
             </div>
         </div>
@@ -391,7 +391,7 @@
                 data-sitekey="{{ config('services.recaptcha.site_key') }}"
                 data-callback='onSubmit'
                 data-action='{{ $action }}'>
-            Valider
+            {{ __('barbofus.buttonValidate') }}
         </button>
 
         @error('g-recaptcha-response')

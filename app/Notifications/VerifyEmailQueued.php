@@ -14,9 +14,9 @@ class VerifyEmailQueued extends \Illuminate\Auth\Notifications\VerifyEmail imple
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $locale)
     {
-        //
+        $this->locale = $locale;
     }
 
     /**

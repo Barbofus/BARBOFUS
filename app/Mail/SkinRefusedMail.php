@@ -41,7 +41,7 @@ class SkinRefusedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Skin Refusé '.(($this->skin->name) ?: 'ID#'.$this->skin->id),
+            subject: config('app.name').' - '.__('barbofus.emailTitleSkinRefused', ['name' => ($this->skin->name) ?: 'ID#'.$this->skin->id]),
         );
     }
 

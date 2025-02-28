@@ -1,8 +1,8 @@
 @extends('layouts.basic-views')
 
 @section('content')
-    <h1 class="text-[min(4rem,15vw)] mt-10 font-normal text-center uppercase">Création</h1>
-    <h2 class="text-2xl font-thin text-center -mt-3 mb-8 uppercase">Présente nous tes skins !</h2>
+    <h1 class="text-[min(4rem,15vw)] mt-10 font-normal text-center uppercase">{{ __('barbofus.titleCreate') }}</h1>
+    <h2 class="text-2xl font-thin text-center -mt-3 mb-8 uppercase">{{ __('barbofus.descriptionSkinCreate2.0') }}</h2>
 
     <a href="{{ route('unity-skins.create') }}" class="w-fit mx-auto flex flex-col items-center">
         <p class="text-2xl font-medium">NOUVEAU !</p>

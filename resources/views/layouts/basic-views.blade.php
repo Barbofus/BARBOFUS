@@ -10,8 +10,10 @@
 
     {{-- Notifications --}}
     @auth
-        <livewire:notifications.notifications-list/>
+        <livewire:notifications.notifications-list />
     @endauth
+
+    <livewire:utils.locale-dropdown />
 
     <x-main-navbar />
 

@@ -30,10 +30,10 @@
                     c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
                     c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
                 </svg>
-                <p class="font-display text-secondary text-[1rem]">Suivez le tutoriel pour poster un skin 3.0</p>
+                <p class="font-display text-secondary text-[1rem]">{{ __('barbofus.buttonSkinIndexPostTuto') }}</p>
             </a>
 
-            <a href="https://www.remove.bg/" target="_blank" class="w-fit mt-2 font-display text-secondary text-[1rem] bg-red-500 hover:bg-red-300 transition-all rounded-md px-4">Accès à remove.bg</a>
+            <a href="https://www.remove.bg/" target="_blank" class="w-fit mt-2 font-display text-secondary text-[1rem] bg-red-500 hover:bg-red-300 transition-all rounded-md px-4">{{ __('barbofus.contentAccessTo') }} remove.bg</a>
         </div>
 
         {{-- Menu de trie --}}
@@ -52,7 +52,7 @@
             @endfor
         @else
             <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.webp') }}">
-            <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
+            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} ! <span class="font-thin italic text-3xl">{{ __('barbofus.contentNoResult') }}</span></p>
         @endif
 
         {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}

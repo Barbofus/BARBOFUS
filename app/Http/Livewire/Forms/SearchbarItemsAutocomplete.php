@@ -40,8 +40,7 @@ class SearchbarItemsAutocomplete extends Component
     {
 
         if ($value) {
-
-            $this->selectedItemID = $value;
+            $this->selectedItemID = (int) $value;
             $this->existentItem = $this->ExistentQuery($value);
             $this->query = $this->existentItem['name'];
             $this->previousQuery = $this->query;
@@ -64,23 +63,25 @@ class SearchbarItemsAutocomplete extends Component
      */
     public function ExistentQuery(string|int $value)
     {
-        return ($this->ExistentQueryCount($value) > 1) ? null : new Collection(DB::table($this->relatedModel)
-            ->select('id', 'icon_path', 'name', 'level')
-            ->where('id', '=', $value)
-            ->orWhere('name', '=', $value)
-            ->addSelect([
-                'sub_icon_path' => DB::table('dofus_items_sub_categories')
-                    ->select('icon_path')
-                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1),
-            ])
-            ->addSelect([
-                'sub_name' => DB::table('dofus_items_sub_categories')
-                    ->select('name')
-                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1),
-            ])
-            ->first());
+        return ($this->ExistentQueryCount($value) > 1)
+            ? null
+            : new Collection((array) DB::table($this->relatedModel)
+                ->select('id', 'icon_path', 'name', 'level')
+                ->where('id', '=', $value)
+                ->orWhere('name', '=', $value)
+                ->addSelect([
+                    'sub_icon_path' => DB::table('dofus_items_sub_categories')
+                        ->select('icon_path')
+                        ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                        ->take(1),
+                ])
+                ->addSelect([
+                    'sub_name' => DB::table('dofus_items_sub_categories')
+                        ->select('name')
+                        ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
+                        ->take(1),
+                ])
+                ->first());
     }
 
     public function ExistentQueryCount(string|int $value): int
@@ -157,7 +158,7 @@ class SearchbarItemsAutocomplete extends Component
      */
     public function setSelection(string|int $value)
     {
-        $this->selectedItem = $value;
+        $this->selectedItem = (int) $value;
 
         $this->useSelectionAsValue();
     }

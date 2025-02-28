@@ -11,17 +11,17 @@
                 </svg>
 
             </div>
-            <p class="ml-2 text-[1.35rem] text-secondary font-medium tracking-wide">Affine ta recherche</p>
+            <p class="ml-2 text-[1.35rem] text-secondary font-medium tracking-wide">{{ __('barbofus.contentRefineSearch') }}</p>
         </div>
 
         @if(count($selectedThemes) > 0)
             <div class="mt-8">
-                <p class="text-ivory font-thin text-[1.25rem]">Actifs :</p>
+                <p class="text-ivory font-thin text-[1.25rem]">{{ __('barbofus.contentSet') }} :</p>
 
                 <div class="grid grid-cols-2 gap-x-2 gap-y-4 mt-4">
                     @foreach($selectedThemes as $sTheme)
                         <button class="relative group overflow-hidden h-fit rounded-lg bg-primary-100" wire:click="ToggleTheme({{ $sTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
-                            <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">Thème</span> {{ ' ' . $sTheme->name }}</p>
+                            <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span> {{ ' ' . $sTheme->name }}</p>
                             <div class="relative aspect-video overflow-hidden">
                                 <img src="{{ asset('storage/'. $sTheme->image_path) }}" draggable="false"
                                      alt="Image du havre sac"
@@ -41,12 +41,12 @@
         @endif
 
         <div class="mt-8">
-            <p class="text-ivory font-thin text-[1.25rem]">Inactifs :</p>
+            <p class="text-ivory font-thin text-[1.25rem]">{{ __('barbofus.contentUnset') }} :</p>
 
             <div class="grid grid-cols-2 gap-x-2 gap-y-4 mt-4">
                 @foreach($unselectedThemes as $uTheme)
                     <button class="relative group overflow-hidden h-fit rounded-lg bg-primary-100" wire:click="ToggleTheme({{ $uTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
-                        <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">Thème</span>{{ ' ' . $uTheme->name }}</p>
+                        <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span>{{ ' ' . $uTheme->name }}</p>
                         <div class="relative aspect-video overflow-hidden">
                             <img src="{{ asset('storage/'. $uTheme->image_path) }}" draggable="false"
                                  alt="Image du havre sac"
@@ -110,7 +110,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
 
-                <p class="group-hover:-translate-y-2 transition-all">Poster un havre-sac</p>
+                <p class="group-hover:-translate-y-2 transition-all">{{ __('barbofus.buttonPostHS') }}</p>
             </a>
         </div>
 
@@ -122,7 +122,7 @@
             @endfor
         @else
             <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.webp') }}">
-            <p class="text-4xl font-normal">Aïe ! <span class="font-thin italic text-3xl">Aucun résultat pour ces filtres</span></p>
+            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} <span class="font-thin italic text-3xl">{{ __('barbofus.contentNoResult') }}</span></p>
         @endif
 
         <template x-if="true">
@@ -145,12 +145,12 @@
                                     </div>
 
                                     <div class="flex w-full h-fit items-end overflow-hidden font-thin whitespace-nowrap">
-                                        <p class="slidableTextCenter">par <span class="font-normal text-[calc(clamp(3rem,8vw,6rem)/100*22)]" x-text="username" />&nbsp</p>
+                                        <p class="slidableTextCenter">{{ __('barbofus.contentBy') }} <span class="font-normal text-[calc(clamp(3rem,8vw,6rem)/100*22)]" x-text="username" />&nbsp</p>
                                     </div>
                                 </div>
 
                                 <div class="font-thin text-left flex w-full h-fit pt-1 items-end overflow-hidden whitespace-nowrap">
-                                    <p class="slidableText">Thème : <span class="italic font-light" x-text="'Havre-sac ' + havenBagThemeName" />&nbsp</p>
+                                    <p class="slidableText">{{ __('barbofus.contentTheme') }} : <span class="italic font-light" x-text="'{{ __('barbofus.contentHS') }} ' + havenBagThemeName" />&nbsp</p>
                                 </div>
                             </div>
                         </div>

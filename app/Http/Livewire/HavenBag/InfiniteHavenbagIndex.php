@@ -22,17 +22,17 @@ class InfiniteHavenbagIndex extends Component
     public int $maxPage = 1;
 
     /**
-     * @var null|Collection<string, array<int, Collection<string, mixed>>>
+     * @var null|Collection<int, \stdClass>
      */
     public $initHavenBag;
 
     /**
-     * @var Collection<int, array<string, int|string>>
+     * @var Collection<int, \stdClass>
      */
     public $unselectedThemes;
 
     /**
-     * @var Collection<int, array<string, int|string>>
+     * @var Collection<int, \stdClass>
      */
     public $selectedThemes;
 

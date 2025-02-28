@@ -59,7 +59,7 @@ final class DoColorsMatch
     }
 
     /**
-     * @return int[]
+     * @return array<int, float|int>
      */
     public function hexToRgb(string $hex)
     {
@@ -72,7 +72,7 @@ final class DoColorsMatch
     }
 
     /**
-     * @param  int[]  $RGB
+     * @param  array<int, float|int>  $RGB
      * @return float[]
      */
     public function getHue($RGB)
@@ -99,7 +99,7 @@ final class DoColorsMatch
             switch ($max) {
                 case $r:
                     $h = 60 * fmod((($g - $b) / $d), 6);
-                    if ($b > $g) { //will have given a negative value for $h
+                    if ($b > $g) { // will have given a negative value for $h
                         $h += 360;
                     }
                     break;

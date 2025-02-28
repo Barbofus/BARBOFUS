@@ -203,7 +203,7 @@ class UnitySkinController extends Controller
             'name' => $request->name,
         ]);
 
-        session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
+        session()->flash('alert-message', __('barbofus.alertSkinCreated'));
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
@@ -273,7 +273,7 @@ class UnitySkinController extends Controller
 
         $skin->save();
 
-        session()->flash('alert-message', 'Ton skin a été modifié. Il est en attente de validation par un Modérateur');
+        session()->flash('alert-message', __('barbofus.alertSkinEdited'));
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
@@ -294,7 +294,7 @@ class UnitySkinController extends Controller
 
         (new DeleteSkin)($skinID, true);
 
-        session()->flash('alert-message', 'Le Skin '.(($skin->name) ? $skin->name : 'ID#'.$skinID).' posté par '.$skinUserName.' a bien été supprimé.');
+        session()->flash('alert-message', __('barbofus.alertDeleteSkin', ['skin' => (($skin->name) ?: 'ID#'.$skinID), 'username' => $skinUserName]));
 
         return redirect()->route('unity-skins.index');
     }

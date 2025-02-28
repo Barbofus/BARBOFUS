@@ -1,6 +1,6 @@
 <div x-data="{ havenBagDeleteID: null, havenBagDeleteImg: '', }">
     <div class="animate-topFade [--custom-translate-y:50px] [--custom-animation-time:0.3s]">
-        <x-utils.userpage-title :title="'Mes havre-sacs'" :subtitle="'Tes propres créations'" />
+        <x-utils.userpage-title :title="__('barbofus.titleMyHS')" :subtitle="__('barbofus.descriptionOwnCreation')" />
 
         <div class="bg-primary w-full flex justify-center sticky top-12 py-8 z-10">
             <a href="{{ route('havre-sacs.create') }}" class="goldGradient px-4 py-2 rounded-md text-primary flex flex-col transition-all items-center text-lg min-[400px]:text-2xl hover:rounded-3xl group hover:brightness-110">
@@ -8,7 +8,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
 
-                <p class="group-hover:-translate-y-2 transition-all">Poster un havre-sac</p>
+                <p class="group-hover:-translate-y-2 transition-all">{{ __('barbofus.buttonPostHS') }}</p>
             </a>
         </div>
 
@@ -31,7 +31,7 @@
                                 </div>
 
                                 <div class="font-thin text-left flex w-full h-fit pt-1 items-end overflow-hidden whitespace-nowrap">
-                                    <p class="slidableText">Thème : <span class="italic font-light">Havre-sac {{ $havenBag->haven_bag_theme_name }}</span>&nbsp</p>
+                                    <p class="slidableText">{{ __('barbofus.contentTheme') }} : <span class="italic font-light">{{ __('barbofus.contentHS') }} {{ $havenBag->haven_bag_theme_name }}</span>&nbsp</p>
                                 </div>
                             </div>
                         </div>
@@ -59,11 +59,11 @@
                     </div>
 
                     @if($havenBag->status == 'Pending')
-                        <p class="p-2 text-sm min-[400px]:text-lg text-yellow-200 italic">En attente ...</p>
+                        <p class="p-2 text-sm min-[400px]:text-lg text-yellow-200 italic">{{ __('barbofus.contentPending') }}</p>
                     @elseif($havenBag->status == 'Refused')
-                        <p class="p-2 text-sm min-[400px]:text-lg text-red-400 italic">Havre-sac Refusé</p>
+                        <p class="p-2 text-sm min-[400px]:text-lg text-red-400 italic">{{ __('barbofus.contentHSRefused') }}</p>
                     @else
-                        <p class="p-2 text-sm min-[400px]:text-lg text-inactiveText italic">Posté {{ $havenBag->created_at->diffForHumans() }}</p>
+                        <p class="p-2 text-sm min-[400px]:text-lg text-inactiveText italic">{{ __('barbofus.contentPosted') }} {{ $havenBag->created_at->diffForHumans() }}</p>
                     @endif
                 </div>
             @endforeach

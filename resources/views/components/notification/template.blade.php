@@ -8,9 +8,9 @@
         <p class="text-sm text-inactiveText">{{ $notification->created_at->diffForHumans() }}</p>
 
         @if($read)
-            <button wire:click="DeleteNotification('{{ $notification->id }}')" class="text-red-400 text-sm hover:text-red-300">Supprimer</button>
+            <button wire:click="DeleteNotification('{{ $notification->id }}')" class="text-red-400 text-sm hover:text-red-300">{{ __('barbofus.buttonDelete') }}</button>
         @else
-            <button wire:click="ReadNotification('{{ $notification->id }}')" class="text-red-400 text-sm hover:text-red-300">Marquer comme lu</button>
+            <button wire:click="ReadNotification('{{ $notification->id }}')" class="text-red-400 text-sm hover:text-red-300">{{ __('barbofus.notifButtonMarkAsRead') }}</button>
         @endif
     </div>
 </div>

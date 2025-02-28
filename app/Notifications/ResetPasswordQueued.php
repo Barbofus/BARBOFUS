@@ -42,6 +42,8 @@ class ResetPasswordQueued extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        app()->setLocale($notifiable->locale ?? config('app.locale'));
+
         return (new ResetPasswordMail($this->url, $notifiable))->to($notifiable->email);
     }
 }

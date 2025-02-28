@@ -22,5 +22,6 @@
   'user-panel.user-dashboard' => 'App\\Http\\Livewire\\UserPanel\\UserDashboard',
   'user-panel.user-details' => 'App\\Http\\Livewire\\UserPanel\\UserDetails',
   'user-panel.users-list' => 'App\\Http\\Livewire\\UserPanel\\UsersList',
+  'utils.locale-dropdown' => 'App\\Http\\Livewire\\Utils\\LocaleDropdown',
   'notifications.notifications-list' => 'App\\Http\\Livewire\\notifications\\NotificationsList',
 );

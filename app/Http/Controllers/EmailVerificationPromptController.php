@@ -30,7 +30,9 @@ class EmailVerificationPromptController extends Controller
      */
     public function store(Request $request)
     {
+        /** @var User $user */
         $user = User::findOrFail($request->id);
+
         if ($user->hasVerifiedEmail()) {
             return $request->wantsJson()
                 ? new JsonResponse('', 204)

@@ -54,7 +54,7 @@ class HavenBagController extends Controller
             'name' => $request->name,
         ]);
 
-        session()->flash('alert-message', 'Ton havre-sac a été créé. Il est en attente de validation par un Modérateur');
+        session()->flash('alert-message', __('barbofus.alertHSCreated'));
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordHavenBagPendingWebhook)(config('app.pending_webhook_url'), $havenBag);
@@ -100,7 +100,7 @@ class HavenBagController extends Controller
 
         $havenBag->save();
 
-        session()->flash('alert-message', 'Ton havre-sac a été modifié. Il est en attente de validation par un Modérateur');
+        session()->flash('alert-message', __('barbofus.alertHSEdited'));
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordHavenBagPendingWebhook)(config('app.pending_webhook_url'), $havenBag);

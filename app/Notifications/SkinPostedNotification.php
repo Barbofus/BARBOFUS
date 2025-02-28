@@ -53,6 +53,8 @@ class SkinPostedNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        app()->setLocale($notifiable->locale ?? config('app.locale'));
+
         return (new SkinPostedMail($this->skin, $notifiable, $this->isUnitySkin))->to($notifiable->email);
     }
 

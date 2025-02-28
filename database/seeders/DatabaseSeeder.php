@@ -71,12 +71,12 @@ class DatabaseSeeder extends Seeder
             RewardPriceSeeder::class,
 
             // Création des users
-            //UserSeeder::class,
+            // UserSeeder::class,
 
-            //Création des skins avec les likes et récompenses
-            //SkinSeeder::class,
+            // Création des skins avec les likes et récompenses
+            // SkinSeeder::class,
 
-            //Création des havres sacs
+            // Création des havres sacs
             HavenBagSeeder::class,
         ]);
     }

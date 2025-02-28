@@ -144,7 +144,8 @@ class SkinController extends Controller
      */
     public function create()
     {
-        $races = DB::table('races')
+        abort(404);
+        /*$races = DB::table('races')
             ->select('*')
             ->get()->toArray();
 
@@ -155,7 +156,7 @@ class SkinController extends Controller
 
         return view('skins.create', [
             'races' => $races,
-        ]);
+        ]);*/
     }
 
     /**
@@ -163,8 +164,9 @@ class SkinController extends Controller
      */
     public function store(StoreUpdateSkinRequest $request)
     {
+        abort(403);
         // Resize de l'image, on affichera que 200px max
-        $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
+        /*$imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
             'width' => 300,
             'height' => 390]);
 
@@ -188,7 +190,7 @@ class SkinController extends Controller
             'name' => $request->name,
         ]);
 
-        session()->flash('alert-message', 'Ton skin a été créé. Il est en attente de validation par un Modérateur');
+        session()->flash('alert-message', __('barbofus.alertSkinCreated'));
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
@@ -196,7 +198,7 @@ class SkinController extends Controller
             (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin);
         }
 
-        return redirect()->route('user-dashboard.index', 'section=my-skins');
+        return redirect()->route('user-dashboard.index', 'section=my-skins');*/
     }
 
     /**
@@ -204,7 +206,8 @@ class SkinController extends Controller
      */
     public function edit(Skin $skin)
     {
-        $races = DB::table('races')
+        abort(404);
+        /*$races = DB::table('races')
             ->select('*')
             ->get()->toArray();
 
@@ -216,7 +219,7 @@ class SkinController extends Controller
         return view('skins.edit', [
             'races' => $races,
             'skin' => $skin,
-        ]);
+        ]);*/
     }
 
     /**
@@ -224,7 +227,8 @@ class SkinController extends Controller
      */
     public function update(StoreUpdateSkinRequest $request, Skin $skin)
     {
-        $imagePath = $skin->image_path;
+        abort(403);
+        /*$imagePath = $skin->image_path;
 
         // Si on change l'image, supprime l'ancienne et s'occupe de la nouvelle
         if ($request->image_path) {
@@ -255,7 +259,7 @@ class SkinController extends Controller
 
         $skin->save();
 
-        session()->flash('alert-message', 'Ton skin a été modifié. Il est en attente de validation par un Modérateur');
+        session()->flash('alert-message', __('barbofus.alertSkinEdited'));
 
         if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
@@ -263,7 +267,7 @@ class SkinController extends Controller
             (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin);
         }
 
-        return redirect()->route('user-dashboard.index', 'section=my-skins');
+        return redirect()->route('user-dashboard.index', 'section=my-skins');*/
     }
 
     /**
@@ -271,13 +275,14 @@ class SkinController extends Controller
      */
     public function delete(int $skinID)
     {
-        $skin = Skin::find($skinID);
+        abort(403);
+        /*$skin = Skin::find($skinID);
         $skinUserName = $skin->User->name;
 
         (new DeleteSkin)($skinID);
 
-        session()->flash('alert-message', 'Le Skin '.(($skin->name) ? $skin->name : 'ID#'.$skinID).' posté par '.$skinUserName.' a bien été supprimé.');
+        session()->flash('alert-message', __('barbofus.alertDeleteSkin', ['skin' => (($skin->name) ? $skin->name : 'ID#'.$skinID), 'username' => $skinUserName]));
 
-        return redirect()->route('skins.index');
+        return redirect()->route('skins.index');*/
     }
 }

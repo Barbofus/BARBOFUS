@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="pb-16">
-        <h1 class="text-[min(4rem,8vw)] mt-16 font-normal text-center uppercase">Barbofus, la galerie de skins dofus</h1>
-        <h2 class="text-2xl font-thin text-center mt-2 mb-8 uppercase">Bienvenue sur le site, explore la galerie de skin, ou poste les tiens et deviens la miss'skin de Dofus !</h2>
+        <h1 class="text-[min(4rem,8vw)] mt-16 font-normal text-center uppercase">{{ __('barbofus.titleHome') }}</h1>
+        <h2 class="text-2xl font-thin text-center mt-2 mb-8 uppercase">{{ __('barbofus.descriptionHome') }}</h2>
 
         {{-- Présentation des skins --}}
         <div class="h-[max(20vh,13.75rem)] mx-auto w-[min(90vw,62.5rem)] mt-16 px-1 rounded-md goldGradient">
@@ -31,17 +31,17 @@
             <div class="flex min-[800px]:flex-row gap-y-4 flex-col w-fit h-fit">
                 <div class="w-96 flex justify-center">
                     <a href="{{ route('unity-skins.index') }}" title="Galerie de skins dofus" class="top-0 px-8 py-3 h-fit text-xl mx-auto font-normal text-goldText border-4 border-primary bg-primary rounded-lg hover:bg-primary-100 hover:border-primary-100 hover:tracking-widest transition-all uppercase">
-                        Explorer les skins</a>
+                        {{ __('barbofus.buttonSkinExplore') }}</a>
                 </div>
                 <div class="w-96 flex justify-center">
-                    <a href="{{ route('unity-skins.create') }}" title="Partage ton skin dofus" class="px-8 py-3 h-fit text-xl mx-auto font-medium text-primary border-4 border-primary rounded-lg hover:border-primary-100 hover:tracking-widest transition-all uppercase">Poster un skin</a>
+                    <a href="{{ route('unity-skins.create') }}" title="Partage ton skin dofus" class="px-8 py-3 h-fit text-xl mx-auto font-medium text-primary border-4 border-primary rounded-lg hover:border-primary-100 hover:tracking-widest transition-all uppercase">{{ __('barbofus.buttonSkinPost') }}</a>
                 </div>
             </div>
         </div>
 
         {{-- Présentation Barbe --}}
-        <h2 class="text-[min(4rem,7vw)] mt-32 font-normal text-center uppercase">Découvre Barbe Douce</h2>
-        <h3 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">Le Streameur à l'origine de ce site</h3>
+        <h2 class="text-[min(4rem,7vw)] mt-32 font-normal text-center uppercase">{{ __('barbofus.titleBarbe') }}</h2>
+        <h3 class="text-2xl font-thin text-center -mt-2 mb-8 uppercase">{{ __('barbofus.descriptionBarbe') }}</h3>
 
         <div class="w-[min(90vw,50rem)] aspect-video mx-auto mt-16 relative">
             <x-utils.twitch-embed />
@@ -50,12 +50,12 @@
         <div class="w-[min(90vw,62.5rem)] mx-auto mt-16 flex min-[800px]:flex-row flex-col justify-between gap-8">
             <div>
                 <div class="text-secondary text-xl font-thin flex flex-col gap-y-4 [&>p>a]:inline-block [&>p>a]:h-12 [&>p>a]:text-goldText [&>p>a:hover]:text-goldTextLit [&>p>a]:transition-all [&>p>a:hover]:-skew-x-12">
-                    <p class="mb-4 font-normal uppercase">Petite présentation rapide & efficace :</p>
+                    <p class="mb-4 font-normal uppercase">{{ __('barbofus.titleBarbeDetails') }}</p>
 
                     <p>• Mathieu - Barbe Douce</p>
-                    <p>• Je suis partenaire <a href="https://www.twitch.tv/barbe___douce" title="Page Twitch de Barbe Douce" target="_blank">Twitch</a>, <a href="https://www.ankama.com/fr" title="Site web d'Ankama" target="_blank">Ankama</a> & <a href="https://www.topachat.com/accueil/index.php?mtm_campaign=mkstrm" title="Partenaire TopAchat" target="_blank">TopAchat</a></p>
-                    <p>• En live chaque jour dès 7-8h sur : <a href="https://twitch.tv/barbe___douce" title="Page Twitch de Barbe Douce" target="_blank">twitch.tv/barbe___douce</a></p>
-                    <p>• Contact Pro : <a href="mailto:mathieu.lehr@gmail.com?subject=Contact a partir du site {{ config('app.name') }}" title="Envoyer un mail">mathieu.lehr@gmail.com</a></p>
+                    <p>• {{ __('barbofus.descriptionBarbeDetails1') }} <a href="https://www.twitch.tv/barbe___douce" title="Page Twitch de Barbe Douce" target="_blank">Twitch</a>, <a href="https://www.ankama.com/fr" title="Site web d'Ankama" target="_blank">Ankama</a> & <a href="https://www.topachat.com/accueil/index.php?mtm_campaign=mkstrm" title="Partenaire TopAchat" target="_blank">TopAchat</a></p>
+                    <p>• {{ __('barbofus.descriptionBarbeDetails2') }} <a href="https://twitch.tv/barbe___douce" title="Page Twitch de Barbe Douce" target="_blank">twitch.tv/barbe___douce</a></p>
+                    <p>• {{ __('barbofus.descriptionBarbeDetails3') }} <a href="mailto:mathieu.lehr@gmail.com?subject=Contact a partir du site {{ config('app.name') }}" title="Envoyer un mail">mathieu.lehr@gmail.com</a></p>
                 </div>
 
                 <!-- Réseaux sociaux -->
@@ -69,17 +69,17 @@
             <div class="-z-10 bg-[linear-gradient(rgba(0,0,0,0.05)_50%,0,transparent_100%),linear-gradient(-135deg,var(--goldLit),var(--goldDark))] [background-size:.5em_.5em,100%_100%] top-0 absolute w-full h-full skew-y-[1.5deg]"></div>
 
             <div class="max-w-screen-xl px-2 mx-auto [&>p]:text-[min(1.25rem,4vw)] [&>p]:indent-12 [&>p]:font-light [&>p]:mt-2">
-                <h2 class="text-[min(4rem,8vw)] font-normal text-center uppercase">Et si on profitais des skins unity ?!</h2>
-                <p>Avec une galerie de plus de <strong>{{ $skinCount }} skins</strong> postés par <strong>{{ $userCount }} joueurs</strong>, Barbofus te permet de trouver le meilleur skin Dofus pour ton personnage en jeu, ou de montrer à tout le monde tes propres créations !</p>
-                <p>Découvre toute la variété du monde des douzes, peu importe le sexe, la classe, les couleurs ou le choix d'items, tous les skins sont présentés pour le plus grand plaisir des joueurs.</p>
-                <p>Tu veux montrer à la commu' de Barbe que c'est toi le plus fashion ? Tous les mardis, le <strong>concours Miss'Skin</strong> choisira les 3 skins ayant reçu le plus de like dans la semaine, alors prépare ton meilleur outfit et impressionne le monde des douzes !</p>
-                <p>@foreach($racesName as $race) {{ $race->name }}, @endforeach vous êtes tous bienvenu !</p>
-                <p>Désormais, partagez vos skins de la version 3.0 sous Unity de Dofus sur Barbofus !</p>
+                <h2 class="text-[min(4rem,8vw)] font-normal text-center uppercase">{{ __('barbofus.titleUnity') }}</h2>
+                <p>{!! __('barbofus.descriptionUnity1', ['skinCount' => $skinCount, 'userCount' => $userCount]) !!}</p>
+                <p>{{ __('barbofus.descriptionUnity2') }}</p>
+                <p>{{ __('barbofus.descriptionUnity3') }}</p>
+                <p>{{ __('barbofus.descriptionUnity4') }}</p>
+                <p>{{ __('barbofus.descriptionUnity5') }}</p>
             </div>
         </div>
 
         {{-- Remerciements --}}
-        <h2 class="text-[min(4rem,7vw)] mt-32 font-normal text-center uppercase">Remerciements</h2>
+        <h2 class="text-[min(4rem,7vw)] mt-32 font-normal text-center uppercase">{{ __('barbofus.titleThanks') }}</h2>
 
         <div class="flex min-[800px]:flex-row flex-col gap-x-16 gap-y-8 justify-center items-center">
             <a href="https://dofusdb.fr/fr/" title="DofusDB" target="_blank" class="flex gap-x-4 items-center hover:bg-primary-100 hover:rounded-md bg-primary transition-all p-2">

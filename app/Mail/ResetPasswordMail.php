@@ -26,6 +26,7 @@ class ResetPasswordMail extends Mailable
     {
         $this->user = $user;
         $this->url = $url;
+        $this->locale = app()->getLocale();
     }
 
     /**
@@ -36,7 +37,7 @@ class ResetPasswordMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Réinitialisation de mot de passe',
+            subject: config('app.name').' - '.__('barbofus.emailTitlePasswordReset'),
         );
     }
 

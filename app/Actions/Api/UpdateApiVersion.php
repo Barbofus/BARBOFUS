@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 final class UpdateApiVersion
 {
+    /**
+     * @throws \JsonException
+     */
     public function __invoke(
         string $apiName,
         string $newVersion,
@@ -19,6 +22,6 @@ final class UpdateApiVersion
 
         $versions[$apiName] = $newVersion;
 
-        Storage::disk('local')->put('api_versions.json', json_encode($versions));
+        Storage::disk('local')->put('api_versions.json', json_encode($versions, JSON_THROW_ON_ERROR));
     }
 }

@@ -28,12 +28,12 @@
                             @endif
 
                             <div class="flex w-full h-fit items-end overflow-hidden font-thin whitespace-nowrap">
-                                <p class="slidableTextCenter">par <span class="font-normal text-[calc(clamp(3rem,8vw,6rem)/100*25)] min-[900px]:text-[calc(clamp(3rem,5vw,6rem)/100*25)]">{{ $havenBag->user_name }}</span>&nbsp</p>
+                                <p class="slidableTextCenter">{{ __('barbofus.contentBy') }} <span class="font-normal text-[calc(clamp(3rem,8vw,6rem)/100*25)] min-[900px]:text-[calc(clamp(3rem,5vw,6rem)/100*25)]">{{ $havenBag->user_name }}</span>&nbsp</p>
                             </div>
                         </div>
 
                         <div class="font-thin text-left flex w-full h-fit pt-1 items-end overflow-hidden whitespace-nowrap">
-                            <p class="slidableText">Thème : <span class="italic font-light">Havre-sac {{ $havenBag->haven_bag_theme_name }}</span>&nbsp</p>
+                            <p class="slidableText">{{ __('barbofus.contentTheme') }} : <span class="italic font-light">{{ __('barbofus.contentHS') }} {{ $havenBag->haven_bag_theme_name }}</span>&nbsp</p>
                         </div>
                     </div>
                 </div>

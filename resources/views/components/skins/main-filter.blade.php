@@ -34,7 +34,7 @@
 
             </div>
 
-            <p class="ml-2 text-[1rem] min-[1501px]:text-[1.35rem] text-secondary font-medium tracking-wide">Affine ta recherche</p>
+            <p class="ml-2 text-[1rem] min-[1501px]:text-[1.35rem] text-secondary font-medium tracking-wide">{{ __('barbofus.contentRefineSearch') }}</p>
         </div>
 
     </div>
@@ -68,7 +68,7 @@
                 <!-- Rewards Only -->
                 <div class="relative mt-5 tracking-wide w-[min(90vw,23.75rem)]">
                     <x-forms.filter-button :name="'missskin'" :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly" >
-                        <label for="missskin" class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),22rem)]">Voir uniquement les vainqueurs du <span class="font-normal">Miss'Skin</span></label>
+                        <label for="missskin" class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),22rem)]">{!! __('barbofus.inputMissSkinOnly') !!}</label>
                     </x-forms.filter-button>
 
                     <div class="absolute right-0 w-6 h-6 cursor-pointer group top-1">
@@ -105,7 +105,7 @@
             <!-- Barb Only -->
             <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,23.75rem)]">
                 <x-forms.filter-button :name="'barbe only'" :checked="$barbOnly" wire:click="ToggleShowBarbeOnly" >
-                    <label for="barbe only" class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">Voir uniquement les skins de <span class=" font-normal">Barbe Douce</span></label>
+                    <label for="barbe only" class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">{!! __('barbofus.inputBarbeOnly') !!}</label>
                 </x-forms.filter-button>
             </div>
         </div>
@@ -119,7 +119,7 @@
             <!-- Skin content -->
             <div>
                 <div class="ml-4 mt-2 border-b border-ivory w-[50%]">
-                    <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Les items peuvent être :</p>
+                    <p class="-ml-4 font-thin text-secondary text-[1.15rem]">{{ __('barbofus.labelShowOnlyItems') }}</p>
                 </div>
 
 
@@ -129,23 +129,23 @@
 
                     <!-- Mimibiotes -->
                     <div class="relative w-[6.25rem]">
-                        <x-forms.filter-button :name="'Mimibiotes'" :label="'Mimibiotes'" :checked="!in_array(1, $skinContent)" wire:click="ToggleSkinContent(1)" />
+                        <x-forms.filter-button :name="'Mimibiotes'" :label="__('barbofus.labelSkinItemMimibiotable')" :checked="!in_array(1, $skinContent)" wire:click="ToggleSkinContent(1)" />
                     </div>
 
                     <!-- Cosmétiques -->
                     <div class="relative w-[7.5rem]">
-                        <x-forms.filter-button :name="'Cosmétiques'" :label="'Cosmétiques'" :checked="!in_array(2, $skinContent)" wire:click="ToggleSkinContent(2)" />
+                        <x-forms.filter-button :name="'Cosmétiques'" :label="__('barbofus.labelSkinItemObjet d\'apparat')" :checked="!in_array(2, $skinContent)" wire:click="ToggleSkinContent(2)" />
                     </div>
 
                     <!-- Objets vivants -->
                     <div class="relative w-32">
-                        <x-forms.filter-button :name="'Objets vivants'" :label="'Objets vivants'" :checked="!in_array(3, $skinContent)" wire:click="ToggleSkinContent(3)" />
+                        <x-forms.filter-button :name="'Objets vivants'" :label="__('barbofus.labelSkinItemObjet vivant')" :checked="!in_array(3, $skinContent)" wire:click="ToggleSkinContent(3)" />
                     </div>
                 </div>
 
 
                 <div class="ml-4 mt-4 border-b border-ivory w-[65%]">
-                    <p class="-ml-4 font-thin text-secondary text-[1.15rem]">Voir uniquement les :</p>
+                    <p class="-ml-4 font-thin text-secondary text-[1.15rem]">{{ __('barbofus.labelSeeOnly') }}</p>
                 </div>
 
                 <!-- Checkboxs -->
@@ -153,17 +153,17 @@
 
                     <!-- Familier -->
                     <div class="relative w-[5rem]">
-                        <x-forms.filter-button :name="'Familier'" :label="'Familier'" :checked="!in_array('familier', $petTypeContent)" wire:click="TogglePetType('familier')" />
+                        <x-forms.filter-button :name="'Familier'" :label="__('barbofus.inputPet')" :checked="!in_array('familier', $petTypeContent)" wire:click="TogglePetType('familier')" />
                     </div>
 
                     <!-- Montilier -->
-                    <div class="relative w-[5.25rem]">
-                        <x-forms.filter-button :name="'Montilier'" :label="'Montilier'" :checked="!in_array('montilier', $petTypeContent)" wire:click="TogglePetType('montilier')" />
+                    <div class="relative w-[7.25rem]">
+                        <x-forms.filter-button :name="'Montilier'" :label="__('barbofus.inputPetsMount')" :checked="!in_array('montilier', $petTypeContent)" wire:click="TogglePetType('montilier')" />
                     </div>
 
                     <!-- Mnture -->
-                    <div class="relative w-[7rem]">
-                        <x-forms.filter-button :name="'Monture'" :label="'Monture'" :checked="!in_array('dragodinde', $petTypeContent)" wire:click="TogglePetType(['dragodinde', 'muldo', 'volkorne'])" />
+                    <div class="relative w-[8rem]">
+                        <x-forms.filter-button :name="'Monture'" :label="__('barbofus.inputTamedMount')" :checked="!in_array('dragodinde', $petTypeContent)" wire:click="TogglePetType(['dragodinde', 'muldo', 'volkorne'])" />
                     </div>
                 </div>
             </div>
@@ -178,7 +178,7 @@
 
             {{-- Couleurs --}}
             <div class="flex items-center gap-x-2 mt-2" x-data="{ color: '{{ ($filterColor) ? '#' . $filterColor : '#000000' }}' }">
-                <label for="color" class="font-thin text-secondary text-[1.15rem]">Couleurs :</label>
+                <label for="color" class="font-thin text-secondary text-[1.15rem]">{{ __('barbofus.labelColors') }}</label>
                 <input id="color" type="color"
                        x-model="color"
                        class="rounded cursor-pointer"
@@ -195,12 +195,12 @@
 
                 <!-- Mâle -->
                 <div class="relative w-16">
-                    <x-forms.filter-button :name="'Homme'" :label="'Homme'" :checked="!in_array(['gender', '!=', 'Homme'], $gender)" wire:click="ToggleGender('Homme')" />
+                    <x-forms.filter-button :name="'Homme'" :label="__('barbofus.inputSkinMale')" :checked="!in_array(['gender', '!=', 'Homme'], $gender)" wire:click="ToggleGender('Homme')" />
                 </div>
 
                 <!-- Femelle -->
                 <div class="relative w-20">
-                    <x-forms.filter-button :name="'Femme'" :label="'Femme'" :checked="!in_array(['gender', '!=', 'Femme'], $gender)" wire:click="ToggleGender('Femme')" />
+                    <x-forms.filter-button :name="'Femme'" :label="__('barbofus.inputSkinFemale')" :checked="!in_array(['gender', '!=', 'Femme'], $gender)" wire:click="ToggleGender('Femme')" />
                 </div>
             </div>
         </div>

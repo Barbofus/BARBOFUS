@@ -17,20 +17,19 @@
             <!-- Réseaux sociaux -->
             <x-utils.socials />
 
-            <p class="text-primary text-center text-sm font-light">Dofus est un MMORPG édité par <a target="_blank" href="https://www.ankama.com/fr" title="Site web d'Ankama" class="underline">Ankama</a>. "BARBOFUS" est un site non-officiel sans aucun lien avec Ankama.<br>
-                Certaines illustrations sont la propriété d'Ankama Studio et de Dofus - Tous droits réservés</p>
+            <p class="text-primary text-center text-sm font-light">{!! __('barbofus.footerLegals') !!}</p>
 
             <div class="grid grid-cols-2 min-[500px]:grid-cols-3 w-fit mx-auto gap-x-2 items-center justify-center text-primary my-4 [&>a]:h-8 [&>a:hover]:-skew-x-12 uppercase">
-                <a href="{{ route('home') }}" title="Accueil du site">Accueil</a>
-                <a href="{{ route('unity-skins.index') }}" title="Gallerie de skin">Les skins</a>
-                <a href="{{ route('unity-skins.create') }}" title="Partage ton skin">Poster un skin</a>
-                <a href="{{ route('havre-sacs.index') }}" title="Gallerie de havre-sacs">Havre-sacs</a>
-                <a href="{{ route('tools') }}" title="Barb'outils">Barb'Outils</a>
-                <a href="{{ route('mentions-legales') }}" title="Mentions légales">Mentions légales</a>
+                <a href="{{ route('home') }}" title="Accueil du site">{{ __('barbofus.buttonHome') }}</a>
+                <a href="{{ route('unity-skins.index') }}" title="Gallerie de skin">{{ __('barbofus.buttonSkins') }}</a>
+                <a href="{{ route('unity-skins.create') }}" title="Partage ton skin">{{ __('barbofus.buttonSkinPost') }}</a>
+                <a href="{{ route('havre-sacs.index') }}" title="Gallerie de havre-sacs">{{ __('barbofus.buttonHavenbags') }}</a>
+                <a href="{{ route('tools') }}" title="Barb'outils">{{ __('barbofus.buttonTools') }}</a>
+                <a href="{{ route('mentions-legales') }}" title="Mentions légales">{{ __('barbofus.buttonLegals') }}</a>
             </div>
 
-            <p class="text-primary font-light text-center">© {{date('Y')}} Barbofus - Tous droits réservés</p>
-            <p class="text-primary font-light italic text-center">Votre vision, notre code – <a href="https://www.malt.fr/profile/charlymollard" class="text-admin-accent-500 hover:underline font-normal">EminensWeb</a></p>
+            <p class="text-primary font-light text-center">© {{date('Y')}} Barbofus - {{ __('barbofus.footerCopyright') }}</p>
+            <p class="text-primary font-light italic text-center">{{ __('barbofus.footerWebmaster') }} – <a href="https://www.malt.fr/profile/charlymollard" class="text-admin-accent-500 hover:underline font-normal">EminensWeb</a></p>
         </div>
     </div>
 </footer>

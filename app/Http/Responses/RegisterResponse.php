@@ -17,6 +17,7 @@ class RegisterResponse extends FortifyRegisterResponse
     public function toResponse($request)
     {
         $id = auth()->id();
+        auth()->user()->update(['locale' => app()->getLocale()]);
         $this->guard->logout();
 
         return redirect()->route('verification.notice', ['id' => $id]);

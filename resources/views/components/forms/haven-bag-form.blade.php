@@ -6,7 +6,7 @@
         {{-- Raison du refus --}}
         @if(isset($havenBag) && $havenBag['status'] == 'Refused')
             <div class="bg-red-300 border border-red-500 h-[clamp(6rem,8rem)] p-4 rounded-md text-red-900 w-full flex flex-col items-center justify-center">
-                <p class="font-light">Ton havre-sac a été refusé <span>{{ $havenBag['refused_reason'] ? ' car' : '!' }}</span></p>
+                <p class="font-light">{{ __('barbofus.alertRefusedHS') }} <span>{{ $havenBag['refused_reason'] ? ' '. __('barbofus.contentBecause')  : '!' }}</span></p>
                 <p class="font-normal italic break-words max-w-full">{{ $havenBag['refused_reason'] }}</p>
             </div>
         @endif
@@ -30,21 +30,21 @@
                     c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
                     c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
             </svg>
-            <p class="font-display text-secondary text-[1rem]">Tuto pour un meilleur screenshot !</p>
+            <p class="font-display text-secondary text-[1rem]">{{ __('barbofus.titleScreenshotTutorial') }}</p>
         </a>
 
         {{-- Nom du havre-sac--}}
         <div class="w-full">
-            <p class="ml-10 text-xl text-secondary font-light">Nom du havre-sac (optionnel)</p>
+            <p class="ml-10 text-xl text-secondary font-light">{{ __('barbofus.labelHSName') }}</p>
             <input x-ref="input"
-                   maxlength="30" name="name" id="name" type="text" placeholder="Nom"
+                   maxlength="30" name="name" id="name" type="text" placeholder="{{ __('barbofus.inputName') }}"
                    class="w-full mt-2 h-10 rounded-md pl-14 focus:outline-none placeholder-inactiveText bg-primary-100 @error('name') err-border @enderror"
                    value="{{ (old('name')) ? (old('name')) : (isset($havenBag) ? $havenBag['name'] : '') }}"/>
         </div>
 
         {{-- Choix du thème --}}
         <div class="w-full mt-5">
-            <p class="ml-10 text-xl font-light">Choix du thème</p>
+            <p class="ml-10 text-xl font-light">{{ __('barbofus.labelTheme') }}</p>
             <div class="relative w-full">
 
                 <!-- Resultat -->
@@ -207,10 +207,10 @@
 
         {{-- Image du havre-sac--}}
         <div class="w-full">
-            <p class="ml-10 text-xl font-light">Image du havre-sac</p>
+            <p class="ml-10 text-xl font-light">{{ __('barbofus.labelHSImage') }}</p>
             <div class="mt-2 @error('image_path') err-border @enderror">
                 <input id="image_input" class="w-full text-inactiveText rounded-md cursor-pointer bg-primary-100 focus:outline-none file:goldGradient file:text-primary file:h-10 file:border-0 hover:file:brightness-110 file:cursor-pointer" type="file" name="image_path" accept="image/png">
-                <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">Minimum 1200x650</p>
+                <p class="mt-1 ml-8 text-sm text-inactiveText" id="file_input_help">{{ __('barbofus.labelMinimum') }} 1200x650</p>
             </div>
 
             @error('image_path')
@@ -228,7 +228,7 @@
                 data-sitekey="{{ config('services.recaptcha.site_key') }}"
                 data-callback='onSubmit'
                 data-action='{{ $action }}'>
-            Valider
+            {{ __('barbofus.buttonValidate') }}
         </button>
 
         @error('g-recaptcha-response')

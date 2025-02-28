@@ -2,7 +2,7 @@
     <div class="flex items-center h-6 space-x-2 text-inactiveText">
         @if ($existentItem && count($existentItem) > 0)
             <img class="h-full" src="{{ asset('storage\\'.$existentItem['sub_icon_path']) }}" draggable="false">
-            <p>{{ $existentItem['sub_name'] }}</p>
+            <p>{{ __('barbofus.labelSkinItem'.$existentItem['sub_name']) }}</p>
             <p>Lvl. {{ $existentItem['level'] }}</p>
         @endif
     </div>

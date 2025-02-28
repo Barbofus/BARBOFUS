@@ -52,7 +52,7 @@ class ImageEnVracController extends Controller
     public function upload(Request $request): RedirectResponse
     {
         if ($request->hasFile('files')) {
-            $files = $request->file('files');
+            $files = \Arr::wrap($request->file('files'));
             foreach ($files as $key => $file) {
                 if ($file->isValid()) {
 

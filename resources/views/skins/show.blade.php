@@ -83,7 +83,7 @@
             @endguest
 
             <h2 class="bg-gradient-to-r from-[var(--goldDark)] to-[var(--goldLit)] bg-clip-text inline-block font-normal italic text-[min(6vw,1.5rem)] text-transparent">{{ $skin->name }}</h2>
-            <h2 class="text-[min(5vw,1.25rem)] font-thin text-center">Par <span
+            <h2 class="text-[min(5vw,1.25rem)] font-thin text-center">{{ __('barbofus.contentBy') }} <span
                     class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
 
             @can('admin-access')
@@ -115,12 +115,12 @@
                               d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
                     </svg>
                 @endif
-                <p class="font-thin text-[min(6vw,1.25rem)] text-secondary">{{ $skin->gender }}</p>
+                <p class="font-thin text-[min(6vw,1.25rem)] text-secondary">{{ $skin->gender === 'Homme' ? __('barbofus.inputSkinMale') : __('barbofus.inputSkinFemale') }}</p>
             </div>
         </div>
 
         <div class="flex justify-center items-center space-x-4">
-            <p class="font-thin text-[min(5vw,1.25rem)] text-center text-secondary">Visage N°{{ $skin->face }}</p>
+            <p class="font-thin text-[min(5vw,1.25rem)] text-center text-secondary">{{ __('barbofus.contentFace') }} N°{{ $skin->face }}</p>
             <img src="{{  asset(sprintf("storage/images/icons/classes/faces/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
                 alt="Visage {{ $skin->race_name }} n° {{ $skin->face }}" draggable="false" class="h-12">
         </div>
@@ -155,29 +155,29 @@
                 <div class="flex flex-col min-[420px]:flex-row gap-x-4">
                     <div
                         class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:-translate-x-[19.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:-translate-x-[7.5rem]">
-                        <x-skins-presentation.color name="Peau" color="{{ $skin->color_skin }}"/>
+                        <x-skins-presentation.color name="{{ __('barbofus.labelSkinColorsSkin') }}" color="{{ $skin->color_skin }}"/>
                     </div>
 
                     <div
                         class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:-translate-x-[11.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-x-[0.5rem]">
-                        <x-skins-presentation.color name="Cheveux" color="{{ $skin->color_hair }}"/>
+                        <x-skins-presentation.color name="{{ __('barbofus.labelSkinColorsHair') }}" color="{{ $skin->color_hair }}"/>
                     </div>
                 </div>
 
                 <div class="flex flex-col min-[420px]:flex-row gap-x-4">
                     <div
                         class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:-translate-x-[3.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-y-[35rem] [@media(min-height:920px)_and_(min-width:1100px)]:-translate-x-[11.5rem]">
-                        <x-skins-presentation.color name="Habits 1" color="{{ $skin->color_cloth_1 }}"/>
+                        <x-skins-presentation.color name="{{ __('barbofus.labelSkinColorsClothes') }} 1" color="{{ $skin->color_cloth_1 }}"/>
                     </div>
 
                     <div
                         class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:translate-x-[4.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-y-[35rem] [@media(min-height:920px)_and_(min-width:1100px)]:-translate-x-[3.5rem]">
-                        <x-skins-presentation.color name="Habits 2" color="{{ $skin->color_cloth_2 }}"/>
+                        <x-skins-presentation.color name="{{ __('barbofus.labelSkinColorsClothes') }} 2" color="{{ $skin->color_cloth_2 }}"/>
                     </div>
 
                     <div
                         class="min-[950px]:absolute top-0 min-[950px]:-translate-y-0 min-[950px]:translate-x-[12.5rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-y-[35rem] [@media(min-height:920px)_and_(min-width:1100px)]:translate-x-[4.5rem]">
-                        <x-skins-presentation.color name="Habits 3" color="{{ $skin->color_cloth_3 }}"/>
+                        <x-skins-presentation.color name="{{ __('barbofus.labelSkinColorsClothes') }} 3" color="{{ $skin->color_cloth_3 }}"/>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_costume_subicon"
-                                                       :subname="$skin->dofus_item_costume_subname"
+                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_costume_subname)"
                                                        :name="$skin->dofus_item_costume_name"
                                                        :level="$skin->dofus_item_costume_level"
                                                        :icon="$skin->dofus_item_costume_icon"/>
@@ -209,7 +209,7 @@
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_shield_subicon"
-                                                       :subname="$skin->dofus_item_shield_subname"
+                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_shield_subname)"
                                                        :name="$skin->dofus_item_shield_name"
                                                        :level="$skin->dofus_item_shield_level"
                                                        :icon="$skin->dofus_item_shield_icon"/>
@@ -227,7 +227,7 @@
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_pet_subicon"
-                                                       :subname="$skin->dofus_item_pet_subname"
+                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_pet_subname)"
                                                        :name="$skin->dofus_item_pet_name"
                                                        :level="$skin->dofus_item_pet_level"
                                                        :icon="$skin->dofus_item_pet_icon"/>
@@ -246,7 +246,7 @@
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_hat_subicon"
-                                                       :subname="$skin->dofus_item_hat_subname"
+                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_hat_subname)"
                                                        :name="$skin->dofus_item_hat_name"
                                                        :level="$skin->dofus_item_hat_level"
                                                        :icon="$skin->dofus_item_hat_icon"/>
@@ -264,7 +264,7 @@
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
                             <x-skins-presentation.item :subicon="$skin->dofus_item_cloak_subicon"
-                                                       :subname="$skin->dofus_item_cloak_subname"
+                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_cloak_subname)"
                                                        :name="$skin->dofus_item_cloak_name"
                                                        :level="$skin->dofus_item_cloak_level"
                                                        :icon="$skin->dofus_item_cloak_icon"/>

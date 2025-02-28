@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Utils\GetCurrentLocale;
 use App\Notifications\ResetPasswordQueued;
 use App\Notifications\VerifyEmailQueued;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -34,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'role_id',
+        'locale',
     ];
 
     /**
@@ -60,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmailQueued);
+        $this->notify(new VerifyEmailQueued((new GetCurrentLocale)()));
     }
 
     /**

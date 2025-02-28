@@ -72,7 +72,7 @@ class InfiniteUnitySkinIndex extends Component
     public mixed $races;
 
     /**
-     * @var array<int, string[]>
+     * @var array<int, array<int|string>>
      */
     public $raceWhere = [];
 
@@ -82,7 +82,7 @@ class InfiniteUnitySkinIndex extends Component
     public $genderWhere = [];
 
     /**
-     * @var array<int, string[]>
+     * @var array<int, array<string>|int>
      */
     public $skinContentWhere = [];
 
@@ -96,7 +96,7 @@ class InfiniteUnitySkinIndex extends Component
     public bool $winnersOnly = false;
 
     /**
-     * @var array<int, string[]>
+     * @var array<int, array<string>|string>
      */
     public $searchFilterInput = [];
 
@@ -114,7 +114,7 @@ class InfiniteUnitySkinIndex extends Component
     {
         // Si on a des paramètres dans l'url
         if (request()->all()) {
-            //dd(request()->all());
+            // dd(request()->all());
             foreach (request()->all() as $key => $param) {
                 switch ($key) {
                     case 'color':
@@ -133,7 +133,7 @@ class InfiniteUnitySkinIndex extends Component
                     case 'sort':
                         $values = explode(',', $param);
                         $this->SortBy(intval($values[0]), $values[1]);
-                        //dd(explode(',', $param));
+                        // dd(explode(',', $param));
                         break;
                 }
             }

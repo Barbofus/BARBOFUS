@@ -33,7 +33,7 @@ class UserPasswordChangeMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Changement de mot de passe',
+            subject: config('app.name').' - '.__('barbofus.emailTitlePasswordChanged'),
         );
     }
 

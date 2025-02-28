@@ -41,7 +41,7 @@ class SkinPostedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Skin Posté '.(($this->skin->name) ?: 'ID#'.$this->skin->id),
+            subject: config('app.name').' - '.__('barbofus.emailTitleSkinPosted', ['name' => ($this->skin->name) ?: 'ID#'.$this->skin->id]),
         );
     }
 

@@ -1,17 +1,17 @@
 <x-mail::message>
-# Vérification d'E-mail
+#  {{ __('barbofus.emailTitleVerifyEmail') }}
 
-Salut <span class="italic">{{ $notifiable->name }}</span>,<br><br>
-<span>Merci de cliquer sur ce lien pour valider ton adresse e-mail et te connecter à Barbofus.</span>
+{{ __('barbofus.emailContentHello') }} <span class="italic">{{ $notifiable->name }}</span>,<br><br>
+<span>{{ __('barbofus.emailContentVerifyEmail') }}</span>
 
 <x-mail::button :url="$url" :color="'gold'">
-Valider l'E-mail
+{{ __('barbofus.emailButtonVerifyEmail') }}
 </x-mail::button>
 
 <br><br>
 
-Si le bouton ne fonctionne pas, copie colle ce lien dans ta barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
+{{ __('barbofus.emailFooterLink') }} <a href="{{ $url }}" class="blue">{{ $url }}</a>
 
-Cordialement,<br>
+{{ __('barbofus.emailFooterCheers') }}<br>
 <span class="font-bold">{{ config('app.name') }}</span>
 </x-mail::message>

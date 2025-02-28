@@ -33,7 +33,7 @@ class UserNameChangeMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name').' - Changement de pseudo',
+            subject: config('app.name').' - '.__('barbofus.emailTitleNameChanged'),
         );
     }
 

@@ -21,7 +21,7 @@
 {{-- Footer --}}
 <x-slot:footer>
 <x-mail::footer>
-© {{ date('Y') }} {{ config('app.name') }}. @lang('Tous droits réservés.')
+© {{ date('Y') }} {{ config('app.name') }}. @lang('barbofus.footerCopyright')
 </x-mail::footer>
 </x-slot:footer>
 </x-mail::layout>

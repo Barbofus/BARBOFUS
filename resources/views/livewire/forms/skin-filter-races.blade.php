@@ -86,7 +86,7 @@
             @click="showSort = !showSort"
             @keydown="if(showSort) keyPressed($event), window.scrollTo({top: 0, behavior: 'smooth'})"
             class="flex transition-all rounded-md w-[15rem] text-inactiveText hover:text-secondary font-light items-center justify-left gap-x-2 border-2 border-inactiveText hover:border-secondary cursor-pointer h-12 bg-primary-100 p-2">
-        <p>Choisis une classe ...</p>
+        <p>{{  __('barbofus.inputChooseClass') }}</p>
     </button>
 
     <!-- Menu déroulant -->

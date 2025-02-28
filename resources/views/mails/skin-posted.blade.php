@@ -1,20 +1,20 @@
 
 <x-mail::message>
-# Skin posté
+# {{ __('barbofus.emailTitleSkinPosted', ['name' => ($skin->name) ?: 'ID#'.$skin->id]) }}
 
-Salut <span class="italic">{{ $user->name }}</span>,<br><br>
-<span>Ton skin ***{{ ($skin->name) ?: 'ID#'.$skin->id }}*** en **{{ $skin->race->name }}** a été validé par un membre du Staff.</span>
+{{ __('barbofus.emailContentHello') }} <span class="italic">{{ $user->name }}</span>,<br><br>
+<span>{{ __('barbofus.emailContentSkinPosted', ['name' => ($skin->name) ?: 'ID#'.$skin->id, 'class' => $skin->race->name]) }}</span>
 
 <div style="text-align: center;"><img src="{{ asset('storage/' . $skin->image_path ) }}" alt="Image du skin {{ $skin->id }}"></div>
 
 <x-mail::button :url="$url" :color="'gold'">
-Clique pour le voir en action !
+{{ __('barbofus.emailButtonSkinPosted') }}
 </x-mail::button>
 
 <br><br>
 
-Si le bouton ne fonctionne pas, copie colle ce lien dans ta barre de recherche: <a href="{{ $url }}" class="blue">{{ $url }}</a>
+{{ __('barbofus.emailFooterLink') }} <a href="{{ $url }}" class="blue">{{ $url }}</a>
 
-Cordialement,<br>
+{{ __('barbofus.emailFooterCheers') }}<br>
 <span class="font-bold">{{ config('app.name') }}</span>
 </x-mail::message>

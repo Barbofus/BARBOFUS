@@ -43,6 +43,8 @@ class UserPasswordChangeNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        app()->setLocale($notifiable->locale ?? config('app.locale'));
+
         return (new UserPasswordChangeMail($this->user))->to($notifiable->email);
     }
 }

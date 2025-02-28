@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
+use stdClass;
 
 class HavenbagIndexChunk extends Component
 {
@@ -15,7 +16,7 @@ class HavenbagIndexChunk extends Component
     public $havenBagIds;
 
     /**
-     * @var Collection<int, array<string, mixed>>
+     * @var Collection<int|string, stdClass|null>
      */
     public $orderedHavenBags;
 
@@ -34,7 +35,7 @@ class HavenbagIndexChunk extends Component
     }
 
     /**
-     * @return Collection<int, array<string, mixed>>
+     * @return Collection<(int|string), stdClass|null>
      */
     protected function getHavenBags()
     {
