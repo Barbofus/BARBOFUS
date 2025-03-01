@@ -118,6 +118,9 @@ return [
     'contentSkinPosted' => 'skins posted',
     'contentRegistered' => 'Registered',
     'contentVictory' => 'win(s)',
+    'contentError' => 'Error',
+    'contentLost' => 'Oops !',
+    'content404' => 'We searched high and low… but this page is as lost as your socks in the laundry.',
 
     'alertPasswordSaved' => 'Your password has been successfully reset.',
     'alertPasswordResetSended' => 'A password reset email has been sent!<br>Remember to check your spam/junk folder.',

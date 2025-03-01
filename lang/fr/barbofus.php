@@ -118,6 +118,9 @@ return [
     'contentSkinPosted' => 'skins postés',
     'contentRegistered' => 'Inscrit',
     'contentVictory' => 'victoire(s)',
+    'contentError' => 'Erreur',
+    'contentLost' => 'Oups !',
+    'content404' => 'On a cherché partout… mais cette page est aussi introuvable qu’un objet dans l’inventaire de Skyrim.',
 
     'alertPasswordSaved' => 'Ton mot de passe a bien été réinitilisé',
     'alertPasswordResetSended' => 'Un e-mail de réinitialisation a été envoyé !<br>Pense à regarder tes spams / indésirables.',
