@@ -54,6 +54,7 @@ return [
     'titleSettings' => 'Paramètres',
     'titlePreferences' => 'Préférences',
     'titleConnection' => 'Connexions',
+    'titleTranslation' => 'Traductions',
 
     'descriptionHome' => 'Bienvenue sur le site, explore la galerie de skin, ou poste les tiens et deviens la miss\'skin de Dofus !',
     'descriptionBarbe' => 'Le Streameur à l\'origine de ce site',

@@ -98,6 +98,26 @@
                 </div>
             </a>
         </div>
+
+        <h3 class="text-3xl mt-8 mb-2 font-normal text-center uppercase">{{ __('barbofus.titleTranslation') }}</h3>
+
+        <div class="flex min-[800px]:flex-row flex-col gap-x-16 gap-y-8 justify-center items-center">
+            <div class="flex gap-x-4 items-center hover:bg-primary-100 hover:rounded-md bg-primary transition-all p-2">
+                <img src="{{ asset('storage/images/icons/locale/es.png') }}" height="48" width="48" alt="Logo DofusDB">
+                <div class="flex flex-col justify-center items-start">
+                    <p class="text-xl text-secondary font-light uppercase">Max Medina</p>
+                    <p class="italic font-thin text-secondary">Traductions es</p>
+                </div>
+            </div>
+
+            <div class="flex gap-x-4 items-center hover:bg-primary-100 hover:rounded-md bg-primary transition-all p-2">
+                <img src="{{ asset('storage/images/icons/locale/ptbr.png') }}" height="48" width="48" alt="Logo DofusBook">
+                <div class="flex flex-col justify-center items-start">
+                    <p class="text-xl text-secondary font-light uppercase">Amalik</p>
+                    <p class="italic font-thin text-secondary">Tradiction pt/br</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     @vite(['resources/js/skins/NameScroll.js', 'resources/js/skins/ScrollListeners.js', 'resources/js/skins/InfiniteDragSlide.js'])
