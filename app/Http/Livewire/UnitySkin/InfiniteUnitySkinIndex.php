@@ -231,6 +231,15 @@ class InfiniteUnitySkinIndex extends Component
                 $query->where('users.name', 'Barbe Douce');
             })
 
+            // Winners Only
+            ->when($this->winnersOnly, function (Builder $query) {
+                $query->whereExists(function (Builder $query) {
+                    $query->select('id')
+                        ->from('unity_rewards')
+                        ->whereColumn('unity_rewards.unity_skin_id', 'unity_skins.id');
+                });
+            })
+
             // Skin content
             ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
                 $query->where(function (Builder $query) {
