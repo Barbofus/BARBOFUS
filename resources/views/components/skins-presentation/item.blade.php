@@ -1,7 +1,7 @@
 <div>
     <div class="flex gap-x-2 items-center justify-start">
-        <img src="{{ asset('storage/' . $subicon) }}" class="h-7">
-        <p class="text-inactiveText text-md font-light">{{ $subname }}</p>
+        <img src="{{ asset('storage/images/icons/items/subcategories/'. $subname .'.png') }}" class="h-7">
+        <p class="text-inactiveText text-md font-light">{{ __('barbofus.labelSkinItem'.$subname) }}</p>
         <p class="text-inactiveText text-md font-light">Lv. {{ $level }}</p>
     </div>
     <div class="flex space-x-2 items-center bg-primary-100 rounded-md pr-4">

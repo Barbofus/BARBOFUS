@@ -127,19 +127,19 @@
                 <!-- Checkboxs -->
                 <div class="flex flex-col min-[450px]:flex-row justify-start pt-2 pr-5 ml-2 tracking-wide gap-x-4 gap-y-2">
 
-                    <!-- Mimibiotes -->
-                    <div class="relative w-[6.25rem]">
-                        <x-forms.filter-button :name="'Mimibiotes'" :label="__('barbofus.labelSkinItemMimibiotable')" :checked="!in_array(1, $skinContent)" wire:click="ToggleSkinContent(1)" />
-                    </div>
-
                     <!-- Cosmétiques -->
-                    <div class="relative w-[7.5rem]">
-                        <x-forms.filter-button :name="'Cosmétiques'" :label="__('barbofus.labelSkinItemObjet d\'apparat')" :checked="!in_array(2, $skinContent)" wire:click="ToggleSkinContent(2)" />
+                    <div class="relative w-[8.35rem]">
+                        <x-forms.filter-button :name="'Cosmétiques'" :label="__('barbofus.labelSkinItemceremonial')" :checked="!in_array('ceremonial', $skinContent)" wire:click="ToggleSkinContent('ceremonial')" />
                     </div>
 
                     <!-- Objets vivants -->
                     <div class="relative w-32">
-                        <x-forms.filter-button :name="'Objets vivants'" :label="__('barbofus.labelSkinItemObjet vivant')" :checked="!in_array(3, $skinContent)" wire:click="ToggleSkinContent(3)" />
+                        <x-forms.filter-button :name="'Objets vivants'" :label="__('barbofus.labelSkinItemlivingObject')" :checked="!in_array('livingObject', $skinContent)" wire:click="ToggleSkinContent('livingObject')" />
+                    </div>
+
+                    <!-- Mimibiotes -->
+                    <div class="relative w-[6.25rem]">
+                        <x-forms.filter-button :name="'Mimibiotes'" :label="__('barbofus.labelSkinItemmimisymbic')" :checked="!in_array('mimisymbic', $skinContent)" wire:click="ToggleSkinContent('mimisymbic')" />
                     </div>
                 </div>
 

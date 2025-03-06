@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\UnitySkin;
 
 use App\Actions\Utils\DoColorsMatch;
+use App\Enums\ItemSubcategorieEnum;
 use App\Models\Skin;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
@@ -39,14 +40,14 @@ class InfiniteUnitySkinIndex extends Component
     /**
      * @var string[]
      */
-    protected $itemRelations = [
-        'dofus_item_hat',
-        'dofus_item_cloak',
-        'dofus_item_shield',
-        'dofus_item_pet',
-        'dofus_item_costume',
-        'dofus_item_wing',
-        'dofus_item_shoulder',
+    protected $itemCategory = [
+        'hat',
+        'cape',
+        'shield',
+        'pet',
+        'costume',
+        'wings',
+        'shoulderpads',
     ];
 
     /**
@@ -82,7 +83,7 @@ class InfiniteUnitySkinIndex extends Component
     public $genderWhere = [];
 
     /**
-     * @var array<int, array<string>|int>
+     * @var array<int, array<string>|string>
      */
     public $skinContentWhere = [];
 
@@ -114,7 +115,6 @@ class InfiniteUnitySkinIndex extends Component
     {
         // Si on a des paramètres dans l'url
         if (request()->all()) {
-            // dd(request()->all());
             foreach (request()->all() as $key => $param) {
                 switch ($key) {
                     case 'color':
@@ -133,7 +133,6 @@ class InfiniteUnitySkinIndex extends Component
                     case 'sort':
                         $values = explode(',', $param);
                         $this->SortBy(intval($values[0]), $values[1]);
-                        // dd(explode(',', $param));
                         break;
                 }
             }
@@ -176,24 +175,11 @@ class InfiniteUnitySkinIndex extends Component
 
             // Les joins
             ->join('users', 'unity_skins.user_id', '=', 'users.id')
-            ->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0 || count($this->skinPetTypeWhere) > 0, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    $tableItem = $item;
-
-                    if ($item == 'dofus_item_shoulder' || $item == 'dofus_item_wing') {
-                        if ($item == 'dofus_item_wing') {
-                            $query->leftJoin('dofus_item_costumes as wings', 'wings.id', '=', 'unity_skins.dofus_item_wing_id');
-
-                            continue;
-                        }
-
-                        $query->leftJoin('dofus_item_costumes as shoulders', 'shoulders.id', '=', 'unity_skins.dofus_item_shoulder_id');
-
-                        continue;
-                    }
-                    $query->leftJoin($item.'s', $tableItem.'s.id', '=', 'unity_skins.'.$item.'_id');
+            /*->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0 || count($this->skinPetTypeWhere) > 0, function (Builder $query) {
+                foreach ($this->itemCategory as $category) {
+                    $query->leftJoin('items as '. $category .'_items', 'items.dofus_id', '=', 'unity_skins.'.$category.'_id');
                 }
-            })
+            })*/
 
             // select princpal
             ->select('unity_skins.id', 'unity_skins.user_id')
@@ -244,20 +230,21 @@ class InfiniteUnitySkinIndex extends Component
             ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
                 $query->where(function (Builder $query) {
 
-                    // Parcous toutes les relations d'items (DofusItemHat etc..)
-                    foreach ($this->itemRelations as $item) {
-                        $tableItem = $item;
-                        if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
-                            $tableItem = 'dofus_item_costume';
-                        }
-                        $query->where(function (Builder $query) use ($item, $tableItem) {
+                    // Parcous toutes les catégories, et récupère le skin si les items correspondent au filtre, ou sont vides
+                    foreach ($this->itemCategory as $category) {
+                        $query->where(function (Builder $query) use ($category) {
 
-                            $query->whereNotExists(function (Builder $query) use ($item, $tableItem) {
-                                $query->select('id')
-                                    ->from($tableItem.'s')
-                                    ->whereColumn($tableItem.'s.id', 'unity_skins.'.$item.'_id');
+                            $query->whereNotExists(function (Builder $query) use ($category) {
+                                $query->select('dofus_id')
+                                    ->from('items')
+                                    ->whereColumn('items.dofus_id', 'unity_skins.'.$category.'_id');
                             })
-                                ->orWhereNotIn($tableItem.'s.dofus_items_sub_categorie_id', $this->skinContentWhere);
+                                ->orWhereExists(function (Builder $query) use ($category) {
+                                    $query->select('dofus_id')
+                                        ->from('items')
+                                        ->whereColumn('items.dofus_id', 'unity_skins.' . $category . '_id')
+                                        ->whereNotIn('items.subcategory', $this->skinContentWhere);
+                                });
                         });
 
                     }
@@ -266,26 +253,23 @@ class InfiniteUnitySkinIndex extends Component
 
             // Skin pet type
             ->when(count($this->skinPetTypeWhere) > 0, function (Builder $query) {
-                $query->where(function (Builder $query) {
 
-                    $query->when(in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
-                        $query->whereExists(function (Builder $query) {
-                            $query->select('id')
-                                ->from('dofus_item_pets')
-
-                                ->whereColumn('dofus_item_pets.id', 'unity_skins.dofus_item_pet_id');
-                        })
-                            ->WhereNotIn('dofus_item_pets.type', $this->skinPetTypeWhere);
+                // Affiche uniquement ce qui est encore coché
+                $query->when(count($this->skinPetTypeWhere) > 0 && count($this->skinPetTypeWhere) < 5, function (Builder $query) {
+                    $query->whereExists(function (Builder $query) {
+                        $query->select('dofus_id')
+                            ->from('items')
+                            ->whereColumn('items.dofus_id', 'unity_skins.pet_id')
+                            ->WhereNotIn('items.pet_type', $this->skinPetTypeWhere);
                     });
+                });
 
-                    $query->when(! in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
-                        $query->whereNotExists(function (Builder $query) {
-                            $query->select('id')
-                                ->from('dofus_item_pets')
-
-                                ->whereColumn('dofus_item_pets.id', 'unity_skins.dofus_item_pet_id');
-                        })
-                            ->OrWhereNotIn('dofus_item_pets.type', $this->skinPetTypeWhere);
+                // Si tout est déoché, on affiche que les skins sans familier / montiler / monture
+                $query->when(count($this->skinPetTypeWhere) == 5, function (Builder $query) {
+                    $query->whereNotExists(function (Builder $query) {
+                        $query->select('dofus_id')
+                            ->from('items')
+                            ->whereColumn('items.dofus_id', 'unity_skins.pet_id');
                     });
                 });
             })
@@ -462,8 +446,12 @@ class InfiniteUnitySkinIndex extends Component
     /**
      * @return void
      */
-    public function ToggleSkinContent(int $subcategoryID)
+    public function ToggleSkinContent(string $subcategoryID)
     {
+        if(!in_array($subcategoryID, ItemSubcategorieEnum::values())) {
+            return;
+        }
+
         // Si le subcategory est déjà exclu
         if (count($this->skinContentWhere) > 0 && ($key = array_search($subcategoryID, $this->skinContentWhere)) !== false) {
             unset($this->skinContentWhere[$key]);

@@ -184,17 +184,16 @@
 
             <div class="flex flex-col gap-y-4 mt-4">
                 {{-- Items --}}
-                @if(isset($skin->dofus_item_costume_level))
+                @if(isset($skin->costume_level))
                     <div
                         class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-45.5rem)] top-[7.5rem] order-4 w-[31.25rem] flex justify-center min-[950px]:justify-end"
                         style="animation-delay: -2500ms">
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
-                            <x-skins-presentation.item :subicon="$skin->dofus_item_costume_subicon"
-                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_costume_subname)"
-                                                       :name="$skin->dofus_item_costume_name"
-                                                       :level="$skin->dofus_item_costume_level"
-                                                       :icon="$skin->dofus_item_costume_icon"/>
+                            <x-skins-presentation.item :subname="$skin->costume_subname"
+                                                       :name="$skin->costume_name"
+                                                       :level="$skin->costume_level"
+                                                       :icon="$skin->costume_icon"/>
                         </div>
 
                         <img src="{{ asset('storage/images/misc_ui/costume_arrow.png') }}"
@@ -202,17 +201,16 @@
                     </div>
                 @endif
 
-                @if(isset($skin->dofus_item_shield_level))
+                @if(isset($skin->shield_level))
                     <div
                         class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-39.5rem)] top-[16rem] order-3 w-[31.25rem] flex justify-center min-[950px]:justify-end"
                         style="animation-delay: -1250ms">
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
-                            <x-skins-presentation.item :subicon="$skin->dofus_item_shield_subicon"
-                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_shield_subname)"
-                                                       :name="$skin->dofus_item_shield_name"
-                                                       :level="$skin->dofus_item_shield_level"
-                                                       :icon="$skin->dofus_item_shield_icon"/>
+                            <x-skins-presentation.item :subname="$skin->shield_subname"
+                                                       :name="$skin->shield_name"
+                                                       :level="$skin->shield_level"
+                                                       :icon="$skin->shield_icon"/>
                         </div>
 
                         <img src="{{ asset('storage/images/misc_ui/shield_arrow.png') }}"
@@ -220,17 +218,16 @@
                     </div>
                 @endif
 
-                @if(isset($skin->dofus_item_pet_level))
+                @if(isset($skin->pet_level))
                     <div
                         class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%-43.5rem)] top-[24rem] order-5 w-[31.25rem] flex justify-center min-[950px]:justify-end"
                         style="animation-delay: -1250ms">
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
-                            <x-skins-presentation.item :subicon="$skin->dofus_item_pet_subicon"
-                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_pet_subname)"
-                                                       :name="$skin->dofus_item_pet_name"
-                                                       :level="$skin->dofus_item_pet_level"
-                                                       :icon="$skin->dofus_item_pet_icon"/>
+                            <x-skins-presentation.item :subname="$skin->pet_subname"
+                                                       :name="$skin->pet_name"
+                                                       :level="$skin->pet_level"
+                                                       :icon="$skin->pet_icon"/>
                         </div>
 
                         <img src="{{ asset('storage/images/misc_ui/pet_arrow.png') }}"
@@ -239,17 +236,16 @@
                     </div>
                 @endif
 
-                @if(isset($skin->dofus_item_hat_level))
+                @if(isset($skin->hat_level))
                     <div
                         class="min-[950px]:absolute min-[950px]:animate-slideY [--custom-translate-y:5px] [--custom-animation-time:5s] left-[calc(50%+11.5rem)] top-[8.5rem] order-1 w-[31.25rem] flex justify-center min-[950px]:justify-start"
                         style="animation-delay: -1250ms">
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
-                            <x-skins-presentation.item :subicon="$skin->dofus_item_hat_subicon"
-                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_hat_subname)"
-                                                       :name="$skin->dofus_item_hat_name"
-                                                       :level="$skin->dofus_item_hat_level"
-                                                       :icon="$skin->dofus_item_hat_icon"/>
+                            <x-skins-presentation.item :subname="$skin->hat_subname"
+                                                       :name="$skin->hat_name"
+                                                       :level="$skin->hat_level"
+                                                       :icon="$skin->hat_icon"/>
                         </div>
 
                         <img src="{{ asset('storage/images/misc_ui/hat_arrow.png') }}"
@@ -257,17 +253,16 @@
                     </div>
                 @endif
 
-                @if(isset($skin->dofus_item_cloak_level))
+                @if(isset($skin->cape_level))
                     <div
                         class="min-[950px]:absolute min-[950px]:animate-slideX [--custom-translate-x:5px] [--custom-animation-time:5s] left-[calc(50%+14.5rem)] top-[19rem] order-2 w-[31.25rem] flex justify-center min-[950px]:justify-start"
                         style="animation-delay: -1250ms">
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
-                            <x-skins-presentation.item :subicon="$skin->dofus_item_cloak_subicon"
-                                                       :subname="__('barbofus.labelSkinItem'.$skin->dofus_item_cloak_subname)"
-                                                       :name="$skin->dofus_item_cloak_name"
-                                                       :level="$skin->dofus_item_cloak_level"
-                                                       :icon="$skin->dofus_item_cloak_icon"/>
+                            <x-skins-presentation.item :subname="$skin->cape_subname"
+                                                       :name="$skin->cape_name"
+                                                       :level="$skin->cape_level"
+                                                       :icon="$skin->cape_icon"/>
                         </div>
 
                         <img src="{{ asset('storage/images/misc_ui/cloak_arrow.png') }}"

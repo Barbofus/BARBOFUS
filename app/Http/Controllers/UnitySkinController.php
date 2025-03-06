@@ -22,14 +22,14 @@ class UnitySkinController extends Controller
     /**
      * @var string[]
      */
-    protected $itemRelations = [
-        'dofus_item_hat',
-        'dofus_item_cloak',
-        'dofus_item_shield',
-        'dofus_item_pet',
-        'dofus_item_costume',
-        'dofus_item_wing',
-        'dofus_item_shoulder',
+    protected $itemCategories = [
+        'hat',
+        'cape',
+        'shield',
+        'pet',
+        'costume',
+        'wings',
+        'shoulderpads',
     ];
 
     public function __construct()
@@ -57,17 +57,6 @@ class UnitySkinController extends Controller
         $toShow = DB::table('unity_skins')
             ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'unity_skins.id', 'unity_skins.name')
             ->where('unity_skins.id', $skin->id)
-            ->when(true, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
-                        $query->leftJoin('dofus_item_costumes as '.$item.'s', $item.'s.id', '=', 'unity_skins.'.$item.'_id');
-
-                        continue;
-                    }
-                    $query->leftJoin($item.'s', $item.'s.id', '=', 'unity_skins.'.$item.'_id');
-                }
-            })
-
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')
@@ -103,40 +92,30 @@ class UnitySkinController extends Controller
             ])
 
             ->when(true, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    $tableItem = $item;
-                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
-                        $tableItem = 'dofus_item_costume';
-                    }
-
+                foreach ($this->itemCategories as $category) {
                     $query->addSelect([
-                        $item.'_name' => DB::table($tableItem.'s')
+                        $category.'_name' => DB::table('localized_items')
                             ->select('name')
-                            ->whereColumn('id', 'unity_skins.'.$item.'_id')
+                            ->where('locale', app()->getLocale())
+                            ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                             ->take(1),
                     ])
                         ->addSelect([
-                            $item.'_icon' => DB::table($tableItem.'s')
+                            $category.'_icon' => DB::table('items')
                                 ->select('icon_path')
-                                ->whereColumn('id', 'unity_skins.'.$item.'_id')
+                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $item.'_level' => DB::table($tableItem.'s')
+                            $category.'_level' => DB::table('items')
                                 ->select('level')
-                                ->whereColumn('id', 'unity_skins.'.$item.'_id')
+                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $item.'_subname' => DB::table('dofus_items_sub_categories')
-                                ->select('name')
-                                ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
-                                ->take(1),
-                        ])
-                        ->addSelect([
-                            $item.'_subicon' => DB::table('dofus_items_sub_categories')
-                                ->select('icon_path')
-                                ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
+                            $category.'_subname' => DB::table('items')
+                                ->select('subcategory')
+                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                                 ->take(1),
                         ]);
                 }
@@ -181,13 +160,13 @@ class UnitySkinController extends Controller
             'height' => 390]);
 
         $skin = UnitySkin::create([
-            'dofus_item_hat_id' => $request->dofus_item_hat_id,
-            'dofus_item_cloak_id' => $request->dofus_item_cloak_id,
-            'dofus_item_shield_id' => $request->dofus_item_shield_id,
-            'dofus_item_pet_id' => $request->dofus_item_pet_id,
-            'dofus_item_costume_id' => $request->dofus_item_costume_id,
-            'dofus_item_wing_id' => $request->dofus_item_wing_id,
-            'dofus_item_shoulder_id' => $request->dofus_item_shoulder_id,
+            'hat_id' => $request->hat_id,
+            'cape_id' => $request->cape_id,
+            'shield_id' => $request->shield_id,
+            'pet_id' => $request->pet_id,
+            'costume_id' => $request->costume_id,
+            'wings_id' => $request->wings_id,
+            'shoulderpads_id' => $request->shoulderpads_id,
             'face' => $request->face,
             'image_path' => $imagePath,
             'gender' => $request->gender,
@@ -251,13 +230,13 @@ class UnitySkinController extends Controller
                 'height' => 390]);
         }
 
-        $skin->dofus_item_hat_id = $request->dofus_item_hat_id;
-        $skin->dofus_item_cloak_id = $request->dofus_item_cloak_id;
-        $skin->dofus_item_shield_id = $request->dofus_item_shield_id;
-        $skin->dofus_item_pet_id = $request->dofus_item_pet_id;
-        $skin->dofus_item_costume_id = $request->dofus_item_costume_id;
-        $skin->dofus_item_wing_id = $request->dofus_item_wing_id;
-        $skin->dofus_item_shoulder_id = $request->dofus_item_shoulder_id;
+        $skin->hat_id = $request->hat_id;
+        $skin->cape_id = $request->cape_id;
+        $skin->shield_id = $request->shield_id;
+        $skin->pet_id = $request->pet_id;
+        $skin->costume_id = $request->costume_id;
+        $skin->wings_id = $request->wings_id;
+        $skin->shoulderpads_id = $request->shoulderpads_id;
         $skin->face = $request->face;
         $skin->image_path = $imagePath;
         $skin->gender = $request->gender;

@@ -22,12 +22,12 @@ class SkinController extends Controller
     /**
      * @var string[]
      */
-    protected $itemRelations = [
-        'dofus_item_hat',
-        'dofus_item_cloak',
-        'dofus_item_shield',
-        'dofus_item_pet',
-        'dofus_item_costume',
+    protected $itemCategories = [
+        'hat',
+        'cape',
+        'shield',
+        'pet',
+        'costume',
     ];
 
     public function __construct()
@@ -55,12 +55,6 @@ class SkinController extends Controller
         $toShow = DB::table('skins')
             ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'skins.id', 'skins.name')
             ->where('skins.id', $skin->id)
-            ->when(true, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    $query->leftJoin($item.'s', $item.'s.id', '=', 'skins.'.$item.'_id');
-                }
-            })
-
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')
@@ -96,35 +90,30 @@ class SkinController extends Controller
             ])
 
             ->when(true, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
+                foreach ($this->itemCategories as $category) {
                     $query->addSelect([
-                        $item.'_name' => DB::table($item.'s')
+                        $category.'_name' => DB::table('localized_items')
                             ->select('name')
-                            ->whereColumn('id', 'skins.'.$item.'_id')
+                            ->where('locale', app()->getLocale())
+                            ->whereColumn('dofus_id', 'skins.'.$category.'_id')
                             ->take(1),
                     ])
                         ->addSelect([
-                            $item.'_icon' => DB::table($item.'s')
+                            $category.'_icon' => DB::table('items')
                                 ->select('icon_path')
-                                ->whereColumn('id', 'skins.'.$item.'_id')
+                                ->whereColumn('dofus_id', 'skins.'.$category.'_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $item.'_level' => DB::table($item.'s')
+                            $category.'_level' => DB::table('items')
                                 ->select('level')
-                                ->whereColumn('id', 'skins.'.$item.'_id')
+                                ->whereColumn('dofus_id', 'skins.'.$category.'_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $item.'_subname' => DB::table('dofus_items_sub_categories')
-                                ->select('name')
-                                ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
-                                ->take(1),
-                        ])
-                        ->addSelect([
-                            $item.'_subicon' => DB::table('dofus_items_sub_categories')
-                                ->select('icon_path')
-                                ->whereColumn('id', $item.'s.dofus_items_sub_categorie_id')
+                            $category.'_subname' => DB::table('items')
+                                ->select('subcategory')
+                                ->whereColumn('dofus_id', 'skins.'.$category.'_id')
                                 ->take(1),
                         ]);
                 }

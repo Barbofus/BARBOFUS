@@ -47,7 +47,7 @@ final class GetItemsFromDofusDB
             foreach ($result as $value) {
                 $items[] = [
                     'id' => $value->id,
-                    'name' => $value->name->fr,
+                    'name' => $value->name,
                     'level' => $value->level,
                     'iconId' => $value->iconId,
                     'typeId' => $value->typeId,
@@ -56,7 +56,7 @@ final class GetItemsFromDofusDB
         }
 
         // Récupère tous les objets vivants qui sont compatible avec typeID
-        if (in_array(16, $typeID) || in_array(17, $typeID) || in_array(82, $typeID) || in_array(300, $typeID)) {
+        if (in_array(16, $typeID) || in_array(17, $typeID) || in_array(82, $typeID) || in_array(199, $typeID) || in_array(299, $typeID) || in_array(300, $typeID)) {
 
             // Construit un string avec les &typesID= pour la requête
             $typeIDString = '';
@@ -90,9 +90,14 @@ final class GetItemsFromDofusDB
 
                     // Pour chaque moods normal (donc key 1), on ajoute un item dans $items avec l'id du mood, son lien d'image, le $livingObject->level et le $livingObject->name + mood id
                     foreach ($result->moods[1] as $key => $mood) {
+                        $name = [];
+                        foreach ($livingObject->name as $key2 => $locale) {
+                            $name[$key2] = $locale.' '.($key + 1);
+                        }
+
                         $items[] = [
                             'id' => $mood,
-                            'name' => $livingObject->name->fr.' '.($key + 1),
+                            'name' => $name,
                             'level' => $livingObject->level,
                             'iconId' => $mood,
                             'typeId' => 113,

@@ -2,228 +2,138 @@
 
 namespace App\Http\Livewire\Forms;
 
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use App\Models\Item;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class SearchbarItemsAutocomplete extends Component
 {
-    public string $relatedModel;
+    public string $category;
 
     public string $name;
 
-    public string|int|null $value;
-
     public string $placeholder;
-
-    public int $selectedItem = 0;
-
-    public int $selectedItemID = 0;
-
-    /**
-     * @var Collection<int|string, mixed>
-     */
-    public $existentItem;
 
     public string $query = '';
 
-    public string $previousQuery = '';
+    public ?int $value;
 
-    public mixed $itemsToShow = [];
+    public int $selectedID = 0;
+
+    public ?Item $selectedItem;
+
+    /**
+     * @var Collection<int, Item>
+     */
+    public $items;
 
     /**
      * @return void
      */
-    public function mount(string|int|null $value)
+    public function mount()
     {
+        $this->items = new Collection;
 
-        if ($value) {
-            $this->selectedItemID = (int) $value;
-            $this->existentItem = $this->ExistentQuery($value);
-            $this->query = $this->existentItem['name'];
-            $this->previousQuery = $this->query;
+        // Si nous avons un item dans le champ à l'initialisation
+        if ($this->value) {
+            $this->useValue();
         }
-
-        $this->updatedQuery($this->query);
     }
 
     /**
+     * S'execute depuis le mount() lorsqu'il la $value initiale n'est pas null
+     *
      * @return void
      */
-    public function emptyQuery()
+    private function useValue()
     {
-        $this->query = '';
-        $this->itemsToShow = [];
+        // Récupère l'item présent dans le champ
+        $this->selectedItem = Item::whereHas('localizedName')
+            ->where('dofus_id', $this->value)
+            ->where('category', $this->category)
+            ->first();
+
+        // Utilise son nom dans la query
+        $this->query = $this->selectedItem?->name ?? '';
     }
 
     /**
-     * @return Collection<int|string, mixed>
-     */
-    public function ExistentQuery(string|int $value)
-    {
-        return ($this->ExistentQueryCount($value) > 1)
-            ? null
-            : new Collection((array) DB::table($this->relatedModel)
-                ->select('id', 'icon_path', 'name', 'level')
-                ->where('id', '=', $value)
-                ->orWhere('name', '=', $value)
-                ->addSelect([
-                    'sub_icon_path' => DB::table('dofus_items_sub_categories')
-                        ->select('icon_path')
-                        ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                        ->take(1),
-                ])
-                ->addSelect([
-                    'sub_name' => DB::table('dofus_items_sub_categories')
-                        ->select('name')
-                        ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                        ->take(1),
-                ])
-                ->first());
-    }
-
-    public function ExistentQueryCount(string|int $value): int
-    {
-        $found = DB::table($this->relatedModel)
-            ->select('id', 'icon_path', 'name', 'level')
-            ->where('id', '=', $value)
-            ->orWhere('name', '=', $value)
-            ->addSelect([
-                'sub_icon_path' => DB::table('dofus_items_sub_categories')
-                    ->select('icon_path')
-                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1),
-            ])
-            ->addSelect([
-                'sub_name' => DB::table('dofus_items_sub_categories')
-                    ->select('name')
-                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1),
-            ])->get();
-
-        if ($found->count() > 0) {
-            return 0;
-        }
-
-        return $found->count();
-    }
-
-    /**
+     * Fonction qui se déclenche lorsque la query change, dans l'input depuis la vue
+     *
      * @return void
      */
-    public function resetSelection()
+    public function updatedQuery()
     {
-        // Aucun id selectionné
-        $this->selectedItem = 0;
+        // Remet l'item selectionné à zéro
+        $this->selectedID = 0;
 
-        // Vide le dropdown
-        $this->itemsToShow = [];
-
-        // Aucun item selectionné
-        $this->existentItem = new Collection;
-    }
-
-    /**
-     * @return void
-     */
-    public function incrementSelection()
-    {
-        if ($this->selectedItem >= count($this->itemsToShow) - 1) {
-            $this->selectedItem = 0;
+        // Si la query est trop courte, on vide les selections et bloque la fonction
+        if (strlen($this->query) < 3) {
+            $this->selectedItem = null;
+            $this->items = new Collection;
 
             return;
         }
 
-        $this->selectedItem++;
+        $this->searchForItems();
+        $this->searchForPerfect();
     }
 
     /**
+     * S'execute depuis updatedQuery(), cherche les items correspondant à la query
+     *
      * @return void
      */
-    public function decrementSelection()
+    private function searchForItems()
     {
-        if ($this->selectedItem <= 0) {
-            $this->selectedItem = count($this->itemsToShow) - 1;
-
-            return;
-        }
-
-        $this->selectedItem--;
+        $this->items = Item::whereHas('localizedName', function ($query) {
+            $query->where('locale', app()->getLocale())
+                ->where('name', 'LIKE', "%{$this->query}%")
+                ->where('name', '!=', $this->query);
+        })->where('category', $this->category)->limit(20)->get();
     }
 
     /**
+     * S'execute depuis updatedQuery(), cherche si un item possède exactement le même nom que la query
+     *
      * @return void
      */
-    public function setSelection(string|int $value)
+    private function searchForPerfect()
     {
-        $this->selectedItem = (int) $value;
+        $this->selectedItem = Item::whereHas('localizedName', function ($query) {
+            $query->where('locale', app()->getLocale())
+                ->where('name', '=', $this->query);
+        })->where('category', $this->category)->first();
+    }
 
+    /**
+     * S'éxecute depuis le front, via un clique gauche sur un item présent dans le menu déroulant
+     *
+     * @return void
+     */
+    public function setSelection(int $id)
+    {
+        $this->selectedID = $id;
         $this->useSelectionAsValue();
     }
 
     /**
+     * S'execute via setSelection() - Permet d'utiliser la selection en tant que valeur
+     *
      * @return void
      */
-    public function updatedQuery(string $query)
+    private function useSelectionAsValue()
     {
-        // Si la recherche est trop courte
-        if (strlen($query) < 3) {
+        // Récupère l'item selectionné
+        $this->selectedItem = $this->items[$this->selectedID];
 
-            // On reset la selection
-            $this->resetSelection();
-            $this->previousQuery = $query;
+        // Utilise son nom dans la query
+        $this->query = $this->selectedItem->name;
+        $this->items = new Collection;
 
-            return;
-        }
-
-        $resultCount = $this->ExistentQueryCount($query);
-
-        // Prend les premiers items contenant la recherche en excluant le résultat exact
-        $this->itemsToShow = DB::table($this->relatedModel)
-            ->select('id', 'icon_path', 'name', 'level')
-            ->when($resultCount == 1, function (Builder $q) use ($query) {
-                $q->where('name', '!=', $query);
-            })
-            ->where('name', 'LIKE', '%'.$query.'%')
-            ->addSelect([
-                'sub_icon_path' => DB::table('dofus_items_sub_categories')
-                    ->select('icon_path')
-                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1),
-            ])
-            ->addSelect([
-                'sub_name' => DB::table('dofus_items_sub_categories')
-                    ->select('name')
-                    ->whereColumn('dofus_items_sub_categories.id', $this->relatedModel.'.dofus_items_sub_categorie_id')
-                    ->take(1),
-            ])
-            ->get();
-
-        // Si l'item exact est écrit, on le dit pour changer le visuel
-        $this->existentItem = $this->ExistentQuery(($this->selectedItemID > 0) ? $this->selectedItemID : $query);
-
-        if ($this->query != $this->previousQuery) {
-            $this->selectedItem = 0;
-        }
-
-        $this->previousQuery = $query;
-
-    }
-
-    /**
-     * @return void
-     */
-    // Remplace la query par l'item selectionné
-    public function useSelectionAsValue()
-    {
-        if (! $this->itemsToShow) {
-            return;
-        }
-
-        $this->query = [$this->itemsToShow[$this->selectedItem]][0]['name'];
-        $this->selectedItemID = [$this->itemsToShow[$this->selectedItem]][0]['id'];
+        // Remet la selection à zéro
+        $this->selectedID = 0;
     }
 
     /**
@@ -231,8 +141,6 @@ class SearchbarItemsAutocomplete extends Component
      */
     public function render()
     {
-        $this->updatedQuery($this->query);
-
-        return view('livewire.forms.searchbar-items-autocomplete', ['items' => $this->itemsToShow]);
+        return view('livewire.forms.searchbar-items-autocomplete');
     }
 }

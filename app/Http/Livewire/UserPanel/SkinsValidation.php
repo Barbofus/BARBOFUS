@@ -17,14 +17,14 @@ class SkinsValidation extends Component
     /**
      * @var string[]
      */
-    protected $itemRelations = [
-        'dofus_item_hat',
-        'dofus_item_cloak',
-        'dofus_item_shield',
-        'dofus_item_pet',
-        'dofus_item_costume',
-        'dofus_item_wing',
-        'dofus_item_shoulder',
+    protected $itemCategories = [
+        'hat',
+        'cape',
+        'shield',
+        'pet',
+        'costume',
+        'wings',
+        'shoulderpads',
     ];
 
     public mixed $skins;
@@ -64,20 +64,21 @@ class SkinsValidation extends Component
             ])
 
             ->when(true, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
+                foreach ($this->itemCategories as $category) {
+                    if ($category == 'wings' || $category == 'shoulderpads') {
                         continue;
                     }
                     $query->addSelect([
-                        $item.'_name' => DB::table($item.'s')
+                        $category.'_name' => DB::table('localized_items')
                             ->select('name')
-                            ->whereColumn('id', 'skins.'.$item.'_id')
+                            ->where('locale', app()->getLocale())
+                            ->whereColumn('dofus_id', 'skins.'.$category.'_id')
                             ->take(1),
                     ])
                         ->addSelect([
-                            $item.'_icon' => DB::table($item.'s')
+                            $category.'_icon' => DB::table('items')
                                 ->select('icon_path')
-                                ->whereColumn('id', 'skins.'.$item.'_id')
+                                ->whereColumn('dofus_id', 'skins.'.$category.'_id')
                                 ->take(1),
                         ]);
                 }
@@ -114,21 +115,18 @@ class SkinsValidation extends Component
             ])
 
             ->when(true, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    $tableItem = $item;
-                    if ($item == 'dofus_item_wing' || $item == 'dofus_item_shoulder') {
-                        $tableItem = 'dofus_item_costume';
-                    }
+                foreach ($this->itemCategories as $category) {
                     $query->addSelect([
-                        $item.'_name' => DB::table($tableItem.'s')
+                        $category.'_name' => DB::table('localized_items')
                             ->select('name')
-                            ->whereColumn('id', 'unity_skins.'.$item.'_id')
+                            ->where('locale', app()->getLocale())
+                            ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                             ->take(1),
                     ])
                         ->addSelect([
-                            $item.'_icon' => DB::table($tableItem.'s')
+                            $category.'_icon' => DB::table('items')
                                 ->select('icon_path')
-                                ->whereColumn('id', 'unity_skins.'.$item.'_id')
+                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                                 ->take(1),
                         ]);
                 }

@@ -1,41 +1,42 @@
 <?php
 
 declare(strict_types=1);
-//some words may have two (or more!) good substitutes
-//i'm translating with the target audience in mind and making it be as readable and reasonable as possible.
-//trying to avoid gendered words to make it more ample
-//Also shamelessly copying some words from Ankama shop
+
+// some words may have two (or more!) good substitutes
+// i'm translating with the target audience in mind and making it be as readable and reasonable as possible.
+// trying to avoid gendered words to make it more ample
+// Also shamelessly copying some words from Ankama shop
 return [
-    'buttonHome' => 'Início',//Very accustomed to the word "Home" but "Início" may be more welcoming for non-english speakers
-    'buttonSkins' => 'Aparência',//
-    'buttonHavenbags' => 'Saco de viagem',//Ankama
-    'buttonTools' => 'Barb\'Ferramentas',//"Tools" translates literally to "ferramentas", unfortunately no small word to help we here.
-    'buttonLogin' => 'Log in',//"Iniciar sessão" would be a more literal approach
-    'buttonRegister' => 'Registrar-se',//good to go
-    'buttonLogout' => 'Log out',//"Encerrar sessão" would be a more literal approach
+    'buttonHome' => 'Início', // Very accustomed to the word "Home" but "Início" may be more welcoming for non-english speakers
+    'buttonSkins' => 'Aparência', //
+    'buttonHavenbags' => 'Saco de viagem', // Ankama
+    'buttonTools' => 'Barb\'Ferramentas', // "Tools" translates literally to "ferramentas", unfortunately no small word to help we here.
+    'buttonLogin' => 'Log in', // "Iniciar sessão" would be a more literal approach
+    'buttonRegister' => 'Registrar-se', // good to go
+    'buttonLogout' => 'Log out', // "Encerrar sessão" would be a more literal approach
     'buttonSkinPost' => 'Compartilhar uma aparência',
-    'buttonSkinExplore' => 'Explore as aparências',//"confira" would be like "look into", "Descubra"/"discover" also a good word here
+    'buttonSkinExplore' => 'Explore as aparências', // "confira" would be like "look into", "Descubra"/"discover" also a good word here
     'buttonLegals' => 'Avisos legais',
     'buttonDashboard' => 'Meu perfil',
     'buttonForgotPassword' => 'Esqueceu sua senha ?',
-    'buttonSend' => 'Enviar',//"enviar" has the meaning of sending something, like a letter, e-mail or message
+    'buttonSend' => 'Enviar', // "enviar" has the meaning of sending something, like a letter, e-mail or message
     'buttonSendVerifyEmail' => 'Reenviar e-mail de verificação',
-    'buttonToolsTougli' => 'Clique aqui para abrir o documento',//"Acesse o documento aqui" would be more lighthearted
+    'buttonToolsTougli' => 'Clique aqui para abrir o documento', // "Acesse o documento aqui" would be more lighthearted
     'buttonToolsSkin2.0' => 'Clique aqui para (re)descobrir',
     'buttonDelete' => 'Apagar',
     'buttonCancel' => 'Cancelar',
-    'buttonValidate' => 'Validar',//"submit" differs from "send", much like to submit a form or a more formal thing, thus "validar" as in "validate"
+    'buttonValidate' => 'Validar', // "submit" differs from "send", much like to submit a form or a more formal thing, thus "validar" as in "validate"
     'buttonPostHS' => 'Compartilhar um saco de viagem',
     'buttonSkinPostTuto' => 'Tutorial para compartilhar aparências',
     'buttonSkinIndexPostTuto' => 'Siga o tutorial para postar uma aparência 3.0 ',
     'buttonSkinOldIndexPostTuto' => 'Como criar e postar uma aparência no site?',
     'buttonSave' => 'Salvar',
-    'buttonLinkDiscord' => 'Vincule seu discord',//"link" would work as well, "vincule" is a more verbose approach
+    'buttonLinkDiscord' => 'Vincule seu discord', // "link" would work as well, "vincule" is a more verbose approach
 
     'titleHome' => 'Barbofus, a galeria de aparências do Dofus',
     'titleBarbe' => 'Descubra Barbe Douce',
     'titleBarbeDetails' => 'Uma introdução rápida e efetiva:',
-    'titleUnity' => 'E se nós gostamos das aparências do unity?!',//if the objetive os this text is to sound challangin as in "i like this, so what?" a better translation would be
+    'titleUnity' => 'E se nós gostamos das aparências do unity?!', // if the objetive os this text is to sound challangin as in "i like this, so what?" a better translation would be
     'titleThanks' => 'Agradecimentos',
     'titleLogin' => 'Login',
     'titleForgotPassword' => 'Esqueci a senha',
@@ -51,7 +52,7 @@ return [
     'titleUserDetails' => 'Detalhes de usuário',
     'titleMySkins' => 'Minhas aparências',
     'titleMyOldSkins' => 'aparências 2.0',
-    'titleMyLikes' => 'Minhas curtidas',//"meus likes" would also work, the facebook like here is called "curtida" for example
+    'titleMyLikes' => 'Minhas curtidas', // "meus likes" would also work, the facebook like here is called "curtida" for example
     'titleMyAccount' => 'Minha conta',
     'titleInfo' => 'Informações',
     'titleSettings' => 'Configurações',
@@ -60,7 +61,7 @@ return [
     'titleTranslation' => 'Traduções',
 
     'descriptionHome' => 'Boas vindas ao site! Explore a galeria de aparências, compartilhe suas próprias criações e torne-se Miss\'Aparência do Dofus!',
-    //"Miss\'aparência do Dofus!" sound a little off, maybe Miss'Barbofus or Miss'Dofus?
+    // "Miss\'aparência do Dofus!" sound a little off, maybe Miss'Barbofus or Miss'Dofus?
     'descriptionBarbe' => 'O streamer por trás deste site',
     'descriptionBarbeDetails1' => 'Eu sou um parceiro',
     'descriptionBarbeDetails2' => 'Live todos os dias à partir das 7-8 AM na:',
@@ -94,7 +95,7 @@ return [
     'descriptionSkinCreate' => 'Nos mostre suas aparências 3.0 !',
     'descriptionSkinCreate2.0' => 'Nos mostre suas aparências !',
     'descriptionDeleteSkinVerif' => 'Tem certeza que quer apagar a aparência',
-    'descriptionMissSkin' => 'Ranking toda <span class="font-normal">Terça-feira às 9am</span> !',// "ranking" could go as "classificação"
+    'descriptionMissSkin' => 'Ranking toda <span class="font-normal">Terça-feira às 9am</span> !', // "ranking" could go as "classificação"
     'descriptionMissSkinDetails' => '<span class="font-normal text-[0.9rem]">Miss\'Aparência</span> é um concurso semanal automático, toda semana as aparências com mais "curtidas" serão escolhidas como vencedoras!',
     'descriptionNotLiked' => 'Você não curtiu nada !',
     'descriptionNoSkinPosted' => 'Nenhuma aparência postada ainda !',
@@ -194,9 +195,9 @@ return [
     'labelSkinColorsSkin' => 'Aparência',
     'labelSkinColorsHair' => 'Cabelo',
     'labelSkinColorsClothes' => 'Roupas',
-    'labelSkinItemObjet d\'apparat' => 'Cosméticos',
-    'labelSkinItemObjet vivant' => 'Itens vivos',
-    'labelSkinItemMimibiotable' => 'Mimibiótico',
+    'labelSkinItemceremonial' => 'Cosméticos',
+    'labelSkinItemlivingObject' => 'Itens vivos',
+    'labelSkinItemmimisymbic' => 'Mimibiótico',
     'labelSortedBy' => 'Listar por:',
     'labelColors' => 'Cores:',
     'labelSeeOnly' => 'Mostrar apenas :',

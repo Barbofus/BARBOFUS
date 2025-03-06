@@ -46,9 +46,16 @@
                 <h2 class="text-2xl font-thin mb-8 uppercase">Derniers Ajouts</h2>
                 <div class="grid grid-cols-3 gap-4 text-left">
                     @foreach(session('newItems') as $newItem)
-                        <div class="flex space-x-2 items-center bg-primary-100 rounded-md pr-4">
-                            <img class="w-14" draggable="false" src="{{ asset('storage/' . $newItem[1] )}}">
-                            <p class="font-light italic text-secondary text-md min-[750px]:text-lg">{{ $newItem[0] }}</p>
+                        <div>
+                            <div class="flex gap-x-2 items-center justify-start">
+                                <img src="{{ asset('storage/images/icons/items/subcategories/'.$newItem[2]->value.'.png') }}" class="h-7">
+                                <p class="text-inactiveText text-md font-light">{{ __('barbofus.labelSkinItem'.$newItem[2]->value) }}</p>
+                                <p class="text-inactiveText text-md font-light">Lv. {{ $newItem[3] }}</p>
+                            </div>
+                            <div class="flex space-x-2 items-center bg-primary-100 rounded-md pr-4">
+                                <img class="w-14" draggable="false" src="{{ asset('storage/' . $newItem[1] )}}">
+                                <p class="font-light italic text-secondary text-md min-[750px]:text-lg">{{ $newItem[0] }}</p>
+                            </div>
                         </div>
                     @endforeach
                 </div>

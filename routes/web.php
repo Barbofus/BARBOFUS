@@ -31,6 +31,9 @@ use Illuminate\Support\Facades\Route;
     $newSkins = \App\Models\Skin::select('id')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->count();
     dd('Nouveaux Comptes = ', $newUser, 'Nouveaux Likes = '.$newLikes, 'Nouveaux Skins = '.$newSkins);
 });*/
+/*Route::get('/foo', function () {
+    (new \App\Actions\Utils\PopulateNewSkinItems)();
+})->name('home');*/
 
 Route::get('/', HomeController::class)->name('home');
 

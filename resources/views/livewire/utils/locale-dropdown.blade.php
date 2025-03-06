@@ -30,7 +30,7 @@
             <img draggable="false" src="{{ asset('storage/images/icons/locale/es.png') }}" title="Española" alt="Bandera española" height="48" class="h-8">
         </button>
         <button wire:click="setLocale('pt')" class="block hover:brightness-50 active:scale-90 transition-all">
-            <img draggable="false" src="{{ asset('storage/images/icons/locale/ptbr.png') }}" title="Português" alt="Bandeira portuguesa" height="48" class="h-8">
+            <img draggable="false" src="{{ asset('storage/images/icons/locale/pt.png') }}" title="Português" alt="Bandeira portuguesa" height="48" class="h-8">
         </button>
     </div>
 </div>

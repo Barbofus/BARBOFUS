@@ -11,6 +11,11 @@ class Skin extends Model
 {
     protected $fillable = [
         'face',
+        'hat_id',
+        'cape_id',
+        'shield_id',
+        'pet_id',
+        'costume_id',
         'image_path',
         'gender',
         'color_skin',
@@ -31,6 +36,46 @@ class Skin extends Model
     ];
 
     use HasFactory;
+
+    /**
+     * @return BelongsTo<Item, Skin>
+     */
+    public function hat()
+    {
+        return $this->belongsTo(Item::class, 'hat_id');
+    }
+
+    /**
+     * @return BelongsTo<Item, Skin>
+     */
+    public function cape()
+    {
+        return $this->belongsTo(Item::class, 'cape_id');
+    }
+
+    /**
+     * @return BelongsTo<Item, Skin>
+     */
+    public function shield()
+    {
+        return $this->belongsTo(Item::class, 'shield_id');
+    }
+
+    /**
+     * @return BelongsTo<Item, Skin>
+     */
+    public function pet()
+    {
+        return $this->belongsTo(Item::class, 'pet_id');
+    }
+
+    /**
+     * @return BelongsTo<Item, Skin>
+     */
+    public function costume()
+    {
+        return $this->belongsTo(Item::class, 'costume_id');
+    }
 
     /**
      * @return BelongsTo<DofusItemHat, Skin>

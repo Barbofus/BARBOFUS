@@ -111,7 +111,7 @@
             </div>
 
             <div class="flex gap-x-4 items-center hover:bg-primary-100 hover:rounded-md bg-primary transition-all p-2">
-                <img src="{{ asset('storage/images/icons/locale/ptbr.png') }}" height="48" width="48" alt="Logo DofusBook">
+                <img src="{{ asset('storage/images/icons/locale/pt.png') }}" height="48" width="48" alt="Logo DofusBook">
                 <div class="flex flex-col justify-center items-start">
                     <p class="text-xl text-secondary font-light uppercase">Amalik</p>
                     <p class="italic font-thin text-secondary">Tradiction pt/br</p>

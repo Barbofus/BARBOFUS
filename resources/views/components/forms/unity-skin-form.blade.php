@@ -362,26 +362,26 @@
             <p class="text-xl ml-10 font-light">{{ __('barbofus.labelSkinItems') }}</p>
             <div class="grid grid-flow-row grid-cols-1 gap-4
                         md:grid-cols-2 pb-72">
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_hats'" :name="'dofus_item_hat_id'" :placeholder="__('barbofus.inputSkinHat')"
-                                                             :value="(old('dofus_item_hat_id')) ? old('dofus_item_hat_id') : (isset($skin) ? $skin['dofus_item_hat_id']: '')"  />
+                <livewire:forms.searchbar-items-autocomplete :category="'hat'" :name="'hat_id'" :placeholder="__('barbofus.inputSkinHat')"
+                                                             :value="(old('hat_id')) ? old('hat_id') : (isset($skin) ? $skin['hat_id']: null)"  />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_cloaks'" :name="'dofus_item_cloak_id'" :placeholder="__('barbofus.inputSkinCape')"
-                                                             :value="(old('dofus_item_cloak_id')) ? old('dofus_item_cloak_id') : (isset($skin) ? $skin['dofus_item_cloak_id']: '')" />
+                <livewire:forms.searchbar-items-autocomplete :category="'cape'" :name="'cape_id'" :placeholder="__('barbofus.inputSkinCape')"
+                                                             :value="(old('cape_id')) ? old('cape_id') : (isset($skin) ? $skin['cape_id']: null)" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_shields'" :name="'dofus_item_shield_id'" :placeholder="__('barbofus.inputSkinShield')"
-                                                             :value="(old('dofus_item_shield_id')) ? old('dofus_item_shield_id') : (isset($skin) ? $skin['dofus_item_shield_id']: '')" />
+                <livewire:forms.searchbar-items-autocomplete :category="'shield'" :name="'shield_id'" :placeholder="__('barbofus.inputSkinShield')"
+                                                             :value="(old('shield_id')) ? old('shield_id') : (isset($skin) ? $skin['shield_id']: null)" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_pets'" :name="'dofus_item_pet_id'" :placeholder="__('barbofus.inputSkinPet')"
-                                                             :value="(old('dofus_item_pet_id')) ? old('dofus_item_pet_id') : (isset($skin) ? $skin['dofus_item_pet_id']: '')" />
+                <livewire:forms.searchbar-items-autocomplete :category="'pet'" :name="'pet_id'" :placeholder="__('barbofus.inputSkinPet')"
+                                                             :value="(old('pet_id')) ? old('pet_id') : (isset($skin) ? $skin['pet_id']: null)" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_wing_id'" :placeholder="__('barbofus.inputSkinWing')"
-                                                             :value="(old('dofus_item_wing_id')) ? old('dofus_item_wing_id') : (isset($skin) ? $skin['dofus_item_wing_id']: '')" />
+                <livewire:forms.searchbar-items-autocomplete :category="'wings'" :name="'wings_id'" :placeholder="__('barbofus.inputSkinWing')"
+                                                             :value="(old('wings_id')) ? old('wings_id') : (isset($skin) ? $skin['wings_id']: null)" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_shoulder_id'" :placeholder="__('barbofus.inputSkinShoulderPads')"
-                                                             :value="(old('dofus_item_shoulder_id')) ? old('dofus_item_shoulder_id') : (isset($skin) ? $skin['dofus_item_shoulder_id']: '')" />
+                <livewire:forms.searchbar-items-autocomplete :category="'shoulderpads'" :name="'shoulderpads_id'" :placeholder="__('barbofus.inputSkinShoulderPads')"
+                                                             :value="(old('shoulderpads_id')) ? old('shoulderpads_id') : (isset($skin) ? $skin['shoulderpads_id']: null)" />
 
-                <livewire:forms.searchbar-items-autocomplete :relatedModel="'dofus_item_costumes'" :name="'dofus_item_costume_id'" :placeholder="__('barbofus.inputSkinCostume')"
-                                                             :value="(old('dofus_item_costume_id')) ? old('dofus_item_costume_id') : (isset($skin) ? $skin['dofus_item_costume_id']: '')" />
+                <livewire:forms.searchbar-items-autocomplete :category="'costume'" :name="'costume_id'" :placeholder="__('barbofus.inputSkinCostume')"
+                                                             :value="(old('costume_id')) ? old('costume_id') : (isset($skin) ? $skin['costume_id']: null)" />
             </div>
         </div>
     </div>

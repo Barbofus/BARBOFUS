@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ItemCategorieEnum;
 use App\Rules\Recaptcha;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -51,13 +52,41 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             'color_cloth_3' => $hexRegex,
             'color_cloth_4' => $hexRegex,
 
-            'dofus_item_hat_id' => 'nullable|integer|exists:dofus_item_hats,id',
-            'dofus_item_cloak_id' => 'nullable|integer|exists:dofus_item_cloaks,id',
-            'dofus_item_shield_id' => 'nullable|integer|exists:dofus_item_shields,id',
-            'dofus_item_pet_id' => 'nullable|integer|exists:dofus_item_pets,id',
-            'dofus_item_costume_id' => 'nullable|integer|exists:dofus_item_costumes,id',
-            'dofus_item_wing_id' => 'nullable|integer|exists:dofus_item_costumes,id',
-            'dofus_item_shoulder_id' => 'nullable|integer|exists:dofus_item_costumes,id',
+            'hat_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::HAT->value),
+            ],
+            'cape_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::CAPE->value),
+            ],
+            'shield_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::SHIELD->value),
+            ],
+            'pet_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::PET->value),
+            ],
+            'costume_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::COSTUME->value),
+            ],
+            'wings_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::WINGS->value),
+            ],
+            'shoulderpads_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::SHOULDERPADS->value),
+            ],
         ];
     }
 
@@ -80,13 +109,13 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             'color_cloth_3.regex' => $hexMsg,
             'color_cloth_4.regex' => $hexMsg,
 
-            'dofus_item_hat_id' => $itemsMsg,
-            'dofus_item_cloak_id' => $itemsMsg,
-            'dofus_item_shield_id' => $itemsMsg,
-            'dofus_item_pet_id' => $itemsMsg,
-            'dofus_item_costume_id' => $itemsMsg,
-            'dofus_item_wing_id' => $itemsMsg,
-            'dofus_item_shoulder_id' => $itemsMsg,
+            'hat_id' => $itemsMsg,
+            'cape_id' => $itemsMsg,
+            'shield_id' => $itemsMsg,
+            'pet_id' => $itemsMsg,
+            'costume_id' => $itemsMsg,
+            'wings_id' => $itemsMsg,
+            'shoulderpads_id' => $itemsMsg,
 
         ];
     }

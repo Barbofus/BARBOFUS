@@ -7,7 +7,7 @@
     <x-svg.checkmark :checked="$checked"/>
 
     @if(isset($label))
-        <label for="{{ $name }}" class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer">{{ $label }}</label>
+        <label for="{{ $name }}" class="absolute font-thin text-secondary text-[0.865rem] left-5 top-2 cursor-pointer">{{ $label }}</label>
     @endif
 
     {{ $slot }}

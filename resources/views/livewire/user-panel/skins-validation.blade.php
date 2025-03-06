@@ -63,32 +63,32 @@
                                 </div>
 
                                 <div>
-                                    @if(isset($skin->dofus_item_hat_id))
-                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_hat_name" :icon="$skin->dofus_item_hat_icon"/>
+                                    @if(isset($skin->hat_id))
+                                        <x-skins-presentation.item-validation :name="$skin->hat_name" :icon="$skin->hat_icon"/>
                                     @endif
 
-                                    @if(isset($skin->dofus_item_shoulder_id))
-                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_shoulder_name" :icon="$skin->dofus_item_shoulder_icon"/>
+                                    @if(isset($skin->shoulderpads_id))
+                                        <x-skins-presentation.item-validation :name="$skin->shoulderpads_name" :icon="$skin->shoulderpads_icon"/>
                                     @endif
 
-                                    @if(isset($skin->dofus_item_wing_id))
-                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_wing_name" :icon="$skin->dofus_item_wing_icon"/>
+                                    @if(isset($skin->wings_id))
+                                        <x-skins-presentation.item-validation :name="$skin->wings_name" :icon="$skin->wings_icon"/>
                                     @endif
 
-                                    @if(isset($skin->dofus_item_cloak_id))
-                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_cloak_name" :icon="$skin->dofus_item_cloak_icon"/>
+                                    @if(isset($skin->cape_id))
+                                        <x-skins-presentation.item-validation :name="$skin->cape_name" :icon="$skin->cape_icon"/>
                                     @endif
 
-                                    @if(isset($skin->dofus_item_shield_id))
-                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_shield_name" :icon="$skin->dofus_item_shield_icon"/>
+                                    @if(isset($skin->shield_id))
+                                        <x-skins-presentation.item-validation :name="$skin->shield_name" :icon="$skin->shield_icon"/>
                                     @endif
 
-                                    @if(isset($skin->dofus_item_pet_id))
-                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_pet_name" :icon="$skin->dofus_item_pet_icon"/>
+                                    @if(isset($skin->pet_id))
+                                        <x-skins-presentation.item-validation :name="$skin->pet_name" :icon="$skin->pet_icon"/>
                                     @endif
 
-                                    @if(isset($skin->dofus_item_costume_id))
-                                        <x-skins-presentation.item-validation :name="$skin->dofus_item_costume_name" :icon="$skin->dofus_item_costume_icon"/>
+                                    @if(isset($skin->costume_id))
+                                        <x-skins-presentation.item-validation :name="$skin->costume_name" :icon="$skin->costume_icon"/>
                                     @endif
                                 </div>
                             </div>
