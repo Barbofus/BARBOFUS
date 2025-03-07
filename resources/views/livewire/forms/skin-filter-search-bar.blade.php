@@ -4,15 +4,44 @@
     <div
         class="w-[90%] -ml-1 relative"
         x-data="{
-            EnterPressedOnSearchBar(name, id)
+            selection: 0,
+            items: @entangle('itemToShow'),
+
+
+            EnterPressedOnSearchBar(isUser, id)
             {
                 window.scrollTo({top: 0, behavior: 'smooth'});
 
-                ToggleArrayParamToUrl('search', name);
-                ToggleArrayParamToUrl('searchID', id);
+                ToggleArrayParamToUrl('search', isUser + '' + id);
+            },
+
+            incrementSelection()
+            {
+                this.selection++;
+
+                if(this.selection > @js(count($itemToShow) - 1)) {
+                    this.selection = 0;
+                }
+
+                // Puis l'ajoute et scroll sur la classe choisie
+                const toGo = document.getElementById('skin-filter-search-bar-result-' + this.selection);
+                goScrollToo(toGo);
+            },
+
+            decrementSelection()
+            {
+                this.selection--;
+
+                if(this.selection < 0) {
+                    this.selection = @js(count($itemToShow) - 1);
+                }
+
+                // Puis l'ajoute et scroll sur la classe choisie
+                const toGo = document.getElementById('skin-filter-search-bar-result-' + this.selection);
+                goScrollToo(toGo);
             }
         }"
-        @click.away="{{ (count($itemToShow) > 0) ? '$wire.emptyQuery()' : '' }}">
+        @click.away="{{ (count($itemToShow) > 0) ? '$wire.emptyQuery(), selection = 0' : '' }}">
 
         {{-- La barre de recherche --}}
         <input type="text"
@@ -21,41 +50,47 @@
                placeholder="{{ __('barbofus.inputSearchItemUsername') }}"
                maxlength="45"
                autocomplete="off"
-               @keydown.enter="{{ (count($itemToShow) > 0) ? 'EnterPressedOnSearchBar(\'' . addslashes($itemToShow[$selectionKey]->name) . '\',\'' . $itemToShow[$selectionKey]->id .'\')' : '' }}"
+               @keydown.enter="@if(count($itemToShow) > 0)
+                    $wire.emit('ToggleSearchedText', items[selection].is_user + '' + items[selection].id), EnterPressedOnSearchBar(items[selection].is_user, items[selection].id)
+               @endif"
                wire:model="query"
-               wire:keydown.arrow-down.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
-               wire:keydown.arrow-up.prevent="{{ (count($itemToShow) > 0) ? 'decrementSelection' : '' }}"
-               wire:keydown.tab.prevent="{{ (count($itemToShow) > 0) ? 'incrementSelection' : '' }}"
-               wire:keydown.enter="{{ (count($itemToShow) > 0) ? '$emit(\'ToggleSearchedText\', [\'' . addslashes($itemToShow[$selectionKey]->name) . '\',' . $itemToShow[$selectionKey]->id . '])' : '' }}">
+               @keydown.arrow-down.prevent="@if(count($itemToShow) > 0)
+                    incrementSelection
+               @endif"
+               @keydown.arrow-up.prevent="@if(count($itemToShow) > 0)
+                    decrementSelection
+               @endif">
 
         {{-- Liste des résultats de la recherche --}}
         <div class="absolute bg-primary-100 max-h-[18.75rem] w-full rounded-sm z-50 overflow-auto">
             @foreach($itemToShow as $key => $item)
                 <button
-                    class="flex w-full p-1 items-center group transition-all {{ ($key == $selectionKey) ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10' }}"
-                    wire:click="$emit('ToggleSearchedText', ['{{ addslashes($item->name) }}', {{ $item->id }}])"
-                    @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', '{{ addslashes($item->name) }}'), ToggleArrayParamToUrl('searchID', '{{ $item->id }}')"
-                    wire:key="{{ addslashes($item->name) . rand() }}">
-                    @if(@isset($item->icon_path))
-                        <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('storage\/'. $item->icon_path) }}">
+                    id="skin-filter-search-bar-result-{{$key}}"
+                    class="flex w-full p-1 items-center group transition-all"
+                    :class="(selection == {{$key}} ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10')"
+                    wire:click="$emit('ToggleSearchedText', '{{$item['is_user'].$item['id'] }}')"
+                    @click="EnterPressedOnSearchBar('{{ $item['is_user'] }}','{{ $item['id'] }}')"
+                    wire:key="{{ addslashes($item['id']) . rand() }}">
+                    @if(@isset($item['icon_path']))
+                        <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('storage\/'. $item['icon_path']) }}">
                     @else
                         <svg class="h-10 fill-inactiveText transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                              viewBox="-10 -10 80 80" xml:space="preserve">
                             <g><g><ellipse cx="30.336" cy="12.097" rx="11.997" ry="12.097"/><path d="M35.64,30.079H25.031c-7.021,0-12.714,5.739-12.714,12.821v17.771h36.037V42.9 C48.354,35.818,42.661,30.079,35.64,30.079z"/></g></g>
                         </svg>
                     @endif
-                    <p class="font-thin transition-all text-[1rem] ml-2 text-left {{ ($key == $selectionKey) ? '-translate-y-1' : 'group-hover:-translate-y-1' }}">{{ $item->name }}</p>
+                    <p class="font-thin transition-all text-[1rem] ml-2 text-left {{ ($key == $selectionKey) ? '-translate-y-1' : 'group-hover:-translate-y-1' }}">{{ $item['name'] }}</p>
                 </button>
             @endforeach
         </div>
 
         {{-- Affichage des filtres actuels --}}
         <div class="flex flex-wrap justify-start w-full max-h-[7rem] overflow-auto items-center gap-2 mt-2">
-            @foreach($searchFilterInput as $input)
-                <button wire:click="$emit('ToggleSearchedText', ['{{ addslashes($input[0]) }}', {{ $input[1] }}])"
-                        @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', '{{ addslashes($input[0]) }}'), ToggleArrayParamToUrl('searchID', '{{ $input[1] }}')"
+            @foreach($itemResults as $result)
+                <button wire:click="$emit('ToggleSearchedText', '{{ $result[0] }}')"
+                        @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', '{{ $result[0] }}')"
                         class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
-                    <p class="font-light text-[1rem] text-inactiveText">{{ $input[0] }}</p>
+                    <p class="font-light text-[1rem] text-inactiveText">{{ $result[1] }}</p>
 
                     <!-- Croix -->
                     <svg class="w-4 text-red-500 group-hover:text-red-400 ml-2"
@@ -66,4 +101,27 @@
             @endforeach
         </div>
     </div>
+
+    <script>
+        function goScrollToo(el)
+        {
+            if(!el) return;
+
+            const container = el.parentElement;
+
+            //if (!el || !container) return;
+
+            const elemRect = el.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Vérifie si l'élément est complètement visible dans le conteneur
+            const isVisible =
+                elemRect.top >= containerRect.top &&
+                elemRect.bottom <= containerRect.bottom;
+
+            if (!isVisible) {
+                el.parentElement.scrollTo({ behavior: 'smooth', top: el.offsetTop});
+            }
+        }
+    </script>
 </div>

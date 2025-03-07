@@ -21,17 +21,7 @@ class SkinFilterSearchBar extends Component
 
     public mixed $itemToShow = [];
 
-    /**
-     * @var string[]
-     */
-    protected $models = [
-        'users',
-        'dofus_item_hats',
-        'dofus_item_cloaks',
-        'dofus_item_shields',
-        'dofus_item_pets',
-        'dofus_item_costumes',
-    ];
+    public mixed $itemResults = [];
 
     /**
      * @var string[]
@@ -46,8 +36,43 @@ class SkinFilterSearchBar extends Component
     public function render()
     {
         $this->findForItems($this->query);
+        $this->getResults();
 
         return view('livewire.forms.skin-filter-search-bar');
+    }
+
+    /**
+     * @return void
+     */
+    private function getResults()
+    {
+        $this->itemResults = [];
+
+        foreach ($this->searchFilterInput as $key => $value) {
+
+            $id = substr($value, 1);
+
+            if ($value[0] == '0') {
+                $this->itemResults[] = [$value,
+                    optional(DB::table('items')
+                        ->select('dofus_id')
+                        ->where('items.dofus_id', $id)
+                        ->addSelect([
+                            'name' => DB::table('localized_items')
+                                ->select('name')
+                                ->where('dofus_id', $id)
+                                ->where('locale', app()->getLocale())
+                                ->take(1),
+                        ])->first())->name,
+                ];
+            } else {
+                $this->itemResults[] = [$value,
+                    optional(DB::table('users')
+                        ->select('name')
+                        ->where('id', $id)->first())->name,
+                ];
+            }
+        }
     }
 
     /**
@@ -66,30 +91,33 @@ class SkinFilterSearchBar extends Component
             return;
         }
 
-        foreach ($this->models as $model) {
-            $select = ['name', 'id'];
+        $this->itemToShow = array_merge(DB::table('users')
+            ->select('id', 'name')
+            ->where('name', 'LIKE', '%'.$query.'%')
+            ->addSelect([DB::raw('1 as is_user')])
+            ->get()
+            ->toArray());
 
-            if ($model != 'users') {
-                $select[] = 'icon_path';
-            }
-
-            $items = DB::table($model)
-                ->select($select)
-                ->where('name', 'LIKE', '%'.$query.'%')
-                ->get()
-                ->toArray();
-
-            foreach ($items as $item) {
-                $item->is_user = ($model == 'users');
-            }
-
-            $this->itemToShow = array_merge($this->itemToShow, $items);
-        }
+        $this->itemToShow = array_merge(DB::table('items')
+            ->select('items.dofus_id as id', 'items.icon_path', 'localized_items.name')
+            ->leftJoin('localized_items', function ($join) use ($query) {
+                $join->on('localized_items.dofus_id', '=', 'items.dofus_id')
+                    ->where('localized_items.locale', app()->getLocale())
+                    ->where('localized_items.name', 'like', '%'.$query.'%');
+            })
+            ->whereNotNull('localized_items.name')
+            ->addSelect([DB::raw('0 as is_user')])
+            ->get()
+            ->toArray(), $this->itemToShow);
 
         asort($this->itemToShow);
         $this->itemToShow = array_values($this->itemToShow);
 
         $this->oldQuery = $query;
+
+        $this->itemToShow = collect($this->itemToShow)->map(function ($item) {
+            return (array) $item;
+        })->toArray();
     }
 
     /**

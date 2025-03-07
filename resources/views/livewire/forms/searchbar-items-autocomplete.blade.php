@@ -22,6 +22,10 @@
                     if(this.selection > @js(count($items) - 1)) {
                         this.selection = 0;
                     }
+
+                    // Puis l'ajoute et scroll sur la classe choisie
+                    const toGo = document.getElementById('item-result-{{$category}}-' + this.selection);
+                    goScrollToo(toGo);
                 },
 
                 decrementSelection()
@@ -31,6 +35,10 @@
                     if(this.selection < 0) {
                         this.selection = @js(count($items) - 1);
                     }
+
+                    // Puis l'ajoute et scroll sur la classe choisie
+                    const toGo = document.getElementById('item-result-{{$category}}-' + this.selection);
+                    goScrollToo(toGo);
                 }
             }"
             @mousedown.away="show = false">
@@ -57,6 +65,7 @@
                     @foreach ($items as $key => $item)
                         <button
                             type="button"
+                            id="item-result-{{$category}}-{{$key}}"
                             class="flex w-full rounded-md items-center transition-all duration-75 border-2 h-12 space-x-2 cursor-pointer}"
                             :class="(selection === @js($key) ? 'border-secondary text-secondary font-normal' : 'hover:border-inactiveText border-primary-100 text-inactiveText font-light')"
                             wire:click="setSelection({{$key}})"
@@ -75,4 +84,27 @@
             <x-forms.requirements-error :$message />
         @enderror
     </div>
+
+    <script>
+        function goScrollToo(el)
+        {
+            if(!el) return;
+
+            const container = el.parentElement;
+
+            //if (!el || !container) return;
+
+            const elemRect = el.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Vérifie si l'élément est complètement visible dans le conteneur
+            const isVisible =
+                elemRect.top >= containerRect.top &&
+                elemRect.bottom <= containerRect.bottom;
+
+            if (!isVisible) {
+                el.parentElement.scrollTo({ behavior: 'smooth', top: el.offsetTop});
+            }
+        }
+    </script>
 </div>

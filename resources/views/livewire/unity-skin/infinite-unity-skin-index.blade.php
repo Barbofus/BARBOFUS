@@ -52,7 +52,7 @@
             @endfor
         @else
             <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.webp') }}">
-            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} ! <span class="font-thin italic text-3xl">{{ __('barbofus.contentNoResult') }}</span></p>
+            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} <span class="font-thin italic text-3xl">{{ __('barbofus.contentNoResult') }}</span></p>
         @endif
 
         {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}

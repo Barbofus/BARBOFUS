@@ -97,7 +97,7 @@ class InfiniteUnitySkinIndex extends Component
     public bool $winnersOnly = false;
 
     /**
-     * @var array<int, array<string>|string>
+     * @var array<int, string>
      */
     public $searchFilterInput = [];
 
@@ -127,7 +127,7 @@ class InfiniteUnitySkinIndex extends Component
                         break;
                     case 'search':
                         foreach (explode(',', $param) as $searchKey => $searchedName) {
-                            $this->ToggleSearchedText([urldecode($searchedName), explode(',', request()->input('searchID'))[$searchKey]]);
+                            $this->ToggleSearchedText($searchedName);
                         }
                         break;
                     case 'sort':
@@ -242,7 +242,7 @@ class InfiniteUnitySkinIndex extends Component
                                 ->orWhereExists(function (Builder $query) use ($category) {
                                     $query->select('dofus_id')
                                         ->from('items')
-                                        ->whereColumn('items.dofus_id', 'unity_skins.' . $category . '_id')
+                                        ->whereColumn('items.dofus_id', 'unity_skins.'.$category.'_id')
                                         ->whereNotIn('items.subcategory', $this->skinContentWhere);
                                 });
                         });
@@ -281,35 +281,17 @@ class InfiniteUnitySkinIndex extends Component
                     // Pour chaque mot clef
                     foreach ($this->searchFilterInput as $input) {
 
-                        // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
-                        $query->orWhere('users.name', $input);
+                        // Si le mot clef est un user
+                        $query->when($input[0] == '1', function (Builder $query) use ($input) {
+                            $query->orWhere('users.id', substr($input, 1));
+                        });
 
-                        // ensuite, on teste les noms d'items, toujours en OR
-                        foreach ($this->itemRelations as $item) {
-                            $tableItem = $item;
-
-                            if ($item == 'dofus_item_shoulder' || $item == 'dofus_item_wing') {
-                                // Gestion des alias pour les ailes et les épaulettes
-                                if ($item == 'dofus_item_wing') {
-                                    $tableItem = 'wings';
-                                }
-                                if ($item == 'dofus_item_shoulder') {
-                                    $tableItem = 'shoulders';
-                                }
-
-                                // Recherche avec les alias sur dofus_item_costumes
-                                $query->orWhere(function (Builder $query) use ($tableItem, $input) {
-                                    $query->where($tableItem.'.name', $input[0])
-                                        ->where($tableItem.'.id', $input[1]);
-                                });
-                            } else {
-                                // Pour les autres items (hat, cloak, etc.), on utilise la table normale
-                                $query->orWhere(function (Builder $query) use ($item, $input) {
-                                    $query->where($item.'s.name', $input[0])
-                                        ->where($item.'s.id', $input[1]);
-                                });
+                        // Si le mot clef est un item
+                        $query->when($input[0] == '0', function (Builder $query) use ($input) {
+                            foreach ($this->itemCategory as $category) {
+                                $query->orWhere($category.'_id', substr($input, 1));
                             }
-                        }
+                        });
                     }
                 });
             })
@@ -448,7 +430,7 @@ class InfiniteUnitySkinIndex extends Component
      */
     public function ToggleSkinContent(string $subcategoryID)
     {
-        if(!in_array($subcategoryID, ItemSubcategorieEnum::values())) {
+        if (! in_array($subcategoryID, ItemSubcategorieEnum::values())) {
             return;
         }
 
@@ -525,11 +507,7 @@ class InfiniteUnitySkinIndex extends Component
         $this->winnersOnly = ! $this->winnersOnly;
     }
 
-    /**
-     * @param  string|array<int, string>  $search
-     * @return void
-     */
-    public function ToggleSearchedText($search)
+    public function ToggleSearchedText(string $search): void
     {
         // Si le mot clef est déjà dans le tableau, on le retire
         if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {
