@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Actions\DofusDBApi;
 
 use App\Actions\Api\FetchExternalFile;
+use App\Enums\LocaleEnum;
 use App\Models\HavenBagTheme;
+use App\Models\LocalizedHavenBagTheme;
 
 final class SaveHavenBagsFromDofusDB
 {
@@ -27,16 +29,39 @@ final class SaveHavenBagsFromDofusDB
 
             // Si on l'a déjà, passe à la boucle suivante
             if (HavenBagTheme::where('dofus_id', '=', $item['id'])->exists()) {
+
+                // Ajoute les noms traduits
+                /*foreach ($item['name'] as $key => $locale) {
+                    if (in_array($key, LocaleEnum::values())) {
+                        LocalizedHavenBagTheme::create([
+                            'locale' => $key,
+                            'dofus_id' => $item['id'],
+                            'name' => $locale,
+                        ]);
+                    }
+                }*/
+
                 continue;
             }
 
             // Créer l'item en bdd
             $newItem = HavenBagTheme::create([
-                'name' => $item['name'],
+                'name' => $item['name']['fr'],
                 'dofus_id' => $item['id'],
                 'image_path' => 'images/icons/haven_bags/backgrounds/'.$item['mapId'].'.jpg',
                 'popocket_icon_path' => 'images/icons/haven_bags/popockets/'.(($item['has_popocket']) ? $item['popocket_iconId'] : 'no_icon').'.png',
             ]);
+
+            // Ajoute les noms traduits
+            foreach ($item['name'] as $key => $locale) {
+                if (in_array($key, LocaleEnum::values())) {
+                    LocalizedHavenBagTheme::create([
+                        'locale' => $key,
+                        'dofus_id' => $item['id'],
+                        'name' => $locale,
+                    ]);
+                }
+            }
 
             // Récupère l'image et la stocke dans l'icon_path
             (new FetchExternalFile)($item['image_path'], $newItem['image_path']);

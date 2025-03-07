@@ -79,12 +79,24 @@ class InfiniteHavenbagIndex extends Component
         $this->unselectedThemes = DB::table('haven_bag_themes')
             ->whereNotIn('id', $this->selectedThemesID)
             ->select('id', 'name', 'image_path')
-            ->get();
+            ->addSelect([
+                'localized_name' => DB::table('localized_haven_bag_themes')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
+                    ->take(1)
+            ])->get();
 
         $this->selectedThemes = DB::table('haven_bag_themes')
             ->whereIn('id', $this->selectedThemesID)
             ->select('id', 'name', 'image_path')
-            ->get();
+            ->addSelect([
+                'localized_name' => DB::table('localized_haven_bag_themes')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
+                    ->take(1)
+            ])->get();
     }
 
     protected function CheckForRequest(): void
@@ -93,27 +105,29 @@ class InfiniteHavenbagIndex extends Component
 
         if (request()->has('show')) {
             $this->initHavenBag = DB::table('haven_bags')
-                ->select('id', 'image_path', 'haven_bag_theme_id', 'user_id', 'name', 'status')
+                ->select('haven_bags.id', 'haven_bags.image_path', 'haven_bags.haven_bag_theme_id', 'haven_bags.user_id', 'haven_bags.name', 'haven_bags.status')
+                ->join('haven_bag_themes', 'haven_bags.haven_bag_theme_id', '=', 'haven_bag_themes.id')
                 ->addSelect([
                     'user_name' => DB::table('users')
                         ->select('name')
-                        ->whereColumn('id', 'haven_bags.user_id')
+                        ->whereColumn('users.id', 'haven_bags.user_id')
                         ->take(1),
                 ])
                 ->addSelect([
-                    'haven_bag_theme_name' => DB::table('haven_bag_themes')
+                    'haven_bag_theme_name' => DB::table('localized_haven_bag_themes')
                         ->select('name')
-                        ->whereColumn('id', 'haven_bags.haven_bag_theme_id')
+                        ->where('locale', app()->getLocale())
+                        ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
                         ->take(1),
                 ])
                 ->addSelect([
                     'popocket_icon_path' => DB::table('haven_bag_themes')
                         ->select('popocket_icon_path')
-                        ->whereColumn('id', 'haven_bags.haven_bag_theme_id')
+                        ->whereColumn('haven_bag_themes.id', 'haven_bags.haven_bag_theme_id')
                         ->take(1),
                 ])
-                ->where('id', request('show'))
-                ->where('status', 'Posted')
+                ->where('haven_bags.id', request('show'))
+                ->where('haven_bags.status', 'Posted')
                 ->get();
         }
     }

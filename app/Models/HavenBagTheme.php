@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class HavenBagTheme extends Model
 {
@@ -20,5 +21,22 @@ class HavenBagTheme extends Model
     public function havenBags()
     {
         return $this->hasMany(HavenBag::class);
+    }
+
+    /**
+     * @return HasOne<LocalizedItem>
+     */
+    public function localizedName()
+    {
+        return $this->hasOne(LocalizedHavenBagTheme::class, 'dofus_id', 'dofus_id')
+            ->where('locale', app()->getLocale());
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return $this->localizedName?->name ?? 'No name found';
     }
 }

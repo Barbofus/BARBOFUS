@@ -26,17 +26,19 @@ class MyhavenbagsInfiniteLoad extends Component
     protected function getHavenBags(): void
     {
         $this->havenBags = DB::table('haven_bags')
-            ->select('id', 'image_path', 'haven_bag_theme_id', 'name', 'user_id', 'status', 'created_at')
+            ->select('haven_bags.id', 'haven_bags.image_path', 'haven_bags.haven_bag_theme_id', 'haven_bags.name', 'haven_bags.user_id', 'haven_bags.status', 'haven_bags.created_at')
+            ->join('haven_bag_themes', 'haven_bags.haven_bag_theme_id', '=', 'haven_bag_themes.id')
             ->addSelect([
-                'haven_bag_theme_name' => DB::table('haven_bag_themes')
+                'haven_bag_theme_name' => DB::table('localized_haven_bag_themes')
                     ->select('name')
-                    ->whereColumn('id', 'haven_bags.haven_bag_theme_id')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
                     ->take(1),
             ])
             ->addSelect([
                 'popocket_icon_path' => DB::table('haven_bag_themes')
                     ->select('popocket_icon_path')
-                    ->whereColumn('id', 'haven_bags.haven_bag_theme_id')
+                    ->whereColumn('haven_bag_themes.id', 'haven_bags.haven_bag_theme_id')
                     ->take(1),
             ])
             ->where('user_id', auth()->user()->id)

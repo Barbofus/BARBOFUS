@@ -28,7 +28,13 @@ class HavenBagController extends Controller
     {
         $hbThemes = DB::table('haven_bag_themes')
             ->select('*')
-            ->get()->toArray();
+            ->addSelect([
+                'localized_name' => DB::table('localized_haven_bag_themes')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
+                    ->take(1),
+            ])->get()->toArray();
 
         foreach ($hbThemes as $hbTheme) {
             $hbTheme->popocket_icon_path = asset('storage\/'.$hbTheme->popocket_icon_path);
@@ -67,7 +73,13 @@ class HavenBagController extends Controller
     {
         $hbThemes = DB::table('haven_bag_themes')
             ->select('*')
-            ->get()->toArray();
+            ->addSelect([
+                'localized_name' => DB::table('localized_haven_bag_themes')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
+                    ->take(1),
+            ])->get()->toArray();
 
         foreach ($hbThemes as $hbTheme) {
             $hbTheme->popocket_icon_path = asset('storage\/'.$hbTheme->popocket_icon_path);

@@ -21,7 +21,7 @@
                 <div class="grid grid-cols-2 gap-x-2 gap-y-4 mt-4">
                     @foreach($selectedThemes as $sTheme)
                         <button class="relative group overflow-hidden h-fit rounded-lg bg-primary-100" wire:click="ToggleTheme({{ $sTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
-                            <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span> {{ ' ' . $sTheme->name }}</p>
+                            <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span> {{ ' ' . $sTheme->localized_name }}</p>
                             <div class="relative aspect-video overflow-hidden">
                                 <img src="{{ asset('storage/'. $sTheme->image_path) }}" draggable="false"
                                      alt="Image du havre sac"
@@ -46,7 +46,7 @@
             <div class="grid grid-cols-2 gap-x-2 gap-y-4 mt-4">
                 @foreach($unselectedThemes as $uTheme)
                     <button class="relative group overflow-hidden h-fit rounded-lg bg-primary-100" wire:click="ToggleTheme({{ $uTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
-                        <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span>{{ ' ' . $uTheme->name }}</p>
+                        <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span>{{ ' ' . $uTheme->localized_name }}</p>
                         <div class="relative aspect-video overflow-hidden">
                             <img src="{{ asset('storage/'. $uTheme->image_path) }}" draggable="false"
                                  alt="Image du havre sac"

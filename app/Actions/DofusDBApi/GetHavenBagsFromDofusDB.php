@@ -44,7 +44,7 @@ final class GetHavenBagsFromDofusDB
 
                     $items[] = [
                         'id' => $value->id,
-                        'name' => $value->name->fr,
+                        'name' => $value->name,
                         'mapId' => $value->mapId,
                         'image_path' => 'https://api.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
                         'has_popocket' => false,
@@ -57,7 +57,7 @@ final class GetHavenBagsFromDofusDB
 
                 $items[] = [
                     'id' => $value->id,
-                    'name' => $value->name->fr,
+                    'name' => $value->name,
                     'mapId' => $value->mapId,
                     'image_path' => 'https://api.dofusdb.fr/img/maps/1/'.$value->mapId.'.jpg',
                     'has_popocket' => true,
