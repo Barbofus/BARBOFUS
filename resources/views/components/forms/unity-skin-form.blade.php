@@ -165,7 +165,7 @@
                                                @keydown.enter="selection = {{ $race->id }}, showSort = false"
                                                class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
                                             <img src="{{ $race->ghost_icon_path }}" class="h-11">
-                                            <p>{{ $race->name }}</p>
+                                            <p>{{ $race->localized_name }}</p>
                                         </label>
                                     </div>
                                 @endforeach
@@ -199,7 +199,7 @@
                             function refreshResult()
                             {
                                 rr_img.src = races[selection]['ghost_icon_path']
-                                rr_name.textContent = races[selection]['name']
+                                rr_name.textContent = races[selection]['localized_name']
 
                                 let race_dofus_id = (selection === 18) ? 20 : selection + 1;
 
@@ -251,7 +251,7 @@
 
                                 for (let i=0; i<races.length; i++)
                                 {
-                                    if(races[i]['name'].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().startsWith(search)){
+                                    if(races[i]['localized_name'].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().startsWith(search)){
                                         result = i;
                                         break;
                                     }

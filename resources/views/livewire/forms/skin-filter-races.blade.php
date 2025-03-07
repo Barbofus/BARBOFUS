@@ -59,7 +59,7 @@
 
             for (let i=0; i<races.length; i++)
             {
-                if(races[i]['name'].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().startsWith(search)){
+                if(races[i]['localized_name'].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().startsWith(search)){
                     result = i;
                     break;
                 }
@@ -93,11 +93,11 @@
     <div x-show="showSort" x-cloak class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer" id="race-dropdown">
         @foreach ($races as $race)
             <button id="label_race_id_{{ $race->id }}"
-                    aria-label="Filtre {{ $race->name }}"
+                    aria-label="Filtre {{ $race->localized_name }}"
                     @click="setSelection( {{ $race->id }}), window.scrollTo({top: 0, behavior: 'smooth'})"
                     class="flex rounded-md items-center transition-all w-full justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
                 <img src="{{ asset('storage/' . $race->ghost_icon_path) }}" class="h-11">
-                <p>{{ $race->name }}</p>
+                <p>{{ $race->localized_name }}</p>
             </button>
         @endforeach
     </div>
@@ -108,7 +108,7 @@
             <button wire:click="$emit('ToggleRace', {{ $race[2] }})"
                     @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('classe', {{ $race[2] }})"
                     class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
-                <p class="font-light text-[1rem] text-inactiveText">{{ $races[$race[2]-1]->name  }}</p>
+                <p class="font-light text-[1rem] text-inactiveText">{{ $races[$race[2]-1]->localized_name  }}</p>
 
                 <!-- Croix -->
                 <svg class="w-4 text-red-500 group-hover:text-red-400 ml-2"

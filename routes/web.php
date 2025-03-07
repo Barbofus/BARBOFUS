@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Api\GetApiBody;
 use App\Actions\Likes\SwitchLikes;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\EmailVerificationPromptController;
@@ -31,6 +32,20 @@ use Illuminate\Support\Facades\Route;
     $newSkins = \App\Models\Skin::select('id')->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay())->count();
     dd('Nouveaux Comptes = ', $newUser, 'Nouveaux Likes = '.$newLikes, 'Nouveaux Skins = '.$newSkins);
 });*/
+
+/*Route::get('/foo', function () {
+    $breeds = (new GetApiBody)('https://api.dofusdb.fr/breeds?$limit=50')->data;
+    foreach ($breeds as $breed) {
+        foreach (\App\Enums\LocaleEnum::values() as $locale) {
+            \App\Models\LocalizedRace::create([
+                'dofus_id' => $breed->id,
+                'locale' => $locale,
+                'name' => $breed->shortName->$locale,
+            ]);
+        }
+    }
+});*/
+
 /*Route::get('/foo', function () {
     (new \App\Actions\Utils\PopulateNewSkinItems)();
 })->name('home');*/

@@ -142,7 +142,14 @@ class InfiniteSkinIndex extends Component
      */
     public function render()
     {
-        $this->races = DB::table('races')->get();
+        $this->races = DB::table('races')
+            ->addSelect([
+                'localized_name' => DB::table('localized_races')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
+                    ->take(1),
+            ])->get();
 
         if (! $this->hasLoadMore) {
             $this->PrepareChunks();

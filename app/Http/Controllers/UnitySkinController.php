@@ -56,6 +56,7 @@ class UnitySkinController extends Controller
 
         $toShow = DB::table('unity_skins')
             ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'unity_skins.id', 'unity_skins.name')
+            ->join('races', 'unity_skins.race_id', '=', 'races.id')
             ->where('unity_skins.id', $skin->id)
             ->addSelect([
                 'user_name' => DB::table('users')
@@ -64,9 +65,10 @@ class UnitySkinController extends Controller
                     ->take(1),
             ])
             ->addSelect([
-                'race_name' => DB::table('races')
+                'race_name' => DB::table('localized_races')
                     ->select('name')
-                    ->whereColumn('id', 'unity_skins.race_id')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
                     ->take(1),
             ])
             ->addSelect([
@@ -137,6 +139,13 @@ class UnitySkinController extends Controller
     {
         $races = DB::table('races')
             ->select('*')
+            ->addSelect([
+                'localized_name' => DB::table('localized_races')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
+                    ->take(1),
+            ])
             ->get()->toArray();
 
         foreach ($races as $race) {
@@ -200,6 +209,13 @@ class UnitySkinController extends Controller
     {
         $races = DB::table('races')
             ->select('*')
+            ->addSelect([
+                'localized_name' => DB::table('localized_races')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
+                    ->take(1),
+            ])
             ->get()->toArray();
 
         foreach ($races as $race) {

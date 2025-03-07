@@ -54,6 +54,7 @@ class SkinController extends Controller
 
         $toShow = DB::table('skins')
             ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'skins.id', 'skins.name')
+            ->join('races', 'skins.race_id', '=', 'races.id')
             ->where('skins.id', $skin->id)
             ->addSelect([
                 'user_name' => DB::table('users')
@@ -62,9 +63,10 @@ class SkinController extends Controller
                     ->take(1),
             ])
             ->addSelect([
-                'race_name' => DB::table('races')
+                'race_name' => DB::table('localized_races')
                     ->select('name')
-                    ->whereColumn('id', 'skins.race_id')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
                     ->take(1),
             ])
             ->addSelect([
