@@ -36,7 +36,7 @@ class Race extends Model
     }
 
     /**
-     * @return HasOne<LocalizedItem>
+     * @return HasOne<LocalizedRace>
      */
     public function localizedName()
     {

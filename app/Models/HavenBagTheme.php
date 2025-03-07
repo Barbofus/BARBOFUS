@@ -24,7 +24,7 @@ class HavenBagTheme extends Model
     }
 
     /**
-     * @return HasOne<LocalizedItem>
+     * @return HasOne<LocalizedHavenBagTheme>
      */
     public function localizedName()
     {

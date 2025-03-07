@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -15,10 +14,10 @@ class LocalizedHavenBagTheme extends Model
     ];
 
     /**
-     * @return BelongsTo<Item, LocalizedItem>
+     * @return BelongsTo<HavenBagTheme, LocalizedHavenBagTheme>
      */
-    public function item()
+    public function havenBagTheme()
     {
-        return $this->belongsTo(Race::class);
+        return $this->belongsTo(HavenBagTheme::class);
     }
 }

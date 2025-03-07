@@ -84,7 +84,7 @@ class InfiniteHavenbagIndex extends Component
                     ->select('name')
                     ->where('locale', app()->getLocale())
                     ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
-                    ->take(1)
+                    ->take(1),
             ])->get();
 
         $this->selectedThemes = DB::table('haven_bag_themes')
@@ -95,7 +95,7 @@ class InfiniteHavenbagIndex extends Component
                     ->select('name')
                     ->where('locale', app()->getLocale())
                     ->whereColumn('localized_haven_bag_themes.dofus_id', 'haven_bag_themes.dofus_id')
-                    ->take(1)
+                    ->take(1),
             ])->get();
     }
 

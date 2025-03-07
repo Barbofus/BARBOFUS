@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -15,9 +14,9 @@ class LocalizedRace extends Model
     ];
 
     /**
-     * @return BelongsTo<Item, LocalizedItem>
+     * @return BelongsTo<Race, LocalizedRace>
      */
-    public function item()
+    public function race()
     {
         return $this->belongsTo(Race::class);
     }
