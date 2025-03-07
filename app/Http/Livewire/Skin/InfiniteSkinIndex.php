@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Skin;
 
 use App\Actions\Utils\DoColorsMatch;
+use App\Enums\ItemSubcategorieEnum;
 use App\Models\Skin;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
@@ -39,12 +40,12 @@ class InfiniteSkinIndex extends Component
     /**
      * @var string[]
      */
-    protected $itemRelations = [
-        'dofus_item_hat',
-        'dofus_item_cloak',
-        'dofus_item_shield',
-        'dofus_item_pet',
-        'dofus_item_costume',
+    protected $itemCategory = [
+        'hat',
+        'cape',
+        'shield',
+        'pet',
+        'costume',
     ];
 
     /**
@@ -79,7 +80,7 @@ class InfiniteSkinIndex extends Component
     public $genderWhere = [];
 
     /**
-     * @var array<int, array<string>|int>
+     * @var array<int, array<string>|string>
      */
     public $skinContentWhere = [];
 
@@ -93,7 +94,7 @@ class InfiniteSkinIndex extends Component
     public bool $winnersOnly = false;
 
     /**
-     * @var array<int, array<string>|string>
+     * @var array<int, string>
      */
     public $searchFilterInput = [];
 
@@ -124,7 +125,7 @@ class InfiniteSkinIndex extends Component
                         break;
                     case 'search':
                         foreach (explode(',', $param) as $searchKey => $searchedName) {
-                            $this->ToggleSearchedText([urldecode($searchedName), explode(',', request()->input('searchID'))[$searchKey]]);
+                            $this->ToggleSearchedText($searchedName);
                         }
                         break;
                     case 'sort':
@@ -180,11 +181,6 @@ class InfiniteSkinIndex extends Component
 
             // Les joins
             ->join('users', 'skins.user_id', '=', 'users.id')
-            ->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0 || count($this->skinPetTypeWhere) > 0, function (Builder $query) {
-                foreach ($this->itemRelations as $item) {
-                    $query->leftJoin($item.'s', $item.'s.id', '=', 'skins.'.$item.'_id');
-                }
-            })
 
             // select princpal
             ->select('skins.id', 'skins.user_id')
@@ -235,16 +231,21 @@ class InfiniteSkinIndex extends Component
             ->when(count($this->skinContentWhere) > 0, function (Builder $query) {
                 $query->where(function (Builder $query) {
 
-                    // Parcous toutes les relations d'items (DofusItemHat etc..)
-                    foreach ($this->itemRelations as $item) {
-                        $query->where(function (Builder $query) use ($item) {
+                    // Parcous toutes les catégories, et récupère le skin si les items correspondent au filtre, ou sont vides
+                    foreach ($this->itemCategory as $category) {
+                        $query->where(function (Builder $query) use ($category) {
 
-                            $query->whereNotExists(function (Builder $query) use ($item) {
-                                $query->select('id')
-                                    ->from($item.'s')
-                                    ->whereColumn($item.'s.id', 'skins.'.$item.'_id');
+                            $query->whereNotExists(function (Builder $query) use ($category) {
+                                $query->select('dofus_id')
+                                    ->from('items')
+                                    ->whereColumn('items.dofus_id', 'skins.'.$category.'_id');
                             })
-                                ->orWhereNotIn($item.'s.dofus_items_sub_categorie_id', $this->skinContentWhere);
+                                ->orWhereExists(function (Builder $query) use ($category) {
+                                    $query->select('dofus_id')
+                                        ->from('items')
+                                        ->whereColumn('items.dofus_id', 'skins.'.$category.'_id')
+                                        ->whereNotIn('items.subcategory', $this->skinContentWhere);
+                                });
                         });
 
                     }
@@ -253,26 +254,23 @@ class InfiniteSkinIndex extends Component
 
             // Skin pet type
             ->when(count($this->skinPetTypeWhere) > 0, function (Builder $query) {
-                $query->where(function (Builder $query) {
 
-                    $query->when(in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
-                        $query->whereExists(function (Builder $query) {
-                            $query->select('id')
-                                ->from('dofus_item_pets')
-
-                                ->whereColumn('dofus_item_pets.id', 'skins.dofus_item_pet_id');
-                        })
-                            ->WhereNotIn('dofus_item_pets.type', $this->skinPetTypeWhere);
+                // Affiche uniquement ce qui est encore coché
+                $query->when(count($this->skinPetTypeWhere) > 0 && count($this->skinPetTypeWhere) < 5, function (Builder $query) {
+                    $query->whereExists(function (Builder $query) {
+                        $query->select('dofus_id')
+                            ->from('items')
+                            ->whereColumn('items.dofus_id', 'skins.pet_id')
+                            ->WhereNotIn('items.pet_type', $this->skinPetTypeWhere);
                     });
+                });
 
-                    $query->when(! in_array('familier', $this->skinPetTypeWhere), function (Builder $query) {
-                        $query->whereNotExists(function (Builder $query) {
-                            $query->select('id')
-                                ->from('dofus_item_pets')
-
-                                ->whereColumn('dofus_item_pets.id', 'skins.dofus_item_pet_id');
-                        })
-                            ->OrWhereNotIn('dofus_item_pets.type', $this->skinPetTypeWhere);
+                // Si tout est déoché, on affiche que les skins sans familier / montiler / monture
+                $query->when(count($this->skinPetTypeWhere) == 5, function (Builder $query) {
+                    $query->whereNotExists(function (Builder $query) {
+                        $query->select('dofus_id')
+                            ->from('items')
+                            ->whereColumn('items.dofus_id', 'skins.pet_id');
                     });
                 });
             })
@@ -284,17 +282,17 @@ class InfiniteSkinIndex extends Component
                     // Pour chaque mot clef
                     foreach ($this->searchFilterInput as $input) {
 
-                        // Si le filtre 'Voir uniquement les skins de Barbe' n'est pas coché, alors on teste les pseudos
-                        $query->orWhere('users.name', $input);
+                        // Si le mot clef est un user
+                        $query->when($input[0] == '1', function (Builder $query) use ($input) {
+                            $query->orWhere('users.id', substr($input, 1));
+                        });
 
-                        // ensuite, on teste les noms d'items, toujours en OR
-                        foreach ($this->itemRelations as $item) {
-                            // $query->orWhereIn($item.'s.id', $this->searchFilterInput);
-                            $query->orWhere(function (Builder $query) use ($item, $input) {
-                                $query->where($item.'s.id', $input[1])
-                                    ->where($item.'s.name', $input[0]);
-                            });
-                        }
+                        // Si le mot clef est un item
+                        $query->when($input[0] == '0', function (Builder $query) use ($input) {
+                            foreach ($this->itemCategory as $category) {
+                                $query->orWhere($category.'_id', substr($input, 1));
+                            }
+                        });
                     }
                 });
             })
@@ -467,11 +465,12 @@ class InfiniteSkinIndex extends Component
         $this->genderWhere[] = ['gender', '!=', $gender];
     }
 
-    /**
-     * @return void
-     */
-    public function ToggleSkinContent(int $subcategoryID)
+    public function ToggleSkinContent(string $subcategoryID): void
     {
+        if (! in_array($subcategoryID, ItemSubcategorieEnum::values())) {
+            return;
+        }
+
         // Si le subcategory est déjà exclu
         if (count($this->skinContentWhere) > 0 && ($key = array_search($subcategoryID, $this->skinContentWhere)) !== false) {
             unset($this->skinContentWhere[$key]);
@@ -545,11 +544,7 @@ class InfiniteSkinIndex extends Component
         $this->winnersOnly = ! $this->winnersOnly;
     }
 
-    /**
-     * @param  string|array<int, string>  $search
-     * @return void
-     */
-    public function ToggleSearchedText($search)
+    public function ToggleSearchedText(string $search): void
     {
         // Si le mot clef est déjà dans le tableau, on le retire
         if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {
