@@ -15,6 +15,7 @@ class Item extends Model
         'subcategory',
         'icon_path',
         'pet_type',
+        'asset_id',
     ];
 
     /**

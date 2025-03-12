@@ -13,6 +13,8 @@ class Race extends Model
         'icon_path',
         'banner_path',
         'name',
+        'colors',
+        'heads',
     ];
 
     public $timestamps = false;

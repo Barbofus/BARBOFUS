@@ -17,11 +17,11 @@ final class UpdateApiVersion
     ): void {
 
         // Get nos versions des Api
-        $file = Storage::disk('local')->get('api_versions.json');
+        $file = Storage::disk('local')->get('json/api_versions.json');
         $versions = (array) json_decode($file);
 
         $versions[$apiName] = $newVersion;
 
-        Storage::disk('local')->put('api_versions.json', json_encode($versions, JSON_THROW_ON_ERROR));
+        Storage::disk('local')->put('json/api_versions.json', json_encode($versions, JSON_THROW_ON_ERROR));
     }
 }

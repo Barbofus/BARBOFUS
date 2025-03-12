@@ -45,12 +45,16 @@ final class GetItemsFromDofusDB
 
             // On remplit un tableau à nous, plus facilement éditable
             foreach ($result as $value) {
+                $skinId = $value->appearance?->skin ?? null;
+                $boneId = $value->appearance?->bone ?? null;
+
                 $items[] = [
                     'id' => $value->id,
                     'name' => $value->name,
                     'level' => $value->level,
                     'iconId' => $value->iconId,
                     'typeId' => $value->typeId,
+                    'assetId' => ($skinId ?: ($boneId ?: null)),
                 ];
             }
         }

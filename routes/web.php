@@ -50,6 +50,10 @@ use Illuminate\Support\Facades\Route;
     (new \App\Actions\Utils\PopulateNewSkinItems)();
 })->name('home');*/
 
+/*Route::get('/foo', function () {
+    (new \App\Actions\Utils\PopulateBreedsInfo)();
+})->name('home');*/
+
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');

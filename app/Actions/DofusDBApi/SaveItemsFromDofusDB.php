@@ -38,6 +38,15 @@ final class SaveItemsFromDofusDB
 
             // Si on l'a déjà, passe à la boucle suivante
             if (Item::where('dofus_id', '=', $item['id'])->exists()) {
+                /*if(!isset($item['assetId'])) {
+                    continue;
+                }
+
+                Item::where('dofus_id', '=', $item['id'])->update([
+                    'asset_id' => $item['assetId'],
+                    'female_asset_id' => $item['assetId'],
+                ]);*/
+
                 continue;
             }
 
@@ -111,6 +120,8 @@ final class SaveItemsFromDofusDB
                 'category' => $category,
                 'subcategory' => $subCategory,
                 'pet_type' => $petType,
+                'asset_id' => $item['assetId'],
+                'female_asset_id' => $item['assetId'],
             ]);
 
             foreach ($item['name'] as $key => $locale) {

@@ -13,7 +13,7 @@ final class CheckApiVersion
     public function __invoke(): stdClass
     {
         // Get nos versions des Api
-        $versions = Storage::disk('local')->get('api_versions.json');
+        $versions = Storage::disk('local')->get('json/api_versions.json');
 
         return json_decode($versions);
     }

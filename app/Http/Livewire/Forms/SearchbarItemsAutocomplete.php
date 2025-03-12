@@ -51,7 +51,9 @@ class SearchbarItemsAutocomplete extends Component
         // Récupère l'item présent dans le champ
         $this->selectedItem = Item::whereHas('localizedName')
             ->where('dofus_id', $this->value)
-            ->where('category', $this->category)
+            ->when($this->category != '*', function ($query) {
+                $query->where('category', $this->category);
+            })
             ->first();
 
         // Utilise son nom dans la query
@@ -91,7 +93,11 @@ class SearchbarItemsAutocomplete extends Component
             $query->where('locale', app()->getLocale())
                 ->where('name', 'LIKE', "%{$this->query}%")
                 ->where('name', '!=', $this->query);
-        })->where('category', $this->category)->limit(20)->get();
+        })
+            ->when($this->category != '*', function ($query) {
+                $query->where('category', $this->category);
+            })
+            ->limit(20)->get();
     }
 
     /**
@@ -104,7 +110,10 @@ class SearchbarItemsAutocomplete extends Component
         $this->selectedItem = Item::whereHas('localizedName', function ($query) {
             $query->where('locale', app()->getLocale())
                 ->where('name', '=', $this->query);
-        })->where('category', $this->category)->first();
+        })
+            ->when($this->category != '*', function ($query) {
+                $query->where('category', $this->category);
+            })->first();
     }
 
     /**

@@ -2,12 +2,16 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Models\Item;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class UserDashboard extends Component
 {
     public string $section = 'user-details';
+    public int $skinsToComplete = 0;
 
     /**
      * @return void
@@ -24,6 +28,10 @@ class UserDashboard extends Component
      */
     public function render()
     {
+        if(Gate::check('admin-access')) {
+            $this->skinsToComplete = Item::where('asset_id', '=', null)->get()->count();
+        }
+
         return view('livewire.user-panel.user-dashboard');
     }
 
