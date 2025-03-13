@@ -8,12 +8,15 @@ use App\Http\Controllers\HavenBagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
+use App\Http\Controllers\SkinatorController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,11 +51,99 @@ use Illuminate\Support\Facades\Route;
 
 /*Route::get('/foo', function () {
     (new \App\Actions\Utils\PopulateNewSkinItems)();
-})->name('home');*/
+});*/
 
 /*Route::get('/foo', function () {
     (new \App\Actions\Utils\PopulateBreedsInfo)();
-})->name('home');*/
+});*/
+
+/*Route::get('/foo', function () {
+
+    $toExport = \Illuminate\Support\Facades\DB::table('items')
+        ->select('dofus_id as id', 'asset_id', 'female_asset_id')
+        ->whereNotIn('pet_type', ['volkorne', 'dragodinde', 'muldo'])
+        ->orWhereNull('pet_type')
+        ->addSelect([
+            DB::raw("CASE WHEN subcategory = 'livingObject' THEN TRUE ELSE FALSE END AS is_living_object")
+        ])
+        ->addSelect([
+            'name' => \Illuminate\Support\Facades\DB::table('localized_items')
+            ->select('localized_items.name')
+            ->where('locale', 'fr')
+            ->whereColumn('dofus_id', 'items.dofus_id')
+            ->take(1)
+        ])->get()->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    Storage::disk('local')->put('json/assetId.json', $toExport);
+
+
+});*/
+
+/*Route::get('/foo', function () {
+    $assetIds = \App\Models\Item::where('folder', 'skins')->get()->pluck('asset_id')->toArray();
+    $femaleAssetIds = \App\Models\Item::where('folder', 'skins')->get()->pluck('female_asset_id')->toArray();
+
+    $allIds = array_unique(array_merge($assetIds, $femaleAssetIds));
+
+    $files = Storage::disk('local')->files('json/skinator/skins');
+
+    foreach ($files as $file) {
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+
+        if (!in_array($filename, $allIds)) {
+            Storage::disk('local')->delete($file);
+        }
+    }
+
+    dd('FINI');
+});*/
+
+/*Route::get('/foo', function () {
+
+    $allIds = [];
+
+    $files = Storage::disk('local')->files('json/skinator/bones');
+
+    foreach ($files as $file) {
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+
+        if(str_contains($filename, 'SkinAsset')) {
+            continue;
+        }
+
+        $jsonContent = Storage::disk('local')->get($file);
+        $decodedContent = json_decode($jsonContent, true);
+
+        if (is_array($decodedContent)) {
+            $allIds[] = $decodedContent['boneAsset']['m_PathID'];
+        }
+    }
+
+    foreach ($files as $file) {
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+
+        if(!str_contains($filename, 'SkinAsset')) {
+            continue;
+        }
+
+        $filenameWithoutSkinAsset = str_replace('SkinAsset-', '', $filename);
+
+        if (!in_array($filenameWithoutSkinAsset, $allIds)) {
+            Storage::disk('local')->delete($file);
+        }
+    }
+
+    dd('FINI');
+});*/
+
+/*Route::get('/foo', function () {
+
+    foreach (Item::all() as $item) {
+        $item->update([
+            'folder' => (($item->category === 'pet' &! str_contains($item->name, 'Harnachement')) ? 'bones' : 'skins')
+        ]);
+    }
+});*/
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -63,6 +154,8 @@ Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sac
 Route::get('/outils', function () {
     return view('tools');
 })->name('tools');
+
+Route::get('/skinator', [SkinatorController::class, 'index'])->name('skinator.index');
 
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
