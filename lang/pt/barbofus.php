@@ -116,6 +116,8 @@ return [
     'contentPosted' => 'Postado',
     'contentAccessTo' => 'Acesso para',
     'contentFace' => 'Rosto',
+    'contentBreed' => 'Classe',
+    'contentColor' => 'Cores',
     'contentLiked' => 'Curtido',
     'contentSkinRefused' => 'Aparência recusada',
     'contentTotalSkins' => 'total de aparências no site site',
@@ -127,6 +129,8 @@ return [
     'contentError' => 'Erro',
     'contentLost' => 'Ops!',
     'content404' => 'Procuramos em todos os lugares… mas esta página está tão perdida quanto suas meias na lavanderia.',
+    'contentCopy' => 'Cópia',
+    'contentCopied' => 'Copiado',
 
     'alertPasswordSaved' => 'Sua senha foi redefinida com sucesso.',
     'alertPasswordResetSended' => 'Um e-mail para redefinir sua senha foi enviado!<br>Lembre de checar sua pasta de SPAM ou lixeira.',

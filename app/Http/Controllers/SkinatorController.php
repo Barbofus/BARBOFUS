@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Race;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -17,22 +18,39 @@ class SkinatorController extends Controller
         }
 
         return view('skins.skinator', [
-            'items' => $this->getAllSkins(request()->has('test') ? request()->test : 'hat'),
+            'breeds' => $this->getBreeds(),
         ]);
     }
 
-    private function getAllSkins(string $category)
+    private function getItemsFromCategory(string $category)
     {
         return DB::table('items')
-            ->select('asset_id', 'folder', 'female_asset_id', 'icon_path', 'dofus_id', 'category')
+            ->select('dofus_id', 'asset_id', 'female_asset_id', 'pet_type', 'category', 'subcategory', 'folder', 'level', 'icon_path')
             ->where('category', $category)
             ->addSelect([
-                'name' => DB::table('localized_items')
-                ->select('name')
-                ->where('locale', app()->getLocale())
-                ->whereColumn('dofus_id', 'items.dofus_id')
-                ->take(1)
+                'localized_names' => DB::table('localized_items')
+                    ->selectRaw("JSON_OBJECTAGG(locale, name)")
+                    ->whereColumn('items.dofus_id', 'localized_items.dofus_id'),
+            ])->get()->toJson();
+
+    }
+
+    private function getBreeds()
+    {
+        return DB::table('races')
+            ->select('dofus_id', 'colors', 'heads')
+            ->addSelect([
+                'name' => DB::table('localized_races')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
+                    ->take(1),
             ])
-            ->get()->toArray();
+            ->get()
+            ->map(function ($breed) {
+                $breed->colors = json_decode($breed->colors);
+                $breed->heads = json_decode($breed->heads);
+                return $breed;
+            });
     }
 }

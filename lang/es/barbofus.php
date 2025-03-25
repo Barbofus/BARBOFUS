@@ -111,6 +111,8 @@ return [
     'contentPosted' => 'Publicado',
     'contentAccessTo' => 'Visita',
     'contentFace' => 'Cara',
+    'contentBreed' => 'Clase',
+    'contentColor' => 'Colores',
     'contentLiked' => 'Diste like',
     'contentSkinRefused' => 'Skin rechazada',
     'contentTotalSkins' => 'skins totales en el sitio',
@@ -122,6 +124,8 @@ return [
     'contentError' => 'Error',
     'contentLost' => '¡Vaya!',
     'content404' => 'Buscamos por todas partes… pero esta página está tan perdida como tus calcetines en la lavadora.',
+    'contentCopy' => 'Copiar',
+    'contentCopied' => 'Copiado',
 
     'alertPasswordSaved' => 'Tu contraseña ha sido reestablecida exitosamente.',
     'alertPasswordResetSended' => '¡Se envió un correo para reestablecimiento de contraseña!<br>Recuerda verificar tu carpeta de correo no deseado.',

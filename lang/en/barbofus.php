@@ -111,6 +111,8 @@ return [
     'contentPosted' => 'Posted',
     'contentAccessTo' => 'Access to',
     'contentFace' => 'Face',
+    'contentBreed' => 'Breed',
+    'contentColor' => 'Color',
     'contentLiked' => 'Liked',
     'contentSkinRefused' => 'Skin refused',
     'contentTotalSkins' => 'total skins on the website',
@@ -122,6 +124,8 @@ return [
     'contentError' => 'Error',
     'contentLost' => 'Oops !',
     'content404' => 'We searched high and low… but this page is as lost as your socks in the laundry.',
+    'contentCopy' => 'Copy',
+    'contentCopied' => 'Copied',
 
     'alertPasswordSaved' => 'Your password has been successfully reset.',
     'alertPasswordResetSended' => 'A password reset email has been sent!<br>Remember to check your spam/junk folder.',
