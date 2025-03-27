@@ -32,6 +32,7 @@ return [
     'buttonSkinOldIndexPostTuto' => 'Como criar e postar uma aparência no site?',
     'buttonSave' => 'Salvar',
     'buttonLinkDiscord' => 'Vincule seu discord', // "link" would work as well, "vincule" is a more verbose approach
+    'buttonShare' => 'Compartilhar',
 
     'titleHome' => 'Barbofus, a galeria de aparências do Dofus',
     'titleBarbe' => 'Descubra Barbe Douce',

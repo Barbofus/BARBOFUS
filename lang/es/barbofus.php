@@ -28,6 +28,7 @@ return [
     'buttonSkinOldIndexPostTuto' => '¿Cómo crear y publicar una skin en el sitio?',
     'buttonSave' => 'Guardar',
     'buttonLinkDiscord' => 'Vincula tu discord',
+    'buttonShare' => 'Compartir',
 
     'titleHome' => 'Barbofus, la galería de skins de Dofus',
     'titleBarbe' => 'Conoce a Barbe Douce',

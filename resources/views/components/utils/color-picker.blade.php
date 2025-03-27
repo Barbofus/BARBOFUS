@@ -1,4 +1,4 @@
-<div x-data="colorPicker('#ffffff'), isHexDragging = false, isHexIn = false, isHueDragging = false, isHueIn = false"
+<div x-data="colorPicker('#ffffff'), isHexDragging = false, isHueDragging = false"
      x-show="showPicker"
      x-cloak
      x-transition:enter="transition ease-out duration-100"
@@ -13,12 +13,11 @@
      :style="{ top: inputPosition.y + 'px', left: inputPosition.x + 'px' }"
      x-init="if(showPicker) updateFromHex()">
     <div class="relative z-10 h-32 cursor-pointer select-none"
+         id="color-picker-hex"
          :style="{ background: 'hsl(' + hue + ', 100%, 50%)'}"
          @mousedown="isHexDragging = true; pickColor($event); $event.preventDefault()"
-         @mouseenter="isHexIn = true; if(isHexDragging) pickColor($event)"
-         @mouseleave="isHexIn = false; if(isHexDragging) updateColor(); if(isHexDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex })"
          @mouseup.window="if(isHexDragging) updateColor(); if(isHexDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex }); isHexDragging = false"
-         @mousemove.window="if(isHexDragging && isHexIn) pickColor($event)">
+         @mousemove.window="if(isHexDragging) pickColor($event)">
         <div class="absolute pointer-events-none inset-0 bg-gradient-to-r from-white to-transparent"></div>
         <div class="absolute pointer-events-none inset-0 bg-gradient-to-t from-black to-transparent"></div>
 
@@ -29,11 +28,10 @@
 
     <!-- Barre de teinte -->
     <div class="h-4 relative select-none"
+         id="color-picker-hue"
          @mousedown="isHueDragging = true, pickHue($event); $event.preventDefault()"
-         @mouseenter="isHueIn = true; if(isHueDragging) pickHue($event)"
-         @mouseleave="isHueIn = false; if(isHueDragging) updateColor(); if(isHexDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex })"
          @mouseup.window="if(isHueDragging) updateColor(); if(isHueDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex }); isHueDragging = false"
-         @mousemove.window="if(isHueDragging && isHueIn) pickHue($event)">
+         @mousemove.window="if(isHueDragging) pickHue($event)">
         <svg width="208" height="24" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="Gradient1">
@@ -209,17 +207,17 @@
             },
 
             pickColor(event) {
-                let rect = event.target.getBoundingClientRect();
+                let rect = document.getElementById('color-picker-hex').getBoundingClientRect();
                 let x = this.clamp((event.clientX - rect.left) / rect.width * 100, 0, 100);
                 let y = this.clamp((event.clientY - rect.top) / rect.height * 100, 0, 100);
                 this.selectedPos = { x, y };
             },
 
             pickHue(event) {
-                let rect = event.target.getBoundingClientRect();
-                let x = (event.clientX - rect.left) / rect.width * 100;
+                let rect = document.getElementById('color-picker-hue').getBoundingClientRect();
+                let x = this.clamp((event.clientX - rect.left) / rect.width * 100, 0, 100);
                 this.huePos = x;
-                this.hue = this.clamp(x * 3.6, 0, 360);
+                this.hue = x * 3.6;
             },
 
             updateColor() {

@@ -22,19 +22,6 @@ class SkinatorController extends Controller
         ]);
     }
 
-    private function getItemsFromCategory(string $category)
-    {
-        return DB::table('items')
-            ->select('dofus_id', 'asset_id', 'female_asset_id', 'pet_type', 'category', 'subcategory', 'folder', 'level', 'icon_path')
-            ->where('category', $category)
-            ->addSelect([
-                'localized_names' => DB::table('localized_items')
-                    ->selectRaw("JSON_OBJECTAGG(locale, name)")
-                    ->whereColumn('items.dofus_id', 'localized_items.dofus_id'),
-            ])->get()->toJson();
-
-    }
-
     private function getBreeds()
     {
         return DB::table('races')

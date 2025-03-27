@@ -28,6 +28,7 @@ return [
     'buttonSkinOldIndexPostTuto' => 'How to create and post a skin on the website?',
     'buttonSave' => 'Save',
     'buttonLinkDiscord' => 'Link your discord',
+    'buttonShare' => 'Share',
 
     'titleHome' => 'Barbofus, the Dofus skins gallery',
     'titleBarbe' => 'Discover Barbe Douce',
