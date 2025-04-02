@@ -10,123 +10,58 @@
           action=""
           enctype="multipart/form-data"
           onkeydown="return event.key != 'Enter';"
-          x-init="if(getDataFromURL()) { getAlpineDataFromURL(getDataFromURL()) } else { colors = getDefaultColor(gender, breed); editURLParam(getURLObject()) } "
-          x-data="{
-            copy: null,
-            copyTimeout: null,
-            possibleOrientation: {
-                'Static': [1,2,3,4,5,6,7,0],
-                'Combat': [1,3,5,7],
-                'Monture': [1,2,3,4,5,6,7,0],
-            },
-            orientationKey: 0,
-            colorsLabel: [
-                '{{ __('barbofus.labelSkinColorsSkin') }}',
-                '{{ __('barbofus.labelSkinColorsHair') }}',
-                '{{ __('barbofus.labelSkinColorsClothes') }} 1',
-                '{{ __('barbofus.labelSkinColorsClothes') }} 2',
-                '{{ __('barbofus.labelSkinColorsClothes') }} 3',
-                '{{ __('barbofus.labelSkinColorsClothes') }} 4',
-            ],
-            shouldResetColors: false,
-            charactersCurrentTab: 'breed',
-            oldGender: 0,
-            oldBreed: 1,
-            gender: 0,
-            breed: 1,
-            head: updateHead(this.gender, this.breed),
-            colors: [],
-            animation: 'Static',
-
-            getAlpineDataFromURL(json)
-            {
-                this.breed = json.breed;
-                this.gender = json.gender;
-                this.head = json.head;
-                this.colors = json.colors.map(color => `#${color.toString(16).padStart(6, '0')}`);
-            },
-
-            getURLObject()
-            {
-                return JSON.stringify(shortenKeys({
-                    gender: this.gender,
-                    breed: this.breed,
-                    head: this.head,
-                    colors: this.colors.map(color =>
-                        typeof color === 'string' ? parseInt(color.replace('#', ''), 16) : color
-                    ),
-                }));
-            },
-
-            getRendererObject()
-            {
-                return JSON.stringify({
-                    gender: this.gender,
-                    breed: this.breed,
-                    head: this.head,
-                    colors: this.colors.map(color =>
-                        typeof color === 'string' ? parseInt(color.replace('#', ''), 16) : color
-                    ),
-                    orientation: this.possibleOrientation[this.animation][this.orientationKey],
-                    animation: this.animation,
-                }, null, 2);
-            },
-
-            getTESTDataFromURL()
-            {
-                return JSON.stringify(getDataFromURL(), null ,2);
-            },
-
-            updateAlpineHead()
-            {
-                this.head = updateHead(this.gender, this.breed);
-
-                if(this.shouldResetColors) {
-                    this.colors = getDefaultColor(this.gender, this.breed);
-                    this.shouldResetColors = false;
-                }
-
-                editURLParam(this.getURLObject())
-            },
-
-            copyToClipboard(toCopy, name)
-            {
-                if(this.copyTimeout) {
-                    clearTimeout(this.copyTimeout);
-                }
-
-                this.copy = name;
-                navigator.clipboard.writeText(toCopy);
-
-                this.copyTimeout = setTimeout(() => {
-                    this.copy = null;
-                    this.copyTimeout = null;
-                }, 1000);
-            },
-          }">
+          x-data="skinator">
 
         {{--    ITEMS ACTUELS    --}}
-        <div class="h-24">
-            items coché
+        <div class="flex space-x-4 mb-4">
+            <template x-for="(item, key) in Object.fromEntries(Object.entries(items).filter(([key, value]) => value !== null))" :key="item">
+                <button type="button"
+                        @click="items[key] = null; editURLParam(getURLObject())"
+                        class="bg-primary-100 group relative rounded-lg h-fit p-2 min-w-[9rem] overflow-hidden">
+
+                    <div class="flex items-baseline">
+                        <img draggable="false" class="h-12" :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
+                             :alt="allItems.find(i => i.dofus_id === item).name">
+                        <div class="flex">
+                            <img loading="lazy" draggable="false" width="24" height="24"
+                                 class="h-6 w-6"
+                                 :src="'/storage/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id === item).subcategory + '.png'"
+                                 :alt="allItems.find(i => i.dofus_id === item).subcategory">
+                            <p x-text="'Lv.' + allItems.find(i => i.dofus_id === item).level" class="text-inactiveText"></p>
+                        </div>
+                    </div>
+
+                    <p x-text="allItems.find(i => i.dofus_id === item).name" class="text-left"></p>
+
+                    <div class="bg-black w-full h-full absolute top-0 left-0 opacity-0 group-hover:opacity-70 transition-all"></div>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                         class="h-6 w-6 text-red-500 absolute top-1 right-1 group-hover:h-20 group-hover:w-20 transition-all">
+                        <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                    </svg>
+                </button>
+            </template>
         </div>
 
-        <div class="flex">
+        <div class="flex h-[45rem]">
 
             {{--      REGLAGES PERSONNAGE      --}}
             <div class="w-[25.5rem]">
+
+                {{-- CHOIX ONGLET --}}
                 <div class="text-xl h-12 font-thin flex justify-evenly">
                     <button type="button"
                             class="w-1/3 uppercase"
                             :class="(charactersCurrentTab === 'breed') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                            @click="charactersCurrentTab = 'breed'; charactersTabTransition = true">{{ __('barbofus.contentBreed') }}</button>
+                            @click="charactersCurrentTab = 'breed'">{{ __('barbofus.contentBreed') }}</button>
                     <button type="button"
                             class="w-1/3 uppercase"
                             :class="(charactersCurrentTab === 'head') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                            @click="charactersCurrentTab = 'head'; charactersTabTransition = true">{{ __('barbofus.contentFace') }}</button>
+                            @click="charactersCurrentTab = 'head'">{{ __('barbofus.contentFace') }}</button>
                     <button type="button"
                             class="w-1/3 uppercase"
                             :class="(charactersCurrentTab === 'color') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                            @click="charactersCurrentTab = 'color'; charactersTabTransition = true">{{ __('barbofus.contentColor') }}</button>
+                            @click="charactersCurrentTab = 'color'">{{ __('barbofus.contentColor') }}</button>
                 </div>
 
                 {{--      Choix sexe      --}}
@@ -174,24 +109,24 @@
                     <p class="text-xl text-center mt-4 mb-1 font-light">{{ __('barbofus.labelSkinClass') }}</p>
 
                     <div class="flex flex-wrap gap-4 justify-center items-center">
-                        @foreach($breeds as $breed)
+                        <template x-for="breedInfo in breedInfos" :key="breedInfo.dofus_id">
                             <div>
-                                <input id="breed_{{ $breed->dofus_id }}"
+                                <input :id="'breed_' + breedInfo.dofus_id"
                                        x-model.number="breed"
                                        type="radio"
-                                       value="{{ $breed->dofus_id }}"
+                                       :value="breedInfo.dofus_id"
                                        class="hidden peer"
-                                       :checked="breed === {{ $breed->dofus_id }}"
+                                       :checked="breed === breedInfo.dofus_id"
                                        @change="editURLParam(getURLObject()); updateAlpineHead()">
-                                <label for="breed_{{ $breed->dofus_id }}"
+                                <label :for="'breed_' + breedInfo.dofus_id"
                                        @click="shouldResetColors = checkIfDefaultColors(gender, breed, colors)"
-                                       title="{{ $breed->name }}"
+                                       :title="breed.name"
                                        class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
-                                    <img x-show="gender === 0" draggable="false" src="{{ asset('storage/images/icons/classes/faces/unity/'. $breed->heads->male->{0}->assetId .'.png') }}" alt="{{ $breed->name }}">
-                                    <img x-show="gender === 1" draggable="false" src="{{ asset('storage/images/icons/classes/faces/unity/'. $breed->heads->female->{0}->assetId .'.png') }}" alt="{{ $breed->name }}">
+                                    <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[gender === 0 ? 'male' : 'female'][0].assetId + '.png'"
+                                         :alt="breed.name">
                                 </label>
                             </div>
-                        @endforeach
+                        </template>
                     </div>
                 </div>
 
@@ -201,27 +136,23 @@
                     <p class="text-xl text-center mt-4 mb-1 font-light">{{ __('barbofus.labelSkinFace') }}</p>
 
                     <div class="flex flex-wrap gap-4 justify-center items-center">
-                        @foreach($breeds as $breed)
-                            @foreach($breed->heads as $genderKey => $gender)
-                                @foreach($gender as $head)
-                                    <div x-show="breed === {{ $breed->dofus_id }} && (gender === 0 ? 'male' : 'female') === '{{ $genderKey }}'">
-
-                                        <input id="head_{{ $head->id }}"
-                                               x-model.number="head"
-                                               type="radio"
-                                               value="{{ $head->id }}"
-                                               class="hidden peer"
-                                               :checked="head === {{ $head->id }}"
-                                               @change="editURLParam(getURLObject())">
-                                        <label for="head_{{ $head->id }}"
-                                               title="{{ __('barbofus.contentFace').' '.$breed->name . ' ' . $head->id }}"
-                                               class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
-                                            <img draggable="false" src="{{ asset('storage/images/icons/classes/faces/unity/'. $head->assetId .'.png') }}" alt="{{ __('barbofus.contentFace').' '.$breed->name . ' ' . $head->id }}">
-                                        </label>
-                                    </div>
-                                @endforeach
-                            @endforeach
-                        @endforeach
+                        <template x-for="breedHead in breedHeads" :key="breedHead.id">
+                            <div>
+                                <input :id="'head_' + breedHead.id"
+                                       x-model.number="head"
+                                       type="radio"
+                                       :value="breedHead.id"
+                                       class="hidden peer"
+                                       :checked="head === breedHead.id"
+                                       @change="editURLParam(getURLObject())">
+                                <label :for="'head_' + breedHead.id"
+                                       :title="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id"
+                                       class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
+                                    <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId + '.png'"
+                                         :alt="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id">
+                                </label>
+                            </div>
+                        </template>
                     </div>
                 </div>
 
@@ -283,10 +214,6 @@
 
             {{--      RESULTAT SKIN + ORIENTATION + EXPORT PNG + COPY LINK      --}}
             <div class="w-96 p-4 space-y-4 h-fit mt-16">
-                <div class="flex justify-evenly">
-                    <p class="mt-16 whitespace-pre-wrap w-fit" x-text="getRendererObject"/>
-                    <p class="mt-16 whitespace-pre-wrap w-fit" x-text="getTESTDataFromURL"/>
-                </div>
 
                 {{-- Skin + bouton d'export --}}
                 <div class="relative w-fit mx-auto">
@@ -316,7 +243,7 @@
                 {{-- Zone sous skins / Orientation / Animation --}}
                 <div class="flex justify-evenly space-x-8 w-fit mx-auto">
                     <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
-                        <img src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
+                        <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
                     </button>
 
                     <button type="button"
@@ -336,7 +263,7 @@
                     </button>
 
                     <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
-                        <img src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 group-active:translate-y-0 group-active:scale-90 transition-all">
+                        <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 group-active:translate-y-0 group-active:scale-90 transition-all">
                     </button>
                 </div>
 
@@ -368,6 +295,10 @@
                     </div>
                 </div>
 
+                <div class="flex justify-evenly">
+                    <p class="mt-16 whitespace-pre-wrap w-fit" x-text="getRendererObject"/>
+                </div>
+
                 <script data-type="lazy" data-src="https://www.google.com/recaptcha/api.js"></script>
 
                 <script>
@@ -378,55 +309,307 @@
             </div>
 
             {{--      TOUS LES ITEMS      --}}
-            <div class="flex-1">items, onglets par catégories</div>
+            <div class="flex-1 flex flex-col h-full">
+
+                {{-- CHOIX ONGLET --}}
+                <div class="text-xl h-12 font-thin flex justify-evenly">
+
+                    @foreach($itemCategories as $category)
+                        <button type="button"
+                                class="w-1/3 uppercase"
+                                :class="(itemsCurrentTab === '{{ $category }}') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
+                                @click="itemsCurrentTab = '{{ $category }}'; maxItemVisible = 192">{{ __('barbofus.content' . ucfirst($category)) }}</button>
+                    @endforeach
+                </div>
+
+                <div class="relative flex items-center space-x-2 h-10 my-2 w-[16rem] bg-primary-100 rounded-md py-2">
+                    <input maxlength="64" id="skinator-search" type="text" placeholder="{{ __('barbofus.contentRefineSearch') }}"
+                           x-model="searchBar"
+                           x-ref="skinatorSearchInput"
+                           @input="updateFilteredItems"
+                           class="rounded-md pl-4 focus:outline-none placeholder-inactiveText bg-primary-100" />
+
+                    <button type="button"
+                            x-cloak
+                            @click="searchBar = ''; $refs.skinatorSearchInput.focus(); updateFilteredItems()"
+                            for="skinator-search">
+                        <svg x-show="searchBar.length === 0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 text-inactiveText">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+
+                        <svg x-show="searchBar.length > 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                             class="h-6 text-red-500">
+                            <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="overflow-auto flex flex-wrap gap-2 justify-left">
+                    <template x-for="allItem in (searchBar.length >= 3 ? filteredItems : filteredItems.filter(i => i.category === itemsCurrentTab)).slice(0, maxItemVisible)"
+                              :key="allItem.dofus_id">
+                    <div class="h-fit">
+                            <input :id="allItem.category + '_' + allItem.dofus_id"
+                                   x-model.number="items[allItem.category]"
+                                   type="radio"
+                                   :value="allItem.dofus_id"
+                                   class="hidden peer"
+                                   :checked="items[allItem.category] === allItem.dofus_id"
+                                   @change="editURLParam(getURLObject())">
+                            <label :for="allItem.category + '_' + allItem.dofus_id"
+                                   :title="allItem.name"
+                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
+                                <div x-show="allItem.subcategory != 'mimisymbic'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
+                                <img loading="lazy" draggable="false" class="mt-0" height="64" width="64" :src="'/storage/' + allItem.icon_path"
+                                     :alt="allItem.name">
+                            </label>
+                        </div>
+                    </template>
+                </div>
+
+                <button type="button"
+                        x-cloak
+                        x-show="maxItemVisible < filteredItems.filter(i => i.category === itemsCurrentTab).length"
+                        class="py-2 w-fit mx-auto px-6 my-4 group rounded-md bg-secondary text-primary hover:rounded-lg transition-all"
+                        @click="maxItemVisible += 192">
+                    <p class="group-hover:-translate-y-0.5 transition-all">{{ __('barbofus.contentLoadMore') }}</p>
+                </button>
+            </div>
         </div>
     </form>
 
     <script>
-        const breedInfo = @js($breeds);
+        document.addEventListener("alpine:init", () => {
+            Alpine.data("skinator", () => ({
+                breedInfos: @js($breeds),
+                allItems: @js($items),
+                filteredItems: null,
+                breedHeads: null,
+                maxItemVisible: 192,
+                searchBar: '',
+                copy: null,
+                copyTimeout: null,
+                possibleOrientation: {
+                    'Static': [1,2,3,4,5,6,7,0],
+                    'Combat': [1,3,5,7],
+                    'Monture': [1,2,3,4,5,6,7,0],
+                },
+                orientationKey: 0,
+                colorsLabel: [
+                    '{{ __('barbofus.labelSkinColorsSkin') }}',
+                    '{{ __('barbofus.labelSkinColorsHair') }}',
+                    '{{ __('barbofus.labelSkinColorsClothes') }} 1',
+                    '{{ __('barbofus.labelSkinColorsClothes') }} 2',
+                    '{{ __('barbofus.labelSkinColorsClothes') }} 3',
+                    '{{ __('barbofus.labelSkinColorsClothes') }} 4',
+                ],
+                shouldResetColors: false,
+                charactersCurrentTab: 'breed',
+                itemsCurrentTab: 'hat',
+                oldGender: 0,
+                oldBreed: 1,
+                gender: 0,
+                breed: 1,
+                head: null,
+                colors: [],
+                animation: 'Static',
+                items: {
+                    hat: null,
+                    cape: null,
+                    shield: null,
+                    pet: null,
+                    shoulderpads: null,
+                    wings: null,
+                    costume: null,
+                },
+
+                init()
+                {
+                    this.head = this.updateHead(this.gender, this.breed);
+                    this.breedHeads = this.updateHeads(this.gender, this.breed);
+                    this.updateFilteredItems();
+
+                    if(getDataFromURL()) {
+                        this.getAlpineDataFromURL(getDataFromURL())
+                    }
+                    else
+                    {
+                        this.colors = this.getDefaultColor(this.gender, this.breed);
+                        editURLParam(this.getURLObject())
+                    }
+                },
+
+                getAlpineDataFromURL(json)
+                {
+                    this.breed = json.breed;
+                    this.gender = json.gender;
+                    this.head = json.head;
+                    this.breedHeads = this.updateHeads(json.gender, json.breed);
+                    this.colors = json.colors.map(color => `#${color.toString(16).padStart(6, '0')}`);
+                    this.items = json.items;
+                },
+
+                getURLObject()
+                {
+                    return JSON.stringify(shortenKeys({
+                        gender: this.gender,
+                        breed: this.breed,
+                        head: this.head,
+                        colors: this.colors.map(color =>
+                            typeof color === 'string' ? parseInt(color.replace('#', ''), 16) : color
+                        ),
+                        items: this.items,
+                    }));
+                },
+
+                getRendererObject()
+                {
+                    return JSON.stringify({
+                        gender: this.gender,
+                        breed: this.breed,
+                        head: this.head,
+                        colors: this.colors.map(color =>
+                            typeof color === 'string' ? parseInt(color.replace('#', ''), 16) : color
+                        ),
+                        orientation: this.possibleOrientation[this.animation][this.orientationKey],
+                        animation: this.animation,
+                        skins: Object.entries(this.items)
+                            .map(([key, value]) => {
+                                if (!value) return null;
+
+                                const item = this.allItems.find(i => i.dofus_id === value && i.folder === 'skins');
+                                return item ? (this.gender === 0 ? item.asset_id : item.female_asset_id) : null;
+                            })
+                            .filter(Boolean),
+                        bones: Object.entries(this.items)
+                            .map(([key, value]) => {
+                                if (!value) return null;
+
+                                const item = this.allItems.find(i => i.dofus_id === value && i.folder === 'bones');
+                                return item ? (this.gender === 0 ? item.asset_id : item.female_asset_id) : null;
+                            })
+                            .filter(Boolean),
+                    }, null, 2);
+                },
+
+                updateAlpineHead()
+                {
+                    this.head = this.updateHead(this.gender, this.breed);
+                    this.breedHeads = this.updateHeads(this.gender, this.breed);
+
+                    if(this.shouldResetColors) {
+                        this.colors = this.getDefaultColor(this.gender, this.breed);
+                        this.shouldResetColors = false;
+                    }
+
+                    editURLParam(this.getURLObject())
+                },
+
+                copyToClipboard(toCopy, name)
+                {
+                    if(this.copyTimeout) {
+                        clearTimeout(this.copyTimeout);
+                    }
+
+                    this.copy = name;
+                    navigator.clipboard.writeText(toCopy);
+
+                    this.copyTimeout = setTimeout(() => {
+                        this.copy = null;
+                        this.copyTimeout = null;
+                    }, 1000);
+                },
+
+                checkIfDefaultColors(gender, breed, colors)
+                {
+                    let count = 0;
+                    const defaultColors = this.getDefaultColor(gender, breed)
+
+                    colors.forEach((color, index) => {
+                        if(defaultColors[index].toUpperCase() == color.toUpperCase()) count++
+                    })
+
+                    return count === colors.length
+                },
+
+                updateFilteredItems()
+                {
+                    if(this.searchBar.length >= 3) {
+                        this.filteredItems = this.allItems.filter(i =>
+                            removeAccents(i.name).toLowerCase().includes(removeAccents(this.searchBar).toLowerCase())
+                        );
+
+                    }
+                    else {
+                        this.filteredItems = this.allItems;
+                    }
+
+                    this.maxItemVisible = 192;
+                },
+
+                updateHead(gender, breed)
+                {
+                    const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
+                    return currentBreed ? currentBreed.heads[gender === 0 ? 'male' : 'female'][0].id : 1
+                },
+
+                updateHeads(gender, breed)
+                {
+                    const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
+                    return currentBreed ? currentBreed.heads[gender === 0 ? 'male' : 'female'] : 1
+                },
+
+                getDefaultColor(gender, breed)
+                {
+                    const currentBreed = this.breedInfos.find(b => b.dofus_id === breed);
+
+                    if (currentBreed) {
+                        // Applique la fonction decimalToHex à chaque couleur de colors[gender]
+                        return currentBreed.colors[gender === 0 ? 'male' : 'female'].map(decimalToHex);
+                    }
+
+                    return [];
+                },
+            }));
+        });
+
         const colorTab = document.getElementById('color-tab')
-        const mapKeys = { gender: "1", breed: "2", head: "3", colors: "4", skins: "5", bone: "6" };
+        const mapKeys = { gender: "1", breed: "2", head: "3", colors: "4", items: "5", hat: "6", cape: "7", shield: "8", pet: "9", costume: "10", shoulderpads: "11", wings: "12" };
 
         function shortenKeys(obj) {
-            return Object.fromEntries(Object.entries(obj).map(([key, value]) => [mapKeys[key] || key, value]));
+            if (Array.isArray(obj)) {
+                return obj.map(item => shortenKeys(item, mapKeys));
+            } else if (typeof obj === 'object' && obj !== null) {
+                return Object.fromEntries(
+                    Object.entries(obj).map(([key, value]) => [
+                        mapKeys[key] || key,
+                        shortenKeys(value, mapKeys)
+                    ])
+                );
+            }
+            return obj;
         }
 
         function expandKeys(obj) {
             const reverseMap = Object.fromEntries(Object.entries(mapKeys).map(([k, v]) => [v, k]));
-            return Object.fromEntries(Object.entries(obj).map(([key, value]) => [reverseMap[key] || key, value]));
+
+            if (Array.isArray(obj)) {
+                return obj.map(item => expandKeys(item, mapKeys));
+            } else if (typeof obj === 'object' && obj !== null) {
+                return Object.fromEntries(
+                    Object.entries(obj).map(([key, value]) => [
+                        reverseMap[key] || key,
+                        expandKeys(value, mapKeys)
+                    ])
+                );
+            }
+            return obj;
+        }
+
+        function removeAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
 
         const decimalToHex = (decimal) => '#' + decimal.toString(16).padStart(6, '0').toUpperCase();
-
-        function checkIfDefaultColors(gender, breed, colors)
-        {
-            let count = 0;
-            const defaultColors = getDefaultColor(gender, breed)
-
-            colors.forEach((color, index) => {
-                if(defaultColors[index].toUpperCase() == color.toUpperCase()) count++
-            })
-
-            return count === colors.length
-        }
-
-        function updateHead(gender, breed)
-        {
-            const currentBreed = breedInfo.find(b => b.dofus_id === breed)
-            return currentBreed ? currentBreed.heads[gender === 0 ? 'male' : 'female'][0].id : 1
-        }
-
-        function getDefaultColor(gender, breed)
-        {
-            const currentBreed = breedInfo.find(b => b.dofus_id === breed);
-
-            if (currentBreed) {
-                // Applique la fonction decimalToHex à chaque couleur de colors[gender]
-                return currentBreed.colors[gender === 0 ? 'male' : 'female'].map(decimalToHex);
-            }
-
-            return [];
-        }
 
         function getInputPosition(index)
         {
