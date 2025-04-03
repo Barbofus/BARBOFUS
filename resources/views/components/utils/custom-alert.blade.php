@@ -1,4 +1,4 @@
-<div class="fixed z-50 bottom-4 right-4 px-8 py-4 bg-green-100 border-l-4 border-green-700 text-green-700 text-xl max-w-[90vw] min-[1100px]:max-w-[30vw]" x-show="showAlert" x-cloak
+<div class="fixed z-50 bottom-4 right-4 px-8 py-4 bg-green-100 border-l-4 border-green-700 text-green-700 text-xl max-w-[90vw] min-[1100px]:max-w-[30vw]" :class="showAlert ? 'visible pointer-events-auto' : 'invisible pointer-events-none'" x-cloak
     x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="opacity-0 translate-y-48"
     x-transition:enter-end="opacity-100"

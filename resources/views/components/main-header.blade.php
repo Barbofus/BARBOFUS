@@ -8,7 +8,7 @@
         <div class="w-[min(100vw,1500px)] relative h-full">
 
             {{-- Image arrière plan --}}
-            <img src="{{ asset('storage/images/misc_ui/header-background.avif') }}" alt="Barbofus Background" loading="lazy" width="1500" height="783" class="animate-slideY [--custom-translate-y:-35px] [--custom-animation-time:20s] absolute left-0 bottom-[-200px]">
+            <img src="{{ asset('storage/images/misc_ui/header-background.avif') }}" alt="Barbofus Background" loading="lazy" width="1500" height="783" class="absolute left-0 bottom-[-200px]">
 
             {{-- Fondu avec le fond de couleur unis --}}
             <div class="bg-gradient-to-r from-primary to-transparent h-full w-[300px] absolute left-0 top-0 z-10"></div>

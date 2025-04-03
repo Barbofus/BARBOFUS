@@ -1,16 +1,10 @@
 <div x-data="colorPicker('#ffffff'), isHexDragging = false, isHueDragging = false"
-     x-show="showPicker"
+     :class="showPicker ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-90 pointer-events-none'"
      x-cloak
-     x-transition:enter="transition ease-out duration-100"
-     x-transition:enter-start="opacity-0 scale-90"
-     x-transition:enter-end="opacity-100 scale-100"
-     x-transition:leave="transition ease-in duration-100"
-     x-transition:leave-start="opacity-100 scale-100"
-     x-transition:leave-end="opacity-0 scale-90"
      @mousedown.away="showPicker = false"
      x-on:show-color-picker.window="showColorPicker($event)"
-     class="absolute w-52 translate-y-2 bg-primary-100 shadow-lg rounded-lg z-50"
      :style="{ top: inputPosition.y + 'px', left: inputPosition.x + 'px' }"
+     class="absolute w-52 translate-y-2 bg-primary-100 shadow-lg rounded-lg z-50 transition-[scale, opacity] duration-300"
      x-init="if(showPicker) updateFromHex()">
     <div class="relative z-10 h-32 cursor-pointer select-none"
          id="color-picker-hex"

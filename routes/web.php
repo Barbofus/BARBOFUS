@@ -145,6 +145,19 @@ use Illuminate\Support\Facades\Storage;
     }
 });*/
 
+/*Route::get('/foo', function () {
+
+    DB::transaction(function () {
+        Item::where('icon_path', 'like', '%.png')
+            ->each(function ($item) {
+                $newPath = preg_replace('/\.png$/', '.webp', $item->icon_path);
+                $item->update(['icon_path' => $newPath]);
+            });
+    });
+
+    dd('DONE');
+});*/
+
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');

@@ -13,8 +13,8 @@ class SkinatorController extends Controller
 {
     public function index()
     {
-        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon
-        if(!Gate::check('mod-access') &! Gate::check('admin-access') &! in_array(auth()->id(), [2496, 8741, 465]))  {
+        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira
+        if(!Gate::check('mod-access') &! Gate::check('admin-access') &! in_array(auth()->id(), [2496, 8741, 465, 9322]))  {
             abort(403);
         }
 
@@ -43,6 +43,11 @@ class SkinatorController extends Controller
                     ->where('i.subcategory', 'mimisymbic')
                     ->whereIn('i.pet_type', ['dragodinde', 'volkorne', 'muldo']);
             })
+            ->orderByRaw("FIELD(category, 'hat', 'cape', 'shield', 'pet', 'wings', 'shoulderpads', 'costume')")
+            ->orderByRaw("FIELD(pet_type, 'familier', 'montilier', 'dragodinde', 'muldo', 'volkorne')")
+            ->orderByRaw("FIELD(subcategory, 'mimisymbic', 'ceremonial', 'livingObject')")
+            ->orderBy('level')
+            ->orderBy('name')
             ->get();
 
     }

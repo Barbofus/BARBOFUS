@@ -52,7 +52,7 @@
 </head>
 <body class="bg-primary text-secondary min-h-screen max-w-screen"
 
-    x-data="{
+      x-data="{
         alertMessage: '',
         showAlert: false,
         timeoutID: null,
@@ -76,31 +76,31 @@
             this.showAlert = false;
         },
     }"
-    x-init="if(sessionAlert) setTimeout(() => newAlert('{{ session('alert-message') }}'), 300)"
-    x-on:alert-event="newAlert($event.detail.message)">
+      x-init="if(sessionAlert) setTimeout(() => newAlert('{{ session('alert-message') }}'), 300)"
+      x-on:alert-event="newAlert($event.detail.message)">
 
-    {{--<x-utils.snowflakes />--}}
+{{--<x-utils.snowflakes />--}}
 
-    @yield('app-content')
+@yield('app-content')
 
-    <x-utils.custom-alert />
+<x-utils.custom-alert />
 
 
-    <script>
-        {
-            const load = () => {
-                document.querySelectorAll("script[data-type='lazy']").forEach(el => el.setAttribute("src", el.getAttribute("data-src")));
-            }
-            const timer = setTimeout(load, 5000);
-            const trigger = () => {
-                load();
-                clearTimeout(timer);
-            }
-            const events = ["mouseover","keydown","touchmove","touchstart"];
-            events.forEach(e => window.addEventListener(e, trigger, {passive: true, once: true}));
+<script>
+    {
+        const load = () => {
+            document.querySelectorAll("script[data-type='lazy']").forEach(el => el.setAttribute("src", el.getAttribute("data-src")));
         }
-    </script>
+        const timer = setTimeout(load, 5000);
+        const trigger = () => {
+            load();
+            clearTimeout(timer);
+        }
+        const events = ["mouseover","keydown","touchmove","touchstart"];
+        events.forEach(e => window.addEventListener(e, trigger, {passive: true, once: true}));
+    }
+</script>
 
-    @livewireScripts
+@livewireScripts
 </body>
 </html>

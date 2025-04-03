@@ -12,13 +12,7 @@
 
     {{-- Dropdown --}}
     <div class="bg-primary-100 absolute rounded-md p-2 shadow-xl" x-on:click="open = false"
-         x-show="open" x-cloak
-         x-transition:enter="transition ease-out duration-300 origin-top"
-         x-transition:enter-start="opacity-0 scale-0"
-         x-transition:enter-end="opacity-100 scale-100"
-         x-transition:leave="transition ease-out duration-300 origin-top"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-0">
+         :class="open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'" x-cloak>
 
         <button wire:click="setLocale('en')" class="block hover:brightness-50 active:scale-90 transition-all">
             <img draggable="false" src="{{ asset('storage/images/icons/locale/en.png') }}" title="English" alt="English flag" height="48" class="h-8">

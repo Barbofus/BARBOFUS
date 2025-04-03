@@ -13,25 +13,26 @@
           x-data="skinator">
 
         {{--    ITEMS ACTUELS    --}}
-        <div class="flex space-x-4 mb-4">
+        <div class="flex space-x-4 mb-4 h-32">
             <template x-for="(item, key) in Object.fromEntries(Object.entries(items).filter(([key, value]) => value !== null))" :key="item">
                 <button type="button"
+                        :title="allItems.find(i => i.dofus_id === item).name"
                         @click="items[key] = null; editURLParam(getURLObject())"
-                        class="bg-primary-100 group relative rounded-lg h-fit p-2 min-w-[9rem] overflow-hidden">
+                        class="bg-primary-100 h-full group relative rounded-lg p-2 min-w-[11rem] overflow-hidden">
 
-                    <div class="flex items-baseline">
-                        <img draggable="false" class="h-12" :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
+                    <div class="flex items-start">
+                        <img loading="lazy" draggable="false" class="h-20" :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
                              :alt="allItems.find(i => i.dofus_id === item).name">
-                        <div class="flex">
+                        <div class="flex items-end space-x-1 pt-4">
                             <img loading="lazy" draggable="false" width="24" height="24"
                                  class="h-6 w-6"
                                  :src="'/storage/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id === item).subcategory + '.png'"
                                  :alt="allItems.find(i => i.dofus_id === item).subcategory">
-                            <p x-text="'Lv.' + allItems.find(i => i.dofus_id === item).level" class="text-inactiveText"></p>
+                            <p x-text="'Lv.' + allItems.find(i => i.dofus_id === item).level" class="text-inactiveText whitespace-nowrap"></p>
                         </div>
                     </div>
 
-                    <p x-text="allItems.find(i => i.dofus_id === item).name" class="text-left"></p>
+                    <p x-text="allItems.find(i => i.dofus_id === item).name" class="text-left truncate"></p>
 
                     <div class="bg-black w-full h-full absolute top-0 left-0 opacity-0 group-hover:opacity-70 transition-all"></div>
 
@@ -246,17 +247,19 @@
                         <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
                     </button>
 
+                    {{-- Choix anim exploration / combat --}}
                     <button type="button"
+                            title="Exploration / Combat"
                             :disabled="animation === 'Monture'"
                             class="group relative h-8 w-16 rounded-full bg-primary-100 p-2 disabled:cursor-not-allowed"
                             @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
                         <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
                              :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
-                            <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                            <svg x-cloak :class="animation === 'Static' ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                             </svg>
 
-                            <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                            <svg x-cloak :class="animation === 'Combat' ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                                 <path d="M8.5 1a.75.75 0 0 0-.75.75V6.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V7.5a.5.5 0 0 1-1 0V4.75a.75.75 0 0 0-1.5 0v4.5a5.75 5.75 0 0 0 11.5 0v-2.5a.75.75 0 0 0-1.5 0V9.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V6.5a.5.5 0 0 1-1 0V1.75A.75.75 0 0 0 8.5 1Z" />
                             </svg>
                         </div>
@@ -318,7 +321,7 @@
                         <button type="button"
                                 class="w-1/3 uppercase"
                                 :class="(itemsCurrentTab === '{{ $category }}') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                                @click="itemsCurrentTab = '{{ $category }}'; maxItemVisible = 192">{{ __('barbofus.content' . ucfirst($category)) }}</button>
+                                @click="itemsCurrentTab = '{{ $category }}'; maxItemVisible = 96">{{ __('barbofus.content' . ucfirst($category)) }}</button>
                     @endforeach
                 </div>
 
@@ -332,34 +335,40 @@
                     <button type="button"
                             x-cloak
                             @click="searchBar = ''; $refs.skinatorSearchInput.focus(); updateFilteredItems()"
+                            class="relative w-6 h-6"
                             for="skinator-search">
-                        <svg x-show="searchBar.length === 0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 text-inactiveText">
+                        <svg :class="searchBar.length === 0 ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="h-6 text-inactiveText absolute top-0 left-0">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg>
 
-                        <svg x-show="searchBar.length > 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                             class="h-6 text-red-500">
+                        <svg :class="searchBar.length > 0 ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                             class="h-6 text-red-500 absolute top-0 left-0">
                             <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
                         </svg>
                     </button>
                 </div>
 
-                <div class="overflow-auto flex flex-wrap gap-2 justify-left">
-                    <template x-for="allItem in (searchBar.length >= 3 ? filteredItems : filteredItems.filter(i => i.category === itemsCurrentTab)).slice(0, maxItemVisible)"
+                <div class="overflow-auto flex flex-wrap gap-2 justify-left"
+                     @change="if (event.target.matches('input[type=radio]')) { editURLParam(getURLObject()); items[event.target.dataset.category] = Number(event.target.dataset.id); }">
+                    <template x-for="(allItem, index) in (searchBar.length >= 3 ? filteredItems : filteredItems.filter(i => i.category === itemsCurrentTab)).slice(0, maxItemVisible)"
                               :key="allItem.dofus_id">
-                    <div class="h-fit">
+                        <div class="h-fit"
+                             x-intersect:enter="$el.style.visibility = 'visible'; $el.style.opacity = 1;"
+                             x-intersect:leave="$el.style.visibility = 'invisible'; $el.style.opacity = 0;">
                             <input :id="allItem.category + '_' + allItem.dofus_id"
-                                   x-model.number="items[allItem.category]"
+                                   :data-category="allItem.category"
+                                   :data-id="allItem.dofus_id"
                                    type="radio"
+                                   :name="allItem.category"
                                    :value="allItem.dofus_id"
                                    class="hidden peer"
-                                   :checked="items[allItem.category] === allItem.dofus_id"
-                                   @change="editURLParam(getURLObject())">
+                                   :checked="items[allItem.category] === allItem.dofus_id">
                             <label :for="allItem.category + '_' + allItem.dofus_id"
                                    :title="allItem.name"
-                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
-                                <div x-show="allItem.subcategory != 'mimisymbic'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
-                                <img loading="lazy" draggable="false" class="mt-0" height="64" width="64" :src="'/storage/' + allItem.icon_path"
+                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-24 h-24 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
+                                <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
+                                <img loading="lazy" draggable="false" class="mt-0" height="80" width="80" :src="'/storage/' + allItem.icon_path"
                                      :alt="allItem.name">
                             </label>
                         </div>
@@ -368,9 +377,10 @@
 
                 <button type="button"
                         x-cloak
-                        x-show="maxItemVisible < filteredItems.filter(i => i.category === itemsCurrentTab).length"
+                        :class="maxItemVisible < filteredItems.filter(i => i.category === itemsCurrentTab).length ? 'visible' : 'invisible'"
+                        :disabled="maxItemVisible >= filteredItems.filter(i => i.category === itemsCurrentTab).length"
                         class="py-2 w-fit mx-auto px-6 my-4 group rounded-md bg-secondary text-primary hover:rounded-lg transition-all"
-                        @click="maxItemVisible += 192">
+                        @click="maxItemVisible += 480">
                     <p class="group-hover:-translate-y-0.5 transition-all">{{ __('barbofus.contentLoadMore') }}</p>
                 </button>
             </div>
@@ -382,9 +392,10 @@
             Alpine.data("skinator", () => ({
                 breedInfos: @js($breeds),
                 allItems: @js($items),
+                loadedItems: new Set(),
                 filteredItems: null,
                 breedHeads: null,
-                maxItemVisible: 192,
+                maxItemVisible: 96,
                 searchBar: '',
                 copy: null,
                 copyTimeout: null,
@@ -543,7 +554,7 @@
                         this.filteredItems = this.allItems;
                     }
 
-                    this.maxItemVisible = 192;
+                    this.maxItemVisible = 96;
                 },
 
                 updateHead(gender, breed)

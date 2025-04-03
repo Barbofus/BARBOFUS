@@ -1,6 +1,6 @@
 
 <div
-    wire:poll.visible.30s
+    wire:poll.visible.120s
     class="fixed min-[901px]:absolute top-3 right-[6.5rem] flex flex-col items-end z-50"
     x-data="{
                 open: false
@@ -19,14 +19,8 @@
         </button>
 
         {{-- Dropdown --}}
-        <div class="w-80 bg-primary-100 rounded-md p-2 shadow-xl"
-             x-show="open" x-cloak
-             x-transition:enter="transition ease-out duration-300 origin-top-right"
-             x-transition:enter-start="opacity-0 scale-0"
-             x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-out duration-300 origin-top-right"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-0">
+        <div class="w-80 bg-primary-100 rounded-md p-2 shadow-xl transition-all"
+             :class="open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'" x-cloak>
 
             <div class="flex pb-1 justify-between items-baseline text-sm text-red-400">
                 <button wire:click="ReadNotifications" class="hover:text-red-300">{{ __('barbofus.notifButtonMarkAllAsRead') }}</button>
