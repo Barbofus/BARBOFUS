@@ -1,7 +1,7 @@
 @extends('layouts.basic-views')
 
 @section('content')
-    <h1 class="text-[min(3rem,10vw)] my-8 font-normal text-center uppercase">Skinator</h1>
+    <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">Skinator</h1>
 
     <form autocomplete="off"
           class="w-[min(90vw,120rem)] mx-auto mb-16"
@@ -13,15 +13,16 @@
           x-data="skinator">
 
         {{--    ITEMS ACTUELS    --}}
-        <div class="flex space-x-4 mb-4 h-32">
+        <div class="flex space-x-4 my-2 h-24"
+             @click="if(event.target.closest('button[data-key]')) { items[event.target.closest('button[data-key]').dataset.key] = null; editURLParam(getURLObject()); }">
             <template x-for="(item, key) in Object.fromEntries(Object.entries(items).filter(([key, value]) => value !== null))" :key="item">
                 <button type="button"
                         :title="allItems.find(i => i.dofus_id === item).name"
-                        @click="items[key] = null; editURLParam(getURLObject())"
-                        class="bg-primary-100 h-full group relative rounded-lg p-2 min-w-[11rem] overflow-hidden">
+                        :data-key="key"
+                        class="bg-primary-100 h-full group relative rounded-lg py-1 px-2 min-w-[11rem] overflow-hidden">
 
                     <div class="flex items-start">
-                        <img loading="lazy" draggable="false" class="h-20" :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
+                        <img loading="lazy" draggable="false" class="h-16" :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
                              :alt="allItems.find(i => i.dofus_id === item).name">
                         <div class="flex items-end space-x-1 pt-4">
                             <img loading="lazy" draggable="false" width="24" height="24"
@@ -44,41 +45,41 @@
             </template>
         </div>
 
-        <div class="flex h-[45rem]">
+        <div class="flex h-[40rem]">
 
             {{--      REGLAGES PERSONNAGE      --}}
             <div class="w-[25.5rem]">
 
                 {{-- CHOIX ONGLET --}}
-                <div class="text-xl h-12 font-thin flex justify-evenly">
+                <div class="text-xl h-12 font-thin flex justify-evenly"
+                     @click="if(event.target.closest('button[data-tab]')) { charactersCurrentTab = event.target.closest('button[data-tab]').dataset.tab; }">
                     <button type="button"
                             class="w-1/3 uppercase"
-                            :class="(charactersCurrentTab === 'breed') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                            @click="charactersCurrentTab = 'breed'">{{ __('barbofus.contentBreed') }}</button>
+                            data-tab="breed"
+                            :class="(charactersCurrentTab === 'breed') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentBreed') }}</button>
                     <button type="button"
                             class="w-1/3 uppercase"
-                            :class="(charactersCurrentTab === 'head') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                            @click="charactersCurrentTab = 'head'">{{ __('barbofus.contentFace') }}</button>
+                            data-tab="head"
+                            :class="(charactersCurrentTab === 'head') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentFace') }}</button>
                     <button type="button"
                             class="w-1/3 uppercase"
-                            :class="(charactersCurrentTab === 'color') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                            @click="charactersCurrentTab = 'color'">{{ __('barbofus.contentColor') }}</button>
+                            data-tab="color"
+                            :class="(charactersCurrentTab === 'color') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentColor') }}</button>
                 </div>
 
                 {{--      Choix sexe      --}}
                 <p class="text-xl text-center mt-4 mb-1 font-light">{{ __('barbofus.labelSkinGender') }}</p>
-                <div class="flex gap-x-4 w-fit mx-auto">
+                <div class="flex gap-x-4 w-fit mx-auto"
+                     @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); gender = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
                     <div>
                         <input id="male"
-                               x-model.number="gender"
                                type="radio"
+                               name="gender"
                                value="0"
                                class="hidden peer"
-                               :checked="gender === 0"
-                               @change="editURLParam(getURLObject()); updateAlpineHead()">
+                               :checked="gender === 0">
                         <label
                             for="male"
-                            @click="shouldResetColors = checkIfDefaultColors(gender, breed, colors)"
                             class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-full" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
                             </svg>
@@ -88,14 +89,12 @@
 
                     <div>
                         <input id="female"
-                               x-model.number="gender"
                                type="radio"
+                               name="gender"
                                value="1"
                                class="hidden peer"
-                               :checked="gender === 1"
-                               @change="editURLParam(getURLObject()); updateAlpineHead()">
+                               :checked="gender === 1">
                         <label for="female"
-                               @click="shouldResetColors = checkIfDefaultColors(gender, breed, colors)"
                                class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
                             </svg>
@@ -104,23 +103,23 @@
                     </div>
                 </div>
 
-                <div x-cloak x-show="charactersCurrentTab === 'breed'" class="p-4">
+                <div x-cloak class="p-4"
+                     x-show="charactersCurrentTab === 'breed'">
 
                     {{--      Choix classe      --}}
-                    <p class="text-xl text-center mt-4 mb-1 font-light">{{ __('barbofus.labelSkinClass') }}</p>
+                    <p class="text-xl text-center mb-1 font-light">{{ __('barbofus.labelSkinClass') }}</p>
 
-                    <div class="flex flex-wrap gap-4 justify-center items-center">
+                    <div class="flex flex-wrap gap-2 justify-center items-center"
+                         @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
                         <template x-for="breedInfo in breedInfos" :key="breedInfo.dofus_id">
                             <div>
                                 <input :id="'breed_' + breedInfo.dofus_id"
-                                       x-model.number="breed"
                                        type="radio"
+                                       name="breed"
                                        :value="breedInfo.dofus_id"
                                        class="hidden peer"
-                                       :checked="breed === breedInfo.dofus_id"
-                                       @change="editURLParam(getURLObject()); updateAlpineHead()">
+                                       :checked="breed === breedInfo.dofus_id">
                                 <label :for="'breed_' + breedInfo.dofus_id"
-                                       @click="shouldResetColors = checkIfDefaultColors(gender, breed, colors)"
                                        :title="breed.name"
                                        class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                     <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[gender === 0 ? 'male' : 'female'][0].assetId + '.png'"
@@ -131,21 +130,22 @@
                     </div>
                 </div>
 
-                <div x-cloak x-show="charactersCurrentTab === 'head'" class="p-4">
+                <div x-cloak class="p-4"
+                     x-show="charactersCurrentTab === 'head'">
 
                     {{--      Choix visage      --}}
-                    <p class="text-xl text-center mt-4 mb-1 font-light">{{ __('barbofus.labelSkinFace') }}</p>
+                    <p class="text-xl text-center mb-1 font-light">{{ __('barbofus.labelSkinFace') }}</p>
 
-                    <div class="flex flex-wrap gap-4 justify-center items-center">
+                    <div class="flex flex-wrap gap-2 justify-center items-center"
+                         @change="if (event.target.matches('input[type=radio]')) { head = Number(event.target.value); editURLParam(getURLObject()); }">
                         <template x-for="breedHead in breedHeads" :key="breedHead.id">
                             <div>
                                 <input :id="'head_' + breedHead.id"
-                                       x-model.number="head"
                                        type="radio"
+                                       name="head"
                                        :value="breedHead.id"
                                        class="hidden peer"
-                                       :checked="head === breedHead.id"
-                                       @change="editURLParam(getURLObject())">
+                                       :checked="head === breedHead.id">
                                 <label :for="'head_' + breedHead.id"
                                        :title="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id"
                                        class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
@@ -157,14 +157,17 @@
                     </div>
                 </div>
 
-                <div x-cloak x-show="charactersCurrentTab === 'color'" id="color-tab" class="p-4 relative">
+                <div x-cloak id="color-tab" class="p-4 relative"
+                     x-show="charactersCurrentTab === 'color'">
 
                     {{--      Choix couleur      --}}
-                    <div class="flex flex-wrap justify-evenly">
+                    <div class="flex flex-wrap justify-evenly"
+                         @click="if(event.target.closest('button[data-copy]')) { copyToClipboard(colors[event.target.closest('button[data-copy]').dataset.copy], 'hex' + event.target.closest('button[data-copy]').dataset.copy) }"
+                         @input="if(event.target.closest('input[data-color]')) { colors[event.target.closest('input[data-color]').dataset.color] = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6); editURLParam(getURLObject()) }">
                         <template x-for="(color, index) in colors" :key="index">
                             <div :id="'color-' + index" class="my-3 hover:bg-primary-100 rounded-t-lg overflow-hidden transition-colors">
                                 <button type="button"
-                                        @click="copyToClipboard(colors[index], 'hex'+index)"
+                                        :data-copy="index"
                                         class="relative flex w-full py-1 px-2 justify-between items-center">
                                     <p x-text="colorsLabel[index] + ' :'" class="font-thin text-lg"></p>
 
@@ -184,22 +187,20 @@
 
                                     <!-- Input de couleur -->
                                     <input type="text"
-                                           x-model="colors[index]"
-                                           @input="colors[index] = '#' + colors[index].replace(/[^0-9a-fA-F]/g, '').slice(0, 6); editURLParam(getURLObject())"
+                                           :value="colors[index]"
+                                           :data-color="index"
                                            class="uppercase order-last h-full peer rounded-r p-1 bg-primary-100 text-center w-28 focus:outline-none border-transparent focus:border-secondary border-y border-r transition-colors">
 
-                                    <!-- Aperçu de la couleur (clic pour ouvrir le picker) -->
-                                    <button type="button" @click="$dispatch('show-color-picker', { hex: colors[index], cindex: index, inputPosition: getInputPosition(index) })"
-                                         @color-picked.window="if(index === $event.detail.cindex) colors[index] = $event.detail.hex; editURLParam(getURLObject())"
-                                         class="w-10 h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary transition-colors"
-                                         :style="{ background: colors[index] }"></button>
+                                    <div class="w-10 h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary transition-colors" :style="{ background: colors[index] }">
+                                        <input type="color"
+                                               :data-color="index"
+                                               :value="colors[index]"
+                                               class="opacity-0 h-full w-full cursor-pointer">
+                                    </div>
                                 </div>
                             </div>
                         </template>
                     </div>
-
-                    <!-- Composant Color Picker -->
-                    <x-utils.color-picker />
 
                     <button type="button"
                             @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject())"
@@ -315,13 +316,14 @@
             <div class="flex-1 flex flex-col h-full">
 
                 {{-- CHOIX ONGLET --}}
-                <div class="text-xl h-12 font-thin flex justify-evenly">
+                <div class="text-xl h-12 font-thin flex justify-evenly"
+                     @click="if(event.target.closest('button[data-tab]')) { itemsCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; }">
 
                     @foreach($itemCategories as $category)
                         <button type="button"
+                                data-tab="{{ $category }}"
                                 class="w-1/3 uppercase"
-                                :class="(itemsCurrentTab === '{{ $category }}') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'"
-                                @click="itemsCurrentTab = '{{ $category }}'; maxItemVisible = 96">{{ __('barbofus.content' . ucfirst($category)) }}</button>
+                                :class="(itemsCurrentTab === '{{ $category }}') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.content' . ucfirst($category)) }}</button>
                     @endforeach
                 </div>
 
@@ -350,12 +352,10 @@
                 </div>
 
                 <div class="overflow-auto flex flex-wrap gap-2 justify-left"
-                     @change="if (event.target.matches('input[type=radio]')) { editURLParam(getURLObject()); items[event.target.dataset.category] = Number(event.target.dataset.id); }">
+                     @change="if (event.target.matches('input[type=radio]')) { items[event.target.dataset.category] = Number(event.target.dataset.id); editURLParam(getURLObject()); }">
                     <template x-for="(allItem, index) in (searchBar.length >= 3 ? filteredItems : filteredItems.filter(i => i.category === itemsCurrentTab)).slice(0, maxItemVisible)"
                               :key="allItem.dofus_id">
-                        <div class="h-fit"
-                             x-intersect:enter="$el.style.visibility = 'visible'; $el.style.opacity = 1;"
-                             x-intersect:leave="$el.style.visibility = 'invisible'; $el.style.opacity = 0;">
+                        <div class="h-fit">
                             <input :id="allItem.category + '_' + allItem.dofus_id"
                                    :data-category="allItem.category"
                                    :data-id="allItem.dofus_id"
@@ -366,10 +366,31 @@
                                    :checked="items[allItem.category] === allItem.dofus_id">
                             <label :for="allItem.category + '_' + allItem.dofus_id"
                                    :title="allItem.name"
-                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-24 h-24 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
+                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-24 h-24 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText"
+                                   x-data="{ loaded: false, intersected: false }">
+
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
-                                <img loading="lazy" draggable="false" class="mt-0" height="80" width="80" :src="'/storage/' + allItem.icon_path"
-                                     :alt="allItem.name">
+
+                                <div class="flex gap-1 absolute pointer-events-none">
+                                    <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:0ms]"
+                                         :class="!(loaded && intersected) ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
+                                    <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:100ms]"
+                                         :class="!(loaded && intersected) ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
+                                    <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:200ms]"
+                                         :class="!(loaded && intersected) ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
+                                </div>
+
+
+                                <img loading="lazy"
+                                     draggable="false"
+                                     height="80"
+                                     width="80"
+                                     :src="'/storage/' + allItem.icon_path"
+                                     :alt="allItem.name"
+                                     class="mt-0 transition-opacity delay-100 duration-300"
+                                     @load="loaded = true"
+                                     x-intersect:enter="intersected = true"
+                                     :class="(loaded && intersected) ? 'opacity-100' : 'opacity-0'">
                             </label>
                         </div>
                     </template>
