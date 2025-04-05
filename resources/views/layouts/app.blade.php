@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
 
     <meta name="theme-color" content="#fcb943">
+    <meta name="color-scheme" content="dark light">
 
     <meta name="keywords" content="skin, dofus, unity, barbe douce, barbofus, Féca, Osamodas, Enutrof, Sram, Xélor, Ecaflip, Eniripsa, Iop, Crâ, Sadida, Sacrieur, Pandawa, Roublard, Zobal, Steamer, Eliotrope, Huppermage, Ouginak, Forgelance">
     <meta name="robots" content="index, follow">
