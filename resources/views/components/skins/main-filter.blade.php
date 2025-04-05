@@ -179,10 +179,12 @@
             {{-- Couleurs --}}
             <div class="flex items-center gap-x-2 mt-2" x-data="{ color: '{{ ($filterColor) ? '#' . $filterColor : '#000000' }}' }">
                 <label for="color" class="font-thin text-secondary text-[1.15rem]">{{ __('barbofus.labelColors') }}</label>
-                <input id="color" type="color"
-                       x-model="color"
-                       class="rounded cursor-pointer"
-                       @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'}), AddParamToUrl('color', color)">
+                <div class="h-10 w-10 rounded border-2 border-inactiveText" :style="{ background: color }">
+                    <input id="color" type="color"
+                           x-model="color"
+                           class="h-full w-full opacity-0 cursor-pointer"
+                           @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'}), AddParamToUrl('color', color)">
+                </div>
                 <button
                     aria-label="Réinitialiser les couleurs"
                     @click="window.scrollTo({top: 0, behavior: 'smooth'}), color = '#000000', RemoveParamUrl('color')"
