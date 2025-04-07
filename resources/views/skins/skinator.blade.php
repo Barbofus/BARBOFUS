@@ -191,7 +191,7 @@
                                            :data-color="index"
                                            class="uppercase order-last h-full peer rounded-r p-1 bg-primary-100 text-center w-28 focus:outline-none border-transparent focus:border-secondary border-y border-r transition-colors">
 
-                                    <div class="w-10 h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary transition-colors" :style="{ background: colors[index] }">
+                                    <div class="w-10 h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary" :style="{ background: colors[index] }">
                                         <input type="color"
                                                :data-color="index"
                                                :value="colors[index]"
