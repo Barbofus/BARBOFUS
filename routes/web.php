@@ -8,6 +8,7 @@ use App\Http\Controllers\HavenBagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
+use App\Http\Controllers\ProxyController;
 use App\Http\Controllers\SkinatorController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
@@ -156,6 +157,66 @@ use Illuminate\Support\Facades\Storage;
     });
 
     dd('DONE');
+});*/
+
+/*Route::get('/foo', function () {
+
+    $skins = [];
+
+    // 1. TABLE 'items'
+    $items = DB::table('items')->select('asset_id', 'female_asset_id', 'folder')->get();
+    foreach ($items as $item) {
+        if ($item->asset_id) {
+            $skins[$item->folder][] = (int) $item->asset_id;
+        }
+        if ($item->female_asset_id) {
+            $skins[$item->folder][] = (int) $item->female_asset_id;
+        }
+    }
+
+    // 2. TABLE 'races'
+    $races = DB::table('races')->select('heads')->get();
+    foreach ($races as $race) {
+        $heads = json_decode($race->heads, true);
+        foreach (['male', 'female'] as $gender) {
+            if (!isset($heads[$gender])) continue;
+            foreach ($heads[$gender] as $entry) {
+                if (isset($entry['skins'])) {
+                    $skins['skins'][] = (int) $entry['skins'];
+                }
+            }
+        }
+    }
+
+    // 3. FICHIER JSON
+    $jsonPath = storage_path('app/json/skinator/BreedsRoot.json');
+    if (file_exists($jsonPath)) {
+        $data = json_decode(file_get_contents($jsonPath), true);
+        $references = $data['references'] ?? [];
+
+        foreach ($references['RefIds'] as $ref) {
+            foreach (['maleLook', 'femaleLook'] as $lookKey) {
+                if (!isset($ref['data'][$lookKey])) continue;
+
+                $lookString = $ref['data'][$lookKey];
+                preg_match('/\{[^|]*\|(\d+)/', $lookString, $matches);
+                if (!empty($matches[1])) {
+                    $skins['skins'][] = (int) $matches[1];
+                }
+            }
+        }
+    }
+
+    // Nettoyage des doublons et tri
+    foreach ($skins as $key => &$group) {
+        $group = array_values(array_unique($group));
+        sort($group);
+    }
+
+    // Enregistrement du fichier
+    Storage::disk('local')->put('json/skinator/export.json', json_encode($skins, JSON_PRETTY_PRINT));
+
+    dd('DONE', json_encode($skins, JSON_PRETTY_PRINT));
 });*/
 
 Route::get('/', HomeController::class)->name('home');

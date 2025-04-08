@@ -20,7 +20,7 @@
 
         {{-- Dropdown --}}
         <div class="w-80 bg-primary-100 rounded-md p-2 shadow-xl transition-all"
-             :class="open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'" x-cloak>
+             x-show="open" x-cloak>
 
             <div class="flex pb-1 justify-between items-baseline text-sm text-red-400">
                 <button wire:click="ReadNotifications" class="hover:text-red-300">{{ __('barbofus.notifButtonMarkAllAsRead') }}</button>

@@ -10,11 +10,20 @@
           action=""
           enctype="multipart/form-data"
           onkeydown="return event.key != 'Enter';"
-          x-data="skinator">
-
+          x-data="skinator"
+          x-init="initWatcher">
         {{--    ITEMS ACTUELS    --}}
         <div class="flex space-x-4 my-2 h-24"
-             @click="if(event.target.closest('button[data-key]')) { items[event.target.closest('button[data-key]').dataset.key] = null; editURLParam(getURLObject()); }">
+             @click="if(event.target.closest('button[data-key]')) {
+                const key = event.target.closest('button[data-key]').dataset.key;
+                const id = items[key];
+                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                if (radio) radio.checked = false;
+
+                items[key] = null;
+                editURLParam(getURLObject());
+             }">
             <template x-for="(item, key) in Object.fromEntries(Object.entries(items).filter(([key, value]) => value !== null))" :key="item">
                 <button type="button"
                         :title="allItems.find(i => i.dofus_id === item).name"
@@ -203,7 +212,7 @@
                     </div>
 
                     <button type="button"
-                            @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject())"
+                            @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetColors()"
                             class="py-2 mt-4 flex items-center space-x-2 px-4 mx-auto rounded-md text-xl bg-primary-100 text-inactiveText uppercase hover:text-red-500 hover:rounded-3xl transition-all duration-75">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -219,11 +228,17 @@
 
                 {{-- Skin + bouton d'export --}}
                 <div class="relative w-fit mx-auto">
-                    <img x-ref="finalSkin" src="{{ asset('storage/images/skins/1741861810.png') }}" alt="Skin result">
+                    <canvas x-ref="canvas" id="canvas" width="250" height="390"></canvas>
 
                     {{-- Bouton DL --}}
                     <button type="button"
-                            @click="let a = document.createElement('a'); a.href = $refs.finalSkin.src; a.download = 'image.png'; a.click();"
+                            @click="() => {
+                                const canvas = $refs.canvas;
+                                const a = document.createElement('a');
+                                a.href = canvas.toDataURL('image/png');
+                                a.download = 'image.png';
+                                a.click();
+                            };"
                             class="absolute bottom-0 left-0 p-2 bg-primary-100 rounded-lg border-2 border-transparent hover:bg-primary hover:border-secondary transition-all">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -231,8 +246,16 @@
                     </button>
 
                     {{-- Bouton Copier --}}
-                    <button type="button"
-                            @click="copyToClipboard('', 'finalSkin'); fetch($refs.finalSkin.src).then(res => res.blob()).then(blob => navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])).catch(err => console.error(err))"
+                    <button x-cloak type="button"
+                            @click="() => {
+                                copyToClipboard('', 'finalSkin');
+                                const canvas = $refs.canvas;
+                                canvas.toBlob(blob => {
+                                    if (blob) {
+                                        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                                    }
+                                });
+                            }"
                             :class="copy === 'finalSkin' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
                             class="absolute bottom-0 right-0 p-2 rounded-lg border-2 border-transparent transition-all">
                         <svg x-show="copy != 'finalSkin'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
@@ -256,11 +279,11 @@
                             @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
                         <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
                              :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
-                            <svg x-cloak :class="animation === 'Static' ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                            <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                             </svg>
 
-                            <svg x-cloak :class="animation === 'Combat' ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                            <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                                 <path d="M8.5 1a.75.75 0 0 0-.75.75V6.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V7.5a.5.5 0 0 1-1 0V4.75a.75.75 0 0 0-1.5 0v4.5a5.75 5.75 0 0 0 11.5 0v-2.5a.75.75 0 0 0-1.5 0V9.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V6.5a.5.5 0 0 1-1 0V1.75A.75.75 0 0 0 8.5 1Z" />
                             </svg>
                         </div>
@@ -299,9 +322,9 @@
                     </div>
                 </div>
 
-                <div class="flex justify-evenly">
+                {{--<div class="flex justify-evenly">
                     <p class="mt-16 whitespace-pre-wrap w-fit" x-text="getRendererObject"/>
-                </div>
+                </div>--}}
 
                 <script data-type="lazy" data-src="https://www.google.com/recaptcha/api.js"></script>
 
@@ -317,7 +340,7 @@
 
                 {{-- CHOIX ONGLET --}}
                 <div class="text-xl h-12 font-thin flex justify-evenly"
-                     @click="if(event.target.closest('button[data-tab]')) { itemsCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; }">
+                     @click="if(event.target.closest('button[data-tab]')) { itemsCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
 
                     @foreach($itemCategories as $category)
                         <button type="button"
@@ -373,11 +396,11 @@
 
                                 <div class="flex gap-1 absolute pointer-events-none">
                                     <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:0ms]"
-                                         :class="!(loaded && intersected) ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
+                                         :class="!loaded && intersected ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
                                     <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:100ms]"
-                                         :class="!(loaded && intersected) ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
+                                         :class="!loaded && intersected ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
                                     <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:200ms]"
-                                         :class="!(loaded && intersected) ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
+                                         :class="!loaded && intersected ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
                                 </div>
 
 
@@ -453,6 +476,18 @@
                     wings: null,
                     costume: null,
                 },
+                previousData: '',
+
+                initWatcher() {
+                    Alpine.effect(() => {
+                        const data = this.getRendererObject();
+
+                        if (data !== this.previousData) {
+                            this.previousData = data;
+                            window.updateRendererData(data);
+                        }
+                    });
+                },
 
                 init()
                 {
@@ -499,9 +534,9 @@
                         gender: this.gender,
                         breed: this.breed,
                         head: this.head,
-                        colors: this.colors.map(color =>
+                        /*colors: this.colors.map(color =>
                             typeof color === 'string' ? parseInt(color.replace('#', ''), 16) : color
-                        ),
+                        ),*/
                         orientation: this.possibleOrientation[this.animation][this.orientationKey],
                         animation: this.animation,
                         skins: Object.entries(this.items)
@@ -534,6 +569,8 @@
                     }
 
                     editURLParam(this.getURLObject())
+
+                    window.resetColors()
                 },
 
                 copyToClipboard(toCopy, name)
@@ -672,5 +709,322 @@
 
             return expandKeys(JSON.parse(LZString.decompressFromEncodedURIComponent(compressed)));
         }
+
+        window.getDataFromURL = function () {
+            const params = new URLSearchParams(window.location.search);
+            const compressed = params.get('s');
+            if (!compressed) return null;
+
+            return expandKeys(JSON.parse(LZString.decompressFromEncodedURIComponent(compressed)));
+        };
     </script>
+
+    <script id="vertex-2d" type="x-shader/x-vertex">
+        precision mediump float;
+
+        attribute vec3 position;
+        attribute vec2 texCoord;
+
+        uniform vec2 u_resolution;
+
+        varying vec2 vTexCoord;
+
+        void main() {
+            // Transformation du pixel vers clip space
+            vec2 zeroToOne = position.xy / u_resolution;
+            vec2 zeroToTwo = zeroToOne * 2.0;
+            vec2 clipSpace = zeroToTwo - 1.0;
+
+            // Inversion Y car WebGL a l'axe Y inversé
+            gl_Position = vec4(clipSpace.x + 1.0, clipSpace.y + 0.6, 0.0, 0.55);
+            vTexCoord = texCoord;
+        }
+
+    </script>
+
+    <script id="fragment-2d" type="x-shader/x-fragment">
+        precision mediump float;
+
+        varying vec2 vTexCoord;
+        uniform sampler2D u_texture;
+        uniform vec3 u_mainColor;
+
+        void main() {
+            vec4 texColor = texture2D(u_texture, vec2(vTexCoord.s, 1.0 - vTexCoord.t));
+            texColor.rgb *= u_mainColor.rgb;
+            texColor.rgb *= texColor.a;
+            gl_FragColor = texColor;
+
+        }
+    </script>
+
+    <script src="//cdn.jsdelivr.net/npm/protobufjs@7.4.0/dist/protobuf.min.js"></script>
+
+    <script async>
+
+        let urlData = {};
+        let COLORS = [];
+        let rendererData = {};
+        let gl = null;
+        let program = null;
+
+        let uMainColor
+        let positionsBuffer
+        let uvsBuffer
+        let indicesBuffer
+
+        let textures = null
+
+        let data = null
+
+        let focusColor = null
+
+        let skinRendererProto = null
+
+        window.addEventListener('DOMContentLoaded', () => {
+            urlData = window.getDataFromURL();
+            COLORS = urlData.colors;
+        });
+
+        window.resetColors = function () {
+            urlData = window.getDataFromURL();
+            COLORS = urlData.colors;
+        };
+
+        window.updateRendererData = function (data) {
+            rendererData = data;
+            console.log(rendererData);
+
+            UpdateRenderer()
+        };
+
+        async function loadTexture(gl, url) {
+            const image = await new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = (err) => reject(new Error(`Erreur de chargement de l'image: ${url}`));
+                img.src = url;
+            });
+
+            const texture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+            gl.generateMipmap(gl.TEXTURE_2D);
+
+            return texture;
+        }
+
+        async function Prepapre () {
+            const root = await protobuf.load('/storage/proto/skin.proto')
+            skinRendererProto = root.lookupType("SkinRenderer");
+        }
+
+        async function UpdateRenderer () {
+            const response = await fetch('http://62.241.115.223:9461/renderer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: rendererData
+            })
+            if (!response.ok) {
+                throw new Error('Network response was not ok' + response.statusText);
+            }
+            const buffer = await response.arrayBuffer();
+            let newData = skinRendererProto.decode(new Uint8Array(buffer));
+
+            const newTexture = []
+            for (const texture of newData.textures) {
+                newTexture.push(await loadTexture(gl, 'storage/images/skinator/' + texture))
+            }
+
+
+            textures = newTexture
+            data = newData
+        }
+
+        async function InitGL() {
+            const canvas = document.getElementById('canvas');
+            gl = canvas.getContext('webgl2', { alpha: true,  antialias: true,
+                depth: false, preserveDrawingBuffer: false , premultipliedAlpha: true, stencil: false });
+
+            gl.viewport(0, 0, canvas.width, canvas.height);
+
+
+
+            if (!gl) {
+                console.error('WebGL not supported, falling back on experimental-webgl');
+                gl = canvas.getContext('experimental-webgl');
+            }
+
+            if (!gl) {
+                alert('Your browser does not support WebGL');
+            }
+
+            const vertexShaderSource = document.getElementById('vertex-2d').textContent;
+            const fragmentShaderSource = document.getElementById('fragment-2d').textContent;
+
+            const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(vertexShader, vertexShaderSource);
+            gl.compileShader(vertexShader);
+
+            const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(fragmentShader, fragmentShaderSource);
+            gl.compileShader(fragmentShader);
+
+            program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            const uResolution = gl.getUniformLocation(program, 'u_resolution');
+            gl.uniform2f(uResolution, canvas.width, canvas.height);
+
+
+            uMainColor = gl.getUniformLocation(program, 'u_mainColor')
+            positionsBuffer = gl.createBuffer();
+            uvsBuffer = gl.createBuffer();
+            indicesBuffer = gl.createBuffer();
+
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+        }
+
+
+        function draw () {
+            gl.clearColor(0, 0, 0, 0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+
+            if(!data) return;
+
+            const frames0 = data.frames[indexFrame % data.frames.length].frame;
+
+            for (const part of frames0) {
+
+                if (part.colorIndex !== null) {
+                    const color = COLORS[part.colorIndex];
+                    const r = ((color >> 16) & 0xFF) / 255;
+                    const g = ((color >> 8) & 0xFF) / 255;
+                    const b = (color & 0xFF) / 255;
+                    let focusing = false
+                    if (focusColor == part.colorIndex) {
+                        focusing = ((indexFrame >> 3) & 1)
+                    }
+
+                    if(focusing) {
+                        gl.uniform3fv(uMainColor, [2-r*2, 2-g*2, 2-b*2]);
+                    }
+                    else {
+                        gl.uniform3fv(uMainColor, [2*r, 2*g, 2*b]);
+                    }
+
+                } else {
+                    gl.uniform3fv(uMainColor, [1, 1, 1]);
+                }
+
+                const positions = new Float32Array(part.positions);
+                const uvs = new Float32Array(part.uvs);
+                const indices = new Uint16Array(part.indices);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionsBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, uvsBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.STATIC_DRAW);
+
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indicesBuffer);
+                gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+                const positionAttribLocation = gl.getAttribLocation(program, 'position');
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionsBuffer);
+                gl.enableVertexAttribArray(positionAttribLocation);
+                gl.vertexAttribPointer(positionAttribLocation, 3, gl.FLOAT, false, 0, 0);
+
+                const texCoordAttribLocation = gl.getAttribLocation(program, 'texCoord');
+                gl.bindBuffer(gl.ARRAY_BUFFER, uvsBuffer);
+                gl.enableVertexAttribArray(texCoordAttribLocation);
+                gl.vertexAttribPointer(texCoordAttribLocation, 2, gl.FLOAT, false, 0, 0);
+
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, textures[part.textureIndex]);
+                const textureLocation = gl.getUniformLocation(program, 'u_texture');
+                gl.uniform1i(textureLocation, 0);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, indicesBuffer);
+                gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0 );
+            }
+        }
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.nextTick(() => {
+                document.querySelectorAll('input[type="color"]').forEach(input => {
+                    input.addEventListener('input', (event) => {
+                        const colorIndex = event.target.getAttribute('data-color');
+                        const colorValue = event.target.value;
+                        const r = parseInt(colorValue.slice(1, 3), 16);
+                        const g = parseInt(colorValue.slice(3, 5), 16);
+                        const b = parseInt(colorValue.slice(5, 7), 16);
+                        COLORS[colorIndex] = (r << 16) | (g << 8) | b;
+                    });
+
+                    input.addEventListener('mouseenter', (event) => {
+                        focusColor = event.target.getAttribute('data-color');
+                    });
+
+                    input.addEventListener('mouseleave', () => {
+                        focusColor = null;
+                    });
+
+                    input.addEventListener('click', () => {
+                        focusColor = null;
+                    });
+                });
+
+                document.querySelectorAll('input[type="text"][data-color]').forEach(input => {
+                    input.addEventListener('input', (event) => {
+                        const colorIndex = event.target.getAttribute('data-color');
+                        const colorValue = event.target.value;
+                        const r = parseInt(colorValue.slice(1, 3), 16);
+                        const g = parseInt(colorValue.slice(3, 5), 16);
+                        const b = parseInt(colorValue.slice(5, 7), 16);
+                        COLORS[colorIndex] = (r << 16) | (g << 8) | b;
+                    });
+                });
+
+            });
+        });
+
+
+
+        let indexFrame = 0
+        let lastTime = 0;
+        const targetFPS = 30;
+        const interval = 1000 / targetFPS;
+
+        async function main() {
+            await Prepapre()
+            await InitGL()
+            //await UpdateRenderer()
+
+            function animate(currentTime) {
+                requestAnimationFrame(animate);
+
+                const delta = currentTime - lastTime;
+
+                if (delta >= interval) {
+                    lastTime = currentTime - (delta % interval);
+                    draw();
+                    indexFrame += 1;
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+        main()
+
+    </script>
+
 @endsection
