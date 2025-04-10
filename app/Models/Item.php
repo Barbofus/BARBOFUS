@@ -16,6 +16,7 @@ class Item extends Model
         'icon_path',
         'pet_type',
         'asset_id',
+        'female_asset_id',
         'folder'
     ];
 

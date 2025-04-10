@@ -8,7 +8,6 @@ use App\Http\Controllers\HavenBagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
-use App\Http\Controllers\ProxyController;
 use App\Http\Controllers\SkinatorController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
@@ -217,6 +216,23 @@ use Illuminate\Support\Facades\Storage;
     Storage::disk('local')->put('json/skinator/export.json', json_encode($skins, JSON_PRETTY_PRINT));
 
     dd('DONE', json_encode($skins, JSON_PRETTY_PRINT));
+});*/
+
+/*Route::get('/foo', function () {
+    $jsonPath = storage_path('app/json/skinator/MountsRoot.json');
+    $jsonData = json_decode(file_get_contents($jsonPath), true);
+
+    foreach ($jsonData['references']['RefIds'] as $mount) {
+        if(!isset($mount['data']['certificateId'])) continue;
+
+        $item = Item::where('dofus_id', $mount['data']['certificateId'])->first();
+        $item?->update([
+            'asset_id' => $mount['data']['id'],
+            'female_asset_id' => $mount['data']['id']
+        ]);
+    }
+
+    dd('DONE');
 });*/
 
 Route::get('/', HomeController::class)->name('home');

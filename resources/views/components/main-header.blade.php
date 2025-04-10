@@ -1,7 +1,7 @@
 <!-- En-tête -->
 <div id="header"
      class="w-full h-0 bg-secondary relative z-20 hidden
-          [@media(min-height:950px)_and_(min-width:901px)]:block [@media(min-height:950px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:950px)_and_(min-width:901px)]:min-h-[150px] overflow-hidden">
+          [@media(min-height:900px)_and_(min-width:901px)]:block [@media(min-height:900px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:900px)_and_(min-width:901px)]:min-h-[150px] overflow-hidden">
 
     {{-- Arrière plan --}}
     <div class="absolute w-full h-full flex items-center justify-center bg-primary">

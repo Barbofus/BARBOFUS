@@ -4,7 +4,7 @@
     <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">Skinator</h1>
 
     <form autocomplete="off"
-          class="w-[min(90vw,120rem)] mx-auto mb-16"
+          class="w-[min(98vw,120rem)] mx-auto mb-16 h-fit"
           method="POST"
           id="skinator-form"
           action=""
@@ -13,7 +13,7 @@
           x-data="skinator"
           x-init="initWatcher">
         {{--    ITEMS ACTUELS    --}}
-        <div class="flex space-x-4 my-2 h-24"
+        <div class="flex space-x-4 my-2 h-24 overflow-auto"
              @click="if(event.target.closest('button[data-key]')) {
                 const key = event.target.closest('button[data-key]').dataset.key;
                 const id = items[key];
@@ -31,7 +31,7 @@
                         class="bg-primary-100 h-full group relative rounded-lg py-1 px-2 min-w-[11rem] overflow-hidden">
 
                     <div class="flex items-start">
-                        <img loading="lazy" draggable="false" class="h-16" :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
+                        <img loading="lazy" draggable="false" class="h-10 min-[1600px]:h-16" :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
                              :alt="allItems.find(i => i.dofus_id === item).name">
                         <div class="flex items-end space-x-1 pt-4">
                             <img loading="lazy" draggable="false" width="24" height="24"
@@ -54,342 +54,446 @@
             </template>
         </div>
 
-        <div class="flex h-[40rem]">
+        <div class="flex flex-col min-[700px]:flex-row max-[699px]:items-center">
 
-            {{--      REGLAGES PERSONNAGE      --}}
-            <div class="w-[25.5rem]">
+            <div class="flex flex-col min-[1249px]:flex-row h-full">
 
-                {{-- CHOIX ONGLET --}}
-                <div class="text-xl h-12 font-thin flex justify-evenly"
-                     @click="if(event.target.closest('button[data-tab]')) { charactersCurrentTab = event.target.closest('button[data-tab]').dataset.tab; }">
-                    <button type="button"
-                            class="w-1/3 uppercase"
-                            data-tab="breed"
-                            :class="(charactersCurrentTab === 'breed') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentBreed') }}</button>
-                    <button type="button"
-                            class="w-1/3 uppercase"
-                            data-tab="head"
-                            :class="(charactersCurrentTab === 'head') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentFace') }}</button>
-                    <button type="button"
-                            class="w-1/3 uppercase"
-                            data-tab="color"
-                            :class="(charactersCurrentTab === 'color') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentColor') }}</button>
-                </div>
+                {{--      REGLAGES PERSONNAGE      --}}
+                <div class="w-full min-[600px]:w-[max(min(20vw,25.5rem),23rem)]">
 
-                {{--      Choix sexe      --}}
-                <p class="text-xl text-center mt-4 mb-1 font-light">{{ __('barbofus.labelSkinGender') }}</p>
-                <div class="flex gap-x-4 w-fit mx-auto"
-                     @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); gender = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
-                    <div>
-                        <input id="male"
-                               type="radio"
-                               name="gender"
-                               value="0"
-                               class="hidden peer"
-                               :checked="gender === 0">
-                        <label
-                            for="male"
-                            class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-full" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
-                            </svg>
-                            <p>{{ __('barbofus.inputSkinMale') }}</p>
-                        </label>
+                    {{-- CHOIX ONGLET --}}
+                    <div class="text-md min-[1600px]:text-xl h-12 font-thin flex justify-evenly"
+                         @click="if(event.target.closest('button[data-tab]')) { charactersCurrentTab = event.target.closest('button[data-tab]').dataset.tab; }">
+                        <button type="button"
+                                class="w-1/3 uppercase"
+                                data-tab="breed"
+                                :class="(charactersCurrentTab === 'breed') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentBreed') }}</button>
+                        <button type="button"
+                                class="w-1/3 uppercase"
+                                data-tab="head"
+                                :class="(charactersCurrentTab === 'head') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentFace') }}</button>
+                        <button type="button"
+                                class="w-1/3 uppercase"
+                                data-tab="color"
+                                :class="(charactersCurrentTab === 'color') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.contentColor') }}</button>
                     </div>
 
-                    <div>
-                        <input id="female"
-                               type="radio"
-                               name="gender"
-                               value="1"
-                               class="hidden peer"
-                               :checked="gender === 1">
-                        <label for="female"
-                               class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
-                            </svg>
-                            <p>{{ __('barbofus.inputSkinFemale') }}</p>
-                        </label>
+                    {{--      Choix sexe      --}}
+                    <p class="text-xl text-center mt-4 mb-1 font-light">{{ __('barbofus.labelSkinGender') }}</p>
+                    <div class="flex gap-x-4 w-fit mx-auto"
+                         @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); gender = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
+                        <div>
+                            <input id="male"
+                                   type="radio"
+                                   name="gender"
+                                   value="0"
+                                   class="hidden peer"
+                                   :checked="gender === 0">
+                            <label
+                                for="male"
+                                class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-full" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+                                </svg>
+                                <p>{{ __('barbofus.inputSkinMale') }}</p>
+                            </label>
+                        </div>
+
+                        <div>
+                            <input id="female"
+                                   type="radio"
+                                   name="gender"
+                                   value="1"
+                                   class="hidden peer"
+                                   :checked="gender === 1">
+                            <label for="female"
+                                   class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
+                                </svg>
+                                <p>{{ __('barbofus.inputSkinFemale') }}</p>
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-                <div x-cloak class="p-4"
-                     x-show="charactersCurrentTab === 'breed'">
+                    <div x-cloak class="py-4 min-[600px]:px-4"
+                         x-show="charactersCurrentTab === 'breed'">
 
-                    {{--      Choix classe      --}}
-                    <p class="text-xl text-center mb-1 font-light">{{ __('barbofus.labelSkinClass') }}</p>
+                        {{--      Choix classe      --}}
+                        <p class="text-xl text-center mb-1 font-light">{{ __('barbofus.labelSkinClass') }}</p>
 
-                    <div class="flex flex-wrap gap-2 justify-center items-center"
-                         @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
-                        <template x-for="breedInfo in breedInfos" :key="breedInfo.dofus_id">
-                            <div>
-                                <input :id="'breed_' + breedInfo.dofus_id"
-                                       type="radio"
-                                       name="breed"
-                                       :value="breedInfo.dofus_id"
-                                       class="hidden peer"
-                                       :checked="breed === breedInfo.dofus_id">
-                                <label :for="'breed_' + breedInfo.dofus_id"
-                                       :title="breed.name"
-                                       class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
-                                    <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[gender === 0 ? 'male' : 'female'][0].assetId + '.png'"
-                                         :alt="breed.name">
-                                </label>
-                            </div>
-                        </template>
+                        <div class="flex flex-wrap gap-2 justify-center items-center"
+                             @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
+                            <template x-for="breedInfo in breedInfos" :key="breedInfo.dofus_id">
+                                <div>
+                                    <input :id="'breed_' + breedInfo.dofus_id"
+                                           type="radio"
+                                           name="breed"
+                                           :value="breedInfo.dofus_id"
+                                           class="hidden peer"
+                                           :checked="breed === breedInfo.dofus_id">
+                                    <label :for="'breed_' + breedInfo.dofus_id"
+                                           :title="breed.name"
+                                           class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
+                                        <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[gender === 0 ? 'male' : 'female'][0].assetId + '.png'"
+                                             :alt="breed.name">
+                                    </label>
+                                </div>
+                            </template>
+                        </div>
                     </div>
-                </div>
 
-                <div x-cloak class="p-4"
-                     x-show="charactersCurrentTab === 'head'">
+                    <div x-cloak class="py-4 min-[600px]:px-4"
+                         x-show="charactersCurrentTab === 'head'">
 
-                    {{--      Choix visage      --}}
-                    <p class="text-xl text-center mb-1 font-light">{{ __('barbofus.labelSkinFace') }}</p>
+                        {{--      Choix visage      --}}
+                        <p class="text-xl text-center mb-1 font-light">{{ __('barbofus.labelSkinFace') }}</p>
 
-                    <div class="flex flex-wrap gap-2 justify-center items-center"
-                         @change="if (event.target.matches('input[type=radio]')) { head = Number(event.target.value); editURLParam(getURLObject()); }">
-                        <template x-for="breedHead in breedHeads" :key="breedHead.id">
-                            <div>
-                                <input :id="'head_' + breedHead.id"
-                                       type="radio"
-                                       name="head"
-                                       :value="breedHead.id"
-                                       class="hidden peer"
-                                       :checked="head === breedHead.id">
-                                <label :for="'head_' + breedHead.id"
-                                       :title="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id"
-                                       class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-20 h-20 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
-                                    <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId + '.png'"
-                                         :alt="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id">
-                                </label>
-                            </div>
-                        </template>
+                        <div class="flex flex-wrap gap-2 justify-center items-center"
+                             @change="if (event.target.matches('input[type=radio]')) { head = Number(event.target.value); editURLParam(getURLObject()); }">
+                            <template x-for="breedHead in breedHeads" :key="breedHead.id">
+                                <div>
+                                    <input :id="'head_' + breedHead.id"
+                                           type="radio"
+                                           name="head"
+                                           :value="breedHead.id"
+                                           class="hidden peer"
+                                           :checked="head === breedHead.id">
+                                    <label :for="'head_' + breedHead.id"
+                                           :title="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id"
+                                           class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
+                                        <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId + '.png'"
+                                             :alt="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id">
+                                    </label>
+                                </div>
+                            </template>
+                        </div>
                     </div>
-                </div>
 
-                <div x-cloak id="color-tab" class="p-4 relative"
-                     x-show="charactersCurrentTab === 'color'">
+                    <div x-cloak id="color-tab" class="py-4 min-[600px]:px-4 relative"
+                         x-show="charactersCurrentTab === 'color'">
 
-                    {{--      Choix couleur      --}}
-                    <div class="flex flex-wrap justify-evenly"
-                         @click="if(event.target.closest('button[data-copy]')) { copyToClipboard(colors[event.target.closest('button[data-copy]').dataset.copy], 'hex' + event.target.closest('button[data-copy]').dataset.copy) }"
-                         @input="if(event.target.closest('input[data-color]')) { colors[event.target.closest('input[data-color]').dataset.color] = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6); editURLParam(getURLObject()) }">
-                        <template x-for="(color, index) in colors" :key="index">
-                            <div :id="'color-' + index" class="my-3 hover:bg-primary-100 rounded-t-lg overflow-hidden transition-colors">
-                                <button type="button"
-                                        :data-copy="index"
-                                        class="relative flex w-full py-1 px-2 justify-between items-center">
-                                    <p x-text="colorsLabel[index] + ' :'" class="font-thin text-lg"></p>
+                        {{--      Choix couleur      --}}
+                        <div class="flex flex-wrap justify-evenly"
+                             @click="if(event.target.closest('button[data-copy]')) { copyToClipboard(colors[event.target.closest('button[data-copy]').dataset.copy], 'hex' + event.target.closest('button[data-copy]').dataset.copy) }"
+                             @input="if(event.target.closest('input[data-color]')) { colors[event.target.closest('input[data-color]').dataset.color] = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6); editURLParam(getURLObject()) }">
+                            <template x-for="(color, index) in colors" :key="index">
+                                <div :id="'color-' + index" class="my-3 hover:bg-primary-100 rounded-t-lg overflow-hidden transition-colors00">
+                                    <button type="button"
+                                            :data-copy="index"
+                                            class="relative flex w-full py-1 px-2 justify-between items-center">
+                                        <p x-text="colorsLabel[index] + ' :'" class="font-thin text-sm min-[600px]:text-lg truncate"></p>
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 fill-inactiveText">
-                                        <path d="M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12A1.5 1.5 0 0 1 17 6.622V12.5a1.5 1.5 0 0 1-1.5 1.5h-1v-3.379a3 3 0 0 0-.879-2.121L10.5 5.379A3 3 0 0 0 8.379 4.5H7v-1Z" />
-                                        <path d="M4.5 6A1.5 1.5 0 0 0 3 7.5v9A1.5 1.5 0 0 0 4.5 18h7a1.5 1.5 0 0 0 1.5-1.5v-5.879a1.5 1.5 0 0 0-.44-1.06L9.44 6.439A1.5 1.5 0 0 0 8.378 6H4.5Z" />
-                                    </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 fill-inactiveText">
+                                            <path d="M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12A1.5 1.5 0 0 1 17 6.622V12.5a1.5 1.5 0 0 1-1.5 1.5h-1v-3.379a3 3 0 0 0-.879-2.121L10.5 5.379A3 3 0 0 0 8.379 4.5H7v-1Z" />
+                                            <path d="M4.5 6A1.5 1.5 0 0 0 3 7.5v9A1.5 1.5 0 0 0 4.5 18h7a1.5 1.5 0 0 0 1.5-1.5v-5.879a1.5 1.5 0 0 0-.44-1.06L9.44 6.439A1.5 1.5 0 0 0 8.378 6H4.5Z" />
+                                        </svg>
 
-                                    <div x-cloak
-                                         :class="copy === 'hex'+index ? 'opacity-100' : 'opacity-0' "
-                                         class="absolute flex items-center justify-center bg-secondary transition h-full w-full top-0 left-0">
-                                        <p class="text-primary font-medium text-xl uppercase">{{ __('barbofus.contentCopied') }} !</p>
-                                    </div>
-                                </button>
+                                        <div x-cloak
+                                             :class="copy === 'hex'+index ? 'opacity-100' : 'opacity-0' "
+                                             class="absolute flex items-center justify-center bg-secondary transition h-full w-full top-0 left-0">
+                                            <p class="text-primary font-medium text-xl uppercase">{{ __('barbofus.contentCopied') }} !</p>
+                                        </div>
+                                    </button>
 
-                                <div class="flex items-center h-10">
+                                    <div class="flex items-center h-10">
 
-                                    <!-- Input de couleur -->
-                                    <input type="text"
-                                           :value="colors[index]"
-                                           :data-color="index"
-                                           class="uppercase order-last h-full peer rounded-r p-1 bg-primary-100 text-center w-28 focus:outline-none border-transparent focus:border-secondary border-y border-r transition-colors">
-
-                                    <div class="w-10 h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary" :style="{ background: colors[index] }">
-                                        <input type="color"
-                                               :data-color="index"
+                                        <!-- Input de couleur -->
+                                        <input type="text"
                                                :value="colors[index]"
-                                               class="opacity-0 h-full w-full cursor-pointer">
+                                               :data-color="index"
+                                               class="uppercase order-last h-full peer rounded-r p-1 bg-primary-100 text-center w-[5.5rem] min-[600px]:w-28 focus:outline-none border-transparent focus:border-secondary border-y border-r transition-colors">
+
+                                        <div class="w-10 h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary" :style="{ background: colors[index] }">
+                                            <input type="color"
+                                                   :data-color="index"
+                                                   :value="colors[index]"
+                                                   class="opacity-0 h-full w-full cursor-pointer">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </template>
-                    </div>
-
-                    <button type="button"
-                            @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetColors()"
-                            class="py-2 mt-4 flex items-center space-x-2 px-4 mx-auto rounded-md text-xl bg-primary-100 text-inactiveText uppercase hover:text-red-500 hover:rounded-3xl transition-all duration-75">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                        </svg>
-
-                        <p>Reset</p>
-                    </button>
-                </div>
-            </div>
-
-            {{--      RESULTAT SKIN + ORIENTATION + EXPORT PNG + COPY LINK      --}}
-            <div class="w-96 p-4 space-y-4 h-fit mt-16">
-
-                {{-- Skin + bouton d'export --}}
-                <div class="relative w-fit mx-auto">
-                    <canvas x-ref="canvas" id="canvas" width="250" height="390"></canvas>
-
-                    {{-- Bouton DL --}}
-                    <button type="button"
-                            @click="() => {
-                                const canvas = $refs.canvas;
-                                const a = document.createElement('a');
-                                a.href = canvas.toDataURL('image/png');
-                                a.download = 'image.png';
-                                a.click();
-                            };"
-                            class="absolute bottom-0 left-0 p-2 bg-primary-100 rounded-lg border-2 border-transparent hover:bg-primary hover:border-secondary transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                    </button>
-
-                    {{-- Bouton Copier --}}
-                    <button x-cloak type="button"
-                            @click="() => {
-                                copyToClipboard('', 'finalSkin');
-                                const canvas = $refs.canvas;
-                                canvas.toBlob(blob => {
-                                    if (blob) {
-                                        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                                    }
-                                });
-                            }"
-                            :class="copy === 'finalSkin' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
-                            class="absolute bottom-0 right-0 p-2 rounded-lg border-2 border-transparent transition-all">
-                        <svg x-show="copy != 'finalSkin'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
-                        </svg>
-                        <p x-show="copy === 'finalSkin'">{{ __('barbofus.contentCopied') }}</p>
-                    </button>
-                </div>
-
-                {{-- Zone sous skins / Orientation / Animation --}}
-                <div class="flex justify-evenly space-x-8 w-fit mx-auto">
-                    <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
-                        <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
-                    </button>
-
-                    {{-- Choix anim exploration / combat --}}
-                    <button type="button"
-                            title="Exploration / Combat"
-                            :disabled="animation === 'Monture'"
-                            class="group relative h-8 w-16 rounded-full bg-primary-100 p-2 disabled:cursor-not-allowed"
-                            @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
-                        <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
-                             :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
-                            <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                            </svg>
-
-                            <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                <path d="M8.5 1a.75.75 0 0 0-.75.75V6.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V7.5a.5.5 0 0 1-1 0V4.75a.75.75 0 0 0-1.5 0v4.5a5.75 5.75 0 0 0 11.5 0v-2.5a.75.75 0 0 0-1.5 0V9.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V6.5a.5.5 0 0 1-1 0V1.75A.75.75 0 0 0 8.5 1Z" />
-                            </svg>
+                            </template>
                         </div>
-                    </button>
 
-                    <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
-                        <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 group-active:translate-y-0 group-active:scale-90 transition-all">
-                    </button>
-                </div>
-
-                {{-- Boutons copy link + Export PNG --}}
-                <div class="flex justify-evenly space-x-8">
-
-                    {{-- Bouton Copy link --}}
-                    <div class="w-full flex justify-end">
                         <button type="button"
-                                @click="copyToClipboard(window.location.href, 'url')"
-                                x-text="copy === 'url' ? '{{ __('barbofus.contentCopied') }}' : '{{ __('barbofus.contentCopy') }} URL'"
-                                :class="copy === 'url' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
-                                class="px-4 w-32 py-2 rounded-lg border-2 border-transparent transition-all">
-                        </button>
-                    </div>
+                                @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetColors()"
+                                class="py-2 mt-4 flex items-center space-x-2 px-4 mx-auto rounded-md text-xl bg-primary-100 text-inactiveText uppercase hover:text-red-500 hover:rounded-3xl transition-all duration-75">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
 
-                    {{-- Bouton Partager --}}
-                    <div class="w-full flex justify-start">
-                        <button class="g-recaptcha px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
-                                data-sitekey="{{ config('services.recaptcha.site_key') }}"
-                                data-callback='onSubmit'
-                                data-action='store'>
-                            {{ __('barbofus.buttonShare') }}
+                            <p>Reset</p>
                         </button>
-
-                        @error('g-recaptcha-response')
-                        <x-forms.requirements-error :message="$message"/>
-                        @enderror
                     </div>
                 </div>
 
-                {{--<div class="flex justify-evenly">
-                    <p class="mt-16 whitespace-pre-wrap w-fit" x-text="getRendererObject"/>
-                </div>--}}
+                {{--      RESULTAT SKIN + ORIENTATION + EXPORT PNG + COPY LINK      --}}
+                <div class="w-fit mx-auto p-4 space-y-4 h-fit mt-16 max-[1240px]:order-first">
 
-                <script data-type="lazy" data-src="https://www.google.com/recaptcha/api.js"></script>
+                    {{-- Skin + bouton d'export --}}
+                    <div class="relative w-fit mx-auto">
+                        <canvas x-ref="canvas" id="canvas" width="250" height="390"></canvas>
 
-                <script>
-                    function onSubmit(token) {
-                        document.getElementById("skinator-form").submit();
-                    }
-                </script>
+                        {{-- Bouton DL --}}
+                        <button type="button"
+                                @click="() => {
+                                    const canvas = $refs.canvas;
+                                    const a = document.createElement('a');
+                                    a.href = canvas.toDataURL('image/png');
+                                    a.download = 'image.png';
+                                    a.click();
+                                };"
+                                class="absolute bottom-0 left-0 p-2 bg-primary-100 rounded-lg border-2 border-transparent hover:bg-primary hover:border-secondary transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                        </button>
+
+                        {{-- Bouton Copier --}}
+                        <button type="button"
+                                @click="() => {
+                                    copyToClipboard('', 'finalSkin');
+                                    const canvas = $refs.canvas;
+                                    canvas.toBlob(blob => {
+                                        if (blob) {
+                                            navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                                        }
+                                    });
+                                }"
+                                :class="copy === 'finalSkin' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
+                                class="absolute bottom-0 right-0 p-2 rounded-lg border-2 border-transparent transition-all">
+                            <svg x-show="copy != 'finalSkin'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                            </svg>
+                            <p x-cloak x-show="copy === 'finalSkin'">{{ __('barbofus.contentCopied') }}</p>
+                        </button>
+                    </div>
+
+                    {{-- Zone sous skins / Orientation / Animation --}}
+                    <div class="flex justify-evenly space-x-8 w-fit mx-auto">
+                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
+                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
+                        </button>
+
+                        {{-- Choix anim exploration / combat --}}
+                        <button type="button"
+                                title="Exploration / Combat"
+                                :disabled="animation === 'Monture'"
+                                class="group relative h-8 w-16 rounded-full bg-primary-100 p-2 disabled:cursor-not-allowed"
+                                @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
+                            <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
+                                 :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
+                                <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                                </svg>
+
+                                <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                    <path d="M8.5 1a.75.75 0 0 0-.75.75V6.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V7.5a.5.5 0 0 1-1 0V4.75a.75.75 0 0 0-1.5 0v4.5a5.75 5.75 0 0 0 11.5 0v-2.5a.75.75 0 0 0-1.5 0V9.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V6.5a.5.5 0 0 1-1 0V1.75A.75.75 0 0 0 8.5 1Z" />
+                                </svg>
+                            </div>
+                        </button>
+
+                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
+                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 group-active:translate-y-0 group-active:scale-90 transition-all">
+                        </button>
+                    </div>
+
+                    {{-- Boutons copy link + Export PNG --}}
+                    <div class="flex w-fit mx-auto justify-evenly space-x-2 min-[600px]:space-x-8">
+
+                        {{-- Bouton Copy link --}}
+                        <div class="w-full flex justify-end">
+                            <button type="button"
+                                    @click="copyToClipboard(window.location.href, 'url')"
+                                    x-text="copy === 'url' ? '{{ __('barbofus.contentCopied') }}' : '{{ __('barbofus.contentCopy') }} URL'"
+                                    :class="copy === 'url' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
+                                    class="px-4 py-2 rounded-lg border-2 border-transparent transition-all">
+                            </button>
+                        </div>
+
+                        {{-- Bouton Partager --}}
+                        <div class="w-full flex justify-start">
+                            <button class="g-recaptcha px-5 min-[600px]:px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
+                                    data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                                    data-callback='onSubmit'
+                                    data-action='store'>
+                                {{ __('barbofus.buttonShare') }}
+                            </button>
+
+                            @error('g-recaptcha-response')
+                            <x-forms.requirements-error :message="$message"/>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <script data-type="lazy" data-src="https://www.google.com/recaptcha/api.js"></script>
+
+                    <script>
+                        function onSubmit(token) {
+                            document.getElementById("skinator-form").submit();
+                        }
+                    </script>
+                </div>
             </div>
 
             {{--      TOUS LES ITEMS      --}}
             <div class="flex-1 flex flex-col h-full">
 
                 {{-- CHOIX ONGLET --}}
-                <div class="text-xl h-12 font-thin flex justify-evenly"
+                <div class="text-md min-[1600px]:text-xl h-fit font-thin flex flex-wrap gap-y-2 justify-evenly"
                      @click="if(event.target.closest('button[data-tab]')) { itemsCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
 
                     @foreach($itemCategories as $category)
                         <button type="button"
                                 data-tab="{{ $category }}"
-                                class="w-1/3 uppercase"
+                                class="px-2 flex-grow uppercase truncate"
                                 :class="(itemsCurrentTab === '{{ $category }}') ? 'font-medium border-b-4 border-secondary' : 'border-b-2 border-inactiveText'">{{ __('barbofus.content' . ucfirst($category)) }}</button>
                     @endforeach
                 </div>
 
-                <div class="relative flex items-center space-x-2 h-10 my-2 w-[16rem] bg-primary-100 rounded-md py-2">
-                    <input maxlength="64" id="skinator-search" type="text" placeholder="{{ __('barbofus.contentRefineSearch') }}"
-                           x-model="searchBar"
-                           x-ref="skinatorSearchInput"
-                           @input="updateFilteredItems"
-                           class="rounded-md pl-4 focus:outline-none placeholder-inactiveText bg-primary-100" />
+                {{-- Barre de recherche --}}
+                <div class="min-[950px]:flex h-fit my-2 min-[950px]:space-x-2">
+                    <div class="relative flex items-center space-x-2 h-full w-[16rem] bg-primary-100 rounded-md py-2">
+                        <input maxlength="64" id="skinator-search" type="text" placeholder="{{ __('barbofus.contentRefineSearch') }}"
+                               x-model="searchBar"
+                               x-ref="skinatorSearchInput"
+                               @input="updateFilteredItems"
+                               class="rounded-md pl-4 focus:outline-none placeholder-inactiveText bg-primary-100" />
 
-                    <button type="button"
-                            x-cloak
-                            @click="searchBar = ''; $refs.skinatorSearchInput.focus(); updateFilteredItems()"
-                            class="relative w-6 h-6"
-                            for="skinator-search">
-                        <svg :class="searchBar.length === 0 ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                             class="h-6 text-inactiveText absolute top-0 left-0">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                        </svg>
+                        <button type="button"
+                                x-cloak
+                                @click="searchBar = ''; $refs.skinatorSearchInput.focus(); updateFilteredItems()"
+                                class="relative w-6 h-6"
+                                for="skinator-search">
+                            <svg :class="searchBar.length === 0 ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                 class="h-6 text-inactiveText absolute top-0 left-0">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
 
-                        <svg :class="searchBar.length > 0 ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                             class="h-6 text-red-500 absolute top-0 left-0">
-                            <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
-                        </svg>
-                    </button>
+                            <svg :class="searchBar.length > 0 ? 'visible' : 'invisible'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                 class="h-6 text-red-500 absolute top-0 left-0">
+                                <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {{-- CHOIX ONGLET FAMILIER --}}
+                    <div x-show="itemsCurrentTab === 'pet'" x-transition
+                         class="h-10 font-thin flex space-x-2 mt-2 min-[950px]:mt-0"
+                         @click="if(event.target.closest('button[data-tab]')) { petCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
+
+                        <button type="button" x-cloak
+                                data-tab="familier"
+                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="(petCurrentTab === 'familier') ? 'border-secondary' : 'border-inactiveText'">
+                            <img :class="(petCurrentTab === 'familier') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/familiar.png') }}" alt="Familier">
+                        </button>
+
+                        <button type="button" x-cloak
+                                data-tab="montilier"
+                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="(petCurrentTab === 'montilier') ? 'border-secondary' : 'border-inactiveText'">
+                            <img :class="(petCurrentTab === 'montilier') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/petsmount.png') }}" alt="Montilier">
+                        </button>
+
+                        <button type="button" x-cloak
+                                data-tab="dragodinde"
+                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="(petCurrentTab === 'dragodinde') ? 'border-secondary' : 'border-inactiveText'">
+                            <img :class="(petCurrentTab === 'dragodinde') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/dragoturkey.png') }}" alt="Dragodinde">
+                        </button>
+
+                        <button type="button" x-cloak
+                                data-tab="muldo"
+                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="(petCurrentTab === 'muldo') ? 'border-secondary' : 'border-inactiveText'">
+                            <img :class="(petCurrentTab === 'muldo') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/seemyool.png') }}" alt="Muldo">
+                        </button>
+
+                        <button type="button" x-cloak
+                                data-tab="volkorne"
+                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="(petCurrentTab === 'volkorne') ? 'border-secondary' : 'border-inactiveText'">
+                            <img :class="(petCurrentTab === 'volkorne') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
+                        </button>
+                    </div>
                 </div>
 
-                <div class="overflow-auto flex flex-wrap gap-2 justify-left"
-                     @change="if (event.target.matches('input[type=radio]')) { items[event.target.dataset.category] = Number(event.target.dataset.id); editURLParam(getURLObject()); }">
-                    <template x-for="(allItem, index) in (searchBar.length >= 3 ? filteredItems : filteredItems.filter(i => i.category === itemsCurrentTab)).slice(0, maxItemVisible)"
+                {{-- Liste des items --}}
+                <div class="overflow-auto flex flex-wrap gap-2 justify-left max-h-[25rem] min-[700px]:max-h-[60rem] min-[1249px]:max-h-[26.5rem]"
+                     @change="if (event.target.matches('input[type=radio]'))
+                     {
+                        items[event.target.dataset.category] = Number(event.target.dataset.id);
+
+                        if(items['pet']) {
+                            const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
+                            const mount = allItems.find(i => (i.dofus_id === items['mount'] ));
+
+                            if(harn != null && mount == null)
+                            {
+                                const id = {
+                                    dragodinde: 1,
+                                    muldo: 2,
+                                    volkorne: 3,
+                                }
+                                items['mount'] = id[harn.pet_type];
+                            }
+
+                            if(event.target.dataset.category == 'pet' && harn == null && items['mount'] != null)
+                            {
+                                const id = items['mount'];
+                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                if (radio) radio.checked = false;
+
+                                items['mount'] = null;
+                            }
+
+                            if(event.target.dataset.category == 'mount' && harn == null && items['pet'] != null)
+                            {
+                                const id = items['pet'];
+                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                if (radio) radio.checked = false;
+
+                                items['pet'] = null;
+                            }
+
+                            if(!harn || !mount) return;
+
+                            if(harn.pet_type != mount.pet_type)
+                            {
+                                const id = items['pet'];
+                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                if (radio) radio.checked = false;
+
+                                items['pet'] = null;
+                            }
+                        }
+
+                        editURLParam(getURLObject());
+                     }">
+
+                    <template x-for="(allItem, index) in (
+                              searchBar.length >= 3
+                                ? filteredItems
+                                : filteredItems.filter(i =>
+                                    i.category === itemsCurrentTab &&
+                                    (i.pet_type === petCurrentTab || i.pet_type === null)
+                                  )
+                            ).slice(0, maxItemVisible)"
                               :key="allItem.dofus_id">
                         <div class="h-fit">
-                            <input :id="allItem.category + '_' + allItem.dofus_id"
-                                   :data-category="allItem.category"
+                            <input :id="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem.dofus_id"
+                                   :data-category="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category)"
                                    :data-id="allItem.dofus_id"
                                    type="radio"
-                                   :name="allItem.category"
+                                   :name="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category)"
                                    :value="allItem.dofus_id"
                                    class="hidden peer"
-                                   :checked="items[allItem.category] === allItem.dofus_id">
-                            <label :for="allItem.category + '_' + allItem.dofus_id"
+                                   :checked="items[((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category)] === allItem.dofus_id">
+                            <label :for="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem.dofus_id"
                                    :title="allItem.name"
-                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-24 h-24 flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText"
+                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(4vw,6rem),3.8rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText"
                                    x-data="{ loaded: false, intersected: false }">
 
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
@@ -448,6 +552,11 @@
                     'Combat': [1,3,5,7],
                     'Monture': [1,2,3,4,5,6,7,0],
                 },
+                rendererOrientation: {
+                    'Static': [1,2,1,0,5,6,5,0],
+                    'Combat': [1,1,5,5],
+                    'Monture': [1,2,1,0,5,6,5,0],
+                },
                 orientationKey: 0,
                 colorsLabel: [
                     '{{ __('barbofus.labelSkinColorsSkin') }}',
@@ -460,6 +569,7 @@
                 shouldResetColors: false,
                 charactersCurrentTab: 'breed',
                 itemsCurrentTab: 'hat',
+                petCurrentTab: 'familier',
                 oldGender: 0,
                 oldBreed: 1,
                 gender: 0,
@@ -467,6 +577,7 @@
                 head: null,
                 colors: [],
                 animation: 'Static',
+                cameleon: false,
                 items: {
                     hat: null,
                     cape: null,
@@ -475,16 +586,21 @@
                     shoulderpads: null,
                     wings: null,
                     costume: null,
+                    mount: null,
                 },
                 previousData: '',
+                previousInvertX: '',
 
                 initWatcher() {
                     Alpine.effect(() => {
                         const data = this.getRendererObject();
+                        const invertX = [3,4,7].includes(this.possibleOrientation[this.animation][this.orientationKey]);
 
-                        if (data !== this.previousData) {
+                        if (data !== this.previousData || invertX !== this.previousInvertX) {
                             this.previousData = data;
-                            window.updateRendererData(data);
+                            this.previousInvertX = invertX;
+
+                            window.updateRendererData(data, invertX);
                         }
                     });
                 },
@@ -534,14 +650,12 @@
                         gender: this.gender,
                         breed: this.breed,
                         head: this.head,
-                        /*colors: this.colors.map(color =>
-                            typeof color === 'string' ? parseInt(color.replace('#', ''), 16) : color
-                        ),*/
-                        orientation: this.possibleOrientation[this.animation][this.orientationKey],
+                        orientation: this.rendererOrientation[this.animation][this.orientationKey],
                         animation: this.animation,
                         skins: Object.entries(this.items)
                             .map(([key, value]) => {
                                 if (!value) return null;
+                                if (key === 'mount') return null;
 
                                 const item = this.allItems.find(i => i.dofus_id === value && i.folder === 'skins');
                                 return item ? (this.gender === 0 ? item.asset_id : item.female_asset_id) : null;
@@ -550,11 +664,14 @@
                         bones: Object.entries(this.items)
                             .map(([key, value]) => {
                                 if (!value) return null;
+                                if (key === 'mount') return null;
 
                                 const item = this.allItems.find(i => i.dofus_id === value && i.folder === 'bones');
                                 return item ? (this.gender === 0 ? item.asset_id : item.female_asset_id) : null;
                             })
                             .filter(Boolean),
+                        mount: this.items.mount ? this.allItems.find(i => i.dofus_id === this.items.mount).asset_id : null,
+                        cameleon: this.items.mount ? ([1, 2, 3].includes(this.items.mount)) : false
                     }, null, 2);
                 },
 
@@ -748,13 +865,14 @@
         varying vec2 vTexCoord;
         uniform sampler2D u_texture;
         uniform vec3 u_mainColor;
+        uniform float u_Opacity;
 
         void main() {
-            vec4 texColor = texture2D(u_texture, vec2(vTexCoord.s, 1.0 - vTexCoord.t));
-            texColor.rgb *= u_mainColor.rgb;
-            texColor.rgb *= texColor.a;
-            gl_FragColor = texColor;
-
+          vec4 texColor = texture2D(u_texture, vec2(vTexCoord.s, 1.0 - vTexCoord.t));
+          texColor.rgb *= u_mainColor.rgb;
+          texColor.rgb *= (texColor.a * u_Opacity);
+          texColor.a *= u_Opacity;
+          gl_FragColor = texColor;
         }
     </script>
 
@@ -769,6 +887,7 @@
         let program = null;
 
         let uMainColor
+        let uOpacity
         let positionsBuffer
         let uvsBuffer
         let indicesBuffer
@@ -780,6 +899,8 @@
         let focusColor = null
 
         let skinRendererProto = null
+        let invertX = false
+
 
         window.addEventListener('DOMContentLoaded', () => {
             urlData = window.getDataFromURL();
@@ -791,8 +912,9 @@
             COLORS = urlData.colors;
         };
 
-        window.updateRendererData = function (data) {
+        window.updateRendererData = function (data, invX) {
             rendererData = data;
+            invertX = invX;
             console.log(rendererData);
 
             UpdateRenderer()
@@ -848,7 +970,7 @@
         async function InitGL() {
             const canvas = document.getElementById('canvas');
             gl = canvas.getContext('webgl2', { alpha: true,  antialias: true,
-                depth: false, preserveDrawingBuffer: false , premultipliedAlpha: true, stencil: false });
+                depth: false, preserveDrawingBuffer: false , premultipliedAlpha: false, stencil: false });
 
             gl.viewport(0, 0, canvas.width, canvas.height);
 
@@ -885,6 +1007,10 @@
 
 
             uMainColor = gl.getUniformLocation(program, 'u_mainColor')
+            uOpacity = gl.getUniformLocation(program, 'u_Opacity')
+
+            gl.uniform1f(uOpacity, 1.0)
+
             positionsBuffer = gl.createBuffer();
             uvsBuffer = gl.createBuffer();
             indicesBuffer = gl.createBuffer();

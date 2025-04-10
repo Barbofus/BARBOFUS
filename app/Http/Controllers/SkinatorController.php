@@ -28,7 +28,7 @@ class SkinatorController extends Controller
     private function getItems()
     {
         return DB::table('items')
-            ->select('dofus_id', 'icon_path', 'asset_id', 'female_asset_id', 'folder', 'category', 'subcategory', 'level')
+            ->select('dofus_id', 'icon_path', 'asset_id', 'female_asset_id', 'folder', 'category', 'subcategory', 'level', 'pet_type')
             ->addSelect([
                 'name' => DB::table('localized_items')
                     ->select('name')
@@ -36,16 +36,25 @@ class SkinatorController extends Controller
                     ->whereColumn('items.dofus_id', 'localized_items.dofus_id')
                     ->take(1),
             ])
-            ->whereNotExists(function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('items as i')
-                    ->whereColumn('i.dofus_id', 'items.dofus_id')
-                    ->where('i.subcategory', 'mimisymbic')
-                    ->whereIn('i.pet_type', ['dragodinde', 'volkorne', 'muldo']);
-            })
             ->orderByRaw("FIELD(category, 'hat', 'cape', 'shield', 'pet', 'wings', 'shoulderpads', 'costume')")
             ->orderByRaw("FIELD(pet_type, 'familier', 'montilier', 'dragodinde', 'muldo', 'volkorne')")
-            ->orderByRaw("FIELD(subcategory, 'mimisymbic', 'ceremonial', 'livingObject')")
+            ->orderByRaw("
+                CASE
+                    WHEN pet_type IN ('dragodinde', 'muldo', 'volkorne') THEN
+                        CASE
+                            WHEN subcategory = 'ceremonial' THEN 0
+                            WHEN subcategory = 'mimisymbic' THEN 1
+                            ELSE 2
+                        END
+                    ELSE
+                        CASE
+                            WHEN subcategory = 'mimisymbic' THEN 0
+                            WHEN subcategory = 'ceremonial' THEN 1
+                            WHEN subcategory = 'livingObject' THEN 2
+                            ELSE 3
+                        END
+                END
+            ")
             ->orderBy('level')
             ->orderBy('name')
             ->get();
