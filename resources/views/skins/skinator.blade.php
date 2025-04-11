@@ -879,7 +879,6 @@
 
         let urlData = {};
         let COLORS = [];
-        let oldCOLORS = [];
         let rendererData = {};
         let gl = null;
         let program = null;
