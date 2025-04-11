@@ -269,8 +269,8 @@
 
                     {{-- Zone sous skins / Orientation / Animation --}}
                     <div class="flex justify-evenly space-x-8 w-fit mx-auto">
-                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
-                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
+                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
+                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 group-active:translate-y-0 group-active:scale-90 transition-all">
                         </button>
 
                         {{-- Choix anim exploration / combat --}}
@@ -291,8 +291,8 @@
                             </div>
                         </button>
 
-                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
-                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 group-active:translate-y-0 group-active:scale-90 transition-all">
+                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
+                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
                         </button>
                     </div>
 
@@ -948,7 +948,6 @@
 
         async function UpdateRenderer () {
             renderDone = false
-            console.log('renderDone false')
 
             const response = await fetch('http://62.241.115.223:9461/renderer', {
                 method: 'POST',
@@ -976,6 +975,7 @@
             canvasScaleY = 1
 
             let maxX = Number.MIN_SAFE_INTEGER
+            let maxY = Number.MIN_SAFE_INTEGER
 
             // Temps rebuild position
             for (const dataFrame of data.frames) {
@@ -983,6 +983,7 @@
                     const positions = df.positions
                     for (let i = 0; i < positions.length; i += 3) {
                         maxX = Math.max(maxX, positions[i])
+                        maxY = Math.max(maxY, positions[i + 1])
                     }
                 }
             }
@@ -990,16 +991,17 @@
             const canvas = document.getElementById('canvas');
             const canvasRatio = canvas.width / canvas.height
 
-            canvasScaleX = 1 / canvasRatio
+            if(maxX < maxY) canvasScaleX = 1 / canvasRatio
+            if(maxX > maxY) canvasScaleY = canvasRatio
 
             if(canvasScaleX * maxX > 1)
             {
                 const diff = (canvasScaleX * maxX) - 1
+                const total = canvasScaleX * maxX - maxX
                 canvasScaleX = 1 / maxX
-                canvasScaleY = 1 - (maxX * diff)
+                canvasScaleY = 1 - (total * (diff / total) / 2)
             }
 
-            console.log('renderDone')
             renderDone = true
         }
 
