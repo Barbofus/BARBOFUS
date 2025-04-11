@@ -158,10 +158,10 @@
                                            class="hidden peer"
                                            :checked="head === breedHead.id">
                                     <label :for="'head_' + breedHead.id"
-                                           :title="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id"
+                                           :title="'{{ __('barbofus.contentFace') }} ' + (breedInfos.find(i => i.dofus_id === breed).name) + ' ' + breedHead.id"
                                            class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                         <img loading="lazy" draggable="false" :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId + '.png'"
-                                             :alt="'{{ __('barbofus.contentFace') }} ' + breedInfos[breed-1].name + ' ' + breedHead.id">
+                                             :alt="'{{ __('barbofus.contentFace') }} ' + (breedInfos.find(i => i.dofus_id === breed).name) + ' ' + breedHead.id">
                                     </label>
                                 </div>
                             </template>
@@ -230,7 +230,7 @@
 
                     {{-- Skin + bouton d'export --}}
                     <div class="relative w-fit mx-auto">
-                        <canvas x-ref="canvas" id="canvas" width="250" height="390"></canvas>
+                        <canvas x-ref="canvas" id="canvas" width="300" height="500"></canvas>
 
                         {{-- Bouton DL --}}
                         <button type="button"
@@ -844,16 +844,13 @@
 
         uniform vec2 u_resolution;
 
+        uniform float u_invertX;
+
         varying vec2 vTexCoord;
 
         void main() {
-            // Transformation du pixel vers clip space
-            vec2 zeroToOne = position.xy / u_resolution;
-            vec2 zeroToTwo = zeroToOne * 2.0;
-            vec2 clipSpace = zeroToTwo - 1.0;
-
             // Inversion Y car WebGL a l'axe Y inversé
-            gl_Position = vec4(clipSpace.x + 1.0, clipSpace.y + 0.6, 0.0, 0.55);
+            gl_Position = vec4(position.x * u_invertX, position.y, 0.0, 1.0);
             vTexCoord = texCoord;
         }
 
@@ -882,9 +879,15 @@
 
         let urlData = {};
         let COLORS = [];
+        let oldCOLORS = [];
         let rendererData = {};
         let gl = null;
         let program = null;
+
+        let canvasScaleX
+        let canvasScaleY
+
+        let renderDone
 
         let uMainColor
         let uOpacity
@@ -915,6 +918,7 @@
         window.updateRendererData = function (data, invX) {
             rendererData = data;
             invertX = invX;
+
             console.log(rendererData);
 
             UpdateRenderer()
@@ -944,6 +948,9 @@
         }
 
         async function UpdateRenderer () {
+            renderDone = false
+            console.log('renderDone false')
+
             const response = await fetch('http://62.241.115.223:9461/renderer', {
                 method: 'POST',
                 headers: {
@@ -954,6 +961,7 @@
             if (!response.ok) {
                 throw new Error('Network response was not ok' + response.statusText);
             }
+
             const buffer = await response.arrayBuffer();
             let newData = skinRendererProto.decode(new Uint8Array(buffer));
 
@@ -962,9 +970,38 @@
                 newTexture.push(await loadTexture(gl, 'storage/images/skinator/' + texture))
             }
 
-
             textures = newTexture
             data = newData
+
+            canvasScaleX = 1
+            canvasScaleY = 1
+
+            let maxX = Number.MIN_SAFE_INTEGER
+
+            // Temps rebuild position
+            for (const dataFrame of data.frames) {
+                for (const df of dataFrame.frame) {
+                    const positions = df.positions
+                    for (let i = 0; i < positions.length; i += 3) {
+                        maxX = Math.max(maxX, positions[i])
+                    }
+                }
+            }
+
+            const canvas = document.getElementById('canvas');
+            const canvasRatio = canvas.width / canvas.height
+
+            canvasScaleX = 1 / canvasRatio
+
+            if(canvasScaleX * maxX > 1)
+            {
+                const diff = (canvasScaleX * maxX) - 1
+                canvasScaleX = 1 / maxX
+                canvasScaleY = 1 - (maxX * diff)
+            }
+
+            console.log('renderDone')
+            renderDone = true
         }
 
         async function InitGL() {
@@ -1005,6 +1042,9 @@
             const uResolution = gl.getUniformLocation(program, 'u_resolution');
             gl.uniform2f(uResolution, canvas.width, canvas.height);
 
+            const u_invertXLocation = gl.getUniformLocation(program, 'u_invertX');
+            gl.uniform1f(u_invertXLocation, invertX ? -1.0 : 1.0);
+
 
             uMainColor = gl.getUniformLocation(program, 'u_mainColor')
             uOpacity = gl.getUniformLocation(program, 'u_Opacity')
@@ -1021,17 +1061,24 @@
 
 
         function draw () {
+            if(!renderDone) return;
+
             gl.clearColor(0, 0, 0, 0);
             gl.clear(gl.COLOR_BUFFER_BIT);
 
             if(!data) return;
+
+            const u_invertXLocation = gl.getUniformLocation(program, 'u_invertX');
+            gl.uniform1f(u_invertXLocation, invertX && renderDone ? -1.0 : 1.0);
 
             const frames0 = data.frames[indexFrame % data.frames.length].frame;
 
             for (const part of frames0) {
 
                 if (part.colorIndex !== null) {
+
                     const color = COLORS[part.colorIndex];
+
                     const r = ((color >> 16) & 0xFF) / 255;
                     const g = ((color >> 8) & 0xFF) / 255;
                     const b = (color & 0xFF) / 255;
@@ -1051,7 +1098,16 @@
                     gl.uniform3fv(uMainColor, [1, 1, 1]);
                 }
 
+                gl.uniform1f(uOpacity, part.opacity)
+
                 const positions = new Float32Array(part.positions);
+
+                const dfPositions = part.positions
+                for (let i = 0; i < dfPositions.length; i += 3) {
+                    positions[i] = dfPositions[i] * canvasScaleX
+                    positions[i + 1] = dfPositions[i + 1] * canvasScaleY
+                }
+
                 const uvs = new Float32Array(part.uvs);
                 const indices = new Uint16Array(part.indices);
 
@@ -1079,7 +1135,6 @@
                 const textureLocation = gl.getUniformLocation(program, 'u_texture');
                 gl.uniform1i(textureLocation, 0);
 
-                gl.bindBuffer(gl.ARRAY_BUFFER, indicesBuffer);
                 gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0 );
             }
         }
