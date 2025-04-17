@@ -235,6 +235,103 @@ use Illuminate\Support\Facades\Storage;
     dd('DONE');
 });*/
 
+/*Route::get('/foo', function () {
+    $jsonPath = storage_path('app/json/outBonesSize.json');
+    $jsonData = json_decode(file_get_contents($jsonPath), true);
+
+    // Clé = ID dans le JSON
+    $jsonIds = array_map('intval', array_keys($jsonData)); // au cas où les clés soient des strings
+
+    $itemIDs = Item::where('folder', 'bones')
+        ->whereNotIn('pet_type', ['volkorne', 'dragodinde', 'muldo'])
+        ->pluck('dofus_id')
+        ->map(fn($id) => (int)$id) // au cas où ce soit des strings
+        ->toArray();
+
+    // Ce qu'il manque = dans la BDD mais pas dans le JSON
+    $missing = array_diff($itemIDs, $jsonIds);
+
+    // Ce qu'il y a en trop = dans le JSON mais pas dans la BDD
+    $extra = array_diff($jsonIds, $itemIDs);
+
+    dd([
+        'missing' => $missing,
+        'extra' => $extra,
+    ]);
+
+    // On récupère tous les bonesId présents dans le JSON
+    $jsonBonesIds = collect($jsonData)
+        ->pluck('bonesId')
+        ->filter()
+        ->map(fn($id) => (int)$id)
+        ->toArray();
+
+    // On récupère tous les asset_id depuis la BDD
+    $items = Item::where('folder', 'bones')
+        ->whereNotIn('pet_type', ['volkorne', 'dragodinde', 'muldo'])
+        ->get(['dofus_id', 'asset_id']);
+
+    $assetIDs = $items->pluck('asset_id')->filter()->map(fn($id) => (int)$id)->toArray();
+
+    // Calcul des différences
+    $missingAssetIDs = array_diff($assetIDs, $jsonBonesIds); // BDD mais pas JSON
+    $extraBonesIds = array_diff($jsonBonesIds, $assetIDs);   // JSON mais pas BDD
+
+    // Récupère les items manquants avec leur dofus_id
+    $missing = $items->filter(fn($item) => in_array((int)$item->asset_id, $missingAssetIDs))
+        ->map(fn($item) => [
+            'dofus_id' => $item->dofus_id,
+            'asset_id' => $item->asset_id,
+        ])
+        ->values();
+
+    // Récupère les entrées JSON "en trop"
+    $extra = collect($jsonData)
+        ->filter(fn($entry) => in_array((int)$entry['bonesId'], $extraBonesIds))
+        ->map(fn($entry, $key) => [
+            'json_id'   => (int)$key,
+            'bonesId'   => (int)$entry['bonesId'],
+        ])
+        ->values();
+
+    dd([
+        'missing' => $missing,
+    ]);
+});*/
+
+/*Route::get('/foo', function () {
+    $jsonPath = storage_path('app/json/outBonesSize.json');
+    $jsonData = json_decode(file_get_contents($jsonPath), true);
+
+    $items = Item::whereNot(function ($query) {
+        $query->whereIn('pet_type', ['dragodinde', 'muldo', 'volkorne'])
+            ->where('subcategory', 'mimisymbic');
+    })->get();
+
+    $itemsExport = [];
+
+    foreach ($items as $item) {
+        $itemsExport[$item->dofus_id] = [
+            'id' => $item->dofus_id,
+            'category' => $item->category,
+            'subcategory' => $item->subcategory,
+            'pet_type' => $item->pet_type,
+            'harn' => in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']),
+            'folder' => $item->folder,
+            'sprite' => [
+                0 => $item->asset_id,
+                1 => $item->female_asset_id,
+            ],
+            'scale' => (in_array($item->pet_type, ['familier', 'montilier'])) ? ($jsonData[$item->dofus_id]['scales']) ?: 100 : 100,
+        ];
+    }
+
+    // Enregistrement du fichier
+    Storage::disk('local')->put('json/skinator/itemsExport.json', json_encode($itemsExport, JSON_PRETTY_PRINT));
+
+    dd('DONE', json_encode($itemsExport, JSON_PRETTY_PRINT));
+});*/
+
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');

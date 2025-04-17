@@ -652,7 +652,15 @@
                         head: this.head,
                         orientation: this.rendererOrientation[this.animation][this.orientationKey],
                         animation: this.animation,
-                        skins: Object.entries(this.items)
+                        items: Object.entries(this.items)
+                            .map(([key, value]) => {
+                                if (!value) return null;
+                                if (key === 'mount') return null;
+
+                                return this.items[key];
+                            })
+                            .filter(Boolean),
+                        /*skins: Object.entries(this.items)
                             .map(([key, value]) => {
                                 if (!value) return null;
                                 if (key === 'mount') return null;
@@ -669,7 +677,7 @@
                                 const item = this.allItems.find(i => i.dofus_id === value && i.folder === 'bones');
                                 return item ? (this.gender === 0 ? item.asset_id : item.female_asset_id) : null;
                             })
-                            .filter(Boolean),
+                            .filter(Boolean),*/
                         mount: this.items.mount ? this.allItems.find(i => i.dofus_id === this.items.mount).asset_id : null,
                         cameleon: this.items.mount ? ([1, 2, 3].includes(this.items.mount)) : false
                     }, null, 2);
