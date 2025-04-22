@@ -306,7 +306,7 @@ use Illuminate\Support\Facades\Storage;
     $items = Item::whereNot(function ($query) {
         $query->whereIn('pet_type', ['dragodinde', 'muldo', 'volkorne'])
             ->where('subcategory', 'mimisymbic');
-    })->get();
+    })->orWhere('pet_type', null)->get();
 
     $itemsExport = [];
 
@@ -330,6 +330,25 @@ use Illuminate\Support\Facades\Storage;
     Storage::disk('local')->put('json/skinator/itemsExport.json', json_encode($itemsExport, JSON_PRETTY_PRINT));
 
     dd('DONE', json_encode($itemsExport, JSON_PRETTY_PRINT));
+});*/
+
+/*Route::get('/foo', function () {
+    $jsonPath = storage_path('app/json/skinator/SkinSlotsRulesRoot.json');
+    $jsonData = json_decode(file_get_contents($jsonPath), true);
+
+    $slotRulesList = [];
+
+    //dd($jsonData);
+
+    foreach ($jsonData['references']['RefIds'][149]['data']['slotRulesList']['Array'] as $slot) {
+        if($slot['slotRuleType'] === 0) continue;
+        if($slot['slotRuleType'] === 1 && $slot['slotRuleInfo'] != 11) continue;
+        if($slot['slotRuleType'] === 3 && $slot['slotRuleInfo'] != 403) continue;
+
+        $slotRulesList[] = $slot;
+    }
+
+    dd('DONE', $slotRulesList, $jsonData['references']['RefIds'][149]['data']['slotRulesList']['Array']);
 });*/
 
 Route::get('/', HomeController::class)->name('home');

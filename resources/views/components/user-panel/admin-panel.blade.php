@@ -4,7 +4,7 @@
          x-data="{
         loading: false
     }">
-        <x-utils.userpage-title :title="'Panel Administrateur'" :subtitle="'Gestion de l\'API DofusDB'" />
+        {{--<x-utils.userpage-title :title="'Panel Administrateur'" :subtitle="'Gestion de l\'API DofusDB'" />
 
         <div class="flex justify-center w-full mt-16">
 
@@ -25,7 +25,7 @@
              x-transition:enter-end="opacity-100">
             <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">
             <p class="text-2xl text-secondary animate-pulseFast opacity-25 font-light">Récupération des items</p>
-        </div>
+        </div>--}}
 
         <h2 class="text-2xl font-thin text-center mt-16 mb-8 uppercase">Gestion du miss'skin</h2>
 

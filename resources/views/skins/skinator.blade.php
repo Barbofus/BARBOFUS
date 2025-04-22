@@ -226,30 +226,31 @@
                 </div>
 
                 {{--      RESULTAT SKIN + ORIENTATION + EXPORT PNG + COPY LINK      --}}
-                <div class="w-fit mx-auto p-4 space-y-4 h-fit mt-16 max-[1240px]:order-first">
+                <div class="w-fit mx-auto p-4 space-y-4 h-fit max-[1240px]:order-first">
 
                     {{-- Skin + bouton d'export --}}
                     <div class="relative w-fit mx-auto">
                         <canvas x-ref="canvas" id="canvas" width="300" height="500"></canvas>
 
-                        {{-- Bouton DL --}}
-                        <button type="button"
-                                @click="() => {
+                        <div class="flex justify-between">
+                            {{-- Bouton DL --}}
+                            <button type="button"
+                                    @click="() => {
                                     const canvas = $refs.canvas;
                                     const a = document.createElement('a');
                                     a.href = canvas.toDataURL('image/png');
                                     a.download = 'image.png';
                                     a.click();
                                 };"
-                                class="absolute bottom-0 left-0 p-2 bg-primary-100 rounded-lg border-2 border-transparent hover:bg-primary hover:border-secondary transition-all">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                            </svg>
-                        </button>
+                                    class="p-2 bg-primary-100 rounded-lg border-2 border-transparent hover:bg-primary hover:border-secondary transition-all">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </button>
 
-                        {{-- Bouton Copier --}}
-                        <button type="button"
-                                @click="() => {
+                            {{-- Bouton Copier --}}
+                            <button type="button"
+                                    @click="() => {
                                     copyToClipboard('', 'finalSkin');
                                     const canvas = $refs.canvas;
                                     canvas.toBlob(blob => {
@@ -258,13 +259,14 @@
                                         }
                                     });
                                 }"
-                                :class="copy === 'finalSkin' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
-                                class="absolute bottom-0 right-0 p-2 rounded-lg border-2 border-transparent transition-all">
-                            <svg x-show="copy != 'finalSkin'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
-                            </svg>
-                            <p x-cloak x-show="copy === 'finalSkin'">{{ __('barbofus.contentCopied') }}</p>
-                        </button>
+                                    :class="copy === 'finalSkin' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
+                                    class="p-2 rounded-lg border-2 border-transparent transition-all">
+                                <svg x-show="copy != 'finalSkin'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                </svg>
+                                <p x-cloak x-show="copy === 'finalSkin'">{{ __('barbofus.contentCopied') }}</p>
+                            </button>
+                        </div>
                     </div>
 
                     {{-- Zone sous skins / Orientation / Animation --}}
@@ -647,8 +649,6 @@
                 getRendererObject()
                 {
                     return JSON.stringify({
-                        gender: this.gender,
-                        breed: this.breed,
                         head: this.head,
                         orientation: this.rendererOrientation[this.animation][this.orientationKey],
                         animation: this.animation,
