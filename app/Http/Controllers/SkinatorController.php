@@ -28,7 +28,7 @@ class SkinatorController extends Controller
     private function getItems()
     {
         return DB::table('items')
-            ->select('dofus_id', 'icon_path', 'asset_id', 'female_asset_id', 'folder', 'category', 'subcategory', 'level', 'pet_type')
+            ->select('dofus_id', 'icon_path', 'asset_id', 'female_asset_id', 'folder', 'category', 'subcategory', 'level', 'pet_type', 'colorable')
             ->addSelect([
                 'name' => DB::table('localized_items')
                     ->select('name')

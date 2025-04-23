@@ -500,6 +500,10 @@
 
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
 
+                                <img src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable item"
+                                     :class="(allItem.colorable === 1 && loaded && intersected) ? 'visible' : 'invisible'"
+                                     class="h-6 w-6 absolute top-1 right-1">
+
                                 <div class="flex gap-1 absolute pointer-events-none">
                                     <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:0ms]"
                                          :class="!loaded && intersected ? 'opacity-100 visible animate-bounce' : 'opacity-0 invisible'"></div>
@@ -516,7 +520,7 @@
                                      width="80"
                                      :src="'/storage/' + allItem.icon_path"
                                      :alt="allItem.name"
-                                     class="mt-0 transition-opacity delay-100 duration-300"
+                                     class="mt-0 transition-opacity delay-100 duration-300 relative z-10"
                                      @load="loaded = true"
                                      x-intersect:enter="intersected = true"
                                      :class="(loaded && intersected) ? 'opacity-100' : 'opacity-0'">
@@ -767,7 +771,7 @@
         });
 
         const colorTab = document.getElementById('color-tab')
-        const mapKeys = { gender: "1", breed: "2", head: "3", colors: "4", items: "5", hat: "6", cape: "7", shield: "8", pet: "9", costume: "10", shoulderpads: "11", wings: "12" };
+        const mapKeys = { gender: "1", breed: "2", head: "3", colors: "4", items: "5", hat: "6", cape: "7", shield: "8", pet: "9", costume: "10", shoulderpads: "11", wings: "12", mount: "13" };
 
         function shortenKeys(obj) {
             if (Array.isArray(obj)) {
@@ -816,6 +820,7 @@
         }
 
         function editURLParam(json) {
+            console.log(json)
             const compressed = LZString.compressToEncodedURIComponent(json);
             const params = new URLSearchParams(window.location.search);
             params.set('s', compressed);

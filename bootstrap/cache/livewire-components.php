@@ -10,6 +10,7 @@
   'skin.unity-last-winners' => 'App\\Http\\Livewire\\Skin\\UnityLastWinners',
   'unity-skin.infinite-unity-skin-index' => 'App\\Http\\Livewire\\UnitySkin\\InfiniteUnitySkinIndex',
   'unity-skin.unity-skin-index-chunk' => 'App\\Http\\Livewire\\UnitySkin\\UnitySkinIndexChunk',
+  'user-panel.admin-panel' => 'App\\Http\\Livewire\\UserPanel\\AdminPanel',
   'user-panel.complete-skins-id' => 'App\\Http\\Livewire\\UserPanel\\CompleteSkinsId',
   'user-panel.haven-bags-validation' => 'App\\Http\\Livewire\\UserPanel\\HavenBagsValidation',
   'user-panel.my-unityskins-chunk' => 'App\\Http\\Livewire\\UserPanel\\MyUnityskinsChunk',
