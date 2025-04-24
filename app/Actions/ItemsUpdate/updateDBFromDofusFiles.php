@@ -107,7 +107,7 @@ final class updateDBFromDofusFiles
                 'category' => ItemCategorieEnum::PET->value,
                 'subcategory' => ItemSubcategorieEnum::MIMISYMBIC->value,
                 'pet_type' => $petType,
-                'icon_path' => $item['iconId'],
+                'icon_path' => 'images/icons/items/'. $item['iconId'] .'.webp',
                 'colorable' => $item['isColorable'],
                 'asset_id' => (int) explode('||', trim($mountD['look'], '{}'))[0],
                 'female_asset_id' => (int) explode('||', trim($mountD['look'], '{}'))[0]

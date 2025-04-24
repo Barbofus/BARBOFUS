@@ -13,7 +13,7 @@ final class uploadToFtp
     /**
      * @return void
      */
-    public function __invoke($localFilePath, $remoteFilePath)
+    public function __invoke($localFiles, $remoteDestination)
     {
         // Détails de la connexion FTP
         $ftp_server = "ftp.lema1810.odns.fr";  // Adresse du serveur FTP
@@ -34,17 +34,33 @@ final class uploadToFtp
         // Passer en mode passif si nécessaire
         ftp_pasv($ftp_conn, true);
 
-        // Transfert du fichier local vers le serveur FTP
-        $upload = ftp_put($ftp_conn, $remoteFilePath, $localFilePath, FTP_BINARY);
+        foreach ($localFiles as $key => $fileInfos)
+        {
+            $this->stepLog('🌱'.($key+1).'/'.count($localFiles).' '.$fileInfos['name']);
 
-        // Vérifier si l'upload a réussi
-        if (!$upload) {
-            echo "Erreur lors de l'upload du fichier $localFilePath.";
-        } else {
-            echo "Le fichier a été téléchargé avec succès à $remoteFilePath.";
+            // Transfert du fichier local vers le serveur FTP
+            $upload = ftp_put($ftp_conn, $remoteDestination.$fileInfos['name'], $fileInfos['file'], FTP_BINARY);
+
+            // Vérifier si l'upload a réussi
+            if (!$upload) {
+                $this->stepLog('❌'.($key+1).'/'.count($localFiles).' Erreur lors de l\'upload du fichier '.$fileInfos['name']);
+            } else {
+                $this->stepLog('✅'.($key+1).'/'.count($localFiles).' Le fichier a été téléchargé avec succès à '.$remoteDestination.$fileInfos['name']);
+            }
         }
 
         // Fermer la connexion FTP
         ftp_close($ftp_conn);
+    }
+
+    /**
+     * Ajoute une ligne dans les logs du php artisan serve
+     * @param string $message
+     * @return void
+     */
+    function stepLog(string $message): void
+    {
+        $output = new \Symfony\Component\Console\Output\ConsoleOutput();
+        $output->writeln($message);
     }
 }

@@ -17,3 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/run-update-items', function (Request $request) {
+    if (app()->environment('local')) {
+        return Response::json(['error' => 'Not allowed in this environment'], 403);
+    }
+
+    $providedKey = $request->header('X-Secret-Key');
+
+    if ($providedKey !== env('DOFUS_UPDATE_SECRET')) {
+        return Response::json(['error' => 'Unauthorized'], 401);
+    }
+
+    Artisan::call('update:dofus-items');
+
+    return Response::json([
+        'success' => true,
+        'output' => Artisan::output(),
+    ]);
+});

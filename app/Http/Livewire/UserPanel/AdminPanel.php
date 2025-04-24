@@ -4,6 +4,8 @@ namespace App\Http\Livewire\UserPanel;
 
 use App\Actions\ItemsUpdate\updateDBFromDofusFiles;
 use App\Actions\ItemsUpdate\uploadToFtp;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -81,15 +83,16 @@ class AdminPanel extends Component
         //$this->getLangFiles();
 
         // Met à jour avec les fichiers fraichement dl. Return la liste des nouveautés ainsi que les icons à récupèrer
-        $this->updateDB();
+        //$this->updateDB();
+
+        // Récupèrer les icones des items/mounts/visage
+        $this->getIcons();
 
         $this->currentStep = $this->maxStep;
         $this->stepName = 'Mise à jour terminé';
         $this->logIcon = '✅';
         $this->logTitle = 'FIN';
         $this->stepLog();
-
-        dd($this->iconIds);
     }
 
     /**
@@ -99,19 +102,13 @@ class AdminPanel extends Component
     function getDataRootFiles(): void
     {
         $this->logTitle = 'ROOT FILES';
+        $files = [];
 
         foreach ($this->rootToExport as $key => $value) {
             $this->currentStep ++;
             $this->stepName = 'Export '. str_replace(['data_assets_', '.asset.bundle'], '', $value);
             $this->logIcon = '🌱';
             $this->stepLog();
-
-            // Met à jour la progression en front
-            $this->dispatchBrowserEvent('step-progress', [
-                'current' => $this->currentStep,
-                'stepName' => $this->stepName,
-                'maxStep' => $this->maxStep,
-            ]);
 
             // Prépare la commande python
             $command = sprintf(
@@ -134,17 +131,22 @@ class AdminPanel extends Component
                 ]);
             }
 
-            // Envoie le fichier au serveur
-            $this->stepName = 'Envoi au serveur '. str_replace(['data_assets_', '.asset.bundle'], '', $value);
-            $this->logIcon = '✈️';
-            $this->stepLog();
-
-            (new uploadToFtp())(storage_path('app/json/skinator/') . $value . '.json', '/storage/app/json/skinator/' . $value . '.json');
+            $files[] = [
+                'file' => storage_path('app/json/skinator/'). $value . '.json',
+                'name' => $value . '.json',
+            ];
 
             $this->stepName = 'Fin '. str_replace(['data_assets_', '.asset.bundle'], '', $value);
             $this->logIcon = '✅';
             $this->stepLog();
         }
+
+        // Envoie les fichiers au serveur
+        $this->stepName = 'Envoi les fichiers au serveur ';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        (new uploadToFtp())($files, '/storage/app/json/skinator/');
     }
 
     /**
@@ -154,20 +156,13 @@ class AdminPanel extends Component
     function getLangFiles(): void
     {
         $this->logTitle = 'LOCALIZATION FILES';
+        $files = [];
 
         foreach ($this->langs as $lang) {
             $this->currentStep ++;
             $this->stepName = 'Export '. $lang . '.bin';
             $this->logIcon = '🌱';
-
             $this->stepLog();
-
-            // Met à jour la progression en front
-            $this->dispatchBrowserEvent('step-progress', [
-                'current' => $this->currentStep,
-                'stepName' => $this->stepName,
-                'maxStep' => $this->maxStep,
-            ]);
 
             // Prépare la commande python
             $command = sprintf(
@@ -189,17 +184,22 @@ class AdminPanel extends Component
                 ]);
             }
 
-            // Envoie le fichier au serveur
-            $this->stepName = 'Envoi au serveur '. $lang . '.bin';
-            $this->logIcon = '✈️';
-            $this->stepLog();
-
-            (new uploadToFtp())(storage_path('app/json/skinator/lang/') . $lang . '.json', '/storage/app/json/skinator/lang/' . $lang . '.json');
+            $files[] = [
+                'file' => storage_path('app/json/skinator/lang/'). $lang . '.json',
+                'name' => $lang . '.json',
+            ];
 
             $this->stepName = 'Fin '. $lang . '.bin';
             $this->logIcon = '✅';
             $this->stepLog();
         }
+
+        // Envoie le fichier au serveur
+        $this->stepName = 'Envoi les langs au serveur ';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        (new uploadToFtp())($files, '/storage/app/json/skinator/lang/');
     }
 
     /**
@@ -218,44 +218,128 @@ class AdminPanel extends Component
         $this->newItems = $result['newItems'];
         $this->iconIds = $result['icons'];
 
-        /*$this->stepName = 'Mise à jour base de donnée côté serveur';
+        file_put_contents(storage_path('app/json/skinator/iconIds.txt'), implode("\n", $this->iconIds));
+
+        $this->stepName = 'Mise à jour base de donnée côté serveur';
         $this->logIcon = '✈️';
         $this->stepLog();
 
-        // 6f3ZEPw+NW59
-
-        $process = new Process([
-            'C:\\Windows\\System32\\OpenSSH\\ssh', '-v', '-i', 'C:\\Users\\thefl\\.ssh\\id_rsa', 'lema1810@barbofus.com',
-            'cd sites/barbofus.com && php artisan update:dofus-items'
-        ]);
-
-
-        // Définir la passphrase dans l'environnement du processus
-        $process->setEnv(['SSH_ASKPASS' => 'echo "6f3ZEPw+NW59"']);
-
-        try {
-            // Exécuter le processus et le faire échouer s'il y a une erreur
-            $process->mustRun();
-
-            // Si le processus réussit, afficher la sortie
-            echo $process->getOutput();
-        } catch (ProcessFailedException $exception) {
-            // Afficher l'erreur détaillée si le processus échoue
-            echo 'Erreur : ' . $exception->getMessage();
-
-            // Utiliser le Process pour obtenir la sortie d'erreur
-            echo 'Sortie d\'erreur : ' . $process->getErrorOutput();
-        }*/
-
+        Http::withHeaders([
+            'X-Secret-Key' => env('DOFUS_UPDATE_SECRET'),
+        ])->post('https://barbofus.com/api/run-update-items');
 
         $this->logIcon = '✅';
         $this->stepLog();
     }
 
+    /**
+     * Lancé depuis le site en ligne, sert à imiter la fonction updateDB() mais sur le site en ligne
+     * @return void
+     */
     public function UpdateDBFromServer(): void
     {
         $result = (new updateDBFromDofusFiles())();
         $this->newItems = $result['newItems'];
         $this->iconIds = $result['icons'];
+    }
+
+    /**
+     * Récupère les icones des items / mounts / visages. Juste après la maj de la database
+     * @return void
+     */
+    function getIcons()
+    {
+        $this->currentStep ++;
+        $this->stepName = 'Export icons';
+        $this->logIcon = '🌱';
+        $this->logTitle = 'GET ICONS';
+        $this->stepLog();
+
+        // EXPORT DES ICONS D'ITEMS
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/icons_extractor.py')),
+            escapeshellarg($this->dofusContentPath . 'Picto/Items/item_assets_2x.bundle'),
+            escapeshellarg(storage_path('app/public/images/icons/items')),
+            escapeshellarg(storage_path('app/json/skinator/iconIds.txt')),
+        );
+
+        // Execute le python
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if($exitCode != 0) {
+            dd('Erreur pour exporter les icons d\'items', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        $this->stepName = 'Envoie des icons d\'items au serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $files = [];
+
+        foreach (File::allFiles(storage_path('app/public/images/icons/items')) as $file) {
+            $fileName = $file->getFilename();
+
+            $files[] = [
+                'file' => $file->getPathname(),
+                'name' => $fileName
+            ];
+        }
+
+        (new uploadToFtp())($files, '/storage/app/public/images/icons/items/');
+
+        $this->stepName = 'Export visage';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+
+
+        // EXPORT DES VISAGES
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/bundle_extractor.py')),
+            escapeshellarg($this->dofusContentPath . 'Picto/UI/cosmetic_assets_2x.bundle'),
+            escapeshellarg(storage_path('app/public/images/icons/classes/faces/unity')),
+            escapeshellarg('heads'),
+        );
+        // Execute le python
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if($exitCode != 0) {
+            dd('Erreur pour exporter les visages', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        $this->stepName = 'Envoie des icons de visage au serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $files = [];
+
+        foreach (File::allFiles(storage_path('app/public/images/icons/classes/faces/unity')) as $file) {
+            $fileName = $file->getFilename();
+
+            $files[] = [
+                'file' => $file->getPathname(),
+                'name' => $fileName
+            ];
+        }
+
+        (new uploadToFtp())($files, '/storage/app/public/images/icons/classes/faces/unity/');
+
+        $this->stepName = 'Fin';
+        $this->logIcon = '✅';
+        $this->stepLog();
     }
 }

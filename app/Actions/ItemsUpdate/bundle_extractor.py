@@ -60,6 +60,27 @@ def unpack_assets_skin(file_path : str, destination_folder : str):
             # print(dest)
             data.image.save(dest)
 
+def unpack_assets_heads(file_path : str, destination_folder : str):
+
+    # load that file via UnityPy.load
+    env = UnityPy.load(file_path)
+    name = ""
+    # iterate over internal objects
+    for obj in env.objects:
+
+        if obj.type.name in ["Texture2D"]:
+            # print("FIND TEXTURE")
+            data = obj.read()
+            tree = obj.read_typetree()
+            name = tree['m_Name']
+            # create dest based on original path
+            dest = os.path.join(destination_folder, name + ".png")
+            # make sure that the dir of that path exists
+            os.makedirs(os.path.dirname(dest), exist_ok = True)
+
+            # print(dest)
+            data.image.save(dest)
+
 def unpack_assets_data(file_path : str, destination_folder : str):
 
     # load that file via UnityPy.load
@@ -166,5 +187,7 @@ elif bundle_type == "bone":
     unpack_assets_bone(bundle_file, destination_folder)
 elif bundle_type == "data":
     unpack_assets_data(bundle_file, destination_folder)
+elif bundle_type == "heads":
+    unpack_assets_heads(bundle_file, destination_folder)
 
 # unpack_assets(bundle_file, destination_folder)
