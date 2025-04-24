@@ -8,12 +8,15 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class AdminPanel extends Component
 {
     // FONCTIONNE AVEC PYTHON 3.12.6
 
     public array $newItems = [];
+    public array $iconIds = [];
 
     public bool $showUpdateButtons;
     private int $maxStep;
@@ -85,6 +88,8 @@ class AdminPanel extends Component
         $this->logIcon = '✅';
         $this->logTitle = 'FIN';
         $this->stepLog();
+
+        dd($this->iconIds);
     }
 
     /**
@@ -209,9 +214,48 @@ class AdminPanel extends Component
         $this->logTitle = 'DATABASE';
         $this->stepLog();
 
-        $this->newItems = (new updateDBFromDofusFiles())()['newItems'];
+        $result = (new updateDBFromDofusFiles())();
+        $this->newItems = $result['newItems'];
+        $this->iconIds = $result['icons'];
+
+        /*$this->stepName = 'Mise à jour base de donnée côté serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        // 6f3ZEPw+NW59
+
+        $process = new Process([
+            'C:\\Windows\\System32\\OpenSSH\\ssh', '-v', '-i', 'C:\\Users\\thefl\\.ssh\\id_rsa', 'lema1810@barbofus.com',
+            'cd sites/barbofus.com && php artisan update:dofus-items'
+        ]);
+
+
+        // Définir la passphrase dans l'environnement du processus
+        $process->setEnv(['SSH_ASKPASS' => 'echo "6f3ZEPw+NW59"']);
+
+        try {
+            // Exécuter le processus et le faire échouer s'il y a une erreur
+            $process->mustRun();
+
+            // Si le processus réussit, afficher la sortie
+            echo $process->getOutput();
+        } catch (ProcessFailedException $exception) {
+            // Afficher l'erreur détaillée si le processus échoue
+            echo 'Erreur : ' . $exception->getMessage();
+
+            // Utiliser le Process pour obtenir la sortie d'erreur
+            echo 'Sortie d\'erreur : ' . $process->getErrorOutput();
+        }*/
+
 
         $this->logIcon = '✅';
         $this->stepLog();
+    }
+
+    public function UpdateDBFromServer(): void
+    {
+        $result = (new updateDBFromDofusFiles())();
+        $this->newItems = $result['newItems'];
+        $this->iconIds = $result['icons'];
     }
 }

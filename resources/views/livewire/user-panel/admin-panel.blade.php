@@ -14,6 +14,19 @@
                     <div class="w-5 h-5 bg-secondary rounded-full transition-all duration-100 opacity-100 visible animate-bounce [animation-delay:200ms]"></div>
                 </div>
             </div>
+        @else
+            <div class="flex flex-col items-center space-y-8 justify-center w-full mt-8">
+                <button  wire:click="UpdateDBFromServer()" wire:loading.attr="disabled"
+                         class="p-4 text-2xl text-primary text-center font-light goldGradient rounded-md disabled:grayscale hover:enabled:brightness-110">
+                    Récup les nouveaux items
+                </button>
+
+                <div class="gap-4 pointer-events-none hidden" wire:loading.class.remove="hidden" wire:loading.class="flex">
+                    <div class="w-5 h-5 bg-secondary rounded-full transition-all duration-100 opacity-100 visible animate-bounce [animation-delay:0ms]"></div>
+                    <div class="w-5 h-5 bg-secondary rounded-full transition-all duration-100 opacity-100 visible animate-bounce [animation-delay:100ms]"></div>
+                    <div class="w-5 h-5 bg-secondary rounded-full transition-all duration-100 opacity-100 visible animate-bounce [animation-delay:200ms]"></div>
+                </div>
+            </div>
         @endif
 
         <h2 class="text-2xl font-thin text-center mt-16 mb-8 uppercase">Gestion du miss'skin</h2>
