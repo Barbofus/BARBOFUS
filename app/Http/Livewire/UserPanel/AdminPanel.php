@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 class AdminPanel extends Component
 {
@@ -230,17 +228,6 @@ class AdminPanel extends Component
 
         $this->logIcon = '✅';
         $this->stepLog();
-    }
-
-    /**
-     * Lancé depuis le site en ligne, sert à imiter la fonction updateDB() mais sur le site en ligne
-     * @return void
-     */
-    public function UpdateDBFromServer(): void
-    {
-        $result = (new updateDBFromDofusFiles())();
-        $this->newItems = $result['newItems'];
-        $this->iconIds = $result['icons'];
     }
 
     /**
