@@ -72,7 +72,7 @@ class AdminPanel extends Component
      */
     public function InitiateItemsUpdate(): void
     {
-        $this->maxStep = 5 + count($this->rootToExport) + count($this->langs);
+        $this->maxStep = 6 + count($this->rootToExport) + count($this->langs);
         $this->currentStep = 0;
 
         // Export des fichiers data en json
@@ -90,6 +90,9 @@ class AdminPanel extends Component
         // Récupère les skins / bones de ce que nous avons déjà (heads, breeds, mounts)
         $this->getRootFilesSkins();
 
+        // Exporte les nouveaux bundle pour identifier les skins / bones id
+        $this->exportBundleDifference();
+
         $this->currentStep = $this->maxStep;
         $this->stepName = 'Mise à jour terminé';
         $this->logIcon = '✅';
@@ -104,6 +107,7 @@ class AdminPanel extends Component
     function getDataRootFiles(): void
     {
         $this->logTitle = 'ROOT FILES';
+        $this->currentStep ++;
         $files = [];
 
         foreach ($this->rootToExport as $key => $value) {
@@ -158,6 +162,7 @@ class AdminPanel extends Component
     function getLangFiles(): void
     {
         $this->logTitle = 'LOCALIZATION FILES';
+        $this->currentStep ++;
         $files = [];
 
         foreach ($this->langs as $lang) {
@@ -522,7 +527,7 @@ class AdminPanel extends Component
         }
 
         $count = 0;
-        foreach ($ftpFiles as $key => $ftpFile) {
+        foreach ($ftpFiles as $ftpFile) {
             $count ++;
             $this->stepName = $count.'/'.count($ftpFiles).' Envoi les fichiers au serveur à ' . $ftpFile['remoteDestination'];
             $this->stepLog();
@@ -531,6 +536,10 @@ class AdminPanel extends Component
 
             (new uploadToFtp())($ftpFile['files'], $ftpFile['remoteDestination']);
         }
+
+        $this->stepName = 'Fin';
+        $this->logIcon = '✅';
+        $this->stepLog();
     }
 
     /**
@@ -544,5 +553,121 @@ class AdminPanel extends Component
         if(!file_exists($localFile) && file_exists($dofusFile)) return true;
 
         return filemtime($localFile) < filemtime($dofusFile);
+    }
+
+    /**
+     * Compare les noms de fichiers entre le json enregistrer et les bundles Dofus, puis exporte les png des nouveaux bundles
+     * @return void
+     */
+    function exportBundleDifference()
+    {
+        $this->currentStep ++;
+        $this->stepName = 'Récupération des nouveaux bundles';
+        $this->logIcon = '🌱';
+        $this->logTitle = 'GET NEW BUNDLES';
+        $this->stepLog();
+
+        // Récupère les différences entre le json et les fichiers Dofus
+        $oldBundleNames = json_decode(Storage::disk('local')->get('json/skinator/bundleNames.json'), true);
+
+        $skinsBundles = File::files($this->dofusContentPath .'Characters/Skins');
+        $skinsBundlesNames = collect($skinsBundles)->map(function ($file) {
+            return $file->getFilename();
+        })->toArray();
+        $bonesBundles = File::files($this->dofusContentPath .'Characters/Bones');
+        $bonesBundlesNames = collect($bonesBundles)->map(function ($file) {
+            return $file->getFilename();
+        })->toArray();
+
+        // Compare les fichiers Skins et Bones avec ceux dans le JSON
+        $missingSkins = array_diff($skinsBundlesNames, $oldBundleNames['skins']);
+        $missingBones = array_diff($bonesBundlesNames, $oldBundleNames['bones']);
+
+        // Extraire les IDs des fichiers avec une fonction anonyme dans array_map
+        $skinsIds = array_map(function ($filename) {
+            if (preg_match('/(?:bones_assets_bone_|skins_assets_skin_)([\w\-]+)(?=\.bundle)/', $filename, $matches)) {
+                return $matches[1];
+            }
+            return null;
+        }, $missingSkins);
+
+        $bonesIds = array_map(function ($filename) {
+            if (preg_match('/(?:bones_assets_bone_|skins_assets_skin_)([\w\-]+)(?=\.bundle)/', $filename, $matches)) {
+                return $matches[1];
+            }
+            return null;
+        }, $missingBones);
+
+        file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $skinsIds));
+        file_put_contents(storage_path('app/json/skinator/boneIds.txt'), implode("\n", $bonesIds));
+
+        $this->stepName = 'Export des bundles BONES';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+        // Exporte tous les bones via python
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
+            escapeshellarg($this->dofusContentPath . 'Characters/Bones'),
+            escapeshellarg(storage_path('app/temp/bones/')),
+            escapeshellarg('bonestemp'),
+            escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
+        );
+        // Execute le python
+        $command .= ' 2>&1';
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if($exitCode != 0) {
+            dd('Erreur pour exporter les bones', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+
+        $this->stepName = 'Export des bundles SKINS';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+        // Exporte tous les skins via python
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
+            escapeshellarg($this->dofusContentPath . 'Characters/Skins'),
+            escapeshellarg(storage_path('app/temp/skins/')),
+            escapeshellarg('skinstemp'),
+            escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
+        );
+        // Execute le python
+        $command .= ' 2>&1';
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if($exitCode != 0) {
+            dd('Erreur pour exporter les skins', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        // Met à jour notre json des noms de bundle croisé
+        $bundleNames = [
+            'skins' => $skinsBundlesNames,
+            'bones' => $bonesBundlesNames,
+        ];
+
+        $jsonBundles = json_encode($bundleNames, JSON_PRETTY_PRINT);
+
+        File::put(storage_path('app/json/skinator/bundleNames.json'), $jsonBundles);
+
+        $this->stepName = 'Fin';
+        $this->logIcon = '✅';
+        $this->stepLog();
     }
 }

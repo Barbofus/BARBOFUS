@@ -38,7 +38,10 @@ final class uploadToFtp
         {
             $this->stepLog('🌱'.($key+1).'/'.count($localFiles).' '.$fileInfos['name']);
 
-            if(!file_exists($fileInfos['file'])) continue;
+            if(!file_exists($fileInfos['file'])) {
+                $this->stepLog('✖️'.($key+1).'/'.count($localFiles).' Aucun fichier trouvé '.$fileInfos['name']);
+                continue;
+            }
 
             // Transfert du fichier local vers le serveur FTP
             $upload = ftp_put($ftp_conn, $remoteDestination.$fileInfos['name'], $fileInfos['file'], FTP_BINARY);

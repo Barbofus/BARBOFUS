@@ -21,6 +21,56 @@ class NaNEncoder(json.JSONEncoder):
                 chunk = '"NaN"'  # Convert NaN to the string "NaN"
             yield chunk
 
+def unpack_assets_skinstemp(folder_path : str, destination_folder : str, ids_file: str):
+    # Charger les IDs
+    with open(ids_file) as f:
+        valid_ids = set(line.strip() for line in f if line.strip())
+
+    for file_id in valid_ids:
+
+        # load that file via UnityPy.load
+        print("Loading file: ", os.path.join(folder_path, f"skins_assets_skin_{file_id}.bundle"))
+        env = UnityPy.load(os.path.join(folder_path, f"skins_assets_skin_{file_id}.bundle"))
+        name = file_id
+
+        for obj in env.objects:
+
+            if obj.type.name in ["Texture2D", "Sprite"]:
+                # print("FIND TEXTURE")
+                data = obj.read()
+                # create dest based on original path
+                dest = os.path.join(destination_folder, name + ".png")
+                # make sure that the dir of that path exists
+                os.makedirs(os.path.dirname(dest), exist_ok = True)
+
+                print(dest)
+                data.image.save(dest)
+
+def unpack_assets_bonestemp(folder_path : str, destination_folder : str, ids_file: str):
+    # Charger les IDs
+    with open(ids_file) as f:
+        valid_ids = set(line.strip() for line in f if line.strip())
+
+    for file_id in valid_ids:
+
+        # load that file via UnityPy.load
+        print("Loading file: ", os.path.join(folder_path, f"bones_assets_bone_{file_id}.bundle"))
+        env = UnityPy.load(os.path.join(folder_path, f"bones_assets_bone_{file_id}.bundle"))
+        name = file_id
+
+        for obj in env.objects:
+
+            if obj.type.name in ["Texture2D", "Sprite"]:
+                # print("FIND TEXTURE")
+                data = obj.read()
+                # create dest based on original path
+                dest = os.path.join(destination_folder, name + ".png")
+                # make sure that the dir of that path exists
+                os.makedirs(os.path.dirname(dest), exist_ok = True)
+
+                print(dest)
+                data.image.save(dest)
+
 def unpack_assets_skin(folder_path : str, destination_folder : str, ids_file: str):
     # Charger les IDs
     with open(ids_file) as f:
@@ -154,5 +204,9 @@ if bundle_type == "skins":
     unpack_assets_skin(bundle_folder, destination_folder, ids_file)
 elif bundle_type == "bones":
     unpack_assets_bone(bundle_folder, destination_folder, ids_file)
+elif bundle_type == "skinstemp":
+    unpack_assets_skinstemp(bundle_folder, destination_folder, ids_file)
+elif bundle_type == "bonestemp":
+    unpack_assets_bonestemp(bundle_folder, destination_folder, ids_file)
 
 # unpack_assets(bundle_file, destination_folder)
