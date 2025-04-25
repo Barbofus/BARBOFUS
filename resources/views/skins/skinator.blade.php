@@ -459,16 +459,16 @@
                                 items['pet'] = null;
                             }
 
-                            if(!harn || !mount) return;
+                            if(harn && mount) {
+                                if(harn.pet_type != mount.pet_type)
+                                {
+                                    const id = items['pet'];
+                                    const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
 
-                            if(harn.pet_type != mount.pet_type)
-                            {
-                                const id = items['pet'];
-                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+                                    if (radio) radio.checked = false;
 
-                                if (radio) radio.checked = false;
-
-                                items['pet'] = null;
+                                    items['pet'] = null;
+                                }
                             }
                         }
 
