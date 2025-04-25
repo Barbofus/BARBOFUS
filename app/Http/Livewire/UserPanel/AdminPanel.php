@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Actions\ItemsUpdate\createItemsExport;
 use App\Actions\ItemsUpdate\updateDBFromDofusFiles;
 use App\Actions\ItemsUpdate\uploadToFtp;
+use App\Models\Item;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
@@ -98,6 +100,237 @@ class AdminPanel extends Component
         $this->logIcon = '✅';
         $this->logTitle = 'FIN';
         $this->stepLog();
+    }
+
+    /**
+     * Seconde étape de la mise à jour, exporter les skins/bones qui ont été modifié, puis reconstruit l'itemExport
+     * @return void
+     */
+    public function InitiateSkinsUpdate(): void
+    {
+        $this->maxStep = 4;
+        $this->currentStep = 0;
+
+        // Récupère les skins/bones nécessaires
+        $this->exportNecessarySkins();
+
+        // Construit le fichier itemsExport.json
+        $this->makeItemExportFile();
+
+        $this->currentStep = $this->maxStep;
+        $this->stepName = 'Mise à jour terminé';
+        $this->logIcon = '✅';
+        $this->logTitle = 'FIN';
+        $this->stepLog();
+    }
+
+    /**
+     * Récupère les skins/bones nécessaires
+     * @return void
+     */
+    function exportNecessarySkins() : void
+    {
+        $this->currentStep ++;
+        $this->stepName = 'Récupération des fichiers + vérifs dates modif';
+        $this->logIcon = '🌱';
+        $this->logTitle = 'GET BONES';
+        $this->stepLog();
+
+        /**
+         * @var array<string, array<int, string>> $files
+         */
+        $files = ['bones' => [], 'skins' => []];
+
+        // Récupèration asset_id et female_id de tout, sauf les mount mimisymbic
+        $items = Item::query()->whereNot(function ($query) {
+            $query->whereIn('pet_type', ['dragodinde', 'muldo', 'volkorne'])
+                ->where('subcategory', 'mimisymbic');
+            })
+            ->orWhere('pet_type', null)
+            ->get();
+
+        // Conserve les ids des skins et bones qu'on doit exporter
+        foreach ($items as $item) {
+            $folder = $item->folder;
+            $aId = $item->asset_id;
+            $faId = $item->female_asset_id;
+
+            if($aId == '' || $faId == '') continue;
+
+            $localFile = storage_path('app/json/skinator/').$folder.($folder === 'skins' ? '/' : '/Bones_Data/').$aId.'.json';
+            $dofusFile = $this->dofusContentPath.'Characters/'.ucfirst($folder).'/'.$folder.'_assets_'.rtrim($folder, 's').'_'.$aId.'.bundle';
+
+            if($this->checkIfDofusNewer($localFile, $dofusFile)){
+                $files[$folder][] = $aId;
+            }
+
+            if($faId != $aId) {
+                $localFile = storage_path('app/json/skinator/').$folder.($folder === 'skins' ? '/' : '/Bones_Data/').$faId.'.json';
+                $dofusFile = $this->dofusContentPath.'Characters/'.ucfirst($folder).'/'.$folder.'_assets_'.rtrim($folder, 's').'_'.$faId.'.bundle';
+                if($this->checkIfDofusNewer($localFile, $dofusFile)){
+                    $files[$folder][] = $faId;
+                }
+            }
+        }
+
+        // Prépare les noms de fichiers pour python
+        file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $files['skins']));
+        file_put_contents(storage_path('app/json/skinator/boneIds.txt'), implode("\n", $files['bones']));
+
+        $this->stepName = 'Export des bundles BONES';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+        // Exporte tous les bones via python
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
+            escapeshellarg($this->dofusContentPath . 'Characters/Bones'),
+            escapeshellarg(storage_path('app/')),
+            escapeshellarg('bones'),
+            escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
+        );
+        // Execute le python
+        $command .= ' 2>&1';
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if($exitCode != 0) {
+            dd('Erreur pour exporter les bones', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+
+        $this->currentStep ++;
+        $this->logTitle = 'GET SKINS';
+        $this->stepName = 'Export des bundles SKINS';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+        // Exporte tous les skins via python
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
+            escapeshellarg($this->dofusContentPath . 'Characters/Skins'),
+            escapeshellarg(storage_path('app/')),
+            escapeshellarg('skins'),
+            escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
+        );
+        // Execute le python
+        $command .= ' 2>&1';
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if($exitCode != 0) {
+            dd('Erreur pour exporter les skins', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        // Envoie les fichiers au serveur
+        $this->currentStep ++;
+        $this->logTitle = 'SEND ASSETS';
+        $this->stepName = 'Envoi les fichiers au serveur ';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $ftpFiles = [
+            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
+            'skins_json' => ['remoteDestination' => '/storage/app/json/skinator/skins/'],
+            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
+            'bones_data' => ['remoteDestination' => '/storage/app/json/skinator/bones/Bones_Data/'],
+            'bones_asset' => ['remoteDestination' => '/storage/app/json/skinator/bones/Bones_AssetData/'],
+        ];
+
+        foreach ($files as $typeKey => $type) {
+            foreach ($type as $file) {
+                if($typeKey === 'skins') {
+                    $ftpFiles['skins_png']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
+                        'name' => $file . '.png'
+                    ];
+                    $ftpFiles['skins_json']['files'][] = [
+                        'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
+                        'name' => $file . '.json'
+                    ];
+                }
+                else if($typeKey === 'bones') {
+                    $ftpFiles['bones_png']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
+                        'name' => $file . '.png'
+                    ];
+                    $ftpFiles['bones_data']['files'][] = [
+                        'file' => storage_path('app/json/skinator/bones/Bones_Data/') . $file . '.json',
+                        'name' => $file . '.json'
+                    ];
+                    $ftpFiles['bones_asset']['files'][] = [
+                        'file' => storage_path('app/json/skinator/bones/Bones_AssetData/') . $file . '.json',
+                        'name' => $file . '.json'
+                    ];
+                }
+            }
+        }
+
+        $count = 0;
+        foreach ($ftpFiles as $ftpFile) {
+            $count ++;
+            $this->stepName = $count.'/'.count($ftpFiles).' Envoi les fichiers au serveur à ' . $ftpFile['remoteDestination'];
+            $this->stepLog();
+
+            if(!isset($ftpFile['files'])) continue;
+
+            (new uploadToFtp())($ftpFile['files'], $ftpFile['remoteDestination']);
+        }
+
+        $this->stepName = 'Fin';
+        $this->logIcon = '✅';
+        $this->stepLog();
+    }
+
+    /**
+     * Créé le fichier itemsExport pour le skinator
+     * @return void
+     */
+    function makeItemExportFile()
+    {
+        $this->currentStep ++;
+        $this->logTitle = 'CREATING ITEMSEXPORT JSON';
+        $this->stepName = 'Envoi outBonesSize.json au serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $files[] = [
+            'file' => storage_path('app/json/skinator/outBonesSize.json'),
+            'name' => 'outBonesSize.json',
+        ];
+
+        (new uploadToFtp())($files, '/storage/app/json/skinator/');
+
+        $this->stepName = 'Créé itemsExport.json local';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+        (new createItemsExport())();
+
+        $this->stepName = 'Créé itemsExport.json serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        Http::withHeaders([
+            'X-Secret-Key' => env('DOFUS_UPDATE_SECRET'),
+        ])->post('https://barbofus.com/api/create-items-export');
+
+        $this->stepName = 'FIN';
+        $this->logIcon = '✅';
+        $this->stepLog();
+
     }
 
     /**

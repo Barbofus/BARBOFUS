@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 final class uploadToFtp
 {
     /**
+     * @param $localFiles
+     * @param $remoteDestination
      * @return void
      */
     public function __invoke($localFiles, $remoteDestination)

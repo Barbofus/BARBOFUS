@@ -36,3 +36,22 @@ Route::post('/run-update-items', function (Request $request) {
         'output' => Artisan::output(),
     ]);
 });
+
+Route::post('/create-items-export', function (Request $request) {
+    if (app()->environment('local')) {
+        return Response::json(['error' => 'Not allowed in this environment'], 403);
+    }
+
+    $providedKey = $request->header('X-Secret-Key');
+
+    if ($providedKey !== env('DOFUS_UPDATE_SECRET')) {
+        return Response::json(['error' => 'Unauthorized'], 401);
+    }
+
+    (new \App\Actions\ItemsUpdate\createItemsExport())();
+
+    return Response::json([
+        'success' => true,
+        'output' => Artisan::output(),
+    ]);
+});
