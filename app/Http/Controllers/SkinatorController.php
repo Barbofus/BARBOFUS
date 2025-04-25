@@ -36,6 +36,7 @@ class SkinatorController extends Controller
                     ->whereColumn('items.dofus_id', 'localized_items.dofus_id')
                     ->take(1),
             ])
+            ->whereNotNull('asset_id')
             ->orderByRaw("FIELD(category, 'hat', 'cape', 'shield', 'pet', 'wings', 'shoulderpads', 'costume')")
             ->orderByRaw("FIELD(pet_type, 'familier', 'montilier', 'dragodinde', 'muldo', 'volkorne')")
             ->orderByRaw("
