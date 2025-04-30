@@ -114,14 +114,14 @@
                               d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
                     </svg>
                 @endif
-                <p class="font-thin text-[min(6vw,1.25rem)] text-secondary">{{ $skin->gender === 'Homme' ? __('barbofus.inputSkinMale') : __('barbofus.inputSkinFemale') }}</p>
+                <p class="font-thin text-[min(6vw,1.25rem)] text-secondary">{{ $skin->gender === 0 ? __('barbofus.inputSkinMale') : __('barbofus.inputSkinFemale') }}</p>
             </div>
         </div>
 
         <div class="flex justify-center items-center space-x-4">
-            <p class="font-thin text-[min(5vw,1.25rem)] text-center text-secondary">{{  __('barbofus.contentFace') }} N°{{ $skin->face }}</p>
-            <img src="{{  asset(sprintf("storage/images/icons/classes/faces/unity/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
-                alt="Visage {{ $skin->race_name }} n° {{ $skin->face }}" draggable="false" class="h-12">
+            <p class="font-thin text-[min(5vw,1.25rem)] text-center text-secondary">{{  __('barbofus.contentFace') }}</p>
+            <img src="{{  asset(sprintf("storage/images/icons/classes/faces/unity/%s.png", $head)) }}"
+                alt="Visage {{ $skin->race_name }}" draggable="false" class="h-20">
         </div>
 
         <div class="flex flex-col gap-y-4 items-center min-[950px]:pt-24 relative h-full">
@@ -172,7 +172,7 @@
                 {{-- Items --}}
                 @if(isset($skin->costume_level))
                     <div
-                        class="min-[950px]:absolute left-[calc(50%+10rem)] top-[21rem] order-6 w-[31.25rem] flex justify-center min-[950px]:justify-start">
+                        class="min-[950px]:absolute left-[calc(50%+10rem)] top-[18rem] order-6 w-[31.25rem] flex justify-center min-[950px]:justify-start">
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
                             <x-skins-presentation.item :subname="$skin->costume_subname"
@@ -237,13 +237,26 @@
 
                 @if(isset($skin->shoulderpads_level))
                     <div
-                        class="min-[950px]:absolute left-[calc(50%+8.5rem)] top-[13.5rem] order-2 w-[31.25rem] flex justify-center min-[950px]:justify-start">
+                        class="min-[950px]:absolute left-[calc(50%+8.5rem)] top-[12rem] order-2 w-[31.25rem] flex justify-center min-[950px]:justify-start">
                         <div
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
                             <x-skins-presentation.item :subname="$skin->shoulderpads_subname"
                                                        :name="$skin->shoulderpads_name"
                                                        :level="$skin->shoulderpads_level"
                                                        :icon="$skin->shoulderpads_icon"/>
+                        </div>
+                    </div>
+                @endif
+
+                @if(isset($skin->mount_level))
+                    <div
+                        class="min-[950px]:absolute left-[calc(50%+8.5rem)] top-[24rem] order-8 w-[31.25rem] flex justify-center min-[950px]:justify-start">
+                        <div
+                            class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
+                            <x-skins-presentation.item :subname="$skin->mount_subname"
+                                                       :name="$skin->mount_name"
+                                                       :level="$skin->mount_level"
+                                                       :icon="$skin->mount_icon"/>
                         </div>
                     </div>
                 @endif

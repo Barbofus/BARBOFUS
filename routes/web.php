@@ -14,6 +14,9 @@ use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Models\Item;
+use App\Models\Race;
+use App\Models\Skin;
+use App\Models\UnitySkin;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -39,7 +42,8 @@ Route::get('/outils', function () {
     return view('tools');
 })->name('tools');
 
-Route::get('/skinator', [SkinatorController::class, 'index'])->name('skinator.index');
+Route::get('/skinator', [SkinatorController::class, 'create'])->name('skinator.create');
+Route::get('/skinator/{skin}', [SkinatorController::class, 'show'])->name('skinator.show');
 
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
@@ -80,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/unity-skins/create', [UnitySkinController::class, 'create'])->name('unity-skins.create');
     Route::get('/unity-skins/{skin}/edit', [UnitySkinController::class, 'edit'])->name('unity-skins.edit');
+
+    Route::get('/skinator/{skin}/edit', [SkinatorController::class, 'edit'])->name('skinator.edit');
 
     Route::get('/havre-sacs/create', [HavenBagController::class, 'create'])->name('havre-sacs.create');
     Route::get('/havre-sacs/{havenBag}/edit', [HavenBagController::class, 'edit'])->name('havre-sacs.edit');

@@ -197,12 +197,12 @@
 
                 <!-- Mâle -->
                 <div class="relative w-16">
-                    <x-forms.filter-button :name="'Homme'" :label="__('barbofus.inputSkinMale')" :checked="!in_array(['gender', '!=', 'Homme'], $gender)" wire:click="ToggleGender('Homme')" />
+                    <x-forms.filter-button :name="'Homme'" :label="__('barbofus.inputSkinMale')" :checked="!in_array(['gender', '!=', 0], $gender)" wire:click="ToggleGender(0)" />
                 </div>
 
                 <!-- Femelle -->
                 <div class="relative w-20">
-                    <x-forms.filter-button :name="'Femme'" :label="__('barbofus.inputSkinFemale')" :checked="!in_array(['gender', '!=', 'Femme'], $gender)" wire:click="ToggleGender('Femme')" />
+                    <x-forms.filter-button :name="'Femme'" :label="__('barbofus.inputSkinFemale')" :checked="!in_array(['gender', '!=', 1], $gender)" wire:click="ToggleGender(1)" />
                 </div>
             </div>
         </div>

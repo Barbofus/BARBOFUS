@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Enums\ItemCategorieEnum;
+use App\Enums\ItemSubcategorieEnum;
 use App\Rules\Recaptcha;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class StoreUpdateUnitySkinRequest extends FormRequest
@@ -31,15 +33,35 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             'regex:/^[a-f0-9]{6}$/i',
         ];
 
+        $raceId = (int) $this->input('race_id');
+        $gender = (int) $this->input('gender');
+
         $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
 
+        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
+
+        $validFaces = collect($headsData)
+            ->pluck('data')
+            ->filter(function ($item) use ($raceId, $gender) {
+                return $item['breed'] === $raceId && $item['gender'] === $gender;
+            })
+            ->pluck('id')
+            ->unique()
+            ->values()
+            ->all();
+
+
         return [
-            'race_id' => 'required|integer|exists:races,id',
-            'face' => 'required|integer|between:1,8',
+            'race_id' => 'required|integer|exists:races,dofus_id',
+            'face' => [
+                'required',
+                'integer',
+                Rule::in($validFaces)
+            ],
             'image_path' => $imageRequired.'|image|max:500|dimensions:max_width=500,max_height=650',
             'gender' => [
                 'required',
-                Rule::in(['Homme', 'Femme']),
+                Rule::in([0, 1]),
             ],
             'name' => 'nullable|max:30',
 
@@ -87,6 +109,14 @@ class StoreUpdateUnitySkinRequest extends FormRequest
                 'integer',
                 Rule::exists('items', 'dofus_id')->where('category', ItemCategorieEnum::SHOULDERPADS->value),
             ],
+            'mount_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('items', 'dofus_id')
+                    ->where('category', ItemCategorieEnum::PET->value)
+                    ->where('subcategory', ItemSubcategorieEnum::MIMISYMBIC->value)
+                    ->whereIn('pet_type', ['dragodinde', 'muldo', 'volkorne']),
+            ],
         ];
     }
 
@@ -116,6 +146,7 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             'costume_id' => $itemsMsg,
             'wings_id' => $itemsMsg,
             'shoulderpads_id' => $itemsMsg,
+            'mount_id' => $itemsMsg,
 
         ];
     }

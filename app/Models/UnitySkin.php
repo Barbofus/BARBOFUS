@@ -16,6 +16,7 @@ class UnitySkin extends Model
         'costume_id',
         'wings_id',
         'shoulderpads_id',
+        'mount_id',
         'image_path',
         'gender',
         'color_skin',
@@ -24,13 +25,6 @@ class UnitySkin extends Model
         'color_cloth_2',
         'color_cloth_3',
         'color_cloth_4',
-        'dofus_item_hat_id',
-        'dofus_item_cloak_id',
-        'dofus_item_shield_id',
-        'dofus_item_pet_id',
-        'dofus_item_costume_id',
-        'dofus_item_wing_id',
-        'dofus_item_shoulder_id',
         'user_id',
         'race_id',
         'status',
@@ -95,44 +89,13 @@ class UnitySkin extends Model
     }
 
     /**
-     * @return BelongsTo<DofusItemHat, UnitySkin>
+     * @return BelongsTo<Item, UnitySkin>
      */
-    public function DofusItemHat()
+    public function mount()
     {
-        return $this->belongsTo(DofusItemHat::class);
+        return $this->belongsTo(Item::class, 'mount_id');
     }
 
-    /**
-     * @return BelongsTo<DofusItemCloak, UnitySkin>
-     */
-    public function DofusItemCloak()
-    {
-        return $this->belongsTo(DofusItemCloak::class);
-    }
-
-    /**
-     * @return BelongsTo<DofusItemShield, UnitySkin>
-     */
-    public function DofusItemShield()
-    {
-        return $this->belongsTo(DofusItemShield::class);
-    }
-
-    /**
-     * @return BelongsTo<DofusItemCostume, UnitySkin>
-     */
-    public function DofusItemCostume()
-    {
-        return $this->belongsTo(DofusItemCostume::class);
-    }
-
-    /**
-     * @return BelongsTo<DofusItemPet, UnitySkin>
-     */
-    public function DofusItemPet()
-    {
-        return $this->belongsTo(DofusItemPet::class);
-    }
 
     /**
      * @return BelongsTo<User, UnitySkin>

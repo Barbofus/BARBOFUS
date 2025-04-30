@@ -3,10 +3,19 @@
             md:grid-cols-[18.75rem,18.75rem] md:grid-rows-[37rem,23rem]
             lg:grid-cols-[18.75rem,40.625rem] lg:grid-rows-[29rem,23rem]"
         x-data="{
-            currentGender: {{ (old('gender')) ? ((old('gender') == 'Femme') ? '1' : '0') : (isset($skin) ? (($skin['gender'] == 'Femme') ? '1' : '0') : '0') }},
-            currentRaceDofusID: {{ (old('race_id')) ? ((old('race_id') == 19) ? '20' : old('race_id')) : (isset($skin) ? (($skin['race_id'] == 19) ? '20' : $skin['race_id']) : '1') }},
+            currentGender: {{ (old('gender') ? old('gender') : (isset($skin) ? $skin['gender'] : '0')) }},
+            currentRaceDofusID: {{ (old('race_id') ? old('race_id') : (isset($skin) ? $skin['race_id'] : '1')) }},
+            heads: null,
+            sHead: {{ (old('face') ? old('face') : (isset($skin) ? $skin['face'] : 1)) }},
+
+            updateHeads()
+            {
+                breedHeads = JSON.parse(races.find(r => r.dofus_id === this.currentRaceDofusID).heads);
+                this.heads = breedHeads[this.currentGender === 0 ? 'male' : 'female'];
+            },
         }"
-         @change-race.window="currentRaceDofusID = $event.detail.message">
+         @change-race.window="currentRaceDofusID = $event.detail.message; updateHeads()"
+         x-init="updateHeads()">
         {{-- Image + raison du refus--}}
         <div class="lg:row-span-2 flex items-center gap-4 flex-col p-2">
 
@@ -115,10 +124,10 @@
                 {{-- Choix du sexe --}}
                 <div>
                     <p class="text-xl ml-10 font-light">{{ __('barbofus.labelSkinGender') }}</p>
-                    <div class="flex gap-x-4">
+                    <div class="flex gap-x-4" @input="updateHeads()">
 
                         <div>
-                            <input id="male" name="gender" type="radio" value="Homme" class="hidden peer" checked @click="currentGender = 0">
+                            <input id="male" name="gender" type="radio" value="0" class="hidden peer" checked @click="currentGender = 0">
                             <label for="male" class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-full" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
                                 </svg>
@@ -127,8 +136,8 @@
                         </div>
 
                         <div>
-                            <input id="female" name="gender" type="radio" value="Femme" class="hidden peer" @click="currentGender = 1"
-                                {{ (old('gender')) ? ((old('gender') == 'Femme') ? 'checked' : '') : (isset($skin) ? (($skin['gender'] == 'Femme') ? 'checked' : '') : '') }}>
+                            <input id="female" name="gender" type="radio" value="1" class="hidden peer" @click="currentGender = 1"
+                                {{ (old('gender')) ? ((old('gender') == 1) ? 'checked' : '') : (isset($skin) ? (($skin['gender'] == 1) ? 'checked' : '') : '') }}>
                             <label for="female"
                                    class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
@@ -158,11 +167,11 @@
                             <div class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer" id="races_dropdown">
                                 @foreach ($races as $race)
                                     <div>
-                                        <input type="radio" value="{{ $race->id }}" class="hidden peer" name="race_id" id="race_id_{{ $race->id }}" @click="currentRaceDofusID = {{ $race->dofus_id }}"
-                                            {{ (old('race_id')) ? ((old('race_id') == $race->id) ? 'checked' : '') : (isset($skin) ? (($skin['race_id'] == $race->id) ? 'checked' : '') : (($race->id == 1) ? 'checked' : '')) }}>
-                                        <label for="race_id_{{ $race->id }}" id="label_race_id_{{ $race->id }}"
-                                               onclick="setSelection({{ $race->id }})"
-                                               @keydown.enter="selection = {{ $race->id }}, showSort = false"
+                                        <input type="radio" value="{{ $race->dofus_id }}" class="hidden peer" name="race_id" id="race_id_{{ $race->dofus_id }}" @click="currentRaceDofusID = {{ $race->dofus_id }}"
+                                            {{ (old('race_id')) ? ((old('race_id') == $race->dofus_id) ? 'checked' : '') : (isset($skin) ? (($skin['race_id'] == $race->dofus_id) ? 'checked' : '') : (($race->dofus_id == 1) ? 'checked' : '')) }}>
+                                        <label for="race_id_{{ $race->dofus_id }}" id="label_race_id_{{ $race->dofus_id }}"
+                                               onclick="setSelection({{ $race->dofus_id }})"
+                                               @keydown.enter="selection = {{ $race->dofus_id }}, showSort = false"
                                                class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
                                             <img src="{{ $race->ghost_icon_path }}" class="h-11">
                                             <p>{{ $race->localized_name }}</p>
@@ -190,7 +199,6 @@
                             // Affiche la bonne classe de base et masque le menu
                             function init()
                             {
-                                selection -= 1; // id partent de 1 en php, 0 en js
                                 refreshResult();
                                 toggle();
                             }
@@ -198,12 +206,10 @@
                             // Set l'image et le texte de la classe selectionné
                             function refreshResult()
                             {
-                                rr_img.src = races[selection]['ghost_icon_path']
-                                rr_name.textContent = races[selection]['localized_name']
+                                rr_img.src = races.find(r => r.dofus_id === selection)['ghost_icon_path']
+                                rr_name.textContent = races.find(r => r.dofus_id === selection)['localized_name']
 
-                                let race_dofus_id = (selection === 18) ? 20 : selection + 1;
-
-                                let evt = new CustomEvent('change-race', { detail: { message: race_dofus_id } } );
+                                let evt = new CustomEvent('change-race', { detail: { message: selection } } );
                                 window.dispatchEvent(evt);
                             }
 
@@ -217,7 +223,7 @@
                             // Change la classe selectionné
                             function setSelection(newSelection)
                             {
-                                selection = newSelection-1;
+                                selection = newSelection;
                                 showSort = false;
                                 races_dropdown.hidden = !showSort;
                                 document.getElementById('race_id_' + newSelection).checked = true;
@@ -252,19 +258,19 @@
                                 for (let i=0; i<races.length; i++)
                                 {
                                     if(races[i]['localized_name'].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().startsWith(search)){
-                                        result = i;
+                                        result = races[i].dofus_id;
                                         break;
                                     }
                                 }
 
                                 if(result == null) return;
 
-                                searchResult = result + 1;
+                                searchResult = result;
 
                                 // Enlève la classe active à toutes les classes
                                 for (let i=0; i<races.length; i++)
                                 {
-                                    document.getElementById('label_race_id_' + (i+1)).classList.remove('active');
+                                    document.getElementById('label_race_id_' + races[i].dofus_id).classList.remove('active');
                                 }
 
                                 // Puis l'ajoute et scroll sur la classe choisie
@@ -312,15 +318,14 @@
 
                     {{-- Choix du visage --}}
                     <p class="mt-5 ml-10 text-xl font-light">{{ __('barbofus.labelSkinFace') }}</p>
-                    <div class="grid grid-cols-4 gap-4 mt-4 w-[90%]">
-                        @for ($i = 1; $i <= 8; $i++)
+                    <div class="grid grid-cols-6 gap-1 mt-4 w-full">
+                        <template x-for="head in heads" :key="head.id">
                             <label>
-                                <input type="radio" name="face" value="{{ $i }}" class="absolute opacity-0 peer"
-                                    {{ (old('face')) ? ((old('face') == $i) ? 'checked' : '') : (isset($skin) ? ($skin['face'] == $i ? 'checked' : '') : (($i == 1) ? 'checked' : '')) }}>
-                                <img :src="'{{ asset('storage/images/icons/classes/faces/unity/') }}/' + currentRaceDofusID + currentGender + '_' + '{{$i}}.png'" alt="Visage n° {{ $i }}"
-                                    class="flex rounded-md items-center justify-center w-full h-full text-3xl bg-primary-100 border-2 border-inactiveText cursor-pointer hover:border-secondary peer-checked:border-goldText">
+                                <input type="radio" name="face" :value="head.id" class="absolute opacity-0 peer" :checked="head.id === sHead">
+                                <img :src="'{{ asset('storage/images/icons/classes/faces/unity/') }}/' + head.assetId + '.png'" :alt="'Visage n° ' + head.id"
+                                     class="flex rounded-md items-center justify-center w-full h-full text-3xl bg-primary-100 border-2 border-inactiveText cursor-pointer hover:border-secondary peer-checked:border-goldText">
                             </label>
-                        @endfor
+                        </template>
                     </div>
                     @error('face')
                     <x-forms.requirements-error :$message />

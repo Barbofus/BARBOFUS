@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class UnitySkinController extends Controller
@@ -27,6 +28,7 @@ class UnitySkinController extends Controller
         'cape',
         'shield',
         'pet',
+        'mount',
         'costume',
         'wings',
         'shoulderpads',
@@ -54,9 +56,11 @@ class UnitySkinController extends Controller
             abort(404);
         }
 
+        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
+
         $toShow = DB::table('unity_skins')
             ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'unity_skins.id', 'unity_skins.name')
-            ->join('races', 'unity_skins.race_id', '=', 'races.id')
+            ->join('races', 'unity_skins.race_id', '=', 'races.dofus_id')
             ->where('unity_skins.id', $skin->id)
             ->addSelect([
                 'user_name' => DB::table('users')
@@ -74,7 +78,7 @@ class UnitySkinController extends Controller
             ->addSelect([
                 'race_icon' => DB::table('races')
                     ->select('ghost_icon_path')
-                    ->whereColumn('id', 'unity_skins.race_id')
+                    ->whereColumn('dofus_id', 'unity_skins.race_id')
                     ->take(1),
             ])
             ->addSelect([
@@ -124,11 +128,19 @@ class UnitySkinController extends Controller
             })
             ->first();
 
+
+        $head = array_filter($headsData, function ($item) use ($toShow) {
+            return isset($item['data']['id']) && $item['data']['id'] === $toShow->face;
+        });
+
+        $headId = reset($head)['data']['assetId'];
+
         $discord = (new GetDiscordUserInfo)($skin->user_id);
 
         return view('unity-skins.show', [
             'skin' => $toShow,
             'discord' => $discord,
+            'head' => $headId,
         ]);
     }
 
@@ -173,6 +185,7 @@ class UnitySkinController extends Controller
             'cape_id' => $request->cape_id,
             'shield_id' => $request->shield_id,
             'pet_id' => $request->pet_id,
+            'mount_id' => $request->mount_id,
             'costume_id' => $request->costume_id,
             'wings_id' => $request->wings_id,
             'shoulderpads_id' => $request->shoulderpads_id,
@@ -250,6 +263,7 @@ class UnitySkinController extends Controller
         $skin->cape_id = $request->cape_id;
         $skin->shield_id = $request->shield_id;
         $skin->pet_id = $request->pet_id;
+        $skin->mount_id = $request->mount_id;
         $skin->costume_id = $request->costume_id;
         $skin->wings_id = $request->wings_id;
         $skin->shoulderpads_id = $request->shoulderpads_id;
