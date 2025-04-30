@@ -17,24 +17,11 @@
              @click="if(event.target.closest('button[data-key]')) {
                 const key = event.target.closest('button[data-key]').dataset.key;
                 const id = items[key];
-
-                if(key == 'mount')
-                {
-                    const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
-                    const mount = allItems.find(i => (i.dofus_id === items['mount'] ));
-
-                    if(harn && mount)
-                    {
-                        const radio = document.querySelector(`input[type='radio'][data-id='${items['pet']}']`);
-                        if (radio) radio.checked = false;
-                        items['pet'] = null;
-                    }
-                }
-
                 const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
-                if (radio) radio.checked = false;
-                items[key] = null;
 
+                if (radio) radio.checked = false;
+
+                items[key] = null;
                 editURLParam(getURLObject());
              }">
             <template x-for="(item, key) in Object.fromEntries(Object.entries(items).filter(([key, value]) => value !== null))" :key="item">
@@ -227,7 +214,7 @@
                         </div>
 
                         <button type="button"
-                                @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetColors()"
                                 class="py-2 mt-4 flex items-center space-x-2 px-4 mx-auto rounded-md text-xl bg-primary-100 text-inactiveText uppercase hover:text-red-500 hover:rounded-3xl transition-all duration-75">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -241,89 +228,43 @@
                 {{--      RESULTAT SKIN + ORIENTATION + EXPORT PNG + COPY LINK      --}}
                 <div class="w-fit mx-auto p-4 space-y-4 h-fit max-[1240px]:order-first">
 
-                    <style>
-                        /* CSS REQUIC  */
-                        .canvas-container {
-                            position: relative;
-                            display: inline-block;
-                        }
-
-                        .canvas-container.loading .canvas-renderer {
-                            filter: blur(4px);
-                        }
-
-                        .loading-logo {
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            width: 75%;
-                            height: 75%;
-                            pointer-events: none;
-                        }
-                    </style>
-
                     {{-- Skin + bouton d'export --}}
                     <div class="relative w-fit mx-auto">
-                        <div class="relative inline-block">
-                            <canvas class="canvas-renderer" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
-                            <svg class="loading-logo" style="display: none;" viewBox="0 0 66.410408 67.468735" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="progress-gradient" x1="0" y1="1" x2="0" y2="0">
-                                        <stop offset="0%" stop-color="#FAE65D" />
-                                        <stop offset="50%" stop-color="#FAE65D" />
-                                        <stop offset="50%" stop-color="#f1e7db" />
-                                        <stop offset="100%" stop-color="#f1e7db" />
-                                    </linearGradient>
-                                </defs>
-                                <g
-                                    width="120px"
-                                    height="120px"
-                                    id="layer1"
-                                    transform="translate(-57.924089,-154.32008)">
-                                    <path
-                                        style="fill:url(#progress-gradient);stroke:none;stroke-width:0.264583"
-                                        d="m 61.628256,154.32008 c -1.322096,1.86955 -1.590754,3.58452 -1.058333,5.82083 l -2.645833,-0.52917 2.910416,5.02709 -2.910416,-0.79375 c 0.761182,5.88925 6.723168,11.10844 12.699999,10.83748 2.45028,-0.11107 4.340675,-1.45116 6.614583,-2.10624 l -1.5875,2.91042 c 5.3036,0 12.50818,-1.69172 14.81667,-7.14375 1.55257,0.75655 2.61276,2.40395 3.96875,3.49041 3.34909,2.68356 7.586918,4.41709 11.906248,3.38876 l -1.5875,-2.91042 c 7.96872,4.19896 17.21484,-0.40296 19.57916,-8.73125 l -3.175,0.52917 c 1.46394,-1.47725 2.59292,-3.00628 3.175,-5.02708 l -2.91042,1.05833 c 0.40349,-2.17331 0.60378,-4.36605 -1.32291,-5.82083 -1.42372,4.33834 -4.95538,5.84731 -9.26042,5.17937 -4.76911,-0.73998 -9.16305,-2.55677 -14.022908,-2.53333 -2.14895,0.0104 -4.20026,1.79644 -6.08542,1.70529 -1.05913,-0.0512 -2.1381,-0.92315 -3.175,-1.19634 -1.579298,-0.41603 -3.405452,-0.30779 -5.027083,-0.23415 -5.961539,0.27061 -12.953497,5.40988 -18.510223,0.90786 -1.345009,-1.08974 -1.482884,-2.52272 -2.39186,-3.8287 m 12.7,21.16666 c -4.916937,0.66212 -7.310464,0.35057 -11.641666,-2.11667 -3.294859,5.79528 -0.982478,12.15258 2.116666,17.4625 h 0.264584 l 0.264583,-2.91041 h 0.264583 c 0.941388,3.31602 2.901712,6.50081 5.291667,8.99583 l 0.264583,-0.79375 h 0.264583 l 2.645833,6.87916 h 0.264584 v -1.85208 h 0.264583 c 1.741911,3.35783 5.285793,4.13306 7.881144,6.48997 3.619239,3.28691 6.585479,9.50489 7.729269,14.14753 3.37238,-2.55852 5.51207,-6.30396 7.33981,-10.05417 0.71623,-1.47002 1.04907,-3.43905 2.09232,-4.70614 1.329008,-1.61422 3.777198,-2.70325 5.384538,-4.10157 2.65059,-2.30637 4.2971,-5.00565 5.82083,-8.12562 l 1.5875,2.38125 0.26459,-4.49792 1.32291,0.26459 c 1.49278,-5.10911 4.49792,-9.00721 4.49792,-14.55208 l 0.79375,0.52916 0.26458,-6.08541 c -4.03225,1.87372 -7.22471,2.46522 -11.64166,2.11666 -2.22409,4.62756 -10.755048,0.61701 -13.493748,-1.50278 -0.90409,-0.6999 -2.20478,-2.64749 -3.41498,-2.67972 -1.00965,-0.0269 -2.41009,1.97524 -3.19987,2.55293 -2.878933,2.10598 -6.040836,2.99371 -9.524736,3.40612 -1.372606,0.16248 -3.456358,0.34012 -3.96875,-1.24738 z"
-                                    />
-                                </g>
-
-                            </svg>
-                        </div>
+                        <canvas x-ref="canvas" id="canvas" width="300" height="500"></canvas>
 
                         <div class="flex justify-between">
-                            {{-- Bouton DL Anim --}}
+                            {{-- Bouton DL --}}
                             <button type="button"
-                                    id="btnExportAnim"
-                                    title="Telechargement image animé"
+                                    @click="() => {
+                                    const canvas = $refs.canvas;
+                                    const a = document.createElement('a');
+                                    a.href = canvas.toDataURL('image/png');
+                                    a.download = 'image.png';
+                                    a.click();
+                                };"
                                     class="p-2 bg-primary-100 rounded-lg border-2 border-transparent hover:bg-primary hover:border-secondary transition-all">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
                             </button>
 
                             {{-- Bouton Copier --}}
                             <button type="button"
-                                    id="btnCopyImg"
-                                    title="Copie image"
-                                    @click="copyToClipboard('test', 'finalSkin')"
+                                    @click="() => {
+                                    copyToClipboard('', 'finalSkin');
+                                    const canvas = $refs.canvas;
+                                    canvas.toBlob(blob => {
+                                        if (blob) {
+                                            navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                                        }
+                                    });
+                                }"
                                     :class="copy === 'finalSkin' ? 'bg-secondary text-primary' : 'bg-primary-100 hover:bg-primary hover:border-secondary'"
                                     class="p-2 rounded-lg border-2 border-transparent transition-all">
-                                <svg x-cloak x-show="copy != 'finalSkin'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
+                                <svg x-show="copy != 'finalSkin'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
                                 </svg>
                                 <p x-cloak x-show="copy === 'finalSkin'">{{ __('barbofus.contentCopied') }}</p>
-                            </button>
-
-                            {{-- Bouton DL --}}
-                            <button type="button"
-                                    id="btnExport"
-                                    title="Telechargement image"
-                                    class="p-2 bg-primary-100 rounded-lg border-2 border-transparent hover:bg-primary hover:border-secondary transition-all">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                                </svg>
-
                             </button>
                         </div>
                     </div>
@@ -346,7 +287,9 @@
                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                                 </svg>
 
-                                <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Sword-Attack--Streamline-Sharp" class="size-4 -scale-x-100"><desc>Sword Attack Streamline Icon: https://streamlinehq.com</desc><g id="sword-attack--entertainment-gaming-sword-attack"><path id="Union" fill="#000000" fill-rule="evenodd" d="M6.67488 1.37109h-5.3033v5.3033L12.4699 17.7727l5.3033 -5.3033L6.67488 1.37109ZM21.4854 13.7068l-2.4751 2.4751 3.9895 3.9894 0 2.8285 -2.8285 0 -3.9894 -3.9895 -2.4747 2.4747 -1.4142 -1.4142 7.7781 -7.7782 1.4143 1.4142Z" clip-rule="evenodd" stroke-width="1"></path></g></svg>
+                                <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                    <path d="M8.5 1a.75.75 0 0 0-.75.75V6.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V7.5a.5.5 0 0 1-1 0V4.75a.75.75 0 0 0-1.5 0v4.5a5.75 5.75 0 0 0 11.5 0v-2.5a.75.75 0 0 0-1.5 0V9.5a.5.5 0 0 1-1 0V2.75a.75.75 0 0 0-1.5 0V6.5a.5.5 0 0 1-1 0V1.75A.75.75 0 0 0 8.5 1Z" />
+                                </svg>
                             </div>
                         </button>
 
@@ -370,12 +313,11 @@
 
                         {{-- Bouton Partager --}}
                         <div class="w-full flex justify-start">
-                            <button class="g-recaptcha relative px-5 min-[600px]:px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
+                            <button class="g-recaptcha px-5 min-[600px]:px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
                                     data-sitekey="{{ config('services.recaptcha.site_key') }}"
                                     data-callback='onSubmit'
                                     data-action='store'>
-                                <p class="absolute text-center w-full left-0">{{ __('barbofus.buttonShare') }}</p>
-                                <p class="opacity-0 tracking-widest">{{ __('barbofus.buttonShare') }}</p>
+                                {{ __('barbofus.buttonShare') }}
                             </button>
 
                             @error('g-recaptcha-response')
@@ -487,19 +429,15 @@
                             const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
                             const mount = allItems.find(i => (i.dofus_id === items['mount'] ));
 
-                            if(event.target.dataset.category == 'pet')
+                            if(harn != null && mount == null)
                             {
-                                if(harn != null && mount == null || harn != null && mount.pet_type != harn.pet_type)
-                                {
-                                    const id = {
-                                        dragodinde: 1,
-                                        muldo: 2,
-                                        volkorne: 3,
-                                    }
-                                    items['mount'] = id[harn.pet_type];
+                                const id = {
+                                    dragodinde: 1,
+                                    muldo: 2,
+                                    volkorne: 3,
                                 }
+                                items['mount'] = id[harn.pet_type];
                             }
-
 
                             if(event.target.dataset.category == 'pet' && harn == null && items['mount'] != null)
                             {
@@ -521,8 +459,7 @@
                                 items['pet'] = null;
                             }
 
-                            if(event.target.dataset.category == 'mount' && harn)
-                            {
+                            if(harn && mount) {
                                 if(harn.pet_type != mount.pet_type)
                                 {
                                     const id = items['pet'];
@@ -604,8 +541,6 @@
         </div>
     </form>
 
-
-
     <script>
         document.addEventListener("alpine:init", () => {
             Alpine.data("skinator", () => ({
@@ -671,13 +606,7 @@
                             this.previousData = data;
                             this.previousInvertX = invertX;
 
-                            let interval = setInterval(() => {
-                                if (window.updateRendererData) {
-                                    window.updateRendererData(data, invertX);
-                                    clearInterval(interval);
-                                }
-                            }, 50);
-                            //window.updateRendererData?.(data, invertX);
+                            window.updateRendererData(data, invertX);
                         }
                     });
                 },
@@ -891,6 +820,7 @@
         }
 
         function editURLParam(json) {
+            console.log(json)
             const compressed = LZString.compressToEncodedURIComponent(json);
             const params = new URLSearchParams(window.location.search);
             params.set('s', compressed);
@@ -919,677 +849,376 @@
         };
     </script>
 
-    <!-- Extration des données -->
-    <script src="//cdn.jsdelivr.net/npm/protobufjs@7.4.0/dist/protobuf.min.js"></script>
+    <script id="vertex-2d" type="x-shader/x-vertex">
+        precision mediump float;
 
-    <script async type="module">
+        attribute vec3 position;
+        attribute vec2 texCoord;
 
-        //import { FFmpeg } from './@ffmpeg/ffmpeg/dist/esm/index.js';
-        import { FFmpeg } from '/storage/package/@ffmpeg/ffmpeg/dist/esm/index.js';
+        uniform vec2 u_resolution;
 
+        uniform float u_invertX;
 
-        class SkinRenderer {
+        varying vec2 vTexCoord;
 
-            static skinRendererProto = null
-            static async decodeData (data) {
-                if (!SkinRenderer.skinRendererProto) {
-                    const root = await protobuf.load('/storage/proto/skin.proto')
-                    SkinRenderer.skinRendererProto = root.lookupType("SkinRenderer")
-                }
-                return SkinRenderer.skinRendererProto.decode(new Uint8Array(data))
-            }
-
-            static GetSourceVertexShader () {
-                return `
-          precision mediump float;
-          attribute vec2 position;
-          attribute vec2 texCoord;
-          uniform float u_invertX;
-          varying vec2 vTexCoord;
-
-          void main() {
+        void main() {
+            // Inversion Y car WebGL a l'axe Y inversé
             gl_Position = vec4(position.x * u_invertX, position.y, 0.0, 1.0);
             vTexCoord = texCoord;
-          }`
-            }
-
-            static GetSourceFragmentShader () {
-                return `
-          precision mediump float;
-
-          varying vec2 vTexCoord;
-          uniform sampler2D u_texture;
-          uniform vec3 u_mainColor;
-          uniform float u_Opacity;
-
-          void main() {
-            vec4 texColor = texture2D(u_texture, vec2(vTexCoord.s, 1.0 - vTexCoord.t));
-            texColor.rgb *= u_mainColor.rgb;
-            texColor.rgb *= (texColor.a * u_Opacity);
-            texColor.a *= u_Opacity;
-            gl_FragColor = texColor;
-          }
-        `
-            }
-
-
-            constructor ($canvas) {
-                this.$canvas = $canvas
-                this.$parent = $canvas.parentElement
-                this.$svgLogo = this.$parent.querySelector('.loading-logo')
-                this.$progressGradient = this.$svgLogo.querySelector('#progress-gradient')
-                this.gl = this.$canvas.getContext('webgl2', {
-                    alpha: true,
-                    antialias: true,
-                    depth: false,
-                    preserveDrawingBuffer: true ,
-                    premultipliedAlpha: false,
-                    stencil: false
-                })
-
-
-                if (!this.gl) {
-                    throw new Error('WebGL not supported')
-                }
-
-                this.__init = false
-                this.__running = false
-
-                // Animation
-                this.indexFrame = 0
-                this.lastTime = 0
-
-                this.data = null
-
-                this.colors = [0xe59b68, 0x773f29, 0xd8742e, 0x496352, 0x512a15, 0x5b5243]
-                this.indexFocusColor = null
-
-                // OpenGL
-                this.program = null
-                this.uMainColor = null
-                this.uOpacity = null
-                this.uInvertX = null
-                this.positionsBuffer = null
-                this.uvsBuffer = null
-                this.indicesBuffer = null
-                this.textures = []
-
-
-
-            }
-
-
-            async setData (data, invX = false) {
-
-                if (!this.__init) {
-                    await this.InitGL()
-                    this.__init = true
-                }
-
-                this.__running = false
-                const _data = await SkinRenderer.decodeData(data)
-                this.gl.uniform1f(this.uInvertX, invX ? -1 : 1)
-
-                console.log(this.data)
-
-                const textures = []
-                for (const texture of _data.textures) {
-                    textures.push(await this.loadTexture(texture))
-                }
-                this.unloadTextures()
-                this.data = _data
-                this.textures = textures
-                this.__updateViewport()
-                this.start()
-            }
-
-            // ======================================================================
-            // ==== Gestion de l'animation ====
-            // ======================================================================
-            __animate (currentTime) {
-                if (!this.__running) return
-                requestAnimationFrame(this.__animate.bind(this))
-                const interval = 1000 / 30; // 30 FPS
-                const delta = currentTime - this.lastTime
-                if (delta >= interval) {
-                    this.lastTime = currentTime - (delta % interval)
-                    this.draw()
-                    this.indexFrame += 1
-                }
-            }
-
-            start () {
-                if (!this.data) return
-                this.indexFrame = 0
-                this.lastTime = 0
-                this.__running = true
-                this.draw()
-                requestAnimationFrame(this.__animate.bind(this))
-            }
-
-            stop () {
-                this.__running = false
-                this.unloadTextures()
-            }
-
-            // ======================================================================
-            // ==== Export de l'animation ====
-            // ======================================================================
-            async downloadAnimation () {
-                return new Promise(async (resolve, reject) => {
-                    this.setProgress(0)
-                    this.setLoading(true)
-                    this.__running = false
-
-                    const originalWidth = this.$canvas.width
-                    const originalHeight = this.$canvas.height
-
-                    this.$canvas.width = 1080
-                    this.$canvas.height = 1080
-                    this.$canvas.style.width = originalWidth + 'px'
-                    this.$canvas.style.height = originalHeight + 'px'
-                    this.__updateViewport()
-
-
-
-                    const ffmpeg = new FFmpeg({ log: false });
-                    await ffmpeg.load()
-
-
-                    const maxFrames = this.data.frames.length
-                    const frames = []
-                    for (let i = 0; i < maxFrames; i++) {
-                        this.indexFrame = i
-                        this.draw()
-                        const frame = this.$canvas.toDataURL('image/webp', 1.0)
-                        const response = await fetch(frame);
-                        const arrayBuffer = await response.arrayBuffer();
-                        await ffmpeg.writeFile(`frame${String(i).padStart(3, '0')}.webp`, new Uint8Array(arrayBuffer))
-                        this.setProgress((i + 1) / maxFrames * 0.75)
-                    }
-
-                    let fakeProgress = 0.75
-                    const fakeProgressStep = 0.25 / (maxFrames / 4)
-                    ffmpeg.on('progress', ({ progress, time }) => {
-                        fakeProgress = Math.min(fakeProgress + fakeProgressStep, 1)
-                        this.setProgress(fakeProgress)
-                    });
-
-                    await ffmpeg.exec([
-                        '-framerate', '30',                  // 30 fps
-                        '-i', 'frame%03d.webp',               // frame000.webp, frame001.webp, etc.
-                        '-loop', '0',                         // boucle infinie
-                        '-c:v', 'libwebp_anim',               // encoder en WebP animé
-                        '-quality', '100',                 // Meilleure qualité pour l'export (100%)
-                        'out.webp'                            // sortie
-                    ])
-                    const data = await ffmpeg.readFile('out.webp');
-                    const blob = new Blob([data], { type: 'video/webm' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'skin.webp';
-                    a.click();
-                    URL.revokeObjectURL(url);
-
-                    this.$canvas.width = originalWidth
-                    this.$canvas.height = originalHeight
-
-                    this.$canvas.style.width = 'initial'
-                    this.$canvas.style.height = 'initial'
-
-                    this.__updateViewport()
-
-                    this.setProgress(0)
-                    this.setLoading(false)
-                    this.start()
-                })
-            }
-
-            async downloadImage () {
-                return new Promise(async (resolve, reject) => {
-                    this.__running = false
-
-                    const originalWidth = this.$canvas.width
-                    const originalHeight = this.$canvas.height
-
-                    this.$canvas.width = 1080
-                    this.$canvas.height = 1080
-                    this.$canvas.style.width = originalWidth + 'px'
-                    this.$canvas.style.height = originalHeight + 'px'
-                    this.__updateViewport()
-
-
-                    this.draw()
-                    const url = this.$canvas.toDataURL('image/png')
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'skin.png';
-                    a.click();
-                    URL.revokeObjectURL(url);
-
-                    this.$canvas.width = originalWidth
-                    this.$canvas.height = originalHeight
-
-                    this.$canvas.style.width = 'initial'
-                    this.$canvas.style.height = 'initial'
-
-                    this.__updateViewport()
-
-                    this.start()
-                })
-
-            }
-
-            async copyImage () {
-                return new Promise(async (resolve, reject) => {
-                    this.__running = false
-
-                    const originalWidth = this.$canvas.width
-                    const originalHeight = this.$canvas.height
-
-                    this.$canvas.width = 1080
-                    this.$canvas.height = 1080
-                    this.$canvas.style.width = originalWidth + 'px'
-                    this.$canvas.style.height = originalHeight + 'px'
-                    this.__updateViewport()
-
-
-                    this.draw()
-                    const url = this.$canvas.toDataURL('image/png');
-
-
-                    this.$canvas.width = originalWidth
-                    this.$canvas.height = originalHeight
-
-                    this.$canvas.style.width = 'initial'
-                    this.$canvas.style.height = 'initial'
-
-                    this.__updateViewport()
-
-                    this.start()
-
-                    const blob = await (await fetch(url)).blob();
-                    const item = new ClipboardItem({ 'image/png': blob });
-                    await navigator.clipboard.write([item]);
-                })
-
-            }
-
-            // ======================================================================
-            // ==== Gestion des couleurs ====
-            // ======================================================================
-            static GetAlternativeColor (r,g, b) {
-                return (r > 0.4 && r < 0.6 && g > 0.4 && g < 0.6 && b > 0.4 && b < 0.6)
-                    ? [1, 0, 1]
-                    : [1 - r, 1 - g, 1 - b]
-            }
-            setColors (colors) {
-                this.colors = colors
-            }
-            setColorIndex (index, color) {
-                this.colors[index] = color
-            }
-            setColorFocusIndex (index) {
-                this.indexFocusColor = index
-            }
-
-            // ======================================================================
-            // ==== Gestion des textures ====
-            // ======================================================================
-            async unloadTextures() {
-                for (const texture of this.textures) {
-                    this.gl.deleteTexture(texture);
-                }
-                this.textures = []
-            }
-            async loadTexture(url) {
-
-                const gl = this.gl
-                const image = await new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.onload = () => resolve(img);
-                    img.onerror = (err) => reject(new Error(`Erreur de chargement de l'image: ${url}`));
-                    img.src = '/storage/images/skinator/' + url;
-                });
-
-                const texture = gl.createTexture();
-                gl.bindTexture(gl.TEXTURE_2D, texture);
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-                gl.generateMipmap(gl.TEXTURE_2D);
-
-                return texture;
-            }
-
-            // ======================================================================
-            // ==== Gestion OpenGL ====
-            // ======================================================================
-            async InitGL() {
-                const gl = this.gl
-                gl.viewport(0, 0, this.$canvas.width, this.$canvas.height);
-
-
-                const vertexShaderSource = SkinRenderer.GetSourceVertexShader();
-                const fragmentShaderSource = SkinRenderer.GetSourceFragmentShader();
-
-                const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-                gl.shaderSource(vertexShader, vertexShaderSource);
-                gl.compileShader(vertexShader);
-
-                const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-                gl.shaderSource(fragmentShader, fragmentShaderSource);
-                gl.compileShader(fragmentShader);
-
-                const program = gl.createProgram();
-                gl.attachShader(program, vertexShader);
-                gl.attachShader(program, fragmentShader);
-                gl.linkProgram(program);
-                gl.useProgram(program);
-
-
-                const uMainColor = gl.getUniformLocation(program, 'u_mainColor')
-                const uOpacity = gl.getUniformLocation(program, 'u_Opacity')
-                const uInvertX = gl.getUniformLocation(program, 'u_invertX')
-
-                gl.uniform1f(uOpacity, 1.0)
-
-
-                const positionsBuffer = gl.createBuffer();
-                const uvsBuffer = gl.createBuffer();
-                const indicesBuffer = gl.createBuffer();
-
-                gl.enable(gl.BLEND);
-                gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-
-                this.program = program
-                this.uMainColor = uMainColor
-                this.uOpacity = uOpacity
-                this.uInvertX = uInvertX
-                this.positionsBuffer = positionsBuffer
-                this.uvsBuffer = uvsBuffer
-                this.indicesBuffer = indicesBuffer
-            }
-            draw () {
-                const gl = this.gl
-                const data = this.data
-                const program = this.program
-                const uMainColor = this.uMainColor
-                const uOpacity = this.uOpacity
-                const positionsBuffer = this.positionsBuffer
-                const uvsBuffer = this.uvsBuffer
-                const indicesBuffer = this.indicesBuffer
-
-                if (!data) return
-                gl.clearColor(0, 0, 0, 0);
-                gl.clear(gl.COLOR_BUFFER_BIT);
-
-                const lColor = [...this.colors]
-                for (let i = 0; i < lColor.length; i++) {
-                    const color = lColor[i]
-                    const r = ((color >> 16) & 0xFF) / 255;
-                    const g = ((color >> 8) & 0xFF) / 255;
-                    const b = (color & 0xFF) / 255;
-                    if (this.indexFocusColor === i && ((this.indexFrame >> 3) & 1)) {
-                        if (((this.indexFrame >> 3) & 1) ) {
-                            lColor[i] = SkinRenderer.GetAlternativeColor(r, g, b)
-                        } else {
-                            lColor[i] = [ r, g, b]
-                        }
-
-                    } else {
-                        lColor[i] = [r, g, b]
-                    }
-                }
-
-                const frames0 = data.frames[this.indexFrame % data.frames.length].frame;
-
-                for (const part of frames0) {
-
-                    let customColor = null
-                    if (part.colorIndex !== null && part.colorIndex !== -1) {
-                        customColor = lColor[part.colorIndex] ?? [1, 1, 1]
-                    } else if (part.color !== null) {
-
-                        customColor = [
-                            ((part.color >> 16) & 0xFF) / 255,
-                            ((part.color >> 8) & 0xFF) / 255,
-                            (part.color & 0xFF) / 255
-                        ]
-                    }
-
-
-                    if (customColor) {
-                        // const additiveColor = part.additiveColor ?? 0x7F7F7F7F
-                        const multiplicativeColor = part.multiplicativeColor ?? 0xFEFEFEFE
-                        const mr = ((multiplicativeColor >> 16) & 0xFF) / 0x7F;
-                        const mg = ((multiplicativeColor >> 8) & 0xFF) / 0x7F;
-                        const mb = (multiplicativeColor & 0xFF) / 0x7F;
-                        gl.uniform3fv(uMainColor, [mr * customColor[0], mg * customColor[1], mb * customColor[2]]);
-                    } else {
-                        gl.uniform3fv(uMainColor, [1, 1, 1]);
-                    }
-
-                    gl.uniform1f(uOpacity, part.alpha ?? 1.0)
-
-                    const positions = new Float32Array(part.positions);
-                    const uvs = new Float32Array(part.uvs);
-                    const indices = new Uint16Array(part.indices);
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, positionsBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, uvsBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.STATIC_DRAW);
-
-                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indicesBuffer);
-                    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-
-                    const positionAttribLocation = gl.getAttribLocation(program, 'position');
-                    gl.bindBuffer(gl.ARRAY_BUFFER, positionsBuffer);
-                    gl.enableVertexAttribArray(positionAttribLocation);
-                    gl.vertexAttribPointer(positionAttribLocation, 2, gl.FLOAT, false, 0, 0);
-
-                    const texCoordAttribLocation = gl.getAttribLocation(program, 'texCoord');
-                    gl.bindBuffer(gl.ARRAY_BUFFER, uvsBuffer);
-                    gl.enableVertexAttribArray(texCoordAttribLocation);
-                    gl.vertexAttribPointer(texCoordAttribLocation, 2, gl.FLOAT, false, 0, 0);
-
-                    gl.activeTexture(gl.TEXTURE0);
-                    gl.bindTexture(gl.TEXTURE_2D, this.textures[part.textureIndex]);
-                    const textureLocation = gl.getUniformLocation(program, 'u_texture');
-                    gl.uniform1i(textureLocation, 0);
-
-                    gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0 );
-                }
-            }
-
-            // ======================================================================
-            // ==== Autre / Loader / Ratio Viewport ====
-            // ======================================================================
-            async setLoading (loading) {
-                if (loading) {
-                    this.$parent.classList.add('loading')
-                    this.$svgLogo.style.display = 'block'
-                } else {
-                    this.$parent.classList.remove('loading')
-                    this.$svgLogo.style.display = 'none'
-                }
-            }
-            async setProgress (progress) {
-                const stops = this.$progressGradient.querySelectorAll('stop')
-                stops[1].setAttribute('offset', `${progress * 100}%`)
-                stops[2].setAttribute('offset', `${progress * 100}%`)
-            }
-            async __updateViewport () {
-                const gl = this.gl
-                const {maxX, maxY, minX, minY} = this.data.bounds
-                const height = this.$canvas.height
-                const width = this.$canvas.width
-                let ratio = width / height
-
-                console.log({ maxX, ratio})
-
-                if (ratio < 1) {
-                    if (maxX < ratio) {
-                        const offsetX = (height - width) / 2
-                        gl.viewport(-offsetX, 0, height, height);
-                    } else if (maxX > ratio) {
-                        const size = width / maxX
-                        const offsetX = (width - size) / 2
-                        const offsetY = (height - size) / 2
-                        gl.viewport(offsetX, offsetY, size, size);
-                    }
-                } else if (ratio > 1) {
-                    ratio = 1 / ratio
-                    if (maxY < ratio) {
-                        const offsetY = (width - height) / 2
-                        gl.viewport(0, -offsetY, width, width);
-                    } else if (maxY > ratio) {
-                        const size = height / maxY
-                        const offsetX = (width - size) / 2
-                        const offsetY = (height - size) / 2
-                        gl.viewport(offsetX, offsetY, size, size);
-                    }
-                } else {
-                    gl.viewport(0, 0, this.$canvas.width, this.$canvas.height);
-                }
-            }
-
         }
 
+    </script>
+
+    <script id="fragment-2d" type="x-shader/x-fragment">
+        precision mediump float;
+
+        varying vec2 vTexCoord;
+        uniform sampler2D u_texture;
+        uniform vec3 u_mainColor;
+        uniform float u_Opacity;
+
+        void main() {
+          vec4 texColor = texture2D(u_texture, vec2(vTexCoord.s, 1.0 - vTexCoord.t));
+          texColor.rgb *= u_mainColor.rgb;
+          texColor.rgb *= (texColor.a * u_Opacity);
+          texColor.a *= u_Opacity;
+          gl_FragColor = texColor;
+        }
+    </script>
+
+    <script src="//cdn.jsdelivr.net/npm/protobufjs@7.4.0/dist/protobuf.min.js"></script>
+
+    <script async>
+
+        let urlData = {};
+        let COLORS = [];
+        let rendererData = {};
+        let gl = null;
+        let program = null;
+
+        let canvasScaleX
+        let canvasScaleY
+
+        let renderDone
+
+        let uMainColor
+        let uOpacity
+        let positionsBuffer
+        let uvsBuffer
+        let indicesBuffer
+
+        let textures = null
+
+        let data = null
+
+        let focusColor = null
+
+        let skinRendererProto = null
+        let invertX = false
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // ======================================================================
-        // ==== Exemple Button d'export  ====
-        // ======================================================================
-        const skinRenderer = new SkinRenderer(document.querySelector('#canvas0'))
-
-        const urlData = window.getDataFromURL();
-        skinRenderer.setColors(urlData.colors)
+        window.addEventListener('DOMContentLoaded', () => {
+            urlData = window.getDataFromURL();
+            COLORS = urlData.colors;
+        });
 
         window.resetColors = function () {
-            const urlData = window.getDataFromURL();
-            skinRenderer.stop()
-            skinRenderer.setColors(urlData.colors)
-        };
-
-        window.resetDefaultColors = function () {
-            const urlData = window.getDataFromURL();
-            skinRenderer.setColors(urlData.colors)
+            urlData = window.getDataFromURL();
+            COLORS = urlData.colors;
         };
 
         window.updateRendererData = function (data, invX) {
-            console.log(data);
+            rendererData = data;
+            invertX = invX;
 
-            UpdateRenderer(data, invX)
+            console.log(rendererData);
+
+            UpdateRenderer()
         };
 
+        async function loadTexture(gl, url) {
+            const image = await new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = (err) => reject(new Error(`Erreur de chargement de l'image: ${url}`));
+                img.src = url;
+            });
 
-        let currentController = null;
+            const texture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+            gl.generateMipmap(gl.TEXTURE_2D);
 
-        async function UpdateRenderer(data, invX) {
-            // Si une requête précédente existe, on l'annule
-            if (currentController) {
-                currentController.abort();
+            return texture;
+        }
+
+        async function Prepapre () {
+            const root = await protobuf.load('/storage/proto/skin.proto')
+            skinRendererProto = root.lookupType("SkinRenderer");
+        }
+
+        async function UpdateRenderer () {
+            renderDone = false
+
+            const response = await fetch('http://62.241.115.223:9461/renderer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: rendererData
+            })
+            if (!response.ok) {
+                throw new Error('Network response was not ok' + response.statusText);
             }
 
-            // Nouveau controller pour la nouvelle requête
-            currentController = new AbortController();
+            const buffer = await response.arrayBuffer();
+            let newData = skinRendererProto.decode(new Uint8Array(buffer));
 
-            try {
-                const response = await fetch('http://62.241.115.223:9461/renderer', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: data,
-                    signal: currentController.signal // on passe le signal ici
-                });
+            const newTexture = []
+            for (const texture of newData.textures) {
+                newTexture.push(await loadTexture(gl, 'storage/images/skinator/' + texture))
+            }
 
-                const buffer = await response.arrayBuffer();
-                await skinRenderer.setData(buffer, invX);
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    // La requête a été annulée, c'est normal
-                    console.log('Fetch aborted');
-                } else {
-                    // Une autre erreur est arrivée
-                    console.error('Fetch error:', error);
+            textures = newTexture
+            data = newData
+
+            canvasScaleX = 1
+            canvasScaleY = 1
+
+            let maxX = Number.MIN_SAFE_INTEGER
+            let maxY = Number.MIN_SAFE_INTEGER
+
+            // Temps rebuild position
+            for (const dataFrame of data.frames) {
+                for (const df of dataFrame.frame) {
+                    const positions = df.positions
+                    for (let i = 0; i < positions.length; i += 3) {
+                        maxX = Math.max(maxX, positions[i])
+                        maxY = Math.max(maxY, positions[i + 1])
+                    }
                 }
             }
+
+            const canvas = document.getElementById('canvas');
+            const canvasRatio = canvas.width / canvas.height
+
+            if(maxX < maxY) canvasScaleX = 1 / canvasRatio
+            if(maxX > maxY) canvasScaleY = canvasRatio
+
+            if(canvasScaleX * maxX > 1)
+            {
+                const diff = (canvasScaleX * maxX) - 1
+                const total = canvasScaleX * maxX - maxX
+                canvasScaleX = 1 / maxX
+                canvasScaleY = 1 - (total * (diff / total) / 2)
+            }
+
+            renderDone = true
+        }
+
+        async function InitGL() {
+            const canvas = document.getElementById('canvas');
+            gl = canvas.getContext('webgl2', { alpha: true,  antialias: true,
+                depth: false, preserveDrawingBuffer: false , premultipliedAlpha: false, stencil: false });
+
+            gl.viewport(0, 0, canvas.width, canvas.height);
+
+
+
+            if (!gl) {
+                console.error('WebGL not supported, falling back on experimental-webgl');
+                gl = canvas.getContext('experimental-webgl');
+            }
+
+            if (!gl) {
+                alert('Your browser does not support WebGL');
+            }
+
+            const vertexShaderSource = document.getElementById('vertex-2d').textContent;
+            const fragmentShaderSource = document.getElementById('fragment-2d').textContent;
+
+            const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(vertexShader, vertexShaderSource);
+            gl.compileShader(vertexShader);
+
+            const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(fragmentShader, fragmentShaderSource);
+            gl.compileShader(fragmentShader);
+
+            program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            const uResolution = gl.getUniformLocation(program, 'u_resolution');
+            gl.uniform2f(uResolution, canvas.width, canvas.height);
+
+            const u_invertXLocation = gl.getUniformLocation(program, 'u_invertX');
+            gl.uniform1f(u_invertXLocation, invertX ? -1.0 : 1.0);
+
+
+            uMainColor = gl.getUniformLocation(program, 'u_mainColor')
+            uOpacity = gl.getUniformLocation(program, 'u_Opacity')
+
+            gl.uniform1f(uOpacity, 1.0)
+
+            positionsBuffer = gl.createBuffer();
+            uvsBuffer = gl.createBuffer();
+            indicesBuffer = gl.createBuffer();
+
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
         }
 
 
+        function draw () {
+            if(!renderDone) return;
 
-        // ======================================================================
-        // ==== Exemple des couleurs ====
-        // ======================================================================
-        document.querySelectorAll('input[type="color"]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.getAttribute('data-color'))
-                const color = parseInt(e.target.value.replace('#', ''), 16)
-                skinRenderer.setColorFocusIndex(null)
-                skinRenderer.setColorIndex(index, color)
-            });
+            gl.clearColor(0, 0, 0, 0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
 
-            input.addEventListener('mouseenter', (e) => {
-                const index = parseInt(e.target.getAttribute('data-color'))
-                skinRenderer.setColorFocusIndex(index)
-            });
+            if(!data) return;
 
-            input.addEventListener('mouseleave', (e) => {
-                const index = parseInt(e.target.getAttribute('data-color'))
-                skinRenderer.setColorFocusIndex(null)
-            });
+            const u_invertXLocation = gl.getUniformLocation(program, 'u_invertX');
+            gl.uniform1f(u_invertXLocation, invertX && renderDone ? -1.0 : 1.0);
 
-            input.addEventListener('click', (e) => {
-                const index = parseInt(e.target.getAttribute('data-color'))
-                skinRenderer.setColorFocusIndex(null)
+            const frames0 = data.frames[indexFrame % data.frames.length].frame;
+
+            for (const part of frames0) {
+
+                if (part.colorIndex !== null) {
+
+                    const color = COLORS[part.colorIndex];
+
+                    const r = ((color >> 16) & 0xFF) / 255;
+                    const g = ((color >> 8) & 0xFF) / 255;
+                    const b = (color & 0xFF) / 255;
+                    let focusing = false
+                    if (focusColor == part.colorIndex) {
+                        focusing = ((indexFrame >> 3) & 1)
+                    }
+
+                    if(focusing) {
+                        gl.uniform3fv(uMainColor, [2-r*2, 2-g*2, 2-b*2]);
+                    }
+                    else {
+                        gl.uniform3fv(uMainColor, [2*r, 2*g, 2*b]);
+                    }
+
+                } else {
+                    gl.uniform3fv(uMainColor, [1, 1, 1]);
+                }
+
+                gl.uniform1f(uOpacity, part.opacity)
+
+                const positions = new Float32Array(part.positions);
+
+                const dfPositions = part.positions
+                for (let i = 0; i < dfPositions.length; i += 3) {
+                    positions[i] = dfPositions[i] * canvasScaleX
+                    positions[i + 1] = dfPositions[i + 1] * canvasScaleY
+                }
+
+                const uvs = new Float32Array(part.uvs);
+                const indices = new Uint16Array(part.indices);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionsBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, uvsBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.STATIC_DRAW);
+
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indicesBuffer);
+                gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+                const positionAttribLocation = gl.getAttribLocation(program, 'position');
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionsBuffer);
+                gl.enableVertexAttribArray(positionAttribLocation);
+                gl.vertexAttribPointer(positionAttribLocation, 3, gl.FLOAT, false, 0, 0);
+
+                const texCoordAttribLocation = gl.getAttribLocation(program, 'texCoord');
+                gl.bindBuffer(gl.ARRAY_BUFFER, uvsBuffer);
+                gl.enableVertexAttribArray(texCoordAttribLocation);
+                gl.vertexAttribPointer(texCoordAttribLocation, 2, gl.FLOAT, false, 0, 0);
+
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, textures[part.textureIndex]);
+                const textureLocation = gl.getUniformLocation(program, 'u_texture');
+                gl.uniform1i(textureLocation, 0);
+
+                gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0 );
+            }
+        }
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.nextTick(() => {
+                document.querySelectorAll('input[type="color"]').forEach(input => {
+                    input.addEventListener('input', (event) => {
+                        const colorIndex = event.target.getAttribute('data-color');
+                        const colorValue = event.target.value;
+                        const r = parseInt(colorValue.slice(1, 3), 16);
+                        const g = parseInt(colorValue.slice(3, 5), 16);
+                        const b = parseInt(colorValue.slice(5, 7), 16);
+                        COLORS[colorIndex] = (r << 16) | (g << 8) | b;
+                    });
+
+                    input.addEventListener('mouseenter', (event) => {
+                        focusColor = event.target.getAttribute('data-color');
+                    });
+
+                    input.addEventListener('mouseleave', () => {
+                        focusColor = null;
+                    });
+
+                    input.addEventListener('click', () => {
+                        focusColor = null;
+                    });
+                });
+
+                document.querySelectorAll('input[type="text"][data-color]').forEach(input => {
+                    input.addEventListener('input', (event) => {
+                        const colorIndex = event.target.getAttribute('data-color');
+                        const colorValue = event.target.value;
+                        const r = parseInt(colorValue.slice(1, 3), 16);
+                        const g = parseInt(colorValue.slice(3, 5), 16);
+                        const b = parseInt(colorValue.slice(5, 7), 16);
+                        COLORS[colorIndex] = (r << 16) | (g << 8) | b;
+                    });
+                });
+
             });
         });
 
-        document.querySelectorAll('input[type="text"][data-color]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.getAttribute('data-color'))
-                const color = parseInt(e.target.value.replace('#', ''), 16)
-                skinRenderer.setColorFocusIndex(null)
-                skinRenderer.setColorIndex(index, color)
-            });
-        });
 
 
-        // ======================================================================
-        // ==== Exemple Button d'export  ====
-        // ======================================================================
-        document.querySelector('#btnExportAnim').addEventListener('click', (e) => {
-            skinRenderer.downloadAnimation()
-        })
+        let indexFrame = 0
+        let lastTime = 0;
+        const targetFPS = 30;
+        const interval = 1000 / targetFPS;
 
-        document.querySelector('#btnExport').addEventListener('click', (e) => {
-            skinRenderer.downloadImage()
-        })
+        async function main() {
+            await Prepapre()
+            await InitGL()
+            //await UpdateRenderer()
 
-        document.querySelector('#btnCopyImg').addEventListener('click', (e) => {
-            skinRenderer.copyImage()
-        })
+            function animate(currentTime) {
+                requestAnimationFrame(animate);
 
+                const delta = currentTime - lastTime;
+
+                if (delta >= interval) {
+                    lastTime = currentTime - (delta % interval);
+                    draw();
+                    indexFrame += 1;
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+        main()
 
     </script>
 

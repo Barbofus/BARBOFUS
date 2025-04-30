@@ -13,8 +13,8 @@ class SkinatorController extends Controller
 {
     public function index()
     {
-        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira
-        if(!Gate::check('mod-access') &! Gate::check('admin-access') &! in_array(auth()->id(), [2496, 8741, 465, 9322]))  {
+        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira ; 3230 Mcdonald
+        if(!Gate::check('mod-access') &! Gate::check('admin-access') &! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230]))  {
             abort(403);
         }
 

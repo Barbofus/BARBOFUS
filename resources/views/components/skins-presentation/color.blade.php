@@ -1,6 +1,6 @@
 <div>
     <button
-        class="w-28 rounded-md hover:bg-primary-100 group relative overflow-hidden"
+        class="w-30 rounded-md hover:bg-primary-100 group relative overflow-hidden"
         x-data="{
             color:'{{ $color }}',
             copied: false,

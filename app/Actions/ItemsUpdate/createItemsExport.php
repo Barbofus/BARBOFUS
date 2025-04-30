@@ -17,8 +17,16 @@ final class createItemsExport
      */
     public function __invoke()
     {
-        $jsonPath = storage_path('app/json/skinator/outBonesSize.json');
-        $jsonData = json_decode(file_get_contents($jsonPath), true);
+        $jsonData = json_decode(Storage::disk('local')->get('json/skinator/outBonesSize.json'), true);
+        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
+
+        // Indexe les items par leur ID pour un accès rapide
+        $itemsById = [];
+        foreach ($itemsData as $item) {
+            if ($item['type']['ns'] != 'Core.DataCenter.Metadata.Item') continue;
+            if (!in_array($item['data']['id'], array_keys($jsonData))) continue;
+            $itemsById[$item['data']['id']] = $item['data'];
+        }
 
         $items = Item::whereNot(function ($query) {
             $query->whereIn('pet_type', ['dragodinde', 'muldo', 'volkorne'])
@@ -28,7 +36,7 @@ final class createItemsExport
         $itemsExport = [];
 
         foreach ($items as $item) {
-            $itemsExport[$item->dofus_id] = [
+            $entry = [
                 'id' => $item->dofus_id,
                 'category' => $item->category,
                 'subcategory' => $item->subcategory,
@@ -39,8 +47,16 @@ final class createItemsExport
                     0 => $item->asset_id,
                     1 => $item->female_asset_id,
                 ],
-                'scale' => (in_array($item->pet_type, ['familier', 'montilier'])) ? ($jsonData[$item->dofus_id]['scales']) ?: 100 : 100,
+                'scale' => (in_array($item->pet_type, ['familier', 'montilier'])) ? ($jsonData[$item->dofus_id]['scales'] ?? [100]) : [100],
             ];
+
+            if(in_array($item->pet_type, ['familier', 'montilier'])) {
+                if (!empty($jsonData[$item->dofus_id]['indexedColors']) && $itemsById[$item->dofus_id]['isColorable'] === 0) {
+                    $entry['indexedColors'] = $jsonData[$item->dofus_id]['indexedColors'];
+                }
+            }
+
+            $itemsExport[$item->dofus_id] = $entry;
         }
 
         // Enregistrement du fichier

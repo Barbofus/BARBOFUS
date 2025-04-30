@@ -617,6 +617,7 @@ class AdminPanel extends Component
 
         // Récupère les noms des fichiers pour les breeds (skins corps, bones anim combat + la static explo)
         $files['Bones'][] = '1-static'; // Bone animation static explo général
+        $files['Bones'][] = '2'; // Bone animation monture
         foreach ($breedsData as $breed) {
             if($breed['type']['class'] != 'Breeds') continue;
             $bd = $breed['data'];
