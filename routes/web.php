@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\Api\GetApiBody;
 use App\Actions\Likes\SwitchLikes;
 use App\Http\Controllers\DofusDBApiController;
 use App\Http\Controllers\EmailVerificationPromptController;
@@ -13,13 +12,7 @@ use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
-use App\Models\Item;
-use App\Models\Race;
-use App\Models\Skin;
-use App\Models\UnitySkin;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------

@@ -128,7 +128,7 @@ class UnitySkinController extends Controller
             })
             ->first();
 
-
+        /** @var object{face: int} $toShow */
         $head = array_filter($headsData, function ($item) use ($toShow) {
             return isset($item['data']['id']) && $item['data']['id'] === $toShow->face;
         });

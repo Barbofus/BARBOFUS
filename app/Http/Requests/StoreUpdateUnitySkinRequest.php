@@ -40,6 +40,7 @@ class StoreUpdateUnitySkinRequest extends FormRequest
 
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
 
+        /** @var array<int, array{rid: int, type: array<string, string>, data: array{id: int, skins: string, assetId: string, breed: int, gender: int, label: string, order: int, payable: int}}> $headsData */
         $validFaces = collect($headsData)
             ->pluck('data')
             ->filter(function ($item) use ($raceId, $gender) {
@@ -50,13 +51,12 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             ->values()
             ->all();
 
-
         return [
             'race_id' => 'required|integer|exists:races,dofus_id',
             'face' => [
                 'required',
                 'integer',
-                Rule::in($validFaces)
+                Rule::in($validFaces),
             ],
             'image_path' => $imageRequired.'|image|max:500|dimensions:max_width=500,max_height=650',
             'gender' => [

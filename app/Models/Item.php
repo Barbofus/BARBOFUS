@@ -18,7 +18,7 @@ class Item extends Model
         'asset_id',
         'female_asset_id',
         'folder',
-        'colorable'
+        'colorable',
     ];
 
     /**

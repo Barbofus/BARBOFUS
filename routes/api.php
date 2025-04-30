@@ -48,7 +48,7 @@ Route::post('/create-items-export', function (Request $request) {
         return Response::json(['error' => 'Unauthorized'], 401);
     }
 
-    (new \App\Actions\ItemsUpdate\createItemsExport())();
+    (new \App\Actions\ItemsUpdate\createItemsExport)();
 
     return Response::json([
         'success' => true,

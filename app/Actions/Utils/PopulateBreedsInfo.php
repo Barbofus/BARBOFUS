@@ -4,15 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Utils;
 
-use App\Models\DofusItemCloak;
-use App\Models\DofusItemCostume;
-use App\Models\DofusItemHat;
-use App\Models\DofusItemPet;
-use App\Models\DofusItemShield;
-use App\Models\LocalizedItem;
 use App\Models\Race;
-use App\Models\Skin;
-use App\Models\UnitySkin;
 use Illuminate\Support\Facades\Storage;
 
 final class PopulateBreedsInfo
@@ -39,18 +31,15 @@ final class PopulateBreedsInfo
             $colorsArray[$breed['data']['id']]['female'] = $breed['data']['femaleColors']['Array'];
         }
 
-
-
         /*
          * Récupère tous les visages des classes
          */
         foreach ($headsJson['references']['RefIds'] as $head) {
-            //dd($head['data']);
+            // dd($head['data']);
             $headsArray[$head['data']['breed']][($head['data']['gender']) ? 'female' : 'male'][$head['data']['order']]['skins'] = $head['data']['skins'];
             $headsArray[$head['data']['breed']][($head['data']['gender']) ? 'female' : 'male'][$head['data']['order']]['id'] = $head['data']['id'];
             $headsArray[$head['data']['breed']][($head['data']['gender']) ? 'female' : 'male'][$head['data']['order']]['assetId'] = $head['data']['assetId'];
         }
-
 
         $breeds = Race::all();
 
@@ -60,7 +49,7 @@ final class PopulateBreedsInfo
 
             $breed->update([
                 'colors' => $jsonColors,
-                'heads' => $jsonHeads
+                'heads' => $jsonHeads,
             ]);
         }
 

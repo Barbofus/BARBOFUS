@@ -22,14 +22,12 @@ class UpdateDofusItemFromLocal extends Command
     protected $description = 'Execute le script qui met à jour la base de donnée grâce aux fichiers root de dofus';
 
     /**
-     * Execute the console command.
-     *
-     * @return int
+     * @return void
      */
     public function handle()
     {
         $this->info('Début de la mise à jour');
-        (new updateDBFromDofusFiles())();
+        (new updateDBFromDofusFiles)();
         $this->info('Base de données mise à jour avec succès');
     }
 }

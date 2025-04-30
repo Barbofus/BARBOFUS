@@ -202,7 +202,7 @@ return [
     'labelSkinColors' => 'Choix des couleurs',
     'labelSkinColorsSkin' => 'Peau',
     'labelSkinColorsHair' => 'Cheveux',
-        'labelSkinColorsClothes' => 'Vêtements',
+    'labelSkinColorsClothes' => 'Vêtements',
     'labelSkinItemceremonial' => 'Objet d\'apparat',
     'labelSkinItemlivingObject' => 'Objet vivant',
     'labelSkinItemmimisymbic' => 'Mimibiotable',

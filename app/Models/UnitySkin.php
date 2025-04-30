@@ -96,7 +96,6 @@ class UnitySkin extends Model
         return $this->belongsTo(Item::class, 'mount_id');
     }
 
-
     /**
      * @return BelongsTo<User, UnitySkin>
      */

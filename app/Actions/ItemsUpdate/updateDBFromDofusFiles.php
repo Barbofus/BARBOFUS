@@ -7,42 +7,51 @@ namespace App\Actions\ItemsUpdate;
 use App\Enums\ItemCategorieEnum;
 use App\Enums\ItemSubcategorieEnum;
 use App\Models\Item;
-use App\Models\Like;
 use App\Models\LocalizedItem;
 use App\Models\LocalizedRace;
 use App\Models\Race;
-use App\Models\UnityLike;
-use Carbon\Exceptions\Exception;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 final class updateDBFromDofusFiles
 {
+    /**
+     * @var array<int, mixed>
+     */
     private array $newItems = [];
+
+    /**
+     * @var array<int, mixed>
+     */
     private array $icons = [];
+
+    /**
+     * @var array<string, array<int, string>>
+     */
     private array $langData = [];
 
+    /**
+     * @var array<int, mixed>
+     */
     private array $typeID = [];
 
     /**
-     * @return void
+     * @return array<string, array<int, mixed>>
      */
     public function __invoke(): array
     {
         $langs = ['fr', 'en', 'es', 'pt'];
 
         $this->typeID = [
-            16  => ['cat' => ItemCategorieEnum::HAT->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
+            16 => ['cat' => ItemCategorieEnum::HAT->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
             246 => ['cat' => ItemCategorieEnum::HAT->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            17  => ['cat' => ItemCategorieEnum::CAPE->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
+            17 => ['cat' => ItemCategorieEnum::CAPE->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
             247 => ['cat' => ItemCategorieEnum::CAPE->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            82  => ['cat' => ItemCategorieEnum::SHIELD->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
+            82 => ['cat' => ItemCategorieEnum::SHIELD->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
             248 => ['cat' => ItemCategorieEnum::SHIELD->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
             199 => ['cat' => ItemCategorieEnum::COSTUME->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
             299 => ['cat' => ItemCategorieEnum::SHOULDERPADS->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
             300 => ['cat' => ItemCategorieEnum::WINGS->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            18  => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
+            18 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
             121 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
             190 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
             255 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
@@ -52,7 +61,8 @@ final class updateDBFromDofusFiles
         ];
 
         foreach ($langs as $lang) {
-            $langFile = storage_path('app/json/skinator/lang/'). $lang .'.json';
+            $langFile = storage_path('app/json/skinator/lang/').$lang.'.json';
+            // @phpstan-ignore-next-line
             $this->langData[$lang] = json_decode(file_get_contents($langFile), true);
         }
 
@@ -67,18 +77,20 @@ final class updateDBFromDofusFiles
         ];
     }
 
-    function updateMounts() : void
+    public function updateMounts(): void
     {
         $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsRoot.json'), true)['references']['RefIds'];
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
 
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
 
         foreach ($mountsData as $mount) {
             $mountD = $mount['data'];
 
-            if(!isset($mountD['familyId'])) return;
+            if (! isset($mountD['familyId'])) {
+                return;
+            }
 
             $item = null;
             foreach ($itemsData as $id) {
@@ -87,6 +99,8 @@ final class updateDBFromDofusFiles
                     break;
                 }
             }
+
+            $petType = null;
 
             switch ($item['typeId']) {
                 case 97:
@@ -107,10 +121,10 @@ final class updateDBFromDofusFiles
                 'category' => ItemCategorieEnum::PET->value,
                 'subcategory' => ItemSubcategorieEnum::MIMISYMBIC->value,
                 'pet_type' => $petType,
-                'icon_path' => 'images/icons/items/'. $item['iconId'] .'.webp',
+                'icon_path' => 'images/icons/items/'.$item['iconId'].'.webp',
                 'colorable' => $item['isColorable'],
                 'asset_id' => $mountD['id'],
-                'female_asset_id' => $mountD['id']
+                'female_asset_id' => $mountD['id'],
             ];
 
             $names = [];
@@ -122,41 +136,39 @@ final class updateDBFromDofusFiles
             $this->icons[] = $item['iconId'];
 
             $existingItem = $allItems[$item['id']] ?? null;
-            if (!$existingItem) {
+            if (! $existingItem) {
                 $this->newItems[] = $value + ['name' => $names['fr'] ?? 'Nom inconnu'];
                 Item::create($value);
             } elseif (array_diff_assoc($value, $existingItem->toArray())) {
                 $existingItem->update($value);
             }
 
-
             foreach ($this->langData as $lang => $translation) {
-                $existingItemName = $allItemsName[$item['id'] . '|' . $lang][0] ?? null;
-                if (!$existingItemName) {
+                $existingItemName = $allItemsName[$item['id'].'|'.$lang][0] ?? null;
+                if (! $existingItemName) {
                     LocalizedItem::create([
                         'dofus_id' => $item['id'],
                         'locale' => $lang,
                         'name' => $names[$lang],
                     ]);
-                } elseif ($existingItemName->name != $names[$lang]){
-                    $existingItemName->update(['name' => $names[$lang].' '. ($key+1)]);
+                } elseif ($existingItemName->name != $names[$lang]) {
+                    $existingItemName->update(['name' => $names[$lang]]);
                 }
             }
         }
     }
 
-    function updateLivingObjects() : void
+    public function updateLivingObjects(): void
     {
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
         $livingData = json_decode(Storage::disk('local')->get('json/skinator/LivingObjectSkinJntMoodRoot.json'), true)['references']['RefIds'];
 
-        if(json_last_error() !== JSON_ERROR_NONE) {
-            dd('erreur json : ' . json_last_error_msg());
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            dd('erreur json : '.json_last_error_msg());
         }
 
-
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
 
         // Indexe les items par leur ID pour un accès rapide
         $itemsById = [];
@@ -175,8 +187,7 @@ final class updateDBFromDofusFiles
         $skinIds = array_filter($skinIds);
 
         // Filtre les items correspondants
-        $itemsLivingData = array_filter($itemsData, fn($item) =>
-            isset($item['data']['id']) && in_array($item['data']['id'], $skinIds)
+        $itemsLivingData = array_filter($itemsData, fn ($item) => isset($item['data']['id']) && in_array($item['data']['id'], $skinIds)
         );
 
         // On garde seulement ceux avec effets utiles
@@ -186,10 +197,12 @@ final class updateDBFromDofusFiles
                     $effectValue = $itemsById[$effect['rid']]['value'];
                     if (array_key_exists($effectValue, $this->typeID)) {
                         $item['data']['usefulLivingEffect'] = $effectValue; // Ajoute la valeur utile
+
                         return $item;
                     }
                 }
             }
+
             return null;
         }, $itemsLivingData)));
 
@@ -232,69 +245,68 @@ final class updateDBFromDofusFiles
             }
 
             foreach ($currentLV as $key => $lv) {
-                $dofusId = (3000000000 + ($itemD['id'] * 1000) + ($key+1));
+                $dofusId = (3000000000 + ($itemD['id'] * 1000) + ($key + 1));
                 $value = [
                     'dofus_id' => $dofusId,
-                    'folder' => in_array($itemD['typeId'], [18,249,121,250]) ? 'bones' : 'skins',
+                    'folder' => in_array($itemD['typeId'], [18, 249, 121, 250]) ? 'bones' : 'skins',
                     'level' => $itemD['level'],
                     'category' => $this->typeID[$itemD['usefulLivingEffect']]['cat'],
                     'subcategory' => ItemSubcategorieEnum::LIVINGOBJECT->value,
                     'pet_type' => $petType,
-                    'icon_path' => 'images/icons/items/'. $lv .'.webp',
+                    'icon_path' => 'images/icons/items/'.$lv.'.webp',
                     'colorable' => $itemD['isColorable'],
                 ];
 
                 $this->icons[] = $lv;
 
                 $existingItem = $allItems[$dofusId] ?? null;
-                if (!$existingItem) {
-                    $this->newItems[] = $value + ['name' => ($names['fr'].' '. ($key+1)) ?? 'Nom inconnu'];
+                if (! $existingItem) {
+                    $this->newItems[] = $value + ['name' => ($names['fr'].' '.($key + 1))];
                     Item::create($value);
                 } elseif (array_diff_assoc($value, $existingItem->toArray())) {
                     $existingItem->update($value);
                 }
 
                 foreach ($this->langData as $lang => $translation) {
-                    $existingItemName = $allItemsName[$dofusId . '|' . $lang][0] ?? null;
-                    if (!$existingItemName) {
+                    $existingItemName = $allItemsName[$dofusId.'|'.$lang][0] ?? null;
+                    if (! $existingItemName) {
                         LocalizedItem::create([
                             'dofus_id' => $dofusId,
                             'locale' => $lang,
-                            'name' => $names[$lang].' '. ($key+1),
+                            'name' => $names[$lang].' '.($key + 1),
                         ]);
-                    } elseif ($existingItemName->name != $names[$lang]){
-                        $existingItemName->update(['name' => $names[$lang].' '. ($key+1)]);
+                    } elseif ($existingItemName->name != $names[$lang]) {
+                        $existingItemName->update(['name' => $names[$lang].' '.($key + 1)]);
                     }
                 }
             }
         }
     }
 
-    function updateItems() : void
+    public function updateItems(): void
     {
 
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
 
-        if(json_last_error() !== JSON_ERROR_NONE) {
-            dd('erreur json : ' . json_last_error_msg());
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            dd('erreur json : '.json_last_error_msg());
         }
 
-        $itemsData = array_filter($itemsData, function($item) {
+        $itemsData = array_filter($itemsData, function ($item) {
             return isset($item['data']['typeId']) && isset($this->typeID[$item['data']['typeId']]);
         });
 
-
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
 
         foreach ($itemsData as $item) {
             $itemD = $item['data'];
 
-            if(!isset($itemD['typeId'])) {
+            if (! isset($itemD['typeId'])) {
                 continue;
             }
 
-            if (!in_array($itemD['typeId'], array_keys($this->typeID))) {
+            if (! in_array($itemD['typeId'], array_keys($this->typeID))) {
                 continue;
             }
 
@@ -322,12 +334,12 @@ final class updateDBFromDofusFiles
 
             $value = [
                 'dofus_id' => $itemD['id'],
-                'folder' => in_array($itemD['typeId'], [18,249,121,250]) ? 'bones' : 'skins',
+                'folder' => in_array($itemD['typeId'], [18, 249, 121, 250]) ? 'bones' : 'skins',
                 'level' => $itemD['level'],
                 'category' => $this->typeID[$itemD['typeId']]['cat'],
                 'subcategory' => $this->typeID[$itemD['typeId']]['subcat'],
                 'pet_type' => $petType,
-                'icon_path' => 'images/icons/items/'. $itemD['iconId'] .'.webp',
+                'icon_path' => 'images/icons/items/'.$itemD['iconId'].'.webp',
                 'colorable' => $itemD['isColorable'],
             ];
 
@@ -340,7 +352,7 @@ final class updateDBFromDofusFiles
             }
 
             $existingItem = $allItems[$itemD['id']] ?? null;
-            if (!$existingItem) {
+            if (! $existingItem) {
                 $this->newItems[] = $value + ['name' => $names['fr'] ?? 'Nom inconnu'];
                 Item::create($value);
             } elseif (array_diff_assoc($value, $existingItem->toArray())) {
@@ -348,21 +360,21 @@ final class updateDBFromDofusFiles
             }
 
             foreach ($this->langData as $lang => $translation) {
-                $existingItemName = $allItemsName[$itemD['id'] . '|' . $lang][0] ?? null;
-                if (!$existingItemName) {
+                $existingItemName = $allItemsName[$itemD['id'].'|'.$lang][0] ?? null;
+                if (! $existingItemName) {
                     LocalizedItem::create([
                         'dofus_id' => $itemD['id'],
                         'locale' => $lang,
                         'name' => $names[$lang],
                     ]);
-                } elseif ($existingItemName->name != $names[$lang]){
+                } elseif ($existingItemName->name != $names[$lang]) {
                     $existingItemName->update(['name' => $names[$lang]]);
                 }
             }
         }
     }
 
-    function updateBreeds() : void
+    public function updateBreeds(): void
     {
         $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsRoot.json'), true)['references']['RefIds'];
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
@@ -375,7 +387,7 @@ final class updateDBFromDofusFiles
         // Récupère les têtes
         foreach ($headsData as $head) {
             $headD = $head['data'];
-            if (!isset($headsByBreed[$headD['breed']])) {
+            if (! isset($headsByBreed[$headD['breed']])) {
                 $headsByBreed[$headD['breed']] = [];
             }
             $headsByBreed[$headD['breed']][$headD['gender'] ? 'female' : 'male'][$headD['order']] = [
@@ -392,7 +404,7 @@ final class updateDBFromDofusFiles
             // Récupérer les couleurs
             $colorsArray = [
                 'male' => $breed['maleColors'],
-                'female' => $breed['femaleColors']
+                'female' => $breed['femaleColors'],
             ];
 
             // Préparer les têtes
@@ -410,7 +422,7 @@ final class updateDBFromDofusFiles
 
             // Vérifier si la classe existe déjà pour la mettre à jour ou la créer
             $existingBreed = $allBreeds->where('dofus_id', $breed['id'])->first();
-            if (!$existingBreed) {
+            if (! $existingBreed) {
                 Race::create($value);
             } else {
                 $existingBreed->update($value);
@@ -419,7 +431,7 @@ final class updateDBFromDofusFiles
             // Met à jour les traductions
             foreach ($this->langData as $lang => $translation) {
                 $existingBreedName = $allBreedsName->where('dofus_id', $breed['id'])->where('locale', $lang)->first();
-                if (!$existingBreedName) {
+                if (! $existingBreedName) {
                     LocalizedRace::create([
                         'dofus_id' => $breed['id'],
                         'locale' => $lang,

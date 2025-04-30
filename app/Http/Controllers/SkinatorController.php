@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ItemCategorieEnum;
-use App\Models\Item;
-use App\Models\Race;
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class SkinatorController extends Controller
 {
-    public function create()
+    public function create(): View
     {
         // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira ; 3230 Mcdonald
-        if(!Gate::check('mod-access') &! Gate::check('admin-access') &! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230]))  {
+        if (! Gate::check('mod-access') & ! Gate::check('admin-access') & ! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230])) {
             abort(403);
         }
 
@@ -25,7 +24,10 @@ class SkinatorController extends Controller
         ]);
     }
 
-    private function getItems()
+    /**
+     * @return Collection<int, \stdClass>
+     */
+    private function getItems(): Collection
     {
         return DB::table('items')
             ->select('dofus_id', 'icon_path', 'asset_id', 'female_asset_id', 'folder', 'category', 'subcategory', 'level', 'pet_type', 'colorable')
@@ -62,7 +64,10 @@ class SkinatorController extends Controller
 
     }
 
-    private function getBreeds()
+    /**
+     * @return Collection<int, \stdClass>
+     */
+    private function getBreeds(): Collection
     {
         return DB::table('races')
             ->select('dofus_id', 'colors', 'heads')
@@ -77,6 +82,7 @@ class SkinatorController extends Controller
             ->map(function ($breed) {
                 $breed->colors = json_decode($breed->colors);
                 $breed->heads = json_decode($breed->heads);
+
                 return $breed;
             });
     }

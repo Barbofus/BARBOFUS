@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Actions\ItemsUpdate;
 
 use App\Models\Item;
-use App\Models\Like;
-use App\Models\UnityLike;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 final class createItemsExport
@@ -23,8 +20,12 @@ final class createItemsExport
         // Indexe les items par leur ID pour un accès rapide
         $itemsById = [];
         foreach ($itemsData as $item) {
-            if ($item['type']['ns'] != 'Core.DataCenter.Metadata.Item') continue;
-            if (!in_array($item['data']['id'], array_keys($jsonData))) continue;
+            if ($item['type']['ns'] != 'Core.DataCenter.Metadata.Item') {
+                continue;
+            }
+            if (! in_array($item['data']['id'], array_keys($jsonData))) {
+                continue;
+            }
             $itemsById[$item['data']['id']] = $item['data'];
         }
 
@@ -50,8 +51,8 @@ final class createItemsExport
                 'scale' => (in_array($item->pet_type, ['familier', 'montilier'])) ? ($jsonData[$item->dofus_id]['scales'] ?? [100]) : [100],
             ];
 
-            if(in_array($item->pet_type, ['familier', 'montilier'])) {
-                if (!empty($jsonData[$item->dofus_id]['indexedColors']) && $itemsById[$item->dofus_id]['isColorable'] === 0) {
+            if (in_array($item->pet_type, ['familier', 'montilier'])) {
+                if (! empty($jsonData[$item->dofus_id]['indexedColors']) && $itemsById[$item->dofus_id]['isColorable'] === 0) {
                     $entry['indexedColors'] = $jsonData[$item->dofus_id]['indexedColors'];
                 }
             }
@@ -59,7 +60,13 @@ final class createItemsExport
             $itemsExport[$item->dofus_id] = $entry;
         }
 
-        // Enregistrement du fichier
-        Storage::disk('local')->put('json/skinator/itemsExport.json', json_encode($itemsExport, JSON_PRETTY_PRINT));
+        $jsonItemsExport = json_encode($itemsExport, JSON_PRETTY_PRINT);
+
+        if ($jsonItemsExport === false) {
+            // Gérer l'erreur si json_encode échoue
+            dd('ERREUR - Lors de l\'export de itemsExport.json');
+        }
+
+        Storage::disk('local')->put('json/skinator/itemsExport.json', $jsonItemsExport);
     }
 }

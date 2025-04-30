@@ -70,8 +70,7 @@ return new class extends Migration
         Schema::table('unity_skins', function (Blueprint $table) {
             $table->foreign('race_id')
                 ->references('id')
-                ->on('races')
-            ;
+                ->on('races');
         });
     }
 };
