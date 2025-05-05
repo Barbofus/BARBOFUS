@@ -24,7 +24,7 @@ final class SendDiscordPostedWebhook
                         *Posté par* **'.$skin->User->name.'**',
                     'color' => 16562499,
                     'image' => [
-                        'url' => asset('storage/'.$skin->image_path),
+                        'url' => asset('storage/'.$skin->image_path) . '?v=' . time() + rand(0, 1000),
                     ],
                 ],
             ],
