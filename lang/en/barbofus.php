@@ -40,7 +40,7 @@ return [
     'titleRegister' => 'Register',
     'titleResetPassword' => 'Forgot password',
     'titleSuccess' => 'Success !',
-    'titleToolsTougli' => 'Adventurer\'s Journal - The Dofus Journey',
+    'titleToolsTougli' => 'Tougli - An optimized guide for the Dofus',
     'titleToolsSkin2.0' => 'A bit of nostalgia? The 2.0 skins',
     'titleCreate' => 'Create',
     'titleEdit' => 'Edit',

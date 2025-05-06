@@ -40,7 +40,7 @@ return [
     'titleRegister' => 'Inscription',
     'titleResetPassword' => 'Mot de passe oublié',
     'titleSuccess' => 'Succès !',
-    'titleToolsTougli' => 'Carnet d\'aventurier - Le parcours des Dofus',
+    'titleToolsTougli' => 'Tougli - Le guide opti des Dofus',
     'titleToolsSkin2.0' => 'Un peu de nostalgie ? Les skins 2.0',
     'titleCreate' => 'Création',
     'titleEdit' => 'Modification',

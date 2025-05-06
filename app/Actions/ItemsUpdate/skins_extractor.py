@@ -101,7 +101,7 @@ def unpack_assets_skin(folder_path : str, destination_folder : str, ids_file: st
                     fp = os.path.join(destination_folder , "json/skinator/skins", name + ".json")
                     os.makedirs(os.path.dirname(fp), exist_ok = True)
                     with open(fp, "wt", encoding = "utf8") as f:
-                        json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = 0)
+                        json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = None)
 
 
         for obj in env.objects:
@@ -154,7 +154,7 @@ def unpack_assets_bone(folder_path : str, destination_folder : str, ids_file: st
                         os.makedirs(os.path.dirname(fp), exist_ok = True)
                         m_PathID = tree['boneAsset']['m_PathID']
                         with open(fp, "wt", encoding = "utf8") as f:
-                            json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = 0)
+                            json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = None)
                         break
 
         # print("m_PathID => ", m_PathID)
@@ -172,7 +172,7 @@ def unpack_assets_bone(folder_path : str, destination_folder : str, ids_file: st
                         os.makedirs(os.path.dirname(fp), exist_ok = True)
 
                         with open(fp, "wt", encoding = "utf8") as f:
-                            json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = 0)
+                            json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = None)
                         break
 
 

@@ -13,6 +13,10 @@
              [&>h3]:text-2xl [&>h3]:pb-4 [&>h3]:pt-6">
         <h2>Informations légales</h2>
 
+        <p>This site is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
+
         <p style="text-align:justify">En conformité aux directives de l'article 6-III et 19 de la Loi numero 2004-575 du 21 juin 2004 pour la Confiance en l'économie numérique, dite L.C.E.N., nous portons à la connaissance des utilisateurs du site internet : <a href="https://barbofus.com" target="_blank">barbofus.com</a> Ces infos ci-jointe :</p>
         <br />
         <p style="text-align:justify"><strong>1. Données légales :</strong></p>
@@ -74,14 +78,14 @@
         <p style="text-align:justify"><br />
             <strong>5. Cookies & Liens Hypertextes :</strong><br />
             <br />
-            Le site barbofus.com contient différents liens hypertextes vers différents sites (partenariats, sites sources .) mis en ligne suite à l'autorisation de Charly Mollard<a href="https://www.generateur-de-mentions-legales.com/" style="text-decoration:none"><font color="#000000">.</font></a> Cependant, Charly Mollard n'a pas la possibilité de sécuriser l'intégralité des élements des sites  visités et décline donc toute responsabilité de ce fait quand aux risques de contenus illicites.<br />
+            Le site barbofus.com contient différents liens hypertextes vers différents sites (partenariats, sites sources .) mis en ligne suite à l'autorisation de Charly Mollard. Cependant, Charly Mollard n'a pas la possibilité de sécuriser l'intégralité des élements des sites  visités et décline donc toute responsabilité de ce fait quand aux risques de contenus illicites.<br />
             L'utilisateur est donc avisé que au cours de ses visites sur le site barbofus.com, un ou des cookies peuvent s'intégrer automatiquement sur son pc grâce à son logiciel informatique de navigation. Un cookie est un bloc de donnée qui ne permet pas de savoir qui l'utilise, néanmoins qui note des indications en lien avec la navigation de l'usager sur le site. <br />
             La configration du logiciel de navigation laisse libre de notifier de la compagnie de cookie et éventuellement, de la contester de la procédure expliquée à l' adresse  : <a href="https://www.barbofus.com">www.barbofus.com</a>. La mise en place à la possibilité néanmoins de paramétrer le navigateur de son pc pour contester l'installation des cookies, en sachant que le rebut d'installation d'un cookie pourrait potentiellement entraîner l'impossibilité d'accéder à plusieurs secteurs. Pour tout blocage de cookies, cherchez dans un moteur de recherche : blocage des cookies et suivez les enseignements en fonction de votre  navigateur.</p>
 
         <br />
         <p><strong>6. Protection des personnes & biens - Utilisation des données personnelles :</strong><br /></p>
         <br />
-        En France, les données personnelles sont par exemple protégées par la loi n° 78-87 du 6 janvier 1978 et la loi n° 2004-801 datant du 6 août 2004, l'article L. 226-13 du Code pénal ainsi que la Directive Européenne du 24 octobre 1995.</p>
+        En France, les données personnelles sont par exemple protégées par la loi n° 78-87 du 6 janvier 1978 et la loi n° 2004-801 datant du 6 août 2004, l'article L. 226-13 du Code pénal ainsi que la Directive Européenne du 24 octobre 1995.
 
         <p style="text-align:justify">Sur le site interne barbofus.com, Charly Mollard ne collecte pas d'informations personnelles ( suivant l'article 4 loi n°78-17 du 06 janvier 1978) relatives à l'usager que pour la nécéssité de différents services mis à disposition par le site suivant barbofus.com. L'utilisateur offre les données en toute conscience de cause, notamment lorsqu'il procède de lui-même à leur saisie. Il est donc résumé à l'usagé du site interne barbofus.com l'obligation ou pas de mentionner ces informations.<br />
             Conformément aux agencements des articles 38 et autres de la loi 78-17 du 6 janvier 1978 relative à l'informatique, les fichiers et aux différentes libertés, tout utilisateur possède un droit d'accès , de rectification, de suppression et d'opposition aux informations personnelles le concernant. Pour l'exercer, adressez une requête à barbofus.com par email : <strong><a href="mailto:charly.mollard@gmail.com?subject=Contact à partir des mentions légales via le site barbofus.com">charly.mollard@gmail.com</a></strong> ou via lettre manuscrite dûement signée, accompagnée d'une copie du titre d'identité avec signature du propriétaire du document, en précisant l'adresse à laquelle une réponse doit être envoyée.</p>

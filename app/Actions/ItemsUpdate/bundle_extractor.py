@@ -65,7 +65,7 @@ def unpack_assets_data(file_path : str, destination_folder : str):
                 fp = os.path.join(destination_folder , "json/skinator", f"{tree['m_Name']}.json")
                 os.makedirs(os.path.dirname(fp), exist_ok = True)
                 with open(fp, "wt", encoding = "utf8") as f:
-                    json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = 0)
+                    json.dump(tree, f, cls=NaNEncoder, ensure_ascii = False, indent = None)
 
 # unpack_all_assets("./../../Dofus_Data/Dofus_Data/Characters/Bones", "./out")
 bundle_file = sys.argv[1]
