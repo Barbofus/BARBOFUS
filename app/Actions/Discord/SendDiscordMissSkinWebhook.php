@@ -38,7 +38,7 @@ final class SendDiscordMissSkinWebhook
                         [Aller sur la page du skin]('.route(($isUnity) ? 'unity-skins.show' : 'skins.show', $winners[0]['skin_id']).')',
                     'color' => 16562499,
                     'image' => [
-                        'url' => asset('storage/'.$winners[0]['skin_image_path']) . '?v=' . time() + rand(0, 1000),
+                        'url' => asset('storage/'.$winners[0]['skin_image_path']).'?v='.time().rand(0, 1000),
                     ],
                     'thumbnail' => [
                         'url' => asset('storage/images/misc_ui/dofus_ocre.png'),
@@ -52,7 +52,7 @@ final class SendDiscordMissSkinWebhook
                         [Aller sur la page du skin]('.route(($isUnity) ? 'unity-skins.show' : 'skins.show', $winners[1]['skin_id']).')',
                     'color' => 8041236,
                     'image' => [
-                        'url' => asset('storage/'.$winners[1]['skin_image_path']) . '?v=' . time() + rand(0, 1000),
+                        'url' => asset('storage/'.$winners[1]['skin_image_path']).'?v='.time().rand(0, 1000),
                     ],
                     'thumbnail' => [
                         'url' => asset('storage/images/misc_ui/dofus_emeraude.png'),
@@ -66,7 +66,7 @@ final class SendDiscordMissSkinWebhook
                         [Aller sur la page du skin]('.route(($isUnity) ? 'unity-skins.show' : 'skins.show', $winners[2]['skin_id']).')',
                     'color' => 14831887,
                     'image' => [
-                        'url' => asset('storage/'.$winners[2]['skin_image_path']) . '?v=' . time() + rand(0, 1000),
+                        'url' => asset('storage/'.$winners[2]['skin_image_path']).'?v='.time().rand(0, 1000),
                     ],
                     'thumbnail' => [
                         'url' => asset('storage/images/misc_ui/dofus_cawotte.png'),

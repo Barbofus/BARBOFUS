@@ -350,7 +350,6 @@ class AdminPanel extends Component
     public function getDataRootFiles(): void
     {
         $this->logTitle = 'ROOT FILES';
-        $this->currentStep++;
         $files = [];
 
         foreach ($this->rootToExport as $key => $value) {
@@ -404,7 +403,6 @@ class AdminPanel extends Component
     public function getLangFiles(): void
     {
         $this->logTitle = 'LOCALIZATION FILES';
-        $this->currentStep++;
         $files = [];
 
         foreach ($this->langs as $lang) {

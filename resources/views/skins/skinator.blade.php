@@ -4,14 +4,101 @@
     <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">Skinator</h1>
 
     <form autocomplete="off"
-          class="w-[min(98vw,120rem)] mx-auto mb-16 h-fit"
+          class="w-[min(98vw,120rem)] mx-auto mb-16 h-fit relative"
           method="POST"
           id="skinator-form"
-          action=""
+          action="{{ route('unity-skins.store') }}"
           enctype="multipart/form-data"
           onkeydown="return event.key != 'Enter';"
           x-data="skinator"
           x-init="initWatcher">
+
+        @csrf
+
+        <input type="file" name="image_path" id="image_path" hidden>
+
+        {{-- PREVISU PARTAGE --}}
+        <div x-show="openShareUI" x-cloak
+             x-transition:enter="transition ease-out duration-100"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-90"
+             @click.outside="openShareUI = false; $refs.btnShare.disabled = false;"
+             class="absolute p-4 shadow-[rgba(0,_0,_0,_0.5)_0px_0px_70px_4px] rounded-lg bg-primary top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+            <img id="previsu-img" src="" height="500" width="300" alt="Render" style="opacity: 0" class="transition-all mx-auto">
+
+            <div class="w-full absolute top-1/4 left-0 pointer-events-none">
+                <div id="shareLoader" class="border-[0.375rem] border-inactiveText border-l-goldText w-20 h-20 rounded-full opacity-0 mx-auto [--custom-animation-time:1s]"></div>
+            </div>
+
+            <input x-ref="input"
+                   maxlength="30" name="name" id="name" type="text" placeholder="{{ __('barbofus.inputName').' (optionnal)' }}"
+                   value="{{ (old('name') ? old('name') : (isset($skin) ? $skin['name'] : '')) }}"
+                   class="w-full h-10 pl-4 focus:outline-none placeholder-inactiveText bg-primary-100"/>
+
+            {{-- Bouton Valider --}}
+            <div class="w-full flex justify-evenly mt-4">
+
+                {{-- Valider --}}
+                <button type="button"
+                        id="myRecaptchaBtn"
+                        class="relative px-5 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:enabled:brightness-110 hover:enabled:tracking-widest disabled:cursor-not-allowed disabled:grayscale transition-all focus:brightness-75 uppercase"
+                        data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                        data-callback='onSubmit'
+                        data-action='store'>
+                    <p class="absolute text-center w-full left-0">{{ __('barbofus.buttonValidate') }}</p>
+                    <p class="opacity-0 tracking-widest">{{ __('barbofus.buttonValidate') }}</p>
+                </button>
+
+                {{-- Annuler --}}
+                <button @click="openShareUI = false; $refs.btnShare.disabled = false;" type="button" class="relative px-5 py-3 text-lg font-normal text-primary bg-gradient-to-tr from-red-700 to-red-500 rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase">
+                    <p class="absolute text-center w-full left-0">{{ __('barbofus.buttonCancel') }}</p>
+                    <p class="opacity-0 tracking-widest">{{ __('barbofus.buttonCancel') }}</p>
+                </button>
+
+                <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const button = document.getElementById('myRecaptchaBtn');
+
+                        button.addEventListener('click', function (e) {
+                            e.preventDefault();
+
+                            // Affiche le loader
+                            const loader = document.getElementById('shareLoader');
+                            if(loader) {
+                                loader.classList.add('animate-customSpin');
+                                loader.classList.remove('opacity-0');
+                            }
+                            const img = document.getElementById('previsu-img');
+                            if(img) {
+                                img.style.opacity = '0.5';
+                            }
+
+                            button.disabled = true;
+
+                            grecaptcha.ready(function () {
+                                grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'store' }).then(function (token) {
+                                    // Crée dynamiquement le champ hidden
+                                    const form = document.getElementById('skinator-form');
+                                    let input = document.createElement('input');
+                                    input.type = 'hidden';
+                                    input.name = 'g-recaptcha-response';
+                                    input.value = token;
+                                    form.appendChild(input);
+
+                                    window.generateFinalInputImage();
+                                });
+                            });
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+
         {{--    ITEMS ACTUELS    --}}
         <div class="flex space-x-4 my-2 h-24 overflow-auto"
              @click="if(event.target.closest('button[data-key]')) {
@@ -54,6 +141,8 @@
                             <p x-text="'Lv.' + allItems.find(i => i.dofus_id === item).level" class="text-inactiveText whitespace-nowrap"></p>
                         </div>
                     </div>
+
+                    <input type="text" :value="item" :name="key + '_id'" class="hidden">
 
                     <p x-text="allItems.find(i => i.dofus_id === item).name" class="text-left truncate"></p>
 
@@ -139,7 +228,7 @@
                                 <div>
                                     <input :id="'breed_' + breedInfo.dofus_id"
                                            type="radio"
-                                           name="breed"
+                                           name="race_id"
                                            :value="breedInfo.dofus_id"
                                            class="hidden peer"
                                            :checked="breed === breedInfo.dofus_id">
@@ -166,7 +255,7 @@
                                 <div>
                                     <input :id="'head_' + breedHead.id"
                                            type="radio"
-                                           name="head"
+                                           name="face"
                                            :value="breedHead.id"
                                            class="hidden peer"
                                            :checked="head === breedHead.id">
@@ -212,6 +301,7 @@
                                         <!-- Input de couleur -->
                                         <input type="text"
                                                :value="colors[index]"
+                                               :name="'color_' + colorsName[index]"
                                                :data-color="index"
                                                class="uppercase order-last h-full peer rounded-r p-1 bg-primary-100 text-center w-[5.5rem] min-[600px]:w-28 focus:outline-none border-transparent focus:border-secondary border-y border-r transition-colors">
 
@@ -236,6 +326,16 @@
                             <p>Reset</p>
                         </button>
                     </div>
+
+                    @if ($errors->any())
+                        <div class="text-red-500">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
 
                 {{--      RESULTAT SKIN + ORIENTATION + EXPORT PNG + COPY LINK      --}}
@@ -263,32 +363,61 @@
                         }
                     </style>
 
-                    {{-- Skin + bouton d'export --}}
-                    <div class="relative w-fit mx-auto">
-                        <div class="relative inline-block">
-                            <canvas class="canvas-renderer" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
-                            <svg class="loading-logo" style="display: none;" viewBox="0 0 66.410408 67.468735" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="progress-gradient" x1="0" y1="1" x2="0" y2="0">
-                                        <stop offset="0%" stop-color="#FAE65D" />
-                                        <stop offset="50%" stop-color="#FAE65D" />
-                                        <stop offset="50%" stop-color="#f1e7db" />
-                                        <stop offset="100%" stop-color="#f1e7db" />
-                                    </linearGradient>
-                                </defs>
-                                <g
-                                    width="120px"
-                                    height="120px"
-                                    id="layer1"
-                                    transform="translate(-57.924089,-154.32008)">
-                                    <path
-                                        style="fill:url(#progress-gradient);stroke:none;stroke-width:0.264583"
-                                        d="m 61.628256,154.32008 c -1.322096,1.86955 -1.590754,3.58452 -1.058333,5.82083 l -2.645833,-0.52917 2.910416,5.02709 -2.910416,-0.79375 c 0.761182,5.88925 6.723168,11.10844 12.699999,10.83748 2.45028,-0.11107 4.340675,-1.45116 6.614583,-2.10624 l -1.5875,2.91042 c 5.3036,0 12.50818,-1.69172 14.81667,-7.14375 1.55257,0.75655 2.61276,2.40395 3.96875,3.49041 3.34909,2.68356 7.586918,4.41709 11.906248,3.38876 l -1.5875,-2.91042 c 7.96872,4.19896 17.21484,-0.40296 19.57916,-8.73125 l -3.175,0.52917 c 1.46394,-1.47725 2.59292,-3.00628 3.175,-5.02708 l -2.91042,1.05833 c 0.40349,-2.17331 0.60378,-4.36605 -1.32291,-5.82083 -1.42372,4.33834 -4.95538,5.84731 -9.26042,5.17937 -4.76911,-0.73998 -9.16305,-2.55677 -14.022908,-2.53333 -2.14895,0.0104 -4.20026,1.79644 -6.08542,1.70529 -1.05913,-0.0512 -2.1381,-0.92315 -3.175,-1.19634 -1.579298,-0.41603 -3.405452,-0.30779 -5.027083,-0.23415 -5.961539,0.27061 -12.953497,5.40988 -18.510223,0.90786 -1.345009,-1.08974 -1.482884,-2.52272 -2.39186,-3.8287 m 12.7,21.16666 c -4.916937,0.66212 -7.310464,0.35057 -11.641666,-2.11667 -3.294859,5.79528 -0.982478,12.15258 2.116666,17.4625 h 0.264584 l 0.264583,-2.91041 h 0.264583 c 0.941388,3.31602 2.901712,6.50081 5.291667,8.99583 l 0.264583,-0.79375 h 0.264583 l 2.645833,6.87916 h 0.264584 v -1.85208 h 0.264583 c 1.741911,3.35783 5.285793,4.13306 7.881144,6.48997 3.619239,3.28691 6.585479,9.50489 7.729269,14.14753 3.37238,-2.55852 5.51207,-6.30396 7.33981,-10.05417 0.71623,-1.47002 1.04907,-3.43905 2.09232,-4.70614 1.329008,-1.61422 3.777198,-2.70325 5.384538,-4.10157 2.65059,-2.30637 4.2971,-5.00565 5.82083,-8.12562 l 1.5875,2.38125 0.26459,-4.49792 1.32291,0.26459 c 1.49278,-5.10911 4.49792,-9.00721 4.49792,-14.55208 l 0.79375,0.52916 0.26458,-6.08541 c -4.03225,1.87372 -7.22471,2.46522 -11.64166,2.11666 -2.22409,4.62756 -10.755048,0.61701 -13.493748,-1.50278 -0.90409,-0.6999 -2.20478,-2.64749 -3.41498,-2.67972 -1.00965,-0.0269 -2.41009,1.97524 -3.19987,2.55293 -2.878933,2.10598 -6.040836,2.99371 -9.524736,3.40612 -1.372606,0.16248 -3.456358,0.34012 -3.96875,-1.24738 z"
-                                    />
-                                </g>
+                    {{-- Skin --}}
+                    <div class="relative inline-block">
+                        <canvas class="canvas-renderer" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
+                        <svg class="loading-logo" style="display: none;" viewBox="0 0 66.410408 67.468735" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="progress-gradient" x1="0" y1="1" x2="0" y2="0">
+                                    <stop offset="0%" stop-color="#fba436" />
+                                    <stop offset="50%" stop-color="#faed61" />
+                                    <stop offset="50%" stop-color="#fff5e9" />
+                                    <stop offset="100%" stop-color="#f2e8dc" />
+                                </linearGradient>
+                            </defs>
+                            <g
+                                width="120px"
+                                height="120px"
+                                id="layer1"
+                                transform="translate(-57.924089,-154.32008)">
+                                <path
+                                    style="fill:url(#progress-gradient);stroke:none;stroke-width:0.264583"
+                                    d="m 61.628256,154.32008 c -1.322096,1.86955 -1.590754,3.58452 -1.058333,5.82083 l -2.645833,-0.52917 2.910416,5.02709 -2.910416,-0.79375 c 0.761182,5.88925 6.723168,11.10844 12.699999,10.83748 2.45028,-0.11107 4.340675,-1.45116 6.614583,-2.10624 l -1.5875,2.91042 c 5.3036,0 12.50818,-1.69172 14.81667,-7.14375 1.55257,0.75655 2.61276,2.40395 3.96875,3.49041 3.34909,2.68356 7.586918,4.41709 11.906248,3.38876 l -1.5875,-2.91042 c 7.96872,4.19896 17.21484,-0.40296 19.57916,-8.73125 l -3.175,0.52917 c 1.46394,-1.47725 2.59292,-3.00628 3.175,-5.02708 l -2.91042,1.05833 c 0.40349,-2.17331 0.60378,-4.36605 -1.32291,-5.82083 -1.42372,4.33834 -4.95538,5.84731 -9.26042,5.17937 -4.76911,-0.73998 -9.16305,-2.55677 -14.022908,-2.53333 -2.14895,0.0104 -4.20026,1.79644 -6.08542,1.70529 -1.05913,-0.0512 -2.1381,-0.92315 -3.175,-1.19634 -1.579298,-0.41603 -3.405452,-0.30779 -5.027083,-0.23415 -5.961539,0.27061 -12.953497,5.40988 -18.510223,0.90786 -1.345009,-1.08974 -1.482884,-2.52272 -2.39186,-3.8287 m 12.7,21.16666 c -4.916937,0.66212 -7.310464,0.35057 -11.641666,-2.11667 -3.294859,5.79528 -0.982478,12.15258 2.116666,17.4625 h 0.264584 l 0.264583,-2.91041 h 0.264583 c 0.941388,3.31602 2.901712,6.50081 5.291667,8.99583 l 0.264583,-0.79375 h 0.264583 l 2.645833,6.87916 h 0.264584 v -1.85208 h 0.264583 c 1.741911,3.35783 5.285793,4.13306 7.881144,6.48997 3.619239,3.28691 6.585479,9.50489 7.729269,14.14753 3.37238,-2.55852 5.51207,-6.30396 7.33981,-10.05417 0.71623,-1.47002 1.04907,-3.43905 2.09232,-4.70614 1.329008,-1.61422 3.777198,-2.70325 5.384538,-4.10157 2.65059,-2.30637 4.2971,-5.00565 5.82083,-8.12562 l 1.5875,2.38125 0.26459,-4.49792 1.32291,0.26459 c 1.49278,-5.10911 4.49792,-9.00721 4.49792,-14.55208 l 0.79375,0.52916 0.26458,-6.08541 c -4.03225,1.87372 -7.22471,2.46522 -11.64166,2.11666 -2.22409,4.62756 -10.755048,0.61701 -13.493748,-1.50278 -0.90409,-0.6999 -2.20478,-2.64749 -3.41498,-2.67972 -1.00965,-0.0269 -2.41009,1.97524 -3.19987,2.55293 -2.878933,2.10598 -6.040836,2.99371 -9.524736,3.40612 -1.372606,0.16248 -3.456358,0.34012 -3.96875,-1.24738 z"
+                                />
+                            </g>
 
-                            </svg>
-                        </div>
+                        </svg>
+                    </div>
+
+                    {{-- Zone sous skins / Orientation / Animation --}}
+                    <div class="flex justify-evenly space-x-8 w-fit mx-auto">
+                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
+                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 group-active:translate-y-0 group-active:scale-90 transition-all">
+                        </button>
+
+                        {{-- Choix anim exploration / combat --}}
+                        <button type="button"
+                                title="Exploration / Combat"
+                                :disabled="animation === 'Monture'"
+                                class="group relative h-8 w-16 rounded-full bg-primary-100 p-2 disabled:cursor-not-allowed"
+                                @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
+                            <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
+                                 :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
+                                <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                                </svg>
+
+                                <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Sword-Attack--Streamline-Sharp" class="size-4 -scale-x-100"><desc>Sword Attack Streamline Icon: https://streamlinehq.com</desc><g id="sword-attack--entertainment-gaming-sword-attack"><path id="Union" fill="#000000" fill-rule="evenodd" d="M6.67488 1.37109h-5.3033v5.3033L12.4699 17.7727l5.3033 -5.3033L6.67488 1.37109ZM21.4854 13.7068l-2.4751 2.4751 3.9895 3.9894 0 2.8285 -2.8285 0 -3.9894 -3.9895 -2.4747 2.4747 -1.4142 -1.4142 7.7781 -7.7782 1.4143 1.4142Z" clip-rule="evenodd" stroke-width="1"></path></g></svg>
+                            </div>
+                        </button>
+
+                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
+                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
+                        </button>
+                    </div>
+
+                    {{-- Bouton d'export --}}
+                    <div class="relative w-full mx-auto">
 
                         <div class="flex justify-between">
                             {{-- Bouton DL Anim --}}
@@ -328,33 +457,6 @@
                         </div>
                     </div>
 
-                    {{-- Zone sous skins / Orientation / Animation --}}
-                    <div class="flex justify-evenly space-x-8 w-fit mx-auto">
-                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
-                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 group-active:translate-y-0 group-active:scale-90 transition-all">
-                        </button>
-
-                        {{-- Choix anim exploration / combat --}}
-                        <button type="button"
-                                title="Exploration / Combat"
-                                :disabled="animation === 'Monture'"
-                                class="group relative h-8 w-16 rounded-full bg-primary-100 p-2 disabled:cursor-not-allowed"
-                                @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
-                            <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
-                                 :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
-                                <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                                </svg>
-
-                                <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Sword-Attack--Streamline-Sharp" class="size-4 -scale-x-100"><desc>Sword Attack Streamline Icon: https://streamlinehq.com</desc><g id="sword-attack--entertainment-gaming-sword-attack"><path id="Union" fill="#000000" fill-rule="evenodd" d="M6.67488 1.37109h-5.3033v5.3033L12.4699 17.7727l5.3033 -5.3033L6.67488 1.37109ZM21.4854 13.7068l-2.4751 2.4751 3.9895 3.9894 0 2.8285 -2.8285 0 -3.9894 -3.9895 -2.4747 2.4747 -1.4142 -1.4142 7.7781 -7.7782 1.4143 1.4142Z" clip-rule="evenodd" stroke-width="1"></path></g></svg>
-                            </div>
-                        </button>
-
-                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
-                            <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
-                        </button>
-                    </div>
-
                     {{-- Boutons copy link + Export PNG --}}
                     <div class="flex w-fit mx-auto justify-evenly space-x-2 min-[600px]:space-x-8">
 
@@ -370,27 +472,17 @@
 
                         {{-- Bouton Partager --}}
                         <div class="w-full flex justify-start">
-                            <button class="g-recaptcha relative px-5 min-[600px]:px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:brightness-110 hover:tracking-widest transition-all focus:brightness-75 uppercase"
-                                    data-sitekey="{{ config('services.recaptcha.site_key') }}"
-                                    data-callback='onSubmit'
-                                    data-action='store'>
+                            <button disabled
+                                    x-ref="btnShare"
+                                    type="button"
+                                    id="btnShare"
+                                    class="g-recaptcha relative px-5 min-[600px]:px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:enabled:brightness-110 hover:enabled:tracking-widest disabled:cursor-not-allowed disabled:grayscale transition-all focus:brightness-75 uppercase"
+                                    @click="openShareUI = true; $refs.btnShare.disabled = true;">
                                 <p class="absolute text-center w-full left-0">{{ __('barbofus.buttonShare') }}</p>
                                 <p class="opacity-0 tracking-widest">{{ __('barbofus.buttonShare') }}</p>
                             </button>
-
-                            @error('g-recaptcha-response')
-                            <x-forms.requirements-error :message="$message"/>
-                            @enderror
                         </div>
                     </div>
-
-                    <script data-type="lazy" data-src="https://www.google.com/recaptcha/api.js"></script>
-
-                    <script>
-                        function onSubmit(token) {
-                            document.getElementById("skinator-form").submit();
-                        }
-                    </script>
                 </div>
             </div>
 
@@ -637,6 +729,14 @@
                     '{{ __('barbofus.labelSkinColorsClothes') }} 3',
                     '{{ __('barbofus.labelSkinColorsClothes') }} 4',
                 ],
+                colorsName: [
+                    'skin',
+                    'hair',
+                    'cloth_1',
+                    'cloth_2',
+                    'cloth_3',
+                    'cloth_4',
+                ],
                 shouldResetColors: false,
                 charactersCurrentTab: 'breed',
                 itemsCurrentTab: 'hat',
@@ -661,6 +761,7 @@
                 },
                 previousData: '',
                 previousInvertX: '',
+                openShareUI: false,
 
                 initWatcher() {
                     Alpine.effect(() => {
@@ -735,24 +836,6 @@
                                 return this.items[key];
                             })
                             .filter(Boolean),
-                        /*skins: Object.entries(this.items)
-                            .map(([key, value]) => {
-                                if (!value) return null;
-                                if (key === 'mount') return null;
-
-                                const item = this.allItems.find(i => i.dofus_id === value && i.folder === 'skins');
-                                return item ? (this.gender === 0 ? item.asset_id : item.female_asset_id) : null;
-                            })
-                            .filter(Boolean),
-                        bones: Object.entries(this.items)
-                            .map(([key, value]) => {
-                                if (!value) return null;
-                                if (key === 'mount') return null;
-
-                                const item = this.allItems.find(i => i.dofus_id === value && i.folder === 'bones');
-                                return item ? (this.gender === 0 ? item.asset_id : item.female_asset_id) : null;
-                            })
-                            .filter(Boolean),*/
                         mount: this.items.mount ? this.allItems.find(i => i.dofus_id === this.items.mount).asset_id : null,
                         cameleon: this.items.mount ? ([1, 2, 3].includes(this.items.mount)) : false
                     }, null, 2);
@@ -999,6 +1082,8 @@
                 this.indexFrame = 0
                 this.lastTime = 0
 
+                this.rendererData = null
+
                 this.data = null
 
                 this.colors = [0xe59b68, 0x773f29, 0xd8742e, 0x496352, 0x512a15, 0x5b5243]
@@ -1023,6 +1108,7 @@
 
                 if (!this.__init) {
                     await this.InitGL()
+                    document.getElementById('btnShare').disabled = false
                     this.__init = true
                 }
 
@@ -1214,6 +1300,76 @@
                     await navigator.clipboard.write([item]);
                 })
 
+            }
+
+            async showSharePrevImage () {
+                return new Promise(async (resolve, reject) => {
+                    this.__running = false
+
+                    const originalWidth = this.$canvas.width
+                    const originalHeight = this.$canvas.height
+
+                    this.$canvas.width = 300
+                    this.$canvas.height = 500
+                    this.$canvas.style.width = originalWidth + 'px'
+                    this.$canvas.style.height = originalHeight + 'px'
+                    this.__updateViewport()
+
+
+                    this.draw()
+                    const url = this.$canvas.toDataURL('image/png');
+
+
+                    this.$canvas.width = originalWidth
+                    this.$canvas.height = originalHeight
+
+                    this.$canvas.style.width = 'initial'
+                    this.$canvas.style.height = 'initial'
+
+                    this.__updateViewport()
+
+                    this.start()
+
+                    // 🔄 Insertion de l'image dans l'élément <img>
+                    const img = document.getElementById('previsu-img');
+                    if (img) {
+                        img.src = url;
+                        img.style.opacity = '1'; // ou applique une animation si souhaité
+                    }
+
+                    resolve(); // N'oublie pas de résoudre la promesse
+                })
+
+            }
+
+            async fillShareInputImage () {
+                this.__running = false
+
+                const originalWidth = this.$canvas.width
+                const originalHeight = this.$canvas.height
+
+                this.$canvas.width = 300
+                this.$canvas.height = 500
+                this.$canvas.style.width = originalWidth + 'px'
+                this.$canvas.style.height = originalHeight + 'px'
+                this.__updateViewport()
+
+
+                this.draw()
+                const url = this.$canvas.toDataURL('image/png');
+
+
+                this.$canvas.width = originalWidth
+                this.$canvas.height = originalHeight
+
+                this.$canvas.style.width = 'initial'
+                this.$canvas.style.height = 'initial'
+
+                this.__updateViewport()
+
+                this.start()
+
+                return url;
             }
 
             // ======================================================================
@@ -1514,7 +1670,7 @@
             currentController = new AbortController();
 
             try {
-                const response = await fetch('http://62.241.115.223:9461/renderer', {
+                const response = await fetch('https://barbofus.com/renderer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -1523,6 +1679,8 @@
                     signal: currentController.signal // on passe le signal ici
                 });
 
+
+                skinRenderer.rendererData = data;
                 const buffer = await response.arrayBuffer();
                 await skinRenderer.setData(buffer, invX);
             } catch (error) {
@@ -1589,6 +1747,62 @@
         document.querySelector('#btnCopyImg').addEventListener('click', (e) => {
             skinRenderer.copyImage()
         })
+
+        document.querySelector('#btnShare').addEventListener('click', async (e) => {
+            let data = JSON.parse(skinRenderer.rendererData);
+            data.orientation = 1;
+            data.animation = 'Static';
+
+            // Affiche le loader
+            const loader = document.getElementById('shareLoader');
+            if(loader) {
+                loader.classList.add('animate-customSpin');
+                loader.classList.remove('opacity-0');
+            }
+
+            // Vide l'ancienne image
+            const img = document.getElementById('previsu-img');
+            if (img) {
+                img.src = '';
+                img.style.opacity = '0';
+            }
+
+            // Génére la nouvelle
+            await UpdateRenderer(JSON.stringify(data, null, 2), false);
+
+            // Puis l'applique
+            await skinRenderer.showSharePrevImage();
+
+            // Masque le loader
+            if(loader) {
+                loader.classList.remove('animate-customSpin');
+                loader.classList.add('opacity-0');
+            }
+        })
+
+        window.generateFinalInputImage = async function () {
+
+            // Génère l'image
+            let data = JSON.parse(skinRenderer.rendererData);
+            data.orientation = 1;
+            data.animation = 'Static';
+
+            await UpdateRenderer(JSON.stringify(data, null, 2), false);
+
+            const url = await skinRenderer.fillShareInputImage();
+            const blob = await (await fetch(url)).blob();
+            const file = new File([blob], 'webgl-image.png', { type: 'image/png' });
+
+            // Injecte ce fichier dans le champ file caché via DataTransfer
+            const dt = new DataTransfer();
+            dt.items.add(file);
+
+            const input = document.getElementById('image_path');
+            input.files = dt.files;
+
+            const form = document.getElementById('skinator-form');
+            form.submit();
+        };
 
 
     </script>

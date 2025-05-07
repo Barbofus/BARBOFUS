@@ -178,7 +178,7 @@ class UnitySkinController extends Controller
         // Resize de l'image, on affichera que 200px max
         $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
             'width' => 300,
-            'height' => 390]);
+            'height' => 500]); // 390
 
         $skin = UnitySkin::create([
             'hat_id' => $request->hat_id,
@@ -192,12 +192,12 @@ class UnitySkinController extends Controller
             'face' => $request->face,
             'image_path' => $imagePath,
             'gender' => $request->gender,
-            'color_skin' => $request->color_skin,
-            'color_hair' => $request->color_hair,
-            'color_cloth_1' => $request->color_cloth_1,
-            'color_cloth_2' => $request->color_cloth_2,
-            'color_cloth_3' => $request->color_cloth_3,
-            'color_cloth_4' => $request->color_cloth_4,
+            'color_skin' => ltrim($request->color_skin, '#'),
+            'color_hair' => ltrim($request->color_hair, '#'),
+            'color_cloth_1' => ltrim($request->color_cloth_1, '#'),
+            'color_cloth_2' => ltrim($request->color_cloth_2, '#'),
+            'color_cloth_3' => ltrim($request->color_cloth_3, '#'),
+            'color_cloth_4' => ltrim($request->color_cloth_4, '#'),
             'user_id' => $request->user()->id,
             'race_id' => $request->race_id,
             'status' => (Gate::check('validate-skin')) ? 'Posted' : 'Pending',
@@ -270,12 +270,12 @@ class UnitySkinController extends Controller
         $skin->face = $request->face;
         $skin->image_path = $imagePath;
         $skin->gender = $request->gender;
-        $skin->color_skin = $request->color_skin;
-        $skin->color_hair = $request->color_hair;
-        $skin->color_cloth_1 = $request->color_cloth_1;
-        $skin->color_cloth_2 = $request->color_cloth_2;
-        $skin->color_cloth_3 = $request->color_cloth_3;
-        $skin->color_cloth_4 = $request->color_cloth_4;
+        $skin->color_skin = ltrim($request->color_skin, '#');
+        $skin->color_hair = ltrim($request->color_hair, '#');
+        $skin->color_cloth_1 = ltrim($request->color_cloth_1, '#');
+        $skin->color_cloth_2 = ltrim($request->color_cloth_2, '#');
+        $skin->color_cloth_3 = ltrim($request->color_cloth_3, '#');
+        $skin->color_cloth_4 = ltrim($request->color_cloth_4, '#');
         $skin->race_id = $request->race_id;
         $skin->status = (Gate::check('validate-skin')) ? 'Posted' : 'Pending';
         $skin->name = $request->name;

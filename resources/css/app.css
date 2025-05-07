@@ -95,6 +95,10 @@
     scrollbar-width: none;  /* Firefox */
 }
 
+.grecaptcha-badge {
+    visibility: hidden !important;
+}
+
 :root {
 
     /* Colors */

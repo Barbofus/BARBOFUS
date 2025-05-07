@@ -25,7 +25,7 @@ final class SendDiscordPendingWebhook
                         *'.ucfirst(\Carbon\Carbon::now()->isoFormat('dddd D MMMM à HH:mm')).'*',
                     'color' => 16562499,
                     'thumbnail' => [
-                        'url' => asset('storage/'.$skin->image_path) . '?v=' . time() + rand(0, 1000),
+                        'url' => asset('storage/'.$skin->image_path).'?v='.time().rand(0, 1000),
                     ],
                 ],
             ],

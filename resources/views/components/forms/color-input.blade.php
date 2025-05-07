@@ -29,8 +29,6 @@
                 if(this.color.length > 6) {
                     color = color.slice(1);
                     this.color = color;
-
-                    console.log(color);
                 }
 
                 $refs.colorPreview.style.backgroundColor = '#' + color;

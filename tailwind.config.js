@@ -107,6 +107,10 @@ module.exports = {
                 '0%,100%': { height: 'var(--tw-height))' },
                 '50%': { height: 'var(--custom-zoom)'},
             },//, top: 'calc(calc(calc(var(--custom-zoom) + var(--tw-height))-100)/2)'
+            customSpin: {
+                '0%': { transform: 'rotate(0deg)' },
+                '100%': { transform: 'rotate(360deg)' },
+            },
         },
         animation: {
             skinApparition: 'skinApparition .5s linear forwards',
@@ -126,6 +130,7 @@ module.exports = {
             slideY: 'slideY var(--custom-animation-time) ease-in-out infinite',
             dice: 'dice var(--custom-animation-time) ease-in-out',
             zoomIn: 'zoomIn var(--custom-animation-time) ease-in-out infinite',
+            customSpin: 'customSpin var(--custom-animation-time) linear infinite',
         },
     },
   },

@@ -30,13 +30,20 @@ class StoreUpdateUnitySkinRequest extends FormRequest
     {
         $hexRegex = [
             'required',
-            'regex:/^[a-f0-9]{6}$/i',
+            'regex:/^#?[a-f0-9]{6}$/i',
         ];
 
         $raceId = (int) $this->input('race_id');
         $gender = (int) $this->input('gender');
 
-        $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
+        $imageValidation = '';
+
+        if (str_contains(url()->previous(), 'skinator')) {
+            $imageValidation = 'required|image|max:150|dimensions:width=300,height=500';
+        } else {
+            $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
+            $imageValidation = $imageRequired.'|image|max:500|dimensions:max_width=500,max_height=650';
+        }
 
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
 
@@ -58,7 +65,7 @@ class StoreUpdateUnitySkinRequest extends FormRequest
                 'integer',
                 Rule::in($validFaces),
             ],
-            'image_path' => $imageRequired.'|image|max:500|dimensions:max_width=500,max_height=650',
+            'image_path' => $imageValidation,
             'gender' => [
                 'required',
                 Rule::in([0, 1]),
@@ -129,8 +136,6 @@ class StoreUpdateUnitySkinRequest extends FormRequest
         $itemsMsg = 'Cet item n\'éxiste pas.';
 
         return [
-            'image_path.dimensions' => "L'image doit être inférieur à :max_widthx:max_height pixels.",
-            'image_path.max' => "L'image ne doit pas dépasser :max ko.",
 
             'color_skin.regex' => $hexMsg,
             'color_hair.regex' => $hexMsg,
