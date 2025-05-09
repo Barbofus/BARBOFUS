@@ -1,18 +1,19 @@
 @extends('layouts.basic-views')
 
 @section('content')
-    <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">Skinator</h1>
+    <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">{{ (str_ends_with(Route::currentRouteName(), 'edit')) ? __('barbofus.titleEdit') : 'Skinator' }}</h1>
 
     <form autocomplete="off"
           class="w-[min(98vw,120rem)] mx-auto mb-16 h-fit relative"
           method="POST"
           id="skinator-form"
-          action="{{ route('unity-skins.store') }}"
+          action="{{ $route }}"
           enctype="multipart/form-data"
           onkeydown="return event.key != 'Enter';"
           x-data="skinator"
           x-init="initWatcher">
 
+        @method($method)
         @csrf
 
         <input type="file" name="image_path" id="image_path" hidden>
@@ -478,8 +479,8 @@
                                     id="btnShare"
                                     class="g-recaptcha relative px-5 min-[600px]:px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:enabled:brightness-110 hover:enabled:tracking-widest disabled:cursor-not-allowed disabled:grayscale transition-all focus:brightness-75 uppercase"
                                     @click="openShareUI = true; $refs.btnShare.disabled = true;">
-                                <p class="absolute text-center w-full left-0">{{ __('barbofus.buttonShare') }}</p>
-                                <p class="opacity-0 tracking-widest">{{ __('barbofus.buttonShare') }}</p>
+                                <p class="absolute text-center w-full left-0">{{ (str_ends_with(Route::currentRouteName(), 'edit')) ? __('barbofus.buttonModify') : __('barbofus.buttonShare') }}</p>
+                                <p class="opacity-0 tracking-widest">{{ (str_ends_with(Route::currentRouteName(), 'edit')) ? __('barbofus.buttonModify') : __('barbofus.buttonShare') }}</p>
                             </button>
                         </div>
                     </div>
@@ -696,9 +697,15 @@
         </div>
     </form>
 
-
-
     <script>
+        // Masquer les query params comme ?skin=123 après chargement
+        if (window.location.search.includes('skin=')) {
+            const url = new URL(window.location);
+            url.searchParams.delete('skin');
+            window.history.replaceState({}, document.title, url.pathname + url.search);
+        }
+
+
         document.addEventListener("alpine:init", () => {
             Alpine.data("skinator", () => ({
                 breedInfos: @js($breeds),
@@ -743,21 +750,28 @@
                 petCurrentTab: 'familier',
                 oldGender: 0,
                 oldBreed: 1,
-                gender: 0,
-                breed: 1,
-                head: null,
-                colors: [],
+                gender: @json($skin ? $skin->gender : 0),
+                breed: @json($skin ? $skin->race_id : 1),
+                head: @json($skin?->face),
+                colors: {!! json_encode($skin ? [
+                    '#' . ltrim((string) $skin?->color_skin, '#'),
+                    '#' . ltrim((string) $skin?->color_hair, '#'),
+                    '#' . ltrim((string) $skin?->color_cloth_1, '#'),
+                    '#' . ltrim((string) $skin?->color_cloth_2, '#'),
+                    '#' . ltrim((string) $skin?->color_cloth_3, '#'),
+                    '#' . ltrim((string) $skin?->color_cloth_4, '#'),
+                ] : []) !!},
                 animation: 'Static',
                 cameleon: false,
                 items: {
-                    hat: null,
-                    cape: null,
-                    shield: null,
-                    pet: null,
-                    shoulderpads: null,
-                    wings: null,
-                    costume: null,
-                    mount: null,
+                    hat: @json($skin?->hat_id),
+                    cape: @json($skin?->cape_id),
+                    shield: @json($skin?->shield_id),
+                    pet: @json($skin?->pet_id),
+                    shoulderpads: @json($skin?->shoulderpads_id),
+                    wings: @json($skin?->wings_id),
+                    costume: @json($skin?->costume_id),
+                    mount: @json($skin?->mount_id),
                 },
                 previousData: '',
                 previousInvertX: '',
@@ -778,14 +792,15 @@
                                     clearInterval(interval);
                                 }
                             }, 50);
-                            //window.updateRendererData?.(data, invertX);
                         }
                     });
                 },
 
                 init()
                 {
-                    this.head = this.updateHead(this.gender, this.breed);
+                    if(this.head == null) {
+                        this.head = this.updateHead(this.gender, this.breed);
+                    }
                     this.breedHeads = this.updateHeads(this.gender, this.breed);
                     this.updateFilteredItems();
 
@@ -794,7 +809,9 @@
                     }
                     else
                     {
-                        this.colors = this.getDefaultColor(this.gender, this.breed);
+                        if(this.colors.length == 0) {
+                            this.colors = this.getDefaultColor(this.gender, this.breed);
+                        }
                         editURLParam(this.getURLObject())
                     }
                 },

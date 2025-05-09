@@ -14,7 +14,7 @@
             <div class="flex absolute gap-x-2 top-2 right-2">
                 {{-- Modification --}}
                 <a class="scale-90 hover:scale-110 text-inactiveText hover:text-blue-500 transition-all"
-                   href="{{ route('unity-skins.edit', $skin->id) }}">
+                   href="{{ route((Gate::check('mod-access') || Gate::check('admin-access')) ? 'skinator.edit' : 'unity-skins.edit', $skin->id) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-12">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -129,10 +129,11 @@
             <img src="{{ asset('storage/' . $skin->image_path) }}" draggable="false">
             <img src="{{ asset('storage/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
 
-            {{-- Button Copy Link --}}
-            <button
-                class="uppercase px-2 min-[950px]:px-4 py-1 min-[950px]:py-2 goldGradient rounded-md hover:rounded-3xl group-hover:brightness-110 group transition-all"
-                x-data="{
+            <div class="flex space-x-8">
+                {{-- Button Copy Link --}}
+                <button
+                    class="uppercase relative px-2 min-[950px]:px-4 py-1 min-[950px]:py-2 bg-primary border-2 border-goldText rounded-md hover:rounded-xl group-hover:brightness-110 group text-goldText transition-all"
+                    x-data="{
                         copied: 'Copy Link',
 
                         CopyLink() {
@@ -142,10 +143,20 @@
                             this.copied = 'Copié';
                         }
                     }"
-                x-on:mousedown="CopyLink">
-                <p class="text-primary font-medium text-[min(4.5vw,1.125rem)] group-hover:tracking-widest transition-all"
-                   x-text="copied"></p>
-            </button>
+                    x-on:mousedown="CopyLink">
+                    <p class="absolute w-full left-0 font-medium text-[min(4.5vw,1.125rem)] group-hover:tracking-widest transition-all"
+                       x-text="copied"></p>
+                    <p class="opacity-0 font-medium text-[min(4.5vw,1.125rem)] tracking-widest"
+                       x-text="copied"></p>
+                </button>
+
+                @if(Gate::check('mod-access') || Gate::check('admin-access'))
+                    <a href="{{ route('skinator.create') . '?skin=' . $skin->id }}" class="uppercase relative px-2 min-[950px]:px-4 py-1 min-[950px]:py-2 goldGradient rounded-md hover:rounded-xl group-hover:brightness-110 group transition-all">
+                        <p class="text-primary absolute text-center top-0 h-full flex items-center justify-center w-full left-0 font-medium text-[min(4.5vw,1.125rem)] group-hover:tracking-widest transition-all">Skinator</p>
+                        <p class="text-primary opacity-0 font-medium text-[min(4.5vw,1.125rem)] tracking-widest">Skinator</p>
+                    </a>
+                @endif
+            </div>
 
             <div class="flex flex-col min-[901px]:flex-row min-[901px]:absolute min-[901px]:-top-2 items-center gap-x-4 gap-y-4 mt-4">
                 {{-- Colors --}}

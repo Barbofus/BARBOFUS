@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ItemCategorieEnum;
+use App\Http\Middleware\UnitySkinsOwnerShip;
+use App\Models\UnitySkin;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -10,7 +13,40 @@ use Illuminate\View\View;
 
 class SkinatorController extends Controller
 {
-    public function create(): View
+    public function __construct()
+    {
+        $this->middleware(UnitySkinsOwnerShip::class)->only(['edit']);
+    }
+
+    public function create(Request $request): View
+    {
+        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira ; 3230 Mcdonald
+        if (! Gate::check('mod-access') & ! Gate::check('admin-access') & ! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230])) {
+            abort(403);
+        }
+
+        $skinId = $request->input('skin');
+        $skin = null;
+
+        if ($skinId) {
+            $skin = UnitySkin::find($skinId);
+
+            if (! $skin) {
+                abort(404);
+            }
+        }
+
+        return view('skins.skinator', [
+            'breeds' => $this->getBreeds(),
+            'itemCategories' => ItemCategorieEnum::values(),
+            'items' => $this->getItems(),
+            'route' => route('unity-skins.store'),
+            'skin' => $skin,
+            'method' => 'POST',
+        ]);
+    }
+
+    public function edit(UnitySkin $skin): View
     {
         // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira ; 3230 Mcdonald
         if (! Gate::check('mod-access') & ! Gate::check('admin-access') & ! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230])) {
@@ -21,6 +57,9 @@ class SkinatorController extends Controller
             'breeds' => $this->getBreeds(),
             'itemCategories' => ItemCategorieEnum::values(),
             'items' => $this->getItems(),
+            'route' => route('unity-skins.update', $skin),
+            'skin' => $skin,
+            'method' => 'PUT',
         ]);
     }
 

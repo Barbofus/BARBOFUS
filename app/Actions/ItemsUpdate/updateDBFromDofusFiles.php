@@ -245,7 +245,7 @@ final class updateDBFromDofusFiles
             }
 
             foreach ($currentLV as $key => $lv) {
-                $dofusId = (3000000000 + ($itemD['id'] * 1000) + ($key + 1));
+                $dofusId = (1000000000 + ($itemD['id'] * 1000) + ($key + 1));
                 $value = [
                     'dofus_id' => $dofusId,
                     'folder' => in_array($itemD['typeId'], [18, 249, 121, 250]) ? 'bones' : 'skins',

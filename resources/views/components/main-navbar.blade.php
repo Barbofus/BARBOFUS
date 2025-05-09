@@ -33,7 +33,11 @@
             @endguest
 
             @auth()
-                <a href="{{ route('unity-skins.create') }}" title="Partage de skin" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">🚀{{ __('barbofus.buttonSkinPost') }}</a>
+                @if (Gate::check('mod-access') || Gate::check('admin-access'))
+                    <a href="{{ route('skinator.create') }}" title="Partage de skin" :class="{{ (str_starts_with(Route::currentRouteName(),'skinator')) ? 'selectedClass' : 'unselectedClass'  }}">🚀Skinator</a>
+                @else
+                    <a href="{{ route('unity-skins.create') }}" title="Partage de skin" :class="{{ (Route::is('skins.create')) ? 'selectedClass' : 'unselectedClass'  }}">🚀{{ __('barbofus.buttonSkinPost') }}</a>
+                @endif
                 <a href="{{ route('havre-sacs.index') }}" title="Galleri de havre-sacs" :class="{{ (Route::is('havre-sacs.index')) ? 'selectedClass' : 'unselectedClass' }}">🏠{{ __('barbofus.buttonHavenbags') }}</a>
                 <a href="{{ route('tools') }}" title="Outils" :class="{{ (Route::is('tools')) ? 'selectedClass' : 'unselectedClass'  }}">🔧{{ __('barbofus.buttonTools') }}</a>
                 <a href="{{ route('user-dashboard.index') }}" title="Espace mon compte" :class="{{ (Route::is('user-dashboard.index')) ? 'selectedClass' : 'unselectedClass'  }}">⚙️{{ __('barbofus.buttonDashboard') }}</a>

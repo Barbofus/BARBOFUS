@@ -256,7 +256,7 @@ class UnitySkinController extends Controller
             // Resize de l'image, on affichera que 200px max
             $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
                 'width' => 300,
-                'height' => 390]);
+                'height' => 500]);
         }
 
         $skin->hat_id = $request->hat_id;

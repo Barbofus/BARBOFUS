@@ -39,7 +39,7 @@ class StoreUpdateUnitySkinRequest extends FormRequest
         $imageValidation = '';
 
         if (str_contains(url()->previous(), 'skinator')) {
-            $imageValidation = 'required|image|max:150|dimensions:width=300,height=500';
+            $imageValidation = 'required|image|max:250|dimensions:width=300,height=500';
         } else {
             $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
             $imageValidation = $imageRequired.'|image|max:500|dimensions:max_width=500,max_height=650';
@@ -144,14 +144,14 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             'color_cloth_3.regex' => $hexMsg,
             'color_cloth_4.regex' => $hexMsg,
 
-            'hat_id' => $itemsMsg,
-            'cape_id' => $itemsMsg,
-            'shield_id' => $itemsMsg,
-            'pet_id' => $itemsMsg,
-            'costume_id' => $itemsMsg,
-            'wings_id' => $itemsMsg,
-            'shoulderpads_id' => $itemsMsg,
-            'mount_id' => $itemsMsg,
+            'hat_id' => 'Cette coiffe n\'éxiste pas.',
+            'cape_id' => 'Cette cape n\'éxiste pas.',
+            'shield_id' => 'Ce bouclier n\'éxiste pas.',
+            'pet_id' => 'Ce familier n\'éxiste pas.',
+            'costume_id' => 'Ce costume n\'éxiste pas.',
+            'wings_id' => 'Ces ailes n\'éxistent pas.',
+            'shoulderpads_id' => 'Ces épaulières n\'éxistent pas.',
+            'mount_id' => 'Cette monture n\'éxiste pas.',
 
         ];
     }

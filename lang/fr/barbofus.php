@@ -29,6 +29,7 @@ return [
     'buttonSave' => 'Enregistrer',
     'buttonLinkDiscord' => 'Connecte ton discord',
     'buttonShare' => 'Partager',
+    'buttonModify' => 'Modifier',
 
     'titleHome' => 'Barbofus, la galerie de skins dofus',
     'titleBarbe' => 'Découvre Barbe Douce',

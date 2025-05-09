@@ -33,6 +33,7 @@ return [
     'buttonSave' => 'Salvar',
     'buttonLinkDiscord' => 'Vincule seu discord', // "link" would work as well, "vincule" is a more verbose approach
     'buttonShare' => 'Compartilhar',
+    'buttonModify' => 'Editar',
 
     'titleHome' => 'Barbofus, a galeria de aparências do Dofus',
     'titleBarbe' => 'Descubra Barbe Douce',
