@@ -36,6 +36,7 @@ Route::get('/outils', function () {
 })->name('tools');
 
 Route::get('/skinator', [SkinatorController::class, 'create'])->name('skinator.create');
+Route::get('/testator', [SkinatorController::class, 'testator'])->name('testator.create');
 
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');

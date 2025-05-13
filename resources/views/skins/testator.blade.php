@@ -1689,7 +1689,7 @@
             currentController = new AbortController();
 
             try {
-                const response = await fetch('https://barbofus.com/renderer', {
+                const response = await fetch('http://62.241.115.223:9461/renderer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
