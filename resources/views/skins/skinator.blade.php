@@ -583,14 +583,24 @@
 
                             if(event.target.dataset.category == 'pet')
                             {
-                                if(harn != null && mount == null || harn != null && mount.pet_type != harn.pet_type)
+                                if(harn != null)
                                 {
+                                    if(mount != null) {
+                                        const id = items['mount'];
+                                        const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                        if (radio) radio.checked = false;
+                                    }
+
                                     const id = {
                                         dragodinde: 1,
                                         muldo: 2,
                                         volkorne: 3,
                                     }
                                     items['mount'] = id[harn.pet_type];
+                                    const radio = document.querySelector(`input[type='radio'][data-id='${id[harn.pet_type]}']`);
+
+                                    if (radio) radio.checked = true;
                                 }
                             }
 
@@ -617,15 +627,12 @@
 
                             if(event.target.dataset.category == 'mount' && harn)
                             {
-                                if(harn.pet_type != mount.pet_type)
-                                {
-                                    const id = items['pet'];
-                                    const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+                                const id = items['pet'];
+                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
 
-                                    if (radio) radio.checked = false;
+                                if (radio) radio.checked = false;
 
-                                    items['pet'] = null;
-                                }
+                                items['pet'] = null;
                             }
                         }
 
