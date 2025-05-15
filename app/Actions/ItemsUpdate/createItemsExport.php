@@ -51,10 +51,8 @@ final class createItemsExport
                 'scale' => (in_array($item->pet_type, ['familier', 'montilier'])) ? ($jsonData[$item->dofus_id]['scales'] ?? [100]) : [100],
             ];
 
-            if (in_array($item->pet_type, ['familier', 'montilier'])) {
-                if (! empty($jsonData[$item->dofus_id]['indexedColors']) && $itemsById[$item->dofus_id]['isColorable'] === 0) {
-                    $entry['indexedColors'] = $jsonData[$item->dofus_id]['indexedColors'];
-                }
+            if (! empty($jsonData[$item->dofus_id]['indexedColors']) && $itemsById[$item->dofus_id]['isColorable'] === 0) {
+                $entry['indexedColors'] = $jsonData[$item->dofus_id]['indexedColors'];
             }
 
             $itemsExport[$item->dofus_id] = $entry;

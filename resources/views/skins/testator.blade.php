@@ -1185,74 +1185,72 @@
             // ==== Export de l'animation ====
             // ======================================================================
             async downloadAnimation () {
-                return new Promise(async (resolve, reject) => {
-                    this.setProgress(0)
-                    this.setLoading(true)
-                    this.__running = false
+                this.setProgress(0)
+                this.setLoading(true)
+                this.__running = false
 
-                    const originalWidth = this.$canvas.width
-                    const originalHeight = this.$canvas.height
+                const originalWidth = this.$canvas.width
+                const originalHeight = this.$canvas.height
 
-                    this.$canvas.width = 1080
-                    this.$canvas.height = 1080
-                    this.$canvas.style.width = originalWidth + 'px'
-                    this.$canvas.style.height = originalHeight + 'px'
-                    this.__updateViewport()
-
+                this.$canvas.width = 1080
+                this.$canvas.height = 1080
+                this.$canvas.style.width = originalWidth + 'px'
+                this.$canvas.style.height = originalHeight + 'px'
+                this.__updateViewport()
 
 
-                    const ffmpeg = new FFmpeg({ log: false });
-                    await ffmpeg.load()
+
+                const ffmpeg = new FFmpeg({ log: false });
+                await ffmpeg.load()
 
 
-                    const maxFrames = this.data.frames.length
-                    const frames = []
-                    for (let i = 0; i < maxFrames; i++) {
-                        this.indexFrame = i
-                        this.draw()
-                        const frame = this.$canvas.toDataURL('image/webp', 1.0)
-                        const response = await fetch(frame);
-                        const arrayBuffer = await response.arrayBuffer();
-                        await ffmpeg.writeFile(`frame${String(i).padStart(3, '0')}.webp`, new Uint8Array(arrayBuffer))
-                        this.setProgress((i + 1) / maxFrames * 0.75)
-                    }
+                const maxFrames = this.data.frames.length
+                const frames = []
+                for (let i = 0; i < maxFrames; i++) {
+                    this.indexFrame = i
+                    this.draw()
+                    const frame = this.$canvas.toDataURL('image/webp', 1.0)
+                    const response = await fetch(frame);
+                    const arrayBuffer = await response.arrayBuffer();
+                    await ffmpeg.writeFile(`frame${String(i).padStart(3, '0')}.webp`, new Uint8Array(arrayBuffer))
+                    this.setProgress((i + 1) / maxFrames * 0.75)
+                }
 
-                    let fakeProgress = 0.75
-                    const fakeProgressStep = 0.25 / (maxFrames / 4)
-                    ffmpeg.on('progress', ({ progress, time }) => {
-                        fakeProgress = Math.min(fakeProgress + fakeProgressStep, 1)
-                        this.setProgress(fakeProgress)
-                    });
+                let fakeProgress = 0.75
+                const fakeProgressStep = 0.25 / (maxFrames / 4)
+                ffmpeg.on('progress', ({ progress, time }) => {
+                    fakeProgress = Math.min(fakeProgress + fakeProgressStep, 1)
+                    this.setProgress(fakeProgress)
+                });
 
-                    await ffmpeg.exec([
-                        '-framerate', '30',                  // 30 fps
-                        '-i', 'frame%03d.webp',               // frame000.webp, frame001.webp, etc.
-                        '-loop', '0',                         // boucle infinie
-                        '-c:v', 'libwebp_anim',               // encoder en WebP animé
-                        '-quality', '100',                 // Meilleure qualité pour l'export (100%)
-                        'out.webp'                            // sortie
-                    ])
-                    const data = await ffmpeg.readFile('out.webp');
-                    const blob = new Blob([data], { type: 'video/webm' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'skin.webp';
-                    a.click();
-                    URL.revokeObjectURL(url);
+                await ffmpeg.exec([
+                    '-framerate', '30',                  // 30 fps
+                    '-i', 'frame%03d.webp',               // frame000.webp, frame001.webp, etc.
+                    '-loop', '0',                         // boucle infinie
+                    '-c:v', 'libwebp_anim',               // encoder en WebP animé
+                    '-quality', '100',                 // Meilleure qualité pour l'export (100%)
+                    'out.webp'                            // sortie
+                ])
+                const data = await ffmpeg.readFile('out.webp');
+                const blob = new Blob([data], { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'skin.webp';
+                a.click();
+                URL.revokeObjectURL(url);
 
-                    this.$canvas.width = originalWidth
-                    this.$canvas.height = originalHeight
+                this.$canvas.width = originalWidth
+                this.$canvas.height = originalHeight
 
-                    this.$canvas.style.width = 'initial'
-                    this.$canvas.style.height = 'initial'
+                this.$canvas.style.width = 'initial'
+                this.$canvas.style.height = 'initial'
 
-                    this.__updateViewport()
+                this.__updateViewport()
 
-                    this.setProgress(0)
-                    this.setLoading(false)
-                    this.start()
-                })
+                this.setProgress(0)
+                this.setLoading(false)
+                this.start()
             }
 
             async downloadImage () {
@@ -1759,8 +1757,26 @@
         // ======================================================================
         // ==== Exemple Button d'export  ====
         // ======================================================================
-        document.querySelector('#btnExportAnim').addEventListener('click', (e) => {
-            skinRenderer.downloadAnimation()
+        document.querySelector('#btnExportAnim').addEventListener('click', async (e) => {
+            // Génère l'image
+            let data = JSON.parse(skinRenderer.rendererData);
+            if(data.animated === true) {
+                console.log('animated', data.animated)
+                skinRenderer.downloadAnimation()
+            }
+            else {
+                console.log('animated false', data.animated)
+                data.animated = true;
+                await UpdateRenderer(JSON.stringify(data, null, 2), false);
+                console.log('UpdateRenderer true', data.animated)
+
+                await skinRenderer.downloadAnimation()
+
+                console.log('skinRenderer')
+                data.animated = false;
+                await UpdateRenderer(JSON.stringify(data, null, 2), false);
+                console.log('UpdateRenderer false', data.animated)
+            }
         })
 
         document.querySelector('#btnExport').addEventListener('click', (e) => {
