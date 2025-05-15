@@ -366,8 +366,25 @@
                     </style>
 
                     {{-- Skin --}}
-                    <div class="relative inline-block">
-                        <canvas @click="animated = !animated; " class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
+                    <div class="relative inline-block group">
+
+                        {{-- Toggle animation --}}
+                        <div class="group-hover:text-secondary text-inactiveText w-8 h-8 absolute top-2 left-0 transition-all">
+                            {{-- Pause --}}
+                            <svg x-cloak x-show="animated" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <path d="M4.5 2a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5h-1ZM10.5 2a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5h-1Z" />
+                            </svg>
+
+                            {{-- Play --}}
+                            <svg x-cloak x-show="!animated" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <path d="M3 3.732a1.5 1.5 0 0 1 2.305-1.265l6.706 4.267a1.5 1.5 0 0 1 0 2.531l-6.706 4.268A1.5 1.5 0 0 1 3 12.267V3.732Z" />
+                            </svg>
+                        </div>
+
+                        {{-- Render --}}
+                        <canvas @click="animated = !animated" class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
+
+                        {{-- Loader --}}
                         <svg class="loading-logo" style="display: none;" viewBox="0 0 66.410408 67.468735" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="progress-gradient" x1="0" y1="1" x2="0" y2="0">
