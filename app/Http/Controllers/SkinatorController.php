@@ -126,7 +126,9 @@ class SkinatorController extends Controller
                 END
             ")
             ->orderBy('level')
-            ->orderBy('name')
+            ->orderByRaw('name REGEXP ".* [0-9]+$" DESC')
+            ->orderByRaw('SUBSTRING_INDEX(name, " ", 1)')
+            ->orderByRaw('CAST(SUBSTRING_INDEX(name, " ", -1) AS UNSIGNED)')
             ->get();
 
     }
