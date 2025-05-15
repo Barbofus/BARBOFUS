@@ -496,7 +496,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/icons_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Picto/Items/item_assets_2x.bundle'),
+            escapeshellarg($this->dofusContentPath.'Picto/Items/item_assets_1x.bundle'),
             escapeshellarg(storage_path('app/public/images/icons/items')),
             escapeshellarg(storage_path('app/json/skinator/iconIds.txt')),
         );

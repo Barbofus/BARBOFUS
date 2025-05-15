@@ -277,7 +277,8 @@
                         {{--      Choix couleur      --}}
                         <div class="flex flex-wrap justify-evenly"
                              @click="if(event.target.closest('button[data-copy]')) { copyToClipboard(colors[event.target.closest('button[data-copy]').dataset.copy], 'hex' + event.target.closest('button[data-copy]').dataset.copy) }"
-                             @input="if(event.target.closest('input[data-color]')) { colors[event.target.closest('input[data-color]').dataset.color] = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6); editURLParam(getURLObject()) }">
+                             @change="editURLParam(getURLObject())"
+                             @input="if(event.target.closest('input[data-color]')) { colors[event.target.closest('input[data-color]').dataset.color] = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6) }">
                             <template x-for="(color, index) in colors" :key="index">
                                 <div :id="'color-' + index" class="my-3 hover:bg-primary-100 rounded-t-lg overflow-hidden transition-colors00">
                                     <button type="button"
@@ -651,7 +652,7 @@
                                    :checked="items[((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category)] === allItem.dofus_id">
                             <label :for="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem.dofus_id"
                                    :title="allItem.name"
-                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(4vw,6rem),3.8rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText"
+                                   class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(4vw,5rem),3.8rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText"
                                    x-data="{ loaded: false, intersected: false }">
 
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
@@ -672,8 +673,8 @@
 
                                 <img loading="lazy"
                                      draggable="false"
-                                     height="80"
-                                     width="80"
+                                     height="64"
+                                     width="64"
                                      :src="'/storage/' + allItem.icon_path"
                                      :alt="allItem.name"
                                      class="mt-0 transition-opacity delay-100 duration-300 relative z-10"
@@ -723,9 +724,12 @@
                     'Monture': [1,2,3,4,5,6,7,0],
                 },
                 rendererOrientation: {
-                    'Static': [1,2,1,0,5,6,5,0],
+                    /*'Static': [1,2,1,0,5,6,5,0],
                     'Combat': [1,1,5,5],
-                    'Monture': [1,2,1,0,5,6,5,0],
+                    'Monture': [1,2,1,0,5,6,5,0],*/
+                    'Static': [1,2,3,4,5,6,7,0],
+                    'Combat': [1,3,5,7],
+                    'Monture': [1,2,3,4,5,6,7,0],
                 },
                 orientationKey: 0,
                 colorsLabel: [
@@ -1689,7 +1693,7 @@
             currentController = new AbortController();
 
             try {
-                const response = await fetch('https://barbofus.com/renderer', {
+                const response = await fetch('https://skinator.barbofus.com/renderer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
