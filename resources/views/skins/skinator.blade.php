@@ -369,7 +369,7 @@
                     <div class="relative inline-block group">
 
                         {{-- Toggle animation --}}
-                        <div class="group-hover:text-secondary text-inactiveText w-8 h-8 absolute top-2 left-0 transition-all">
+                        <div class="group-hover:opacity-100 opacity-0 text-secondary pointer-events-none w-8 h-8 absolute top-2 left-0 transition-all">
                             {{-- Pause --}}
                             <svg x-cloak x-show="animated" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
                                 <path d="M4.5 2a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5h-1ZM10.5 2a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5h-1Z" />
