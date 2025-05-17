@@ -147,11 +147,11 @@ class AdminPanel extends Component
         $this->logTitle = 'RESTART';
         $this->stepLog();
 
-        $ssh_host = '54.38.92.136';
-        $ssh_port = 12587;
-        $ssh_user = 'debian';
+        $ssh_host = env('ssh_ovh_server_host');
+        $ssh_port = env('ssh_ovh_server_port');
+        $ssh_user = env('ssh_ovh_server_user');
         $ssh_key_path = 'C:/Users/thefl/.ssh/id_rsa_barbofus_renderer';
-        $ssh_passphrase = 'Ei6VEk283qq3cY';
+        $ssh_passphrase = env('SSH_OVH_SERVER_PASSWORD');
 
         $key = PublicKeyLoader::load(file_get_contents($ssh_key_path), $ssh_passphrase);
 

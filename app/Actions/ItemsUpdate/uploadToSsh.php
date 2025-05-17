@@ -16,11 +16,11 @@ final class uploadToSsh
     public function __invoke(array $localFiles, string $remoteDestination)
     {
         // Détails de la connexion SSH
-        $ssh_host = '54.38.92.136';
-        $ssh_port = 12587;
-        $ssh_user = 'debian';
+        $ssh_host = env('ssh_ovh_server_host');
+        $ssh_port = env('ssh_ovh_server_port');
+        $ssh_user = env('ssh_ovh_server_user');
         $ssh_key_path = 'C:/Users/thefl/.ssh/id_rsa_barbofus_renderer';
-        $ssh_passphrase = 'Ei6VEk283qq3cY';
+        $ssh_passphrase = env('SSH_OVH_SERVER_PASSWORD');
 
         // Vérification de la clé
         if (! file_exists($ssh_key_path)) {

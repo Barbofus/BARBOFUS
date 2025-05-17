@@ -1562,12 +1562,14 @@
 
 
                     if (customColor) {
-                        // const additiveColor = part.additiveColor ?? 0x7F7F7F7F
-                        const multiplicativeColor = part.multiplicativeColor ?? 0xFEFEFEFE
-                        const mr = ((multiplicativeColor >> 16) & 0xFF) / 0x7F;
-                        const mg = ((multiplicativeColor >> 8) & 0xFF) / 0x7F;
-                        const mb = (multiplicativeColor & 0xFF) / 0x7F;
+
+                        const multiplicativeColor = part.multiplicativeColor ?? 0x7F7F7F7F
+                        const mr = ((multiplicativeColor >> 0x10) & 0xFF) / 0x40;
+                        const mg = ((multiplicativeColor >> 0x08) & 0xFF) / 0x40;
+                        const mb = ((multiplicativeColor >> 0x00) & 0xFF) / 0x40;
+
                         gl.uniform3fv(uMainColor, [mr * customColor[0], mg * customColor[1], mb * customColor[2]]);
+
                     } else {
                         gl.uniform3fv(uMainColor, [1, 1, 1]);
                     }
