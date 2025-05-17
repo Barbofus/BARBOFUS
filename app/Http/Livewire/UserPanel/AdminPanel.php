@@ -5,6 +5,7 @@ namespace App\Http\Livewire\UserPanel;
 use App\Actions\ItemsUpdate\createItemsExport;
 use App\Actions\ItemsUpdate\updateDBFromDofusFiles;
 use App\Actions\ItemsUpdate\uploadToFtp;
+use App\Actions\ItemsUpdate\uploadToSsh;
 use App\Models\Item;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
+use phpseclib3\Crypt\PublicKeyLoader;
+use phpseclib3\Net\SSH2;
 
 class AdminPanel extends Component
 {
@@ -117,7 +120,7 @@ class AdminPanel extends Component
      */
     public function InitiateSkinsUpdate(): void
     {
-        $this->maxStep = 4;
+        $this->maxStep = 5;
         $this->currentStep = 0;
 
         // Récupère les skins/bones nécessaires
@@ -126,10 +129,41 @@ class AdminPanel extends Component
         // Construit le fichier itemsExport.json
         $this->makeItemExportFile();
 
+        // Construit le fichier itemsExport.json
+        $this->restartRendererServer();
+
         $this->currentStep = $this->maxStep;
         $this->stepName = 'Mise à jour terminé';
         $this->logIcon = '✅';
         $this->logTitle = 'FIN';
+        $this->stepLog();
+    }
+
+    public function restartRendererServer() : void
+    {
+        $this->currentStep++;
+        $this->stepName = 'Redémarrage du serveur OVH';
+        $this->logIcon = '🌱';
+        $this->logTitle = 'RESTART';
+        $this->stepLog();
+
+        $ssh_host = '54.38.92.136';
+        $ssh_port = 12587;
+        $ssh_user = 'debian';
+        $ssh_key_path = 'C:/Users/thefl/.ssh/id_rsa_barbofus_renderer';
+        $ssh_passphrase = 'Ei6VEk283qq3cY';
+
+        $key = PublicKeyLoader::load(file_get_contents($ssh_key_path), $ssh_passphrase);
+
+        $ssh = new SSH2($ssh_host, $ssh_port);
+        if (! $ssh->login($ssh_user, $key)) {
+            exit('❌ Connexion SSH échouée');
+        }
+
+        $output = $ssh->exec('sudo systemctl restart skinator');
+
+        $this->stepName = 'Fin';
+        $this->logIcon = '✅';
         $this->stepLog();
     }
 
@@ -182,6 +216,9 @@ class AdminPanel extends Component
                 }
             }
         }
+
+        $files['bones'] = array_values(array_unique($files['bones']));
+        $files['skins'] = array_values(array_unique($files['skins']));
 
         // Prépare les noms de fichiers pour python
         file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $files['skins']));
@@ -252,10 +289,10 @@ class AdminPanel extends Component
 
         $ftpFiles = [
             'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
-            'skins_json' => ['remoteDestination' => '/storage/app/json/skinator/skins/'],
+            'skins_json' => ['remoteDestination' => '/home/debian/data/skins/'],
             'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
-            'bones_data' => ['remoteDestination' => '/storage/app/json/skinator/bones/Bones_Data/'],
-            'bones_asset' => ['remoteDestination' => '/storage/app/json/skinator/bones/Bones_AssetData/'],
+            'bones_data' => ['remoteDestination' => '/home/debian/data/bones/Bones_Data/'],
+            'bones_asset' => ['remoteDestination' => '/home/debian/data/bones/Bones_AssetData/'],
         ];
 
         foreach ($files as $typeKey => $type) {
@@ -287,7 +324,7 @@ class AdminPanel extends Component
         }
 
         $count = 0;
-        foreach ($ftpFiles as $ftpFile) {
+        foreach ($ftpFiles as $key => $ftpFile) {
             $count++;
             $this->stepName = $count.'/'.count($ftpFiles).' Envoi les fichiers au serveur à '.$ftpFile['remoteDestination'];
             $this->stepLog();
@@ -296,7 +333,12 @@ class AdminPanel extends Component
                 continue;
             }
 
-            (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
+            if(in_array($key, ['skins_png', 'bones_png'])) {
+                (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
+            }
+            else {
+                (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
+            }
         }
 
         $this->stepName = 'Fin';
@@ -313,17 +355,6 @@ class AdminPanel extends Component
     {
         $this->currentStep++;
         $this->logTitle = 'CREATING ITEMSEXPORT JSON';
-        $this->stepName = 'Envoi outBonesSize.json au serveur';
-        $this->logIcon = '✈️';
-        $this->stepLog();
-
-        $files[] = [
-            'file' => storage_path('app/json/skinator/outBonesSize.json'),
-            'name' => 'outBonesSize.json',
-        ];
-
-        (new uploadToFtp)($files, '/storage/app/json/skinator/');
-
         $this->stepName = 'Créé itemsExport.json local';
         $this->logIcon = '🌱';
         $this->stepLog();
@@ -334,9 +365,12 @@ class AdminPanel extends Component
         $this->logIcon = '✈️';
         $this->stepLog();
 
-        Http::withHeaders([
-            'X-Secret-Key' => env('DOFUS_UPDATE_SECRET'),
-        ])->post('https://barbofus.com/api/create-items-export');
+        $files[] = [
+            'file' => storage_path('app/json/skinator/itemsExport.json'),
+            'name' => 'itemsExport.json',
+        ];
+
+        (new uploadToSsh)($files, '/home/debian/data/');
 
         $this->stepName = 'FIN';
         $this->logIcon = '✅';
@@ -389,12 +423,21 @@ class AdminPanel extends Component
             $this->stepLog();
         }
 
-        // Envoie les fichiers au serveur
-        $this->stepName = 'Envoi les fichiers au serveur ';
+        // Envoie les fichiers au serveur o2switch
+        $this->stepName = 'Envoi les fichiers au serveur o2switch';
         $this->logIcon = '✈️';
         $this->stepLog();
 
+        // Envoie au serveur o2dwitch
         (new uploadToFtp)($files, '/storage/app/json/skinator/');
+
+        // Envoie les fichiers au serveur ovh
+        $this->stepName = 'Envoi les fichiers au serveur ovh';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        // Envoie au serveur ovh
+        (new uploadToSsh)($files, '/home/debian/data');
     }
 
     /**
@@ -441,11 +484,12 @@ class AdminPanel extends Component
             $this->stepLog();
         }
 
-        // Envoie le fichier au serveur
-        $this->stepName = 'Envoi les langs au serveur ';
+        // Envoie le fichier au serveur o2switch
+        $this->stepName = 'Envoi les langs au serveur o2switch';
         $this->logIcon = '✈️';
         $this->stepLog();
 
+        // Envoie au serveur o2dwitch
         (new uploadToFtp)($files, '/storage/app/json/skinator/lang/');
     }
 
@@ -732,10 +776,10 @@ class AdminPanel extends Component
 
         $ftpFiles = [
             'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
-            'skins_json' => ['remoteDestination' => '/storage/app/json/skinator/skins/'],
+            'skins_json' => ['remoteDestination' => '/home/debian/data/skins/'],
             'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
-            'bones_data' => ['remoteDestination' => '/storage/app/json/skinator/bones/Bones_Data/'],
-            'bones_asset' => ['remoteDestination' => '/storage/app/json/skinator/bones/Bones_AssetData/'],
+            'bones_data' => ['remoteDestination' => '/home/debian/data/bones/Bones_Data/'],
+            'bones_asset' => ['remoteDestination' => '/home/debian/data/bones/Bones_AssetData/'],
         ];
 
         foreach ($files as $typeKey => $type) {
@@ -767,7 +811,7 @@ class AdminPanel extends Component
         }
 
         $count = 0;
-        foreach ($ftpFiles as $ftpFile) {
+        foreach ($ftpFiles as $key => $ftpFile) {
             $count++;
             $this->stepName = $count.'/'.count($ftpFiles).' Envoi les fichiers au serveur à '.$ftpFile['remoteDestination'];
             $this->stepLog();
@@ -776,7 +820,12 @@ class AdminPanel extends Component
                 continue;
             }
 
-            (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
+            if(in_array($key, ['skins_png', 'bones_png'])) {
+                (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
+            }
+            else {
+                (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
+            }
         }
 
         $this->stepName = 'Fin';

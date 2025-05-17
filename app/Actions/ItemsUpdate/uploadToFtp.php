@@ -32,7 +32,7 @@ final class uploadToFtp
         ftp_pasv($ftp_conn, true);
 
         foreach ($localFiles as $key => $fileInfos) {
-            $this->stepLog('🌱'.($key + 1).'/'.count($localFiles).' '.$fileInfos['name']);
+            $this->stepLog('o2switch 🌱'.($key + 1).'/'.count($localFiles).' '.$fileInfos['name']);
 
             if (! file_exists($fileInfos['file'])) {
                 $this->stepLog('✖️'.($key + 1).'/'.count($localFiles).' Aucun fichier trouvé '.$fileInfos['name']);

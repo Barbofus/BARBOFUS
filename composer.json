@@ -15,7 +15,8 @@
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.10"
+        "livewire/livewire": "^2.10",
+        "phpseclib/phpseclib": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
