@@ -1090,12 +1090,17 @@
           varying vec2 vTexCoord;
           uniform sampler2D u_texture;
           uniform vec3 u_mainColor;
+          uniform vec3 u_additiveColor;
           uniform float u_Opacity;
+
 
           void main() {
             vec4 texColor = texture2D(u_texture, vec2(vTexCoord.s, 1.0 - vTexCoord.t));
+
             texColor.rgb *= u_mainColor.rgb;
+            texColor.rgb += u_additiveColor;
             texColor.rgb *= (texColor.a * u_Opacity);
+
             texColor.a *= u_Opacity;
             gl_FragColor = texColor;
           }
@@ -1139,6 +1144,7 @@
                 // OpenGL
                 this.program = null
                 this.uMainColor = null
+                this.uAdditiveColor = null
                 this.uOpacity = null
                 this.uInvertX = null
                 this.positionsBuffer = null
@@ -1493,6 +1499,7 @@
                 const uMainColor = gl.getUniformLocation(program, 'u_mainColor')
                 const uOpacity = gl.getUniformLocation(program, 'u_Opacity')
                 const uInvertX = gl.getUniformLocation(program, 'u_invertX')
+                const uAdditiveColor = gl.getUniformLocation(program, 'u_additiveColor')
 
                 gl.uniform1f(uOpacity, 1.0)
 
@@ -1517,6 +1524,7 @@
                 const data = this.data
                 const program = this.program
                 const uMainColor = this.uMainColor
+                const uAdditiveColor = this.uAdditiveColor
                 const uOpacity = this.uOpacity
                 const positionsBuffer = this.positionsBuffer
                 const uvsBuffer = this.uvsBuffer
@@ -1561,20 +1569,42 @@
                     }
 
 
+                    let alpha = part.alpha ?? 1.0
+
                     if (customColor) {
 
+                        // const additiveColor = part.additiveColor ?? 0x7F7F7F7F
                         const multiplicativeColor = part.multiplicativeColor ?? 0x7F7F7F7F
                         const mr = ((multiplicativeColor >> 0x10) & 0xFF) / 0x40;
                         const mg = ((multiplicativeColor >> 0x08) & 0xFF) / 0x40;
                         const mb = ((multiplicativeColor >> 0x00) & 0xFF) / 0x40;
 
                         gl.uniform3fv(uMainColor, [mr * customColor[0], mg * customColor[1], mb * customColor[2]]);
-
+                        gl.uniform3fv(uAdditiveColor, [0, 0, 0]);
                     } else {
+
+
+                        const multiplicativeColor = part.multiplicativeColor ?? 0x00000000
+                        const mr = ((multiplicativeColor >> 0x10) & 0xFF) / 0x7F;
+                        const mg = ((multiplicativeColor >> 0x08) & 0xFF) / 0x7F;
+                        const mb = ((multiplicativeColor >> 0x00) & 0xFF) / 0x7F;
+
+                        const additiveColor = part.additiveColor ?? 0
+                        let aa = ((additiveColor >> 0x18) & 0xFF) / 0xFF;
+                        let ar = ((additiveColor >> 0x10) & 0xFF) / 0xFF;
+                        let ag = ((additiveColor >> 0x08) & 0xFF) / 0xFF;
+                        let ab = ((additiveColor >> 0x00) & 0xFF) / 0xFF;
+
+                        if (aa) {
+                            alpha = alpha - (aa / 2)
+                        }
+
                         gl.uniform3fv(uMainColor, [1, 1, 1]);
+                        gl.uniform3fv(uAdditiveColor, [ar, ag, ab]);
                     }
 
-                    gl.uniform1f(uOpacity, part.alpha ?? 1.0)
+
+                    gl.uniform1f(uOpacity, alpha)
 
                     const positions = new Float32Array(part.positions);
                     const uvs = new Float32Array(part.uvs);

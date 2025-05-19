@@ -289,10 +289,10 @@ class AdminPanel extends Component
 
         $ftpFiles = [
             'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
-            'skins_json' => ['remoteDestination' => '/home/debian/data/skins/'],
+            'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
             'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
-            'bones_data' => ['remoteDestination' => '/home/debian/data/bones/Bones_Data/'],
-            'bones_asset' => ['remoteDestination' => '/home/debian/data/bones/Bones_AssetData/'],
+            'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
+            'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
         ];
 
         foreach ($files as $typeKey => $type) {
@@ -370,7 +370,7 @@ class AdminPanel extends Component
             'name' => 'itemsExport.json',
         ];
 
-        (new uploadToSsh)($files, '/home/debian/data/');
+        (new uploadToSsh)($files, '/home/debian/sites/barbofus.com/data/');
 
         $this->stepName = 'FIN';
         $this->logIcon = '✅';
@@ -437,7 +437,7 @@ class AdminPanel extends Component
         $this->stepLog();
 
         // Envoie au serveur ovh
-        (new uploadToSsh)($files, '/home/debian/data');
+        (new uploadToSsh)($files, '/home/debian/sites/barbofus.com/data');
     }
 
     /**
@@ -776,10 +776,10 @@ class AdminPanel extends Component
 
         $ftpFiles = [
             'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
-            'skins_json' => ['remoteDestination' => '/home/debian/data/skins/'],
+            'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
             'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
-            'bones_data' => ['remoteDestination' => '/home/debian/data/bones/Bones_Data/'],
-            'bones_asset' => ['remoteDestination' => '/home/debian/data/bones/Bones_AssetData/'],
+            'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
+            'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
         ];
 
         foreach ($files as $typeKey => $type) {
