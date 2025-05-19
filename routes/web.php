@@ -28,9 +28,6 @@ use Illuminate\Support\Facades\Storage;
 */
 
 
-Route::get('/foo', function () {
-
-});
 
 Route::get('/', HomeController::class)->name('home');
 
