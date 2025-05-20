@@ -818,6 +818,7 @@
                             let interval = setInterval(() => {
                                 if (window.updateRendererData) {
                                     window.updateRendererData(data, invertX);
+                                    window.resetDefaultColors()
                                     clearInterval(interval);
                                 }
                             }, 50);
@@ -1714,8 +1715,8 @@
         // ======================================================================
         const skinRenderer = new SkinRenderer(document.querySelector('#canvas0'))
 
-        const urlData = window.getDataFromURL();
-        skinRenderer.setColors(urlData.colors)
+        /*const urlData = window.getDataFromURL();
+        skinRenderer.setColors(urlData.colors)*/
 
         window.resetColors = function () {
             const urlData = window.getDataFromURL();

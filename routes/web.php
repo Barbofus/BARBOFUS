@@ -79,8 +79,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/skins/create', [SkinController::class, 'create'])->name('skins.create');
     Route::get('/skins/{skin}/edit', [SkinController::class, 'edit'])->name('skins.edit');
 
-    Route::get('/unity-skins/create', [UnitySkinController::class, 'create'])->name('unity-skins.create');
-    Route::get('/unity-skins/{skin}/edit', [UnitySkinController::class, 'edit'])->name('unity-skins.edit');
+    //Route::get('/unity-skins/create', [UnitySkinController::class, 'create'])->name('unity-skins.create');
+    //Route::get('/unity-skins/{skin}/edit', [UnitySkinController::class, 'edit'])->name('unity-skins.edit');
 
     Route::get('/skinator/{skin}/edit', [SkinatorController::class, 'edit'])->name('skinator.edit');
 

@@ -200,17 +200,17 @@ class UnitySkinController extends Controller
             'color_cloth_4' => ltrim($request->color_cloth_4, '#'),
             'user_id' => $request->user()->id,
             'race_id' => $request->race_id,
-            'status' => (Gate::check('validate-skin')) ? 'Posted' : 'Pending',
+            'status' => 'Posted',
             'name' => $request->name,
         ]);
 
         session()->flash('alert-message', __('barbofus.alertSkinCreated'));
 
-        if (! Gate::check('validate-skin')) {
+        /*if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
-        } else {
+        } else {*/
             (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
-        }
+        //}
 
         return redirect()->route('user-dashboard.index', 'section=my-unity-skins');
     }
@@ -277,18 +277,18 @@ class UnitySkinController extends Controller
         $skin->color_cloth_3 = ltrim($request->color_cloth_3, '#');
         $skin->color_cloth_4 = ltrim($request->color_cloth_4, '#');
         $skin->race_id = $request->race_id;
-        $skin->status = (Gate::check('validate-skin')) ? 'Posted' : 'Pending';
+        $skin->status = 'Posted';
         $skin->name = $request->name;
 
         $skin->save();
 
         session()->flash('alert-message', __('barbofus.alertSkinEdited'));
 
-        if (! Gate::check('validate-skin')) {
+        /*if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
-        } else {
+        } else {*/
             (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
-        }
+        //}
 
         return redirect()->route('user-dashboard.index', 'section=my-unity-skins');
     }

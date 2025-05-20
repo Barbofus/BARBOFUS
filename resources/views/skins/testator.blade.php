@@ -366,7 +366,7 @@
                     </style>
 
                     {{-- Skin --}}
-                    <div class="relative inline-block">
+                    <div class="relative inline-block group">
 
                         {{-- Toggle animation --}}
                         <div class="group-hover:opacity-100 opacity-0 text-secondary pointer-events-none w-8 h-8 absolute top-2 left-0 transition-all">
@@ -382,7 +382,7 @@
                         </div>
 
                         {{-- Render --}}
-                        <canvas @click="animated = !animated; " class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
+                        <canvas @click="animated = !animated" class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
 
                         {{-- Loader --}}
                         <svg class="loading-logo" style="display: none;" viewBox="0 0 66.410408 67.468735" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
@@ -818,6 +818,7 @@
                             let interval = setInterval(() => {
                                 if (window.updateRendererData) {
                                     window.updateRendererData(data, invertX);
+                                    window.resetDefaultColors()
                                     clearInterval(interval);
                                 }
                             }, 50);
@@ -1714,8 +1715,8 @@
         // ======================================================================
         const skinRenderer = new SkinRenderer(document.querySelector('#canvas0'))
 
-        const urlData = window.getDataFromURL();
-        skinRenderer.setColors(urlData.colors)
+        /*const urlData = window.getDataFromURL();
+        skinRenderer.setColors(urlData.colors)*/
 
         window.resetColors = function () {
             const urlData = window.getDataFromURL();

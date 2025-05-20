@@ -18,7 +18,7 @@ final class ResizeImages
     ): string {
 
         // Nomme l'image en fonction de l'heure actuelle
-        $imageName = time().'.'.$image->extension();
+        $imageName = time().rand().'.'.$image->extension();
 
         // On range ça dans le public
         $destinationPath = storage_path('app/public/'.$storagePath);

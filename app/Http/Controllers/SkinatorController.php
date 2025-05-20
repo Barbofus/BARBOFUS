@@ -20,11 +20,6 @@ class SkinatorController extends Controller
 
     public function create(Request $request): View
     {
-        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira ; 3230 Mcdonald ; 10049 Zyros
-        if (! Gate::check('mod-access') & ! Gate::check('admin-access') & ! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230, 10049])) {
-            abort(403);
-        }
-
         $skinId = $request->input('skin');
         $skin = null;
 
@@ -48,8 +43,8 @@ class SkinatorController extends Controller
 
     public function testator(Request $request): View
     {
-        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira ; 3230 Mcdonald
-        if (! Gate::check('mod-access') & ! Gate::check('admin-access') & ! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230])) {
+        // 465 Gannon
+        if (! Gate::check('mod-access') & ! Gate::check('admin-access') & auth()->id() != 465) {
             abort(403);
         }
 
@@ -76,11 +71,6 @@ class SkinatorController extends Controller
 
     public function edit(UnitySkin $skin): View
     {
-        // 2496 Coatox ; 8741 Yoroi ; 465 Gannon ; 9322 Kira ; 3230 Mcdonald ; 10049 Zyros
-        if (! Gate::check('mod-access') & ! Gate::check('admin-access') & ! in_array(auth()->id(), [2496, 8741, 465, 9322, 3230, 10049])) {
-            abort(403);
-        }
-
         return view('skins.skinator', [
             'breeds' => $this->getBreeds(),
             'itemCategories' => ItemCategorieEnum::values(),

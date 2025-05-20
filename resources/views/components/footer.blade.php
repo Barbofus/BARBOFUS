@@ -22,7 +22,7 @@
             <div class="grid grid-cols-2 min-[500px]:grid-cols-3 w-fit mx-auto gap-x-2 items-center justify-center text-primary my-4 [&>a]:h-8 [&>a:hover]:-skew-x-12 uppercase">
                 <a href="{{ route('home') }}" title="Accueil du site">{{ __('barbofus.buttonHome') }}</a>
                 <a href="{{ route('unity-skins.index') }}" title="Gallerie de skin">{{ __('barbofus.buttonSkins') }}</a>
-                <a href="{{ route('unity-skins.create') }}" title="Partage ton skin">{{ __('barbofus.buttonSkinPost') }}</a>
+                <a href="{{ route('skinator.create') }}" title="Créer ton skin">Skinator</a>
                 <a href="{{ route('havre-sacs.index') }}" title="Gallerie de havre-sacs">{{ __('barbofus.buttonHavenbags') }}</a>
                 <a href="{{ route('tools') }}" title="Barb'outils">{{ __('barbofus.buttonTools') }}</a>
                 <a href="{{ route('mentions-legales') }}" title="Mentions légales">{{ __('barbofus.buttonLegals') }}</a>

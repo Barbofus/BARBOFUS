@@ -16,9 +16,9 @@ final class uploadToSsh
     public function __invoke(array $localFiles, string $remoteDestination)
     {
         // Détails de la connexion SSH
-        $ssh_host = env('ssh_ovh_server_host');
-        $ssh_port = env('ssh_ovh_server_port');
-        $ssh_user = env('ssh_ovh_server_user');
+        $ssh_host = env('SSH_OVH_SERVER_HOST');
+        $ssh_port = env('SSH_OVH_SERVER_PORT');
+        $ssh_user = env('SSH_OVH_SERVER_USER');
         $ssh_key_path = 'C:/Users/thefl/.ssh/id_rsa_barbofus_renderer';
         $ssh_passphrase = env('SSH_OVH_SERVER_PASSWORD');
 

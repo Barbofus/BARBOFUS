@@ -1,8 +1,6 @@
 @extends('layouts.basic-views')
 
-@section('meta-image')
-    {{ asset('storage/' . $skin->image_path) }}
-@endsection
+@section('meta-image'){{ asset('storage/' . $skin->image_path) }}@endsection
 
 @section('content')
 
@@ -14,7 +12,7 @@
             <div class="flex absolute gap-x-2 top-2 right-2">
                 {{-- Modification --}}
                 <a class="scale-90 hover:scale-110 text-inactiveText hover:text-blue-500 transition-all"
-                   href="{{ route((Gate::check('mod-access') || Gate::check('admin-access')) ? 'skinator.edit' : 'unity-skins.edit', $skin->id) }}">
+                   href="{{ route('skinator.edit', $skin->id) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-12">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -150,12 +148,10 @@
                        x-text="copied"></p>
                 </button>
 
-                @if(Gate::check('mod-access') || Gate::check('admin-access'))
-                    <a href="{{ route('skinator.create') . '?skin=' . $skin->id }}" class="uppercase relative px-2 min-[950px]:px-4 py-1 min-[950px]:py-2 goldGradient rounded-md hover:rounded-xl group-hover:brightness-110 group transition-all">
-                        <p class="text-primary absolute text-center top-0 h-full flex items-center justify-center w-full left-0 font-medium text-[min(4.5vw,1.125rem)] group-hover:tracking-widest transition-all">Skinator</p>
-                        <p class="text-primary opacity-0 font-medium text-[min(4.5vw,1.125rem)] tracking-widest">Skinator</p>
-                    </a>
-                @endif
+                <a href="{{ route('skinator.create') . '?skin=' . $skin->id }}" class="uppercase relative px-2 min-[950px]:px-4 py-1 min-[950px]:py-2 goldGradient rounded-md hover:rounded-xl group-hover:brightness-110 group transition-all">
+                    <p class="text-primary absolute text-center top-0 h-full flex items-center justify-center w-full left-0 font-medium text-[min(4.5vw,1.125rem)] group-hover:tracking-widest transition-all">Skinator</p>
+                    <p class="text-primary opacity-0 font-medium text-[min(4.5vw,1.125rem)] tracking-widest">Skinator</p>
+                </a>
             </div>
 
             <div class="flex flex-col min-[901px]:flex-row min-[901px]:absolute min-[901px]:-top-2 items-center gap-x-4 gap-y-4 mt-4">

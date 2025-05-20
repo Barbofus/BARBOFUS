@@ -15,7 +15,7 @@
         <div class="invisible [@media(min-height:501px)_and_(min-width:851px)]:visible
                 min-[851px]:visible h-full w-fit py-2 flex flex-col items-start min-[975px]:items-center justify-between">
             <a class="flex items-center justify-around cursor-pointer gap-x-2"
-                href="https://www.youtube.com/watch?v=l9mJGSFxeYk" title="Tutoriel pour poster un skin" target="_blank">
+                href="https://www.youtube.com/watch?v=cuAsh_dMw90&ab_channel=BarbeDouce" title="Tutoriel pour poster un skin" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-8 fill-secondary">
                     <path d="M11.812,0C5.289,0,0,5.289,0,11.812s5.289,11.813,11.812,11.813s11.813-5.29,11.813-11.813
                     S18.335,0,11.812,0z M14.271,18.307c-0.608,0.24-1.092,0.422-1.455,0.548c-0.362,0.126-0.783,0.189-1.262,0.189
@@ -33,7 +33,7 @@
                 <p class="font-display text-secondary text-[1rem]">{{ __('barbofus.buttonSkinIndexPostTuto') }}</p>
             </a>
 
-            <a href="https://www.remove.bg/" target="_blank" class="w-fit mt-2 font-display text-secondary text-[1rem] bg-red-500 hover:bg-red-300 transition-all rounded-md px-4">{{ __('barbofus.contentAccessTo') }} remove.bg</a>
+            <a href="{{ route('skinator.create') }}" target="_blank" class="w-fit mt-2 font-display text-secondary text-[1rem] bg-red-500 hover:bg-red-300 transition-all rounded-md px-4">{{ __('barbofus.contentAccessTo') }} skinator</a>
         </div>
 
         {{-- Menu de trie --}}

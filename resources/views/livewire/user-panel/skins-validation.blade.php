@@ -111,14 +111,15 @@
                         <button wire:click="acceptUnitySkin({{ $skin->id }})"
                                 class="px-4 h-12 w-fit text-primary goldGradient transition-all hover:rounded-3xl hover:tracking-widest rounded-md text-md min-[750px]:text-xl hover:brightness-110">Accepter</button>
 
-                        <div class="flex min-[750px]:space-x-2 flex-1" x-data="{ refused_reason: '' }">
+                        {{--<div class="flex min-[750px]:space-x-2 flex-1" x-data="{ refused_reason: '' }">
 
                             <button @click="$wire.refuseUnitySkin(refused_reason, {{ $skin->id }}), refused_reason = ''" class="px-4 h-12 absolute top-0 right-0 max-[749px]:right-2 text-primary transition-all hover:rounded-3xl hover:tracking-widest heartGradient rounded-md text-md min-[750px]:text-xl hover:brightness-110 min-[750px]:static">Refuser</button>
                             <textarea
                                 type="text" name="reason" placeholder="Raison du refus ..." maxlength="128"
                                 class="rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100 flex-1 h-12 p-2"
                                 x-model="refused_reason"></textarea>
-                        </div>
+                        </div>--}}
+                        <a href="{{ route('skinator.edit', $skin->id) }}" class="p-4 goldGradient text-primary text-lg rounded-lg">Skinator</a>
                     </div>
                 </div>
             @endforeach

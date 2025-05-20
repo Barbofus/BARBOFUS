@@ -88,7 +88,7 @@ class SkinsValidation extends Component
             ->get();
 
         $this->unitySkins = DB::table('unity_skins')->select('*')
-            ->where('status', '=', 'pending')
+            ->whereIn('status', ['pending', 'refused'])
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')
