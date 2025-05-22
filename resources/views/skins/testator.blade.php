@@ -276,9 +276,14 @@
 
                         {{--      Choix couleur      --}}
                         <div class="flex flex-wrap justify-evenly"
-                             @click="if(event.target.closest('button[data-copy]')) { copyToClipboard(colors[event.target.closest('button[data-copy]').dataset.copy], 'hex' + event.target.closest('button[data-copy]').dataset.copy) }"
+                             @click="if(event.target.closest('button[data-copy]')) { copyToClipboard(colors[event.target.closest('button[data-copy]').dataset.copy].slice(1), 'hex' + event.target.closest('button[data-copy]').dataset.copy) }"
                              @change="editURLParam(getURLObject())"
-                             @input="if(event.target.closest('input[data-color]')) { colors[event.target.closest('input[data-color]').dataset.color] = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6) }">
+                             @input="if(event.target.closest('input[data-color]'))
+                             {
+                                newColor = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
+                                colors[event.target.closest('input[data-color]').dataset.color] = newColor;
+                                event.target.value = newColor;
+                             }">
                             <template x-for="(color, index) in colors" :key="index">
                                 <div :id="'color-' + index" class="my-3 hover:bg-primary-100 rounded-t-lg overflow-hidden transition-colors00">
                                     <button type="button"
@@ -304,29 +309,63 @@
                                         <input type="text"
                                                :value="colors[index]"
                                                :name="'color_' + colorsName[index]"
+                                               maxlength="7"
                                                :data-color="index"
                                                class="uppercase order-last h-full peer rounded-r p-1 bg-primary-100 text-center w-[5.5rem] min-[600px]:w-28 focus:outline-none border-transparent focus:border-secondary border-y border-r transition-colors">
 
-                                        <div class="w-10 h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary" :style="{ background: colors[index] }">
-                                            <input type="color"
-                                                   :data-color="index"
-                                                   :value="colors[index]"
-                                                   class="opacity-0 h-full w-full cursor-pointer">
+                                        <div class="relative w-10 z-0 h-full group">
+                                            <div class="w-full h-full rounded-l cursor-pointer focus:outline-none border-transparent border-y border-l peer-focus:border-secondary" :style="{ background: colors[index] }">
+                                                <input type="color"
+                                                       :data-color="index"
+                                                       :value="colors[index]"
+                                                       class="opacity-0 h-full w-full cursor-pointer">
+                                            </div>
+
+                                            <button class="opacity-0 -z-10 absolute top-0 left-0 h-full w-full border-transparent bg-primary-100 text-inactiveText group-hover:opacity-100 group-hover:translate-x-full hover:text-red-500 transition-all"
+                                                    @click="colors[index] = getOneDefaultColor(gender, breed, index); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                                    type="button"
+                                                    title="reset">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-7 mx-auto">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+
+                                            <button class="opacity-0 -z-10 absolute top-0 left-0 h-full w-full border-transparent bg-primary-100 text-inactiveText group-hover:opacity-100 group-hover:translate-x-[calc(100%*2)] hover:text-purple-500 transition-all"
+                                                    @click="colors[index] = getOneRandomColor(); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                                    type="button"
+                                                    title="randomize">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 mx-auto">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                                </svg>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </template>
                         </div>
 
-                        <button type="button"
-                                @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetDefaultColors()"
-                                class="py-2 mt-4 flex items-center space-x-2 px-4 mx-auto rounded-md text-xl bg-primary-100 text-inactiveText uppercase hover:text-red-500 hover:rounded-3xl transition-all duration-75">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                            </svg>
+                        <div class="flex justify-evenly">
 
-                            <p>Reset</p>
-                        </button>
+                            <button type="button"
+                                    @click="colors = colors.map(() => getOneRandomColor()); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                    class="py-2 mt-4 flex items-center space-x-2 px-4 mx-auto rounded-md text-lg bg-primary-100 text-inactiveText uppercase hover:text-purple-500 hover:rounded-3xl transition-all duration-75">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                </svg>
+
+                                <p>Randomize</p>
+                            </button>
+
+                            <button type="button"
+                                    @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                    class="py-2 mt-4 flex items-center space-x-2 px-4 mx-auto rounded-md text-xl bg-primary-100 text-inactiveText uppercase hover:text-red-500 hover:rounded-3xl transition-all duration-75">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+
+                                <p>Reset</p>
+                            </button>
+                        </div>
                     </div>
 
                     @if ($errors->any())
@@ -773,7 +812,7 @@
                     'cloth_4',
                 ],
                 shouldResetColors: false,
-                charactersCurrentTab: 'breed',
+                charactersCurrentTab: 'color',
                 itemsCurrentTab: 'hat',
                 petCurrentTab: 'familier',
                 oldGender: 0,
@@ -968,6 +1007,24 @@
                     }
 
                     return [];
+                },
+
+                getOneDefaultColor(gender, breed, index)
+                {
+                    const currentBreed = this.breedInfos.find(b => b.dofus_id === breed);
+
+                    if (currentBreed) {
+                        // Applique la fonction decimalToHex à chaque couleur de colors[gender]
+                        return decimalToHex(currentBreed.colors[gender === 0 ? 'male' : 'female'][index]);
+                    }
+
+                    return '#FFFFFF';
+                },
+
+                getOneRandomColor()
+                {
+                    const randomDecimal = Math.floor(Math.random() * 0xFFFFFF); // Nombre aléatoire entre 0 et 16777215
+                    return '#' + randomDecimal.toString(16).padStart(6, '0').toUpperCase();
                 },
             }));
         });
