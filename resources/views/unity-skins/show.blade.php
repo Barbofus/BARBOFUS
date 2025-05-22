@@ -100,7 +100,7 @@
             {{-- Gender --}}
             <div
                 class="flex rounded-md justify-self-start items-center gap-x-2 border-2 text-secondary border-goldText px-2 min-[950px]:px-3 min-[950px]:h-12 bg-primary-100 py-1 min-[950px]:py-2">
-                @if($skin->gender == 'Homme')
+                @if($skin->gender == 0)
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-5 min-[950px]:h-full"
                          viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
