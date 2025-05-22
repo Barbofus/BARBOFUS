@@ -178,6 +178,13 @@ class AdminPanel extends Component
         $this->logTitle = 'GET BONES';
         $this->stepLog();
 
+        $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
+
+        /**
+         * @var array<string, array<string, int>> $files
+         */
+        $cache = $itemsCache;
+
         /**
          * @var array<string, array<int, string>> $files
          */
@@ -197,7 +204,7 @@ class AdminPanel extends Component
             $aId = $item->asset_id;
             $faId = $item->female_asset_id;
 
-            if ($aId == '' || $faId == '') {
+            if ($aId == '' || $faId == '' || in_array($aId, $files[$folder])) {
                 continue;
             }
 
@@ -205,6 +212,7 @@ class AdminPanel extends Component
             $dofusFile = $this->dofusContentPath.'Characters/'.ucfirst($folder).'/'.$folder.'_assets_'.rtrim($folder, 's').'_'.$aId.'.bundle';
 
             if ($this->checkIfDofusNewer($localFile, $dofusFile)) {
+                $cache[$folder][$aId] = isset($cache[$folder][$aId]) ? $cache[$folder][$aId] + 1 : 1;
                 $files[$folder][] = $aId;
             }
 
@@ -212,6 +220,7 @@ class AdminPanel extends Component
                 $localFile = storage_path('app/json/skinator/').$folder.($folder === 'skins' ? '/' : '/Bones_Data/').$faId.'.json';
                 $dofusFile = $this->dofusContentPath.'Characters/'.ucfirst($folder).'/'.$folder.'_assets_'.rtrim($folder, 's').'_'.$faId.'.bundle';
                 if ($this->checkIfDofusNewer($localFile, $dofusFile)) {
+                    $cache[$folder][$faId] = isset($cache[$folder][$faId]) ? $cache[$folder][$faId] + 1 : 1;
                     $files[$folder][] = $faId;
                 }
             }
@@ -219,6 +228,9 @@ class AdminPanel extends Component
 
         $files['bones'] = array_values(array_unique($files['bones']));
         $files['skins'] = array_values(array_unique($files['skins']));
+
+        Storage::disk('local')->put('json/skinator/itemsCache.json', json_encode($cache, JSON_PRETTY_PRINT));
+
 
         // Prépare les noms de fichiers pour python
         file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $files['skins']));
@@ -341,6 +353,17 @@ class AdminPanel extends Component
             }
         }
 
+        $this->stepName = 'Envoi itemsCache.json serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $fileCache[] = [
+            'file' => storage_path('app/json/skinator/itemsCache.json'),
+            'name' => 'itemsCache.json',
+        ];
+
+        (new uploadToSsh)($fileCache, '/home/debian/sites/barbofus.com/data/');
+
         $this->stepName = 'Fin';
         $this->logIcon = '✅';
         $this->stepLog();
@@ -361,7 +384,7 @@ class AdminPanel extends Component
 
         (new createItemsExport)();
 
-        $this->stepName = 'Créé itemsExport.json serveur';
+        $this->stepName = 'Envoi itemsExport.json serveur';
         $this->logIcon = '✈️';
         $this->stepLog();
 
@@ -629,12 +652,18 @@ class AdminPanel extends Component
         $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsRoot.json'), true)['references']['RefIds'];
         $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsRoot.json'), true)['references']['RefIds'];
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
+        $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
 
         $this->currentStep++;
         $this->stepName = 'Récupération des fichiers + vérifs dates modif';
         $this->logIcon = '🌱';
         $this->logTitle = 'GET SKINS & BONES';
         $this->stepLog();
+
+        /**
+         * @var array<string, array<string, int>> $files
+         */
+        $cache = $itemsCache;
 
         /**
          * @var array<string, array<int, string>> $files
@@ -708,8 +737,13 @@ class AdminPanel extends Component
                 if ($delete) {
                     unset($files[$typeKey][$key]);
                 }
+                else {
+                    $cache[strtolower($typeKey)][$file] = isset($cache[strtolower($typeKey)][$file]) ? $cache[strtolower($typeKey)][$file] + 1 : 1;
+                }
             }
         }
+
+        Storage::disk('local')->put('json/skinator/itemsCache.json', json_encode($cache, JSON_PRETTY_PRINT));
 
         // Prépare les noms de fichiers pour python
         file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $files['Skins']));
