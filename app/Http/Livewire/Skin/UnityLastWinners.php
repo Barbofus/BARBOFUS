@@ -42,7 +42,7 @@ class UnityLastWinners extends Component
                     ->take(1),
             ])
             ->addSelect([DB::raw('true as is_unity_skin')])
-            ->latest()
+            ->orderBy('id', 'desc')
             ->take(3)
             ->get();
 

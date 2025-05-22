@@ -772,8 +772,8 @@
 
         document.addEventListener("alpine:init", () => {
             Alpine.data("skinator", () => ({
-                breedInfos: @js($breeds),
-                allItems: @js($items),
+                breedInfos: @json($breeds),
+                allItems: @json($items),
                 loadedItems: new Set(),
                 filteredItems: null,
                 breedHeads: null,

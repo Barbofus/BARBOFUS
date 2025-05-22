@@ -394,7 +394,6 @@ final class updateDBFromDofusFiles
                 'id' => $headD['id'],
                 'skins' => $headD['skins'],
                 'assetId' => $headD['assetId'],
-                'updated_at' => date('Y-m-d H:i:s'),
             ];
         }
 
