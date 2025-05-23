@@ -28,7 +28,7 @@ class UnityLastWinners extends Component
     public function FetchLastWinners()
     {
         $w = DB::table('skin_winners')
-            ->join('unity_skins', 'skin_winners.skin_id', '=', 'unity_skins.id')
+            ->leftJoin('unity_skins', 'skin_winners.skin_id', '=', 'unity_skins.id')
             ->addSelect([
                 'race_name' => DB::table('races')
                     ->select('name')
@@ -41,8 +41,11 @@ class UnityLastWinners extends Component
                     ->whereColumn('id', 'unity_skins.user_id')
                     ->take(1),
             ])
-            ->addSelect([DB::raw('true as is_unity_skin')])
-            ->orderBy('id', 'desc')
+            ->addSelect([
+                'skin_winners.*',
+                DB::raw('true as is_unity_skin')
+            ])
+            ->orderBy('skin_winners.id', 'desc')
             ->take(3)
             ->get();
 

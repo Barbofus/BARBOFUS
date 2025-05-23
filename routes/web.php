@@ -13,6 +13,7 @@ use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Models\UnitySkin;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,8 +28,6 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-
-
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
@@ -41,6 +40,7 @@ Route::get('/outils', function () {
 
 Route::get('/skinator', [SkinatorController::class, 'create'])->name('skinator.create');
 Route::get('/testator', [SkinatorController::class, 'testator'])->name('testator.create');
+Route::get('/devator', [SkinatorController::class, 'devator'])->name('devator.create');
 
 Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
 Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');

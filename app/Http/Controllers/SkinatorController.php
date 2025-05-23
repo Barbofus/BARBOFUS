@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SkinatorController extends Controller
@@ -69,6 +70,34 @@ class SkinatorController extends Controller
         ]);
     }
 
+    public function devator(Request $request): View
+    {
+        // 465 Gannon; 2496 Coatox; 3230 Mcdonald
+        if (! Gate::check('mod-access') & ! Gate::check('admin-access') &! in_array(auth()->id(), [465, 2496, 3230])) {
+            abort(403);
+        }
+
+        $skinId = $request->input('skin');
+        $skin = null;
+
+        if ($skinId) {
+            $skin = UnitySkin::find($skinId);
+
+            if (! $skin) {
+                abort(404);
+            }
+        }
+
+        return view('skins.devator', [
+            'breeds' => $this->getBreeds(),
+            'itemCategories' => ItemCategorieEnum::values(),
+            'items' => $this->getItems(),
+            'route' => route('unity-skins.store'),
+            'skin' => $skin,
+            'method' => 'POST',
+        ]);
+    }
+
     public function edit(UnitySkin $skin): View
     {
         return view('skins.skinator', [
@@ -86,7 +115,15 @@ class SkinatorController extends Controller
      */
     private function getItems(): Collection
     {
-        return DB::table('items')
+        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/itemsExport.json'), true);
+
+        $sItemsData = [];
+
+        foreach ($itemsData as $item) {
+            $sItemsData[$item['itemId']] = $item;
+        }
+
+        $items = DB::table('items')
             ->select('dofus_id', 'icon_path', 'asset_id', 'female_asset_id', 'folder', 'category', 'subcategory', 'level', 'pet_type', 'colorable')
             ->addSelect([
                 'name' => DB::table('localized_items')
@@ -128,6 +165,11 @@ class SkinatorController extends Controller
                 END')
             ->get();
 
+        $items->map(function ($item) use ($sItemsData) {
+            $item->kolors = $sItemsData[$item->dofus_id]['kolors'] ?? null;
+        });
+
+        return $items;
     }
 
     /**

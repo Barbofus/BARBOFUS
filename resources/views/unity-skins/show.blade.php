@@ -79,7 +79,7 @@
                 </a>
             @endguest
 
-            <h2 class="bg-gradient-to-r from-[var(--goldDark)] to-[var(--goldLit)] bg-clip-text inline-block font-normal italic text-[min(6vw,1.5rem)] text-transparent">{{ $skin->name }}</h2>
+            <h2 class="bg-gradient-to-r from-[var(--goldDark)] to-[var(--goldLit)] bg-clip-text inline-block font-normal italic text-[min(6vw,1.5rem)] text-transparent">{{ $skin->name }}&nbsp;</h2>
             <h2 class="text-[min(5vw,1.25rem)] font-thin text-center">{{ __('barbofus.contentBy') }} <span
                     class="text-[min(6vw,1.5rem)] font-light">{{ $skin->user_name }}</span></h2>
 
