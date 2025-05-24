@@ -120,7 +120,7 @@ class AdminPanel extends Component
      */
     public function InitiateSkinsUpdate(): void
     {
-        $this->maxStep = 5;
+        $this->maxStep = 6;
         $this->currentStep = 0;
 
         // Récupère les skins/bones nécessaires
@@ -129,6 +129,9 @@ class AdminPanel extends Component
         // Construit le fichier itemsExport.json
         $this->makeItemExportFile();
 
+        // Nourrit itemsExport.json avec kolors[] et colorivant
+        $this->generateKolorsAndColorable();
+
         // Construit le fichier itemsExport.json
         $this->restartRendererServer();
 
@@ -136,6 +139,52 @@ class AdminPanel extends Component
         $this->stepName = 'Mise à jour terminé';
         $this->logIcon = '✅';
         $this->logTitle = 'FIN';
+        $this->stepLog();
+    }
+
+    public function generateKolorsAndColorable() : void
+    {
+        $this->currentStep++;
+        $this->stepName = 'Generating kolors and colorable . . .';
+        $this->logIcon = '🌱';
+        $this->logTitle = 'KOLORS';
+        $this->stepLog();
+
+        // Prépare la commande python
+        $command = sprintf(
+            'node %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/kolorsGenerator.mjs')),
+            escapeshellarg(storage_path('app/json/skinator/itemsExport.json')),
+            escapeshellarg(storage_path('app/json/skinator/kolorIds.txt')),
+            escapeshellarg(storage_path('app/')),
+        );
+        // Execute le python
+        $command .= ' 2>&1';
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if ($exitCode != 0) {
+            dd('Erreur pour générer les kolors', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        $this->stepName = 'Envoi itemsExport.json aux serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $files[] = [
+            'file' => storage_path('app/json/skinator/itemsExport.json'),
+            'name' => 'itemsExport.json',
+        ];
+
+        (new uploadToFtp)($files, '/storage/app/json/skinator/');
+        (new uploadToSsh)($files, '/home/debian/sites/barbofus.com/data/');
+
+        $this->stepName = 'Fin';
+        $this->logIcon = '✅';
         $this->stepLog();
     }
 
@@ -179,6 +228,7 @@ class AdminPanel extends Component
         $this->stepLog();
 
         $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
+        $kolorIds = file(storage_path('app/json/skinator/kolorIds.txt'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         /**
          * @var array<string, array<string, int>> $files
@@ -214,6 +264,7 @@ class AdminPanel extends Component
             if ($this->checkIfDofusNewer($localFile, $dofusFile)) {
                 $cache[$folder][$aId] = isset($cache[$folder][$aId]) ? $cache[$folder][$aId] + 1 : 1;
                 $files[$folder][] = $aId;
+                $kolorIds[] = $item->dofus_id;
             }
 
             if ($faId != $aId) {
@@ -222,6 +273,7 @@ class AdminPanel extends Component
                 if ($this->checkIfDofusNewer($localFile, $dofusFile)) {
                     $cache[$folder][$faId] = isset($cache[$folder][$faId]) ? $cache[$folder][$faId] + 1 : 1;
                     $files[$folder][] = $faId;
+                    $kolorIds[] = $item->dofus_id;
                 }
             }
         }
@@ -231,6 +283,11 @@ class AdminPanel extends Component
 
         Storage::disk('local')->put('json/skinator/itemsCache.json', json_encode($cache, JSON_PRETTY_PRINT));
 
+        // Remplit les id des items qui ont été modifiés / ajoutés
+        if($kolorIds) {
+            $kolorIds = array_unique($kolorIds);
+            file_put_contents(storage_path('app/json/skinator/kolorIds.txt'), implode("\n", $kolorIds));
+        }
 
         // Prépare les noms de fichiers pour python
         file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $files['skins']));
@@ -383,17 +440,6 @@ class AdminPanel extends Component
         $this->stepLog();
 
         (new createItemsExport)();
-
-        $this->stepName = 'Envoi itemsExport.json serveur';
-        $this->logIcon = '✈️';
-        $this->stepLog();
-
-        $files[] = [
-            'file' => storage_path('app/json/skinator/itemsExport.json'),
-            'name' => 'itemsExport.json',
-        ];
-
-        (new uploadToSsh)($files, '/home/debian/sites/barbofus.com/data/');
 
         $this->stepName = 'FIN';
         $this->logIcon = '✅';
@@ -653,6 +699,7 @@ class AdminPanel extends Component
         $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsRoot.json'), true)['references']['RefIds'];
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
         $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
+        $kolorIds = [];
 
         $this->currentStep++;
         $this->stepName = 'Récupération des fichiers + vérifs dates modif';
@@ -677,6 +724,8 @@ class AdminPanel extends Component
             }
             $md = $mount['data'];
             $look = $md['look'];
+
+            $kolorIds[] = $md['certificateId'];
 
             if (preg_match('/^\{([^}]+)}/', $look, $matches)) {
                 $parts = explode('|', $matches[1]);
@@ -744,6 +793,9 @@ class AdminPanel extends Component
         }
 
         Storage::disk('local')->put('json/skinator/itemsCache.json', json_encode($cache, JSON_PRETTY_PRINT));
+
+        // Enregistre les ids des monture dont on doit comparer le nom
+        file_put_contents(storage_path('app/json/skinator/kolorIds.txt'), implode("\n", $kolorIds));
 
         // Prépare les noms de fichiers pour python
         file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $files['Skins']));

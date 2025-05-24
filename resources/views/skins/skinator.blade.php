@@ -749,7 +749,7 @@
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
 
                                 <img src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable item"
-                                     :class="(allItem.colorable === 1 && loaded && intersected) ? 'visible' : 'invisible'"
+                                     :class="(allItem.colorable && loaded && intersected) ? 'visible' : 'invisible'"
                                      class="h-6 w-6 absolute top-1 right-1">
 
                                 <div class="flex gap-1 absolute pointer-events-none">

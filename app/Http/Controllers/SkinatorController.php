@@ -117,12 +117,6 @@ class SkinatorController extends Controller
     {
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/itemsExport.json'), true);
 
-        $sItemsData = [];
-
-        foreach ($itemsData as $item) {
-            $sItemsData[$item['itemId']] = $item;
-        }
-
         $items = DB::table('items')
             ->select('dofus_id', 'icon_path', 'asset_id', 'female_asset_id', 'folder', 'category', 'subcategory', 'level', 'pet_type', 'colorable')
             ->addSelect([
@@ -165,8 +159,9 @@ class SkinatorController extends Controller
                 END')
             ->get();
 
-        $items->map(function ($item) use ($sItemsData) {
-            $item->kolors = $sItemsData[$item->dofus_id]['kolors'] ?? null;
+        $items->map(function ($item) use ($itemsData) {
+            $item->kolors = $itemsData[$item->dofus_id]['kolors'] ?? null;
+            $item->colorable = $itemsData[$item->dofus_id]['colorivant'] ?? null;
         });
 
         return $items;
