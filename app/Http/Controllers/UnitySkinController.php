@@ -299,7 +299,7 @@ class UnitySkinController extends Controller
     public function delete(int $skinID)
     {
         $skin = UnitySkin::find($skinID);
-        $skinUserName = $skin->User->name;
+        $skinUserName = $skin?->User?->name;
 
         (new DeleteSkin)($skinID, true);
 

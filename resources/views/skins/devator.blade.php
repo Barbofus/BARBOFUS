@@ -783,7 +783,7 @@
                         :class="maxItemVisible < filteredItems.filter(i => i.category === itemsCurrentTab).length ? 'visible' : 'invisible'"
                         :disabled="maxItemVisible >= filteredItems.filter(i => i.category === itemsCurrentTab).length"
                         class="py-2 w-fit mx-auto px-6 my-4 group rounded-md bg-secondary text-primary hover:rounded-lg transition-all"
-                        @click="maxItemVisible += 480">
+                        @click="maxItemVisible += 4800">
                     <p class="group-hover:-translate-y-0.5 transition-all">{{ __('barbofus.contentLoadMore') }}</p>
                 </button>
             </div>
