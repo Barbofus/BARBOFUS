@@ -560,8 +560,8 @@
                 </div>
 
                 {{-- Barre de recherche --}}
-                <div class="min-[950px]:flex h-fit my-2 min-[950px]:space-x-2">
-                    <div class="relative flex items-center space-x-2 h-full w-[16rem] bg-primary-100 rounded-md py-2">
+                <div class="flex flex-wrap h-fit mt-2">
+                    <div class="relative flex items-center space-x-2 mb-2 h-full w-[16rem] mr-6 bg-primary-100 rounded-md py-2">
                         <input maxlength="64" id="skinator-search" type="text" placeholder="{{ __('barbofus.contentRefineSearch') }}"
                                x-model="searchBar"
                                x-ref="skinatorSearchInput"
@@ -585,15 +585,27 @@
                         </button>
                     </div>
 
-                    <div class="flex relative z-10 w-10 h-10 group">
-                        <div class="w-full h-full rounded cursor-pointer focus:outline-none border-2 border-inactiveText peer-focus:border-secondary"
+                    <div class="flex space-x-2 mb-2 mr-6">
+
+                        {{-- election items aléatoire --}}
+                        <button type="button" x-cloak
+                                title="Randomize items"
+                                @click="getRandomItems()"
+                                class="h-10 w-10 border-2 text-md rounded-md bg-primary-100 border-inactiveText text-inactiveText hover:text-secondary hover:border-secondary transition-all">
+                            <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" alt="Skin Aléatoire" height="32" width="32" draggable="false" class="h-8 opacity-75 hover:opacity-100 hover:scale-90 transition-all mx-auto">
+                        </button>
+                    </div>
+
+                    {{-- Color filter --}}
+                    <div class="group z-10 relative mb-2 mr-6">
+                        <div class="w-10 h-10 rounded cursor-pointer focus:outline-none border-2 border-inactiveText group-hover:border-secondary peer-focus:border-secondary transition-all"
                              :style="searchColor
-                                   ? { background: searchColor }
-                                   : {
-                                       backgroundImage: 'repeating-conic-gradient(#ffffff00 0% 25%, #e1e1e120 0% 50%)',
-                                       backgroundSize: '15px 15px',
-                                       backgroundColor: 'transparent'
-                                     }">
+                                       ? { background: searchColor }
+                                       : {
+                                           backgroundImage: 'repeating-conic-gradient(#ffffff00 0% 25%, #e1e1e120 0% 50%)',
+                                           backgroundSize: '15px 15px',
+                                           backgroundColor: 'transparent'
+                                         }">
                             <input type="color"
                                    title="Item filter"
                                    x-model="searchColor"
@@ -612,42 +624,73 @@
                         </button>
                     </div>
 
+                    {{-- Item filter --}}
+                    <div class="flex space-x-2 mb-2 mr-6">
+
+                        {{-- Show colorable --}}
+                        <button type="button" x-cloak
+                                title="Show only colorable"
+                                @click="showOnlyColorable = !showOnlyColorable; updateFilteredItems()"
+                                class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="showOnlyColorable ? 'border-inactiveText' : 'border-inactiveText'">
+                            <img :class="showOnlyColorable ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable">
+                        </button>
+
+                        {{-- Show Mimisymbic --}}
+                        <button type="button" x-cloak
+                                title="Show only mimisymbic"
+                                @click="showOnlyMimisymbic = !showOnlyMimisymbic; updateFilteredItems()"
+                                class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="showOnlyMimisymbic ? 'border-inactiveText' : 'border-inactiveText'">
+                            <img :class="showOnlyMimisymbic ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/icons/items/subcategories/mimisymbic.png') }}" alt="Colorable">
+                        </button>
+
+                        {{-- Show Ceremonial --}}
+                        <button type="button" x-cloak
+                                title="Show only ceremonial"
+                                @click="showOnlyCeremonial = !showOnlyCeremonial; updateFilteredItems()"
+                                class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="showOnlyCeremonial ? 'border-inactiveText' : 'border-inactiveText'">
+                            <img :class="showOnlyCeremonial ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/icons/items/subcategories/ceremonial.png') }}" alt="Colorable">
+                        </button>
+                    </div>
+
                     {{-- CHOIX ONGLET FAMILIER --}}
                     <div x-show="itemsCurrentTab === 'pet'" x-transition
-                         class="h-10 font-thin flex space-x-2 mt-2 min-[950px]:mt-0"
+                         class="h-10 font-thin flex space-x-2 mb-2"
                          @click="if(event.target.closest('button[data-tab]')) { petCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
 
                         <button type="button" x-cloak
                                 data-tab="familier"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'familier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'familier') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/familiar.png') }}" alt="Familier">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="montilier"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'montilier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'montilier') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/petsmount.png') }}" alt="Montilier">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="dragodinde"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'dragodinde') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'dragodinde') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/dragoturkey.png') }}" alt="Dragodinde">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="muldo"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'muldo') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'muldo') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/seemyool.png') }}" alt="Muldo">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="volkorne"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'volkorne') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'volkorne') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
                         </button>
@@ -743,7 +786,6 @@
                             <label :for="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem.dofus_id"
                                    :title="allItem.name"
                                    class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(4vw,5rem),3.8rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText"
-                                   :style="'background-color: #' + allItem.testKolor"
                                    x-data="{ loaded: false, intersected: false }">
 
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
@@ -1136,6 +1178,9 @@
                 previousInvertX: '',
                 openShareUI: false,
                 searchColor: null,
+                showOnlyColorable: false,
+                showOnlyMimisymbic: false,
+                showOnlyCeremonial: false,
 
                 initWatcher() {
                     Alpine.effect(() => {
@@ -1293,6 +1338,18 @@
                         );
                     }
 
+                    if(this.showOnlyColorable) {
+                        filteredItems = filteredItems.filter(i => i.colorable);
+                    }
+
+                    if(this.showOnlyMimisymbic &! this.showOnlyCeremonial) {
+                        filteredItems = filteredItems.filter(i => i.subcategory === 'mimisymbic');
+                    }
+
+                    if(this.showOnlyCeremonial &! this.showOnlyMimisymbic) {
+                        filteredItems = filteredItems.filter(i => i.subcategory === 'ceremonial');
+                    }
+
                     if (this.searchColor !== null) {
                         const searchColor = [
                             parseInt(this.searchColor.slice(1, 3), 16),
@@ -1389,6 +1446,93 @@
                 {
                     const randomDecimal = Math.floor(Math.random() * 0xFFFFFF); // Nombre aléatoire entre 0 et 16777215
                     return '#' + randomDecimal.toString(16).padStart(6, '0').toUpperCase();
+                },
+
+                getRandomItems()
+                {
+                    const categories = [
+                        "hat",
+                        "cape",
+                        "shield",
+                        "pet",
+                        "shoulderpads",
+                        "wings",
+                        "costume",
+                    ];
+
+                    let filteredItemsIds = [];
+
+                    this.allItems.forEach((item) => {
+                        const dofusId = item.dofus_id;
+                        const kolors = item.kolors;
+
+                        if (item.colorable) {
+                            filteredItemsIds.push(dofusId);
+                            return;
+                        }
+
+                        if (!kolors || kolors.length === 0) return;
+
+                        const shouldAdd = this.colors.slice(2).some((color) => {
+                            const searchColor = [
+                                parseInt(color.slice(1, 3), 16),
+                                parseInt(color.slice(3, 5), 16),
+                                parseInt(color.slice(5, 7), 16)
+                            ];
+                            const searchColorLab = this.rgb2lab(searchColor);
+
+                            let minDist = Infinity;
+
+                            for (const kolor of kolors) {
+                                const kolorLab = this.rgb2lab([
+                                    parseInt(kolor.slice(0, 2), 16),
+                                    parseInt(kolor.slice(2, 4), 16),
+                                    parseInt(kolor.slice(4, 6), 16)
+                                ]);
+
+                                const de00 = new dE00(
+                                    { L: kolorLab[0], A: kolorLab[1], B: kolorLab[2] },
+                                    { L: searchColorLab[0], A: searchColorLab[1], B: searchColorLab[2] }
+                                );
+                                const dist = de00.getDeltaE();
+                                if (dist < minDist) {
+                                    minDist = dist;
+                                }
+                            }
+
+                            return minDist < 10;
+                        });
+
+                        if (shouldAdd) {
+                            filteredItemsIds.push(dofusId);
+                        }
+                    });
+
+                    const searchItems = this.allItems.filter(i => filteredItemsIds.includes(i.dofus_id));
+
+                    categories.forEach(category => {
+                        // Filtrer les items correspondant à la catégorie
+                        let filtered = searchItems.filter(item => item.category === category);
+
+                        if(category === 'pet') {
+                            filtered = filtered.filter(item => ['familier', 'montilier'].includes(item.pet_type));
+                        }
+
+                        // Vérifier s'il y a des items dans cette catégorie
+                        if (filtered.length === 0) return;
+
+                        // Choisir un item aléatoire
+                        let randomItem = filtered[Math.floor(Math.random() * filtered.length)];
+
+                        // Pour shoulderpads, wings, costume : chance sur 3
+                        if (["shoulderpads", "wings", "costume"].includes(category)) {
+                            if (Math.random() > 1 / 3) randomItem = null; // 2 fois sur 3 on saute
+                        }
+
+                        this.items[category] = (randomItem) ? randomItem.dofus_id : null;
+                    });
+
+                    editURLParam(this.getURLObject());
                 },
             }));
         });

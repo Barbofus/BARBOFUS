@@ -699,7 +699,7 @@ class AdminPanel extends Component
         $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsRoot.json'), true)['references']['RefIds'];
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
         $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
-        $kolorIds = [];
+        $kolorIds = [1, 2, 3];
 
         $this->currentStep++;
         $this->stepName = 'Récupération des fichiers + vérifs dates modif';

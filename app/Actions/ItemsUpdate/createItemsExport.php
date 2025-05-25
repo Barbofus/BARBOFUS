@@ -17,7 +17,7 @@ final class createItemsExport
         $jsonData = json_decode(Storage::disk('local')->get('json/skinator/outBonesSize.json'), true);
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
         $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsRoot.json'), true)['references']['RefIds'];
-
+        $itemsExport = json_decode(Storage::disk('local')->get('json/skinator/itemsExport.json'), true);
 
         $mountId = [];
 
@@ -69,7 +69,7 @@ final class createItemsExport
 
         $items = Item::all();
 
-        $itemsExport = [];
+        //$itemsExport = [];
 
         foreach ($items as $item) {
             $sprite = [
@@ -96,11 +96,19 @@ final class createItemsExport
             ];
 
             if (! empty($jsonData[$item->dofus_id]['indexedColors']) && $itemsById[$item->dofus_id]['isColorable'] === 0) {
-                $entry['indexedColors'] = $jsonData[$item->dofus_id]['indexedColors'];
+                $entry['indexedColors'] =  array_map('intval', $jsonData[$item->dofus_id]['indexedColors']);
             }
 
             if(in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']) && $item->subcategory == 'mimisymbic') {
-                $entry['indexedColors'] = $mountId[$item->asset_id]['colors'];
+                $entry['indexedColors'] =  array_map('intval', $mountId[$item->asset_id]['colors']);
+            }
+
+            if (isset($itemsExport[$item->dofus_id]['colorivant'])) {
+                $entry['colorivant'] = $itemsExport[$item->dofus_id]['colorivant'];
+            }
+
+            if (isset($itemsExport[$item->dofus_id]['kolors'])) {
+                $entry['kolors'] = $itemsExport[$item->dofus_id]['kolors'];
             }
 
             $itemsExport[$item->dofus_id] = $entry;
