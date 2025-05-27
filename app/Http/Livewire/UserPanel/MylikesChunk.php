@@ -17,6 +17,13 @@ class MylikesChunk extends Component
 
     public int $itemsPerPage;
 
+    public function mount(): void
+    {
+        $this->skinIds = array_map(function ($skin) {
+            return (object) $skin;
+        }, $this->skinIds);
+    }
+
     /**
      * @return View
      */

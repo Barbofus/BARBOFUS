@@ -29,12 +29,12 @@ final class createItemsExport
             $md = $mount['data'];
             $look = $md['look'];
 
-            //dd($look);
+            // dd($look);
 
             if (preg_match('/^\{([^}]+)}/', $look, $matches)) {
                 $parts = explode('|', $matches[1]);
 
-                //dd($parts);
+                // dd($parts);
                 $mountId[$md['id']]['boneId'] = $parts[0];
 
                 // Le deuxième segment contient les couleurs, séparées par des virgules
@@ -42,7 +42,7 @@ final class createItemsExport
                     $colors = $colorMatches[1]; // Contient uniquement les valeurs (ex: [16772045, 16772045, ...])
 
                     // S'assurer qu'on a bien 4 couleurs, sinon compléter avec null
-                    //$colors = array_pad($colors, 4, null);
+                    // $colors = array_pad($colors, 4, null);
 
                     // Exemple de stockage dans un tableau structuré
                     $mountId[$md['id']]['colors'] = $colors;
@@ -69,7 +69,7 @@ final class createItemsExport
 
         $items = Item::all();
 
-        //$itemsExport = [];
+        // $itemsExport = [];
 
         foreach ($items as $item) {
             $sprite = [
@@ -77,7 +77,7 @@ final class createItemsExport
                 1 => $item->female_asset_id,
             ];
 
-            if(in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']) && $item->subcategory == 'mimisymbic') {
+            if (in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']) && $item->subcategory == 'mimisymbic') {
                 $sprite = [
                     0 => (int) $mountId[$item->asset_id]['boneId'],
                     1 => (int) $mountId[$item->female_asset_id]['boneId'],
@@ -96,11 +96,11 @@ final class createItemsExport
             ];
 
             if (! empty($jsonData[$item->dofus_id]['indexedColors']) && $itemsById[$item->dofus_id]['isColorable'] === 0) {
-                $entry['indexedColors'] =  array_map('intval', $jsonData[$item->dofus_id]['indexedColors']);
+                $entry['indexedColors'] = array_map('intval', $jsonData[$item->dofus_id]['indexedColors']);
             }
 
-            if(in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']) && $item->subcategory == 'mimisymbic') {
-                $entry['indexedColors'] =  array_map('intval', $mountId[$item->asset_id]['colors']);
+            if (in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']) && $item->subcategory == 'mimisymbic' && isset($mountId[$item->asset_id]['colors'])) {
+                $entry['indexedColors'] = array_map('intval', $mountId[$item->asset_id]['colors']);
             }
 
             if (isset($itemsExport[$item->dofus_id]['colorivant'])) {

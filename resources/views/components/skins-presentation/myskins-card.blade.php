@@ -27,7 +27,7 @@
     </p>
 
     {{-- Likes --}}
-    @if(!isset($skin->is_unity_skin))
+    @if(isset($skin->is_unity_skin))
         <div
             x-data="{
                 liked: false,

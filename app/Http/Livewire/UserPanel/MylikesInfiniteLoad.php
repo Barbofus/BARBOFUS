@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\UserPanel;
 
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -13,7 +14,7 @@ class MylikesInfiniteLoad extends Component
     public const ITEMS_PER_PAGE = 60;
 
     /**
-     * @var array<int, int[]>
+     * @var array<int, array<int, Collection<string, int|string>>>
      */
     public $postIdChunks = [];
 
@@ -60,6 +61,10 @@ class MylikesInfiniteLoad extends Component
      */
     public function PrepareChunks()
     {
+
+        if ($this->page != 1) {
+            dd('PrepareChunks');
+        }
         /*$this->postIdChunks = DB::table('skins')
 
             // select princpal

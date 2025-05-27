@@ -142,7 +142,7 @@ class AdminPanel extends Component
         $this->stepLog();
     }
 
-    public function generateKolorsAndColorable() : void
+    public function generateKolorsAndColorable(): void
     {
         $this->currentStep++;
         $this->stepName = 'Generating kolors and colorable . . .';
@@ -188,7 +188,7 @@ class AdminPanel extends Component
         $this->stepLog();
     }
 
-    public function restartRendererServer() : void
+    public function restartRendererServer(): void
     {
         $this->currentStep++;
         $this->stepName = 'Redémarrage du serveur OVH';
@@ -202,10 +202,17 @@ class AdminPanel extends Component
         $ssh_key_path = 'C:/Users/thefl/.ssh/id_rsa_barbofus_renderer';
         $ssh_passphrase = env('SSH_OVH_SERVER_PASSWORD');
 
-        $key = PublicKeyLoader::load(file_get_contents($ssh_key_path), $ssh_passphrase);
+        $ssh_key_contents = file_get_contents($ssh_key_path);
+        if ($ssh_key_contents === false) {
+            dd("Impossible de lire la clé SSH à l'emplacement : $ssh_key_path");
+        }
 
-        $ssh = new SSH2($ssh_host, $ssh_port);
-        if (! $ssh->login($ssh_user, $key)) {
+        $ssh_passphrase = is_string($ssh_passphrase) ? $ssh_passphrase : null;
+
+        $key = PublicKeyLoader::load($ssh_key_contents, $ssh_passphrase);
+
+        $ssh = new SSH2($ssh_host, (int) $ssh_port);
+        if (! $ssh->login((string) $ssh_user, $key)) {
             exit('❌ Connexion SSH échouée');
         }
 
@@ -230,8 +237,12 @@ class AdminPanel extends Component
         $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
         $kolorIds = file(storage_path('app/json/skinator/kolorIds.txt'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
+        if ($kolorIds === false) {
+            $kolorIds = [];
+        }
+
         /**
-         * @var array<string, array<string, int>> $files
+         * @var array<string, array<string, int>> $cache
          */
         $cache = $itemsCache;
 
@@ -281,10 +292,16 @@ class AdminPanel extends Component
         $files['bones'] = array_values(array_unique($files['bones']));
         $files['skins'] = array_values(array_unique($files['skins']));
 
-        Storage::disk('local')->put('json/skinator/itemsCache.json', json_encode($cache, JSON_PRETTY_PRINT));
+        $cacheFile = json_encode($cache, JSON_PRETTY_PRINT);
+
+        if ($cacheFile === false) {
+            $cacheFile = '';
+        }
+
+        Storage::disk('local')->put('json/skinator/itemsCache.json', $cacheFile);
 
         // Remplit les id des items qui ont été modifiés / ajoutés
-        if($kolorIds) {
+        if ($kolorIds) {
             $kolorIds = array_unique($kolorIds);
             file_put_contents(storage_path('app/json/skinator/kolorIds.txt'), implode("\n", $kolorIds));
         }
@@ -402,10 +419,9 @@ class AdminPanel extends Component
                 continue;
             }
 
-            if(in_array($key, ['skins_png', 'bones_png'])) {
+            if (in_array($key, ['skins_png', 'bones_png'])) {
                 (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
-            }
-            else {
+            } else {
                 (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
             }
         }
@@ -708,7 +724,7 @@ class AdminPanel extends Component
         $this->stepLog();
 
         /**
-         * @var array<string, array<string, int>> $files
+         * @var array<string, array<string, int>> $cache
          */
         $cache = $itemsCache;
 
@@ -785,14 +801,19 @@ class AdminPanel extends Component
 
                 if ($delete) {
                     unset($files[$typeKey][$key]);
-                }
-                else {
+                } else {
                     $cache[strtolower($typeKey)][$file] = isset($cache[strtolower($typeKey)][$file]) ? $cache[strtolower($typeKey)][$file] + 1 : 1;
                 }
             }
         }
 
-        Storage::disk('local')->put('json/skinator/itemsCache.json', json_encode($cache, JSON_PRETTY_PRINT));
+        $cacheFile = json_encode($cache, JSON_PRETTY_PRINT);
+
+        if ($cacheFile === false) {
+            $cacheFile = '';
+        }
+
+        Storage::disk('local')->put('json/skinator/itemsCache.json', $cacheFile);
 
         // Enregistre les ids des monture dont on doit comparer le nom
         file_put_contents(storage_path('app/json/skinator/kolorIds.txt'), implode("\n", $kolorIds));
@@ -906,10 +927,9 @@ class AdminPanel extends Component
                 continue;
             }
 
-            if(in_array($key, ['skins_png', 'bones_png'])) {
+            if (in_array($key, ['skins_png', 'bones_png'])) {
                 (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
-            }
-            else {
+            } else {
                 (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
             }
         }

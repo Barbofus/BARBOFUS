@@ -12,10 +12,7 @@ use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
-use App\Models\UnitySkin;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,8 +76,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/skins/create', [SkinController::class, 'create'])->name('skins.create');
     Route::get('/skins/{skin}/edit', [SkinController::class, 'edit'])->name('skins.edit');
 
-    //Route::get('/unity-skins/create', [UnitySkinController::class, 'create'])->name('unity-skins.create');
-    //Route::get('/unity-skins/{skin}/edit', [UnitySkinController::class, 'edit'])->name('unity-skins.edit');
+    // Route::get('/unity-skins/create', [UnitySkinController::class, 'create'])->name('unity-skins.create');
+    // Route::get('/unity-skins/{skin}/edit', [UnitySkinController::class, 'edit'])->name('unity-skins.edit');
 
     Route::get('/skinator/{skin}/edit', [SkinatorController::class, 'edit'])->name('skinator.edit');
 

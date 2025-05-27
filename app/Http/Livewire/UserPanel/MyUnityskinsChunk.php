@@ -37,6 +37,11 @@ class MyUnityskinsChunk extends Component
                     ->whereColumn('id', 'unity_skins.race_id')
                     ->take(1),
             ])
+            ->addSelect([
+                'likes_count' => DB::table('unity_likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('unity_skin_id', 'unity_skins.id'),
+            ])
             ->addSelect([DB::raw('true as is_unity_skin')])
             ->whereIn('id', $this->skinIds)
             ->get();

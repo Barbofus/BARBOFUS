@@ -73,7 +73,7 @@ class SkinatorController extends Controller
     public function devator(Request $request): View
     {
         // 465 Gannon; 2496 Coatox; 3230 Mcdonald
-        if (! Gate::check('mod-access') & ! Gate::check('admin-access') &! in_array(auth()->id(), [465, 2496, 3230])) {
+        if (! Gate::check('mod-access') & ! Gate::check('admin-access') & ! in_array(auth()->id(), [465, 2496, 3230])) {
             abort(403);
         }
 

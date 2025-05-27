@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Actions\ItemsUpdate;
 
-use phpseclib3\Net\SFTP;
+use phpseclib3\Crypt\Common\PrivateKey;
 use phpseclib3\Crypt\PublicKeyLoader;
+use phpseclib3\Net\SFTP;
 
 final class uploadToSsh
 {
@@ -24,33 +25,42 @@ final class uploadToSsh
 
         // Vérification de la clé
         if (! file_exists($ssh_key_path)) {
-            $this->stepLog('❌ Clé SSH non trouvée à ' . $ssh_key_path);
+            $this->stepLog('❌ Clé SSH non trouvée à '.$ssh_key_path);
             exit("Clé SSH non trouvée à $ssh_key_path");
         }
 
-        $key = PublicKeyLoader::load(file_get_contents($ssh_key_path), $ssh_passphrase);
+        $ssh_key_contents = file_get_contents($ssh_key_path);
+        if ($ssh_key_contents === false) {
+            dd("Impossible de lire la clé SSH à l'emplacement : $ssh_key_path");
+        }
 
-        $sftp = new SFTP($ssh_host, $ssh_port);
-        if (! $sftp->login($ssh_user, $key)) {
+        $ssh_passphrase = is_string($ssh_passphrase) ? $ssh_passphrase : null;
+
+        /** @var PrivateKey $key */
+        $key = PublicKeyLoader::load($ssh_key_contents, $ssh_passphrase);
+
+        $sftp = new SFTP($ssh_host, (int) $ssh_port);
+        if (! $sftp->login((string) $ssh_user, $key)) {
             $this->stepLog('❌ Échec de la connexion SFTP avec clé privée');
             exit('❌ Échec de la connexion SFTP avec clé privée');
         }
 
         foreach ($localFiles as $key => $fileInfos) {
-            $this->stepLog('OVH 🌱' . ($key + 1) . '/' . count($localFiles) . ' ' . $fileInfos['name']);
+            $this->stepLog('OVH 🌱'.($key + 1).'/'.count($localFiles).' '.$fileInfos['name']);
 
             if (! file_exists($fileInfos['file'])) {
-                $this->stepLog('✖️ Fichier manquant : ' . $fileInfos['file']);
+                $this->stepLog('✖️ Fichier manquant : '.$fileInfos['file']);
+
                 continue;
             }
 
-            $remoteFile = rtrim($remoteDestination, '/') . '/' . $fileInfos['name'];
+            $remoteFile = rtrim($remoteDestination, '/').'/'.$fileInfos['name'];
             $success = $sftp->put($remoteFile, $fileInfos['file'], SFTP::SOURCE_LOCAL_FILE);
 
             if ($success) {
-                $this->stepLog('✅ Fichier transféré : ' . $remoteFile);
+                $this->stepLog('✅ Fichier transféré : '.$remoteFile);
             } else {
-                $this->stepLog('❌ Erreur lors de l\'upload de : ' . $remoteFile);
+                $this->stepLog('❌ Erreur lors de l\'upload de : '.$remoteFile);
             }
         }
     }
