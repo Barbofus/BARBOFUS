@@ -760,8 +760,36 @@ class AdminPanel extends Component
         }
 
         // Récupère les noms des fichiers pour les breeds (skins corps, bones anim combat + la static explo)
-        $files['Bones'][] = '1-static'; // Bone animation static explo général
-        $files['Bones'][] = '2'; // Bone animation monture
+        //$files['Bones'][] = '1-static'; // Bone animation static explo général
+        //$files['Bones'][] = '2'; // Bone animation monture
+        $files['Bones'] = array_merge([
+            '1-static',
+            '2',
+            '1-movement',
+            'AnimEmoteJuggle',
+            'AnimEmotePaint',
+            'AnimEmoteCry',
+            'AnimEmoteBunnyhop',
+            'AnimEmoteCarnival',
+            'AnimEmoteSamourai',
+            'AnimEmoteSit',
+            'AnimEmoteWrite',
+            'AnimEmoteBoxing',
+            'AnimEmoteColor',
+            'AnimEmoteMad',
+            'AnimEmoteNoxine',
+            'AnimEmoteHeartbreak',
+            'AnimEmoteSwishswish',
+            'AnimEmoteBallon',
+            'AnimEmoteUlgrude',
+            'AnimEmoteKrosmose',
+            'AnimEmoteSlip20ans',
+            'AnimEmoteCross',
+            'AnimEmoteBehind',
+            'AnimEmoteFear',
+            'AnimEmoteOups',
+        ], $files['Bones']);
+
         foreach ($breedsData as $breed) {
             if ($breed['type']['class'] != 'Breeds') {
                 continue;

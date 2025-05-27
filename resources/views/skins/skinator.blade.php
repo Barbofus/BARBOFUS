@@ -11,7 +11,7 @@
           enctype="multipart/form-data"
           onkeydown="return event.key != 'Enter';"
           x-data="skinator"
-          x-init="initWatcher">
+          x-init="initWatcher(); window.skinator = $data">
 
         @method($method)
         @csrf
@@ -421,7 +421,7 @@
                         </div>
 
                         {{-- Render --}}
-                        <canvas @click="animated = !animated" class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
+                        <canvas @click="if(!showAnimationList) { animated = !animated }" class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
 
                         {{-- Loader --}}
                         <svg class="loading-logo" style="display: none;" viewBox="0 0 66.410408 67.468735" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
@@ -449,27 +449,21 @@
 
                     {{-- Zone sous skins / Orientation / Animation --}}
                     <div class="flex justify-evenly items-center space-x-8 w-fit mx-auto">
-                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
+                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animations[animation].orientation].length) orientationKey = 0">
                             <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 group-active:translate-y-0 group-active:scale-90 transition-all">
                         </button>
 
                         {{-- Choix anim exploration / combat --}}
                         <button type="button"
                                 title="Exploration / Combat"
-                                :disabled="animation === 'Monture'"
-                                class="group relative h-8 w-16 rounded-full bg-primary-100 p-2 disabled:cursor-not-allowed"
-                                @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
-                            <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
-                                 :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
-                                <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                                </svg>
-
-                                <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Sword-Attack--Streamline-Sharp" class="size-4 -scale-x-100"><desc>Sword Attack Streamline Icon: https://streamlinehq.com</desc><g id="sword-attack--entertainment-gaming-sword-attack"><path id="Union" fill="#000000" fill-rule="evenodd" d="M6.67488 1.37109h-5.3033v5.3033L12.4699 17.7727l5.3033 -5.3033L6.67488 1.37109ZM21.4854 13.7068l-2.4751 2.4751 3.9895 3.9894 0 2.8285 -2.8285 0 -3.9894 -3.9895 -2.4747 2.4747 -1.4142 -1.4142 7.7781 -7.7782 1.4143 1.4142Z" clip-rule="evenodd" stroke-width="1"></path></g></svg>
-                            </div>
+                                class="group relative rounded-md bg-secondary text-primary p-1 uppercase hover:rounded-3xl transition-all"
+                                @click="showAnimationList = !showAnimationList">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-8">
+                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 0 0-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634Zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 0 1-.189-.866c0-.298.059-.605.189-.866Zm2.023 6.828a.75.75 0 1 0-1.06-1.06 3.75 3.75 0 0 1-5.304 0 .75.75 0 0 0-1.06 1.06 5.25 5.25 0 0 0 7.424 0Z" clip-rule="evenodd" />
+                            </svg>
                         </button>
 
-                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
+                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animations[animation].orientation].length - 1">
                             <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
                         </button>
                     </div>
@@ -545,7 +539,7 @@
             </div>
 
             {{--      TOUS LES ITEMS      --}}
-            <div class="flex-1 flex flex-col h-full">
+            <div class="flex-1 relative flex flex-col h-full">
 
                 {{-- CHOIX ONGLET --}}
                 <div class="text-md min-[1600px]:text-xl h-fit font-thin flex flex-wrap gap-y-2 justify-evenly"
@@ -560,7 +554,7 @@
                 </div>
 
                 {{-- Barre de recherche --}}
-                <div class="flex flex-wrap h-fit mt-2">
+                <div class="flex relative flex-wrap h-fit mt-2">
                     <div class="relative flex items-center space-x-2 mb-2 h-full w-[16rem] mr-6 bg-primary-100 rounded-md py-2">
                         <input maxlength="64" id="skinator-search" type="text" placeholder="{{ __('barbofus.contentRefineSearch') }}"
                                x-model="searchBar"
@@ -695,6 +689,29 @@
                             <img :class="(petCurrentTab === 'volkorne') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
                         </button>
                     </div>
+                </div>
+
+                <div x-show="showAnimationList" x-transition x-cloak
+                     @click.outside="showAnimationList = false"
+                     class="h-[35rem] rounded border-2 border-secondary p-4 pb-8 w-full overflow-auto z-20 top-20 left-0 absolute flex flex-wrap gap-4 gap-y-6 bg-primary">
+
+                    <template x-for="(a, index) in animations"
+                              :key="index">
+                        <button type="button"
+                                @click="animation = index; orientationKey = 0"
+                                class="bg-primary-100 relative group rounded hover:brightness-110 transition-all">
+                            <img draggable="false" class="h-[9rem]" :src="'{{ asset('storage/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
+                            <p x-text="a.shortName" class="absolute bottom-0 right-0 text-right translate-y-1/2 z-50 bg-primary border border-secondary px-2 py-1 whitespace-nowrap w-fit opacity-0 group-hover:opacity-100 transition-all"></p>
+                        </button>
+                    </template>
+
+                    <button type="button"
+                            @click="showAnimationList = false"
+                            class="text-inactiveText h-12 w-12 hover:text-red-500 hover:scale-110 top-2 right-2 absolute transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
 
                 {{-- Liste des items --}}
@@ -1114,19 +1131,11 @@
                 searchBar: '',
                 copy: null,
                 copyTimeout: null,
-                possibleOrientation: {
-                    'Static': [1,2,3,4,5,6,7,0],
-                    'Combat': [1,3,5,7],
-                    'Monture': [1,2,3,4,5,6,7,0],
-                },
-                rendererOrientation: {
-                    /*'Static': [1,2,1,0,5,6,5,0],
-                    'Combat': [1,1,5,5],
-                    'Monture': [1,2,1,0,5,6,5,0],*/
-                    'Static': [1,2,3,4,5,6,7,0],
-                    'Combat': [1,3,5,7],
-                    'Monture': [1,2,3,4,5,6,7,0],
-                },
+                possibleOrientation: [
+                    [1,3,5,7],
+                    [1,2,3,4,5,6,7,0],
+                    [1,3],
+                ],
                 orientationKey: 0,
                 colorsLabel: [
                     '{{ __('barbofus.labelSkinColorsSkin') }}',
@@ -1161,7 +1170,36 @@
                     '#' . ltrim((string) $skin?->color_cloth_3, '#'),
                     '#' . ltrim((string) $skin?->color_cloth_4, '#'),
                 ] : []) !!},
-                animation: 'Static',
+                animations: [
+                    {shortName: @json(__('barbofus.AnimStatic')),name: 'AnimStatiqueExplo0@1-static', frame: 0, orientation: 1},
+                    {shortName: @json(__('barbofus.AnimCombat')),name: 'Combat', frame: 0, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimWalk')),name: 'Marche', frame: 0, orientation: 1},
+                    {shortName: @json(__('barbofus.AnimRun')),name: 'Course', frame: 0, orientation: 1},
+                    {shortName: @json(__('barbofus.AnimEmoteJuggle')),name: 'AnimEmoteJuggle_Statique@AnimEmoteJuggle', frame: 0, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmotePaint')),name: 'AnimEmotePaint@AnimEmotePaint', frame: 66, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteCry')),name: 'AnimEmoteCry@AnimEmoteCry', frame: 24, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteBunnyhop')),name: 'AnimEmoteBunnyhop@AnimEmoteBunnyhop', frame: 17, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteCarnival')),name: 'AnimEmoteCarnival_Statique@AnimEmoteCarnival', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSamourai')),name: 'AnimEmoteSamourai@AnimEmoteSamourai', frame: 31, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSit')),name: 'AnimEmoteSit_Statique@AnimEmoteSit', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteWrite')),name: 'AnimEmoteWrite_Statique@AnimEmoteWrite', frame: 25, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteBoxing')),name: 'AnimEmoteBoxing@AnimEmoteBoxing', frame: 1, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteColor')),name: 'AnimEmoteColor@AnimEmoteColor', frame: 10, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteMad')),name: 'AnimEmoteMad@AnimEmoteMad', frame: 10, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteNoxine')),name: 'AnimEmoteNoxine@AnimEmoteNoxine', frame: 25, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteHeartbreak')),name: 'AnimEmoteHeartbreak@AnimEmoteHeartbreak', frame: 53, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSwishswish')),name: 'AnimEmoteSwishswish@AnimEmoteSwishswish', frame: 5, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteBallon')),name: 'AnimEmoteBallon@AnimEmoteBallon', frame: 100, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteUlgrude')),name: 'AnimEmoteUlgrude@AnimEmoteUlgrude', frame: 60, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteKrosmose')),name: 'AnimEmoteKrosmose@AnimEmoteKrosmose', frame: 150, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSlip20ans')),name: 'AnimEmoteSlip20ans@AnimEmoteSlip20ans', frame: 50, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteCross')),name: 'AnimEmoteCross_Statique@AnimEmoteCross', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteBehind')),name: 'AnimEmoteBehind_Statique@AnimEmoteBehind', frame: 0, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteFear')),name: 'AnimEmoteFear_Statique@AnimEmoteFear', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteOups')),name: 'AnimEmoteOups@AnimEmoteOups', frame: 27, orientation: 0},
+                ],
+                showAnimationList: false,
+                animation: 0,
                 animated: true,
                 cameleon: false,
                 items: {
@@ -1185,7 +1223,7 @@
                 initWatcher() {
                     Alpine.effect(() => {
                         const data = this.getRendererObject();
-                        const invertX = [3,4,7].includes(this.possibleOrientation[this.animation][this.orientationKey]);
+                        const invertX = [3,4,7].includes(this.possibleOrientation[this.animations[this.animation].orientation][this.orientationKey]);
 
                         if (data !== this.previousData || invertX !== this.previousInvertX) {
                             this.previousData = data;
@@ -1249,8 +1287,8 @@
                 {
                     return JSON.stringify({
                         head: this.head,
-                        orientation: this.rendererOrientation[this.animation][this.orientationKey],
-                        animation: this.animation,
+                        orientation: this.possibleOrientation[this.animations[this.animation].orientation][this.orientationKey],
+                        animation: this.animations[this.animation].name,
                         items: Object.entries(this.items)
                             .map(([key, value]) => {
                                 if (!value) return null;
@@ -1892,7 +1930,7 @@
                 this.start()
             }
 
-            async downloadImage () {
+            async downloadImage (frame) {
                 return new Promise(async (resolve, reject) => {
                     this.__running = false
 
@@ -1905,6 +1943,7 @@
                     this.$canvas.style.height = originalHeight + 'px'
                     this.__updateViewport()
 
+                    this.indexFrame = frame
 
                     this.draw()
                     const url = this.$canvas.toDataURL('image/png')
@@ -1927,7 +1966,7 @@
 
             }
 
-            async copyImage () {
+            async copyImage (frame) {
                 return new Promise(async (resolve, reject) => {
                     this.__running = false
 
@@ -1940,6 +1979,7 @@
                     this.$canvas.style.height = originalHeight + 'px'
                     this.__updateViewport()
 
+                    this.indexFrame = frame
 
                     this.draw()
                     const url = this.$canvas.toDataURL('image/png');
@@ -2426,30 +2466,27 @@
             // Génère l'image
             let data = JSON.parse(skinRenderer.rendererData);
             if(data.animated === true) {
-                console.log('animated', data.animated)
                 skinRenderer.downloadAnimation()
             }
             else {
-                console.log('animated false', data.animated)
                 data.animated = true;
                 await UpdateRenderer(JSON.stringify(data, null, 2), false);
-                console.log('UpdateRenderer true', data.animated)
 
                 await skinRenderer.downloadAnimation()
 
-                console.log('skinRenderer')
                 data.animated = false;
                 await UpdateRenderer(JSON.stringify(data, null, 2), false);
-                console.log('UpdateRenderer false', data.animated)
             }
         })
 
         document.querySelector('#btnExport').addEventListener('click', (e) => {
-            skinRenderer.downloadImage()
+            const frame = window.skinator.animations[window.skinator.animation].frame;
+            skinRenderer.downloadImage(frame)
         })
 
         document.querySelector('#btnCopyImg').addEventListener('click', (e) => {
-            skinRenderer.copyImage()
+            const frame = window.skinator.animations[window.skinator.animation].frame;
+            skinRenderer.copyImage(frame)
         })
 
         document.querySelector('#btnShare').addEventListener('click', async (e) => {

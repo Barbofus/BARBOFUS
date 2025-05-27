@@ -7,6 +7,33 @@ declare(strict_types=1);
 // trying to avoid gendered words to make it more ample
 // Also shamelessly copying some words from Ankama shop
 return [
+    'AnimStatic' => 'Estático ocioso',
+    'AnimCombat' => 'Lutar',
+    'AnimWalk' => 'Andar',
+    'AnimRun' => 'Correndo',
+    'AnimEmoteJuggle' => 'Malabarismo',
+    'AnimEmotePaint' => 'Pintar',
+    'AnimEmoteCry' => 'Chorar',
+    'AnimEmoteBunnyhop' => 'Pulo de Lepowide',
+    'AnimEmoteCarnival' => 'Carnaval',
+    'AnimEmoteSamourai' => 'Samurai',
+    'AnimEmoteSit' => 'Sentar',
+    'AnimEmoteWrite' => 'Escrever',
+    'AnimEmoteBoxing' => 'Boxe',
+    'AnimEmoteColor' => 'Explosão de cores',
+    'AnimEmoteMad' => 'Irritado',
+    'AnimEmoteNoxine' => 'Selfie',
+    'AnimEmoteHeartbreak' => 'Coração partido',
+    'AnimEmoteSwishswish' => 'Emote No Ritmo',
+    'AnimEmoteBallon' => 'Inflar um balão',
+    'AnimEmoteUlgrude' => 'Trovão retumbante de Ulgrude',
+    'AnimEmoteKrosmose' => 'Dança Krósmica',
+    'AnimEmoteSlip20ans' => 'Festa da Cueca',
+    'AnimEmoteCross' => 'Cruzar os braços',
+    'AnimEmoteBehind' => 'Mãos atrás das costas',
+    'AnimEmoteFear' => 'Medo',
+    'AnimEmoteOups' => 'Soltar gases',
+
     'buttonHome' => 'Início', // Very accustomed to the word "Home" but "Início" may be more welcoming for non-english speakers
     'buttonSkins' => 'Aparência', //
     'buttonHavenbags' => 'Saco de viagem', // Ankama
