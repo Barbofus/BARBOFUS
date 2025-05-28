@@ -9,6 +9,8 @@
 
         setSelection(newSelection)
         {
+            if(newSelection === null) return;
+
             this.selection = newSelection;
             this.showSort = false;
 

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\UnitySkin;
 
 use App\Actions\Utils\DoColorsMatch;
 use App\Enums\ItemSubcategorieEnum;
+use App\Models\Race;
 use App\Models\Skin;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
@@ -113,6 +114,8 @@ class InfiniteUnitySkinIndex extends Component
 
     public function mount(): void
     {
+        $breedIds = Race::all()->pluck('dofus_id')->toArray();
+
         // Si on a des paramètres dans l'url
         if (request()->all()) {
             foreach (request()->all() as $key => $param) {
@@ -122,6 +125,10 @@ class InfiniteUnitySkinIndex extends Component
                         break;
                     case 'classe':
                         foreach (explode(',', $param) as $race_id) {
+                            if(!in_array(intval($race_id), $breedIds)) {
+                                continue;
+                            }
+
                             $this->ToggleRace(intval($race_id));
                         }
                         break;
