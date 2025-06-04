@@ -11,7 +11,7 @@
           enctype="multipart/form-data"
           onkeydown="return event.key != 'Enter';"
           x-data="skinator"
-          x-init="initWatcher">
+          x-init="initWatcher(); window.skinator = $data">
 
         @method($method)
         @csrf
@@ -421,7 +421,7 @@
                         </div>
 
                         {{-- Render --}}
-                        <canvas @click="animated = !animated" class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
+                        <canvas @click="if(!showAnimationList) { animated = !animated }" class="canvas-renderer cursor-pointer" title="Cliquez pour activer/désactiver l'animation" x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
 
                         {{-- Loader --}}
                         <svg class="loading-logo" style="display: none;" viewBox="0 0 66.410408 67.468735" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg">
@@ -449,27 +449,21 @@
 
                     {{-- Zone sous skins / Orientation / Animation --}}
                     <div class="flex justify-evenly items-center space-x-8 w-fit mx-auto">
-                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animation].length) orientationKey = 0">
+                        <button type="button" class="group" @click="orientationKey++; if(orientationKey >= possibleOrientation[animations[animation].orientation].length) orientationKey = 0">
                             <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 group-active:translate-y-0 group-active:scale-90 transition-all">
                         </button>
 
                         {{-- Choix anim exploration / combat --}}
                         <button type="button"
                                 title="Exploration / Combat"
-                                :disabled="animation === 'Monture'"
-                                class="group relative h-8 w-16 rounded-full bg-primary-100 p-2 disabled:cursor-not-allowed"
-                                @click="orientationKey = 0; (animation === 'Static' ? animation = 'Combat' : (animation === 'Combat' ? animation = 'Static' : animation = 'Monture'))">
-                            <div class="h-5 w-5 p-1 left-1.5 absolute top-1.5 bg-secondary text-primary rounded-full transition-all group-disabled:bg-inactiveText"
-                                 :class="(animation === 'Static' || animation === 'Monture') ? 'translate-x-0' : 'translate-x-8'">
-                                <svg x-cloak x-show="animation === 'Static'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                                </svg>
-
-                                <svg x-cloak x-show="animation === 'Combat'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Sword-Attack--Streamline-Sharp" class="size-4 -scale-x-100"><desc>Sword Attack Streamline Icon: https://streamlinehq.com</desc><g id="sword-attack--entertainment-gaming-sword-attack"><path id="Union" fill="#000000" fill-rule="evenodd" d="M6.67488 1.37109h-5.3033v5.3033L12.4699 17.7727l5.3033 -5.3033L6.67488 1.37109ZM21.4854 13.7068l-2.4751 2.4751 3.9895 3.9894 0 2.8285 -2.8285 0 -3.9894 -3.9895 -2.4747 2.4747 -1.4142 -1.4142 7.7781 -7.7782 1.4143 1.4142Z" clip-rule="evenodd" stroke-width="1"></path></g></svg>
-                            </div>
+                                class="group relative rounded-md bg-secondary text-primary p-1 uppercase hover:rounded-3xl transition-all"
+                                @click="showAnimationList = !showAnimationList">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-8">
+                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 0 0-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634Zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 0 1-.189-.866c0-.298.059-.605.189-.866Zm2.023 6.828a.75.75 0 1 0-1.06-1.06 3.75 3.75 0 0 1-5.304 0 .75.75 0 0 0-1.06 1.06 5.25 5.25 0 0 0 7.424 0Z" clip-rule="evenodd" />
+                            </svg>
                         </button>
 
-                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animation].length - 1">
+                        <button type="button" class="group" @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animations[animation].orientation].length - 1">
                             <img loading="lazy" src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}" class="group-hover:-translate-y-1 h-14 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90 transition-all">
                         </button>
                     </div>
@@ -545,7 +539,7 @@
             </div>
 
             {{--      TOUS LES ITEMS      --}}
-            <div class="flex-1 flex flex-col h-full">
+            <div class="flex-1 relative flex flex-col h-full">
 
                 {{-- CHOIX ONGLET --}}
                 <div class="text-md min-[1600px]:text-xl h-fit font-thin flex flex-wrap gap-y-2 justify-evenly"
@@ -560,8 +554,8 @@
                 </div>
 
                 {{-- Barre de recherche --}}
-                <div class="min-[950px]:flex h-fit my-2 min-[950px]:space-x-2">
-                    <div class="relative flex items-center space-x-2 h-full w-[16rem] bg-primary-100 rounded-md py-2">
+                <div class="flex relative flex-wrap h-fit mt-2">
+                    <div class="relative flex items-center space-x-2 mb-2 h-full w-[16rem] mr-6 bg-primary-100 rounded-md py-2">
                         <input maxlength="64" id="skinator-search" type="text" placeholder="{{ __('barbofus.contentRefineSearch') }}"
                                x-model="searchBar"
                                x-ref="skinatorSearchInput"
@@ -585,46 +579,139 @@
                         </button>
                     </div>
 
+                    <div class="flex space-x-2 mb-2 mr-6">
+
+                        {{-- election items aléatoire --}}
+                        <button type="button" x-cloak
+                                title="Randomize items"
+                                @click="getRandomItems()"
+                                class="h-10 w-10 border-2 text-md rounded-md bg-primary-100 border-inactiveText text-inactiveText hover:text-secondary hover:border-secondary transition-all">
+                            <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" alt="Skin Aléatoire" height="32" width="32" draggable="false" class="h-8 opacity-75 hover:opacity-100 hover:scale-90 transition-all mx-auto">
+                        </button>
+                    </div>
+
+                    {{-- Color filter --}}
+                    <div class="group z-10 relative mb-2 mr-6">
+                        <div class="w-10 h-10 rounded cursor-pointer focus:outline-none border-2 border-inactiveText group-hover:border-secondary peer-focus:border-secondary transition-all"
+                             :style="searchColor
+                                       ? { background: searchColor }
+                                       : {
+                                           backgroundImage: 'repeating-conic-gradient(#ffffff00 0% 25%, #e1e1e120 0% 50%)',
+                                           backgroundSize: '15px 15px',
+                                           backgroundColor: 'transparent'
+                                         }">
+                            <input type="color"
+                                   title="Item filter"
+                                   x-model="searchColor"
+                                   @change="updateFilteredItems()"
+                                   class="opacity-0 h-full w-full cursor-pointer">
+                        </div>
+
+                        <button class="opacity-0 -z-10 absolute top-0 left-0 h-full w-full border-transparent bg-primary-100 text-inactiveText hover:text-red-500 transition-all"
+                                :class="searchColor ? 'group-hover:translate-x-full group-hover:opacity-100' : ''"
+                                @click="searchColor = null; updateFilteredItems()"
+                                type="button"
+                                title="reset">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-7 mx-auto">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {{-- Item filter --}}
+                    <div class="flex space-x-2 mb-2 mr-6">
+
+                        {{-- Show colorable --}}
+                        <button type="button" x-cloak
+                                title="Show only colorable"
+                                @click="showOnlyColorable = !showOnlyColorable; updateFilteredItems()"
+                                class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="showOnlyColorable ? 'border-inactiveText' : 'border-inactiveText'">
+                            <img :class="showOnlyColorable ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable">
+                        </button>
+
+                        {{-- Show Mimisymbic --}}
+                        <button type="button" x-cloak
+                                title="Show only mimisymbic"
+                                @click="showOnlyMimisymbic = !showOnlyMimisymbic; updateFilteredItems()"
+                                class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="showOnlyMimisymbic ? 'border-inactiveText' : 'border-inactiveText'">
+                            <img :class="showOnlyMimisymbic ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/icons/items/subcategories/mimisymbic.png') }}" alt="Colorable">
+                        </button>
+
+                        {{-- Show Ceremonial --}}
+                        <button type="button" x-cloak
+                                title="Show only ceremonial"
+                                @click="showOnlyCeremonial = !showOnlyCeremonial; updateFilteredItems()"
+                                class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="showOnlyCeremonial ? 'border-inactiveText' : 'border-inactiveText'">
+                            <img :class="showOnlyCeremonial ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/icons/items/subcategories/ceremonial.png') }}" alt="Colorable">
+                        </button>
+                    </div>
+
                     {{-- CHOIX ONGLET FAMILIER --}}
                     <div x-show="itemsCurrentTab === 'pet'" x-transition
-                         class="h-10 font-thin flex space-x-2 mt-2 min-[950px]:mt-0"
+                         class="h-10 font-thin flex space-x-2 mb-2"
                          @click="if(event.target.closest('button[data-tab]')) { petCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
 
                         <button type="button" x-cloak
                                 data-tab="familier"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'familier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'familier') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/familiar.png') }}" alt="Familier">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="montilier"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'montilier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'montilier') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/petsmount.png') }}" alt="Montilier">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="dragodinde"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'dragodinde') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'dragodinde') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/dragoturkey.png') }}" alt="Dragodinde">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="muldo"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'muldo') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'muldo') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/seemyool.png') }}" alt="Muldo">
                         </button>
 
                         <button type="button" x-cloak
                                 data-tab="volkorne"
-                                class="h-full border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                class="h-full w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
                                 :class="(petCurrentTab === 'volkorne') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'volkorne') ? 'opacity-100' : 'opacity-60'" class="h-full transition-all" src="{{ asset('storage/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
                         </button>
                     </div>
+                </div>
+
+                <div x-show="showAnimationList" x-transition x-cloak
+                     @click.outside="showAnimationList = false"
+                     class="h-[35rem] rounded border-2 border-secondary p-4 pb-8 w-full overflow-auto z-20 top-20 left-0 absolute flex flex-wrap gap-4 gap-y-6 bg-primary">
+
+                    <template x-for="(a, index) in animations"
+                              :key="index">
+                        <button type="button"
+                                @click="animation = index; orientationKey = 0"
+                                class="bg-primary-100 relative group rounded hover:brightness-110 transition-all">
+                            <img draggable="false" class="h-[9rem]" :src="'{{ asset('storage/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
+                            <p x-text="a.shortName" class="absolute bottom-0 right-0 text-right translate-y-1/2 z-50 bg-primary border border-secondary px-2 py-1 whitespace-nowrap w-fit opacity-0 group-hover:opacity-100 transition-all"></p>
+                        </button>
+                    </template>
+
+                    <button type="button"
+                            @click="showAnimationList = false"
+                            class="text-inactiveText h-12 w-12 hover:text-red-500 hover:scale-110 top-2 right-2 absolute transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
 
                 {{-- Liste des items --}}
@@ -721,7 +808,7 @@
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
 
                                 <img src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable item"
-                                     :class="(allItem.colorable === 1 && loaded && intersected) ? 'visible' : 'invisible'"
+                                     :class="(allItem.colorable && loaded && intersected) ? 'visible' : 'invisible'"
                                      class="h-6 w-6 absolute top-1 right-1">
 
                                 <div class="flex gap-1 absolute pointer-events-none">
@@ -744,6 +831,7 @@
                                      @load="loaded = true"
                                      x-intersect:enter="intersected = true"
                                      :class="(loaded && intersected) ? 'opacity-100' : 'opacity-0'">
+
                             </label>
                         </div>
                     </template>
@@ -754,7 +842,7 @@
                         :class="maxItemVisible < filteredItems.filter(i => i.category === itemsCurrentTab).length ? 'visible' : 'invisible'"
                         :disabled="maxItemVisible >= filteredItems.filter(i => i.category === itemsCurrentTab).length"
                         class="py-2 w-fit mx-auto px-6 my-4 group rounded-md bg-secondary text-primary hover:rounded-lg transition-all"
-                        @click="maxItemVisible += 480">
+                        @click="maxItemVisible += 4800">
                     <p class="group-hover:-translate-y-0.5 transition-all">{{ __('barbofus.contentLoadMore') }}</p>
                 </button>
             </div>
@@ -769,11 +857,273 @@
             window.history.replaceState({}, document.title, url.pathname + url.search);
         }
 
+        function dE00(x1, x2, weights) {
+            var sqrt = Math.sqrt;
+            var pow = Math.pow;
+
+            this.x1 = x1;
+            this.x2 = x2;
+
+            this.weights = weights || {};
+            this.ksubL = this.weights.lightness || 1;
+            this.ksubC = this.weights.chroma || 1;
+            this.ksubH = this.weights.hue || 1;
+
+            // Delta L Prime
+            this.deltaLPrime = x2.L - x1.L;
+
+            // L Bar
+            this.LBar = (x1.L + x2.L) / 2;
+
+            // C1 & C2
+            this.C1 = sqrt(pow(x1.A, 2) + pow(x1.B, 2));
+            this.C2 = sqrt(pow(x2.A, 2) + pow(x2.B, 2));
+
+            // C Bar
+            this.CBar = (this.C1 + this.C2) / 2;
+
+            // A Prime 1
+            this.aPrime1 = x1.A +
+                (x1.A / 2) *
+                (1 - sqrt(
+                    pow(this.CBar, 7) /
+                    (pow(this.CBar, 7) + pow(25, 7))
+                ));
+
+            // A Prime 2
+            this.aPrime2 = x2.A +
+                (x2.A / 2) *
+                (1 - sqrt(
+                    pow(this.CBar, 7) /
+                    (pow(this.CBar, 7) + pow(25, 7))
+                ));
+
+            // C Prime 1
+            this.CPrime1 = sqrt(
+                pow(this.aPrime1, 2) +
+                pow(x1.B, 2)
+            );
+
+            // C Prime 2
+            this.CPrime2 = sqrt(
+                pow(this.aPrime2, 2) +
+                pow(x2.B, 2)
+            );
+
+            // C Bar Prime
+            this.CBarPrime = (this.CPrime1 + this.CPrime2) / 2;
+
+            // Delta C Prime
+            this.deltaCPrime = this.CPrime2 - this.CPrime1;
+
+            // S sub L
+            this.SsubL = 1 + (
+                (0.015 * pow(this.LBar - 50, 2)) /
+                sqrt(20 + pow(this.LBar - 50, 2))
+            );
+
+            // S sub C
+            this.SsubC = 1 + 0.045 * this.CBarPrime;
+
+            /**
+             * Properties set in getDeltaE method, for access to convenience functions
+             */
+            // h Prime 1
+            this.hPrime1 = 0;
+
+            // h Prime 2
+            this.hPrime2 = 0;
+
+            // Delta h Prime
+            this.deltahPrime = 0;
+
+            // Delta H Prime
+            this.deltaHPrime = 0;
+
+            // H Bar Prime
+            this.HBarPrime = 0;
+
+            // T
+            this.T = 0;
+
+            // S sub H
+            this.SsubH = 0;
+
+            // R sub T
+            this.RsubT = 0;
+        }
+
+        /**
+         * Returns the deltaE value.
+         */
+        dE00.prototype.getDeltaE = function() {
+            var sqrt = Math.sqrt;
+            var sin = Math.sin;
+            var pow = Math.pow;
+
+            // h Prime 1
+            this.hPrime1 = this.gethPrime1();
+
+            // h Prime 2
+            this.hPrime2 = this.gethPrime2();
+
+            // Delta h Prime
+            this.deltahPrime = this.getDeltahPrime();
+
+            // Delta H Prime
+            this.deltaHPrime = 2 * sqrt(this.CPrime1 * this.CPrime2) * sin(this.degreesToRadians(this.deltahPrime) / 2);
+
+            // H Bar Prime
+            this.HBarPrime = this.getHBarPrime();
+
+            // T
+            this.T = this.getT();
+
+            // S sub H
+            this.SsubH = 1 + 0.015 * this.CBarPrime * this.T;
+
+            // R sub T
+            this.RsubT = this.getRsubT();
+
+            // Put it all together!
+            var lightness = this.deltaLPrime / (this.ksubL * this.SsubL);
+            var chroma = this.deltaCPrime / (this.ksubC * this.SsubC);
+            var hue = this.deltaHPrime / (this.ksubH * this.SsubH);
+
+            return sqrt(
+                pow(lightness, 2) +
+                pow(chroma, 2) +
+                pow(hue, 2) +
+                this.RsubT * chroma * hue
+            );
+        };
+
+        /**
+         * Returns the RT variable calculation.
+         */
+        dE00.prototype.getRsubT = function() {
+            var sin = Math.sin;
+            var sqrt = Math.sqrt;
+            var pow = Math.pow;
+            var exp = Math.exp;
+
+            return -2 *
+                sqrt(
+                    pow(this.CBarPrime, 7) /
+                    (pow(this.CBarPrime, 7) + pow(25, 7))
+                ) *
+                sin(this.degreesToRadians(
+                    60 *
+                    exp(
+                        -(
+                            pow(
+                                (this.HBarPrime - 275) / 25, 2
+                            )
+                        )
+                    )
+                ));
+        };
+
+        /**
+         * Returns the T variable calculation.
+         */
+        dE00.prototype.getT = function() {
+            var cos = Math.cos;
+
+            return 1 -
+                0.17 * cos(this.degreesToRadians(this.HBarPrime - 30)) +
+                0.24 * cos(this.degreesToRadians(2 * this.HBarPrime)) +
+                0.32 * cos(this.degreesToRadians(3 * this.HBarPrime + 6)) -
+                0.20 * cos(this.degreesToRadians(4 * this.HBarPrime - 63));
+        };
+
+        /**
+         * Returns the H Bar Prime variable calculation.
+         */
+        dE00.prototype.getHBarPrime= function() {
+            var abs = Math.abs;
+
+            if (abs(this.hPrime1 - this.hPrime2) > 180) {
+                return (this.hPrime1 + this.hPrime2 + 360) / 2
+            }
+
+            return (this.hPrime1 + this.hPrime2) / 2
+        };
+
+        /**
+         * Returns the Delta h Prime variable calculation.
+         */
+        dE00.prototype.getDeltahPrime = function() {
+            var abs = Math.abs;
+
+            // When either C′1 or C′2 is zero, then Δh′ is irrelevant and may be set to
+            // zero.
+            if (0 === this.C1 || 0 === this.C2) {
+                return 0;
+            }
+
+            if (abs(this.hPrime1 - this.hPrime2) <= 180) {
+                return this.hPrime2 - this.hPrime1;
+            }
+
+            if (this.hPrime2 <= this.hPrime1) {
+                return this.hPrime2 - this.hPrime1 + 360;
+            } else {
+                return this.hPrime2 - this.hPrime1 - 360;
+            }
+        };
+
+        /**
+         * Returns the h Prime 1 variable calculation.
+         */
+        dE00.prototype.gethPrime1 = function() {
+            return this._gethPrimeFn(this.x1.B, this.aPrime1);
+        };
+
+        /**
+         * Returns the h Prime 2 variable calculation.
+         */
+        dE00.prototype.gethPrime2 = function() {
+            return this._gethPrimeFn(this.x2.B, this.aPrime2);
+        };
+
+        /**
+         * A helper function to calculate the h Prime 1 and h Prime 2 values.
+         */
+        dE00.prototype._gethPrimeFn = function(x, y) {
+            var hueAngle;
+
+            if (x === 0 && y === 0) {
+                return 0;
+            }
+
+            hueAngle = this.radiansToDegrees(Math.atan2(x, y));
+
+            if (hueAngle >= 0) {
+                return hueAngle;
+            } else {
+                return hueAngle + 360;
+            }
+        };
+
+        /**
+         * Gives the radian equivalent of a specified degree angle.
+         */
+        dE00.prototype.radiansToDegrees = function(radians) {
+            return radians * (180 / Math.PI);
+        };
+
+        /**
+         * Gives the degree equivalent of a specified radian.
+         */
+        dE00.prototype.degreesToRadians = function(degrees) {
+            return degrees * (Math.PI / 180);
+        };
 
         document.addEventListener("alpine:init", () => {
             Alpine.data("skinator", () => ({
-                breedInfos: @js($breeds),
-                allItems: @js($items),
+                breedInfos: @json($breeds),
+                allItems: @json($items),
                 loadedItems: new Set(),
                 filteredItems: null,
                 breedHeads: null,
@@ -781,19 +1131,11 @@
                 searchBar: '',
                 copy: null,
                 copyTimeout: null,
-                possibleOrientation: {
-                    'Static': [1,2,3,4,5,6,7,0],
-                    'Combat': [1,3,5,7],
-                    'Monture': [1,2,3,4,5,6,7,0],
-                },
-                rendererOrientation: {
-                    /*'Static': [1,2,1,0,5,6,5,0],
-                    'Combat': [1,1,5,5],
-                    'Monture': [1,2,1,0,5,6,5,0],*/
-                    'Static': [1,2,3,4,5,6,7,0],
-                    'Combat': [1,3,5,7],
-                    'Monture': [1,2,3,4,5,6,7,0],
-                },
+                possibleOrientation: [
+                    [1,3,5,7],
+                    [1,2,3,4,5,6,7,0],
+                    [1,3],
+                ],
                 orientationKey: 0,
                 colorsLabel: [
                     '{{ __('barbofus.labelSkinColorsSkin') }}',
@@ -828,7 +1170,36 @@
                     '#' . ltrim((string) $skin?->color_cloth_3, '#'),
                     '#' . ltrim((string) $skin?->color_cloth_4, '#'),
                 ] : []) !!},
-                animation: 'Static',
+                animations: [
+                    {shortName: @json(__('barbofus.AnimStatic')),name: 'AnimStatiqueExplo0@1-static', frame: 0, orientation: 1},
+                    {shortName: @json(__('barbofus.AnimCombat')),name: 'Combat', frame: 0, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimWalk')),name: 'Marche', frame: 0, orientation: 1},
+                    {shortName: @json(__('barbofus.AnimRun')),name: 'Course', frame: 0, orientation: 1},
+                    {shortName: @json(__('barbofus.AnimEmoteJuggle')),name: 'AnimEmoteJuggle_Statique@AnimEmoteJuggle', frame: 0, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmotePaint')),name: 'AnimEmotePaint@AnimEmotePaint', frame: 66, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteCry')),name: 'AnimEmoteCry@AnimEmoteCry', frame: 24, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteBunnyhop')),name: 'AnimEmoteBunnyhop@AnimEmoteBunnyhop', frame: 17, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteCarnival')),name: 'AnimEmoteCarnival_Statique@AnimEmoteCarnival', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSamourai')),name: 'AnimEmoteSamourai@AnimEmoteSamourai', frame: 31, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSit')),name: 'AnimEmoteSit_Statique@AnimEmoteSit', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteWrite')),name: 'AnimEmoteWrite_Statique@AnimEmoteWrite', frame: 25, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteBoxing')),name: 'AnimEmoteBoxing@AnimEmoteBoxing', frame: 1, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteColor')),name: 'AnimEmoteColor@AnimEmoteColor', frame: 10, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteMad')),name: 'AnimEmoteMad@AnimEmoteMad', frame: 10, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteNoxine')),name: 'AnimEmoteNoxine@AnimEmoteNoxine', frame: 25, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteHeartbreak')),name: 'AnimEmoteHeartbreak@AnimEmoteHeartbreak', frame: 53, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSwishswish')),name: 'AnimEmoteSwishswish@AnimEmoteSwishswish', frame: 5, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteBallon')),name: 'AnimEmoteBallon@AnimEmoteBallon', frame: 100, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteUlgrude')),name: 'AnimEmoteUlgrude@AnimEmoteUlgrude', frame: 60, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteKrosmose')),name: 'AnimEmoteKrosmose@AnimEmoteKrosmose', frame: 150, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteSlip20ans')),name: 'AnimEmoteSlip20ans@AnimEmoteSlip20ans', frame: 50, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteCross')),name: 'AnimEmoteCross_Statique@AnimEmoteCross', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteBehind')),name: 'AnimEmoteBehind_Statique@AnimEmoteBehind', frame: 0, orientation: 0},
+                    {shortName: @json(__('barbofus.AnimEmoteFear')),name: 'AnimEmoteFear_Statique@AnimEmoteFear', frame: 0, orientation: 2},
+                    {shortName: @json(__('barbofus.AnimEmoteOups')),name: 'AnimEmoteOups@AnimEmoteOups', frame: 27, orientation: 0},
+                ],
+                showAnimationList: false,
+                animation: 0,
                 animated: true,
                 cameleon: false,
                 items: {
@@ -844,11 +1215,15 @@
                 previousData: '',
                 previousInvertX: '',
                 openShareUI: false,
+                searchColor: null,
+                showOnlyColorable: false,
+                showOnlyMimisymbic: false,
+                showOnlyCeremonial: false,
 
                 initWatcher() {
                     Alpine.effect(() => {
                         const data = this.getRendererObject();
-                        const invertX = [3,4,7].includes(this.possibleOrientation[this.animation][this.orientationKey]);
+                        const invertX = [3,4,7].includes(this.possibleOrientation[this.animations[this.animation].orientation][this.orientationKey]);
 
                         if (data !== this.previousData || invertX !== this.previousInvertX) {
                             this.previousData = data;
@@ -912,8 +1287,8 @@
                 {
                     return JSON.stringify({
                         head: this.head,
-                        orientation: this.rendererOrientation[this.animation][this.orientationKey],
-                        animation: this.animation,
+                        orientation: this.possibleOrientation[this.animations[this.animation].orientation][this.orientationKey],
+                        animation: this.animations[this.animation].name,
                         items: Object.entries(this.items)
                             .map(([key, value]) => {
                                 if (!value) return null;
@@ -970,18 +1345,102 @@
                     return count === colors.length
                 },
 
+                rgb2lab(rgb){
+                    let r = rgb[0] / 255,
+                        g = rgb[1] / 255,
+                        b = rgb[2] / 255,
+                        x, y, z;
+
+                    r = (r > 0.04045) ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+                    g = (g > 0.04045) ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+                    b = (b > 0.04045) ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+
+                    x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+                    y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.00000;
+                    z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+
+                    x = (x > 0.008856) ? Math.pow(x, 1/3) : (7.787 * x) + 16/116;
+                    y = (y > 0.008856) ? Math.pow(y, 1/3) : (7.787 * y) + 16/116;
+                    z = (z > 0.008856) ? Math.pow(z, 1/3) : (7.787 * z) + 16/116;
+
+                    return [(116 * y) - 16, 500 * (x - y), 200 * (y - z)]
+                },
+
                 updateFilteredItems()
                 {
+                    let filteredItems = this.allItems;
+
                     if(this.searchBar.length >= 3) {
-                        this.filteredItems = this.allItems.filter(i =>
+                        filteredItems = this.allItems.filter(i =>
                             removeAccents(i.name).toLowerCase().includes(removeAccents(this.searchBar).toLowerCase())
                         );
-
-                    }
-                    else {
-                        this.filteredItems = this.allItems;
                     }
 
+                    if(this.showOnlyColorable) {
+                        filteredItems = filteredItems.filter(i => i.colorable);
+                    }
+
+                    if(this.showOnlyMimisymbic &! this.showOnlyCeremonial) {
+                        filteredItems = filteredItems.filter(i => i.subcategory === 'mimisymbic');
+                    }
+
+                    if(this.showOnlyCeremonial &! this.showOnlyMimisymbic) {
+                        filteredItems = filteredItems.filter(i => i.subcategory === 'ceremonial');
+                    }
+
+                    if (this.searchColor !== null) {
+                        const searchColor = [
+                            parseInt(this.searchColor.slice(1, 3), 16),
+                            parseInt(this.searchColor.slice(3, 5), 16),
+                            parseInt(this.searchColor.slice(5, 7), 16)
+                        ];
+                        const searchColorLab = this.rgb2lab(searchColor);
+
+                        filteredItems = filteredItems.map(i => {
+                            const dofusId = i.dofus_id;
+                            // DEBUG REWRITE KOLORS
+                            const kolors = i.kolors // this.itemsKolors.find(k => k.itemId == dofusId)?.kolors;
+
+                            if (kolors == null || kolors == []) return {...i, minDist: Infinity};
+                            if(i.colorable) return {...i, minDist: Infinity};
+
+                            let minDist = Infinity;
+                            kolors.forEach((kolor) => {
+
+                                const kolorLab = this.rgb2lab([
+                                    parseInt(kolor.slice(0, 2), 16),
+                                    parseInt(kolor.slice(2, 4), 16),
+                                    parseInt(kolor.slice(4, 6), 16)
+                                ]);
+                                // const alpha = parseInt(kolor.slice(6, 8), 16) / 255;
+
+                                const de00 = new dE00({
+                                    L: kolorLab[0],
+                                    A: kolorLab[1],
+                                    B: kolorLab[2]
+                                }, {
+                                    L: searchColorLab[0],
+                                    A: searchColorLab[1],
+                                    B: searchColorLab[2]
+                                })
+                                const newDist = de00.getDeltaE();
+                                if (newDist < minDist) {
+                                    minDist = newDist;
+                                }
+
+                            })
+
+                            return {
+                                ...i,
+                                minDist: minDist,
+                            };
+                        });
+
+                        filteredItems = filteredItems
+                            .sort((a, b) => a.minDist - b.minDist)
+                    }
+
+                    this.filteredItems = filteredItems;
                     this.maxItemVisible = 96;
                 },
 
@@ -1025,6 +1484,93 @@
                 {
                     const randomDecimal = Math.floor(Math.random() * 0xFFFFFF); // Nombre aléatoire entre 0 et 16777215
                     return '#' + randomDecimal.toString(16).padStart(6, '0').toUpperCase();
+                },
+
+                getRandomItems()
+                {
+                    const categories = [
+                        "hat",
+                        "cape",
+                        "shield",
+                        "pet",
+                        "shoulderpads",
+                        "wings",
+                        "costume",
+                    ];
+
+                    let filteredItemsIds = [];
+
+                    this.allItems.forEach((item) => {
+                        const dofusId = item.dofus_id;
+                        const kolors = item.kolors;
+
+                        if (item.colorable) {
+                            filteredItemsIds.push(dofusId);
+                            return;
+                        }
+
+                        if (!kolors || kolors.length === 0) return;
+
+                        const shouldAdd = this.colors.slice(2).some((color) => {
+                            const searchColor = [
+                                parseInt(color.slice(1, 3), 16),
+                                parseInt(color.slice(3, 5), 16),
+                                parseInt(color.slice(5, 7), 16)
+                            ];
+                            const searchColorLab = this.rgb2lab(searchColor);
+
+                            let minDist = Infinity;
+
+                            for (const kolor of kolors) {
+                                const kolorLab = this.rgb2lab([
+                                    parseInt(kolor.slice(0, 2), 16),
+                                    parseInt(kolor.slice(2, 4), 16),
+                                    parseInt(kolor.slice(4, 6), 16)
+                                ]);
+
+                                const de00 = new dE00(
+                                    { L: kolorLab[0], A: kolorLab[1], B: kolorLab[2] },
+                                    { L: searchColorLab[0], A: searchColorLab[1], B: searchColorLab[2] }
+                                );
+                                const dist = de00.getDeltaE();
+                                if (dist < minDist) {
+                                    minDist = dist;
+                                }
+                            }
+
+                            return minDist < 10;
+                        });
+
+                        if (shouldAdd) {
+                            filteredItemsIds.push(dofusId);
+                        }
+                    });
+
+                    const searchItems = this.allItems.filter(i => filteredItemsIds.includes(i.dofus_id));
+
+                    categories.forEach(category => {
+                        // Filtrer les items correspondant à la catégorie
+                        let filtered = searchItems.filter(item => item.category === category);
+
+                        if(category === 'pet') {
+                            filtered = filtered.filter(item => ['familier', 'montilier'].includes(item.pet_type));
+                        }
+
+                        // Vérifier s'il y a des items dans cette catégorie
+                        if (filtered.length === 0) return;
+
+                        // Choisir un item aléatoire
+                        let randomItem = filtered[Math.floor(Math.random() * filtered.length)];
+
+                        // Pour shoulderpads, wings, costume : chance sur 3
+                        if (["shoulderpads", "wings", "costume"].includes(category)) {
+                            if (Math.random() > 1 / 3) randomItem = null; // 2 fois sur 3 on saute
+                        }
+
+                        this.items[category] = (randomItem) ? randomItem.dofus_id : null;
+                    });
+
+                    editURLParam(this.getURLObject());
                 },
             }));
         });
@@ -1096,6 +1642,49 @@
             if (!compressed) return null;
 
             return expandKeys(JSON.parse(LZString.decompressFromEncodedURIComponent(compressed)));
+        }
+
+        function hexToHsl(hex) {
+            hex = hex.replace(/^#/, '');
+            let r = parseInt(hex.slice(0, 2), 16) / 255;
+            let g = parseInt(hex.slice(2, 4), 16) / 255;
+            let b = parseInt(hex.slice(4, 6), 16) / 255;
+
+            let max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0;
+            } else {
+                let d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
+                    case g: h = ((b - r) / d + 2); break;
+                    case b: h = ((r - g) / d + 4); break;
+                }
+                h *= 60;
+            }
+
+            return { h, s, l };
+        }
+
+        function colorDistanceHSL(hex1, hex2, weights = { h: 30, s: 1, l: 2 }) {
+            const c1 = hexToHsl(hex1);
+            const c2 = hexToHsl(hex2);
+
+            const hueDiff = Math.min(Math.abs(c1.h - c2.h), 360 - Math.abs(c1.h - c2.h)) / 180; // normalisé [0–1]
+            const satDiff = Math.abs(c1.s - c2.s); // [0–1]
+            const lightDiff = Math.abs(c1.l - c2.l); // [0–1]
+
+            return (
+                Math.sqrt(
+                    weights.h * hueDiff ** 2 +
+                    weights.s * satDiff ** 2 +
+                    weights.l * lightDiff ** 2
+                )
+            );
         }
 
         window.getDataFromURL = function () {
@@ -1341,7 +1930,7 @@
                 this.start()
             }
 
-            async downloadImage () {
+            async downloadImage (frame) {
                 return new Promise(async (resolve, reject) => {
                     this.__running = false
 
@@ -1354,6 +1943,7 @@
                     this.$canvas.style.height = originalHeight + 'px'
                     this.__updateViewport()
 
+                    this.indexFrame = frame
 
                     this.draw()
                     const url = this.$canvas.toDataURL('image/png')
@@ -1376,7 +1966,7 @@
 
             }
 
-            async copyImage () {
+            async copyImage (frame) {
                 return new Promise(async (resolve, reject) => {
                     this.__running = false
 
@@ -1389,6 +1979,7 @@
                     this.$canvas.style.height = originalHeight + 'px'
                     this.__updateViewport()
 
+                    this.indexFrame = frame
 
                     this.draw()
                     const url = this.$canvas.toDataURL('image/png');
@@ -1875,30 +2466,27 @@
             // Génère l'image
             let data = JSON.parse(skinRenderer.rendererData);
             if(data.animated === true) {
-                console.log('animated', data.animated)
                 skinRenderer.downloadAnimation()
             }
             else {
-                console.log('animated false', data.animated)
                 data.animated = true;
                 await UpdateRenderer(JSON.stringify(data, null, 2), false);
-                console.log('UpdateRenderer true', data.animated)
 
                 await skinRenderer.downloadAnimation()
 
-                console.log('skinRenderer')
                 data.animated = false;
                 await UpdateRenderer(JSON.stringify(data, null, 2), false);
-                console.log('UpdateRenderer false', data.animated)
             }
         })
 
         document.querySelector('#btnExport').addEventListener('click', (e) => {
-            skinRenderer.downloadImage()
+            const frame = window.skinator.animations[window.skinator.animation].frame;
+            skinRenderer.downloadImage(frame)
         })
 
         document.querySelector('#btnCopyImg').addEventListener('click', (e) => {
-            skinRenderer.copyImage()
+            const frame = window.skinator.animations[window.skinator.animation].frame;
+            skinRenderer.copyImage(frame)
         })
 
         document.querySelector('#btnShare').addEventListener('click', async (e) => {
