@@ -36,4 +36,6 @@ return [
         'secret_key' => env('RECAPTCHA_SECRET_KEY'),
     ],
 
+    'dofus_update_secret' => env('DOFUS_UPDATE_SECRET'),
+
 ];

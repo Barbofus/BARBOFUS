@@ -77,7 +77,7 @@ final class createItemsExport
                 1 => $item->female_asset_id,
             ];
 
-            if (in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']) && $item->subcategory == 'mimisymbic') {
+            if (in_array($item->pet_type, ['dragodinde', 'muldo', 'volkorne']) && $item->subcategory == 'mimisymbic' && isset($mountId[$item->asset_id]) && isset($mountId[$item->female_asset_id])) {
                 $sprite = [
                     0 => (int) $mountId[$item->asset_id]['boneId'],
                     1 => (int) $mountId[$item->female_asset_id]['boneId'],

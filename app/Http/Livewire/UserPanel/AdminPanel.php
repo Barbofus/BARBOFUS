@@ -599,8 +599,11 @@ class AdminPanel extends Component
         $this->logIcon = '✈️';
         $this->stepLog();
 
+        $this->stepName = 'X-Secret-Key: '. config('services.dofus_update_secret');
+        $this->stepLog();
+
         Http::withHeaders([
-            'X-Secret-Key' => env('DOFUS_UPDATE_SECRET'),
+            'X-Secret-Key' => config('services.dofus_update_secret'),
         ])->post('https://barbofus.com/api/run-update-items');
 
         $this->logIcon = '✅';

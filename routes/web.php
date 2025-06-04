@@ -25,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::middleware('auth')->get('/api/whoami', function () {
+    return response()->json(request()->user());
+});
+
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
