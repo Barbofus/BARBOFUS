@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TwitchCounterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,8 @@ Route::post('/run-update-items', function (Request $request) {
         'output' => Artisan::output(),
     ]);
 });
+
+Route::post('/twitch/counter', TwitchCounterController::class);
 
 
 /*Route::post('/create-items-export', function (Request $request) {

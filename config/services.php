@@ -37,5 +37,6 @@ return [
     ],
 
     'dofus_update_secret' => env('DOFUS_UPDATE_SECRET'),
+    'twitch_counter_secret' => env('TWITCH_COUNTER_SECRET'),
 
 ];
