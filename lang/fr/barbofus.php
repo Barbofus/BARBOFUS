@@ -61,7 +61,7 @@ return [
     'titleHome' => 'Barbofus, la galerie de skins dofus',
     'titleBarbe' => 'Découvre Barbe Douce',
     'titleBarbeDetails' => 'Petite présentation rapide & efficace :',
-    'titleUnity' => 'Et si on profitais des skins unity ?!',
+    'titleUnity' => 'Et si on profitait des skins unity ?!',
     'titleThanks' => 'Remerciements',
     'titleLogin' => 'Connexion',
     'titleForgotPassword' => 'Mot de passe oublié',
