@@ -45,7 +45,7 @@ class UnitySkinIndexChunk extends Component
                     ->whereColumn('unity_skin_id', 'unity_skins.id')
                     ->where('user_id', Auth::id())
                     ->orWhereColumn('unity_skin_id', 'unity_skins.id')
-                    ->where('ip_adress', request()->ip())
+                    ->where('ip_adress', request()->header('X-Forwarded-For') ?? request()->ip())
                     ->take(1),
             ])
             ->addSelect([

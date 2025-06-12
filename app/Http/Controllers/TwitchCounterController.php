@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class TwitchCounterController extends Controller
@@ -53,7 +54,6 @@ class TwitchCounterController extends Controller
         } elseif ($request->action === 'set') {
             $counters[$name] = (int) $request->value;
         } elseif ($request->action === 'read') {
-            \Illuminate\Support\Facades\Log::info('Return read');
             return response()->json([
                 'value' => $counters[$name]
             ]);

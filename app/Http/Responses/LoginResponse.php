@@ -16,8 +16,8 @@ class LoginResponse implements LoginResponseContract
         if (auth()->user()->hasVerifiedEmail()) {
 
             // Ajoute l'ip de l'utilisateur à tous les likes de son ID, et inversement
-            Like::where('user_id', auth()->id())->update(['ip_adress' => request()->ip()]);
-            Like::where('ip_adress', request()->ip())->update(['user_id' => auth()->id()]);
+            Like::where('user_id', auth()->id())->update(['ip_adress' => request()->header('X-Forwarded-For') ?? request()->ip()]);
+            Like::where('ip_adress', request()->header('X-Forwarded-For') ?? request()->ip())->update(['user_id' => auth()->id()]);
 
             return redirect()->route('home');
         }

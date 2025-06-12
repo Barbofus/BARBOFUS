@@ -15,7 +15,7 @@ final class SwitchLikes
      */
     public function __invoke(int $skinID, bool $isUnity = false)
     {
-        $ipAdress = request()->ip();
+        $ipAdress = request()->header('X-Forwarded-For') ?? request()->ip();
 
         // Si user connecté, on check par user_id
         if (auth()->check()) {

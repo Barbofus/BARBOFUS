@@ -30,6 +30,10 @@ Route::middleware('auth')->get('/api/whoami', function () {
     return response()->json(request()->user());
 });
 
+Route::get('/monip', function () {
+    dd(request()->ip(), request()->getClientIp(), request()->getClientIps(), request()->header('X-Forwarded-For') ?? 'no header');
+})->name('home');
+
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
