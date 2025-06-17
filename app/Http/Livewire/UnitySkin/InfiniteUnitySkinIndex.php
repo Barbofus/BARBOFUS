@@ -21,6 +21,8 @@ class InfiniteUnitySkinIndex extends Component
      */
     public $postIdChunks = [];
 
+    public int $skinCount = 0;
+
     public int $page = 1;
 
     public int $maxPage = 1;
@@ -363,6 +365,8 @@ class InfiniteUnitySkinIndex extends Component
                 }
             }
         }
+
+        $this->skinCount = count($this->postIdChunks);
 
         // On chunk et on envoie !
         $this->postIdChunks = array_chunk($this->postIdChunks, self::ITEMS_PER_PAGE);

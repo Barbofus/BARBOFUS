@@ -43,8 +43,9 @@
     <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere :canWinnersOnly="true" />
 
     {{-- La grille des skins --}}
-    <div class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mb-10 bg-primary">
+    <div class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mt-4 mb-10 bg-primary">
         @if(count($postIdChunks) > 0)
+            <p class="italic">{{ $skinCount }} skins</p>
             @for($i = 0; $i < $page && $i < $maxPage; $i++)
                 <div class="w-full">
                     <livewire:unity-skin.unity-skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
