@@ -58,12 +58,12 @@
         <img src="{{ asset('storage/images/misc_ui/wabbit.webp') }}" alt="Wabbit" loading="lazy" draggable="false" width="51" height="64" class="js-subject-r absolute left-[37.5rem] bottom-0 translate-y-[19px] opacity-0">
     </div>
 
-    {{-- Live partout--}}
-    {{--<div class="opacity-0">
+    {{-- Lp --}}
+    <div class="opacity-0">
         @if(Route::currentRouteName() != 'skins.index' && Route::currentRouteName() != 'home' && Route::currentRouteName() != 'unity-skins.index')
             <x-utils.twitch-embed />
         @endif
-    </div>--}}
+    </div>
 
     @vite('resources/js/header/OnSlope.js')
 </div>

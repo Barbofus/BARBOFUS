@@ -314,6 +314,19 @@ class InfiniteUnitySkinIndex extends Component
 
             ->where('unity_skins.status', 'Posted')
 
+            // Concours anniversaire
+            /*->when($this->orderByID === 5, function (Builder $query) {
+                $subQuery = \DB::table('unity_skins as us2')
+                    ->selectRaw('MAX(us2.id)') // ou MAX(created_at) + id
+                    ->whereDate('us2.created_at', '2025-07-01')
+                    ->whereColumn('us2.name', 'unity_skins.name')
+                    ->groupBy('us2.name');
+
+                $query->whereDate('unity_skins.created_at', '2025-07-01')
+                    ->where('unity_skins.name', 'LIKE', '%#%')
+                    ->whereIn('unity_skins.id', $subQuery);
+            })*/
+
             // orderBy
             ->when(! $this->randSort, function (Builder $query) {
                 $query->orderBy($this->orderBy, $this->orderDirection)

@@ -12,7 +12,11 @@ use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Models\UnitySkin;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +33,31 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->get('/api/whoami', function () {
     return response()->json(request()->user());
 });
+
+/*Route::get('export-concours', function () {
+    $skins = UnitySkin::query()
+        ->when(true, function (EloquentBuilder $query) {
+            $subQuery = \DB::table('unity_skins as us2')
+                ->selectRaw('MAX(us2.id)')
+                ->whereColumn('us2.name', 'unity_skins.name')
+                ->groupBy('us2.name');
+
+            $query->whereDate('unity_skins.created_at', '2025-07-01')
+                ->where('unity_skins.name', 'LIKE', '%#%')
+                ->whereIn('unity_skins.id', $subQuery);
+        })
+        ->get();
+
+
+    $export = $skins->map(function ($skin) {
+        return "=HYPERLINK(\"" . \route('unity-skins.show', $skin->id) . "\"; \"" . $skin->name . " - " . $skin->User->name . "\")";
+    })->toArray();
+
+    return response(implode("\n", $export))
+        ->header('Content-Type', 'text/plain')
+        ->header('Content-Disposition', 'attachment; filename="skins-concours.txt"');
+
+});*/
 
 Route::get('/', HomeController::class)->name('home');
 
