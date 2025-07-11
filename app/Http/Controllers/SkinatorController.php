@@ -127,7 +127,8 @@ class SkinatorController extends Controller
                     ->take(1),
             ])
             ->whereNotNull('asset_id')
-            ->orderByRaw("FIELD(category, 'hat', 'cape', 'shield', 'pet', 'wings', 'shoulderpads', 'costume')")
+            ->orderBy('updated_at', 'desc')
+            /*->orderByRaw("FIELD(category, 'hat', 'cape', 'shield', 'pet', 'wings', 'shoulderpads', 'costume')")
             ->orderByRaw("FIELD(pet_type, 'familier', 'montilier', 'dragodinde', 'muldo', 'volkorne')")
             ->orderByRaw("
                 CASE
@@ -156,7 +157,7 @@ class SkinatorController extends Controller
             ->orderByRaw('CASE
                     WHEN name REGEXP ".* [0-9]+$" THEN CAST(SUBSTRING_INDEX(name, " ", -1) AS UNSIGNED)
                     ELSE 0
-                END')
+                END')*/
             ->get();
 
         $items->map(function ($item) use ($itemsData) {
