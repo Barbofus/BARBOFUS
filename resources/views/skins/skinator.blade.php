@@ -2107,8 +2107,8 @@
                     img.onload = () => resolve(img);
                     img.onerror = (err) => reject(new Error(`Erreur de chargement de l'image: ${url}`));
 
-                    const [category, filename] = url.split("/");
-                    const id = filename.split('.')[0];
+                    const [category, filename] = url.includes("/") ? url.split("/") : url.split("\\");
+                    const id = filename.split('.')[0] ?? "0";
 
                     const itemCache = this.cacheTexture[category][id] ?? 123456;
                     const textureVersion = '?v=' + itemCache;
