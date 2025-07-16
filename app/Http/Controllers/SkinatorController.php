@@ -38,6 +38,7 @@ class SkinatorController extends Controller
             'items' => $this->getItems(),
             'route' => route('unity-skins.store'),
             'skin' => $skin,
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
         ]);
     }
@@ -66,6 +67,7 @@ class SkinatorController extends Controller
             'items' => $this->getItems(),
             'route' => route('unity-skins.store'),
             'skin' => $skin,
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
         ]);
     }
@@ -94,6 +96,7 @@ class SkinatorController extends Controller
             'items' => $this->getItems(),
             'route' => route('unity-skins.store'),
             'skin' => $skin,
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
         ]);
     }
@@ -106,6 +109,7 @@ class SkinatorController extends Controller
             'items' => $this->getItems(),
             'route' => route('unity-skins.update', $skin),
             'skin' => $skin,
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'PUT',
         ]);
     }

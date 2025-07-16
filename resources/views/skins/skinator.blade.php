@@ -1798,7 +1798,7 @@
                 this.uvsBuffer = null
                 this.indicesBuffer = null
                 this.textures = []
-
+                this.cacheTexture = @json($itemsCache)
 
 
             }
@@ -2106,7 +2106,14 @@
                     const img = new Image();
                     img.onload = () => resolve(img);
                     img.onerror = (err) => reject(new Error(`Erreur de chargement de l'image: ${url}`));
-                    img.src = '/storage/images/skinator/' + url;
+
+                    const [category, filename] = url.split("/");
+                    const id = filename.split('.')[0];
+
+                    const itemCache = this.cacheTexture[category][id] ?? 123456;
+                    const textureVersion = '?v=' + itemCache;
+
+                    img.src = '/storage/images/skinator/' + url + textureVersion;
                 });
 
                 const texture = gl.createTexture();

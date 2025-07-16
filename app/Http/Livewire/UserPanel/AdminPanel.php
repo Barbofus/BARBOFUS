@@ -357,7 +357,6 @@ class AdminPanel extends Component
         // Execute le python
         $command .= ' 2>&1';
         exec($command, $output, $exitCode);
-
         // S'il y a une erreur, la retourne
         if ($exitCode != 0) {
             dd('Erreur pour exporter les skins', [
@@ -427,7 +426,7 @@ class AdminPanel extends Component
             }
         }
 
-        $this->stepName = 'Envoi itemsCache.json serveur';
+        $this->stepName = 'Envoi itemsCache.json serveur o2Switch';
         $this->logIcon = '✈️';
         $this->stepLog();
 
@@ -436,7 +435,7 @@ class AdminPanel extends Component
             'name' => 'itemsCache.json',
         ];
 
-        (new uploadToSsh)($fileCache, '/home/debian/sites/barbofus.com/data/');
+        (new uploadToFtp)($fileCache, '/storage/app/json/skinator/');
 
         $this->stepName = 'Fin';
         $this->logIcon = '✅';
@@ -966,6 +965,17 @@ class AdminPanel extends Component
             }
         }
 
+        $this->stepName = 'Envoi itemsCache.json serveur o2Switch';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $fileCache[] = [
+            'file' => storage_path('app/json/skinator/itemsCache.json'),
+            'name' => 'itemsCache.json',
+        ];
+
+        (new uploadToFtp)($fileCache, '/storage/app/json/skinator/');
+
         $this->stepName = 'Fin';
         $this->logIcon = '✅';
         $this->stepLog();
@@ -1042,7 +1052,7 @@ class AdminPanel extends Component
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
             escapeshellarg($this->dofusContentPath.'Characters/Bones'),
-            escapeshellarg(storage_path('app/temp/bones/')),
+            escapeshellarg(storage_path('app/temp/bones/new/')),
             escapeshellarg('bonestemp'),
             escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
         );
@@ -1069,7 +1079,7 @@ class AdminPanel extends Component
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
             escapeshellarg($this->dofusContentPath.'Characters/Skins'),
-            escapeshellarg(storage_path('app/temp/skins/')),
+            escapeshellarg(storage_path('app/temp/skins/new/')),
             escapeshellarg('skinstemp'),
             escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
         );
