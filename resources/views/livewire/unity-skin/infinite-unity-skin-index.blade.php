@@ -5,7 +5,7 @@
           min-[1801px]:grid-cols-[27rem,1fr,25rem] min-[1801px]:grid-rows-[theme(spacing.20),1fr]">
 
     <!-- Header skin section -->
-    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 pt-8 min-[851px]:pt-0 min-[1501px]:pt-8 z-30
+    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 min-[1301px]:top-12top-20 pt-8 min-[851px]:pt-0 min-[1501px]:pt-8 z-30
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             min-[851px]:flex-row min-[851px]:gap-y-0 min-[851px]:justify-between
             min-[1501px]:col-start-2 min-[1501px]:px-8 min-[1501px]:z-20">

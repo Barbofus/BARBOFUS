@@ -1,7 +1,7 @@
 
 <div
     wire:poll.visible.120s
-    class="fixed min-[901px]:absolute top-3 right-[6.5rem] flex flex-col items-end z-50"
+    class="fixed min-[901px]:absolute top-3 min-[1301px]:top-12 right-[6.5rem] flex flex-col items-end z-50"
     x-data="{
                 open: false
             }"

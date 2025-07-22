@@ -30,7 +30,7 @@ function ResizeSkinWinners()
     }
 
     // Calcule la hauteur visible du header
-    const headerHeight = header.getBoundingClientRect().height + header.getBoundingClientRect().top;
+    const headerHeight = header.getBoundingClientRect().height + header.getBoundingClientRect().top + 40;
     let nextHeight = window.innerHeight - footer.getBoundingClientRect().height;
 
     // S'il est visible, on le soustrait a notre hauteur total
@@ -40,7 +40,7 @@ function ResizeSkinWinners()
 
     // Ensuite, on envoie
     skinWinners.style.height = nextHeight + "px";
-    skinWinners.style.top = (window.innerHeight - nextHeight) + "px";
+    skinWinners.style.top = (window.innerHeight - nextHeight + 40) + "px";
 
     previousRewardSectionH = skinWinners.style.height;
 }

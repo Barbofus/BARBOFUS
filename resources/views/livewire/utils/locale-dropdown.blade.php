@@ -1,5 +1,5 @@
 <div
-    class="fixed w-12 min-[901px]:absolute top-3 right-14 z-50"
+    class="fixed w-12 min-[901px]:absolute top-3 min-[1301px]:top-12 right-14 z-50"
     x-data="{
                 open: false
             }"

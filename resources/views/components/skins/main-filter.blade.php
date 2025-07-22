@@ -10,7 +10,7 @@
      class="flex sticky flex-col w-full h-full items-center z-20 row-start-2 bg-primary
             max-[1500px]:shadow-lg min-[1501px]:z-10
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
-            min-[1501px]:min-h-[calc(100vh-15vh-theme(spacing.14))] min-[1501px]:max-h-[calc(100vh-theme(spacing.14))] min-[1501px]:top-12 min-[1501px]:row-span-2">
+            min-[1501px]:min-h-[calc(100vh-15vh-theme(spacing.14))] min-[1501px]:max-h-[calc(100vh-theme(spacing.14))] min-[1501px]:top-24 min-[1501px]:row-span-2">
 
 
 

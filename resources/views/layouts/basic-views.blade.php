@@ -6,6 +6,23 @@
 
 @section('app-content')
 
+
+    <div x-data="{
+        messages: [
+            'Code Créateur : <span class=\'font-medium\'>BARBEDOUCE</span> — merci du soutien 🙏',
+            '✂️ Customise ton perso avec le code créateur <span class=\'font-medium\'>BARBEDOUCE</span> dans la boutique DOFUS 💛',
+            '🎨 Tu kiffes les skins ? Soutiens le site avec le code créateur : <span class=\'font-medium\'>BARBEDOUCE</span> 💖',
+            '🎨 Soutiens BARBOFUS avec le code créateur : <span class=\'font-medium\'>BARBEDOUCE</span> sur la boutique Ankama ! ❤️',
+        ],
+        get randomMessage() {
+            return this.messages[Math.floor(Math.random() * this.messages.length)];
+        }
+    }" class="sticky hidden min-[1301px]:flex z-50 goldGradient w-full h-10 top-0 left-0 text-primary font-light justify-center items-center">
+        <p x-html="randomMessage"></p>
+    </div>
+
+
+
     <x-main-header />
 
     {{-- Notifications --}}
