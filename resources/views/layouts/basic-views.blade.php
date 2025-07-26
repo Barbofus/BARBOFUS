@@ -18,7 +18,7 @@
                 return this.messages[Math.floor(Math.random() * this.messages.length)];
             }
         }"
-        class="sticky hidden min-[1301px]:relative min-[1301px]:flex z-50 goldGradient w-full h-10 top-0 left-0 text-primary font-light justify-center group items-center">
+        class="sticky hidden min-[1301px]:flex z-50 goldGradient w-full h-10 top-0 left-0 text-primary font-light justify-center group items-center">
         <div class="absolute top-0 left-1/2 h-full w-full -translate-x-1/2 emeraldGradient group-hover:scale-x-100 group-hover:opacity-100 opacity-0 scale-x-0 transition-all duration-700"></div>
         <a href="https://youtu.be/42wbG24vJQ4" target="_blank" class="relative z-10 h-full w-full flex items-center justify-center">
             <p x-html="randomMessage"></p>
