@@ -106,6 +106,9 @@ class AdminPanel extends Component
         // Récupère les skins / bones de ce que nous avons déjà (heads, breeds, mounts)
         $this->getRootFilesSkins();
 
+        // Exporte les bundles modifiés
+        $this->exportUpdatedBundles();
+
         // Exporte les nouveaux bundle pour identifier les skins / bones id
         $this->exportBundleDifference();
 
@@ -998,6 +1001,163 @@ class AdminPanel extends Component
      *
      * @return void
      */
+    public function exportUpdatedBundles()
+    {
+        $this->currentStep++;
+        $this->stepName = 'Récupération des bundles modifiés';
+        $this->logIcon = '🌱';
+        $this->logTitle = 'GET UPDATED BUNDLES';
+        $this->stepLog();
+
+        // Récupère les différences entre le json et les fichiers Dofus
+        $oldBundleNames = json_decode(Storage::disk('local')->get('json/skinator/bundleNames.json'), true);
+
+        // Récupérer les fichiers dans le répertoire 'Skins' et 'Bones'
+        $skinsBundles = File::files($this->dofusContentPath.'Characters/Skins');
+        $bonesBundles = File::files($this->dofusContentPath.'Characters/Bones');
+
+        // Extraire les noms et les dates de mise à jour des fichiers dans le JSON
+        $oldSkinNames = array_column($oldBundleNames['skins'], 'name');
+        $oldSkinUpdatedAt = array_column($oldBundleNames['skins'], 'updatedAt');
+        $oldBoneNames = array_column($oldBundleNames['bones'], 'name');
+        $oldBoneUpdatedAt = array_column($oldBundleNames['bones'], 'updatedAt');
+
+        // Filtrer les fichiers Skins en fonction du nom et de la date de modification
+        $skinsBundlesNames = collect($skinsBundles)->filter(function ($file) use ($oldSkinNames, $oldSkinUpdatedAt) {
+            $filename = $file->getFilename();
+            if (in_array($filename, $oldSkinNames)) {
+                // Trouver l'index du fichier dans oldSkinNames pour comparer la date
+                $index = array_search($filename, $oldSkinNames);
+
+                // Comparer la date de modification du fichier avec updatedAt
+                return $file->getMTime() > $oldSkinUpdatedAt[$index];
+            }
+            return false;
+        })->map(function ($file) {
+            return $file->getFilename();
+        })->toArray();
+
+        // Filtrer les fichiers Bones en fonction du nom et de la date de modification
+        $bonesBundlesNames = collect($bonesBundles)->filter(function ($file) use ($oldBoneNames, $oldBoneUpdatedAt) {
+            $filename = $file->getFilename();
+            if (in_array($filename, $oldBoneNames)) {
+                // Trouver l'index du fichier dans oldBoneNames pour comparer la date
+                $index = array_search($filename, $oldBoneNames);
+                // Comparer la date de modification du fichier avec updatedAt
+                return $file->getMTime() > $oldBoneUpdatedAt[$index];
+            }
+            return false;
+        })->map(function ($file) {
+            return $file->getFilename();
+        })->toArray();
+
+        // Extraire les IDs des fichiers avec une fonction anonyme dans array_map
+        $skinsIds = array_map(function ($filename) {
+            if (preg_match('/(?:bones_assets_bone_|skins_assets_skin_)([\w\-]+)(?=\.bundle)/', $filename, $matches)) {
+                return $matches[1];
+            }
+
+            return null;
+        }, $skinsBundlesNames);
+
+        $bonesIds = array_map(function ($filename) {
+            if (preg_match('/(?:bones_assets_bone_|skins_assets_skin_)([\w\-]+)(?=\.bundle)/', $filename, $matches)) {
+                return $matches[1];
+            }
+
+            return null;
+        }, $bonesBundlesNames);
+
+        file_put_contents(storage_path('app/json/skinator/skinIds.txt'), implode("\n", $skinsIds));
+        file_put_contents(storage_path('app/json/skinator/boneIds.txt'), implode("\n", $bonesIds));
+
+        $this->stepName = 'Export des bundles BONES';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+        // Exporte tous les bones via python
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
+            escapeshellarg($this->dofusContentPath.'Characters/Bones'),
+            escapeshellarg(storage_path('app/temp/bones/updated/')),
+            escapeshellarg('bonestemp'),
+            escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
+        );
+        // Execute le python
+        $command .= ' 2>&1';
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if ($exitCode != 0) {
+            dd('Erreur pour exporter les bones', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        $this->stepName = 'Export des bundles SKINS';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+        // Exporte tous les skins via python
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
+            escapeshellarg($this->dofusContentPath.'Characters/Skins'),
+            escapeshellarg(storage_path('app/temp/skins/updated/')),
+            escapeshellarg('skinstemp'),
+            escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
+        );
+        // Execute le python
+        $command .= ' 2>&1';
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if ($exitCode != 0) {
+            dd('Erreur pour exporter les skins', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        // Met à jour notre json des noms de bundle croisé
+        $updatedBundleNames = [
+            'skins' => $oldSkinNames,
+            'bones' => $oldBoneNames,
+        ];
+
+        foreach ($updatedBundleNames as $key => $category) {
+            foreach ($category as $bundle) {
+                $bundleNames[$key][] = [
+                    'name' => $bundle,
+                    'updatedAt' => time(),
+                ];
+            }
+        }
+
+        $jsonBundles = json_encode($bundleNames, JSON_PRETTY_PRINT);
+
+        if ($jsonBundles === false) {
+            throw new \RuntimeException('Erreur lors de l’encodage JSON des bundles');
+        }
+
+        File::put(storage_path('app/json/skinator/bundleNames.json'), $jsonBundles);
+
+        $this->stepName = 'Fin';
+        $this->logIcon = '✅';
+        $this->stepLog();
+    }
+
+    /**
+     * Compare les noms de fichiers entre le json enregistrer et les bundles Dofus, puis exporte les png des nouveaux bundles
+     *
+     * @return void
+     */
     public function exportBundleDifference()
     {
         $this->currentStep++;
@@ -1018,9 +1178,13 @@ class AdminPanel extends Component
             return $file->getFilename();
         })->toArray();
 
+        // Extraire les noms des fichiers dans le JSON des skins et bones
+        $oldSkinNames = array_column($oldBundleNames['skins'], 'name');
+        $oldBoneNames = array_column($oldBundleNames['bones'], 'name');
+
         // Compare les fichiers Skins et Bones avec ceux dans le JSON
-        $missingSkins = array_diff($skinsBundlesNames, $oldBundleNames['skins']);
-        $missingBones = array_diff($bonesBundlesNames, $oldBundleNames['bones']);
+        $missingSkins = array_diff($skinsBundlesNames, $oldSkinNames);
+        $missingBones = array_diff($bonesBundlesNames, $oldBoneNames);
 
         // Extraire les IDs des fichiers avec une fonction anonyme dans array_map
         $skinsIds = array_map(function ($filename) {
@@ -1097,10 +1261,19 @@ class AdminPanel extends Component
         }
 
         // Met à jour notre json des noms de bundle croisé
-        $bundleNames = [
+        $completBundleNames = [
             'skins' => $skinsBundlesNames,
             'bones' => $bonesBundlesNames,
         ];
+
+        foreach ($completBundleNames as $key => $category) {
+            foreach ($category as $bundle) {
+                $bundleNames[$key][] = [
+                    'name' => $bundle,
+                    'updatedAt' => time(),
+                ];
+            }
+        }
 
         $jsonBundles = json_encode($bundleNames, JSON_PRETTY_PRINT);
 
