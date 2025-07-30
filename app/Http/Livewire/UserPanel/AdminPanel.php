@@ -794,6 +794,10 @@ class AdminPanel extends Component
             'AnimEmoteBehind',
             'AnimEmoteFear',
             'AnimEmoteOups',
+            'AnimEmoteEtendardAgis',
+            'AnimEmoteEtendardKCorp',
+            'AnimEmoteEtendardGentlemate',
+            'AnimEmoteEtendardSolary',
         ], $files['Bones']);
 
         foreach ($breedsData as $breed) {

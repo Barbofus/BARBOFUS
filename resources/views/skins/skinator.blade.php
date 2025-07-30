@@ -626,7 +626,7 @@
                                 title="Show only colorable"
                                 @click="showOnlyColorable = !showOnlyColorable; updateFilteredItems()"
                                 class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
-                                :class="showOnlyColorable ? 'border-inactiveText' : 'border-inactiveText'">
+                                :class="showOnlyColorable ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyColorable ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable">
                         </button>
 
@@ -635,7 +635,7 @@
                                 title="Show only mimisymbic"
                                 @click="showOnlyMimisymbic = !showOnlyMimisymbic; updateFilteredItems()"
                                 class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
-                                :class="showOnlyMimisymbic ? 'border-inactiveText' : 'border-inactiveText'">
+                                :class="showOnlyMimisymbic ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyMimisymbic ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/icons/items/subcategories/mimisymbic.png') }}" alt="Colorable">
                         </button>
 
@@ -644,7 +644,7 @@
                                 title="Show only ceremonial"
                                 @click="showOnlyCeremonial = !showOnlyCeremonial; updateFilteredItems()"
                                 class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
-                                :class="showOnlyCeremonial ? 'border-inactiveText' : 'border-inactiveText'">
+                                :class="showOnlyCeremonial ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyCeremonial ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/icons/items/subcategories/ceremonial.png') }}" alt="Colorable">
                         </button>
                     </div>
@@ -1197,6 +1197,10 @@
                     {shortName: @json(__('barbofus.AnimEmoteBehind')),name: 'AnimEmoteBehind_Statique@AnimEmoteBehind', frame: 0, orientation: 0},
                     {shortName: @json(__('barbofus.AnimEmoteFear')),name: 'AnimEmoteFear_Statique@AnimEmoteFear', frame: 0, orientation: 2},
                     {shortName: @json(__('barbofus.AnimEmoteOups')),name: 'AnimEmoteOups@AnimEmoteOups', frame: 27, orientation: 0},
+                    {shortName: 'Aegis',name: 'AnimEmoteEtendardAgis_Statique@AnimEmoteEtendardAgis', frame: 0, orientation: 0},
+                    {shortName: 'Gentlemate',name: 'AnimEmoteEtendardGentlemate_Statique@AnimEmoteEtendardGentlemate', frame: 0, orientation: 0},
+                    {shortName: 'KCorp',name: 'AnimEmoteEtendardKCorp_Statique@AnimEmoteEtendardKCorp', frame: 0, orientation: 0},
+                    {shortName: 'Solary',name: 'AnimEmoteEtendardSolary_Statique@AnimEmoteEtendardSolary', frame: 0, orientation: 0},
                 ],
                 showAnimationList: false,
                 animation: 0,
@@ -1385,7 +1389,7 @@
                     }
 
                     if(this.showOnlyCeremonial &! this.showOnlyMimisymbic) {
-                        filteredItems = filteredItems.filter(i => i.subcategory === 'ceremonial');
+                        filteredItems = filteredItems.filter(i => i.subcategory === 'ceremonial' || i.subcategory === 'livingObject');
                     }
 
                     if (this.searchColor !== null) {

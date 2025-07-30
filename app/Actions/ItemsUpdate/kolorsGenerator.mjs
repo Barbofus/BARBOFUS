@@ -118,38 +118,40 @@ async function main() {
     const desiredIds = getIdsFromFileSync(kolorsIdTxt);
     const allIds = Object.keys(items);
     const ouputData = []
+
     for (let count = 0; count < allIds.length; count++) {
-    const itemId = allIds[count];
-    const item = items[itemId];
+        const itemId = allIds[count];
+        const item = items[itemId];
 
-    if(!desiredIds.includes(itemId)) {
-        console.log('ANNULATION', itemId);
-        continue;
-    }
-
-    const folder = item.folder;
-    const skinId = item.sprite[0];
-
-    if (!skinId) {
-      continue
-    }
-
-    try {
-        const imagePath = `${appPath}\\public\\images\\skinator\\${folder}\\${skinId}.png`;
-        const isColorivant = await getColorivant(item);
-
-        let topColor = []
-        if (item.indexedColors && item.indexedColors.length > 0) {
-            topColor = item.indexedColors.map(v => Number(v).toString(16).padStart(6, '0') )
-        } else if (!isColorivant) {
-            topColor = await getTopColors(imagePath);
+        if(!desiredIds.includes(itemId)) {
+            console.log('ANNULATION', itemId);
+            continue;
         }
 
-        items[itemId].kolors = topColor;
-        items[itemId].colorivant = isColorivant;
-    } catch (error) {
-        console.error(`Error processing item ID ${itemId} [${skinId}]:`, error.message);
-    }
+        const folder = item.folder;
+        const skinId = item.sprite[0];
+
+        if (!skinId) {
+          continue
+        }
+
+        try {
+            const imagePath = `${appPath}\\public\\images\\skinator\\${folder}\\${skinId}.png`;
+            //const isColorivant = await getColorivant(item);
+            const isColorivant = items[itemId].colorivant;
+
+            let topColor = []
+            if (item.indexedColors && item.indexedColors.length > 0) {
+                topColor = item.indexedColors.map(v => Number(v).toString(16).padStart(6, '0') )
+            } else if (!isColorivant) {
+                topColor = await getTopColors(imagePath);
+            }
+
+            items[itemId].kolors = topColor;
+            items[itemId].colorivant = isColorivant;
+        } catch (error) {
+            console.error(`Error processing item ID ${itemId} [${skinId}]:`, error.message);
+        }
 
     }
 

@@ -51,7 +51,7 @@ final class createItemsExport
         }
 
         // Indexe les items par leur ID pour un accès rapide
-        $itemsById = [];
+        /*$itemsById = [];
         foreach ($itemsData as $item) {
             if ($item['type']['ns'] != 'Core.DataCenter.Metadata.Item') {
                 continue;
@@ -60,14 +60,26 @@ final class createItemsExport
                 continue;
             }
             $itemsById[$item['data']['id']] = $item['data'];
+        }*/
+
+        $items = Item::all();
+
+        $itemsById = [];
+        foreach ($itemsData as $item) {
+            if ($item['type']['ns'] != 'Core.DataCenter.Metadata.Item') {
+                continue;
+            }
+
+            /*if (! in_array($item['data']['id'], array_column($items->toArray(), 'dofus_id'))) {
+                continue;
+            }*/
+            $itemsById[$item['data']['id']] = $item['data'];
         }
 
         /*$items = Item::whereNot(function ($query) {
             $query->whereIn('pet_type', ['dragodinde', 'muldo', 'volkorne'])
                 ->where('subcategory', 'mimisymbic');
         })->orWhere('pet_type', null)->get();*/
-
-        $items = Item::all();
 
         // $itemsExport = [];
 
@@ -103,8 +115,13 @@ final class createItemsExport
                 $entry['indexedColors'] = array_map('intval', $mountId[$item->asset_id]['colors']);
             }
 
-            if (isset($itemsExport[$item->dofus_id]['colorivant'])) {
+            /*if (isset($itemsExport[$item->dofus_id]['colorivant'])) {
                 $entry['colorivant'] = $itemsExport[$item->dofus_id]['colorivant'];
+            }*/
+
+            $dofusId = $item->dofus_id > 1000000000 ? floor(($item->dofus_id - 1000000000) / 1000) : $item->dofus_id;
+            if (isset($itemsById[$dofusId]['isColorable'])) {
+                $entry['colorivant'] = $itemsById[$dofusId]['isColorable'];
             }
 
             if (isset($itemsExport[$item->dofus_id]['kolors'])) {
