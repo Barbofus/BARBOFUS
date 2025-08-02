@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ class UsersList extends Component
     public function render()
     {
         return view('livewire.user-panel.users-list', [
+            'userCount' => User::all()->count(),
             'users' => $this->GetAllUsers(),
             'roles' => $this->GetRoles(),
         ]);
@@ -38,18 +40,20 @@ class UsersList extends Component
      */
     public function GetAllUsers()
     {
-        return new Collection(DB::table('users')
-            ->select('id', 'role_id', 'name')
-            ->addSelect([
-                'role_name' => DB::table('roles')
-                    ->select('name')
-                    ->whereColumn('id', 'role_id')
-                    ->take(1),
-            ])
-            ->where('name', 'LIKE', '%'.$this->query.'%')
-            ->orderBy('role_id', 'DESC')
-            ->orderBy('name', 'ASC')
-            ->get());
+        return User::query()
+            ->select('users.id', 'users.name')
+            ->with('roles:id,name')
+            ->when($this->query, function ($query) {
+                $query->where('users.name', 'LIKE', '%' . $this->query . '%');
+            })
+            ->orderByDesc(
+                DB::table('role_user')
+                    ->selectRaw('MAX(role_id)')
+                    ->whereColumn('user_id', 'users.id')
+            )
+            ->orderBy('users.name', 'asc')
+            ->limit(50)
+            ->get();
     }
 
     /**
@@ -67,14 +71,30 @@ class UsersList extends Component
     /**
      * @return void
      */
-    public function ChangeRole(int $userID, int $newRoleID)
+    public function ToggleRole(int $userId, int $roleId)
     {
-        $user = User::find($userID);
+        $user = User::with('roles')->findOrFail($userId);
+        $role = Role::findOrFail($roleId);
 
-        $user->update([
-            'role_id' => $newRoleID,
-        ]);
+        // Si l'utilisateur a déjà le rôle → on le retire
+        if ($user->roles->contains('id', $roleId)) {
+            $user->roles()->detach($roleId);
 
-        $this->dispatchBrowserEvent('alert-event', ['message' => $user->name.' devient '.$user->Role->name]);
+            // Événement navigateur
+            $this->dispatchBrowserEvent('alert-event', [
+                'message' => $user->name . ' quitte ' . $role->name
+            ]);
+        } else {
+            // Sinon, on l'ajoute
+            $user->roles()->attach($roleId);
+
+            // Événement navigateur
+            $this->dispatchBrowserEvent('alert-event', [
+                'message' => $user->name . ' devient ' . $role->name
+            ]);
+        }
+
+        // Rafraîchir les rôles dans l'instance Livewire
+        $user->load('roles');
     }
 }

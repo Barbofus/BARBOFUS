@@ -14,10 +14,7 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Models\UnitySkin;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +26,6 @@ use Illuminate\Support\Facades\Storage;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 Route::middleware('auth')->get('/api/whoami', function () {
     return response()->json(request()->user());

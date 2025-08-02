@@ -12,7 +12,7 @@
                        placeholder="Recherche un pseudo"
                        wire:model.debounce.500ms="query">
 
-                <p class="text-lg text-secondary font-light italic py-2">{{ count($users) }} utilisateurs trouvés</p>
+                <p class="text-lg text-secondary font-light italic py-2">{{ count($users) . ' / ' . $userCount }} utilisateurs trouvés</p>
             </div>
 
             <table class="text-secondary table-auto text-left w-full">
@@ -32,10 +32,14 @@
                                      x-on:mousedown.outside="if(showRoles) showRoles = false">
 
                                     <!-- Trier par: Texte -->
-                                    <button @click="showRoles = !showRoles" class="font-normal px-4 py-2 w-full text-primary text-center rounded-full text-lg {{ ($user->role_id == 1) ? 'cawotteGradient' : (($user->role_id == 2) ? 'emeraldGradient' : 'goldGradient') }} cursor-pointer hover:brightness-110 hover:tracking-wider transition-all">{{ $user->role_name }}</button>
+                                    <div class="flex space-x-2 justify-start">
+                                        @foreach($user->roles as $role)
+                                            <button @click="showRoles = !showRoles" title="{{ $role->name }}" class="font-normal px-4 py-2 h-full aspect-square text-primary text-center rounded-full text-lg {{ ($role->id == 1) ? 'cawotteGradient' : (($role->id == 2) ? 'emeraldGradient' : ($role->id == 4 ? 'heartGradient' : 'goldGradient')) }} cursor-pointer hover:brightness-110 hover:tracking-wider transition-all">{{ $user->role_name }}</button>
+                                        @endforeach
+                                    </div>
 
                                     <!-- Menu déroulant -->
-                                    <div class="w-full h-screen top-16 left-0 rounded-md z-50 absolute bg-primary p-4 flex flex-col gap-y-2"
+                                    <div class="w-full h-fit top-16 left-0 rounded-md z-50 absolute bg-primary p-4 flex flex-col gap-y-2"
                                          x-show="showRoles"
                                          x-transition:enter="transition ease-out duration-300"
                                          x-transition:enter-start="opacity-0 -translate-y-48"
@@ -44,7 +48,7 @@
                                          x-transition:leave-start="opacity-100"
                                          x-transition:leave-end="opacity-0 -translate-y-48">
                                         @foreach($roles as $role)
-                                            <button class="font-normal px-4 py-2 w-full text-primary text-center rounded-full text-lg {{ ($role->id == 1) ? 'cawotteGradient' : (($role->id == 2) ? 'emeraldGradient' : 'goldGradient') }} hover:bg-inactiveText cursor-pointer hover:brightness-110 hover:tracking-wider transition-all" @click="showRoles = false" wire:click="ChangeRole({{$user->id}}, {{ $role->id }})">
+                                            <button class="font-normal px-4 py-2 w-full text-primary text-center rounded-full text-lg {{ ($role->id == 1) ? 'cawotteGradient' : (($role->id == 2) ? 'emeraldGradient' : ($role->id == 4 ? 'heartGradient' : 'goldGradient')) }} hover:bg-inactiveText cursor-pointer hover:brightness-110 hover:tracking-wider transition-all" @click="showRoles = false" wire:click="ToggleRole({{$user->id}}, {{ $role->id }})">
                                                 {{ $role->name }}
                                             </button>
                                         @endforeach

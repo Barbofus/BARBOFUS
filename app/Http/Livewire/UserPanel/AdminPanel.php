@@ -43,7 +43,7 @@ class AdminPanel extends Component
 
     private string $logIcon;
 
-    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
+    // private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
     private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
 
     /**
@@ -602,7 +602,7 @@ class AdminPanel extends Component
         $this->logIcon = '✈️';
         $this->stepLog();
 
-        $this->stepName = 'X-Secret-Key: '. config('services.dofus_update_secret');
+        $this->stepName = 'X-Secret-Key: '.config('services.dofus_update_secret');
         $this->stepLog();
 
         Http::withHeaders([
@@ -766,8 +766,8 @@ class AdminPanel extends Component
         }
 
         // Récupère les noms des fichiers pour les breeds (skins corps, bones anim combat + la static explo)
-        //$files['Bones'][] = '1-static'; // Bone animation static explo général
-        //$files['Bones'][] = '2'; // Bone animation monture
+        // $files['Bones'][] = '1-static'; // Bone animation static explo général
+        // $files['Bones'][] = '2'; // Bone animation monture
         $files['Bones'] = array_merge([
             '1-static',
             '2',
@@ -1036,6 +1036,7 @@ class AdminPanel extends Component
                 // Comparer la date de modification du fichier avec updatedAt
                 return $file->getMTime() > $oldSkinUpdatedAt[$index];
             }
+
             return false;
         })->map(function ($file) {
             return $file->getFilename();
@@ -1047,9 +1048,11 @@ class AdminPanel extends Component
             if (in_array($filename, $oldBoneNames)) {
                 // Trouver l'index du fichier dans oldBoneNames pour comparer la date
                 $index = array_search($filename, $oldBoneNames);
+
                 // Comparer la date de modification du fichier avec updatedAt
                 return $file->getMTime() > $oldBoneUpdatedAt[$index];
             }
+
             return false;
         })->map(function ($file) {
             return $file->getFilename();

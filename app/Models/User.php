@@ -7,7 +7,7 @@ use App\Notifications\ResetPasswordQueued;
 use App\Notifications\VerifyEmailQueued;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -79,11 +79,21 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return BelongsTo<Role, User>
+     * @return BelongsToMany<Role>
      */
-    public function Role()
+    public function roles()
     {
-        return $this->belongsTo('App\Models\Role');
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @param  string|string[]  $roles
+     */
+    public function hasRole(string|array $roles): bool
+    {
+        $roles = (array) $roles;
+
+        return $this->roles()->whereIn('name', $roles)->exists();
     }
 
     /**

@@ -127,7 +127,7 @@ class InfiniteUnitySkinIndex extends Component
                         break;
                     case 'classe':
                         foreach (explode(',', $param) as $race_id) {
-                            if(!in_array(intval($race_id), $breedIds)) {
+                            if (! in_array(intval($race_id), $breedIds)) {
                                 continue;
                             }
 

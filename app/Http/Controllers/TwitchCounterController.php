@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class TwitchCounterController extends Controller
@@ -18,7 +17,6 @@ class TwitchCounterController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
@@ -42,20 +40,20 @@ class TwitchCounterController extends Controller
         $name = $request->name;
 
         // Initialisation si nécessaire
-        if (!isset($counters[$name])) {
+        if (! isset($counters[$name])) {
             $counters[$name] = 0;
         }
 
         // Application de l'action
         if ($request->action === 'increment') {
             $counters[$name]++;
-        }  elseif ($request->action === 'decrement') {
+        } elseif ($request->action === 'decrement') {
             $counters[$name]--;
         } elseif ($request->action === 'set') {
             $counters[$name] = (int) $request->value;
         } elseif ($request->action === 'read') {
             return response()->json([
-                'value' => $counters[$name]
+                'value' => $counters[$name],
             ]);
         }
 
@@ -63,7 +61,7 @@ class TwitchCounterController extends Controller
         Storage::disk('local')->put('json/twitch_counters.json', json_encode($counters));
 
         return response()->json([
-            'value' => $counters[$name]
+            'value' => $counters[$name],
         ]);
     }
 }

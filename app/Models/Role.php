@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
     use HasFactory;
 
     /**
-     * @return HasMany<User>
+     * @return BelongsToMany<User>
      */
-    public function User()
+    public function users()
     {
-        return $this->hasMany('App\Models\User');
+        return $this->belongsToMany(User::class);
     }
 }

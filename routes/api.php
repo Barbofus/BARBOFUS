@@ -45,7 +45,6 @@ Route::post('/run-update-items', function (Request $request) {
 
 Route::post('/twitch/counter', TwitchCounterController::class);
 
-
 /*Route::post('/create-items-export', function (Request $request) {
     if (app()->environment('local')) {
         return Response::json(['error' => 'Not allowed in this environment'], 403);
