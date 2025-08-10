@@ -232,4 +232,6 @@ return [
     'discord_connection_secret' => env('APP_DISCORD_CLIENT_SECRET'),
     'discord_redirect_uri' => env('APP_DISCORD_REDIRECT_URI'),
 
+    'jwt_secret' => env('JWT_SECRET'),
+
 ];

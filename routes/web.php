@@ -47,7 +47,7 @@ Route::get('/api/whoami', function () {
         'exp' => time() + 60,
     ];
 
-    $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
+    $jwt = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
 
     return response()->json(['token' => $jwt], 200);
 });
