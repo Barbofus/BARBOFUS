@@ -291,4 +291,7 @@ Sinon, pour réinitialiser ton mot de passe, clique sur le bouton plus bas',
     'footerLegals' => 'Dofus est un MMORPG édité par <a target="_blank" href="https://www.ankama.com/fr" title="Site web d\'Ankama" class="underline">Ankama</a>. "BARBOFUS" est un site non-officiel sans aucun lien avec Ankama.<br>Certaines illustrations sont la propriété d\'Ankama Studio et de Dofus - Tous droits réservés',
     'footerCopyright' => 'Tous droits réservés',
     'footerWebmaster' => 'Votre vision, notre code',
+
+    'errorUnauthenticated' => 'Aucun compte trouvé',
+    'errorEmailNotVerified' => 'Vous devez valider votre adresse e-mail sur Barbofus',
 ];

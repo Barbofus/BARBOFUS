@@ -296,4 +296,7 @@ Caso contrário, para redefinir su senha, clique no botão abaixo:',
     'footerLegals' => 'Dofus é um MMORPG publicado pela <a target="_blank" href="https://www.ankama.com/fr" title="Ankama website" class="underline">Ankama</a>. "BARBOFUS" is an unofficial site with no affiliation to Ankama.<br> Algumas ilustrações são propriedade da Ankama Studio e Dofus - Todos os direitos reservados.',
     'footerCopyright' => 'Todos os direitos reservados.',
     'footerWebmaster' => 'Sua visão, nosso código.',
+
+    'errorUnauthenticated' => 'Nenhuma conta encontrada',
+    'errorEmailNotVerified' => 'Você deve validar seu endereço de e-mail no Barbofus',
 ];

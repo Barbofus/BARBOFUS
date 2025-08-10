@@ -13,6 +13,7 @@ use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Models\UnitySkin;
+use Firebase\JWT\JWT;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +28,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->get('/api/whoami', function () {
-    return response()->json(request()->user());
+Route::get('/api/whoami', function () {
+    $user = request()->user();
+
+    if(!$user) {
+        return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
+    }
+
+    if($user->email_verified_at === null) {
+        return response()->json(['error' => __('barbofus.errorEmailNotVerified')], 401);
+    }
+
+    $payload = [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'roles' => $user->rolesName(),
+        'exp' => time() + 60,
+    ];
+
+    $jwt = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
+
+    return response()->json(['token' => $jwt], 200);
 });
 
 /*Route::get('export-concours', function () {

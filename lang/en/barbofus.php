@@ -291,4 +291,7 @@ Otherwise, to reset your password, click the button below:',
     'footerLegals' => 'Dofus is an MMORPG published by <a target="_blank" href="https://www.ankama.com/fr" title="Ankama website" class="underline">Ankama</a>. "BARBOFUS" is an unofficial site with no affiliation to Ankama.<br> Some illustrations are the property of Ankama Studio and Dofus - All rights reserved.',
     'footerCopyright' => 'All rights reserved.',
     'footerWebmaster' => 'Your vision, our code.',
+
+    'errorUnauthenticated' => 'No account found',
+    'errorEmailNotVerified' => 'You must verify your email address on Barbofus',
 ];

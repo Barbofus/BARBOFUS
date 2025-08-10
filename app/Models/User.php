@@ -87,6 +87,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return string[]
+     */
+    public function rolesName()
+    {
+        return $this->roles->pluck('name')->toArray();
+    }
+
+    /**
      * @param  string|string[]  $roles
      */
     public function hasRole(string|array $roles): bool
