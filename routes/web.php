@@ -44,7 +44,8 @@ Route::get('/api/whoami', function () {
         'name' => $user->name,
         'email' => $user->email,
         'roles' => $user->rolesName(),
-        'exp' => time() + 60,
+        'locale' => $user->locale,
+        'exp' => time() + 86400,
     ];
 
     $jwt = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
