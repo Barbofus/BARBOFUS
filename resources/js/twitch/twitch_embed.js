@@ -3,6 +3,8 @@ const options = {
     height: '100%',
     channel: "barbe___douce", //barbe___douce
     layout: "video", //"video-with-chat"
+    autoplay: true,
+    muted: true,
 };
 let player;
 

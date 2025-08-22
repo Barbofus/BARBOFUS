@@ -37,7 +37,7 @@
         <script id="twitch-embed-script" data-type="lazy" data-src= "https://embed.twitch.tv/embed/v1.js" onload="window.dispatchEvent(new Event('twitch-embed-loaded'))"></script>
 
         <!-- Stream screen container -->
-        <div id="twitchStreamEmbed" class="absolute top-0 left-0 z-30 w-full h-full opacity-0"></div>
+        <div id="twitchStreamEmbed" class="absolute top-0 left-0 z-30 w-full h-full"></div>
 
 
         <!-- Script pour l'embed de Twitch -->

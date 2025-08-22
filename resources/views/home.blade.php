@@ -83,7 +83,7 @@
 
         <div class="flex min-[800px]:flex-row flex-col gap-x-16 gap-y-8 justify-center items-center">
             <a href="https://dofusdb.fr/fr/" title="DofusDB" target="_blank" class="flex gap-x-4 items-center hover:bg-primary-100 hover:rounded-md bg-primary transition-all p-2">
-                <img src="https://dofusdb.fr/icons/favicon.ico" height="48" width="48" alt="Logo DofusDB">
+                <img src="{{ asset('storage/images/misc_ui/logo-dofus-db.ico') }}" height="48" width="48" alt="Logo DofusDB">
                 <div class="flex flex-col justify-center items-start">
                     <p class="text-xl text-secondary font-light uppercase">DofusDB</p>
                     <p class="italic font-thin text-secondary">API des Items</p>
