@@ -56,7 +56,7 @@ class UnitySkinController extends Controller
             abort(404);
         }
 
-        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
+        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 
         $toShow = DB::table('unity_skins')
             ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'unity_skins.id', 'unity_skins.name')

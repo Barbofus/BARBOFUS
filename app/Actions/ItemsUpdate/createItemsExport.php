@@ -15,8 +15,8 @@ final class createItemsExport
     public function __invoke()
     {
         $jsonData = json_decode(Storage::disk('local')->get('json/skinator/outBonesSize.json'), true);
-        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
-        $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsRoot.json'), true)['references']['RefIds'];
+        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
+        $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsDataRoot.json'), true)['references']['RefIds'];
         $itemsExport = json_decode(Storage::disk('local')->get('json/skinator/itemsExport.json'), true);
 
         $mountId = [];

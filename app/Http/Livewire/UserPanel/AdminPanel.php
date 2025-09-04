@@ -43,19 +43,19 @@ class AdminPanel extends Component
 
     private string $logIcon;
 
-    // private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
-    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
+    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
+    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
 
     /**
      * @var string[]
      */
     private array $rootToExport = [
-        'data_assets_breedsroot.asset.bundle' => 'BreedsRoot',
-        'data_assets_headsroot.asset.bundle' => 'HeadsRoot',
-        'data_assets_itemsroot.asset.bundle' => 'ItemsRoot',
-        'data_assets_livingobjectskinjntmoodroot.asset.bundle' => 'LivingObjectSkinJntMoodRoot',
-        'data_assets_skinslotsrulesroot.asset.bundle' => 'SkinSlotsRulesRoot',
-        'data_assets_mountsroot.asset.bundle' => 'MountsRoot',
+        'data_assets_breedsdataroot.asset.bundle' => 'BreedsDataRoot',
+        'data_assets_headsdataroot.asset.bundle' => 'HeadsDataRoot',
+        'data_assets_itemsDataroot.asset.bundle' => 'ItemsDataRoot',
+        'data_assets_livingobjectskinsmoodsdataroot.asset.bundle' => 'LivingObjectSkinsMoodsDataRoot',
+        'data_assets_skinslotsrulesdataroot.asset.bundle' => 'SkinSlotsRulesDataRoot',
+        'data_assets_mountsdataroot.asset.bundle' => 'MountsDataRoot',
     ];
 
     /**
@@ -717,9 +717,9 @@ class AdminPanel extends Component
      */
     public function getRootFilesSkins(): void
     {
-        $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsRoot.json'), true)['references']['RefIds'];
-        $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsRoot.json'), true)['references']['RefIds'];
-        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
+        $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsDataRoot.json'), true)['references']['RefIds'];
+        $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsDataRoot.json'), true)['references']['RefIds'];
+        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
         $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
         $kolorIds = [1, 2, 3];
 

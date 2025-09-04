@@ -79,8 +79,8 @@ final class updateDBFromDofusFiles
 
     public function updateMounts(): void
     {
-        $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsRoot.json'), true)['references']['RefIds'];
-        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
+        $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsDataRoot.json'), true)['references']['RefIds'];
+        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
 
         $allItems = Item::all()->keyBy('dofus_id');
         $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
@@ -130,7 +130,7 @@ final class updateDBFromDofusFiles
             $names = [];
 
             foreach ($this->langData as $lang => $translation) {
-                $names[$lang] = $translation[$item['nameId']];
+                $names[$lang] = $translation[$item['nameId']] ?? "no translation yet";
             }
 
             $this->icons[] = $item['iconId'];
@@ -160,8 +160,8 @@ final class updateDBFromDofusFiles
 
     public function updateLivingObjects(): void
     {
-        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
-        $livingData = json_decode(Storage::disk('local')->get('json/skinator/LivingObjectSkinJntMoodRoot.json'), true)['references']['RefIds'];
+        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
+        $livingData = json_decode(Storage::disk('local')->get('json/skinator/LivingObjectSkinsMoodsDataRoot.json'), true)['references']['RefIds'];
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             dd('erreur json : '.json_last_error_msg());
@@ -233,7 +233,7 @@ final class updateDBFromDofusFiles
             $names = [];
 
             foreach ($this->langData as $lang => $translation) {
-                $names[$lang] = $translation[$itemD['nameId']];
+                $names[$lang] = $translation[$itemD['nameId']] ?? "no translation yet";
             }
 
             $currentLV = null;
@@ -286,7 +286,7 @@ final class updateDBFromDofusFiles
     public function updateItems(): void
     {
 
-        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsRoot.json'), true)['references']['RefIds'];
+        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             dd('erreur json : '.json_last_error_msg());
@@ -348,7 +348,7 @@ final class updateDBFromDofusFiles
             $names = [];
 
             foreach ($this->langData as $lang => $translation) {
-                $names[$lang] = $translation[$itemD['nameId']];
+                $names[$lang] = $translation[$itemD['nameId']] ?? "no translation yet";
             }
 
             $existingItem = $allItems[$itemD['id']] ?? null;
@@ -376,8 +376,8 @@ final class updateDBFromDofusFiles
 
     public function updateBreeds(): void
     {
-        $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsRoot.json'), true)['references']['RefIds'];
-        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
+        $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsDataRoot.json'), true)['references']['RefIds'];
+        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 
         $allBreeds = Race::all();
         $allBreedsName = LocalizedRace::all();

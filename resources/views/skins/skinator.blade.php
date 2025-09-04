@@ -1154,13 +1154,13 @@
                     'cloth_4',
                 ],
                 shouldResetColors: false,
-                charactersCurrentTab: 'color',
+                charactersCurrentTab: 'breed',
                 itemsCurrentTab: 'hat',
                 petCurrentTab: 'familier',
                 oldGender: 0,
                 oldBreed: 1,
-                gender: @json($skin ? $skin->gender : 0),
-                breed: @json($skin ? $skin->race_id : 1),
+                gender: @json($skin ? $skin->gender : rand(0,1)),
+                breed: @json($skin ? $skin->race_id : $breeds[rand(0, $breeds->count()-1)]->dofus_id),
                 head: @json($skin?->face),
                 colors: {!! json_encode($skin ? [
                     '#' . ltrim((string) $skin?->color_skin, '#'),
@@ -1451,7 +1451,10 @@
                 updateHead(gender, breed)
                 {
                     const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
-                    return currentBreed ? currentBreed.heads[gender === 0 ? 'male' : 'female'][0].id : 1
+                    const heads = currentBreed.heads[gender === 0 ? 'male' : 'female']
+                    const keys = Object.keys(heads)
+                    const randKey = keys[Math.floor(Math.random() * keys.length)]
+                    return currentBreed ? heads[randKey].id : 1
                 },
 
                 updateHeads(gender, breed)
