@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TwitchCounterController;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

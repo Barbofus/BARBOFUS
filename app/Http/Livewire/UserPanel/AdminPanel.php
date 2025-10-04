@@ -43,8 +43,8 @@ class AdminPanel extends Component
 
     private string $logIcon;
 
-    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
-    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
+    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
+    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
 
     /**
      * @var string[]
@@ -52,7 +52,7 @@ class AdminPanel extends Component
     private array $rootToExport = [
         'data_assets_breedsdataroot.asset.bundle' => 'BreedsDataRoot',
         'data_assets_headsdataroot.asset.bundle' => 'HeadsDataRoot',
-        'data_assets_itemsDataroot.asset.bundle' => 'ItemsDataRoot',
+        'data_assets_itemsdataroot.asset.bundle' => 'ItemsDataRoot',
         'data_assets_livingobjectskinsmoodsdataroot.asset.bundle' => 'LivingObjectSkinsMoodsDataRoot',
         'data_assets_skinslotsrulesdataroot.asset.bundle' => 'SkinSlotsRulesDataRoot',
         'data_assets_mountsdataroot.asset.bundle' => 'MountsDataRoot',

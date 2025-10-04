@@ -21,96 +21,6 @@ final class FindWinners
      */
     public function __invoke()
     {
-
-        // Utilisé pour les concours avec une participation par personne, jusqu'à $topTen inclut
-        /*$winnerIds = DB::table('skins')
-            ->join('users', 'skins.user_id', '=', 'users.id')
-            ->select('skins.id')
-            ->addSelect([
-                'weekly_like_count' => DB::table('likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
-            ])
-            ->where('users.name', '!=', 'Barbe Douce')
-            ->orderByRaw('weekly_like_count DESC')
-            ->orderBy('skins.updated_at', 'ASC')
-            ->pluck('skins.id')
-            ->toArray();
-
-        $skins = DB::table('skins')
-            ->whereIn('id', $winnerIds)
-            ->select('id')
-            ->addSelect([
-                'user_name' => DB::table('users')
-                    ->select('name')
-                    ->whereColumn('id', 'skins.user_id')
-                    ->take(1),
-            ])
-            ->addSelect([
-                'weekly_like_count' => DB::table('likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
-            ])
-            ->orderBy('weekly_like_count', 'DESC')
-            ->get()->toArray();
-
-        $toRemove = [];
-        $foundName = [];
-
-        foreach ($skins as $skin) {
-            if (in_array($skin->user_name, $foundName)) {
-                $toRemove[] = $skin->id;
-
-                continue;
-            }
-            $foundName[] = $skin->user_name;
-        }
-
-        foreach ($toRemove as $rem) {
-            if (($key = array_search($rem, $winnerIds)) !== false) {
-                unset($winnerIds[$key]);
-            }
-        }
-
-        $winners = DB::table('skins')
-            ->whereIn('id', $winnerIds)
-            ->addSelect([
-                'weekly_like_count' => DB::table('likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
-
-                'user_name' => DB::table('users')
-                    ->select('name')
-                    ->whereColumn('id', 'skins.user_id'),
-            ])
-            ->orderByRaw('weekly_like_count DESC')
-            ->orderBy('updated_at', 'ASC')
-            ->take(3)
-            ->get()
-            ->toArray();
-
-        $topTen = Skin::query()
-            ->whereIn('id', $winnerIds)
-            ->select('id')
-            ->addSelect([
-                'weekly_like_count' => DB::table('likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('skin_id', 'skins.id')
-                    ->whereDate('created_at', '>', Carbon::parse('last Tuesday 09:00:00')->subDay()),
-
-                'user_name' => DB::table('users')
-                    ->select('name')
-                    ->whereColumn('id', 'skins.user_id'),
-            ])
-            ->orderByRaw('weekly_like_count DESC')
-            ->orderBy('updated_at', 'ASC')
-            ->take(10)
-            ->get()
-            ->toArray();*/
-
         // Trouve les 3 skins ayant le plus de likes durant la semaine
         $winners = DB::table('skins')
             ->join('users', 'skins.user_id', '=', 'users.id')
@@ -130,6 +40,8 @@ final class FindWinners
             ->get()
             ->toArray();
 
+        $previousWinners = SkinWinner::all();
+
         $unityWinners = DB::table('unity_skins')
             ->join('users', 'unity_skins.user_id', '=', 'users.id')
             ->addSelect([
@@ -143,6 +55,7 @@ final class FindWinners
                     ->whereColumn('id', 'unity_skins.user_id'),
             ])
             ->where('users.name', '!=', 'Barbe Douce')
+            ->whereNotIn('unity_skins.id', $previousWinners->sortByDesc('id')->take(3)->pluck('skin_id'))
             ->orderByRaw('weekly_like_count DESC')
             ->orderBy('created_at', 'ASC')
             ->take(3)
@@ -150,8 +63,6 @@ final class FindWinners
             ->toArray();
 
         $winners = array_merge($winners, $unityWinners);
-
-        $previousWinners = SkinWinner::all();
 
         foreach ($previousWinners as $previousWinner) {
             if (Storage::exists($previousWinner->image_path)) {

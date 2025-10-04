@@ -647,6 +647,17 @@
                                 :class="showOnlyCeremonial ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyCeremonial ? 'opacity-100' : 'opacity-60 grayscale'" class="h-7 mx-auto hover:scale-90 transition-all" src="{{ asset('storage/images/icons/items/subcategories/ceremonial.png') }}" alt="Colorable">
                         </button>
+
+                        <button type="button" x-cloak
+                                title="Show only favorite"
+                                @click="showOnlyFavorite = !showOnlyFavorite; updateFilteredItems()"
+                                class="h-10 w-10 border-2 rounded-md bg-primary-100 hover:border-secondary transition-all"
+                                :class="showOnlyFavorite ? 'border-secondary text-secondary' : 'border-inactiveText text-inactiveText'">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="h-7 mx-auto hover:scale-90">
+                                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
                     </div>
 
                     {{-- CHOIX ONGLET FAMILIER --}}
@@ -791,7 +802,7 @@
                                   )
                             ).slice(0, maxItemVisible)"
                               :key="allItem.dofus_id">
-                        <div class="h-fit">
+                        <div class="h-fit group">
                             <input :id="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem.dofus_id"
                                    :data-category="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem.subcategory == 'mimisymbic') ? 'mount' : allItem.category)"
                                    :data-id="allItem.dofus_id"
@@ -807,9 +818,28 @@
 
                                 <div :class="allItem.subcategory != 'mimisymbic' ? 'visible' : 'invisible'" class="h-4 w-4 goldGradientTop absolute -top-2 -left-2 rotate-45"></div>
 
+                                {{-- Logo colorable --}}
                                 <img src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable item"
                                      :class="(allItem.colorable && loaded && intersected) ? 'visible' : 'invisible'"
-                                     class="h-6 w-6 absolute top-1 right-1">
+                                     class="h-6 w-6 absolute bottom-1 right-1">
+
+                                {{-- Bouton favoris --}}
+                                <button type="button"
+                                        class="h-6 w-6 absolute top-1 right-1 transition-all z-20"
+                                        :class="favorites.includes(allItem.dofus_id) ? 'text-secondary' : 'text-inactiveText opacity-0 group-hover:opacity-100'"
+                                        @click="SwitchFavorite(allItem.dofus_id)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                         class="hover:brightness-125 absolute top-0 transition-all z-10">
+                                        <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+                                    </svg>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                         class="scale-0 absolute top-0 transition-all"
+                                         :class="(clicked === allItem.dofus_id) ? 'animate-onePing' : ''">
+                                        <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+
 
                                 <div class="flex gap-1 absolute pointer-events-none">
                                     <div class="w-1.5 h-1.5 bg-inactiveText rounded-full transition-all duration-100 [animation-delay:0ms]"
@@ -1120,6 +1150,50 @@
             return degrees * (Math.PI / 180);
         };
 
+        const LocalFavorites = {
+            key: 'favorites', // clé dans le localStorage
+
+            // Lire les favoris depuis localStorage
+            get() {
+                const data = localStorage.getItem(this.key);
+                try {
+                    return data ? JSON.parse(data) : [];
+                } catch {
+                    console.warn("Impossible de parser les favoris dans le localStorage");
+                    return [];
+                }
+            },
+
+            // Sauvegarder les favoris dans localStorage
+            save(favorites) {
+                localStorage.setItem(this.key, JSON.stringify(favorites));
+            },
+
+            // Ajouter un favori
+            add(id) {
+                const favorites = this.get();
+                if (!favorites.includes(id)) {
+                    favorites.push(id);
+                    this.save(favorites);
+                }
+            },
+
+            // Supprimer un favori
+            remove(id) {
+                const favorites = this.get();
+                const index = favorites.indexOf(id);
+                if (index > -1) {
+                    favorites.splice(index, 1);
+                    this.save(favorites);
+                }
+            },
+
+            // Vérifier si un item est favori
+            has(id) {
+                return this.get().includes(id);
+            }
+        };
+
         document.addEventListener("alpine:init", () => {
             Alpine.data("skinator", () => ({
                 breedInfos: @json($breeds),
@@ -1223,6 +1297,11 @@
                 showOnlyColorable: false,
                 showOnlyMimisymbic: false,
                 showOnlyCeremonial: false,
+                showOnlyFavorite: false,
+                clicked: -1,
+                userId: @json(auth()->check() ? auth()->id() : -1),
+                favorites: [],
+                csrfToken: '{{ csrf_token() }}',
 
                 initWatcher() {
                     Alpine.effect(() => {
@@ -1246,6 +1325,15 @@
 
                 init()
                 {
+                    if(this.userId > -1) {
+                        this.favorites = @json(auth()->user()?->favorites()->pluck('item_id'));
+                    }
+                    else {
+                        this.favorites = LocalFavorites.get();
+                    }
+
+                    this.SortFavorites();
+
                     if(this.head == null) {
                         this.head = this.updateHead(this.gender, this.breed);
                     }
@@ -1261,6 +1349,107 @@
                             this.colors = this.getDefaultColor(this.gender, this.breed);
                         }
                         editURLParam(this.getURLObject())
+                    }
+                },
+
+                SortFavorites(){
+                    // Trier les items : les favoris d'abord
+                    this.allItems.sort((a, b) => {
+                        const aFav = this.favorites.includes(a.dofus_id);
+                        const bFav = this.favorites.includes(b.dofus_id);
+
+                        if (aFav && !bFav) return -1; // a est favori → passe avant
+                        if (!aFav && bFav) return 1;  // b est favori → passe avant
+                        return 0; // sinon, garde l’ordre
+                    });
+                },
+
+                SwitchFavorite(id){
+                    this.clicked = id;
+
+                    (!this.favorites.includes(id)) ? this.addFavorite(id) : this.removeFavorite(id);
+                    this.SortFavorites();
+                    setTimeout(() => this.clicked = -1, 500);
+                },
+
+                async addFavorite(id)
+                {
+                    this.favorites.push(id);
+
+                    if(this.userId > -1) {
+                        try {
+                            const response = await fetch("/favorites", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": this.csrfToken,
+                                },
+                                body: JSON.stringify({
+                                    item_id: id,
+                                }),
+                            });
+
+                            // 🚨 Vérifie le statut
+                            if (!response.ok) {
+                                let message = `Erreur serveur (${response.status})`;
+                                try {
+                                    const data = await response.json();
+                                    if (data?.message) message = data.message;
+                                } catch {
+                                }
+                                throw new Error(message);
+                            }
+                        } catch (error) {
+                            console.error("%cErreur lors de l’ajout du favori :", "color: #ef4444;", error);
+                            // rollback
+                            const index = this.favorites.indexOf(id);
+                            if (index > -1) this.favorites.splice(index, 1);
+                        }
+                    }
+                    else {
+                        LocalFavorites.add(id);
+                        this.favorites = LocalFavorites.get();
+                    }
+                },
+
+                async removeFavorite(id)
+                {
+                    const index = this.favorites.indexOf(id);
+                    if( index > -1) {
+                        this.favorites.splice(index, 1);
+                    }
+
+                    if(this.userId > -1) {
+                        try {
+                            const response = await fetch("/favorites", {
+                                method: "DELETE",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": this.csrfToken,
+                                },
+                                body: JSON.stringify({
+                                    item_id: id,
+                                }),
+                            });
+
+                            // 🚨 Vérifie le statut
+                            if (!response.ok) {
+                                let message = `Erreur serveur (${response.status})`;
+                                try {
+                                    const data = await response.json();
+                                    if (data?.message) message = data.message;
+                                } catch {}
+                                throw new Error(message);
+                            }
+                        } catch (error) {
+                            console.error("%cErreur lors de la suppression du favori :", "color: #ef4444;", error);
+                            // rollback
+                            if (!this.favorites.includes(id)) this.favorites.push(id);
+                        }
+                    }
+                    else {
+                        LocalFavorites.remove(id);
+                        this.favorites = LocalFavorites.get();
                     }
                 },
 
@@ -1378,6 +1567,10 @@
                         filteredItems = this.allItems.filter(i =>
                             removeAccents(i.name).toLowerCase().includes(removeAccents(this.searchBar).toLowerCase())
                         );
+                    }
+
+                    if(this.showOnlyFavorite) {
+                        filteredItems = filteredItems.filter(i => this.favorites.includes(i.dofus_id));
                     }
 
                     if(this.showOnlyColorable) {

@@ -12,6 +12,7 @@ use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Models\Favorite;
 use App\Models\UnitySkin;
 use Firebase\JWT\JWT;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -51,6 +52,31 @@ Route::get('/api/whoami', function () {
     $jwt = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
 
     return response()->json(['token' => $jwt], 200);
+});
+
+Route::post('/favorites', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'item_id' => 'integer|required|exists:items,dofus_id',
+    ]);
+
+    Favorite::create([
+        'user_id' => request()->user()->id,
+        'item_id' => $validated['item_id'],
+    ]);
+
+    return response()->noContent();
+});
+
+Route::delete('/favorites', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'item_id' => 'integer|required|exists:items,dofus_id',
+    ]);
+
+    Favorite::where('user_id', request()->user()->id)
+        ->where('item_id', $validated['item_id'])
+        ->delete();
+
+    return response()->noContent();
 });
 
 /*Route::get('export-concours', function () {
