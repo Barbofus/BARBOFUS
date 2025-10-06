@@ -821,11 +821,11 @@
                                 {{-- Logo colorable --}}
                                 <img src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable item"
                                      :class="(allItem.colorable && loaded && intersected) ? 'visible' : 'invisible'"
-                                     class="h-6 w-6 absolute bottom-1 right-1">
+                                     class="h-6 w-6 absolute bottom-0 right-0 min-[1501px]:bottom-1 min-[1501px]:right-1">
 
                                 {{-- Bouton favoris --}}
                                 <button type="button"
-                                        class="h-6 w-6 absolute top-1 right-1 transition-all z-20"
+                                        class="h-4 w-4 min-[1501px]:h-6 min-[1501px]:w-6 absolute top-0 right-0 p-0 min-[1501px]:top-1 min-[1501px]:right-1 transition-all z-20"
                                         :class="favorites.includes(allItem.dofus_id) ? 'text-secondary' : 'text-inactiveText opacity-0 group-hover:opacity-100'"
                                         @click="SwitchFavorite(allItem.dofus_id)">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
