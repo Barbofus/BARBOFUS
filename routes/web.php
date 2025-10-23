@@ -29,56 +29,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/api/whoami', function () {
-    $user = request()->user();
-
-    if(!$user) {
-        return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
-    }
-
-    if($user->email_verified_at === null) {
-        return response()->json(['error' => __('barbofus.errorEmailNotVerified')], 401);
-    }
-
-    $payload = [
-        'id' => $user->id,
-        'name' => $user->name,
-        'email' => $user->email,
-        'roles' => $user->rolesName(),
-        'locale' => $user->locale,
-        'exp' => time() + 86400,
-    ];
-
-    $jwt = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
-
-    return response()->json(['token' => $jwt], 200);
-});
-
-Route::post('/favorites', function (\Illuminate\Http\Request $request) {
-    $validated = $request->validate([
-        'item_id' => 'integer|required|exists:items,dofus_id',
-    ]);
-
-    Favorite::create([
-        'user_id' => request()->user()->id,
-        'item_id' => $validated['item_id'],
-    ]);
-
-    return response()->noContent();
-});
-
-Route::delete('/favorites', function (\Illuminate\Http\Request $request) {
-    $validated = $request->validate([
-        'item_id' => 'integer|required|exists:items,dofus_id',
-    ]);
-
-    Favorite::where('user_id', request()->user()->id)
-        ->where('item_id', $validated['item_id'])
-        ->delete();
-
-    return response()->noContent();
-});
-
 /*Route::get('export-concours', function () {
     $skins = UnitySkin::query()
         ->when(true, function (EloquentBuilder $query) {
@@ -107,6 +57,8 @@ Route::delete('/favorites', function (\Illuminate\Http\Request $request) {
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
+
+Route::view('/socials', 'socials')->name('socials');
 
 Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
 
@@ -184,4 +136,54 @@ Route::middleware(['can:validate-skin', 'auth'])->group(function () {
 
     Route::delete('/skin/{skin}/delete', [SkinController::class, 'delete'])->name('skins.delete');
     Route::delete('/unity-skin/{skin}/delete', [UnitySkinController::class, 'delete'])->name('unity-skins.delete');
+});
+
+Route::get('/api/whoami', function () {
+    $user = request()->user();
+
+    if(!$user) {
+        return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
+    }
+
+    if($user->email_verified_at === null) {
+        return response()->json(['error' => __('barbofus.errorEmailNotVerified')], 401);
+    }
+
+    $payload = [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'roles' => $user->rolesName(),
+        'locale' => $user->locale,
+        'exp' => time() + 86400,
+    ];
+
+    $jwt = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
+
+    return response()->json(['token' => $jwt], 200);
+});
+
+Route::post('/favorites', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'item_id' => 'integer|required|exists:items,dofus_id',
+    ]);
+
+    Favorite::create([
+        'user_id' => request()->user()->id,
+        'item_id' => $validated['item_id'],
+    ]);
+
+    return response()->noContent();
+});
+
+Route::delete('/favorites', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'item_id' => 'integer|required|exists:items,dofus_id',
+    ]);
+
+    Favorite::where('user_id', request()->user()->id)
+        ->where('item_id', $validated['item_id'])
+        ->delete();
+
+    return response()->noContent();
 });
