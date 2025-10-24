@@ -7,6 +7,7 @@ use App\Http\Controllers\HavenBagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
+use App\Http\Controllers\OpenPlanningController;
 use App\Http\Controllers\SkinatorController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
@@ -59,6 +60,8 @@ Route::get('/', HomeController::class)->name('home');
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
 
 Route::view('/socials', 'socials')->name('socials');
+
+Route::get('/planning', OpenPlanningController::class)->name('planning');
 
 Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
 
