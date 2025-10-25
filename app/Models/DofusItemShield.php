@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\DofusItemShield
+ *
+ * @property-read \App\Models\DofusItemsSubCategorie|null $DofusItemsSubCategorie
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Skin> $Skins
+ * @property-read int|null $skins_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UnitySkin> $UnitySkins
+ * @property-read int|null $unity_skins_count
+ * @method static \Illuminate\Database\Eloquent\Builder|DofusItemShield newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DofusItemShield newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DofusItemShield query()
+ * @mixin \Eloquent
+ */
 class DofusItemShield extends Model
 {
     protected $fillable = [

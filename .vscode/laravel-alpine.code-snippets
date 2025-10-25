@@ -1,0 +1,74 @@
+{
+    "Laravel Blade Component": {
+        "prefix": "blade-component",
+        "body": [
+            "<div class=\"$1\">",
+            "    $0",
+            "</div>"
+        ],
+        "description": "Créer un composant Blade simple"
+    },
+    "Alpine.js Component": {
+        "prefix": "x-data",
+        "body": [
+            "x-data=\"{",
+            "    $1: '$2',",
+            "    $3() {",
+            "        $0",
+            "    }",
+            "}\""
+        ],
+        "description": "Créer un composant Alpine.js"
+    },
+    "Laravel Route": {
+        "prefix": "route",
+        "body": [
+            "Route::${1:get}('${2:/}', [${3:Controller}::class, '${4:method}'])->name('${5:name}');"
+        ],
+        "description": "Créer une route Laravel"
+    },
+    "Laravel Blade Directive": {
+        "prefix": "@if",
+        "body": [
+            "@if($1)",
+            "    $0",
+            "@endif"
+        ],
+        "description": "Directive Blade @if"
+    },
+    "Laravel Form": {
+        "prefix": "form",
+        "body": [
+            "<form action=\"{{ route('${1:route}') }}\" method=\"${2:POST}\">",
+            "    @csrf",
+            "    $0",
+            "</form>"
+        ],
+        "description": "Formulaire Laravel avec CSRF"
+    },
+    "Alpine.js Click Handler": {
+        "prefix": "@click",
+        "body": [
+            "@click=\"$1\""
+        ],
+        "description": "Gestionnaire de clic Alpine.js"
+    },
+    "Tailwind Container": {
+        "prefix": "tw-container",
+        "body": [
+            "<div class=\"container mx-auto px-4\">",
+            "    $0",
+            "</div>"
+        ],
+        "description": "Container Tailwind CSS"
+    },
+    "Tailwind Grid": {
+        "prefix": "tw-grid",
+        "body": [
+            "<div class=\"grid grid-cols-${1:1} md:grid-cols-${2:2} lg:grid-cols-${3:3} gap-${4:4}\">",
+            "    $0",
+            "</div>"
+        ],
+        "description": "Grid responsive Tailwind CSS"
+    }
+}

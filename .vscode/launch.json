@@ -1,0 +1,9 @@
+{
+    "version": "0.2.0",
+    "configurations": [],
+    "compounds": [],
+    "settings": {
+        "javascript.validate.enable": false,
+        "typescript.validate.enable": false
+    }
+}

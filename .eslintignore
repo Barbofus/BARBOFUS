@@ -1,0 +1,10 @@
+# Ignore des fichiers Blade
+**/*.blade.php
+resources/views/**/*
+
+# Ignore des dossiers
+node_modules/
+vendor/
+storage/
+bootstrap/cache/
+public/build/

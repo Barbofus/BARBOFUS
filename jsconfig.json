@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "allowJs": true,
+        "checkJs": false
+    },
+    "exclude": ["**/*.blade.php", "resources/views/**/*", "resources/**/*.blade.php", "node_modules", "vendor"]
+}

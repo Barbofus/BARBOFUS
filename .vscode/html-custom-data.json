@@ -1,0 +1,142 @@
+{
+    "version": 1.1,
+    "tags": [],
+    "globalAttributes": [
+        {
+            "name": "x-data",
+            "description": "Alpine.js reactive data object",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-show",
+            "description": "Alpine.js conditional display",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-if",
+            "description": "Alpine.js conditional rendering",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-for",
+            "description": "Alpine.js list rendering",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-on",
+            "description": "Alpine.js event listeners",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-model",
+            "description": "Alpine.js two-way data binding",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-text",
+            "description": "Alpine.js text content",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-html",
+            "description": "Alpine.js HTML content",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-bind",
+            "description": "Alpine.js dynamic attributes",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-init",
+            "description": "Alpine.js initialization",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-cloak",
+            "description": "Alpine.js hide before initialization",
+            "valueSet": "v"
+        },
+        {
+            "name": "x-transition",
+            "description": "Alpine.js transitions",
+            "valueSet": "v"
+        },
+        {
+            "name": "@click",
+            "description": "Alpine.js click event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@submit",
+            "description": "Alpine.js submit event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@keydown",
+            "description": "Alpine.js keydown event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@input",
+            "description": "Alpine.js input event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@change",
+            "description": "Alpine.js change event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@focus",
+            "description": "Alpine.js focus event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@blur",
+            "description": "Alpine.js blur event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@dragover",
+            "description": "Alpine.js dragover event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@dragleave",
+            "description": "Alpine.js dragleave event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": "@drop",
+            "description": "Alpine.js drop event (shorthand)",
+            "valueSet": "v"
+        },
+        {
+            "name": ":key",
+            "description": "Alpine.js unique key for loops",
+            "valueSet": "v"
+        },
+        {
+            "name": ":class",
+            "description": "Alpine.js dynamic class binding",
+            "valueSet": "v"
+        },
+        {
+            "name": ":src",
+            "description": "Alpine.js dynamic src binding",
+            "valueSet": "v"
+        },
+        {
+            "name": ":href",
+            "description": "Alpine.js dynamic href binding",
+            "valueSet": "v"
+        }
+    ],
+    "valueSets": [
+        {
+            "name": "v",
+            "values": []
+        }
+    ]
+}

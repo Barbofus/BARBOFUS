@@ -1,0 +1,260 @@
+{
+    // === FORMATAGE ET SAUVEGARDE ===
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    // === PRETTIER CONFIGURATION ===
+    "prettier.requireConfig": false,
+    "prettier.useEditorConfig": false,
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false,
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.bracketSpacing": true,
+    "prettier.semi": true,
+
+    // === PHP CONFIGURATION ===
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    // === BLADE CONFIGURATION ===
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "javascript.validate.enable": false,
+        "typescript.validate.enable": false,
+        "html.validate.scripts": false
+    },
+
+    // === JAVASCRIPT/ALPINE.JS CONFIGURATION ===
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    // === HTML CONFIGURATION ===
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    // === CSS/SCSS CONFIGURATION ===
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    // === JSON CONFIGURATION ===
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    // === INTELEPHENSE CONFIGURATION ===
+    "intelephense.files.maxSize": 3000000,
+    "intelephense.files.associations": ["*.php", "*.phtml"],
+    "intelephense.files.exclude": [
+        "**/node_modules/**",
+        "**/vendor/**/Tests/**",
+        "**/vendor/**/tests/**",
+        "**/vendor/phpunit/**",
+        "**/storage/framework/**",
+        "**/bootstrap/cache/**"
+    ],
+    "intelephense.environment.includePaths": [
+        "./vendor",
+        "./app",
+        "./config",
+        "./database",
+        "./routes",
+        "./_ide_helper.php",
+        "./_ide_helper_models.php",
+        "./.phpstorm.meta.php"
+    ],
+    "intelephense.completion.insertUseDeclaration": true,
+    "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": false,
+    "intelephense.diagnostics.undefinedSymbols": false,
+    "intelephense.diagnostics.undefinedFunctions": false,
+    "intelephense.diagnostics.undefinedConstants": false,
+    "intelephense.diagnostics.undefinedClassConstants": false,
+    "intelephense.diagnostics.undefinedMethods": false,
+    "intelephense.diagnostics.undefinedProperties": false,
+    "intelephense.diagnostics.undefinedTypes": false,
+    "intelephense.diagnostics.undefinedVariables": false,
+    "intelephense.diagnostics.enable": true,
+    "intelephense.trace.server": "off",
+    "intelephense.stubs": [
+        "apache",
+        "bcmath",
+        "bz2",
+        "calendar",
+        "com_dotnet",
+        "Core",
+        "ctype",
+        "curl",
+        "date",
+        "dba",
+        "dom",
+        "enchant",
+        "exif",
+        "FFI",
+        "fileinfo",
+        "filter",
+        "fpm",
+        "ftp",
+        "gd",
+        "gettext",
+        "gmp",
+        "hash",
+        "iconv",
+        "imap",
+        "intl",
+        "json",
+        "ldap",
+        "libxml",
+        "mbstring",
+        "meta",
+        "mysqli",
+        "oci8",
+        "odbc",
+        "openssl",
+        "pcntl",
+        "pcre",
+        "PDO",
+        "pgsql",
+        "Phar",
+        "posix",
+        "pspell",
+        "readline",
+        "Reflection",
+        "session",
+        "shmop",
+        "SimpleXML",
+        "snmp",
+        "soap",
+        "sockets",
+        "sodium",
+        "SPL",
+        "sqlite3",
+        "standard",
+        "superglobals",
+        "sysvmsg",
+        "sysvsem",
+        "sysvshm",
+        "tidy",
+        "tokenizer",
+        "xml",
+        "xmlreader",
+        "xmlrpc",
+        "xmlwriter",
+        "xsl",
+        "Zend OPcache",
+        "zip",
+        "zlib"
+    ],
+
+    // === BLADE FORMATTER CONFIGURATION ===
+    "bladeFormatter.format.enabled": true,
+    "bladeFormatter.format.indentSize": 4,
+    "bladeFormatter.format.wrapAttributes": "auto",
+    "bladeFormatter.format.wrapLineLength": 120,
+    "bladeFormatter.format.indentInnerHtml": true,
+
+    // === BLADE DIRECTIVES CONFIGURATION ===
+    "blade.format.enable": true,
+    "html.customData": [".vscode/html-custom-data.json"],
+
+    // === TAILWIND CONFIGURATION ===
+    "tailwindCSS.includeLanguages": {
+        "blade": "html",
+        "javascript": "javascript",
+        "html": "html"
+    },
+    "tailwindCSS.experimental.classRegex": [
+        ["class\\s*=\\s*[\"']([^\"']*)[\"']", "([a-zA-Z0-9\\-:]+)"],
+        ["@apply\\s+([^;]+);", "([a-zA-Z0-9\\-:]+)"]
+    ],
+
+    // === HEADWIND CONFIGURATION (tri classes Tailwind) ===
+    "headwind.runOnSave": true,
+    "headwind.sortTailwindClasses": true,
+
+    // === ALPINE.JS CONFIGURATION ===
+    "alpineIntelliSense.settings.completions.enabled": true,
+    "alpineIntelliSense.settings.hover.enabled": true,
+
+    // === DÉSACTIVATION DES ERREURS DECORATORS ===
+    "javascript.preferences.includePackageJsonAutoImports": "off",
+    "typescript.preferences.includePackageJsonAutoImports": "off",
+    "javascript.suggest.autoImports": false,
+    "typescript.suggest.autoImports": false,
+    "html.validate.scripts": false,
+    "html.validate.styles": false,
+
+    // === DÉSACTIVATION COMPLÈTE JS/TS DANS BLADE ===
+    "javascript.validate.enable": false,
+    "typescript.validate.enable": false,
+    "typescript.preferences.experimentalDecorators": true,
+    "javascript.preferences.experimentalDecorators": true,
+    "typescript.suggest.enabled": false,
+    "javascript.suggest.enabled": false,
+    "typescript.suggestionActions.enabled": false,
+    "javascript.suggestionActions.enabled": false,
+
+    // === PROBLÈMES ET ERREURS ===
+    "problems.decorations.enabled": true,
+    "typescript.reportStyleChecksAsWarnings": false,
+    "javascript.reportStyleChecksAsWarnings": false,
+
+    // === AUTRES CONFIGURATIONS ===
+    "files.associations": {
+        "*.blade.php": "blade",
+        "*.php": "php"
+    },
+
+    "emmet.includeLanguages": {
+        "blade": "html",
+        "javascript": "javascriptreact"
+    },
+
+    // === DÉSACTIVATION ESLINT POUR BLADE ===
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "eslint.options": {
+        "ignorePattern": "**/*.blade.php"
+    },
+
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/vendor": true,
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/storage/framework": true,
+        "**/storage/logs": true
+    }
+}

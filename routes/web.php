@@ -7,7 +7,7 @@ use App\Http\Controllers\HavenBagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
-use App\Http\Controllers\OpenPlanningController;
+use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\SkinatorController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitySkinController;
@@ -61,7 +61,7 @@ Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
 
 Route::view('/socials', 'socials')->name('socials');
 
-Route::get('/planning', OpenPlanningController::class)->name('planning');
+Route::get('/planning', [PlanningController::class, 'index'])->name('planning.index');
 
 Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
 
@@ -133,6 +133,10 @@ Route::middleware(['can:admin-access', 'auth'])->group(function () {
 
     Route::get('/image-en-vrac', [ImageEnVracController::class, 'index'])->name('image-en-vrac.index');
     Route::post('/image-en-vrac/upload', [ImageEnVracController::class, 'upload'])->name('image-en-vrac.upload');
+
+    Route::put('/planning/update-all', [PlanningController::class, 'updateAll'])->name('planning.update-all');
+    Route::post('/planning/update-image', [PlanningController::class, 'updateImage'])->name('planning.update-image');
+    Route::post('/planning/change-week', [PlanningController::class, 'changeWeek'])->name('planning.change-week');
 });
 
 Route::middleware(['can:validate-skin', 'auth'])->group(function () {
@@ -144,11 +148,11 @@ Route::middleware(['can:validate-skin', 'auth'])->group(function () {
 Route::get('/api/whoami', function () {
     $user = request()->user();
 
-    if(!$user) {
+    if (!$user) {
         return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
     }
 
-    if($user->email_verified_at === null) {
+    if ($user->email_verified_at === null) {
         return response()->json(['error' => __('barbofus.errorEmailNotVerified')], 401);
     }
 

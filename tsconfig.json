@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        "allowUnreachableCode": true,
+        "allowUnusedLabels": true,
+        "noImplicitAny": false,
+        "strict": false,
+        "noErrorTruncation": true,
+        "target": "ES2020",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": false
+    },
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "vendor",
+        "**/*.blade.php",
+        "resources/views",
+        "storage",
+        "bootstrap/cache"
+    ]
+}

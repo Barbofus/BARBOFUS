@@ -10,6 +10,13 @@
       0 => 'Barryvdh\\Debugbar\\ServiceProvider',
     ),
   ),
+  'barryvdh/laravel-ide-helper' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
+    ),
+  ),
   'intervention/image' => 
   array (
     'providers' => 

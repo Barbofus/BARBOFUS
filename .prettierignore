@@ -1,0 +1,22 @@
+# Dossiers Laravel à ignorer
+/vendor/
+/node_modules/
+/storage/
+/bootstrap/cache/
+/public/hot
+/public/storage
+/public/build/
+
+# Fichiers de config
+.env*
+composer.lock
+package-lock.json
+mix-manifest.json
+
+# Logs
+*.log
+
+# Cache
+/.vscode/
+.DS_Store
+Thumbs.db

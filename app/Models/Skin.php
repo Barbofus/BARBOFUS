@@ -7,6 +7,75 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\Skin
+ *
+ * @property int $id
+ * @property int|null $hat_id
+ * @property int|null $cape_id
+ * @property int|null $shield_id
+ * @property int|null $pet_id
+ * @property int|null $costume_id
+ * @property int $user_id
+ * @property int $race_id
+ * @property int $face
+ * @property string $image_path
+ * @property string $gender
+ * @property string $color_skin
+ * @property string $color_hair
+ * @property string $color_cloth_1
+ * @property string $color_cloth_2
+ * @property string $color_cloth_3
+ * @property string $status
+ * @property string|null $refused_reason
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $name
+ * @property-read \App\Models\DofusItemCloak|null $DofusItemCloak
+ * @property-read \App\Models\DofusItemCostume|null $DofusItemCostume
+ * @property-read \App\Models\DofusItemHat|null $DofusItemHat
+ * @property-read \App\Models\DofusItemPet|null $DofusItemPet
+ * @property-read \App\Models\DofusItemShield|null $DofusItemShield
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Like> $Likes
+ * @property-read int|null $likes_count
+ * @property-read \App\Models\Race $Race
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reward> $Rewards
+ * @property-read int|null $rewards_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reward> $RewardsWinners
+ * @property-read int|null $rewards_winners_count
+ * @property-read \App\Models\User $User
+ * @property-read \App\Models\Item|null $cape
+ * @property-read \App\Models\Item|null $costume
+ * @property-read \App\Models\Item|null $hat
+ * @property-read \App\Models\Item|null $pet
+ * @property-read \App\Models\Item|null $shield
+ * @method static \Database\Factories\SkinFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereCapeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereColorCloth1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereColorCloth2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereColorCloth3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereColorHair($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereColorSkin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereCostumeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereFace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereGender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereHatId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereImagePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin wherePetId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereRaceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereRefusedReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereShieldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skin whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Skin extends Model
 {
     protected $fillable = [

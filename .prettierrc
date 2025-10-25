@@ -1,0 +1,42 @@
+{
+    "tabWidth": 4,
+    "useTabs": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "semi": true,
+    "printWidth": 120,
+    "htmlWhitespaceSensitivity": "ignore",
+    "overrides": [
+        {
+            "files": "*.blade.php",
+            "options": {
+                "parser": "html",
+                "tabWidth": 4,
+                "printWidth": 120
+            }
+        },
+        {
+            "files": "*.php",
+            "options": {
+                "tabWidth": 4,
+                "printWidth": 120
+            }
+        },
+        {
+            "files": "*.js",
+            "options": {
+                "tabWidth": 4,
+                "singleQuote": true,
+                "trailingComma": "es5"
+            }
+        },
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 4,
+                "trailingComma": "none"
+            }
+        }
+    ]
+}
