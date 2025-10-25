@@ -102,7 +102,7 @@
                             class="bg-transparent text-transparent font-light bg-gradient-to-r from-[#fba436] to-[#faed61] bg-clip-text tracking-wider outline-none w-12 min-[400px]:w-14 lg:w-[min(3.5rem,4vw)]
                                   focus:from-white/10 focus:to-white/20 focus:text-white focus:bg-clip-border focus:rounded px-1 transition-all text-sm min-[400px]:text-base lg:text-[min(1rem,1.25vw)]"
                             x-model="activity.StartTime" @focus="activity.StartTime = ''"
-                            @blur="activity.StartTime = validateTime(activity.StartTime); savePlanning()"
+                            @blur="activity.StartTime = window.planningComponent().validateTime(activity.StartTime); window.planningComponent().savePlanning()"
                             @keydown.enter="$event.target.blur()" />
                     @else
                         <span
@@ -119,7 +119,7 @@
                             class="bg-transparent text-transparent font-light bg-gradient-to-r from-[#fba436] to-[#faed61] bg-clip-text tracking-wider outline-none w-12 min-[400px]:w-14 lg:w-[min(3.5rem,4vw)]
                                   focus:from-white/10 focus:to-white/20 focus:text-white focus:bg-clip-border focus:rounded px-1 transition-all text-sm min-[400px]:text-base lg:text-[min(1rem,1.25vw)]"
                             x-model="activity.EndTime" @focus="activity.EndTime = ''"
-                            @blur="activity.EndTime = validateTime(activity.EndTime); savePlanning()"
+                            @blur="activity.EndTime = window.planningComponent().validateTime(activity.EndTime); window.planningComponent().savePlanning()"
                             @keydown.enter="$event.target.blur()" />
                     @else
                         <span
@@ -133,7 +133,8 @@
                 @if ($isAdmin)
                     <input type="text"
                         class="w-full px-1 leading-tight text-white transition-all bg-transparent outline-none text-sm min-[400px]:text-base lg:text-[min(1rem,1.2vw)] focus:bg-white/10 focus:rounded"
-                        x-model="activity.Name" @blur=" savePlanning()" @keydown.enter="$event.target.blur()" />
+                        x-model="activity.Name" @blur="window.planningComponent().savePlanning()"
+                        @keydown.enter="$event.target.blur()" />
                 @else
                     <span
                         class="w-full px-1 leading-tight text-sm min-[400px]:text-base lg:text-[min(1rem,1.2vw)] text-white"
@@ -174,14 +175,17 @@
 
                     if (!day || !day.name) return false;
 
-                    // Vérifier si on regarde la semaine actuelle
+                    // Vérifier si on regarde la semaine actuelle - utiliser la même logique que le composant principal
                     const now = new Date();
-                    const thisWeek = (() => {
-                        const startOfYear = new Date(now.getFullYear(), 0, 1);
-                        const days = Math.floor((now - startOfYear) / (24 * 60 * 60 * 1000));
-                        return Math.ceil((days + startOfYear.getDay() + 1) / 7);
-                    })();
                     const thisYear = now.getFullYear();
+
+                    // Calculer la semaine ISO comme dans le composant principal
+                    const jan1 = new Date(thisYear, 0, 1);
+                    const dayOfWeek = jan1.getDay();
+                    const daysToFirstMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
+                    const firstMonday = new Date(thisYear, 0, 1 + daysToFirstMonday);
+                    const daysDiff = Math.floor((now - firstMonday) / (24 * 60 * 60 * 1000));
+                    const thisWeek = Math.floor(daysDiff / 7) + 1;
 
                     // Si on regarde une autre semaine, pas d'highlight
                     if (currentWeek !== thisWeek || currentYear !== thisYear) return false;

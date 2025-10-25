@@ -66,20 +66,55 @@ class PlanningController extends Controller
         $totalHours = 0;
         $sessions = 0;
 
-        foreach ($planning as $day) {
-            foreach ($day['activities'] as $activity) {
+        foreach ($planning as $dayIndex => $day) {
+            foreach ($day['activities'] as $activityIndex => $activity) {
+                // Debug : afficher les informations de chaque activité
+                \Log::info("Activité [{$dayIndex}][{$activityIndex}]:", [
+                    'name' => $activity['Name'] ?? $activity['name'] ?? 'Unknown',
+                    'visible' => $activity['visible'] ?? 'not set',
+                    'visible_type' => gettype($activity['visible'] ?? null),
+                    'start' => $activity['StartTime'] ?? 'no start',
+                    'end' => $activity['EndTime'] ?? 'no end',
+                ]);
+
+                // Ignorer les activités masquées
+                if (isset($activity['visible']) && $activity['visible'] === false) {
+                    \Log::info("Activité masquée ignorée: " . ($activity['Name'] ?? 'Unknown'));
+                    continue;
+                }
+
                 $sessions++;
 
                 $start = Carbon::createFromFormat('H:i', $activity['StartTime']);
                 $end = Carbon::createFromFormat('H:i', $activity['EndTime']);
 
-                $duration = $end->diffInMinutes($start) / 60;
+                // Si début et fin sont identiques (ex: 00:00 → 00:00), durée = 0
+                if ($start->equalTo($end)) {
+                    $duration = 0;
+                }
+                // Si l'heure de fin est avant l'heure de début, durée = 0
+                else if ($end->lessThan($start)) {
+                    $duration = 0;
+                } else {
+                    $duration = $end->diffInMinutes($start) / 60;
+                }
+
                 $totalHours += $duration;
+
+                \Log::info("Activité comptée:", [
+                    'name' => $activity['Name'] ?? 'Unknown',
+                    'start' => $activity['StartTime'],
+                    'end' => $activity['EndTime'],
+                    'duration' => $duration,
+                    'total_so_far' => $totalHours
+                ]);
             }
         }
 
         // Arrondi à 1 décimale
         $totalHours = round($totalHours, 1);
+
+        \Log::info("Stats finales:", compact('totalHours', 'sessions'));
 
         return compact('totalHours', 'sessions');
     }
@@ -122,6 +157,9 @@ class PlanningController extends Controller
         }
 
         $planning = $request->get('planning', []);
+
+        // Debug : afficher ce qui est reçu du frontend
+        \Log::info("Planning reçu du frontend:", $planning);
 
         foreach ($planning as &$day) {
             if (!isset($day['activities']) || !is_array($day['activities'])) {

@@ -13,6 +13,9 @@
                         <div class="text-[#292522] font-light text-xl lg:text-[min(1.25rem,1.25vw)] tracking-[0.3em] opacity-80 uppercase"
                             x-text="day.name">
                         </div>
+                        <div class="text-[#292522] font-normal text-sm lg:text-[min(0.875rem,0.875vw)] opacity-70 mt-1"
+                            x-text="getDayDate(dayIndex)">
+                        </div>
                     </div>
                 </div>
             </div>

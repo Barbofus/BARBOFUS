@@ -136,18 +136,25 @@
                 sessions: @json($sessions),
                 selectedFile: null,
                 isAdmin,
+                saveTimeout: null,
                 currentWeek: initialWeek || (() => {
-                    // Calculer le numéro de semaine ISO (équivalent à Carbon::week)
+                    // Calculer le numéro de semaine ISO (équivalent à Carbon::week) - même logique que SingleActivity
                     const now = new Date();
-                    const startOfYear = new Date(now.getFullYear(), 0, 1);
-                    const days = Math.floor((now - startOfYear) / (24 * 60 * 60 * 1000));
-                    return Math.ceil((days + startOfYear.getDay() + 1) / 7);
+                    const thisYear = now.getFullYear();
+                    const jan1 = new Date(thisYear, 0, 1);
+                    const dayOfWeek = jan1.getDay();
+                    const daysToFirstMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
+                    const firstMonday = new Date(thisYear, 0, 1 + daysToFirstMonday);
+                    const daysDiff = Math.floor((now - firstMonday) / (24 * 60 * 60 * 1000));
+                    return Math.floor(daysDiff / 7) + 1;
                 })(),
                 currentYear: initialYear || new Date().getFullYear(),
 
                 init() {
                     // Exposer le composant globalement pour les sous-composants
                     window.planningComponent = () => this;
+                    // Recalculer les stats au chargement pour tenir compte des activités masquées
+                    this.recalculateStats();
                 },
 
                 get displayWeekText() {
@@ -155,9 +162,9 @@
                     const year = this.currentYear;
                     const week = this.currentWeek;
 
-                    // Calculer le premier lundi de l'année
+                    // Utiliser la même logique que SingleActivity pour la cohérence
                     const jan1 = new Date(year, 0, 1);
-                    const dayOfWeek = jan1.getDay(); // 0 = dimanche, 1 = lundi, etc.
+                    const dayOfWeek = jan1.getDay();
                     const daysToFirstMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
 
                     // Premier lundi de l'année
@@ -185,6 +192,35 @@
                     const endDate = targetSunday.toLocaleDateString('fr-FR', optionsFullDate);
 
                     return `Semaine du ${startDay} au ${endDate}`;
+                },
+
+                // Nouvelle fonction pour calculer la date d'un jour spécifique
+                getDayDate(dayIndex) {
+                    const year = this.currentYear;
+                    const week = this.currentWeek;
+
+                    // Utiliser la même logique que SingleActivity pour la cohérence
+                    const jan1 = new Date(year, 0, 1);
+                    const dayOfWeek = jan1.getDay();
+                    const daysToFirstMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
+
+                    // Premier lundi de l'année
+                    const firstMonday = new Date(year, 0, 1 + daysToFirstMonday);
+
+                    // Calculer le lundi de la semaine cible
+                    const targetMonday = new Date(firstMonday);
+                    targetMonday.setDate(firstMonday.getDate() + (week - 1) * 7);
+
+                    // Ajouter le nombre de jours selon l'index (0=lundi, 1=mardi, etc.)
+                    const targetDay = new Date(targetMonday);
+                    targetDay.setDate(targetMonday.getDate() + dayIndex);
+
+                    // Formater la date
+                    const options = {
+                        day: 'numeric',
+                        month: 'numeric'
+                    };
+                    return targetDay.toLocaleDateString('fr-FR', options);
                 },
 
                 async changeWeek(direction) {
@@ -253,6 +289,53 @@
                     }));
                 },
 
+                // Recalcule les statistiques en excluant les activités masquées
+                recalculateStats() {
+                    let totalHours = 0;
+                    let sessions = 0;
+
+                    this.planning.forEach(day => {
+                        if (day.activities && Array.isArray(day.activities)) {
+                            day.activities.forEach(activity => {
+                                // Ignorer les activités masquées
+                                if (activity.visible === false) {
+                                    return;
+                                }
+
+                                sessions++;
+
+                                // Calculer la durée
+                                const startTime = activity.StartTime || '00:00';
+                                const endTime = activity.EndTime || '00:00';
+
+                                const [startHour, startMin] = startTime.split(':').map(Number);
+                                const [endHour, endMin] = endTime.split(':').map(Number);
+
+                                const startInMinutes = startHour * 60 + startMin;
+                                const endInMinutes = endHour * 60 + endMin;
+
+                                let durationInHours = 0;
+
+                                // Si début et fin sont identiques (ex: 00:00 → 00:00), durée = 0
+                                if (startInMinutes === endInMinutes) {
+                                    durationInHours = 0;
+                                }
+                                // Si l'heure de fin est avant l'heure de début, durée = 0
+                                else if (endInMinutes < startInMinutes) {
+                                    durationInHours = 0;
+                                } else {
+                                    durationInHours = (endInMinutes - startInMinutes) / 60;
+                                }
+
+                                totalHours += durationInHours;
+                            });
+                        }
+                    });
+
+                    this.totalHours = Math.round(totalHours * 10) / 10; // Arrondi à 1 décimale
+                    this.sessions = sessions;
+                },
+
                 // Valide le format HH:MM
                 validateTime(value) {
                     // Supprimer les espaces et caractères non numériques
@@ -300,34 +383,43 @@
                         return;
                     }
 
-                    try {
-                        const response = await fetch("{{ route('planning.update-all') }}", {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({
-                                planning: this.planning
-                            })
-                        });
-
-                        if (!response.ok) throw new Error('Erreur réseau');
-
-                        const data = await response.json();
-
-                        if (data.success) {
-                            this.totalHours = data.totalHours;
-                            this.sessions = data.sessions;
-                            this.showToast('Planning mis à jour avec succès ✅', 'success');
-                        } else {
-                            this.showToast('Échec de la mise à jour ⚠️', 'error');
-                        }
-
-                    } catch (error) {
-                        console.error('Erreur lors de la mise à jour du planning:', error);
-                        this.showToast('Erreur réseau lors de la mise à jour ❌', 'error');
+                    // Debounce pour éviter les appels multiples
+                    if (this.saveTimeout) {
+                        clearTimeout(this.saveTimeout);
                     }
+
+                    this.saveTimeout = setTimeout(async () => {
+                        try {
+                            const response = await fetch("{{ route('planning.update-all') }}", {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    planning: this.planning
+                                })
+                            });
+
+                            if (!response.ok) throw new Error('Erreur réseau');
+
+                            const data = await response.json();
+
+                            if (data.success) {
+                                // Utiliser uniquement les valeurs du serveur pour éviter le clignement
+                                this.totalHours = data.totalHours;
+                                console.log(data.totalHours)
+                                this.sessions = data.sessions;
+                                this.showToast('Planning mis à jour avec succès ✅', 'success');
+                            } else {
+                                this.showToast('Échec de la mise à jour ⚠️', 'error');
+                            }
+
+                        } catch (error) {
+                            console.error('Erreur lors de la mise à jour du planning:', error);
+                            this.showToast('Erreur réseau lors de la mise à jour ❌', 'error');
+                        }
+                    }, 300); // Attendre 300ms avant d'envoyer
                 },
             }
         }
