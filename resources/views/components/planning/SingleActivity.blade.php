@@ -71,6 +71,20 @@
                     x-transition.opacity>
                     Déposez l'image ici
                 </div>
+
+                <!-- Overlay Loading Upload -->
+                <div x-show="isUploadingImage"
+                    class="absolute inset-0 flex flex-col items-center justify-center text-white transition-opacity pointer-events-none bg-black/60"
+                    x-transition.opacity>
+
+                    <!-- Spinner animé -->
+                    <div class="w-12 h-12 border-4 rounded-full border-white/20 border-t-white animate-spin"></div>
+
+                    <!-- Texte qui pulse -->
+                    <div class="mt-3 text-sm font-medium tracking-wide animate-pulse">
+                        Upload en cours...
+                    </div>
+                </div>
             @endif
         </div>
 
@@ -155,6 +169,7 @@
                 isEditing: false,
                 saveTimeout: null,
                 currentTime: new Date(),
+                isUploadingImage: false,
 
                 init() {
                     // Mettre à jour l'heure toutes les minutes
@@ -250,6 +265,9 @@
                 async uploadFile(file) {
                     if (!this.isAdmin) return;
 
+                    // Activer le loader
+                    this.isUploadingImage = true;
+
                     const formData = new FormData();
                     formData.append('image', file);
                     formData.append('dayIndex', this.dayIndex);
@@ -281,6 +299,9 @@
                     } catch (error) {
                         console.error('Erreur upload image:', error);
                         if (window.planningComponent) window.planningComponent().showToast('Erreur réseau ❌', 'error');
+                    } finally {
+                        // Désactiver le loader dans tous les cas
+                        this.isUploadingImage = false;
                     }
                 }
             }
