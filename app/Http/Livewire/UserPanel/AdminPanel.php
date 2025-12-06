@@ -43,8 +43,8 @@ class AdminPanel extends Component
 
     private string $logIcon;
 
-    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
-    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
+    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
+    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
 
     /**
      * @var string[]
@@ -273,8 +273,8 @@ class AdminPanel extends Component
                 continue;
             }
 
-            $localFile = storage_path('app/json/skinator/').$folder.($folder === 'skins' ? '/' : '/Bones_Data/').$aId.'.json';
-            $dofusFile = $this->dofusContentPath.'Characters/'.ucfirst($folder).'/'.$folder.'_assets_'.rtrim($folder, 's').'_'.$aId.'.bundle';
+            $localFile = storage_path('app/json/skinator/') . $folder . ($folder === 'skins' ? '/' : '/Bones_Data/') . $aId . '.json';
+            $dofusFile = $this->dofusContentPath . 'Characters/' . ucfirst($folder) . '/' . $folder . '_assets_' . rtrim($folder, 's') . '_' . $aId . '.bundle';
 
             if ($this->checkIfDofusNewer($localFile, $dofusFile)) {
                 $cache[$folder][$aId] = isset($cache[$folder][$aId]) ? $cache[$folder][$aId] + 1 : 1;
@@ -283,8 +283,8 @@ class AdminPanel extends Component
             }
 
             if ($faId != $aId) {
-                $localFile = storage_path('app/json/skinator/').$folder.($folder === 'skins' ? '/' : '/Bones_Data/').$faId.'.json';
-                $dofusFile = $this->dofusContentPath.'Characters/'.ucfirst($folder).'/'.$folder.'_assets_'.rtrim($folder, 's').'_'.$faId.'.bundle';
+                $localFile = storage_path('app/json/skinator/') . $folder . ($folder === 'skins' ? '/' : '/Bones_Data/') . $faId . '.json';
+                $dofusFile = $this->dofusContentPath . 'Characters/' . ucfirst($folder) . '/' . $folder . '_assets_' . rtrim($folder, 's') . '_' . $faId . '.bundle';
                 if ($this->checkIfDofusNewer($localFile, $dofusFile)) {
                     $cache[$folder][$faId] = isset($cache[$folder][$faId]) ? $cache[$folder][$faId] + 1 : 1;
                     $files[$folder][] = $faId;
@@ -323,7 +323,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Bones'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Bones'),
             escapeshellarg(storage_path('app/')),
             escapeshellarg('bones'),
             escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
@@ -352,7 +352,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Skins'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Skins'),
             escapeshellarg(storage_path('app/')),
             escapeshellarg('skins'),
             escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
@@ -388,25 +388,25 @@ class AdminPanel extends Component
             foreach ($type as $file) {
                 if ($typeKey === 'skins') {
                     $ftpFiles['skins_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/skins/').$file.'.png',
-                        'name' => $file.'.png',
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
+                        'name' => $file . '.png',
                     ];
                     $ftpFiles['skins_json']['files'][] = [
-                        'file' => storage_path('app/json/skinator/skins/').$file.'.json',
-                        'name' => $file.'.json',
+                        'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
+                        'name' => $file . '.json',
                     ];
                 } elseif ($typeKey === 'bones') {
                     $ftpFiles['bones_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/bones/').$file.'.png',
-                        'name' => $file.'.png',
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
+                        'name' => $file . '.png',
                     ];
                     $ftpFiles['bones_data']['files'][] = [
-                        'file' => storage_path('app/json/skinator/bones/Bones_Data/').$file.'.json',
-                        'name' => $file.'.json',
+                        'file' => storage_path('app/json/skinator/bones/Bones_Data/') . $file . '.json',
+                        'name' => $file . '.json',
                     ];
                     $ftpFiles['bones_asset']['files'][] = [
-                        'file' => storage_path('app/json/skinator/bones/Bones_AssetData/').$file.'.json',
-                        'name' => $file.'.json',
+                        'file' => storage_path('app/json/skinator/bones/Bones_AssetData/') . $file . '.json',
+                        'name' => $file . '.json',
                     ];
                 }
             }
@@ -415,7 +415,7 @@ class AdminPanel extends Component
         $count = 0;
         foreach ($ftpFiles as $key => $ftpFile) {
             $count++;
-            $this->stepName = $count.'/'.count($ftpFiles).' Envoi les fichiers au serveur à '.$ftpFile['remoteDestination'];
+            $this->stepName = $count . '/' . count($ftpFiles) . ' Envoi les fichiers au serveur à ' . $ftpFile['remoteDestination'];
             $this->stepLog();
 
             if (! isset($ftpFile['files'])) {
@@ -463,7 +463,6 @@ class AdminPanel extends Component
         $this->stepName = 'FIN';
         $this->logIcon = '✅';
         $this->stepLog();
-
     }
 
     /**
@@ -476,7 +475,7 @@ class AdminPanel extends Component
 
         foreach ($this->rootToExport as $key => $value) {
             $this->currentStep++;
-            $this->stepName = 'Export '.str_replace(['data_assets_', '.asset.bundle'], '', $value);
+            $this->stepName = 'Export ' . str_replace(['data_assets_', '.asset.bundle'], '', $value);
             $this->logIcon = '🌱';
             $this->stepLog();
 
@@ -484,7 +483,7 @@ class AdminPanel extends Component
             $command = sprintf(
                 'python %s %s %s %s',
                 escapeshellarg(base_path('app/Actions/ItemsUpdate/bundle_extractor.py')),
-                escapeshellarg($this->dofusContentPath.'Data/'.$key),
+                escapeshellarg($this->dofusContentPath . 'Data/' . $key),
                 escapeshellarg(storage_path('app')),
                 escapeshellarg('data'),
             );
@@ -494,7 +493,7 @@ class AdminPanel extends Component
 
             // S'il y a une erreur, la retourne
             if ($exitCode != 0) {
-                dd('Erreur pour '.$value, [
+                dd('Erreur pour ' . $value, [
                     'cmd' => $command,
                     'output' => $output,
                     'code' => $exitCode,
@@ -502,11 +501,11 @@ class AdminPanel extends Component
             }
 
             $files[] = [
-                'file' => storage_path('app/json/skinator/').$value.'.json',
-                'name' => $value.'.json',
+                'file' => storage_path('app/json/skinator/') . $value . '.json',
+                'name' => $value . '.json',
             ];
 
-            $this->stepName = 'Fin '.str_replace(['data_assets_', '.asset.bundle'], '', $value);
+            $this->stepName = 'Fin ' . str_replace(['data_assets_', '.asset.bundle'], '', $value);
             $this->logIcon = '✅';
             $this->stepLog();
         }
@@ -538,7 +537,7 @@ class AdminPanel extends Component
 
         foreach ($this->langs as $lang) {
             $this->currentStep++;
-            $this->stepName = 'Export '.$lang.'.bin';
+            $this->stepName = 'Export ' . $lang . '.bin';
             $this->logIcon = '🌱';
             $this->stepLog();
 
@@ -546,7 +545,7 @@ class AdminPanel extends Component
             $command = sprintf(
                 'python %s %s %s',
                 escapeshellarg(base_path('app/Actions/ItemsUpdate/bin_to_json.py')),
-                escapeshellarg($this->dofusContentPath.'I18n/'.$lang.'.bin'),
+                escapeshellarg($this->dofusContentPath . 'I18n/' . $lang . '.bin'),
                 escapeshellarg(storage_path('app/json/skinator/lang')),
             );
 
@@ -555,7 +554,7 @@ class AdminPanel extends Component
 
             // S'il y a une erreur, la retourne
             if ($exitCode != 0) {
-                dd('Erreur pour '.$lang, [
+                dd('Erreur pour ' . $lang, [
                     'cmd' => $command,
                     'output' => $output,
                     'code' => $exitCode,
@@ -563,11 +562,11 @@ class AdminPanel extends Component
             }
 
             $files[] = [
-                'file' => storage_path('app/json/skinator/lang/').$lang.'.json',
-                'name' => $lang.'.json',
+                'file' => storage_path('app/json/skinator/lang/') . $lang . '.json',
+                'name' => $lang . '.json',
             ];
 
-            $this->stepName = 'Fin '.$lang.'.bin';
+            $this->stepName = 'Fin ' . $lang . '.bin';
             $this->logIcon = '✅';
             $this->stepLog();
         }
@@ -602,7 +601,7 @@ class AdminPanel extends Component
         $this->logIcon = '✈️';
         $this->stepLog();
 
-        $this->stepName = 'X-Secret-Key: '.config('services.dofus_update_secret');
+        $this->stepName = 'X-Secret-Key: ' . config('services.dofus_update_secret');
         $this->stepLog();
 
         Http::withHeaders([
@@ -631,7 +630,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/icons_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Picto/Items/item_assets_2x.bundle'),
+            escapeshellarg($this->dofusContentPath . 'Picto/Items/item_assets_2x.bundle'),
             escapeshellarg(storage_path('app/public/images/icons/items')),
             escapeshellarg(storage_path('app/json/skinator/iconIds.txt')),
         );
@@ -674,7 +673,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/bundle_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Picto/UI/cosmetic_assets_2x.bundle'),
+            escapeshellarg($this->dofusContentPath . 'Picto/UI/cosmetic_assets_2x.bundle'),
             escapeshellarg(storage_path('app/public/images/icons/classes/faces/unity')),
             escapeshellarg('heads'),
         );
@@ -816,7 +815,7 @@ class AdminPanel extends Component
             }
 
             // Bone animation de combat
-            $files['Bones'][] = '1-'.$bd['id'].'-static';
+            $files['Bones'][] = '1-' . $bd['id'] . '-static';
         }
 
         // Récupère les skins de chaque visage
@@ -832,8 +831,8 @@ class AdminPanel extends Component
         // Vérifie s'il faut redl le fichier, et ne conserve que ceux à dl
         foreach ($files as $typeKey => $type) {
             foreach ($type as $key => $file) {
-                $localFile = storage_path('app/json/skinator/').strtolower($typeKey).($typeKey === 'Skins' ? '/' : '/Bones_Data/').$file.'.json';
-                $dofusFile = $this->dofusContentPath.'Characters/'.$typeKey.'/'.strtolower($typeKey).'_assets_'.rtrim(strtolower($typeKey), 's').'_'.$file.'.bundle';
+                $localFile = storage_path('app/json/skinator/') . strtolower($typeKey) . ($typeKey === 'Skins' ? '/' : '/Bones_Data/') . $file . '.json';
+                $dofusFile = $this->dofusContentPath . 'Characters/' . $typeKey . '/' . strtolower($typeKey) . '_assets_' . rtrim(strtolower($typeKey), 's') . '_' . $file . '.bundle';
 
                 $delete = ! $this->checkIfDofusNewer($localFile, $dofusFile);
 
@@ -869,7 +868,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Bones'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Bones'),
             escapeshellarg(storage_path('app/')),
             escapeshellarg('bones'),
             escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
@@ -896,7 +895,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Skins'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Skins'),
             escapeshellarg(storage_path('app/')),
             escapeshellarg('skins'),
             escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
@@ -931,25 +930,25 @@ class AdminPanel extends Component
             foreach ($type as $file) {
                 if ($typeKey === 'Skins') {
                     $ftpFiles['skins_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/skins/').$file.'.png',
-                        'name' => $file.'.png',
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
+                        'name' => $file . '.png',
                     ];
                     $ftpFiles['skins_json']['files'][] = [
-                        'file' => storage_path('app/json/skinator/skins/').$file.'.json',
-                        'name' => $file.'.json',
+                        'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
+                        'name' => $file . '.json',
                     ];
                 } elseif ($typeKey === 'Bones') {
                     $ftpFiles['bones_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/bones/').$file.'.png',
-                        'name' => $file.'.png',
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
+                        'name' => $file . '.png',
                     ];
                     $ftpFiles['bones_data']['files'][] = [
-                        'file' => storage_path('app/json/skinator/bones/Bones_Data/').$file.'.json',
-                        'name' => $file.'.json',
+                        'file' => storage_path('app/json/skinator/bones/Bones_Data/') . $file . '.json',
+                        'name' => $file . '.json',
                     ];
                     $ftpFiles['bones_asset']['files'][] = [
-                        'file' => storage_path('app/json/skinator/bones/Bones_AssetData/').$file.'.json',
-                        'name' => $file.'.json',
+                        'file' => storage_path('app/json/skinator/bones/Bones_AssetData/') . $file . '.json',
+                        'name' => $file . '.json',
                     ];
                 }
             }
@@ -958,7 +957,7 @@ class AdminPanel extends Component
         $count = 0;
         foreach ($ftpFiles as $key => $ftpFile) {
             $count++;
-            $this->stepName = $count.'/'.count($ftpFiles).' Envoi les fichiers au serveur à '.$ftpFile['remoteDestination'];
+            $this->stepName = $count . '/' . count($ftpFiles) . ' Envoi les fichiers au serveur à ' . $ftpFile['remoteDestination'];
             $this->stepLog();
 
             if (! isset($ftpFile['files'])) {
@@ -1017,8 +1016,8 @@ class AdminPanel extends Component
         $oldBundleNames = json_decode(Storage::disk('local')->get('json/skinator/bundleNames.json'), true);
 
         // Récupérer les fichiers dans le répertoire 'Skins' et 'Bones'
-        $skinsBundles = File::files($this->dofusContentPath.'Characters/Skins');
-        $bonesBundles = File::files($this->dofusContentPath.'Characters/Bones');
+        $skinsBundles = File::files($this->dofusContentPath . 'Characters/Skins');
+        $bonesBundles = File::files($this->dofusContentPath . 'Characters/Bones');
 
         // Extraire les noms et les dates de mise à jour des fichiers dans le JSON
         $oldSkinNames = array_column($oldBundleNames['skins'], 'name');
@@ -1087,7 +1086,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Bones'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Bones'),
             escapeshellarg(storage_path('app/temp/bones/updated/')),
             escapeshellarg('bonestemp'),
             escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
@@ -1114,7 +1113,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Skins'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Skins'),
             escapeshellarg(storage_path('app/temp/skins/updated/')),
             escapeshellarg('skinstemp'),
             escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
@@ -1176,11 +1175,11 @@ class AdminPanel extends Component
         // Récupère les différences entre le json et les fichiers Dofus
         $oldBundleNames = json_decode(Storage::disk('local')->get('json/skinator/bundleNames.json'), true);
 
-        $skinsBundles = File::files($this->dofusContentPath.'Characters/Skins');
+        $skinsBundles = File::files($this->dofusContentPath . 'Characters/Skins');
         $skinsBundlesNames = collect($skinsBundles)->map(function ($file) {
             return $file->getFilename();
         })->toArray();
-        $bonesBundles = File::files($this->dofusContentPath.'Characters/Bones');
+        $bonesBundles = File::files($this->dofusContentPath . 'Characters/Bones');
         $bonesBundlesNames = collect($bonesBundles)->map(function ($file) {
             return $file->getFilename();
         })->toArray();
@@ -1222,7 +1221,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Bones'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Bones'),
             escapeshellarg(storage_path('app/temp/bones/new/')),
             escapeshellarg('bonestemp'),
             escapeshellarg(storage_path('app/json/skinator/boneIds.txt')),
@@ -1249,7 +1248,7 @@ class AdminPanel extends Component
         $command = sprintf(
             'python %s %s %s %s %s',
             escapeshellarg(base_path('app/Actions/ItemsUpdate/skins_extractor.py')),
-            escapeshellarg($this->dofusContentPath.'Characters/Skins'),
+            escapeshellarg($this->dofusContentPath . 'Characters/Skins'),
             escapeshellarg(storage_path('app/temp/skins/new/')),
             escapeshellarg('skinstemp'),
             escapeshellarg(storage_path('app/json/skinator/skinIds.txt')),
