@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $color_cloth_2
  * @property string $color_cloth_3
  * @property string $color_cloth_4
+ * @property string $color_guild_1
+ * @property string $color_guild_2
  * @property string $status
  * @property string|null $refused_reason
  * @property string|null $name
@@ -93,6 +95,8 @@ class UnitySkin extends Model
         'color_cloth_2',
         'color_cloth_3',
         'color_cloth_4',
+        'color_guild_1',
+        'color_guild_2',
         'user_id',
         'race_id',
         'status',

@@ -16,6 +16,7 @@ use App\Http\Controllers\TougliController;
 use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Models\UnitySkin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,19 @@ use Illuminate\Support\Facades\Route;
         ->header('Content-Type', 'text/plain')
         ->header('Content-Disposition', 'attachment; filename="skins-concours.txt"');
 
+});*/
+
+/*Route::get('foo', function () {
+    $skins = UnitySkin::all();
+
+    foreach ($skins as $skin) {
+        $skin->update([
+            'color_guild_1' => '#241F1D',
+            'color_guild_2' => '#FAB420'
+        ]);
+    }
+
+    return "Couleurs mises à jour pour " . $skins->count() . " skins Unity";
 });*/
 
 Route::get('/', HomeController::class)->name('home');

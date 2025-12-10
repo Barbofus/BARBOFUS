@@ -42,10 +42,10 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             $imageValidation = 'required|image|max:250|dimensions:width=300,height=500';
         } else {
             $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
-            $imageValidation = $imageRequired.'|image|max:500|dimensions:max_width=500,max_height=650';
+            $imageValidation = $imageRequired . '|image|max:500|dimensions:max_width=500,max_height=650';
         }
 
-        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsRoot.json'), true)['references']['RefIds'];
+        $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 
         /** @var array<int, array{rid: int, type: array<string, string>, data: array{id: int, skins: string, assetId: string, breed: int, gender: int, label: string, order: int, payable: int}}> $headsData */
         $validFaces = collect($headsData)
@@ -72,7 +72,7 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             ],
             'name' => 'nullable|max:30',
 
-            'g-recaptcha-response' => ['required', new Recaptcha],
+            'g-recaptcha-response' => app()->environment('local') ? 'nullable' : ['required', new Recaptcha],
 
             'color_skin' => $hexRegex,
             'color_hair' => $hexRegex,
@@ -80,6 +80,8 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             'color_cloth_2' => $hexRegex,
             'color_cloth_3' => $hexRegex,
             'color_cloth_4' => $hexRegex,
+            'color_guild_1' => $hexRegex,
+            'color_guild_2' => $hexRegex,
 
             'hat_id' => [
                 'nullable',
@@ -143,6 +145,8 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             'color_cloth_2.regex' => $hexMsg,
             'color_cloth_3.regex' => $hexMsg,
             'color_cloth_4.regex' => $hexMsg,
+            'color_guild_1.regex' => $hexMsg,
+            'color_guild_2.regex' => $hexMsg,
 
             'hat_id' => 'Cette coiffe n\'éxiste pas.',
             'cape_id' => 'Cette cape n\'éxiste pas.',

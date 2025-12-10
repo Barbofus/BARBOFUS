@@ -59,7 +59,7 @@ class UnitySkinController extends Controller
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 
         $toShow = DB::table('unity_skins')
-            ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'unity_skins.id', 'unity_skins.name')
+            ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'color_guild_1', 'color_guild_2', 'unity_skins.id', 'unity_skins.name')
             ->join('races', 'unity_skins.race_id', '=', 'races.dofus_id')
             ->where('unity_skins.id', $skin->id)
             ->addSelect([
@@ -100,28 +100,28 @@ class UnitySkinController extends Controller
             ->when(true, function (Builder $query) {
                 foreach ($this->itemCategories as $category) {
                     $query->addSelect([
-                        $category.'_name' => DB::table('localized_items')
+                        $category . '_name' => DB::table('localized_items')
                             ->select('name')
                             ->where('locale', app()->getLocale())
-                            ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
+                            ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
                             ->take(1),
                     ])
                         ->addSelect([
-                            $category.'_icon' => DB::table('items')
+                            $category . '_icon' => DB::table('items')
                                 ->select('icon_path')
-                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
+                                ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $category.'_level' => DB::table('items')
+                            $category . '_level' => DB::table('items')
                                 ->select('level')
-                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
+                                ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $category.'_subname' => DB::table('items')
+                            $category . '_subname' => DB::table('items')
                                 ->select('subcategory')
-                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
+                                ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
                                 ->take(1),
                         ]);
                 }
@@ -161,8 +161,8 @@ class UnitySkinController extends Controller
             ->get()->toArray();
 
         foreach ($races as $race) {
-            $race->ghost_icon_path = asset('storage\/'.$race->ghost_icon_path);
-            $race->colored_icon_path = asset('storage\/'.$race->colored_icon_path);
+            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
         }
 
         return view('unity-skins.create', [
@@ -178,7 +178,8 @@ class UnitySkinController extends Controller
         // Resize de l'image, on affichera que 200px max
         $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
             'width' => 300,
-            'height' => 500]); // 390
+            'height' => 500
+        ]); // 390
 
         $skin = UnitySkin::create([
             'hat_id' => $request->hat_id,
@@ -198,6 +199,8 @@ class UnitySkinController extends Controller
             'color_cloth_2' => ltrim($request->color_cloth_2, '#'),
             'color_cloth_3' => ltrim($request->color_cloth_3, '#'),
             'color_cloth_4' => ltrim($request->color_cloth_4, '#'),
+            'color_guild_1' => ltrim($request->color_guild_1, '#'),
+            'color_guild_2' => ltrim($request->color_guild_2, '#'),
             'user_id' => $request->user()->id,
             'race_id' => $request->race_id,
             'status' => 'Posted',
@@ -232,8 +235,8 @@ class UnitySkinController extends Controller
             ->get()->toArray();
 
         foreach ($races as $race) {
-            $race->ghost_icon_path = asset('storage\/'.$race->ghost_icon_path);
-            $race->colored_icon_path = asset('storage\/'.$race->colored_icon_path);
+            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
         }
 
         return view('unity-skins.edit', [
@@ -256,7 +259,8 @@ class UnitySkinController extends Controller
             // Resize de l'image, on affichera que 200px max
             $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
                 'width' => 300,
-                'height' => 500]);
+                'height' => 500
+            ]);
         }
 
         $skin->hat_id = $request->hat_id;
@@ -276,6 +280,8 @@ class UnitySkinController extends Controller
         $skin->color_cloth_2 = ltrim($request->color_cloth_2, '#');
         $skin->color_cloth_3 = ltrim($request->color_cloth_3, '#');
         $skin->color_cloth_4 = ltrim($request->color_cloth_4, '#');
+        $skin->color_guild_1 = ltrim($request->color_guild_1, '#');
+        $skin->color_guild_2 = ltrim($request->color_guild_2, '#');
         $skin->race_id = $request->race_id;
         $skin->status = 'Posted';
         $skin->name = $request->name;
@@ -303,7 +309,7 @@ class UnitySkinController extends Controller
 
         (new DeleteSkin)($skinID, true);
 
-        session()->flash('alert-message', __('barbofus.alertDeleteSkin', ['skin' => (($skin->name) ?: 'ID#'.$skinID), 'username' => $skinUserName]));
+        session()->flash('alert-message', __('barbofus.alertDeleteSkin', ['skin' => (($skin->name) ?: 'ID#' . $skinID), 'username' => $skinUserName]));
 
         return redirect()->route('unity-skins.index');
     }
