@@ -1,13 +1,14 @@
-<div id="left-section"
-     x-data="{
-              showFilter: (window.innerWidth > 1500),
-              showLive: (window.innerHeight > 700),
-            }"
-     @resize.window="
+<div id="left-section" x-data="{
+    showFilter: (window.innerWidth > 1500),
+    showLive: (window.innerHeight > 700),
+}"
+    @resize.window="
               if(window.innerWidth > 1500) showFilter = true;
               showLive=!(window.innerWidth <= 1500 && showFilter);"
-     :class="showFilter ? ' max-[900px]:fixed max-[900px]:top-0 max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll min-[901px]:top-32' : 'top-24'"
-     class="flex sticky flex-col w-full h-full items-center z-20 row-start-2 bg-primary
+    :class="showFilter ?
+        ' max-[900px]:fixed max-[900px]:left-0 max-[900px]:z-40 max-[900px]:pt-8 max-[900px]:pb-16 max-[900px]:overflow-x-hidden max-[900px]:overflow-y-scroll' :
+        'top-24'"
+    class="flex sticky flex-col w-full h-full items-center z-20 row-start-2 bg-primary top-24
             max-[1500px]:shadow-lg min-[1501px]:z-10
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             min-[1501px]:min-h-[calc(100vh-15vh-theme(spacing.14))] min-[1501px]:max-h-[calc(100vh-theme(spacing.14))] min-[1501px]:top-24 min-[1501px]:row-span-2">
@@ -18,23 +19,26 @@
     <div class="flex py-3 items-end justify-center transition-all duration-150 group
               max-[1500px]:cursor-pointer max-[1500px]:bg-primary-100 max-[1500px]:w-[16rem] max-[1500px]:rounded-lg max-[1500px]:shadow-md
               min-[1501px]:justify-start min-[1501px]:pl-10 min-[1501px]:h-[4rem]"
-         @click="if(window.innerWidth <= 1500) {showFilter = !showFilter; if(window.innerHeight > 700) showLive = !showFilter}">
+        @click="if(window.innerWidth <= 1500) {showFilter = !showFilter; if(window.innerHeight > 700) showLive = !showFilter}">
         <div class="flex items-center transition-all duration-150"
-             :class="showFilter ? 'max-[1500px]:group-hover:-translate-y-1' : 'max-[1500px]:group-hover:translate-y-1'">
+            :class="showFilter ? 'max-[1500px]:group-hover:-translate-y-1' : 'max-[1500px]:group-hover:translate-y-1'">
             <div class="relative w-6 h-6 min-[1501px]:w-10 min-[1501px]:h-10">
                 <svg class="absolute top-0 left-0 h-full fill-secondary invisible min-[1501px]:visible"
-                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M17 2.75a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM17 15.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5zM3.75 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM4.5 2.75a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM10 11a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-5.5A.75.75 0 0110 11zM10.75 2.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5zM10 6a2 2 0 100 4 2 2 0 000-4zM3.75 10a2 2 0 100 4 2 2 0 000-4zM16.25 10a2 2 0 100 4 2 2 0 000-4z" />
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path
+                        d="M17 2.75a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM17 15.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5zM3.75 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM4.5 2.75a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM10 11a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0v-5.5A.75.75 0 0110 11zM10.75 2.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5zM10 6a2 2 0 100 4 2 2 0 000-4zM3.75 10a2 2 0 100 4 2 2 0 000-4zM16.25 10a2 2 0 100 4 2 2 0 000-4z" />
                 </svg>
 
-                <svg class="rotate-180 absolute top-1 left-0 h-full text-secondary min-[1501px]:invisible transition-all duration-150" viewBox="256 256 512 512" fill="currentColor"
-                     :class="showFilter ? 'rotate-0' : 'rotate-180'">
-                    <path d="m512 256 144.8 144.8-36.2 36.2-83-83v311.6h-51.2V354l-83 83-36.2-36.2L512      256zM307.2 716.8V768h409.6v-51.2H307.2z"/>
+                <svg class="rotate-180 absolute top-1 left-0 h-full text-secondary min-[1501px]:invisible transition-all duration-150"
+                    viewBox="256 256 512 512" fill="currentColor" :class="showFilter ? 'rotate-0' : 'rotate-180'">
+                    <path
+                        d="m512 256 144.8 144.8-36.2 36.2-83-83v311.6h-51.2V354l-83 83-36.2-36.2L512      256zM307.2 716.8V768h409.6v-51.2H307.2z" />
                 </svg>
 
             </div>
 
-            <p class="ml-2 text-[1rem] min-[1501px]:text-[1.35rem] text-secondary font-medium tracking-wide">{{ __('barbofus.contentRefineSearch') }}</p>
+            <p class="ml-2 text-[1rem] min-[1501px]:text-[1.35rem] text-secondary font-medium tracking-wide">
+                {{ __('barbofus.contentRefineSearch') }}</p>
         </div>
 
     </div>
@@ -42,16 +46,19 @@
 
 
     <!-- Container -->
-    <div x-show="showFilter" x-transition class="bg-primary relative z-[51] w-full flex flex-col py-4 pl-6
+    <div x-show="showFilter" x-transition
+        class="bg-primary relative z-[51] w-full flex flex-col py-4 pl-6
               max-[900px]:h-[100vh]
               min-[901px]:flex-row min-[901px]:justify-center min-[901px]:gap-x-8 min-[901px]:pl-0
               max-[1500px]:shadow-lg
               min-[1501px]:flex-col min-[1501px]:max-h-[37.5rem] min-[1501px]:border-r-2 min-[1501px]:border-ivory min-[1501px]:pl-6 min-[1501px]:pt-0 min-[1501px]:pb-4">
 
         <!-- Bottom border -->
-        <div class="absolute h-full top-0 left-[10%] w-[80%] border-b-4 border-secondary invisible
+        <div
+            class="absolute h-full top-0 left-[10%] w-[80%] border-b-4 border-secondary invisible
                 min-[901px]:visible
-                min-[1501px]:invisible"></div>
+                min-[1501px]:invisible">
+        </div>
 
 
         <!-- First part -->
@@ -64,11 +71,12 @@
                 <livewire:forms.skin-filter-search-bar wire:key="search{{ rand() }}" :searchFilterInput="$searchFilterInput" />
             </div>
 
-            @if($canWinnersOnly)
+            @if ($canWinnersOnly)
                 <!-- Rewards Only -->
                 <div class="relative mt-5 tracking-wide w-[min(90vw,23.75rem)]">
-                    <x-forms.filter-button :name="'missskin'" :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly" >
-                        <label for="missskin" class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),22rem)]">{!! __('barbofus.inputMissSkinOnly') !!}</label>
+                    <x-forms.filter-button :name="'missskin'" :checked="$winnersOnly" wire:click="ToggleShowWinnersOnly">
+                        <label for="missskin"
+                            class="absolute cursor-pointer font-thin text-secondary left-7 top-2 text-[0.9rem] text-left w-[min(calc(75vw),22rem)]">{!! __('barbofus.inputMissSkinOnly') !!}</label>
                     </x-forms.filter-button>
 
                     <div class="absolute right-0 w-6 h-6 cursor-pointer group top-1">
@@ -84,14 +92,16 @@
                           c0.158,0.129,0.435,0.194,0.827,0.194c0.185,0,0.392-0.033,0.626-0.097c0.232-0.064,0.4-0.121,0.506-0.17L14.271,18.307z
                           M14.137,7.429c-0.353,0.328-0.778,0.492-1.275,0.492c-0.496,0-0.924-0.164-1.28-0.492c-0.354-0.328-0.533-0.727-0.533-1.193
                           c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
-                          c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
+                          c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z" />
                         </svg>
 
-                        <div class="group-hover:visible group-hover:opacity-100 z-10 opacity-0 transition-all invisible cursor-text absolute -top-4 right-8
+                        <div
+                            class="group-hover:visible group-hover:opacity-100 z-10 opacity-0 transition-all invisible cursor-text absolute -top-4 right-8
                             min-[801px]:-right-[17.5rem]">
                             <x-utils.miss-skin />
                             <svg class="absolute h-4 top-5 text-secondary -rotate-90 -right-4
-                                min-[801px]:rotate-90 min-[801px]:-left-4" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
+                                min-[801px]:rotate-90 min-[801px]:-left-4"
+                                x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
                                 <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
                             </svg>
                         </div>
@@ -104,8 +114,9 @@
 
             <!-- Barb Only -->
             <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,23.75rem)]">
-                <x-forms.filter-button :name="'barbe only'" :checked="$barbOnly" wire:click="ToggleShowBarbeOnly" >
-                    <label for="barbe only" class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">{!! __('barbofus.inputBarbeOnly') !!}</label>
+                <x-forms.filter-button :name="'barbe only'" :checked="$barbOnly" wire:click="ToggleShowBarbeOnly">
+                    <label for="barbe only"
+                        class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">{!! __('barbofus.inputBarbeOnly') !!}</label>
                 </x-forms.filter-button>
             </div>
         </div>
@@ -125,21 +136,25 @@
 
 
                 <!-- Checkboxs -->
-                <div class="flex flex-col min-[450px]:flex-row justify-start pt-2 pr-5 ml-2 tracking-wide gap-x-4 gap-y-2">
+                <div
+                    class="flex flex-col min-[450px]:flex-row justify-start pt-2 pr-5 ml-2 tracking-wide gap-x-4 gap-y-2">
 
                     <!-- Cosmétiques -->
                     <div class="relative w-[8.35rem]">
-                        <x-forms.filter-button :name="'Cosmétiques'" :label="__('barbofus.labelSkinItemceremonial')" :checked="!in_array('ceremonial', $skinContent)" wire:click="ToggleSkinContent('ceremonial')" />
+                        <x-forms.filter-button :name="'Cosmétiques'" :label="__('barbofus.labelSkinItemceremonial')" :checked="!in_array('ceremonial', $skinContent)"
+                            wire:click="ToggleSkinContent('ceremonial')" />
                     </div>
 
                     <!-- Objets vivants -->
                     <div class="relative w-32">
-                        <x-forms.filter-button :name="'Objets vivants'" :label="__('barbofus.labelSkinItemlivingObject')" :checked="!in_array('livingObject', $skinContent)" wire:click="ToggleSkinContent('livingObject')" />
+                        <x-forms.filter-button :name="'Objets vivants'" :label="__('barbofus.labelSkinItemlivingObject')" :checked="!in_array('livingObject', $skinContent)"
+                            wire:click="ToggleSkinContent('livingObject')" />
                     </div>
 
                     <!-- Mimibiotes -->
                     <div class="relative w-[6.25rem]">
-                        <x-forms.filter-button :name="'Mimibiotes'" :label="__('barbofus.labelSkinItemmimisymbic')" :checked="!in_array('mimisymbic', $skinContent)" wire:click="ToggleSkinContent('mimisymbic')" />
+                        <x-forms.filter-button :name="'Mimibiotes'" :label="__('barbofus.labelSkinItemmimisymbic')" :checked="!in_array('mimisymbic', $skinContent)"
+                            wire:click="ToggleSkinContent('mimisymbic')" />
                     </div>
                 </div>
 
@@ -149,21 +164,25 @@
                 </div>
 
                 <!-- Checkboxs -->
-                <div class="flex flex-wrap flex-col min-[450px]:flex-row justify-start pt-2 pr-5 ml-2 tracking-wide gap-x-4 gap-y-2">
+                <div
+                    class="flex flex-wrap flex-col min-[450px]:flex-row justify-start pt-2 pr-5 ml-2 tracking-wide gap-x-4 gap-y-2">
 
                     <!-- Familier -->
                     <div class="relative w-[5rem]">
-                        <x-forms.filter-button :name="'Familier'" :label="__('barbofus.inputPet')" :checked="!in_array('familier', $petTypeContent)" wire:click="TogglePetType('familier')" />
+                        <x-forms.filter-button :name="'Familier'" :label="__('barbofus.inputPet')" :checked="!in_array('familier', $petTypeContent)"
+                            wire:click="TogglePetType('familier')" />
                     </div>
 
                     <!-- Montilier -->
                     <div class="relative w-[7.25rem]">
-                        <x-forms.filter-button :name="'Montilier'" :label="__('barbofus.inputPetsMount')" :checked="!in_array('montilier', $petTypeContent)" wire:click="TogglePetType('montilier')" />
+                        <x-forms.filter-button :name="'Montilier'" :label="__('barbofus.inputPetsMount')" :checked="!in_array('montilier', $petTypeContent)"
+                            wire:click="TogglePetType('montilier')" />
                     </div>
 
                     <!-- Mnture -->
                     <div class="relative w-[8rem]">
-                        <x-forms.filter-button :name="'Monture'" :label="__('barbofus.inputTamedMount')" :checked="!in_array('dragodinde', $petTypeContent)" wire:click="TogglePetType(['dragodinde', 'muldo', 'volkorne'])" />
+                        <x-forms.filter-button :name="'Monture'" :label="__('barbofus.inputTamedMount')" :checked="!in_array('dragodinde', $petTypeContent)"
+                            wire:click="TogglePetType(['dragodinde', 'muldo', 'volkorne'])" />
                     </div>
                 </div>
             </div>
@@ -173,27 +192,26 @@
             <!-- Classes -->
             <div class="relative mt-5">
 
-                <livewire:forms.skin-filter-races wire:key="races{{ rand() }}" :races="$races" :raceWhere="$raceWhere" />
+                <livewire:forms.skin-filter-races wire:key="races{{ rand() }}" :races="$races"
+                    :raceWhere="$raceWhere" />
             </div>
 
             {{-- Couleurs --}}
-            <div class="flex items-center gap-x-2 mt-2" x-data="{ color: '{{ ($filterColor) ? '#' . $filterColor : '#000000' }}' }">
-                <label for="color" class="font-thin text-secondary text-[1.15rem]">{{ __('barbofus.labelColors') }}</label>
-                <div class="h-10 w-10 rounded border-2 border-inactiveText" :style="{ background: color }">
-                    <input id="color" type="color"
-                           x-model="color"
-                           class="h-full w-full opacity-0 cursor-pointer"
-                           @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'}), AddParamToUrl('color', color)">
+            <div class="flex items-center mt-2 gap-x-2" x-data="{ color: '{{ $filterColor ? '#' . $filterColor : '#000000' }}' }">
+                <label for="color"
+                    class="font-thin text-secondary text-[1.15rem]">{{ __('barbofus.labelColors') }}</label>
+                <div class="w-10 h-10 border-2 rounded border-inactiveText" :style="{ background: color }">
+                    <input id="color" type="color" x-model="color" class="w-full h-full opacity-0 cursor-pointer"
+                        @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'}), AddParamToUrl('color', color)">
                 </div>
-                <button
-                    aria-label="Réinitialiser les couleurs"
+                <button aria-label="Réinitialiser les couleurs"
                     @click="window.scrollTo({top: 0, behavior: 'smooth'}), color = '#000000', RemoveParamUrl('color')"
                     wire:click="resetFilterColor"
-                    class="text-primary font-light text-lg py-1 px-4 bg-secondary rounded-lg hover:rounded-2xl transition-all hover:bg-secondary-100 {{ ($filterColor == '') ? 'hidden' : '' }}">Reset</button>
+                    class="text-primary font-light text-lg py-1 px-4 bg-secondary rounded-lg hover:rounded-2xl transition-all hover:bg-secondary-100 {{ $filterColor == '' ? 'hidden' : '' }}">Reset</button>
             </div>
 
             <!-- Sexe -->
-            <div class="flex items-center justify-center gap-x-20 mt-2">
+            <div class="flex items-center justify-center mt-2 gap-x-20">
 
                 <!-- Mâle -->
                 <div class="relative w-16">
@@ -202,7 +220,8 @@
 
                 <!-- Femelle -->
                 <div class="relative w-20">
-                    <x-forms.filter-button :name="'Femme'" :label="__('barbofus.inputSkinFemale')" :checked="!in_array(['gender', '!=', 1], $gender)" wire:click="ToggleGender(1)" />
+                    <x-forms.filter-button :name="'Femme'" :label="__('barbofus.inputSkinFemale')"
+                        :checked="!in_array(['gender', '!=', 1], $gender)" wire:click="ToggleGender(1)" />
                 </div>
             </div>
         </div>
@@ -212,9 +231,9 @@
 
     <!-- Twitch section -->
     <div x-show="showLive" wire:ignore
-         class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 hidden
+        class="fixed z-50 w-[20vw] min-w-[250px] bottom-8 left-8 hidden
               [@media(min-height:801px)_and_(min-width:801px)]:block
               min-[1501px]:static min-[1501px]:w-[min(100%,27rem)] min-[1501px]:pt-8 min-[1501px]:pb-4 min-[1501px]:px-1 min-[1501px]:flex-1">
-        <x-utils.twitch-embed :can-close="true"/>
+        <x-utils.twitch-embed :can-close="true" />
     </div>
 </div>
