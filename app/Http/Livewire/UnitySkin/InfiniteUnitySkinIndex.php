@@ -35,6 +35,7 @@ class InfiniteUnitySkinIndex extends Component
         'likes_count',
         'rewards_points',
         'unity_skins.race_id',
+        'total_views',
     ];
 
     /**
@@ -400,6 +401,11 @@ class InfiniteUnitySkinIndex extends Component
             $this->orderDirection = $orderDir;
 
             return;
+        }
+
+        // Protection contre les index invalides
+        if ($orderBy < 0 || $orderBy >= count($this->allOrder)) {
+            $orderBy = 0; // Retour au tri par défaut (nouveauté)
         }
 
         $this->randSort = false;

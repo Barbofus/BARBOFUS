@@ -56,6 +56,14 @@ class UnitySkinController extends Controller
             abort(404);
         }
 
+        // Incrémenter les vues détaillées de façon asynchrone
+        dispatch(new \App\Jobs\IncrementViewJob(
+            $skin->id,
+            'detailed',
+            auth()->id(),
+            session()->getId()
+        ));
+
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 
         $toShow = DB::table('unity_skins')

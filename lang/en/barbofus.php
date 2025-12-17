@@ -207,6 +207,7 @@ return [
     'inputSortedFavorites' => 'Favorites',
     'inputSortedDisliked' => 'Less liked',
     'inputSortedRewards' => 'Rewards',
+    'inputSortedViewed' => 'Most viewed',
     'inputSortedClasses' => 'Breeds',
     'inputSortedMissskin' => 'Current Miss skin',
     'inputSortedRandom' => 'Random',

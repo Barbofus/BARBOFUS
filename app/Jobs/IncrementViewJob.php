@@ -17,12 +17,15 @@ class IncrementViewJob implements ShouldQueue
     public function __construct(
         public int $skinId,
         public string $viewType,
-        public ?string $userId = null
+        public ?string $userId = null,
+        public ?string $sessionId = null
     ) {}
 
     public function handle(): void
     {
-        $cacheKey = "viewed_skin_{$this->skinId}_{$this->viewType}_{$this->userId}";
+        // Créer un identifiant unique pour éviter les doublons
+        $uniqueId = $this->userId ?? $this->sessionId ?? request()->ip();
+        $cacheKey = "viewed_skin_{$this->skinId}_{$this->viewType}_{$uniqueId}";
 
         // Éviter les vues multiples dans la même heure
         if (Cache::has($cacheKey)) {

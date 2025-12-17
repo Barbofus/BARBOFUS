@@ -8,7 +8,7 @@
                 <span>{{ number_format($skin->chunk_views ?? 0) }}</span>
             </div>
             <div class="flex items-center gap-x-1">
-                <p>Chunk</p>
+                <p>Detail</p>
                 <span>{{ number_format($skin->detailed_views ?? 0) }}</span>
             </div>
             <div class="flex items-center gap-x-1">

@@ -25,6 +25,16 @@ class UnitySkinIndexChunk extends Component
      */
     public function render()
     {
+        // Incrémenter les vues chunks de façon asynchrone pour chaque skin
+        foreach ($this->skinIds as $skinId) {
+            dispatch(new \App\Jobs\IncrementViewJob(
+                $skinId,
+                'chunk',
+                auth()->id(),
+                session()->getId()
+            ));
+        }
+
         $skins = DB::table('unity_skins')
             ->select('id', 'image_path', 'user_id', 'created_at', 'status', 'name', 'chunk_views', 'detailed_views', 'total_views')
             ->addSelect([

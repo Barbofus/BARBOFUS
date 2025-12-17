@@ -212,6 +212,7 @@ return [
     'inputSortedDisliked' => 'Menos curtido',
     'inputSortedFavorites' => 'Favoritos',
     'inputSortedRewards' => 'Recompensas',
+    'inputSortedViewed' => 'Mais visualizadas',
     'inputSortedClasses' => 'Classes',
     'inputSortedMissskin' => 'Miss\'Aparência atual',
     'inputSortedRandom' => 'Aleatório',
