@@ -5,8 +5,6 @@ namespace App\Http\Livewire\UnitySkin;
 use App\Actions\Utils\DoColorsMatch;
 use App\Enums\ItemSubcategorieEnum;
 use App\Models\Race;
-use App\Models\Skin;
-use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -37,7 +35,6 @@ class InfiniteUnitySkinIndex extends Component
         'likes_count',
         'rewards_points',
         'unity_skins.race_id',
-        'tuesday_like_count',
     ];
 
     /**
@@ -202,7 +199,7 @@ class InfiniteUnitySkinIndex extends Component
 
             ->when($this->skinColors != '', function (Builder $query) {
                 foreach ($this->skinColors as $color) {
-                    $query->addSelect('unity_skins.'.$color);
+                    $query->addSelect('unity_skins.' . $color);
                 }
             })
 
@@ -216,12 +213,6 @@ class InfiniteUnitySkinIndex extends Component
                 'likes_count' => DB::table('unity_likes')
                     ->selectRaw('count(id)')
                     ->whereColumn('unity_likes.unity_skin_id', 'unity_skins.id'),
-            ])
-            ->addSelect([
-                'tuesday_like_count' => DB::table('unity_likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('unity_skin_id', 'unity_skins.id')
-                    ->whereDate('created_at', '>', Carbon::today()->subWeek()->subDay()->toDateString()),
             ])
 
             // Début du système de filtres
@@ -253,16 +244,15 @@ class InfiniteUnitySkinIndex extends Component
                             $query->whereNotExists(function (Builder $query) use ($category) {
                                 $query->select('dofus_id')
                                     ->from('items')
-                                    ->whereColumn('items.dofus_id', 'unity_skins.'.$category.'_id');
+                                    ->whereColumn('items.dofus_id', 'unity_skins.' . $category . '_id');
                             })
                                 ->orWhereExists(function (Builder $query) use ($category) {
                                     $query->select('dofus_id')
                                         ->from('items')
-                                        ->whereColumn('items.dofus_id', 'unity_skins.'.$category.'_id')
+                                        ->whereColumn('items.dofus_id', 'unity_skins.' . $category . '_id')
                                         ->whereNotIn('items.subcategory', $this->skinContentWhere);
                                 });
                         });
-
                     }
                 });
             })
@@ -305,7 +295,7 @@ class InfiniteUnitySkinIndex extends Component
                         // Si le mot clef est un item
                         $query->when($input[0] == '0', function (Builder $query) use ($input) {
                             foreach ($this->itemCategory as $category) {
-                                $query->orWhere($category.'_id', substr($input, 1));
+                                $query->orWhere($category . '_id', substr($input, 1));
                             }
                         });
                     }
@@ -355,7 +345,7 @@ class InfiniteUnitySkinIndex extends Component
                 ->select('id')
                 ->when($this->skinColors != '', function (Builder $query) {
                     foreach ($this->skinColors as $color) {
-                        $query->addSelect('unity_skins.'.$color);
+                        $query->addSelect('unity_skins.' . $color);
                     }
                 })->get()->toArray();
 

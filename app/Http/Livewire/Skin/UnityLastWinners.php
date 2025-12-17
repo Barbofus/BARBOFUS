@@ -17,7 +17,7 @@ class UnityLastWinners extends Component
     {
         $this->FetchLastWinners();
 
-        return view('livewire.skin.last-winners', [
+        return view('livewire.skin.unity-last-winners', [
             'skins' => $this->winners,
         ]);
     }

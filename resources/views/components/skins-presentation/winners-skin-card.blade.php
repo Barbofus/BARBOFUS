@@ -1,13 +1,13 @@
-{{-- Nécessite un tableau de Skin en argument sous le nom :skin--}}
+{{-- Nécessite un tableau de Skin en argument sous le nom :skin --}}
 <div class="aspect-[14/19] relative h-full">
 
     <x-skins.content :skin="$skin" :id="$skin->skin_id" :showStatus="false" />
 
     {{-- Likes --}}
-    <div class="absolute bottom-0 right-2">
+    <div class="absolute bottom-2 right-2">
         <div class="flex items-center gap-x-1">
             <p>{{ $skin->weekly_likes }}</p>
-            <div class="w-7 h-7 relative" x-data="{liked: true}">
+            <div class="relative w-7 h-7" x-data="{ liked: true }">
                 <x-svg.heart :canLike="false" />
             </div>
         </div>

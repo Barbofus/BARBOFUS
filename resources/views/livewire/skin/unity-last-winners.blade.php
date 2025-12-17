@@ -39,8 +39,7 @@
             </div>
 
             <!-- Sentance -->
-            <p class="w-auto font-light text-secondary">Classement tous les <span class="font-normal">Mardi à 9h</span>
-                !</p>
+            <p class="w-auto font-light text-secondary">{!! __('barbofus.descriptionMissSkin') !!}</p>
         </div>
 
 
@@ -56,7 +55,9 @@
                     class="max-[500px]:w-[clamp(8.75rem,90%,12.5rem)]
                     min-[501px]:max-[1800px]:w-[12.5rem]
                     min-[1801px]:h-[min(28%,22.5rem)] min-[1801px]:w-full min-[1801px]:flex min-[1801px]:justify-center">
-                    <x-skins-presentation.winners-skin-card :skin="$skin" />
+                    <div class="aspect-[14/19] relative h-full">
+                        <x-skins.content :skin="$skin" :id="$skin->skin_id" :showStatus="false" />
+                    </div>
                 </div>
             @endforeach
         </div>

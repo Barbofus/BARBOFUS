@@ -1,83 +1,103 @@
 <div class="flex justify-center mt-20 mb-10">
 
     {{-- Création de variable de class pour éviter les copier coller avec AlpineJS --}}
-    <div
-        class="w-[100vw] min-[400px]:px-6 min-[1550px]:pl-[5vw] relative flex gap-x-2" x-cloak wire:ignore.self
+    <div class="w-[100vw] min-[400px]:px-6 min-[1550px]:pl-[5vw] relative flex gap-x-2" x-cloak wire:ignore.self
         x-data="{
             currentPage: '{{ $section }}',
             initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
             activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
             initTextClass: 'absolute invisible min-[1250px]:visible min-[1250px]:static transition-transform group-hover:-skew-x-12',
-
+        
         }">
 
         {{-- Pseudo navbar pour afficher tel ou tel onglet --}}
         <div class="min-[1250px]:w-[20rem] max-h-[25rem] font-light fixed min-[400px]:sticky top-16 min-[400px]:top-32">
 
-            <button wire:click="$set('section', 'user-details')" @click="currentPage = 'user-details', window.scrollTo(0,0)" :class="(currentPage == 'user-details') ? activeButtonClass : initButtonClass" x-cloak>
+            <button wire:click="$set('section', 'user-details')"
+                @click="currentPage = 'user-details', window.scrollTo(0,0)"
+                :class="(currentPage == 'user-details') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                        clip-rule="evenodd" />
                 </svg>
 
 
-                <p :class="initTextClass">{{  __('barbofus.titleUserDetails') }}</p>
+                <p :class="initTextClass">{{ __('barbofus.titleUserDetails') }}</p>
             </button>
 
-            <button wire:click="ChangeSection('my-unity-skins')" @click="currentPage = 'my-unity-skins', window.scrollTo(0,0)" :class="(currentPage == 'my-unity-skins') ? activeButtonClass : initButtonClass" x-cloak>
+            <button wire:click="ChangeSection('my-unity-skins')"
+                @click="currentPage = 'my-unity-skins', window.scrollTo(0,0)"
+                :class="(currentPage == 'my-unity-skins') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path fill-rule="evenodd" d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.502-.278zM6.75 13.5A3.75 3.75 0 003 17.25a1.5 1.5 0 01-1.601 1.497.75.75 0 00-.7 1.123 5.25 5.25 0 009.8-2.62 3.75 3.75 0 00-3.75-3.75z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.502-.278zM6.75 13.5A3.75 3.75 0 003 17.25a1.5 1.5 0 01-1.601 1.497.75.75 0 00-.7 1.123 5.25 5.25 0 009.8-2.62 3.75 3.75 0 00-3.75-3.75z"
+                        clip-rule="evenodd" />
                 </svg>
 
 
 
-                <p :class="initTextClass">{{  __('barbofus.titleMySkins') }}</p>
+                <p :class="initTextClass">{{ __('barbofus.titleMySkins') }}</p>
             </button>
 
-            <button wire:click="ChangeSection('my-skins')" @click="currentPage = 'my-skins', window.scrollTo(0,0)" :class="(currentPage == 'my-skins') ? activeButtonClass : initButtonClass" x-cloak>
+            <button wire:click="ChangeSection('my-skins')" @click="currentPage = 'my-skins', window.scrollTo(0,0)"
+                :class="(currentPage == 'my-skins') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path fill-rule="evenodd" d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.502-.278zM6.75 13.5A3.75 3.75 0 003 17.25a1.5 1.5 0 01-1.601 1.497.75.75 0 00-.7 1.123 5.25 5.25 0 009.8-2.62 3.75 3.75 0 00-3.75-3.75z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.502-.278zM6.75 13.5A3.75 3.75 0 003 17.25a1.5 1.5 0 01-1.601 1.497.75.75 0 00-.7 1.123 5.25 5.25 0 009.8-2.62 3.75 3.75 0 00-3.75-3.75z"
+                        clip-rule="evenodd" />
                 </svg>
 
 
 
-                <p :class="initTextClass">{{  __('barbofus.titleMyOldSkins') }}</p>
+                <p :class="initTextClass">{{ __('barbofus.titleMyOldSkins') }}</p>
             </button>
 
-            <button wire:click="ChangeSection('my-havenbags')" @click="currentPage = 'my-havenbags', window.scrollTo(0,0)" :class="(currentPage == 'my-havenbags') ? activeButtonClass : initButtonClass" x-cloak>
+            <button wire:click="ChangeSection('my-havenbags')"
+                @click="currentPage = 'my-havenbags', window.scrollTo(0,0)"
+                :class="(currentPage == 'my-havenbags') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-                    <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                    <path
+                        d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                    <path
+                        d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
                 </svg>
 
 
 
 
-                <p :class="initTextClass">{{  __('barbofus.titleMyHS') }}</p>
+                <p :class="initTextClass">{{ __('barbofus.titleMyHS') }}</p>
             </button>
 
-            <button wire:click="ChangeSection('my-likes')" @click="currentPage = 'my-likes', window.scrollTo(0,0)" :class="(currentPage == 'my-likes') ? activeButtonClass : initButtonClass" x-cloak>
+            <button wire:click="ChangeSection('my-likes')" @click="currentPage = 'my-likes', window.scrollTo(0,0)"
+                :class="(currentPage == 'my-likes') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                    <path
+                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                 </svg>
 
-                <p :class="initTextClass">{{  __('barbofus.titleMyLikes') }}</p>
+                <p :class="initTextClass">{{ __('barbofus.titleMyFavorites') }}</p>
             </button>
 
             {{-- Onglet visible uniquement par les modérateurs et les admins --}}
             @can('validate-skin')
-                {{--<button wire:click="$set('section', 'skins-validation')" @click="currentPage = 'skins-validation', window.scrollTo(0,0)" :class="(currentPage == 'skins-validation') ? activeButtonClass : initButtonClass" x-cloak>
+                {{-- <button wire:click="$set('section', 'skins-validation')" @click="currentPage = 'skins-validation', window.scrollTo(0,0)" :class="(currentPage == 'skins-validation') ? activeButtonClass : initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                         <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
                     </svg>
 
                     <p :class="initTextClass">Skins en attente</p>
-                </button>--}}
+                </button> --}}
 
-                <button wire:click="$set('section', 'haven-bags-validation')" @click="currentPage = 'haven-bags-validation', window.scrollTo(0,0)" :class="(currentPage == 'haven-bags-validation') ? activeButtonClass : initButtonClass" x-cloak>
+                <button wire:click="$set('section', 'haven-bags-validation')"
+                    @click="currentPage = 'haven-bags-validation', window.scrollTo(0,0)"
+                    :class="(currentPage == 'haven-bags-validation') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                        <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
+                            clip-rule="evenodd" />
                     </svg>
 
                     <p :class="initTextClass">HS en attente</p>
@@ -87,9 +107,11 @@
             {{-- Onglet visible uniquement par les admins --}}
             @can('admin-access')
 
-                <button wire:click="$set('section', 'users-list')" @click="currentPage = 'users-list', window.scrollTo(0,0)" :class="(currentPage == 'users-list') ? activeButtonClass : initButtonClass" x-cloak>
+                <button wire:click="$set('section', 'users-list')" @click="currentPage = 'users-list', window.scrollTo(0,0)"
+                    :class="(currentPage == 'users-list') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
+                        <path
+                            d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
                     </svg>
 
 
@@ -97,9 +119,13 @@
                 </button>
 
 
-                <button wire:click="$set('section', 'admin-panel')" @click="currentPage = 'admin-panel', window.scrollTo(0,0)" :class="(currentPage == 'admin-panel') ? activeButtonClass : initButtonClass" x-cloak>
+                <button wire:click="$set('section', 'admin-panel')"
+                    @click="currentPage = 'admin-panel', window.scrollTo(0,0)"
+                    :class="(currentPage == 'admin-panel') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd" d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.55.092a1.875 1.875 0 00-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 001.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.55a1.875 1.875 0 00-1.85-1.566h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                            d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.55.092a1.875 1.875 0 00-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 001.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.55a1.875 1.875 0 00-1.85-1.566h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"
+                            clip-rule="evenodd" />
                     </svg>
 
                     <p :class="initTextClass">Panel administrateur</p>
@@ -108,17 +134,23 @@
 
                 <a href="{{ route('image-en-vrac.index') }}" :class="initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                            d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
+                            clip-rule="evenodd" />
                     </svg>
 
 
                     <p :class="initTextClass">Image en vrac</p>
                 </a>
 
-                @if($skinsToComplete > 0)
-                    <button wire:click="$set('section', 'complete-skins-id')" @click="currentPage = 'complete-skins-id', window.scrollTo(0,0)" :class="(currentPage == 'complete-skins-id') ? activeButtonClass : initButtonClass" x-cloak>
+                @if ($skinsToComplete > 0)
+                    <button wire:click="$set('section', 'complete-skins-id')"
+                        @click="currentPage = 'complete-skins-id', window.scrollTo(0,0)"
+                        :class="(currentPage == 'complete-skins-id') ? activeButtonClass: initButtonClass" x-cloak>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                            <path fill-rule="evenodd" d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.55.092a1.875 1.875 0 00-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 001.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.55a1.875 1.875 0 00-1.85-1.566h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd"
+                                d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.55.092a1.875 1.875 0 00-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 001.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.55a1.875 1.875 0 00-1.85-1.566h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"
+                                clip-rule="evenodd" />
                         </svg>
 
                         <p :class="initTextClass">Compléter skinsID</p>
@@ -131,64 +163,66 @@
 
             {{-- Spinning Loader --}}
             <div wire:loading.delay class="h-screen w-[calc(80vw-20rem)] fixed top-0 z-10">
-                <div class="flex flex-col items-center justify-center gap-y-4 min-h-screen bg-primary
+                <div
+                    class="flex flex-col items-center justify-center gap-y-4 min-h-screen bg-primary
                  opacity-0 animate-opacityFade [--custom-animation-time:100ms]">
-                    <img class="animate-pulseFast h-32 w-32 opacity-25" src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">
-                    <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center">Chargement ...</h1>
+                    <img class="w-32 h-32 opacity-25 animate-pulseFast"
+                        src="{{ asset('storage/images/misc_ui/logo_barbe_x256.png') }}" draggable="false">
+                    <h1 class="animate-pulseFast opacity-25 text-[min(3.5rem,max(5vw,1.5rem))] font-normal text-center">
+                        Chargement ...</h1>
                 </div>
             </div>
 
             @switch($section)
                 @case('user-details')
-                    <livewire:user-panel.user-details :wire:key="'user-details-{{ rand() }}'"/>
-                    @break
+                    <livewire:user-panel.user-details :wire:key="'user-details-{{ rand() }}'" />
+                @break
 
                 @case('my-skins')
-                    <livewire:user-panel.myskins-infinite-load :wire:key="'my-skins-{{ rand() }}'"/>
-                    @break
+                    <livewire:user-panel.myskins-infinite-load :wire:key="'my-skins-{{ rand() }}'" />
+                @break
 
                 @case('my-unity-skins')
-                    <livewire:user-panel.my-unityskins-infinite-load :wire:key="'my-unity-skins-{{ rand() }}'"/>
-                    @break
+                    <livewire:user-panel.my-unityskins-infinite-load :wire:key="'my-unity-skins-{{ rand() }}'" />
+                @break
 
                 @case('my-havenbags')
-                    <livewire:user-panel.myhavenbags-infinite-load :wire:key="'my-havenbags-{{ rand() }}'"/>
-                    @break
+                    <livewire:user-panel.myhavenbags-infinite-load :wire:key="'my-havenbags-{{ rand() }}'" />
+                @break
 
                 @case('my-likes')
-                    <livewire:user-panel.mylikes-infinite-load :wire:key="'my-likes-{{ rand() }}'"/>
-                    @break
+                    <livewire:user-panel.mylikes-infinite-load :wire:key="'my-likes-{{ rand() }}'" />
+                @break
 
-                {{--@case('skins-validation')
+                {{-- @case('skins-validation')
                     @can('validate-skin')
                         <livewire:user-panel.skins-validation :wire:key="'skins-validation-{{ rand() }}'"/>
                     @endcan
-                    @break--}}
-
+                    @break --}}
                 @case('haven-bags-validation')
                     @can('validate-skin')
-                        <livewire:user-panel.haven-bags-validation :wire:key="'haven-bags-validation-{{ rand() }}'"/>
+                        <livewire:user-panel.haven-bags-validation :wire:key="'haven-bags-validation-{{ rand() }}'" />
                     @endcan
-                    @break
+                @break
 
                 @case('users-list')
                     @can('admin-access')
-                        <livewire:user-panel.users-list :wire:key="'users-list-{{ rand() }}'"/>
+                        <livewire:user-panel.users-list :wire:key="'users-list-{{ rand() }}'" />
                     @endcan
-                    @break
+                @break
 
                 @case('admin-panel')
                     @can('admin-access')
-                        {{--<x-user-panel.admin-panel :need-dofus-update="(new \App\Actions\DofusDBApi\CheckDofusDBUpdate)()" />--}}
+                        {{-- <x-user-panel.admin-panel :need-dofus-update="(new \App\Actions\DofusDBApi\CheckDofusDBUpdate)()" /> --}}
                         <livewire:user-panel.admin-panel />
                     @endcan
-                    @break
+                @break
 
                 @case('complete-skins-id')
                     @can('admin-access')
                         <livewire:user-panel.complete-skins-id />
                     @endcan
-                    @break
+                @break
 
             @endswitch
 

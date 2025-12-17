@@ -43,7 +43,7 @@
         </div>
 
         {{-- Menu de trie --}}
-        <x-skins.sorter :$orderByID :$orderDirection />
+        <x-skins.unity-sorter :$orderByID :$orderDirection />
     </div>
 
     <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere"
