@@ -24,7 +24,7 @@ class MyUnityskinsChunk extends Component
     public function render()
     {
         $skins = DB::table('unity_skins')
-            ->select('id', 'image_path', 'user_id', 'created_at', 'status', 'name')
+            ->select('id', 'image_path', 'user_id', 'created_at', 'status', 'name', 'chunk_views', 'detailed_views', 'total_views')
             ->addSelect([
                 'user_name' => DB::table('users')
                     ->select('name')
