@@ -102,6 +102,14 @@ class UnitySkin extends Model
         'status',
         'refused_reason',
         'name',
+        'chunk_views',
+        'detailed_views',
+    ];
+
+    protected $casts = [
+        'chunk_views' => 'integer',
+        'detailed_views' => 'integer',
+        'total_views' => 'integer',
     ];
 
     /**
@@ -182,5 +190,21 @@ class UnitySkin extends Model
     public function Race()
     {
         return $this->belongsTo(Race::class);
+    }
+
+    /**
+     * Increment chunk views (for lazy loading)
+     */
+    public function incrementChunkViews(int $count = 1): void
+    {
+        $this->increment('chunk_views', $count);
+    }
+
+    /**
+     * Increment detailed views (for show page)
+     */
+    public function incrementDetailedViews(int $count = 1): void
+    {
+        $this->increment('detailed_views', $count);
     }
 }
