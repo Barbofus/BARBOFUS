@@ -36,6 +36,7 @@ class InfiniteUnitySkinIndex extends Component
         'rewards_points',
         'unity_skins.race_id',
         'total_views',
+        'detailed_views',
     ];
 
     /**
