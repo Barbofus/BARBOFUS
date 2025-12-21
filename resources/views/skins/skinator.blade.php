@@ -20,7 +20,7 @@
             x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-90"
             @click.outside="openShareUI = false; $refs.btnShare.disabled = false;"
-            class="absolute p-4 shadow-[rgba(0,_0,_0,_0.5)_0px_0px_70px_4px] rounded-lg bg-primary top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+            class="absolute p-4 shadow-[rgba(0,_0,_0,_0.5)_0px_0px_70px_4px] rounded-lg bg-primary top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
             <img id="previsu-img" src="" height="500" width="300" alt="Render" style="opacity: 0"
                 class="mx-auto transition-all">
 
@@ -39,8 +39,8 @@
             <div class="flex w-full mt-4 justify-evenly">
 
                 {{-- Valider --}}
-                <button type="button" id="myRecaptchaBtn"
-                    class="relative px-5 py-3 text-lg font-normal uppercase transition-all rounded-lg text-primary goldGradient hover:enabled:brightness-110 hover:enabled:tracking-widest disabled:cursor-not-allowed disabled:grayscale focus:brightness-75"
+                <button type="button"
+                    class="relative px-5 py-3 text-lg font-normal uppercase transition-all rounded-lg recaptcha-btn text-primary goldGradient hover:enabled:brightness-110 hover:enabled:tracking-widest disabled:cursor-not-allowed disabled:grayscale focus:brightness-75"
                     data-sitekey="{{ config('services.recaptcha.site_key') }}" data-callback='onSubmit' data-action='store'>
                     <p class="absolute left-0 w-full text-center">{{ __('barbofus.buttonValidate') }}</p>
                     <p class="tracking-widest opacity-0">{{ __('barbofus.buttonValidate') }}</p>
@@ -52,13 +52,39 @@
                     <p class="absolute left-0 w-full text-center">{{ __('barbofus.buttonCancel') }}</p>
                     <p class="tracking-widest opacity-0">{{ __('barbofus.buttonCancel') }}</p>
                 </button>
+            </div>
 
-                <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+            @if ($isMissSkinTime)
+                {{-- Miss Skin --}}
+                <div class="flex justify-center mt-4" x-transition>
+                    <div class="flex items-center gap-3 cursor-pointer" @click="useForMissSkin = !useForMissSkin">
+                        <button id="use_for_miss_skin" type="button"
+                            class="w-[1.125rem] h-[1.125rem] border rounded-[3px] bg-anthraciteLit border-1 border-ivory flex-shrink-0 relative">
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const button = document.getElementById('myRecaptchaBtn');
+                            <img src="{{ asset('storage/images/misc_ui/checkmark.png') }}" alt=""
+                                class="absolute min-w-[1.875rem] h-[1.875rem] -left-1 -top-3 transition-all"
+                                :class="useForMissSkin ? 'opacity-100' : 'opacity-0'">
+                        </button>
 
+                        <label for="use_for_miss_skin" @click="useForMissSkin = !useForMissSkin"
+                            class="text-lg font-thin cursor-pointer text-secondary whitespace-nowrap">
+                            Utiliser pour Miss'Skin
+                        </label>
+                    </div>
+                </div>
+            @endif
+
+            <input type="hidden" name="use_for_miss_skin" :value="useForMissSkin ? '1' : '0'">
+
+            <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Sélectionne tous les boutons avec la classe 'recaptcha-btn'
+                    const buttons = document.querySelectorAll('.recaptcha-btn');
+
+                    // Attache l'événement click à chaque bouton
+                    buttons.forEach(function(button) {
                         button.addEventListener('click', function(e) {
                             e.preventDefault();
 
@@ -73,6 +99,7 @@
                                 img.style.opacity = '0.5';
                             }
 
+                            // Désactive le bouton cliqué
                             button.disabled = true;
 
                             grecaptcha.ready(function() {
@@ -81,6 +108,14 @@
                                 }).then(function(token) {
                                     // Crée dynamiquement le champ hidden
                                     const form = document.getElementById('skinator-form');
+
+                                    // Supprime le token précédent s'il existe
+                                    const existingInput = form.querySelector(
+                                        'input[name="g-recaptcha-response"]');
+                                    if (existingInput) {
+                                        existingInput.remove();
+                                    }
+
                                     let input = document.createElement('input');
                                     input.type = 'hidden';
                                     input.name = 'g-recaptcha-response';
@@ -92,8 +127,8 @@
                             });
                         });
                     });
-                </script>
-            </div>
+                });
+            </script>
         </div>
 
         {{--    ITEMS ACTUELS    --}}
@@ -133,7 +168,8 @@
                             :alt="allItems.find(i => i.dofus_id === item).name">
                         <div class="flex items-end pt-4 space-x-1">
                             <img loading="lazy" draggable="false" width="24" height="24" class="w-6 h-6"
-                                :src="'/storage/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id === item)
+                                :src="'/storage/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id ===
+                                        item)
                                     .subcategory + '.png'"
                                 :alt="allItems.find(i => i.dofus_id === item).subcategory">
                             <p x-text="'Lv.' + allItems.find(i => i.dofus_id === item).level"
@@ -227,7 +263,8 @@
                                     <label :for="'breed_' + breedInfo.dofus_id" :title="breed.name"
                                         class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                         <img loading="lazy" draggable="false"
-                                            :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[gender ===
+                                            :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[
+                                                gender ===
                                                 0 ? 'male' : 'female'][0].assetId + '.png'"
                                             :alt="breed.name">
                                     </label>
@@ -252,8 +289,10 @@
                                             breed).name) + ' ' + breedHead.id"
                                         class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                         <img loading="lazy" draggable="false"
-                                            :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId + '.png'"
-                                            :alt="'{{ __('barbofus.contentFace') }} ' + (breedInfos.find(i => i.dofus_id ===
+                                            :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId +
+                                                '.png'"
+                                            :alt="'{{ __('barbofus.contentFace') }} ' + (breedInfos.find(i => i
+                                                .dofus_id ===
                                                 breed).name) + ' ' + breedHead.id">
                                     </label>
                                 </div>
@@ -310,7 +349,8 @@
 
                                         <!-- Input de couleur -->
                                         <input type="text"
-                                            :value="index < colors.length ? colors[index] : guildColors[index - colors.length]"
+                                            :value="index < colors.length ? colors[index] : guildColors[index - colors
+                                                .length]"
                                             :name="'color_' + colorsName[index]" maxlength="7" :data-color="index"
                                             class="uppercase order-last h-full peer rounded-r p-1 bg-primary-100 text-center w-[5.5rem] min-[600px]:w-28 focus:outline-none border-transparent focus:border-secondary border-y border-r transition-colors">
 
@@ -321,7 +361,8 @@
                                                         index - colors.length]
                                                 }">
                                                 <input type="color" :data-color="index"
-                                                    :value="index < colors.length ? colors[index] : guildColors[index - colors
+                                                    :value="index < colors.length ? colors[index] : guildColors[index -
+                                                        colors
                                                         .length]"
                                                     class="w-full h-full opacity-0 cursor-pointer">
                                             </div>
@@ -577,7 +618,8 @@
 
                     @foreach ($itemCategories as $category)
                         <button type="button" data-tab="{{ $category }}" class="flex-grow px-2 uppercase truncate"
-                            :class="(itemsCurrentTab === '{{ $category }}') ? 'font-medium border-b-4 border-secondary' :
+                            :class="(itemsCurrentTab === '{{ $category }}') ?
+                            'font-medium border-b-4 border-secondary' :
                             'border-b-2 border-inactiveText'">{{ __('barbofus.content' . ucfirst($category)) }}</button>
                     @endforeach
                 </div>
@@ -845,7 +887,8 @@
                         <div class="h-fit group">
                             <input
                                 :id="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem
-                                    .subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem.dofus_id"
+                                    .subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem
+                                    .dofus_id"
                                 :data-category="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem
                                     .subcategory == 'mimisymbic') ? 'mount' : allItem.category)"
                                 :data-id="allItem.dofus_id" type="radio"
@@ -857,7 +900,8 @@
                                     .dofus_id">
                             <label
                                 :for="((['dragodinde', 'muldo', 'volkorne'].includes(allItem.pet_type) && allItem
-                                    .subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem.dofus_id"
+                                    .subcategory == 'mimisymbic') ? 'mount' : allItem.category) + '_' + allItem
+                                    .dofus_id"
                                 :title="allItem.name"
                                 class="transition-all overflow-hidden relative rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(4vw,5rem),3.8rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText"
                                 x-data="{ loaded: false, intersected: false }">
@@ -1518,6 +1562,7 @@
                 userId: @json(auth()->check() ? auth()->id() : -1),
                 favorites: [],
                 csrfToken: '{{ csrf_token() }}',
+                useForMissSkin: @json($skin && $skin->status === 'MissSkin'),
 
                 initWatcher() {
                     Alpine.effect(() => {

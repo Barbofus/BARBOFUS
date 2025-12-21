@@ -218,6 +218,7 @@ return [
     'inputSearchItemUsername' => 'Item or user name',
     'inputMissSkinOnly' => 'See only the <span class="font-normal">Miss\'Skin</span> winners',
     'inputBarbeOnly' => 'Show only <span class="font-normal ">Barbe Douce</span>\'s skins',
+    'inputCurrentMissSkinOnly' => 'Current Miss\'Skin only',
     'inputValidationSkins' => 'Validation / Refuse a skin',
     'inputOldPassword' => 'Old Password',
     'inputNewPassword' => 'New Password',

@@ -74,6 +74,8 @@ class StoreUpdateUnitySkinRequest extends FormRequest
 
             'g-recaptcha-response' => app()->environment('local') ? 'nullable' : ['required', new Recaptcha],
 
+            'use_for_miss_skin' => 'required|boolean',
+
             'color_skin' => $hexRegex,
             'color_hair' => $hexRegex,
             'color_cloth_1' => $hexRegex,

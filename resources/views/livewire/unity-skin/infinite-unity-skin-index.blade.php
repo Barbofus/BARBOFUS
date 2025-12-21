@@ -46,8 +46,9 @@
         <x-skins.unity-sorter :$orderByID :$orderDirection />
     </div>
 
-    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere"
-        :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere :canWinnersOnly="true" />
+    <x-skins.main-filter :races="$races" :$showCurrentMissSkinFilter :$currentMissSkinOnly :winnersOnly="$winnersOnly"
+        :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere"
+        :searchFilterInput="$searchFilterInput" :$raceWhere :canWinnersOnly="true" />
 
     {{-- La grille des skins --}}
     <div

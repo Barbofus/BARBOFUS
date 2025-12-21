@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Actions\MissSkin\IsMissSkinTime;
 
 class SkinatorController extends Controller
 {
@@ -40,6 +41,7 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
+            'isMissSkinTime' => (new IsMissSkinTime)()
         ]);
     }
 
@@ -69,6 +71,7 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
+            'isMissSkinTime' => (new IsMissSkinTime)()
         ]);
     }
 
@@ -98,6 +101,7 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
+            'isMissSkinTime' => (new IsMissSkinTime)()
         ]);
     }
 
@@ -111,6 +115,7 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'PUT',
+            'isMissSkinTime' => (new IsMissSkinTime)()
         ]);
     }
 

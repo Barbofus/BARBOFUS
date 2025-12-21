@@ -119,6 +119,18 @@
                         class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">{!! __('barbofus.inputBarbeOnly') !!}</label>
                 </x-forms.filter-button>
             </div>
+
+
+            @if ($showCurrentMissSkinFilter)
+                <!-- Miss'Skin actuel -->
+                <div class="relative my-5 min-[430px]:my-2 tracking-wide w-[min(90vw,23.75rem)]">
+                    <x-forms.filter-button :name="'current miss skin only'" :checked="$currentMissSkinOnly"
+                        wire:click="ToggleShowCurrentMissSkinOnly">
+                        <label for="current miss skin only"
+                            class="absolute font-thin text-secondary text-[0.9rem] left-7 top-2 cursor-pointer text-left w-[min(80vw,23.75rem)]">{!! __('barbofus.inputCurrentMissSkinOnly') !!}</label>
+                    </x-forms.filter-button>
+                </div>
+            @endif
         </div>
 
 

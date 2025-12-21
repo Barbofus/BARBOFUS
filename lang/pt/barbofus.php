@@ -223,6 +223,7 @@ return [
     'inputSearchItemUsername' => 'Item ou nome de usuário',
     'inputMissSkinOnly' => 'Veja apenas os vencedores do <span class="font-normal">Miss\'Aparência</span>',
     'inputBarbeOnly' => 'Mostre apenas as aparências <span class="font-normal ">Barbe Douce</span>\'s',
+    'inputCurrentMissSkinOnly' => 'Miss\'Skin em andamento apenas',
     'inputValidationSkins' => 'Validação / Recusar a aparência',
     'inputOldPassword' => 'Senha antiga',
     'inputNewPassword' => 'Senha nova',

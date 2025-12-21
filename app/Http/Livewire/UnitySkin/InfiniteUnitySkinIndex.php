@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UnitySkin;
 
+use App\Actions\MissSkin\IsMissSkinTime;
 use App\Actions\Utils\DoColorsMatch;
 use App\Enums\ItemSubcategorieEnum;
 use App\Models\Race;
@@ -26,6 +27,8 @@ class InfiniteUnitySkinIndex extends Component
     public int $maxPage = 1;
 
     public int $queryCount = 0;
+
+    public bool $showCurrentMissSkinFilter;
 
     /**
      * @var string[]
@@ -98,6 +101,8 @@ class InfiniteUnitySkinIndex extends Component
 
     public bool $winnersOnly = false;
 
+    public bool $currentMissSkinOnly = false;
+
     /**
      * @var array<int, string>
      */
@@ -145,6 +150,8 @@ class InfiniteUnitySkinIndex extends Component
                 }
             }
         }
+
+        $this->showCurrentMissSkinFilter = (new IsMissSkinTime)();
     }
 
     /**
@@ -304,7 +311,12 @@ class InfiniteUnitySkinIndex extends Component
                 });
             })
 
-            ->where('unity_skins.status', 'Posted')
+            // Current Miss Skin only
+            ->when($this->currentMissSkinOnly, function (Builder $query) {
+                $query->where('unity_skins.status', 'MissSkin');
+            }, function (Builder $query) {
+                $query->where('unity_skins.status', 'Posted');
+            })
 
             // Concours anniversaire
             /*->when($this->orderByID === 5, function (Builder $query) {
@@ -525,6 +537,14 @@ class InfiniteUnitySkinIndex extends Component
     public function ToggleShowBarbeOnly()
     {
         $this->barbeOnly = ! $this->barbeOnly;
+    }
+
+    /**
+     * @return void
+     */
+    public function ToggleShowCurrentMissSkinOnly()
+    {
+        $this->currentMissSkinOnly = ! $this->currentMissSkinOnly;
     }
 
     /**

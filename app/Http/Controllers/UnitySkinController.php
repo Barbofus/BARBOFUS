@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Discord\GetDiscordUserInfo;
-use App\Actions\Discord\SendDiscordPendingWebhook;
 use App\Actions\Discord\SendDiscordPostedWebhook;
 use App\Actions\Images\ResizeImages;
 use App\Actions\Skins\DeleteSkin;
+use App\Actions\MissSkin\IsMissSkinTime;
 use App\Http\Middleware\UnitySkinsOwnerShip;
 use App\Http\Requests\StoreUpdateUnitySkinRequest;
 use App\Models\UnitySkin;
@@ -14,7 +14,6 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -211,7 +210,7 @@ class UnitySkinController extends Controller
             'color_guild_2' => ltrim($request->color_guild_2, '#'),
             'user_id' => $request->user()->id,
             'race_id' => $request->race_id,
-            'status' => 'Posted',
+            'status' => ($request->use_for_miss_skin && (new IsMissSkinTime)()) ? 'MissSkin' : 'Posted',
             'name' => $request->name,
         ]);
 
@@ -291,7 +290,7 @@ class UnitySkinController extends Controller
         $skin->color_guild_1 = ltrim($request->color_guild_1, '#');
         $skin->color_guild_2 = ltrim($request->color_guild_2, '#');
         $skin->race_id = $request->race_id;
-        $skin->status = 'Posted';
+        $skin->status = ($request->use_for_miss_skin && (new IsMissSkinTime)()) ? 'MissSkin' : 'Posted';
         $skin->name = $request->name;
 
         $skin->save();
