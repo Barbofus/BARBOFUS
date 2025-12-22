@@ -218,7 +218,7 @@ return [
     'inputSearchItemUsername' => 'Objeto o nombre de usuario',
     'inputMissSkinOnly' => 'Ver sólo los ganadores de <span class="font-normal">Miss\'Skin</span>',
     'inputBarbeOnly' => 'Mostrar sólo las skins de <span class="font-normal ">Barbe Douce</span>',
-    'inputCurrentMissSkinOnly' => 'Miss\'Skin en curso solamente',
+    'inputCurrentMissSkinOnly' => '<span class="font-normal">Miss\'Skin</span> en curso solamente',
     'inputValidationSkins' => 'Una skin ha sido validada/rechazada',
     'inputOldPassword' => 'Antigua contraseña',
     'inputNewPassword' => 'Nueva contraseña',

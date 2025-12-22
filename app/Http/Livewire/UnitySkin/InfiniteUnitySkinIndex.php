@@ -151,7 +151,7 @@ class InfiniteUnitySkinIndex extends Component
             }
         }
 
-        $this->showCurrentMissSkinFilter = (new IsMissSkinTime)();
+        $this->showCurrentMissSkinFilter = now()->isTuesday();
     }
 
     /**
