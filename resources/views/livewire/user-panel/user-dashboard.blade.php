@@ -7,14 +7,18 @@
             initButtonClass: 'border-b-2 transition-all text-inactiveText border-primary px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left text-xl w-full hover:bg-primary-100 hover:text-secondary fill-inactiveText group',
             activeButtonClass: 'border-b-2 transition-all px-2 min-[1250px]:px-6 h-12 min-[400px]:h-[4rem] flex gap-x-2 items-center text-left w-full font-normal border-secondary text-secondary text-2xl fill-secondary',
             initTextClass: 'absolute invisible min-[1250px]:visible min-[1250px]:static transition-transform group-hover:-skew-x-12',
-        
+            updateUrl(section) {
+                const url = new URL(window.location);
+                url.searchParams.set('section', section);
+                window.history.pushState({}, '', url);
+            }
         }">
 
         {{-- Pseudo navbar pour afficher tel ou tel onglet --}}
         <div class="min-[1250px]:w-[20rem] max-h-[25rem] font-light fixed min-[400px]:sticky top-16 min-[400px]:top-32">
 
-            <button wire:click="$set('section', 'user-details')"
-                @click="currentPage = 'user-details', window.scrollTo(0,0)"
+            <button wire:click="ChangeSection('user-details')"
+                @click="currentPage = 'user-details', window.scrollTo(0,0), updateUrl('user-details')"
                 :class="(currentPage == 'user-details') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
@@ -27,7 +31,7 @@
             </button>
 
             <button wire:click="ChangeSection('my-unity-skins')"
-                @click="currentPage = 'my-unity-skins', window.scrollTo(0,0)"
+                @click="currentPage = 'my-unity-skins', window.scrollTo(0,0), updateUrl('my-unity-skins')"
                 :class="(currentPage == 'my-unity-skins') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
@@ -40,7 +44,8 @@
                 <p :class="initTextClass">{{ __('barbofus.titleMySkins') }}</p>
             </button>
 
-            <button wire:click="ChangeSection('my-skins')" @click="currentPage = 'my-skins', window.scrollTo(0,0)"
+            <button wire:click="ChangeSection('my-skins')"
+                @click="currentPage = 'my-skins', window.scrollTo(0,0), updateUrl('my-skins')"
                 :class="(currentPage == 'my-skins') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
@@ -54,7 +59,7 @@
             </button>
 
             <button wire:click="ChangeSection('my-havenbags')"
-                @click="currentPage = 'my-havenbags', window.scrollTo(0,0)"
+                @click="currentPage = 'my-havenbags', window.scrollTo(0,0), updateUrl('my-havenbags')"
                 :class="(currentPage == 'my-havenbags') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path
@@ -69,7 +74,8 @@
                 <p :class="initTextClass">{{ __('barbofus.titleMyHS') }}</p>
             </button>
 
-            <button wire:click="ChangeSection('my-likes')" @click="currentPage = 'my-likes', window.scrollTo(0,0)"
+            <button wire:click="ChangeSection('my-likes')"
+                @click="currentPage = 'my-likes', window.scrollTo(0,0), updateUrl('my-likes')"
                 :class="(currentPage == 'my-likes') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path
@@ -90,8 +96,8 @@
                     <p :class="initTextClass">Skins en attente</p>
                 </button> --}}
 
-                <button wire:click="$set('section', 'haven-bags-validation')"
-                    @click="currentPage = 'haven-bags-validation', window.scrollTo(0,0)"
+                <button wire:click="ChangeSection('haven-bags-validation')"
+                    @click="currentPage = 'haven-bags-validation', window.scrollTo(0,0), updateUrl('haven-bags-validation')"
                     :class="(currentPage == 'haven-bags-validation') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
@@ -107,7 +113,8 @@
             {{-- Onglet visible uniquement par les admins --}}
             @can('admin-access')
 
-                <button wire:click="$set('section', 'users-list')" @click="currentPage = 'users-list', window.scrollTo(0,0)"
+                <button wire:click="ChangeSection('users-list')"
+                    @click="currentPage = 'users-list', window.scrollTo(0,0), updateUrl('users-list')"
                     :class="(currentPage == 'users-list') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path
@@ -119,8 +126,8 @@
                 </button>
 
 
-                <button wire:click="$set('section', 'admin-panel')"
-                    @click="currentPage = 'admin-panel', window.scrollTo(0,0)"
+                <button wire:click="ChangeSection('admin-panel')"
+                    @click="currentPage = 'admin-panel', window.scrollTo(0,0), updateUrl('admin-panel')"
                     :class="(currentPage == 'admin-panel') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path fill-rule="evenodd"
@@ -143,9 +150,21 @@
                     <p :class="initTextClass">Image en vrac</p>
                 </a>
 
+                <button wire:click="ChangeSection('miss-skin-contest')"
+                    @click="currentPage = 'miss-skin-contest', window.scrollTo(0,0), updateUrl('miss-skin-contest')"
+                    :class="(currentPage == 'miss-skin-contest') ? activeButtonClass: initButtonClass" x-cloak>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd"
+                            d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 0 0-.584.859 6.753 6.753 0 0 0 6.138 5.6 6.73 6.73 0 0 0 2.743 1.346A6.707 6.707 0 0 1 9.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 0 0-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-2.25-2.25H16.5v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 0 1-1.112-3.173 6.73 6.73 0 0 0 2.743-1.347 6.753 6.753 0 0 0 6.139-5.6.75.75 0 0 0-.585-.858 47.077 47.077 0 0 0-3.07-.543V2.62a.75.75 0 0 0-.658-.744 49.22 49.22 0 0 0-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 0 0-.657.744Zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 0 1 3.16 5.337a45.6 45.6 0 0 1 2.006-.343v.256Zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 0 1-2.863 3.207 6.72 6.72 0 0 0 .857-3.294Z"
+                            clip-rule="evenodd" />
+                    </svg>
+
+                    <p :class="initTextClass">Concours MissSkin</p>
+                </button>
+
                 @if ($skinsToComplete > 0)
-                    <button wire:click="$set('section', 'complete-skins-id')"
-                        @click="currentPage = 'complete-skins-id', window.scrollTo(0,0)"
+                    <button wire:click="ChangeSection('complete-skins-id')"
+                        @click="currentPage = 'complete-skins-id', window.scrollTo(0,0), updateUrl('complete-skins-id')"
                         :class="(currentPage == 'complete-skins-id') ? activeButtonClass: initButtonClass" x-cloak>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                             <path fill-rule="evenodd"
@@ -224,6 +243,12 @@
                     @endcan
                 @break
 
+                @case('miss-skin-contest')
+                    @can('admin-access')
+                        <livewire:user-panel.miss-skin-contest />
+                    @endcan
+                @break
+
             @endswitch
 
         </div>
@@ -231,4 +256,41 @@
 
     {{-- Scroll horizontalement les pseudos trop long, s'actualise en temps réel --}}
     @vite(['resources/js/skins/NameScroll.js', 'resources/js/skins/AnimationsManager.js'])
+
+    <script>
+        document.addEventListener('livewire:load', function() {
+            // Écouter les changements de section pour mettre à jour l'URL
+            window.livewire.on('user-dashboard-change', function(data) {
+                const section = data.section || data;
+                if (section) {
+                    // Mettre à jour l'URL sans recharger la page
+                    const url = new URL(window.location);
+                    url.searchParams.set('section', section);
+                    window.history.pushState({}, '', url);
+
+                    // Mettre à jour la variable Alpine.js
+                    if (window.Alpine && window.Alpine.data) {
+                        const alpineComponent = document.querySelector('[x-data]').__x;
+                        if (alpineComponent && alpineComponent.$data) {
+                            alpineComponent.$data.currentPage = section;
+                        }
+                    }
+                }
+            });
+        });
+
+        // Alternative pour Livewire v3
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Livewire !== 'undefined') {
+                Livewire.on('user-dashboard-change', (data) => {
+                    const section = data.section || data;
+                    if (section) {
+                        const url = new URL(window.location);
+                        url.searchParams.set('section', section);
+                        window.history.pushState({}, '', url);
+                    }
+                });
+            }
+        });
+    </script>
 </div>

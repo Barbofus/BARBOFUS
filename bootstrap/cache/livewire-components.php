@@ -13,6 +13,7 @@
   'user-panel.admin-panel' => 'App\\Http\\Livewire\\UserPanel\\AdminPanel',
   'user-panel.complete-skins-id' => 'App\\Http\\Livewire\\UserPanel\\CompleteSkinsId',
   'user-panel.haven-bags-validation' => 'App\\Http\\Livewire\\UserPanel\\HavenBagsValidation',
+  'user-panel.miss-skin-contest' => 'App\\Http\\Livewire\\UserPanel\\MissSkinContest',
   'user-panel.my-unityskins-chunk' => 'App\\Http\\Livewire\\UserPanel\\MyUnityskinsChunk',
   'user-panel.my-unityskins-infinite-load' => 'App\\Http\\Livewire\\UserPanel\\MyUnityskinsInfiniteLoad',
   'user-panel.myhavenbags-infinite-load' => 'App\\Http\\Livewire\\UserPanel\\MyhavenbagsInfiniteLoad',

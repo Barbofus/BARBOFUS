@@ -1,18 +1,21 @@
-<div class="w-full grid grid-flow-dense grid-rows-[theme(spacing.12),4rem,70rem,1fr]
+<div
+    class="w-full grid grid-flow-dense grid-rows-[theme(spacing.12),4rem,70rem,1fr]
           [@media(max-height:500px)_and_(max-width:900px)]:grid-rows-[0rem,0rem,70rem,1fr]
           min-[851px]:grid-rows-[theme(spacing.12),4rem,27rem,1fr]
           min-[1501px]:grid-cols-[27rem,1fr] min-[1501px]:grid-rows-[theme(spacing.20),27rem,1fr]
           min-[1801px]:grid-cols-[27rem,1fr,25rem] min-[1801px]:grid-rows-[theme(spacing.20),1fr]">
 
     <!-- Header skin section -->
-    <div class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 pt-8 min-[851px]:pt-0 min-[1501px]:pt-8 z-30
+    <div
+        class="bg-primary sticky flex flex-col gap-y-4 items-center justify-center w-full h-full px-4 top-12 pt-8 min-[851px]:pt-0 min-[1501px]:pt-8 z-30
             [@media(max-height:500px)_and_(max-width:900px)]:invisible
             min-[851px]:flex-row min-[851px]:gap-y-0 min-[851px]:justify-between
             min-[1501px]:col-start-2 min-[1501px]:px-8 min-[1501px]:z-20">
 
 
         <!-- Tuto poste -->
-        <div class="invisible [@media(min-height:501px)_and_(min-width:851px)]:visible
+        <div
+            class="invisible [@media(min-height:501px)_and_(min-width:851px)]:visible
                 min-[851px]:visible h-full w-fit py-2 flex flex-col items-start min-[975px]:items-center justify-between">
             <a class="flex items-center justify-around cursor-pointer gap-x-2"
                 href="https://www.youtube.com/watch?v=teuDOhkgIaM" title="Tutoriel pour poster un skin" target="_blank">
@@ -28,47 +31,54 @@
                     c0.158,0.129,0.435,0.194,0.827,0.194c0.185,0,0.392-0.033,0.626-0.097c0.232-0.064,0.4-0.121,0.506-0.17L14.271,18.307z
                     M14.137,7.429c-0.353,0.328-0.778,0.492-1.275,0.492c-0.496,0-0.924-0.164-1.28-0.492c-0.354-0.328-0.533-0.727-0.533-1.193
                     c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
-                    c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
+                    c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z" />
                 </svg>
                 <p class="font-display text-secondary text-[1rem]">{{ __('barbofus.buttonSkinOldIndexPostTuto') }}</p>
             </a>
 
-            <a href="https://www.dofusbook.net/fr/outils/skinator/draft" target="_blank" class="w-fit mt-2 font-display text-primary text-[1rem] bg-inactiveText hover:bg-secondary transition-all rounded-md px-4">{{ __('barbofus.contentAccessTo') }} skinator Dofusbook</a>
+            <a href="https://www.dofusbook.net/fr/outils/skinator/draft" target="_blank"
+                class="w-fit mt-2 font-display text-primary text-[1rem] bg-inactiveText hover:bg-secondary transition-all rounded-md px-4">{{ __('barbofus.contentAccessTo') }}
+                skinator Dofusbook</a>
         </div>
 
         {{-- Menu de trie --}}
         <x-skins.sorter :$orderByID :$orderDirection />
     </div>
 
-    <x-skins.main-filter :races="$races" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor" :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere :canWinnersOnly="true" />
+    <x-skins.main-filter :races="$races" :showCurrentMissSkinFilter="false" :winnersOnly="$winnersOnly" :barbOnly="$barbeOnly" :filterColor="$filterColor"
+        :petTypeContent="$skinPetTypeWhere" :skinContent="$skinContentWhere" :gender="$genderWhere" :raceSelection="$raceWhere" :searchFilterInput="$searchFilterInput" :$raceWhere
+        :canWinnersOnly="true" />
 
     {{-- La grille des skins --}}
-    <div class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mb-10 bg-primary">
-        @if(count($postIdChunks) > 0)
-            @for($i = 0; $i < $page && $i < $maxPage; $i++)
+    <div
+        class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mb-10 bg-primary">
+        @if (count($postIdChunks) > 0)
+            @for ($i = 0; $i < $page && $i < $maxPage; $i++)
                 <div class="w-full">
-                    <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="Self::ITEMS_PER_PAGE" :wire:key="'chunk-'.$queryCount.'-'.$i"/>
+                    <livewire:skin.skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="self::ITEMS_PER_PAGE"
+                        :wire:key="'chunk-'.$queryCount.'-'.$i" />
                 </div>
             @endfor
         @else
-            <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.webp') }}">
-            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} <span class="font-thin italic text-3xl">{{ __('barbofus.contentNoResult') }}</span></p>
+            <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure"
+                src="{{ asset('storage/images/misc_ui/Barbe_pleure.webp') }}">
+            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} <span
+                    class="text-3xl italic font-thin">{{ __('barbofus.contentNoResult') }}</span></p>
         @endif
 
         {{-- Utils qui permet de charger plus de skins, nécessite une fonction LoadMore() dans le ficher Livewire --}}
-        @if($this->HasMorePage())
-            <x-utils.load-more/>
+        @if ($this->HasMorePage())
+            <x-utils.load-more />
         @endif
     </div>
 
     {{-- Derniers vainqueurs et date du prochain tirage Miss'Skin --}}
-    <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'"/>
+    <livewire:skin.last-winners :wire:key="'winners-{{ rand() }}'" />
 
 
 
     <script>
-        function AddParamToUrl(name, value)
-        {
+        function AddParamToUrl(name, value) {
             // Récupère les paramètres
             const params = new URLSearchParams(window.location.search);
 
@@ -82,11 +92,12 @@
 
             // Puis, on affiche le nouvel URL avec tous les paramètres
             const newUrl = url + '?' + params.toString();
-            window.history.pushState({ path: newUrl }, '', newUrl);
+            window.history.pushState({
+                path: newUrl
+            }, '', newUrl);
         }
 
-        function ToggleArrayParamToUrl(name, value)
-        {
+        function ToggleArrayParamToUrl(name, value) {
             // Récupère les paramètres
             const params = new URLSearchParams(window.location.search);
 
@@ -94,30 +105,26 @@
 
 
             // Check si le paramètre du tableau est déjà dans celui-ci
-            if(params.get(name))
-            {
+            if (params.get(name)) {
                 // Transforme le paramètre en réel tableau
                 finalArray = params.get(name).split(',').map(decodeURIComponent);
 
                 let index = finalArray.indexOf(value.toString());
                 // Si oui, on la retire
-                if(index != -1)
-                {
+                if (index != -1) {
                     finalArray.splice(index, 1);
 
                     // Si le tableau est vide, on supprime le paramètre
-                    if(finalArray.length == 0) {
+                    if (finalArray.length == 0) {
 
                         RemoveParamUrl(name);
                         return;
                     }
-                }
-                else// Si la valeur n'y était pas, on l'ajoute
+                } else // Si la valeur n'y était pas, on l'ajoute
                 {
                     finalArray.push(value);
                 }
-            }
-            else // Si le paramètre n'existe pas, on l'ajoute
+            } else // Si le paramètre n'existe pas, on l'ajoute
             {
                 finalArray.push(value);
             }
@@ -133,18 +140,21 @@
 
             // Puis, on affiche le nouvel URL avec tous les paramètres
             const newUrl = url + '?' + params.toString();
-            window.history.pushState({ path: newUrl }, '', newUrl);
+            window.history.pushState({
+                path: newUrl
+            }, '', newUrl);
         }
 
-        function RemoveParamUrl(name)
-        {
+        function RemoveParamUrl(name) {
             const url = new URL(window.location.href);
             url.search = "";
             const params = new URLSearchParams(window.location.search);
             params.delete(name);
 
             const newUrl = url + '?' + params.toString();
-            window.history.pushState({ path: newUrl }, '', newUrl);
+            window.history.pushState({
+                path: newUrl
+            }, '', newUrl);
         }
     </script>
 

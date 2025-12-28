@@ -20,6 +20,12 @@ class SkinatorController extends Controller
         $this->middleware(UnitySkinsOwnerShip::class)->only(['edit']);
     }
 
+    function GetMissSkinTheme(): string
+    {
+        $missSkinData = json_decode(Storage::disk('local')->get('json/missskin.json'), true);
+        return $missSkinData['theme'] ?? 'A définir';
+    }
+
     public function create(Request $request): View
     {
         $skinId = $request->input('skin');
@@ -41,7 +47,8 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
-            'isMissSkinTime' => (new IsMissSkinTime)()
+            'isMissSkinTime' => (new IsMissSkinTime)(),
+            'missSkinTheme' => $this->GetMissSkinTheme()
         ]);
     }
 
@@ -71,7 +78,8 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
-            'isMissSkinTime' => (new IsMissSkinTime)()
+            'isMissSkinTime' => (new IsMissSkinTime)(),
+            'missSkinTheme' => $this->GetMissSkinTheme()
         ]);
     }
 
@@ -101,7 +109,8 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'POST',
-            'isMissSkinTime' => (new IsMissSkinTime)()
+            'isMissSkinTime' => (new IsMissSkinTime)(),
+            'missSkinTheme' => $this->GetMissSkinTheme()
         ]);
     }
 
@@ -115,7 +124,8 @@ class SkinatorController extends Controller
             'skin' => $skin,
             'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
             'method' => 'PUT',
-            'isMissSkinTime' => (new IsMissSkinTime)()
+            'isMissSkinTime' => (new IsMissSkinTime)(),
+            'missSkinTheme' => $this->GetMissSkinTheme()
         ]);
     }
 
@@ -137,36 +147,6 @@ class SkinatorController extends Controller
             ])
             ->whereNotNull('asset_id')
             ->orderBy('updated_at', 'desc')
-            /*->orderByRaw("FIELD(category, 'hat', 'cape', 'shield', 'pet', 'wings', 'shoulderpads', 'costume')")
-            ->orderByRaw("FIELD(pet_type, 'familier', 'montilier', 'dragodinde', 'muldo', 'volkorne')")
-            ->orderByRaw("
-                CASE
-                    WHEN pet_type IN ('dragodinde', 'muldo', 'volkorne') THEN
-                        CASE
-                            WHEN subcategory = 'ceremonial' THEN 0
-                            WHEN subcategory = 'mimisymbic' THEN 1
-                            ELSE 2
-                        END
-                    ELSE
-                        CASE
-                            WHEN subcategory = 'mimisymbic' THEN 0
-                            WHEN subcategory = 'ceremonial' THEN 1
-                            WHEN subcategory = 'livingObject' THEN 2
-                            ELSE 3
-                        END
-                END
-            ")
-            ->orderBy('level')
-            ->orderByRaw('name REGEXP ".* [0-9]+$" DESC')
-            ->orderByRaw('TRIM(SUBSTRING_INDEX(name, " ", -1)) REGEXP "^[0-9]+$" DESC')
-            ->orderByRaw('CASE
-                    WHEN name REGEXP ".* [0-9]+$" THEN TRIM(SUBSTRING_INDEX(name, " ", LENGTH(name) - LENGTH(REPLACE(name, " ", ""))))
-                    ELSE name
-                END')
-            ->orderByRaw('CASE
-                    WHEN name REGEXP ".* [0-9]+$" THEN CAST(SUBSTRING_INDEX(name, " ", -1) AS UNSIGNED)
-                    ELSE 0
-                END')*/
             ->get();
 
         $items->map(function ($item) use ($itemsData) {

@@ -19,7 +19,7 @@ class UserDashboard extends Component
     public function mount()
     {
         if (request()->has('section')) {
-            $this->ChangeSection(request('section'));
+            $this->section = request('section');
         }
     }
 
@@ -41,6 +41,8 @@ class UserDashboard extends Component
     public function ChangeSection(string $newSection)
     {
         $this->section = $newSection;
-        $this->dispatchBrowserEvent('user-dashboard-change');
+        $this->dispatchBrowserEvent('user-dashboard-change', [
+            'section' => $newSection
+        ]);
     }
 }

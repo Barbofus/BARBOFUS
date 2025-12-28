@@ -4,6 +4,11 @@
     <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">
         {{ str_ends_with(Route::currentRouteName(), 'edit') ? __('barbofus.titleEdit') : 'Skinator' }}</h1>
 
+    @if ($isMissSkinTime)
+        <p class="text-lg italic font-light text-center text-inactiveText">Thème du Miss'Skin: <span
+                class="text-secondary">{{ $missSkinTheme }}</span></p>
+    @endif
+
     <form autocomplete="off" class="w-[min(98vw,120rem)] mx-auto mb-16 h-fit relative" method="POST" id="skinator-form"
         action="{{ $route }}" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';"
         x-data="skinator" x-init="initWatcher();

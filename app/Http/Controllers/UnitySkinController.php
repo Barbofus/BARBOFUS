@@ -51,10 +51,6 @@ class UnitySkinController extends Controller
      */
     public function show(UnitySkin $skin)
     {
-        if ($skin->status != 'Posted' && $skin->user_id != auth()->id()) {
-            abort(404);
-        }
-
         // Incrémenter les vues détaillées de façon asynchrone
         dispatch(new \App\Jobs\IncrementViewJob(
             $skin->id,
