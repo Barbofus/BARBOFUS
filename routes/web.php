@@ -10,13 +10,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageEnVracController;
 use App\Http\Controllers\MissSkinController;
 use App\Http\Controllers\PlanningController;
+use App\Http\Controllers\RewardsController;
 use App\Http\Controllers\SkinatorController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\TougliController;
 use App\Http\Controllers\UnitySkinController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\VerifyEmailController;
-use App\Models\UnitySkin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,6 +75,8 @@ Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
 Route::view('/socials', 'socials')->name('socials');
 
 Route::get('/planning', [PlanningController::class, 'index'])->name('planning.index');
+
+Route::get('/recompenses', [RewardsController::class, 'index'])->name('rewards.index');
 
 Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
 
@@ -150,6 +152,11 @@ Route::middleware(['can:admin-access', 'auth'])->group(function () {
     Route::put('/planning/update-all', [PlanningController::class, 'updateAll'])->name('planning.update-all');
     Route::post('/planning/update-image', [PlanningController::class, 'updateImage'])->name('planning.update-image');
     Route::post('/planning/change-week', [PlanningController::class, 'changeWeek'])->name('planning.change-week');
+
+    Route::put('/recompenses/update-all', [RewardsController::class, 'updateAll'])->name('rewards.update-all');
+    Route::post('/recompenses/update-image', [RewardsController::class, 'updateImage'])->name('rewards.update-image');
+    Route::post('/recompenses/add', [RewardsController::class, 'add'])->name('rewards.add');
+    Route::delete('/recompenses/delete', [RewardsController::class, 'delete'])->name('rewards.delete');
 });
 
 Route::middleware(['can:validate-skin', 'auth'])->group(function () {
