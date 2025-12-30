@@ -788,8 +788,9 @@
                     </div>
                 </div>
 
+                {{-- Animation lists --}}
                 <div x-show="showAnimationList" x-transition x-cloak @click.outside="showAnimationList = false"
-                    class="h-[35rem] rounded border-2 border-secondary p-4 pb-8 w-full overflow-auto z-20 top-20 left-0 absolute flex flex-wrap gap-4 gap-y-6 bg-primary">
+                    class="h-[35rem] rounded border-2 border-secondary p-4 pb-8 w-full overflow-auto z-30 top-20 left-0 absolute flex flex-wrap gap-4 gap-y-6 bg-primary">
 
                     <template x-for="(a, index) in animations" :key="index">
                         <button type="button" @click="animation = index; orientationKey = 0"
