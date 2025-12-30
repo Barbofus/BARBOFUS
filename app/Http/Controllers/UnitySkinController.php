@@ -62,7 +62,7 @@ class UnitySkinController extends Controller
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 
         $toShow = DB::table('unity_skins')
-            ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'color_guild_1', 'color_guild_2', 'unity_skins.id', 'unity_skins.name', 'chunk_views', 'detailed_views', 'total_views')
+            ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'color_guild_1', 'color_guild_2', 'unity_skins.id', 'unity_skins.name', 'detailed_views')
             ->join('races', 'unity_skins.race_id', '=', 'races.dofus_id')
             ->where('unity_skins.id', $skin->id)
             ->addSelect([

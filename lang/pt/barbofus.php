@@ -125,8 +125,8 @@ return [
     'descriptionSkinCreate' => 'Nos mostre suas aparências 3.0 !',
     'descriptionSkinCreate2.0' => 'Nos mostre suas aparências !',
     'descriptionDeleteSkinVerif' => 'Tem certeza que quer apagar a aparência',
-    'descriptionMissSkin' => 'Ranking toda <span class="font-normal">Terça-feira às 9am</span> !', // "ranking" could go as "classificação"
-    'descriptionMissSkinDetails' => '<span class="font-normal text-[0.9rem]">Miss\'Aparência</span> é um concurso semanal automático, toda semana as aparências com mais "curtidas" serão escolhidas como vencedoras!',
+    'descriptionMissSkin' => 'Ranking toda <span class="font-normal">Terça-feira</span> !', // "ranking" could go as "classificação"
+    'descriptionMissSkinDetails' => '<span class="font-normal text-[0.9rem]">Miss\'Aparência</span> é um concurso semanal organizado por <span class="font-normal">Barbe Douce</span>. Toda semana 5 aparências serão selecionadas e apresentadas ao vivo para eleger um <span class="font-normal">top 3 pela comunidade!</span>',
     'descriptionNotLiked' => 'Você não curtiu nada !',
     'descriptionNotFavorite' => 'Você ainda não adicionou nada aos favoritos!',
     'descriptionFavoriteHistoric' => 'A lista das suas skins favoritas',

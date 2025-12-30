@@ -15,8 +15,7 @@
         if (orderID == 2 && orderDir == 'DESC') this.selection = '{{ __('barbofus.inputSortedRewards') }}';
         if (orderID == 3 && orderDir == 'ASC') this.selection = '{{ __('barbofus.inputSortedClasses') }}';
         if (orderID == 4 && orderDir == 'DESC') this.selection = '{{ __('barbofus.inputSortedViewed') }}';
-        if (orderID == 5 && orderDir == 'ASC') this.selection = '{{ __('barbofus.inputSortedViewed') }}';
-        if (orderID == 6 && orderDir == 'ASC') this.selection = '{{ __('barbofus.inputSortedRandom') }}';
+        if (orderID == 5 && orderDir == 'ASC') this.selection = '{{ __('barbofus.inputSortedRandom') }}';
     }
 }" x-init="SetFirstSelection()">
     <div class="flex items-center justify-around gap-x-2" x-on:mousedown.outside="if(showSort) showSort = false">
@@ -24,7 +23,7 @@
         {{-- Randomizer --}}
         <button aria-label="Skins Aléatoire" class="h-10 w-10 mr-4 max-[400px]:hidden"
             :class="diceAnim ? 'animate-dice [--custom-animation-time:0.7s]' : ''" wire:ignore wire:key="dice"
-            @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = '{{ __('barbofus.inputSortedRandom') }}'; sortAsc = true; showSort = false; $wire.SortBy(6, 'ASC'), AddParamToUrl('sort', '6,ASC'), window.scrollTo(0,0)">
+            @click.throttle.700ms="diceAnim = true; setTimeout(() => {diceAnim = false},700); selection = '{{ __('barbofus.inputSortedRandom') }}'; sortAsc = true; showSort = false; $wire.SortBy(5, 'ASC'), AddParamToUrl('sort', '5,ASC'), window.scrollTo(0,0)">
             <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" alt="Skin Aléatoire" height="40"
                 width="40" draggable="false" class="h-full transition-all hover:scale-90">
         </button>
@@ -53,12 +52,9 @@
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
                 x-on:mousedown="selection = '{{ __('barbofus.inputSortedRewards') }}'; sortAsc = false; showSort = false; $wire.SortBy(2, 'DESC'), AddParamToUrl('sort', '2,DESC'), window.scrollTo(0,0)">{{ __('barbofus.inputSortedRewards') }}</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-                x-on:mousedown="selection = '{{ __('barbofus.labelSkinClass') }}'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC'), AddParamToUrl('sort', '3,ASC'), window.scrollTo(0,0)">{{ __('barbofus.inputSortedClasses') }}</button>
+                x-on:mousedown="selection = '{{ __('barbofus.inputSortedClasses') }}'; sortAsc = true; showSort = false; $wire.SortBy(3, 'ASC'), AddParamToUrl('sort', '3,ASC'), window.scrollTo(0,0)">{{ __('barbofus.inputSortedClasses') }}</button>
             <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-                x-on:mousedown="selection = '{{ __('barbofus.inputSortedViewed') }}'; sortAsc = true; showSort = false; $wire.SortBy(4, 'DESC'), AddParamToUrl('sort', '4,DESC'), window.scrollTo(0,0)">{{ __('barbofus.inputSortedViewed') }}</button>
-            <button class="w-full h-full px-4 py-1 hover:bg-secondary"
-                x-on:mousedown="selection = '{{ __('barbofus.inputSortedViewed') }}'; sortAsc = true; showSort = false; $wire.SortBy(5, 'DESC'), AddParamToUrl('sort', '5,DESC'), window.scrollTo(0,0)">{{ __('barbofus.inputSortedViewed') }}
-                test</button>
+                x-on:mousedown="selection = '{{ __('barbofus.inputSortedViewed') }}'; sortAsc = false; showSort = false; $wire.SortBy(4, 'DESC'), AddParamToUrl('sort', '4,DESC'), window.scrollTo(0,0)">{{ __('barbofus.inputSortedViewed') }}</button>
         </div>
     </div>
 </div>

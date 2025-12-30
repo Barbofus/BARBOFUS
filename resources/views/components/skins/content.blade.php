@@ -226,11 +226,9 @@
                 loading="lazy" class="h-full mx-auto transition-transform group-hover:scale-105" draggable="false">
         </div>
 
-        <!-- Vues (modos seulement, au hover) -->
-        @can('admin-access')
-            @if (isset($skin->chunk_views) && isset($skin->detailed_views))
-                <x-skins.skin-views :skin="$skin" />
-            @endif
-        @endcan
+        <!-- Vues -->
+        @if (isset($skin->detailed_views))
+            <x-skins.skin-views :skin="$skin" />
+        @endif
     </a>
 </div>

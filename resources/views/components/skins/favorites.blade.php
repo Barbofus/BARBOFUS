@@ -1,6 +1,4 @@
-<div class="absolute flex items-center pr-1 bottom-1 group right-1 h-7">
-    {{-- <p class="text-lg font-normal text-secondary" x-text="likeCount"></p> --}}
-
+<div class="absolute flex items-center pr-1 top-2 group left-2 h-7" :class="liked ? '' : 'opacity-0 group-hover:opacity-100 transition-all'">
     <div class="h-full w-7">
         <x-svg.star :canLike="$canLike" />
         @if ($canLike)
