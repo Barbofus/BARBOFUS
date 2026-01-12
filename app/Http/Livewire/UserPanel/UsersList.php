@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\UserPanel;
 
+use App\Actions\Discord\GetDiscordUsersInfo;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -18,10 +19,14 @@ class UsersList extends Component
      */
     public function render()
     {
+        $users = $this->GetAllUsers();
+        $discordInfos = $this->GetDiscordInfos($users);
+
         return view('livewire.user-panel.users-list', [
             'userCount' => User::all()->count(),
-            'users' => $this->GetAllUsers(),
+            'users' => $users,
             'roles' => $this->GetRoles(),
+            'discordInfos' => $discordInfos,
         ]);
     }
 
@@ -41,7 +46,7 @@ class UsersList extends Component
     public function GetAllUsers()
     {
         return User::query()
-            ->select('users.id', 'users.name')
+            ->select('users.id', 'users.name', 'users.email')
             ->with('roles:id,name')
             ->when($this->query, function ($query) {
                 $query->where('users.name', 'LIKE', '%' . $this->query . '%');
@@ -63,7 +68,7 @@ class UsersList extends Component
     {
         $user = User::find($userID);
 
-        $this->dispatchBrowserEvent('alert-event', ['message' => 'Le compte de '.$user->name.' a été supprimé.']);
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Le compte de ' . $user->name . ' a été supprimé.']);
 
         $user->delete();
     }
@@ -96,5 +101,17 @@ class UsersList extends Component
 
         // Rafraîchir les rôles dans l'instance Livewire
         $user->load('roles');
+    }
+
+    /**
+     * Récupère les informations Discord pour tous les utilisateurs de manière optimisée
+     *
+     * @param Collection $users
+     * @return array<int, array|null>
+     */
+    private function GetDiscordInfos(Collection $users): array
+    {
+        $userIds = $users->pluck('id');
+        return (new GetDiscordUsersInfo)($userIds);
     }
 }

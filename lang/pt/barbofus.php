@@ -61,6 +61,7 @@ return [
     'buttonLinkDiscord' => 'Vincule seu discord', // "link" would work as well, "vincule" is a more verbose approach
     'buttonShare' => 'Compartilhar',
     'buttonModify' => 'Editar',
+    'buttonRewards' => 'Recompensas',
 
     'titleHome' => 'Barbofus, a galeria de aparências do Dofus',
     'titleBarbe' => 'Descubra Barbe Douce',
@@ -129,6 +130,11 @@ return [
     'descriptionMissSkinDetails' => '<span class="font-normal text-[0.9rem]">Miss\'Aparência</span> é um concurso semanal organizado por <span class="font-normal">Barbe Douce</span>. Toda semana 5 aparências serão selecionadas e apresentadas ao vivo para eleger um <span class="font-normal">top 3 pela comunidade!</span>',
     'descriptionNotLiked' => 'Você não curtiu nada !',
     'descriptionNotFavorite' => 'Você ainda não adicionou nada aos favoritos!',
+
+    'popupMissSkinTitle' => 'Miss\'Aparência - Tema: ',
+    'popupMissSkinContent' => 'O concurso Miss\'Aparência começou! Toda <strong>terça-feira das 7:00 às 11:30</strong>, poste suas aparências mais bonitas através do <strong><a href="/skinator" class="text-goldText hover:text-goldTextLit">Skinator</a></strong> para participar.<br><br><strong class="text-lg">📋 Regras:</strong><br>• Use seu nome de usuário da conta Ankama no nome da aparência, formato: <em>SeuUsuário#0000</em><br>• Escolha sua recompensa na página de <strong><a href="/recompenses" class="text-goldText hover:text-goldTextLit">Recompensas</a></strong><br>• O concurso acontece na <strong>Twitch</strong> onde os viewers elegem o top 3<br><br><strong class="text-lg">💡 Dicas:</strong><br>• Vincule seu Discord em "Minha Conta" para ser contatado se necessário<br>• As escolhas de recompensas são reiniciadas toda terça-feira, lembre-se de selecioná-las novamente',
+    'popupMissSkinButton' => 'Participar agora',
+    'popupMissSkinClose' => 'Fechar',
     'descriptionFavoriteHistoric' => 'A lista das suas skins favoritas',
     'descriptionNoSkinPosted' => 'Nenhuma aparência postada ainda !',
     'descriptionLikeHistoric' => 'Seu histórico de curtidas',

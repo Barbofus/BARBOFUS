@@ -51,6 +51,14 @@ class UnitySkinController extends Controller
      */
     public function show(UnitySkin $skin)
     {
+        // Vérifier l'autorisation pour les skins MissSkin
+        if (
+            $skin->status === 'MissSkin' &&
+            ($skin->user_id !== auth()->id() && !auth()->user()?->hasRole('Administrateur'))
+        ) {
+            abort(403);
+        }
+
         // Incrémenter les vues détaillées de façon asynchrone
         dispatch(new \App\Jobs\IncrementViewJob(
             $skin->id,

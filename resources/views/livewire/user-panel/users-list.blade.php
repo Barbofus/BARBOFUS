@@ -26,7 +26,37 @@
                 <tbody class="flex flex-col overflow-y-scroll w-full h-[45vh]">
                     @foreach($users as $user)
                         <tr class="odd:bg-primary-100 flex justify-between gap-x-8 items-center px-12 py-4">
-                            <td class="font-light text-xl w-full">{{ $user->name }}</td>
+                            <td class="font-light text-xl w-full">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex-1">
+                                        <p class="text-secondary text-xl font-light mb-1">{{ $user->name }}</p>
+                                        <div x-data="{ showEmail: false }">
+                                            <div x-show="showEmail"
+                                                 x-transition:enter="transition ease-out duration-200"
+                                                 x-transition:enter-start="opacity-0"
+                                                 x-transition:enter-end="opacity-100">
+                                                <p class="text-inactiveText text-sm font-light">{{ $user->email }}</p>
+                                            </div>
+                                            <div x-show="!showEmail">
+                                                <div class="bg-inactiveText rounded-lg px-2 py-1 cursor-pointer hover:bg-secondary transition-colors w-fit"
+                                                     @click="showEmail = true">
+                                                    <p class="text-sm font-medium text-transparent">████████</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 ml-4">
+                                        @if(isset($discordInfos[$user->id]) && $discordInfos[$user->id])
+                                            @php $discord = $discordInfos[$user->id]; @endphp
+                                            <x-utils.small-discord-card :$discord />
+                                        @else
+                                            <div class="bg-primary-100 rounded-lg px-3 py-2 border border-inactiveText">
+                                                <p class="text-inactiveText text-xs italic">Non connecté</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </td>
                             <td>
                                 <div x-data="{ showRoles: false, }" class="relative w-[12.5rem]"
                                      x-on:mousedown.outside="if(showRoles) showRoles = false">

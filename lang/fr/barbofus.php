@@ -57,6 +57,7 @@ return [
     'buttonLinkDiscord' => 'Connecte ton discord',
     'buttonShare' => 'Partager',
     'buttonModify' => 'Modifier',
+    'buttonRewards' => 'Récompenses',
 
     'titleHome' => 'Barbofus, la galerie de skins dofus',
     'titleBarbe' => 'Découvre Barbe Douce',
@@ -123,6 +124,11 @@ return [
     'descriptionMissSkin' => 'Classement tous les <span class="font-normal">Mardi</span> !',
     'descriptionMissSkinDetails' => '<span class="font-normal text-[0.9rem]">Miss\'Skin</span> est un concours hebdomadaire organisé par <span class="font-normal">Barbe Douce</span>. Chaque semaine 5 skins seront sélectionnés puis présentés en live pour élire un <span class="font-normal">top 3 par la communauté !</span>',
     'descriptionNotLiked' => 'Tu n\'as encore rien aimé !',
+
+    'popupMissSkinTitle' => 'Miss\'Skin - Thème : ',
+    'popupMissSkinContent' => 'Le concours Miss\'Skin commence ! Tous les <strong>mardis de 7h00 à 11h30</strong>, postez vos plus beaux skins via le <strong><a href="/skinator" class="text-goldText hover:text-goldTextLit">Skinator</a></strong> pour participer.<br><br><strong class="text-lg">📋 Règles :</strong><br>• Utilisez le pseudo de compte Ankama dans le nom du skin, au format : <em>VotrePseudo#0000</em><br>• Choisissez votre récompense sur la page <strong><a href="/recompenses" class="text-goldText hover:text-goldTextLit">Récompenses</a></strong><br>• Le concours se déroule sur <strong>Twitch</strong> où les viewers éliront le top 3<br><br><strong class="text-lg">💡 Conseils :</strong><br>• Liez votre Discord dans "Mon compte" pour être contacté au besoin<br>• Le choix des récompenses est remis à zéro chaque mardi, pensez à les sélectionner de nouveau',
+    'popupMissSkinButton' => 'Participer maintenant',
+    'popupMissSkinClose' => 'Fermer',
     'descriptionNotFavorite' => 'Tu n\'as encore rien mis en favoris !',
     'descriptionFavoriteHistoric' => 'La liste de tes skins favoris',
     'descriptionNoSkinPosted' => 'Encore aucun skin posté !',

@@ -57,6 +57,7 @@ return [
     'buttonLinkDiscord' => 'Vincula tu discord',
     'buttonShare' => 'Compartir',
     'buttonModify' => 'Editar',
+    'buttonRewards' => 'Recompensas',
 
     'titleHome' => 'Barbofus, la galería de skins de Dofus',
     'titleBarbe' => 'Conoce a Barbe Douce',
@@ -122,6 +123,11 @@ return [
     'descriptionDeleteSkinVerif' => '¿Estás seguro que deseas eliminar la skin?',
     'descriptionMissSkin' => 'Clasificación cada <span class="font-normal">Martes</span> !',
     'descriptionMissSkinDetails' => '<span class="font-normal text-[0.9rem]">Miss\'Skin</span> es un concurso semanal organizado por <span class="font-normal">Barbe Douce</span>. Cada semana 5 skins serán seleccionadas y luego presentadas en vivo para elegir un <span class="font-normal">top 3 por la comunidad!</span>',
+
+    'popupMissSkinTitle' => 'Miss\'Skin - Tema: ',
+    'popupMissSkinContent' => '¡El concurso Miss\'Skin comienza! Todos los <strong>martes de 7:00 AM a 11:30 AM</strong>, publica tus skins más hermosas a través del <strong><a href="/skinator" class="text-goldText hover:text-goldTextLit">Skinator</a></strong> para participar.<br><br><strong class="text-lg">📋 Reglas:</strong><br>• Usa tu nombre de usuario de cuenta Ankama en el nombre de la skin, formato: <em>TuUsuario#0000</em><br>• Elige tu recompensa en la página de <strong><a href="/recompenses" class="text-goldText hover:text-goldTextLit">Recompensas</a></strong><br>• El concurso se lleva a cabo en <strong>Twitch</strong> donde los espectadores elegirán el top 3<br><br><strong class="text-lg">💡 Consejos:</strong><br>• Vincula tu Discord en "Mi Cuenta" para ser contactado si es necesario<br>• Las opciones de recompensas se reinician cada martes, recuerda seleccionarlas de nuevo',
+    'popupMissSkinButton' => 'Participar ahora',
+    'popupMissSkinClose' => 'Cerrar',
     'descriptionNotLiked' => '¡No has dado ningún like!',
     'descriptionNotFavorite' => '¡Todavía no has añadido nada a favoritos!',
     'descriptionFavoriteHistoric' => 'La lista de tus skins favoritas',
