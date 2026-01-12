@@ -109,6 +109,57 @@
                         </div>
                     @endif
                 </div>
+
+                {{-- Récompense Miss Skin --}}
+                <div>
+                    <h2 class="font-thin text-3xl min-[800px]:text-4xl uppercase">{{ __('barbofus.titleMissSkinReward') }}</h2>
+                    <div class="border-b border-secondary w-[min(24rem,50vw)] ml-4"></div>
+
+                    <div class="flex items-center gap-6 pl-8 mt-6">
+                        @if (auth()->user()->selected_reward_image && auth()->user()->hasValidSelectedReward())
+                            {{-- Affichage de la récompense sélectionnée --}}
+                            <div class="flex items-center gap-4">
+                                <div class="relative w-24 h-24 overflow-hidden rounded-lg bg-white/5">
+                                    <img src="{{ auth()->user()->selected_reward_image }}"
+                                         alt="Récompense sélectionnée"
+                                         class="object-cover w-full h-full">
+                                    <div class="absolute top-1 right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-light text-secondary">{{ __('barbofus.contentSelectedReward') }}</p>
+                                    <p class="text-sm italic text-inactiveText">{{ __('barbofus.contentRewardDescription') }}</p>
+                                </div>
+                            </div>
+                        @else
+                            {{-- Aucune récompense sélectionnée --}}
+                            <div class="flex items-center gap-4">
+                                <div class="w-24 h-24 rounded-lg bg-white/5 flex items-center justify-center">
+                                    <svg class="w-12 h-12 text-white/30" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9.375 3a1.875 1.875 0 0 0 0 3.75h1.875v4.5H3.375A1.875 1.875 0 0 1 1.5 9.375v-.75c0-1.036.84-1.875 1.875-1.875h3.193A3.375 3.375 0 0 1 12 2.753a3.375 3.375 0 0 1 5.432 3.997h3.943c1.035 0 1.875.84 1.875 1.875v.75c0 1.036-.84 1.875-1.875 1.875H12.75v-4.5h1.875a1.875 1.875 0 1 0-1.875-1.875V6.75h-1.5V4.875C11.25 3.839 10.41 3 9.375 3ZM11.25 12.75H3v6.75a2.25 2.25 0 0 0 2.25 2.25h6v-9ZM12.75 12.75v9h6.75a2.25 2.25 0 0 0 2.25-2.25v-6.75h-9Z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-light text-inactiveText">{{ __('barbofus.contentNoRewardSelected') }}</p>
+                                    <p class="text-sm italic text-inactiveText">{{ __('barbofus.contentNoRewardDescription') }}</p>
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- Bouton pour gérer la récompense --}}
+                        <button wire:click="goToRewards"
+                            class="px-6 py-3 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white font-medium rounded-lg transition-all hover:scale-105 shadow-lg">
+                            @if (auth()->user()->selected_reward_image && auth()->user()->hasValidSelectedReward())
+                                {{ __('barbofus.buttonChangeReward') }}
+                            @else
+                                {{ __('barbofus.buttonChooseReward') }}
+                            @endif
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {{-- Paramètres --}}

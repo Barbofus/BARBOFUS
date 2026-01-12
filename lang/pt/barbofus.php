@@ -315,4 +315,13 @@ Caso contrário, para redefinir su senha, clique no botão abaixo:',
 
     'errorUnauthenticated' => 'Nenhuma conta encontrada',
     'errorEmailNotVerified' => 'Você deve validar seu endereço de e-mail no Barbofus',
+
+    // Miss Skin Rewards
+    'titleMissSkinReward' => 'Prêmio Miss Skin',
+    'contentSelectedReward' => 'Prêmio selecionado',
+    'contentRewardDescription' => 'Prêmio para o vencedor do concurso Miss Skin',
+    'contentNoRewardSelected' => 'Nenhum prêmio selecionado',
+    'contentNoRewardDescription' => 'Escolha seu prêmio em caso de vitória',
+    'buttonChooseReward' => 'Escolher meu prêmio',
+    'buttonChangeReward' => 'Alterar meu prêmio',
 ];

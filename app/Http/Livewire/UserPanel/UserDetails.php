@@ -235,6 +235,14 @@ class UserDetails extends Component
     }
 
     /**
+     * Rediriger vers la page des récompenses
+     */
+    public function goToRewards()
+    {
+        return $this->redirect(route('rewards.index'));
+    }
+
+    /**
      * @return View
      */
     public function render()

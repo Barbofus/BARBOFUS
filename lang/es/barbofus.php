@@ -310,4 +310,13 @@ De lo contrario, haz clic en el botón de abajo para reestablecer tu contraseña
 
     'errorUnauthenticated' => 'No se encontró ninguna cuenta',
     'errorEmailNotVerified' => 'Debe validar su dirección de correo electrónico en Barbofus',
+
+    // Miss Skin Rewards
+    'titleMissSkinReward' => 'Premio Miss Skin',
+    'contentSelectedReward' => 'Premio seleccionado',
+    'contentRewardDescription' => 'Premio para el ganador del concurso Miss Skin',
+    'contentNoRewardSelected' => 'Ningún premio seleccionado',
+    'contentNoRewardDescription' => 'Elige tu premio en caso de victoria',
+    'buttonChooseReward' => 'Elegir mi premio',
+    'buttonChangeReward' => 'Cambiar mi premio',
 ];

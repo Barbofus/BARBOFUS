@@ -310,4 +310,13 @@ Sinon, pour réinitialiser ton mot de passe, clique sur le bouton plus bas',
 
     'errorUnauthenticated' => 'Aucun compte trouvé',
     'errorEmailNotVerified' => 'Vous devez valider votre adresse e-mail sur Barbofus',
+
+    // Miss Skin Rewards
+    'titleMissSkinReward' => 'Récompense Miss Skin',
+    'contentSelectedReward' => 'Récompense sélectionnée',
+    'contentRewardDescription' => 'Récompense pour le gagnant du concours Miss Skin',
+    'contentNoRewardSelected' => 'Aucune récompense sélectionnée',
+    'contentNoRewardDescription' => 'Choisissez votre récompense en cas de victoire',
+    'buttonChooseReward' => 'Choisir ma récompense',
+    'buttonChangeReward' => 'Modifier ma récompense',
 ];

@@ -5,7 +5,7 @@
         class="max-w-screen pb-16 lg:pb-0 min-[1301px]:min-h-[calc(100vh-2.5rem)] min-h-screen bg-gradient-to-br from-[#0f0e0d] via-[#1a1715] to-[#0f0e0d] flex items-center justify-center p-[min(2rem,1.5vw)]">
         <div
             class="w-full max-w-[1920px] lg:aspect-video bg-gradient-to-br from-[#292522]/20 to-[#292522]/10 backdrop-blur-sm border border-white/5 rounded-2xl lg:rounded-3xl p-[min(2rem,1.5vw)] shadow-2xl">
-            <div class="flex flex-col h-full" x-data="rewardsComponent({{ auth()->check() && auth()->user()->can('admin-access') ? 'true' : 'false' }})">
+            <div class="flex flex-col h-full" x-data="rewardsComponent({{ auth()->check() && auth()->user()->can('admin-access') ? 'true' : 'false' }}, {{ auth()->check() ? 'true' : 'false' }}, '{{ $userSelectedReward ?? '' }}')">
 
                 {{-- TOAST ALERT --}}
                 <div x-show="toast.show" x-text="toast.message"
@@ -54,7 +54,9 @@
                 <div x-cloak class="flex-1 min-h-0 mt-16 overflow-y-auto">
                     <div class="grid justify-center gap-4" style="grid-template-columns: repeat(auto-fit, 220px);">
                         <template x-for="(reward, index) in rewards" :key="index">
-                            <div class="transition-all border bg-white/5 backdrop-blur-sm border-white/10 rounded-xl hover:border-white/20 group" style="width: 220px; height: 270px;">
+                            <div class="relative transition-all border bg-white/5 backdrop-blur-sm border-white/10 rounded-xl hover:border-white/20 group"
+                                 style="width: 220px; height: 270px;"
+                                 :class="{ 'border-goldTextLit border-2': isAuthenticated && userSelectedReward === reward.image }">
                                 {{-- Image de la récompense --}}
                                 <div class="relative w-full h-full overflow-hidden transition-all rounded-lg bg-white/5 group-hover:bg-white/10"
                                     @dragover.prevent @dragenter.prevent="dragOverIndex = index" @dragleave.prevent="handleDragLeave($event, index)" @drop.prevent="handleDrop($event, index)">
@@ -65,10 +67,16 @@
                                         :class="{ 'opacity-50': dragOverIndex === index }">
 
                                     {{-- SVG de cadeau par défaut --}}
-                                    <div x-show="!reward.image" class="flex items-center justify-center w-full h-full text-white/30">
+                                    <div x-show="!reward.image" class="flex items-center justify-center w-full h-full text-secondary/30">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16">
                                             <path d="M9.375 3a1.875 1.875 0 0 0 0 3.75h1.875v4.5H3.375A1.875 1.875 0 0 1 1.5 9.375v-.75c0-1.036.84-1.875 1.875-1.875h3.193A3.375 3.375 0 0 1 12 2.753a3.375 3.375 0 0 1 5.432 3.997h3.943c1.035 0 1.875.84 1.875 1.875v.75c0 1.036-.84 1.875-1.875 1.875H12.75v-4.5h1.875a1.875 1.875 0 1 0-1.875-1.875V6.75h-1.5V4.875C11.25 3.839 10.41 3 9.375 3ZM11.25 12.75H3v6.75a2.25 2.25 0 0 0 2.25 2.25h6v-9ZM12.75 12.75v9h6.75a2.25 2.25 0 0 0 2.25-2.25v-6.75h-9Z" />
                                         </svg>
+                                    </div>
+
+                                    {{-- Badge "Sélectionnée" --}}
+                                    <div x-show="isAuthenticated && userSelectedReward === reward.image"
+                                        class="absolute z-20 px-2 py-1 text-xs rounded-full text-primary goldGradient top-3 left-3">
+                                        ✓ Sélectionnée
                                     </div>
 
                                     {{-- Zone de drag & drop overlay --}}
@@ -83,9 +91,22 @@
                                         </div>
                                     </div>
 
+                                    {{-- Bouton de sélection pour tous les utilisateurs connectés --}}
+                                    <div x-show="isAuthenticated"
+                                        class="absolute z-10 transition-opacity opacity-0 bottom-3 left-3 right-3 group-hover:opacity-100">
+                                        <button @click="selectReward(reward.image)"
+                                            :disabled="userSelectedReward === reward.image"
+                                            class="w-full px-3 py-2 text-sm font-medium transition-all rounded-lg"
+                                            :class="userSelectedReward === reward.image
+                                                ? 'goldGradient text-primary cursor-default'
+                                                : 'emeraldGradient hover:brightness-110 text-primary'"
+                                            x-text="userSelectedReward === reward.image ? '✓ Sélectionnée' : 'Choisir'">
+                                        </button>
+                                    </div>
+
                                     {{-- Upload button admin --}}
                                     <div x-show="isAdmin"
-                                        class="absolute transition-opacity opacity-0 top-2 right-2 group-hover:opacity-100">
+                                        class="absolute z-20 transition-opacity opacity-0 top-2 right-2 group-hover:opacity-100">
                                         <button @click="document.getElementById('fileInput' + index).click()"
                                             class="p-2 transition-all rounded-lg bg-black/50 backdrop-blur-sm hover:bg-black/70">
                                             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -98,7 +119,7 @@
                                     </div>
 
                                     {{-- Delete button admin --}}
-                                    <div x-show="isAdmin" class="absolute transition-opacity opacity-0 top-2 left-2 group-hover:opacity-100">
+                                    <div x-show="isAdmin" class="absolute z-20 transition-opacity opacity-0 top-2 left-2 group-hover:opacity-100">
                                         <button @click="deleteReward(index)"
                                             class="p-2 transition-all rounded-lg bg-red-500/50 backdrop-blur-sm hover:bg-red-500/70">
                                             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -167,10 +188,12 @@
     </div>
 
     <script>
-        function rewardsComponent(isAdmin = false) {
+        function rewardsComponent(isAdmin = false, isAuthenticated = false, userSelectedReward = '') {
             return {
                 rewards: @json($rewards),
                 isAdmin,
+                isAuthenticated,
+                userSelectedReward,
                 dragOverIndex: null,
 
                 init() {
@@ -188,6 +211,38 @@
                     this.toast.type = type;
                     this.toast.show = true;
                     setTimeout(() => this.toast.show = false, 2000);
+                },
+
+                // Sélectionner une récompense
+                async selectReward(imagePath) {
+                    if (!this.isAuthenticated) {
+                        this.showToast('Connexion requise ⚠️', 'error');
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch("{{ route('rewards.select') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                imagePath: imagePath
+                            })
+                        });
+
+                        const data = await response.json();
+                        if (data.success) {
+                            this.userSelectedReward = imagePath;
+                            this.showToast('Récompense sélectionnée ! 🎁', 'success');
+                        } else {
+                            this.showToast(data.message || 'Erreur sélection ⚠️', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        this.showToast('Erreur réseau ❌', 'error');
+                    }
                 },
 
                 // Ajouter une nouvelle récompense

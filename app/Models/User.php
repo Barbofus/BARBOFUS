@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -83,6 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'role_id',
         'locale',
+        'selected_reward_image',
     ];
 
     /**
@@ -218,5 +221,64 @@ class User extends Authenticatable implements MustVerifyEmail
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * Vérifie si la récompense sélectionnée par l'utilisateur est encore valide
+     *
+     * @return bool
+     */
+    public function hasValidSelectedReward(): bool
+    {
+        if (!$this->selected_reward_image) {
+            return false;
+        }
+
+        // Vérifier si le fichier existe (convertir le chemin /storage/ vers le path relatif)
+        $filePath = str_replace('/storage/', '', $this->selected_reward_image);
+        if (!Storage::disk('public')->exists($filePath)) {
+            return false;
+        }
+
+        // Vérifier si la récompense est encore dans la liste actuelle
+        $rewardsPath = storage_path('app/json/rewards.json');
+        if (!File::exists($rewardsPath)) {
+            return false;
+        }
+
+        $rewardsData = json_decode(File::get($rewardsPath), true);
+        $rewards = $rewardsData['rewards'] ?? [];
+
+        foreach ($rewards as $reward) {
+            if (isset($reward['image']) && $reward['image'] === $this->selected_reward_image) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Récupère les données complètes de la récompense sélectionnée
+     *
+     * @return array|null
+     */
+    public function getSelectedRewardData(): ?array
+    {
+        if (!$this->hasValidSelectedReward()) {
+            return null;
+        }
+
+        $rewardsPath = storage_path('app/json/rewards.json');
+        $rewardsData = json_decode(File::get($rewardsPath), true);
+        $rewards = $rewardsData['rewards'] ?? [];
+
+        foreach ($rewards as $index => $reward) {
+            if (isset($reward['image']) && $reward['image'] === $this->selected_reward_image) {
+                return array_merge($reward, ['index' => $index]);
+            }
+        }
+
+        return null;
     }
 }

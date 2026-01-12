@@ -310,4 +310,13 @@ Otherwise, to reset your password, click the button below:',
 
     'errorUnauthenticated' => 'No account found',
     'errorEmailNotVerified' => 'You must verify your email address on Barbofus',
+
+    // Miss Skin Rewards
+    'titleMissSkinReward' => 'Miss Skin Reward',
+    'contentSelectedReward' => 'Selected reward',
+    'contentRewardDescription' => 'Reward for the Miss Skin contest winner',
+    'contentNoRewardSelected' => 'No reward selected',
+    'contentNoRewardDescription' => 'Choose your reward in case of victory',
+    'buttonChooseReward' => 'Choose my reward',
+    'buttonChangeReward' => 'Change my reward',
 ];

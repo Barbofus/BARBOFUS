@@ -39,9 +39,11 @@ class RewardsController extends Controller
     public function index(Request $request)
     {
         $rewards = $this->readRewards();
+        $userSelectedReward = auth()->check() ? auth()->user()->selected_reward_image : null;
 
         return view('rewards', [
             'rewards' => $rewards,
+            'userSelectedReward' => $userSelectedReward,
         ]);
     }
 
@@ -201,6 +203,65 @@ class RewardsController extends Controller
         return response()->json([
             'success' => true,
             'rewards' => $rewards
+        ]);
+    }
+
+    /**
+     * Sélectionner une récompense pour l'utilisateur connecté
+     */
+    public function selectReward(Request $request)
+    {
+        if (!auth()->check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Connexion requise'
+            ], 401);
+        }
+
+        $imagePath = $request->input('imagePath');
+
+        if (!$imagePath) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Image path requis'
+            ], 400);
+        }
+
+        // Vérifier que la récompense existe encore dans le JSON
+        $rewards = $this->readRewards();
+        $rewardExists = false;
+
+        foreach ($rewards as $reward) {
+            if (isset($reward['image']) && $reward['image'] === $imagePath) {
+                $rewardExists = true;
+                break;
+            }
+        }
+
+        if (!$rewardExists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cette récompense n\'est plus disponible'
+            ], 404);
+        }
+
+        // Vérifier que le fichier image existe
+        $filePath = str_replace('/storage/', '', $imagePath);
+        if (!Storage::disk('public')->exists($filePath)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'L\'image de cette récompense n\'existe plus'
+            ], 404);
+        }
+
+        // Mettre à jour le choix de l'utilisateur
+        $user = auth()->user();
+        $user->update(['selected_reward_image' => $imagePath]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Récompense sélectionnée avec succès',
+            'selected_reward' => $imagePath
         ]);
     }
 }

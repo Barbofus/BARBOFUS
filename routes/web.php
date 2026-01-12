@@ -122,6 +122,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mon-compte', [UserDashboardController::class, 'index'])->name('user-dashboard.index');
 
+    Route::post('/recompenses/select', [RewardsController::class, 'selectReward'])->name('rewards.select');
+
     Route::get('/skins/create', [SkinController::class, 'create'])->name('skins.create');
     Route::get('/skins/{skin}/edit', [SkinController::class, 'edit'])->name('skins.edit');
 
