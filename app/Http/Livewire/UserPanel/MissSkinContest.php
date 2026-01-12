@@ -8,6 +8,7 @@ use App\Models\RewardPrice;
 use App\Models\SkinWinner;
 use App\Http\Controllers\SkinatorController;
 use App\Actions\Discord\SendDiscordMissSkinWebhook;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -18,10 +19,13 @@ class MissSkinContest extends Component
     public string $currentTheme = '';
     public array $selectedTop3 = ['top1' => null, 'top2' => null, 'top3' => null];
     public bool $showConfirmFinalize = false;
+    public bool $contestFinalized = false;
+    public array $finalizedWinners = [];
 
     public function mount(): void
     {
         $this->loadCurrentTheme();
+        $this->loadContestState();
     }
 
     public function render(): View
@@ -123,18 +127,30 @@ class MissSkinContest extends Component
         $winners = [];
         $rankMapping = ['top1' => 1, 'top2' => 2, 'top3' => 3];
 
-        // Récupérer les skins gagnants
+        // Récupérer les skins gagnants avec les données des utilisateurs
         foreach ($this->selectedTop3 as $position => $skinId) {
             if ($skinId) {
                 $skin = UnitySkin::with('user')->find($skinId);
                 if ($skin) {
-                    $winners[] = [
+                    $winnerData = [
                         'skin' => $skin,
-                        'rank' => $rankMapping[$position]
+                        'rank' => $rankMapping[$position],
+                        'position' => $position
                     ];
+
+                    // Pour le gagnant top1, récupérer sa récompense sélectionnée
+                    if ($position === 'top1' && $skin->user) {
+                        $winnerData['selected_reward'] = $skin->user->getSelectedRewardData();
+                    }
+
+                    $winners[] = $winnerData;
                 }
             }
         }
+
+        // Stocker les données des vainqueurs pour l'affichage
+        $this->finalizedWinners = $winners;
+        $this->contestFinalized = true;
 
         // Nettoyer les anciens SkinWinner pour les unity skins (indices 3, 4, 5)
         $previousUnityWinners = SkinWinner::whereIn('id', [4, 5, 6])->get();
@@ -174,8 +190,11 @@ class MissSkinContest extends Component
         // Changer le statut de TOUS les skins MissSkin en Posted (y compris les vainqueurs)
         UnitySkin::where('status', 'MissSkin')->update(['status' => 'Posted']);
 
-        // Reset contest
+        // Reset contest data but keep finalized state for display
         $this->resetContest();
+
+        // Sauvegarder l'état finalisé du concours
+        $this->saveContestState();
 
         // Send Discord webhook
         (new SendDiscordMissSkinWebhook)(config('app.miss_skin_webhook_url'), true);
@@ -209,5 +228,49 @@ class MissSkinContest extends Component
         $this->currentTheme = 'A définir';
         $this->selectedTop3 = ['top1' => null, 'top2' => null, 'top3' => null];
         $this->showConfirmFinalize = false;
+        // Ne pas réinitialiser $contestFinalized et $finalizedWinners pour l'affichage
+    }
+
+    /**
+     * Recommencer un nouveau concours (remet tout à zéro)
+     */
+    public function startNewContest(): void
+    {
+        $this->contestFinalized = false;
+        $this->finalizedWinners = [];
+        $this->resetContest();
+        $this->saveContestState();
+        $this->dispatchBrowserEvent('new-contest-started');
+    }
+
+    /**
+     * Charger l'état du concours depuis le JSON
+     */
+    private function loadContestState(): void
+    {
+        $missSkinPath = storage_path('app/json/missskin.json');
+
+        if (File::exists($missSkinPath)) {
+            $data = json_decode(File::get($missSkinPath), true);
+            $this->contestFinalized = $data['contest_finalized'] ?? false;
+            $this->finalizedWinners = $data['finalized_winners'] ?? [];
+        }
+    }
+
+    /**
+     * Sauvegarder l'état du concours dans le JSON
+     */
+    private function saveContestState(): void
+    {
+        $missSkinPath = storage_path('app/json/missskin.json');
+        $currentData = File::exists($missSkinPath) ? json_decode(File::get($missSkinPath), true) : [];
+
+        $missSkinData = array_merge($currentData, [
+            'contest_finalized' => $this->contestFinalized,
+            'finalized_winners' => $this->finalizedWinners,
+            'updated_at' => now()->toISOString()
+        ]);
+
+        File::put($missSkinPath, json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
     }
 }
