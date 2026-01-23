@@ -223,7 +223,7 @@ class UnitySkinController extends Controller
         /*if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
         } else {*/
-        (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
+        //(new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
         // }
 
         return redirect()->route('user-dashboard.index', 'section=my-unity-skins');
@@ -304,7 +304,7 @@ class UnitySkinController extends Controller
         /*if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
         } else {*/
-        (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
+        //(new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
         // }
 
         return redirect()->route('user-dashboard.index', 'section=my-unity-skins');

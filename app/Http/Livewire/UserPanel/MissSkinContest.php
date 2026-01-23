@@ -73,11 +73,6 @@ class MissSkinContest extends Component
         ];
     }
 
-    public function test()
-    {
-        dd('test');
-    }
-
     public function setTop(int $skinId, string $position): void
     {
         dd('setTop called', ['skinId' => $skinId, 'position' => $position, 'current_selectedTop3' => $this->selectedTop3]);
@@ -152,16 +147,16 @@ class MissSkinContest extends Component
         $this->finalizedWinners = $winners;
         $this->contestFinalized = true;
 
-        // Nettoyer les anciens SkinWinner pour les unity skins (indices 3, 4, 5)
-        $previousUnityWinners = SkinWinner::whereIn('id', [4, 5, 6])->get();
+        // Nettoyer les 3 derniers SkinWinner pour les unity skins
+        $previousUnityWinners = SkinWinner::orderByDesc('id')->limit(3)->get();
         foreach ($previousUnityWinners as $previousWinner) {
             if (Storage::exists($previousWinner->image_path)) {
                 Storage::delete($previousWinner->image_path);
             }
+            $previousWinner->delete();
         }
-        SkinWinner::whereIn('id', [4, 5, 6])->delete();
 
-        // Créer les SkinWinner (pour l'affichage) - indices 3, 4, 5 pour les unity skins
+        // Créer les SkinWinner (pour l'affichage)
         foreach ($winners as $index => $winner) {
             $skin = $winner['skin'];
             $newPath = 'images/winners/winner_' . ($index + 3) . '_' . time() . '.png';
