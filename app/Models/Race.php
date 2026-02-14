@@ -43,6 +43,7 @@ class Race extends Model
         'name',
         'colors',
         'heads',
+        'bodies',
         'ghost_icon_path',
         'colored_icon_path',
         'dofus_id',

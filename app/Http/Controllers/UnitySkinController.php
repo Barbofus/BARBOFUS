@@ -70,7 +70,7 @@ class UnitySkinController extends Controller
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 
         $toShow = DB::table('unity_skins')
-            ->select('face', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'color_guild_1', 'color_guild_2', 'unity_skins.id', 'unity_skins.name', 'detailed_views')
+            ->select('face', 'body', 'image_path', 'user_id', 'gender', 'color_skin', 'color_hair', 'color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4', 'color_guild_1', 'color_guild_2', 'unity_skins.id', 'unity_skins.name', 'detailed_views')
             ->join('races', 'unity_skins.race_id', '=', 'races.dofus_id')
             ->where('unity_skins.id', $skin->id)
             ->addSelect([
@@ -202,6 +202,7 @@ class UnitySkinController extends Controller
             'wings_id' => $request->wings_id,
             'shoulderpads_id' => $request->shoulderpads_id,
             'face' => $request->face,
+            'body' => $request->body,
             'image_path' => $imagePath,
             'gender' => $request->gender,
             'color_skin' => ltrim($request->color_skin, '#'),
@@ -283,6 +284,7 @@ class UnitySkinController extends Controller
         $skin->wings_id = $request->wings_id;
         $skin->shoulderpads_id = $request->shoulderpads_id;
         $skin->face = $request->face;
+        $skin->body = $request->body;
         $skin->image_path = $imagePath;
         $skin->gender = $request->gender;
         $skin->color_skin = ltrim($request->color_skin, '#');

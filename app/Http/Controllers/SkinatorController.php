@@ -163,7 +163,7 @@ class SkinatorController extends Controller
     private function getBreeds(): Collection
     {
         return DB::table('races')
-            ->select('dofus_id', 'colors', 'heads')
+            ->select('dofus_id', 'colors', 'heads', 'bodies')
             ->addSelect([
                 'name' => DB::table('localized_races')
                     ->select('name')
@@ -175,6 +175,7 @@ class SkinatorController extends Controller
             ->map(function ($breed) {
                 $breed->colors = json_decode($breed->colors);
                 $breed->heads = json_decode($breed->heads);
+                $breed->bodies = json_decode($breed->bodies);
 
                 return $breed;
             });

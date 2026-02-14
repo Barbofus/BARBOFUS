@@ -43,14 +43,15 @@ class AdminPanel extends Component
 
     private string $logIcon;
 
-    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
-    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
+    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
+    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
 
     /**
      * @var string[]
      */
     private array $rootToExport = [
         'data_assets_breedsdataroot.asset.bundle' => 'BreedsDataRoot',
+        'data_assets_bodiesdataroot.asset.bundle' => 'BodiesDataRoot',
         'data_assets_headsdataroot.asset.bundle' => 'HeadsDataRoot',
         'data_assets_itemsdataroot.asset.bundle' => 'ItemsDataRoot',
         'data_assets_livingobjectskinsmoodsdataroot.asset.bundle' => 'LivingObjectSkinsMoodsDataRoot',
@@ -378,8 +379,10 @@ class AdminPanel extends Component
 
         $ftpFiles = [
             'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
+            'skins_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
             'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
             'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
+            'bones_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
             'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
             'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
         ];
@@ -391,12 +394,20 @@ class AdminPanel extends Component
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
                         'name' => $file . '.png',
                     ];
+                    $ftpFiles['skins_png_back']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
+                        'name' => $file . '.png',
+                    ];
                     $ftpFiles['skins_json']['files'][] = [
                         'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
                         'name' => $file . '.json',
                     ];
                 } elseif ($typeKey === 'bones') {
                     $ftpFiles['bones_png']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
+                        'name' => $file . '.png',
+                    ];
+                    $ftpFiles['bones_png_back']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
                         'name' => $file . '.png',
                     ];
@@ -706,6 +717,52 @@ class AdminPanel extends Component
 
         (new uploadToFtp)($files, '/storage/app/public/images/icons/classes/faces/unity/');
 
+
+
+        $this->stepName = 'Export corps';
+        $this->logIcon = '🌱';
+        $this->stepLog();
+
+
+
+        // EXPORT DES CORPS
+        // Prépare la commande python
+        $command = sprintf(
+            'python %s %s %s %s',
+            escapeshellarg(base_path('app/Actions/ItemsUpdate/bundle_extractor.py')),
+            escapeshellarg($this->dofusContentPath . 'Picto/UI/cosmetic_assets_2x.bundle'),
+            escapeshellarg(storage_path('app/public/images/icons/classes/bodies/unity')),
+            escapeshellarg('bodies'),
+        );
+        // Execute le python
+        exec($command, $output, $exitCode);
+
+        // S'il y a une erreur, la retourne
+        if ($exitCode != 0) {
+            dd('Erreur pour exporter les corps', [
+                'cmd' => $command,
+                'output' => $output,
+                'code' => $exitCode,
+            ]);
+        }
+
+        $this->stepName = 'Envoie des icons de corps au serveur';
+        $this->logIcon = '✈️';
+        $this->stepLog();
+
+        $files = [];
+
+        foreach (File::allFiles(storage_path('app/public/images/icons/classes/bodies/unity')) as $file) {
+            $fileName = $file->getFilename();
+
+            $files[] = [
+                'file' => $file->getPathname(),
+                'name' => $fileName,
+            ];
+        }
+
+        (new uploadToFtp)($files, '/storage/app/public/images/icons/classes/bodies/unity/');
+
         $this->stepName = 'Fin';
         $this->logIcon = '✅';
         $this->stepLog();
@@ -719,6 +776,7 @@ class AdminPanel extends Component
         $mountsData = json_decode(Storage::disk('local')->get('json/skinator/MountsDataRoot.json'), true)['references']['RefIds'];
         $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsDataRoot.json'), true)['references']['RefIds'];
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
+        $bodiesData = json_decode(Storage::disk('local')->get('json/skinator/BodiesDataRoot.json'), true)['references']['RefIds'];
         $itemsCache = json_decode(Storage::disk('local')->get('json/skinator/itemsCache.json'), true);
         $kolorIds = [1, 2, 3];
 
@@ -740,7 +798,7 @@ class AdminPanel extends Component
 
         // Récupèration des bones de mount
         foreach ($mountsData as $mount) {
-            if ($mount['type']['class'] != 'Mounts') {
+            if ($mount['type']['class'] != 'MountData') {
                 continue;
             }
             $md = $mount['data'];
@@ -800,11 +858,11 @@ class AdminPanel extends Component
         ], $files['Bones']);
 
         foreach ($breedsData as $breed) {
-            if ($breed['type']['class'] != 'Breeds') {
+            if ($breed['type']['class'] != 'BreedData') {
                 continue;
             }
             $bd = $breed['data'];
-            $looks = [$bd['maleLook'], $bd['femaleLook']];
+            /*$looks = [$bd['maleLook'], $bd['femaleLook']];
 
             // Skin mâle et femelle
             foreach ($looks as $look) {
@@ -812,15 +870,22 @@ class AdminPanel extends Component
                     $parts = explode('|', $matches[1]);
                     $files['Skins'][] = isset($parts[1]) && ctype_digit($parts[1]) ? $parts[1] : null;
                 }
-            }
+            }*/
 
             // Bone animation de combat
             $files['Bones'][] = '1-' . $bd['id'] . '-static';
         }
 
+        // Récupère les skins de chaque corps
+        foreach ($bodiesData as $body) {
+            $bd = $body['data'];
+
+            $files['Skins'][] = $bd['skins'];
+        }
+
         // Récupère les skins de chaque visage
         foreach ($headsData as $head) {
-            if ($head['type']['class'] != 'Heads') {
+            if ($head['type']['class'] != 'HeadData') {
                 continue;
             }
             $hd = $head['data'];
@@ -918,7 +983,7 @@ class AdminPanel extends Component
         $this->logIcon = '✈️';
         $this->stepLog();
 
-        $ftpFiles = [
+        /*$ftpFiles = [
             'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
             'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
             'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
@@ -939,6 +1004,54 @@ class AdminPanel extends Component
                     ];
                 } elseif ($typeKey === 'Bones') {
                     $ftpFiles['bones_png']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
+                        'name' => $file . '.png',
+                    ];
+                    $ftpFiles['bones_data']['files'][] = [
+                        'file' => storage_path('app/json/skinator/bones/Bones_Data/') . $file . '.json',
+                        'name' => $file . '.json',
+                    ];
+                    $ftpFiles['bones_asset']['files'][] = [
+                        'file' => storage_path('app/json/skinator/bones/Bones_AssetData/') . $file . '.json',
+                        'name' => $file . '.json',
+                    ];
+                }
+            }
+        }*/
+
+
+
+        $ftpFiles = [
+            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
+            'skins_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
+            'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
+            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
+            'bones_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
+            'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
+            'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
+        ];
+
+        foreach ($files as $typeKey => $type) {
+            foreach ($type as $file) {
+                if ($typeKey === 'skins') {
+                    $ftpFiles['skins_png']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
+                        'name' => $file . '.png',
+                    ];
+                    $ftpFiles['skins_png_back']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
+                        'name' => $file . '.png',
+                    ];
+                    $ftpFiles['skins_json']['files'][] = [
+                        'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
+                        'name' => $file . '.json',
+                    ];
+                } elseif ($typeKey === 'bones') {
+                    $ftpFiles['bones_png']['files'][] = [
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
+                        'name' => $file . '.png',
+                    ];
+                    $ftpFiles['bones_png_back']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
                         'name' => $file . '.png',
                     ];
@@ -992,10 +1105,12 @@ class AdminPanel extends Component
      */
     public function checkIfDofusNewer(string $localFile, string $dofusFile): bool
     {
+        // Si le fichier local n'existe pas et le fichier Dofus existe, Dofus est plus récent
         if (! file_exists($localFile) && file_exists($dofusFile)) {
             return true;
         }
 
+        // Comparer les dates de modification
         return filemtime($localFile) < filemtime($dofusFile);
     }
 

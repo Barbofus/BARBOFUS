@@ -245,6 +245,9 @@
                         <button type="button" class="w-1/3 uppercase" data-tab="head"
                             :class="(charactersCurrentTab === 'head') ? 'font-medium border-b-4 border-secondary' :
                             'border-b-2 border-inactiveText'">{{ __('barbofus.contentFace') }}</button>
+                        <button type="button" class="w-1/3 uppercase" data-tab="body"
+                            :class="(charactersCurrentTab === 'body') ? 'font-medium border-b-4 border-secondary' :
+                            'border-b-2 border-inactiveText'">{{ __('barbofus.contentBody') }}</button>
                         <button type="button" class="w-1/3 uppercase" data-tab="color"
                             :class="(charactersCurrentTab === 'color') ? 'font-medium border-b-4 border-secondary' :
                             'border-b-2 border-inactiveText'">{{ __('barbofus.contentColor') }}</button>
@@ -253,7 +256,7 @@
                     {{--      Choix sexe      --}}
                     <p class="mt-4 mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinGender') }}</p>
                     <div class="flex mx-auto gap-x-4 w-fit"
-                        @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); gender = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
+                        @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); gender = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
                         <div>
                             <input id="male" type="radio" name="gender" value="0" class="hidden peer"
                                 :checked="gender === 0">
@@ -289,7 +292,7 @@
                         <p class="mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinClass') }}</p>
 
                         <div class="flex flex-wrap items-center justify-center gap-2"
-                            @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); }">
+                            @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
                             <template x-for="breedInfo in breedInfos" :key="breedInfo.dofus_id">
                                 <div>
                                     <input :id="'breed_' + breedInfo.dofus_id" type="radio" name="race_id"
@@ -329,6 +332,33 @@
                                             :alt="'{{ __('barbofus.contentFace') }} ' + (breedInfos.find(i => i
                                                 .dofus_id ===
                                                 breed).name) + ' ' + breedHead.id">
+                                    </label>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div x-cloak class="py-4 min-[600px]:px-4" x-show="charactersCurrentTab === 'body'">
+
+                        {{--      Choix corps      --}}
+                        <p class="mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinBody') }}</p>
+
+                        <div class="grid items-center justify-center grid-cols-3 gap-2"
+                            @change="if (event.target.matches('input[type=radio]')) { body = Number(event.target.value); editURLParam(getURLObject()); }">
+                            <template x-for="breedBody in breedBodies" :key="breedBody.id">
+                                <div>
+                                    <input :id="'body_' + breedBody.id" type="radio" name="body"
+                                        :value="breedBody.id" class="hidden peer" :checked="body === breedBody.id">
+                                    <label :for="'body_' + breedBody.id"
+                                        :title="'{{ __('barbofus.contentBody') }} ' + (breedInfos.find(i => i.dofus_id ===
+                                            breed).name) + ' ' + breedBody.id"
+                                        class="flex p-2 items-center justify-center transition-all border-2 rounded-md cursor-pointer text-inactiveText hover:border-inactiveText bg-primary-100 aspect-[2/3] border-primary-100 peer-checked:text-secondary peer-checked:border-goldText overflow-hidden">
+                                        <img loading="lazy" draggable="false" class="object-cover w-auto h-full"
+                                            :src="'/storage/images/icons/classes/bodies/unity/' + breedBody.assetId.replace(/\d+$/, n => +n - 1) +
+                                                '.png'"
+                                            :alt="'{{ __('barbofus.contentBody') }} ' + (breedInfos.find(i => i
+                                                .dofus_id ===
+                                                breed).name) + ' ' + breedBody.id">
                                     </label>
                                 </div>
                             </template>
@@ -1335,6 +1365,7 @@
                 loadedItems: new Set(),
                 filteredItems: null,
                 breedHeads: null,
+                breedBodies: null,
                 maxItemVisible: 96,
                 searchBar: '',
                 copy: null,
@@ -1366,7 +1397,7 @@
                     'guild_2',
                 ],
                 shouldResetColors: false,
-                charactersCurrentTab: 'color',
+                charactersCurrentTab: 'body',
                 itemsCurrentTab: 'hat',
                 petCurrentTab: 'familier',
                 oldGender: 0,
@@ -1374,6 +1405,7 @@
                 gender: @json($skin ? $skin->gender : rand(0, 1)),
                 breed: @json($skin ? $skin->race_id : $breeds[rand(0, $breeds->count() - 1)]->dofus_id),
                 head: @json($skin?->face),
+                body: @json($skin?->body),
                 colors: {!! json_encode(
                     $skin
                         ? [
@@ -1635,7 +1667,13 @@
                     if (this.head == null) {
                         this.head = this.updateHead(this.gender, this.breed);
                     }
+
+                    if (this.body == null) {
+                        this.body = this.updateBody(this.gender, this.breed);
+                    }
+
                     this.breedHeads = this.updateHeads(this.gender, this.breed);
+                    this.breedBodies = this.updateBodies(this.gender, this.breed);
                     this.updateFilteredItems();
 
                     if (getDataFromURL()) {
@@ -1750,7 +1788,9 @@
                     this.breed = json.breed;
                     this.gender = json.gender;
                     this.head = json.head;
+                    this.body = json.body;
                     this.breedHeads = this.updateHeads(json.gender, json.breed);
+                    this.breedBodies = this.updateBodies(json.gender, json.breed);
                     const allColors = json.colors.map(color =>
                         `#${color.toString(16).padStart(6, '0')}`);
 
@@ -1776,6 +1816,7 @@
                         gender: this.gender,
                         breed: this.breed,
                         head: this.head,
+                        body: this.body,
                         colors: [...this.colors, ...this.guildColors].map(color =>
                             typeof color === 'string' ? parseInt(color.replace('#', ''),
                                 16) : color
@@ -1787,6 +1828,7 @@
                 getRendererObject() {
                     return JSON.stringify({
                         head: this.head,
+                        body: this.body,
                         orientation: this.possibleOrientation[this.animations[this.animation]
                             .orientation][this.orientationKey],
                         animation: this.animations[this.animation].name,
@@ -1809,6 +1851,20 @@
                 updateAlpineHead() {
                     this.head = this.updateHead(this.gender, this.breed);
                     this.breedHeads = this.updateHeads(this.gender, this.breed);
+
+                    if (this.shouldResetColors) {
+                        this.colors = this.getDefaultColor(this.gender, this.breed);
+                        this.shouldResetColors = false;
+                    }
+
+                    editURLParam(this.getURLObject())
+
+                    window.resetColors()
+                },
+
+                updateAlpineBody() {
+                    this.body = this.updateBody(this.gender, this.breed);
+                    this.breedBodies = this.updateBodies(this.gender, this.breed);
 
                     if (this.shouldResetColors) {
                         this.colors = this.getDefaultColor(this.gender, this.breed);
@@ -1967,6 +2023,21 @@
                 updateHeads(gender, breed) {
                     const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
                     return currentBreed ? currentBreed.heads[gender === 0 ? 'male' : 'female'] : 1
+                },
+
+                updateBody(gender, breed) {
+                    const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
+                    const bodies = currentBreed.bodies[gender === 0 ? 'male' : 'female']
+                    const keys = Object.keys(bodies)
+                    const randKey = keys[Math.floor(Math.random() * keys.length)]
+                    console.log('updateBody', currentBreed ? bodies[randKey].id : 1)
+                    return currentBreed ? bodies[randKey].id : 1
+                },
+
+                updateBodies(gender, breed) {
+                    const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
+                    console.log('updateBodies', currentBreed ? currentBreed.bodies[gender === 0 ? 'male' : 'female'] : 1)
+                    return currentBreed ? currentBreed.bodies[gender === 0 ? 'male' : 'female'] : 1
                 },
 
                 getDefaultColor(gender, breed) {

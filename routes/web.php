@@ -68,6 +68,24 @@ use Illuminate\Support\Facades\Route;
     return "Couleurs mises à jour pour " . $skins->count() . " skins Unity";
 });*/
 
+/*oute::get('foo', function () {
+    $allItems = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']["RefIds"];
+
+    //$item = collect($allItems)->firstWhere('data.nameId', 1177910);
+    //$item = collect($allItems)->firstWhere('data.typeId', 250);
+    $item = collect($allItems)->firstWhere('data.id', 34250);
+
+    // Charger le fichier de langue français
+    $langFile = storage_path('app/json/skinator/lang/fr.json');
+    $translations = json_decode(file_get_contents($langFile), true);
+
+    // Récupérer le nom de l'item grâce au nameId
+    $itemName = $translations[$item['data']['nameId']] ?? 'Nom non trouvé';
+
+    //dd($item['data'], $itemName);
+    dd(collect($allItems)->firstWhere('data.id', 34248)["data"], collect($allItems)->firstWhere('data.id', 34249)["data"], collect($allItems)->firstWhere('data.id', 34250)["data"],);
+});*/
+
 Route::get('/', HomeController::class)->name('home');
 
 Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');

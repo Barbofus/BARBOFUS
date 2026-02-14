@@ -79,6 +79,7 @@ class UnitySkin extends Model
 {
     protected $fillable = [
         'face',
+        'body',
         'hat_id',
         'cape_id',
         'shield_id',

@@ -51,17 +51,15 @@ final class updateDBFromDofusFiles
             199 => ['cat' => ItemCategorieEnum::COSTUME->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
             299 => ['cat' => ItemCategorieEnum::SHOULDERPADS->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
             300 => ['cat' => ItemCategorieEnum::WINGS->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            18 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
-            121 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
-            190 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            255 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            256 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            249 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            250 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
+            18 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Familier
+            121 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],  // Montilier
+            324 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],  // Harnachements
+            249 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],  // Familier Cosmet
+            250 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],  // Familier Cosmet
         ];
 
         foreach ($langs as $lang) {
-            $langFile = storage_path('app/json/skinator/lang/').$lang.'.json';
+            $langFile = storage_path('app/json/skinator/lang/') . $lang . '.json';
             // @phpstan-ignore-next-line
             $this->langData[$lang] = json_decode(file_get_contents($langFile), true);
         }
@@ -83,7 +81,7 @@ final class updateDBFromDofusFiles
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
 
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
 
         foreach ($mountsData as $mount) {
             $mountD = $mount['data'];
@@ -121,7 +119,7 @@ final class updateDBFromDofusFiles
                 'category' => ItemCategorieEnum::PET->value,
                 'subcategory' => ItemSubcategorieEnum::MIMISYMBIC->value,
                 'pet_type' => $petType,
-                'icon_path' => 'images/icons/items/'.$item['iconId'].'.webp',
+                'icon_path' => 'images/icons/items/' . $item['iconId'] . '.webp',
                 'colorable' => $item['isColorable'],
                 'asset_id' => $mountD['id'],
                 'female_asset_id' => $mountD['id'],
@@ -144,7 +142,7 @@ final class updateDBFromDofusFiles
             }
 
             foreach ($this->langData as $lang => $translation) {
-                $existingItemName = $allItemsName[$item['id'].'|'.$lang][0] ?? null;
+                $existingItemName = $allItemsName[$item['id'] . '|' . $lang][0] ?? null;
                 if (! $existingItemName) {
                     LocalizedItem::create([
                         'dofus_id' => $item['id'],
@@ -164,11 +162,11 @@ final class updateDBFromDofusFiles
         $livingData = json_decode(Storage::disk('local')->get('json/skinator/LivingObjectSkinsMoodsDataRoot.json'), true)['references']['RefIds'];
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            dd('erreur json : '.json_last_error_msg());
+            dd('erreur json : ' . json_last_error_msg());
         }
 
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
 
         // Indexe les items par leur ID pour un accès rapide
         $itemsById = [];
@@ -187,7 +185,9 @@ final class updateDBFromDofusFiles
         $skinIds = array_filter($skinIds);
 
         // Filtre les items correspondants
-        $itemsLivingData = array_filter($itemsData, fn ($item) => isset($item['data']['id']) && in_array($item['data']['id'], $skinIds)
+        $itemsLivingData = array_filter(
+            $itemsData,
+            fn($item) => isset($item['data']['id']) && in_array($item['data']['id'], $skinIds)
         );
 
         // On garde seulement ceux avec effets utiles
@@ -210,24 +210,36 @@ final class updateDBFromDofusFiles
             $itemD = $item['data'];
             $petType = null;
 
-            switch ($itemD['typeId']) {
-                case 190:
-                    $petType = 'dragodinde';
-                    break;
-                case 255:
-                    $petType = 'muldo';
-                    break;
-                case 256:
+            if ($itemD['typeId'] == 324) {
+                $name_fr = $this->langData['fr'][$itemD['nameId']] ?? '';
+                $name_lower = strtolower($name_fr);
+                if (str_contains($name_lower, 'volkorne')) {
                     $petType = 'volkorne';
-                    break;
-                case 18:
-                case 249:
-                    $petType = 'familier';
-                    break;
-                case 121:
-                case 250:
-                    $petType = 'montilier';
-                    break;
+                } elseif (str_contains($name_lower, 'muldo') || str_contains($name_lower, 'moldus')) {
+                    $petType = 'muldo';
+                } elseif (str_contains($name_lower, 'dragodinde') || str_contains($name_lower, 'drago') || str_contains($name_lower, 'dinde')) {
+                    $petType = 'dragodinde';
+                }
+            } else {
+                switch ($itemD['typeId']) {
+                    case 190:
+                        $petType = 'dragodinde';
+                        break;
+                    case 255:
+                        $petType = 'muldo';
+                        break;
+                    case 256:
+                        $petType = 'volkorne';
+                        break;
+                    case 18:
+                    case 249:
+                        $petType = 'familier';
+                        break;
+                    case 121:
+                    case 250:
+                        $petType = 'montilier';
+                        break;
+                }
             }
 
             $names = [];
@@ -253,7 +265,7 @@ final class updateDBFromDofusFiles
                     'category' => $this->typeID[$itemD['usefulLivingEffect']]['cat'],
                     'subcategory' => ItemSubcategorieEnum::LIVINGOBJECT->value,
                     'pet_type' => $petType,
-                    'icon_path' => 'images/icons/items/'.$lv.'.webp',
+                    'icon_path' => 'images/icons/items/' . $lv . '.webp',
                     'colorable' => $itemD['isColorable'],
                 ];
 
@@ -261,22 +273,22 @@ final class updateDBFromDofusFiles
 
                 $existingItem = $allItems[$dofusId] ?? null;
                 if (! $existingItem) {
-                    $this->newItems[] = $value + ['name' => ($names['fr'].' '.($key + 1))];
+                    $this->newItems[] = $value + ['name' => ($names['fr'] . ' ' . ($key + 1))];
                     Item::create($value);
                 } elseif (array_diff_assoc($value, $existingItem->toArray())) {
                     $existingItem->update($value);
                 }
 
                 foreach ($this->langData as $lang => $translation) {
-                    $existingItemName = $allItemsName[$dofusId.'|'.$lang][0] ?? null;
+                    $existingItemName = $allItemsName[$dofusId . '|' . $lang][0] ?? null;
                     if (! $existingItemName) {
                         LocalizedItem::create([
                             'dofus_id' => $dofusId,
                             'locale' => $lang,
-                            'name' => $names[$lang].' '.($key + 1),
+                            'name' => $names[$lang] . ' ' . ($key + 1),
                         ]);
                     } elseif ($existingItemName->name != $names[$lang]) {
-                        $existingItemName->update(['name' => $names[$lang].' '.($key + 1)]);
+                        $existingItemName->update(['name' => $names[$lang] . ' ' . ($key + 1)]);
                     }
                 }
             }
@@ -289,7 +301,7 @@ final class updateDBFromDofusFiles
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            dd('erreur json : '.json_last_error_msg());
+            dd('erreur json : ' . json_last_error_msg());
         }
 
         $itemsData = array_filter($itemsData, function ($item) {
@@ -297,7 +309,7 @@ final class updateDBFromDofusFiles
         });
 
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
 
         foreach ($itemsData as $item) {
             $itemD = $item['data'];
@@ -312,24 +324,36 @@ final class updateDBFromDofusFiles
 
             $petType = null;
 
-            switch ($itemD['typeId']) {
-                case 190:
-                    $petType = 'dragodinde';
-                    break;
-                case 255:
-                    $petType = 'muldo';
-                    break;
-                case 256:
+            if ($itemD['typeId'] == 324) {
+                $name_fr = $this->langData['fr'][$itemD['nameId']] ?? '';
+                $name_lower = strtolower($name_fr);
+                if (str_contains($name_lower, 'volkorne')) {
                     $petType = 'volkorne';
-                    break;
-                case 18:
-                case 249:
-                    $petType = 'familier';
-                    break;
-                case 121:
-                case 250:
-                    $petType = 'montilier';
-                    break;
+                } elseif (str_contains($name_lower, 'muldo') || str_contains($name_lower, 'moldus')) {
+                    $petType = 'muldo';
+                } elseif (str_contains($name_lower, 'dragodinde') || str_contains($name_lower, 'drago') || str_contains($name_lower, 'dinde')) {
+                    $petType = 'dragodinde';
+                }
+            } else {
+                switch ($itemD['typeId']) {
+                    case 190:
+                        $petType = 'dragodinde';
+                        break;
+                    case 255:
+                        $petType = 'muldo';
+                        break;
+                    case 256:
+                        $petType = 'volkorne';
+                        break;
+                    case 18:
+                    case 249:
+                        $petType = 'familier';
+                        break;
+                    case 121:
+                    case 250:
+                        $petType = 'montilier';
+                        break;
+                }
             }
 
             $value = [
@@ -339,7 +363,7 @@ final class updateDBFromDofusFiles
                 'category' => $this->typeID[$itemD['typeId']]['cat'],
                 'subcategory' => $this->typeID[$itemD['typeId']]['subcat'],
                 'pet_type' => $petType,
-                'icon_path' => 'images/icons/items/'.$itemD['iconId'].'.webp',
+                'icon_path' => 'images/icons/items/' . $itemD['iconId'] . '.webp',
                 'colorable' => $itemD['isColorable'],
             ];
 
@@ -360,7 +384,7 @@ final class updateDBFromDofusFiles
             }
 
             foreach ($this->langData as $lang => $translation) {
-                $existingItemName = $allItemsName[$itemD['id'].'|'.$lang][0] ?? null;
+                $existingItemName = $allItemsName[$itemD['id'] . '|' . $lang][0] ?? null;
                 if (! $existingItemName) {
                     LocalizedItem::create([
                         'dofus_id' => $itemD['id'],
@@ -378,11 +402,13 @@ final class updateDBFromDofusFiles
     {
         $breedsData = json_decode(Storage::disk('local')->get('json/skinator/BreedsDataRoot.json'), true)['references']['RefIds'];
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
+        $bodiesData = json_decode(Storage::disk('local')->get('json/skinator/BodiesDataRoot.json'), true)['references']['RefIds'];
 
         $allBreeds = Race::all();
         $allBreedsName = LocalizedRace::all();
 
         $headsByBreed = [];
+        $bodiesByBreed = [];
 
         // Récupère les têtes
         foreach ($headsData as $head) {
@@ -394,6 +420,19 @@ final class updateDBFromDofusFiles
                 'id' => $headD['id'],
                 'skins' => $headD['skins'],
                 'assetId' => $headD['assetId'],
+            ];
+        }
+
+        // Récupère les corps
+        foreach ($bodiesData as $body) {
+            $bodyD = $body['data'];
+            if (! isset($bodiesByBreed[$bodyD['breed']])) {
+                $bodiesByBreed[$bodyD['breed']] = [];
+            }
+            $bodiesByBreed[$bodyD['breed']][$bodyD['gender'] ? 'female' : 'male'][$bodyD['order']] = [
+                'id' => $bodyD['id'],
+                'skins' => $bodyD['skins'],
+                'assetId' => $bodyD['assetId'],
             ];
         }
 
@@ -409,13 +448,17 @@ final class updateDBFromDofusFiles
             // Préparer les têtes
             $headsArray = isset($headsByBreed[$breed['id']]) ? $headsByBreed[$breed['id']] : [];
 
+            // Préparer les corps
+            $bodiesArray = isset($bodiesByBreed[$breed['id']]) ? $bodiesByBreed[$breed['id']] : [];
+
             // Structurer les données à insérer ou mettre à jour
             $value = [
                 'name' => $this->langData['fr'][$breed['shortNameId']],
                 'colors' => json_encode($colorsArray),
                 'heads' => json_encode($headsArray),
-                'ghost_icon_path' => 'images/icons/classes/ghost/'.$breed['id'].'.png',
-                'colored_icon_path' => 'images/icons/classes/colored/'.$breed['id'].'.png',
+                'bodies' => json_encode($bodiesArray),
+                'ghost_icon_path' => 'images/icons/classes/ghost/' . $breed['id'] . '.png',
+                'colored_icon_path' => 'images/icons/classes/colored/' . $breed['id'] . '.png',
                 'dofus_id' => $breed['id'],
             ];
 
