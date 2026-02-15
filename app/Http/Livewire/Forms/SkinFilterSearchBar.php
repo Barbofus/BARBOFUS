@@ -53,7 +53,8 @@ class SkinFilterSearchBar extends Component
             $id = substr($value, 1);
 
             if ($value[0] == '0') {
-                $this->itemResults[] = [$value,
+                $this->itemResults[] = [
+                    $value,
                     optional(DB::table('items')
                         ->select('dofus_id')
                         ->where('items.dofus_id', $id)
@@ -66,7 +67,8 @@ class SkinFilterSearchBar extends Component
                         ])->first())->name,
                 ];
             } else {
-                $this->itemResults[] = [$value,
+                $this->itemResults[] = [
+                    $value,
                     optional(DB::table('users')
                         ->select('name')
                         ->where('id', $id)->first())->name,
@@ -93,7 +95,7 @@ class SkinFilterSearchBar extends Component
 
         $this->itemToShow = array_merge(DB::table('users')
             ->select('id', 'name')
-            ->where('name', 'LIKE', '%'.$query.'%')
+            ->where('name', 'LIKE', '%' . $query . '%')
             ->addSelect([DB::raw('1 as is_user')])
             ->get()
             ->toArray());
@@ -103,14 +105,21 @@ class SkinFilterSearchBar extends Component
             ->leftJoin('localized_items', function ($join) use ($query) {
                 $join->on('localized_items.dofus_id', '=', 'items.dofus_id')
                     ->where('localized_items.locale', app()->getLocale())
-                    ->where('localized_items.name', 'like', '%'.$query.'%');
+                    ->where('localized_items.name', 'like', '%' . $query . '%');
             })
             ->whereNotNull('localized_items.name')
             ->addSelect([DB::raw('0 as is_user')])
             ->get()
             ->toArray(), $this->itemToShow);
 
-        asort($this->itemToShow);
+
+        usort($this->itemToShow, function ($a, $b) {
+            if ($a->is_user != $b->is_user) {
+                return $a->is_user <=> $b->is_user; // Users d'abord
+            }
+            return strcasecmp($a->name, $b->name); // Puis tri alphabétique
+        });
+
         $this->itemToShow = array_values($this->itemToShow);
 
         $this->oldQuery = $query;
@@ -153,6 +162,5 @@ class SkinFilterSearchBar extends Component
         if ($this->selectionKey < 0) {
             $this->selectionKey = count($this->itemToShow) - 1;
         }
-
     }
 }
