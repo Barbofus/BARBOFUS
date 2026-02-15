@@ -175,6 +175,10 @@ return [
     'contentShoulderpads' => 'Hombreras',
     'contentCostume' => 'Traje',
     'contentPet' => 'Mascota',
+    'contentdefault' => 'Predeterminado',
+    'contentCombat' => 'Combate',
+    'contentRetro' => 'Retro',
+    'contentNewAge' => 'Vanguardia',
     'contentLoadMore' => 'Cargar más',
 
     'alertPasswordSaved' => 'Tu contraseña ha sido reestablecida exitosamente.',

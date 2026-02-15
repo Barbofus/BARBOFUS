@@ -850,18 +850,84 @@
 
                 {{-- Animation lists --}}
                 <div x-show="showAnimationList" x-transition x-cloak @click.outside="showAnimationList = false"
-                    class="h-[35rem] rounded border-2 border-secondary p-4 pb-8 w-full overflow-auto z-30 top-20 left-0 absolute flex flex-wrap gap-4 gap-y-6 bg-primary">
+                    class="h-[37.5rem] rounded border-2 border-secondary p-4 pb-8 w-full overflow-auto z-30 top-20 left-0 absolute bg-primary">
 
-                    <template x-for="(a, index) in animations" :key="index">
-                        <button type="button" @click="animation = index; orientationKey = 0"
-                            class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
-                            <img draggable="false" class="h-[9rem]"
-                                :src="'{{ asset('storage/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
-                            <p x-text="a.shortName"
-                                class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
-                            </p>
-                        </button>
-                    </template>
+                    {{-- CHOIX ONGLET --}}
+                    <div class="text-md mb-4 min-[1600px]:text-xl w-full h-10 font-thin flex justify-evenly"
+                        @click="if(event.target.closest('button[data-tab]')) { animationsCurrentTab = event.target.closest('button[data-tab]').dataset.tab; }">
+                        <button type="button" class="w-1/3 uppercase" data-tab="default"
+                            :class="(animationsCurrentTab === 'default') ? 'font-medium border-b-4 border-secondary' :
+                            'border-b-2 border-inactiveText'">{{ __('barbofus.contentdefault') }}</button>
+                        <button type="button" class="w-1/3 uppercase" data-tab="combat"
+                            :class="(animationsCurrentTab === 'combat') ? 'font-medium border-b-4 border-secondary' :
+                            'border-b-2 border-inactiveText'">{{ __('barbofus.contentCombat') }}</button>
+                        <button type="button" class="w-1/3 uppercase" data-tab="retro"
+                            :class="(animationsCurrentTab === 'retro') ? 'font-medium border-b-4 border-secondary' :
+                            'border-b-2 border-inactiveText'">{{ __('barbofus.contentRetro') }}</button>
+                        <button type="button" class="w-1/3 uppercase" data-tab="newage"
+                            :class="(animationsCurrentTab === 'newage') ? 'font-medium border-b-4 border-secondary' :
+                            'border-b-2 border-inactiveText'">{{ __('barbofus.contentNewAge') }}</button>
+                    </div>
+
+
+                    {{-- DEFAULT --}}
+                    <div x-cloak class="flex flex-wrap gap-4 gap-y-5" x-show="animationsCurrentTab === 'default'">
+                        <template x-for="(a, index) in animations" :key="index">
+                            <button type="button" @click="animation = index; orientationKey = 0"
+                                class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
+                                <img draggable="false" class="h-[9rem]"
+                                    :src="'{{ asset('storage/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
+                                <p x-text="a.shortName"
+                                    class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
+                                </p>
+                            </button>
+                        </template>
+                    </div>
+
+
+                    {{-- COMBAT --}}
+                    <div x-cloak class="flex flex-wrap gap-4 gap-y-5" x-show="animationsCurrentTab === 'combat'">
+                        <template x-for="b in breedInfos" :key="b.dofus_id">
+                            <button type="button" @click="animationName = `AnimStatiqueCombat${b.dofus_id}a@1-${b.dofus_id}-static`; orientationKey = 0"
+                                class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
+                                <img draggable="false" class="h-[9rem]"
+                                    :src="'/storage/images/icons/anims/combat_' + b.dofus_id + '.png'" :alt="'{{ __('barbofus.contentCombat') }} ' + b.name">
+                                <p x-text="'{{ __('barbofus.contentCombat') }} ' + b.name"
+                                    class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
+                                </p>
+                            </button>
+                        </template>
+                    </div>
+
+
+                    {{-- RETRO --}}
+                    <div x-cloak class="flex flex-wrap gap-4 gap-y-5" x-show="animationsCurrentTab === 'retro'">
+                        <template x-for="b in breedInfos" :key="b.dofus_id">
+                            <button type="button" @click="animationName = `AnimStatiqueExploRetro${b.dofus_id}@1-${b.dofus_id}-static`; orientationKey = 0"
+                                class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
+                                <img draggable="false" class="h-[9rem]"
+                                    :src="'/storage/images/icons/classes/bodies/unity/' + b.bodies[gender ? 'female' : 'male'][2].assetId.replace(/\d+$/, n => +n - 1) + '.png'" :alt="'{{ __('barbofus.contentRetro') }} ' + b.name">
+                                <p x-text="'{{ __('barbofus.contentRetro') }} ' + b.name"
+                                    class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
+                                </p>
+                            </button>
+                        </template>
+                    </div>
+
+
+                    {{-- NEW AGE --}}
+                    <div x-cloak class="flex flex-wrap gap-4 gap-y-5" x-show="animationsCurrentTab === 'newage'">
+                        <template x-for="b in breedInfos" :key="b.dofus_id">
+                            <button type="button" @click="animationName = `AnimStatiqueExploNewAge${b.dofus_id}@1-${b.dofus_id}-static`; orientationKey = 0"
+                                class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
+                                <img draggable="false" class="h-[9rem]"
+                                    :src="'/storage/images/icons/classes/bodies/unity/' + b.bodies[gender ? 'female' : 'male'][3].assetId.replace(/\d+$/, n => +n - 1) + '.png'" :alt="'{{ __('barbofus.contentNewAge') }} ' + b.name">
+                                <p x-text="'{{ __('barbofus.contentNewAge') }} ' + b.name"
+                                    class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
+                                </p>
+                            </button>
+                        </template>
+                    </div>
 
                     <button type="button" @click="showAnimationList = false"
                         class="absolute w-12 h-12 transition-all text-inactiveText hover:text-red-500 hover:scale-110 top-2 right-2">
@@ -1397,9 +1463,10 @@
                     'guild_2',
                 ],
                 shouldResetColors: false,
-                charactersCurrentTab: 'body',
+                charactersCurrentTab: 'breed',
                 itemsCurrentTab: 'hat',
                 petCurrentTab: 'familier',
+                animationsCurrentTab: 'default',
                 oldGender: 0,
                 oldBreed: 1,
                 gender: @json($skin ? $skin->gender : rand(0, 1)),
@@ -1606,6 +1673,7 @@
                 ],
                 showAnimationList: false,
                 animation: 0,
+                animationName: "",
                 animated: true,
                 cameleon: false,
                 items: {
@@ -1656,6 +1724,7 @@
                 },
 
                 init() {
+                    console.log(this.breedInfos)
                     if (this.userId > -1) {
                         this.favorites = @json(auth()->user()?->favorites()->pluck('item_id'));
                     } else {
@@ -1831,7 +1900,7 @@
                         body: this.body,
                         orientation: this.possibleOrientation[this.animations[this.animation]
                             .orientation][this.orientationKey],
-                        animation: this.animations[this.animation].name,
+                        animation: this.getAnimation(),
                         items: Object.entries(this.items)
                             .map(([key, value]) => {
                                 if (!value) return null;
@@ -1846,6 +1915,14 @@
                             false,
                         animated: this.animated
                     }, null, 2);
+                },
+
+                getAnimation() {
+                    if(this.animationsCurrentTab === "default") {
+                        return this.animations[this.animation].name
+                    }
+
+                    return this.animationName
                 },
 
                 updateAlpineHead() {

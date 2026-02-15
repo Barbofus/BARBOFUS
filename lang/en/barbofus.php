@@ -175,6 +175,10 @@ return [
     'contentShoulderpads' => 'Shoulder Pads',
     'contentCostume' => 'Costume',
     'contentPet' => 'Pet',
+    'contentdefault' => 'Default',
+    'contentCombat' => 'Combat',
+    'contentRetro' => 'Retro',
+    'contentNewAge' => 'New Age',
     'contentLoadMore' => 'Load more',
 
     'alertPasswordSaved' => 'Your password has been successfully reset.',

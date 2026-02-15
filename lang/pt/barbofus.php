@@ -180,6 +180,10 @@ return [
     'contentShoulderpads' => 'Ombreiras',
     'contentCostume' => 'Traje',
     'contentPet' => 'Mascote',
+    'contentdefault' => 'Padrão',
+    'contentCombat' => 'Combate',
+    'contentRetro' => 'Retro',
+    'contentNewAge' => 'Vanguarda',
     'contentLoadMore' => 'Carregar mais',
 
     'alertPasswordSaved' => 'Sua senha foi redefinida com sucesso.',

@@ -175,6 +175,10 @@ return [
     'contentShoulderpads' => 'Epaulières',
     'contentCostume' => 'Costume',
     'contentPet' => 'Familier',
+    'contentdefault' => 'Défaut',
+    'contentCombat' => 'Combat',
+    'contentRetro' => 'Rétro',
+    'contentNewAge' => 'Avant-gardiste',
     'contentLoadMore' => 'Voir plus',
 
     'alertPasswordSaved' => 'Ton mot de passe a bien été réinitilisé',
