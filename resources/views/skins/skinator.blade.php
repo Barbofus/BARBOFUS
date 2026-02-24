@@ -1737,6 +1737,10 @@
                         this.head = this.updateHead(this.gender, this.breed);
                     }
 
+                    if (this.body === 0) {
+                        this.body = this.getFirstBody(this.gender, this.breed);
+                    }
+
                     if (this.body == null) {
                         this.body = this.updateBody(this.gender, this.breed);
                     }
@@ -1885,7 +1889,7 @@
                         gender: this.gender,
                         breed: this.breed,
                         head: this.head,
-                        body: this.body,
+                        ...(this.body !== 0 && { body: this.body }),
                         colors: [...this.colors, ...this.guildColors].map(color =>
                             typeof color === 'string' ? parseInt(color.replace('#', ''),
                                 16) : color
@@ -1897,7 +1901,7 @@
                 getRendererObject() {
                     return JSON.stringify({
                         head: this.head,
-                        body: this.body,
+                        ...(this.body !== 0 && { body: this.body }),
                         orientation: this.possibleOrientation[this.animations[this.animation]
                             .orientation][this.orientationKey],
                         animation: this.getAnimation(),
@@ -2102,18 +2106,23 @@
                     return currentBreed ? currentBreed.heads[gender === 0 ? 'male' : 'female'] : 1
                 },
 
+                getFirstBody(gender, breed) {
+                    const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
+                    const bodies = currentBreed.bodies[gender === 0 ? 'male' : 'female']
+                    const keys = Object.keys(bodies)
+                    return currentBreed ? bodies[keys[0]].id : 1
+                },
+
                 updateBody(gender, breed) {
                     const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
                     const bodies = currentBreed.bodies[gender === 0 ? 'male' : 'female']
                     const keys = Object.keys(bodies)
                     const randKey = keys[Math.floor(Math.random() * keys.length)]
-                    console.log('updateBody', currentBreed ? bodies[randKey].id : 1)
                     return currentBreed ? bodies[randKey].id : 1
                 },
 
                 updateBodies(gender, breed) {
                     const currentBreed = this.breedInfos.find(b => b.dofus_id === breed)
-                    console.log('updateBodies', currentBreed ? currentBreed.bodies[gender === 0 ? 'male' : 'female'] : 1)
                     return currentBreed ? currentBreed.bodies[gender === 0 ? 'male' : 'female'] : 1
                 },
 
