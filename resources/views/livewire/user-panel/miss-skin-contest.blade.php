@@ -194,6 +194,7 @@
             {{-- Favorites display --}}
             <div class="mb-8">
                 <h3 class="mb-4 text-xl font-light text-secondary">Skins favoris</h3>
+                <p class="mb-4 text-lg italic font-light text-goldText" x-text="favorites.length + ' skins favoris'"></p>
                 <div class="grid grid-cols-[repeat(auto-fill,15rem)] pt-20 px-4 gap-x-8 gap-y-20 w-[min(100%,93rem)] justify-center"
                     x-show="favorites.length > 0" x-transition>
                     <template x-for="skinId in favorites" :key="skinId">
@@ -304,6 +305,7 @@
         {{-- Contest skins grid --}}
         <div class="mb-8">
             <h2 class="mb-4 text-2xl font-light text-secondary">Skins en concours</h2>
+                <p class="mb-4 text-lg italic font-light text-goldText">{{ $contestSkins->count() }} skins en concours</p>
 
             <div
                 class="grid grid-cols-[repeat(auto-fill,15rem)] pt-20 px-4 gap-x-8 gap-y-20 w-[min(100%,93rem)] justify-center">
