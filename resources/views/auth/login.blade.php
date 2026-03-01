@@ -4,13 +4,17 @@
     <div class="flex items-center justify-center mt-24">
         <form method="POST" action='{{ route('login') }}' class="flex justify-center w-[80%]">
             @csrf
-            <div class="w-full px-5 py-10 flex flex-col items-center gap-y-8">
+            <div class="flex flex-col items-center w-full px-5 py-10 gap-y-8">
 
                 <h1 class="text-[min(5rem,15vw)] font-normal text-center uppercase">{{ __('barbofus.titleLogin') }}</h1>
-                <h2 class="text-2xl font-thin text-center -mt-10 mb-8 uppercase">{{ __('barbofus.descriptionLogin') }}</h2>
+                <h2 class="mb-8 -mt-10 text-2xl font-thin text-center uppercase">{{ __('barbofus.descriptionLogin') }}</h2>
 
                 @if (session('status'))
-                    <p class="mb-8 text-center px-8 py-4 border-2 border-green-600 bg-green-200 font-light rounded-md text-md text-green-600">{{ __('barbofus.alertPasswordSaved') }}</p>
+                    <p class="px-8 py-4 mb-8 font-light text-center text-green-600 bg-green-200 border-2 border-green-600 rounded-md text-md">{{ __('barbofus.alertPasswordSaved') }}</p>
+                @endif
+
+                @if (session('sso_source') === 'tougli')
+                    <p class="px-8 py-4 mb-8 font-light text-center text-blue-600 bg-blue-200 border-2 border-blue-600 rounded-md text-md">Connexion requise pour accéder à Tougli</p>
                 @endif
 
                 {{-- Email --}}
@@ -25,17 +29,32 @@
 
                 <x-forms.submit>{{ __('barbofus.buttonLogin') }}</x-forms.submit>
 
-                <div class="relative flex gap-x-2 items-center -mt-12 -ml-16 hover:text-secondary transition-all text-inactiveText text-lg font-light cursor-pointer">
-                    <input class="border rounded-md w-5 h-5 appearance-none border-inactiveText hover:border-secondary bg-opacity-0 accent-goldText transition-all cursor-pointer checked:border-secondary peer" type="checkbox" id="remember" name="remember" />
-                    <label class="peer-checked:text-secondary cursor-pointer" for="remember">{{ __('barbofus.inputRememberMe') }}</label>
+                <input type="hidden" name="redirect" value="{{ session('sso_redirect') }}">
+                <input type="hidden" name="source" value="{{ session('sso_source') }}">
+
+                <div class="relative flex items-center -mt-12 -ml-16 text-lg font-light transition-all cursor-pointer gap-x-2 hover:text-secondary text-inactiveText">
+                    <input class="w-5 h-5 transition-all bg-opacity-0 border rounded-md appearance-none cursor-pointer border-inactiveText hover:border-secondary accent-goldText checked:border-secondary peer" type="checkbox" id="remember" name="remember" />
+                    <label class="cursor-pointer peer-checked:text-secondary" for="remember">{{ __('barbofus.inputRememberMe') }}</label>
                     <img src="{{ asset('storage/images/misc_ui/checkmark.png') }}" class="absolute min-w-[1.875rem] h-[1.875rem] -z-10 -left-1 -top-1 transition-all opacity-0 invisible peer-checked:visible peer-checked:opacity-100">
                 </div>
 
                 <div class="flex flex-col gap-y-4 items-start -ml-[min(200px,20vw)]">
-                    <a href="{{ route('password.request') }}" class="font-normal text-goldText hover:text-goldTextLit text-lg">{{ __('barbofus.buttonForgotPassword') }}</a>
-                    <p class="font-thin">{{ __('barbofus.descriptionNoAccount') }} <a href="{{ route('register') }}" class="font-normal text-goldText hover:text-goldTextLit text-lg">{{ __('barbofus.buttonRegister') }}</a></p>
+                    <a href="{{ route('password.request') }}" class="text-lg font-normal text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonForgotPassword') }}</a>
+                    <p class="font-thin">{{ __('barbofus.descriptionNoAccount') }} <a href="{{ route('register') }}" class="text-lg font-normal text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonRegister') }}</a></p>
                 </div>
             </div>
         </form>
+
+        <script>
+            // On ne touche que si query params redirect/source existent
+            const url = new URL(window.location.href);
+            if (url.searchParams.has('redirect') || url.searchParams.has('source')) {
+                // Supprime les params
+                url.searchParams.delete('redirect');
+                url.searchParams.delete('source');
+                // Remplace l’URL actuelle sans recharger la page
+                window.history.replaceState({}, '', url.pathname + url.search);
+            }
+        </script>
     </div>
 @endsection

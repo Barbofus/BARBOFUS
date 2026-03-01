@@ -43,7 +43,7 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 
-            return Limit::perMinute(5)->by($email.$request->ip());
+            return Limit::perMinute(5)->by($email . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
@@ -51,7 +51,15 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         // Login
-        Fortify::loginView(function () {
+        Fortify::loginView(function (Request $request) {
+            // Stocke redirect/source en session
+            if ($request->has('redirect')) {
+                session(['sso_redirect' => $request->query('redirect')]);
+            }
+            if ($request->has('source')) {
+                session(['sso_source' => $request->query('source')]);
+            }
+
             return view('auth.login');
         });
 
