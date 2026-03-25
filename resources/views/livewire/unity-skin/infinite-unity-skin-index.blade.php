@@ -53,11 +53,11 @@
     {{-- La grille des skins --}}
     <div
         class="flex flex-col items-center min-[1501px]:col-start-2 min-[1501px]:row-start-3 min-[1801px]:row-start-2 w-full mt-4 mb-10 bg-primary">
-        @if (count($postIdChunks) > 0)
+        @if (count($loadedPages) > 0)
             <p class="italic">{{ $skinCount }} skins</p>
             @for ($i = 0; $i < $page && $i < $maxPage; $i++)
                 <div class="w-full">
-                    <livewire:unity-skin.unity-skin-index-chunk :skinIds="$postIdChunks[$i]" :page="$page" :itemsPerPage="self::ITEMS_PER_PAGE"
+                    <livewire:unity-skin.unity-skin-index-chunk :skinIds="$loadedPages[$i]" :page="$page" :itemsPerPage="self::ITEMS_PER_PAGE"
                         :wire:key="'chunk-'.$queryCount.'-'.$i" />
                 </div>
             @endfor
