@@ -31,11 +31,13 @@ final class ComputeColorHsl
         $rgb = $this->doColorsMatch->hexToRgb($hex);
         $hsl = $this->doColorsMatch->getHue($rgb);
 
-        // Si le Hue + 15 (la range de red2) dépasse les 360, on compte ça dans 'red'
-        // Same wrapping as DoColorsMatch lines 40-41
+        // If hue + red2 range width wraps past 360, fold it back into 'red' —
+        // mirrors the same wrapping logic used inside DoColorsMatch.
+        $red2Range = $this->doColorsMatch->colorsSize['red2'];
+        $rangeWidth = $red2Range[1] - $red2Range[0];
         $hue = (int) $hsl[0];
-        if ($hue + 15 >= 360) {
-            $hue = $hue + 15 - 360;
+        if ($hue + $rangeWidth >= 360) {
+            $hue = $hue + $rangeWidth - 360;
         }
 
         return [
