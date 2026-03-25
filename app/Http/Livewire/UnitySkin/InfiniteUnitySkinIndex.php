@@ -465,14 +465,14 @@ class InfiniteUnitySkinIndex extends Component
      */
     public function SortBy(int $orderBy, string $orderDir)
     {
-        if ($orderBy == count($this->allOrder)) { // Si on choisi aléatoire
-            $this->randSort = true;
-            $this->orderByID = $orderBy;
-            $this->orderDirection = $orderDir;
-            $this->randomSeed = mt_rand(1, 999999); // New shuffle
-
-            return;
-        }
+        // Tri aléatoire désactivé temporairement (charge 50k+ IDs en mémoire)
+        // if ($orderBy == count($this->allOrder)) {
+        //     $this->randSort = true;
+        //     $this->orderByID = $orderBy;
+        //     $this->orderDirection = $orderDir;
+        //     $this->randomSeed = mt_rand(1, 999999);
+        //     return;
+        // }
 
         // Protection contre les index invalides
         if ($orderBy < 0 || $orderBy >= count($this->allOrder)) {
