@@ -404,10 +404,9 @@ class InfiniteUnitySkinIndex extends Component
             } else {
                 $orderedQuery = $this->buildOrderedQuery();
                 $this->loadedPages[$this->page - 1] = (clone $orderedQuery)
-                    ->select('unity_skins.id')
                     ->limit(self::ITEMS_PER_PAGE)
                     ->offset($offset)
-                    ->pluck('id')->toArray();
+                    ->pluck('unity_skins.id')->toArray();
             }
 
             $this->hasLoadMore = true;
@@ -423,8 +422,7 @@ class InfiniteUnitySkinIndex extends Component
         if ($this->randSort) {
             $orderedQuery = $this->buildOrderedQuery();
             $this->randomOrderIds = (clone $orderedQuery)
-                ->select('unity_skins.id')
-                ->pluck('id')->toArray();
+                ->pluck('unity_skins.id')->toArray();
             $this->skinCount = count($this->randomOrderIds);
             $this->maxPage = (int) ceil($this->skinCount / self::ITEMS_PER_PAGE);
             $this->page = 1;
@@ -447,9 +445,8 @@ class InfiniteUnitySkinIndex extends Component
         if ($this->skinCount > 0) {
             $orderedQuery = $this->buildOrderedQuery();
             $this->loadedPages[0] = (clone $orderedQuery)
-                ->select('unity_skins.id')
                 ->limit(self::ITEMS_PER_PAGE)
-                ->pluck('id')->toArray();
+                ->pluck('unity_skins.id')->toArray();
         }
 
         $this->queryCount++;
