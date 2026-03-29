@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\UnitySkin;
 
-use App\Actions\Utils\DoColorsMatch;
+use App\Actions\Utils\ComputeColorHsl;
 use App\Enums\ItemSubcategorieEnum;
 use App\Models\Race;
 use Illuminate\Database\Query\Builder;
@@ -17,7 +17,14 @@ class InfiniteUnitySkinIndex extends Component
     /**
      * @var array<int, int[]>
      */
-    public $postIdChunks = [];
+    public array $loadedPages = [];
+
+    public int $randomSeed = 0;
+
+    /**
+     * @var int[]
+     */
+    public array $randomOrderIds = [];
 
     public int $skinCount = 0;
 
@@ -49,16 +56,6 @@ class InfiniteUnitySkinIndex extends Component
         'costume',
         'wings',
         'shoulderpads',
-    ];
-
-    /**
-     * @var string[]
-     */
-    protected $skinColors = [
-        'color_cloth_1',
-        'color_cloth_2',
-        'color_cloth_3',
-        'color_cloth_4',
     ];
 
     protected bool $hasLoadMore = false;
@@ -116,6 +113,8 @@ class InfiniteUnitySkinIndex extends Component
 
     public function mount(): void
     {
+        $this->randomSeed = mt_rand(1, 999999);
+
         $breedIds = Race::all()->pluck('dofus_id')->toArray();
 
         // Si on a des paramètres dans l'url
@@ -149,74 +148,12 @@ class InfiniteUnitySkinIndex extends Component
     }
 
     /**
-     * @return View
+     * Build the base filter query with JOINs + WHERE clauses only (no SELECT, no ORDER BY).
      */
-    public function render()
+    protected function buildFilterQuery(): Builder
     {
-        $this->races = DB::table('races')
-            ->addSelect([
-                'localized_name' => DB::table('localized_races')
-                    ->select('name')
-                    ->where('locale', app()->getLocale())
-                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
-                    ->take(1),
-            ])->get();
-
-        if (! $this->hasLoadMore) {
-            $this->PrepareChunks();
-        }
-
-        $this->dispatchBrowserEvent('skin-index-render');
-
-        return view('livewire.unity-skin.infinite-unity-skin-index');
-    }
-
-    /**
-     * @return void
-     */
-    public function LoadMore()
-    {
-        if ($this->HasMorePage()) {
-            $this->page++;
-            $this->hasLoadMore = true;
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function PrepareChunks()
-    {
-        $this->postIdChunks = DB::table('unity_skins')
-
-            // Les joins
+        $query = DB::table('unity_skins')
             ->join('users', 'unity_skins.user_id', '=', 'users.id')
-            /*->when(count($this->skinContentWhere) > 0 || count($this->searchFilterInput) > 0 || count($this->skinPetTypeWhere) > 0, function (Builder $query) {
-                foreach ($this->itemCategory as $category) {
-                    $query->leftJoin('items as '. $category .'_items', 'items.dofus_id', '=', 'unity_skins.'.$category.'_id');
-                }
-            })*/
-
-            // select princpal
-            ->select('unity_skins.id', 'unity_skins.user_id')
-
-            ->when($this->skinColors != '', function (Builder $query) {
-                foreach ($this->skinColors as $color) {
-                    $query->addSelect('unity_skins.' . $color);
-                }
-            })
-
-            // Variables utiles pour les orderBy
-            ->addSelect([
-                'rewards_points' => DB::table('unity_rewards')
-                    ->selectRaw('sum(points)')
-                    ->whereColumn('unity_rewards.unity_skin_id', 'unity_skins.id'),
-            ])
-            ->addSelect([
-                'likes_count' => DB::table('unity_likes')
-                    ->selectRaw('count(id)')
-                    ->whereColumn('unity_likes.unity_skin_id', 'unity_skins.id'),
-            ])
 
             // Début du système de filtres
             ->where($this->raceWhere)
@@ -319,68 +256,198 @@ class InfiniteUnitySkinIndex extends Component
                 $query->whereDate('unity_skins.created_at', '2025-07-01')
                     ->where('unity_skins.name', 'LIKE', '%#%')
                     ->whereIn('unity_skins.id', $subQuery);
-            })*/
+            })*/;
 
-            // orderBy
-            ->when(! $this->randSort, function (Builder $query) {
-                $query->orderBy($this->orderBy, $this->orderDirection)
-                    ->when($this->orderByID == 4, function (Builder $query) {
-                        $query->orderBy('unity_skins.created_at', 'ASC');
-                    })
-                    ->when($this->orderByID != 4, function (Builder $query) {
-                        $query->orderBy('unity_skins.created_at', 'DESC');
-                    });
-            })
-            ->when($this->randSort, function (Builder $query) {
-                $query->inRandomOrder();
-            })
+        // Color filter in SQL
+        if ($this->filterColor !== '') {
+            $hsl = (new ComputeColorHsl)($this->filterColor);
 
-            // Récupère les ID
-            ->pluck('id')
-            ->toArray();
+            if ($hsl !== null) {
+                $inputH = $hsl['hue'];
+                $inputS = $hsl['saturation'];
+                $inputL = $hsl['lightness'];
 
-        // Si on a une couleur à filtrer
-        if ($this->filterColor != '') {
-            $toRemove = [];
+                $clothColumns = [
+                    'color_cloth_1',
+                    'color_cloth_2',
+                    'color_cloth_3',
+                    'color_cloth_4',
+                ];
 
-            // On reprend tous les skins basé sur les précédents ID, et on select l'id + les couleurs
-            $skins = DB::table('unity_skins')
-                ->whereIn('id', $this->postIdChunks)
-                ->select('id')
-                ->when($this->skinColors != '', function (Builder $query) {
-                    foreach ($this->skinColors as $color) {
-                        $query->addSelect('unity_skins.' . $color);
+                $query->where(function (Builder $query) use ($clothColumns, $inputH, $inputS, $inputL) {
+                    foreach ($clothColumns as $col) {
+                        $query->orWhere(function (Builder $query) use ($col, $inputH, $inputS, $inputL) {
+                            if ($inputS < 5) {
+                                // Grayscale match
+                                $query->where("{$col}_saturation", '<', 5)
+                                    ->whereBetween("{$col}_lightness", [max(0, $inputL - 30), $inputL + 30]);
+                            } else {
+                                // Chromatic match
+                                $query->whereBetween("{$col}_saturation", [max(0, $inputS - 29), $inputS + 29])
+                                    ->whereBetween("{$col}_lightness", [max(0, $inputL - 29), $inputL + 29])
+                                    ->where(function (Builder $query) use ($col, $inputH) {
+                                        $query->orWhere(function (Builder $q) use ($col, $inputH) {
+                                            $q->whereBetween("{$col}_hue", [0, 15])
+                                                ->whereRaw('? BETWEEN 0 AND 15', [$inputH]);
+                                        })
+                                            ->orWhere(function (Builder $q) use ($col, $inputH) {
+                                                $q->whereBetween("{$col}_hue", [12, 39])
+                                                    ->whereRaw('? BETWEEN 12 AND 39', [$inputH]);
+                                            })
+                                            ->orWhere(function (Builder $q) use ($col, $inputH) {
+                                                $q->whereBetween("{$col}_hue", [40, 65])
+                                                    ->whereRaw('? BETWEEN 40 AND 65', [$inputH]);
+                                            })
+                                            ->orWhere(function (Builder $q) use ($col, $inputH) {
+                                                $q->whereBetween("{$col}_hue", [65, 155])
+                                                    ->whereRaw('? BETWEEN 65 AND 155', [$inputH]);
+                                            })
+                                            ->orWhere(function (Builder $q) use ($col, $inputH) {
+                                                $q->whereBetween("{$col}_hue", [155, 250])
+                                                    ->whereRaw('? BETWEEN 155 AND 250', [$inputH]);
+                                            })
+                                            ->orWhere(function (Builder $q) use ($col, $inputH) {
+                                                $q->whereBetween("{$col}_hue", [250, 300])
+                                                    ->whereRaw('? BETWEEN 250 AND 300', [$inputH]);
+                                            })
+                                            ->orWhere(function (Builder $q) use ($col, $inputH) {
+                                                $q->whereBetween("{$col}_hue", [290, 345])
+                                                    ->whereRaw('? BETWEEN 290 AND 345', [$inputH]);
+                                            });
+                                    });
+                            }
+                        });
                     }
-                })->get()->toArray();
-
-            // Pour chacun d'entre eux, on test le colormatch sur chaque couleur, s'il y en a au moins une de bonne on passe à la boucle suivant
-            foreach ($skins as $skin) {
-                foreach ($this->skinColors as $color) {
-                    if ((new DoColorsMatch)($this->filterColor, $skin->$color)) {
-                        continue 2;
-                    }
-                }
-
-                // Sinon on ajoute dans le tableau des IDs à supprimer
-                $toRemove[] = $skin->id;
-            }
-
-            // On supprime tous les IDs dont la couleur de match pas
-            foreach ($toRemove as $rem) {
-                if (($key = array_search($rem, $this->postIdChunks)) !== false) {
-                    unset($this->postIdChunks[$key]);
-                }
+                });
             }
         }
 
-        $this->skinCount = count($this->postIdChunks);
+        return $query;
+    }
 
-        // On chunk et on envoie !
-        $this->postIdChunks = array_chunk($this->postIdChunks, self::ITEMS_PER_PAGE);
+    /**
+     * Build the ordered query: adds SELECT + ORDER BY on top of buildFilterQuery().
+     */
+    protected function buildOrderedQuery(): Builder
+    {
+        $query = $this->buildFilterQuery();
 
+        // Only addSelect for columns needed by ORDER BY
+        if ($this->orderBy === 'rewards_points') {
+            $query->addSelect([
+                'rewards_points' => DB::table('unity_rewards')
+                    ->selectRaw('sum(points)')
+                    ->whereColumn('unity_rewards.unity_skin_id', 'unity_skins.id'),
+            ]);
+        }
+
+        if ($this->orderBy === 'likes_count') {
+            $query->addSelect([
+                'likes_count' => DB::table('unity_likes')
+                    ->selectRaw('count(id)')
+                    ->whereColumn('unity_likes.unity_skin_id', 'unity_skins.id'),
+            ]);
+        }
+
+        // ORDER BY
+        if ($this->randSort) {
+            $query->orderByRaw('RAND(?)', [$this->randomSeed]);
+        } else {
+            $query->orderBy($this->orderBy, $this->orderDirection)
+                ->when($this->orderByID == 4, function (Builder $query) {
+                    $query->orderBy('unity_skins.created_at', 'ASC');
+                })
+                ->when($this->orderByID != 4, function (Builder $query) {
+                    $query->orderBy('unity_skins.created_at', 'DESC');
+                });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @return View
+     */
+    public function render()
+    {
+        $this->races = DB::table('races')
+            ->addSelect([
+                'localized_name' => DB::table('localized_races')
+                    ->select('name')
+                    ->where('locale', app()->getLocale())
+                    ->whereColumn('races.dofus_id', 'localized_races.dofus_id')
+                    ->take(1),
+            ])->get();
+
+        if (! $this->hasLoadMore) {
+            $this->PrepareChunks();
+        }
+
+        $this->dispatchBrowserEvent('skin-index-render');
+
+        return view('livewire.unity-skin.infinite-unity-skin-index');
+    }
+
+    /**
+     * @return void
+     */
+    public function LoadMore()
+    {
+        if ($this->HasMorePage()) {
+            $this->page++;
+            $offset = ($this->page - 1) * self::ITEMS_PER_PAGE;
+
+            if ($this->randSort) {
+                $this->loadedPages[$this->page - 1] = array_slice(
+                    $this->randomOrderIds, $offset, self::ITEMS_PER_PAGE
+                );
+            } else {
+                $orderedQuery = $this->buildOrderedQuery();
+                $this->loadedPages[$this->page - 1] = (clone $orderedQuery)
+                    ->limit(self::ITEMS_PER_PAGE)
+                    ->offset($offset)
+                    ->pluck('unity_skins.id')->toArray();
+            }
+
+            $this->hasLoadMore = true;
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function PrepareChunks()
+    {
+        // Random sort — fetch all IDs (lightweight, SELECT id only)
+        if ($this->randSort) {
+            $orderedQuery = $this->buildOrderedQuery();
+            $this->randomOrderIds = (clone $orderedQuery)
+                ->pluck('unity_skins.id')->toArray();
+            $this->skinCount = count($this->randomOrderIds);
+            $this->maxPage = (int) ceil($this->skinCount / self::ITEMS_PER_PAGE);
+            $this->page = 1;
+            $this->loadedPages = $this->skinCount > 0
+                ? [array_slice($this->randomOrderIds, 0, self::ITEMS_PER_PAGE)]
+                : [];
+            $this->queryCount++;
+
+            return; // early return for random case
+        }
+
+        // Deterministic sort
+        $filterQuery = $this->buildFilterQuery();
+        $this->skinCount = (clone $filterQuery)->count();
+        $this->maxPage = (int) ceil($this->skinCount / self::ITEMS_PER_PAGE);
         $this->page = 1;
+        $this->loadedPages = [];
+        $this->randomOrderIds = [];
 
-        $this->maxPage = count($this->postIdChunks);
+        if ($this->skinCount > 0) {
+            $orderedQuery = $this->buildOrderedQuery();
+            $this->loadedPages[0] = (clone $orderedQuery)
+                ->limit(self::ITEMS_PER_PAGE)
+                ->pluck('unity_skins.id')->toArray();
+        }
 
         $this->queryCount++;
     }
@@ -398,13 +465,14 @@ class InfiniteUnitySkinIndex extends Component
      */
     public function SortBy(int $orderBy, string $orderDir)
     {
-        if ($orderBy == count($this->allOrder)) { // Si on choisi aléatoire
-            $this->randSort = true;
-            $this->orderByID = $orderBy;
-            $this->orderDirection = $orderDir;
-
-            return;
-        }
+        // Tri aléatoire désactivé temporairement (charge 50k+ IDs en mémoire)
+        // if ($orderBy == count($this->allOrder)) {
+        //     $this->randSort = true;
+        //     $this->orderByID = $orderBy;
+        //     $this->orderDirection = $orderDir;
+        //     $this->randomSeed = mt_rand(1, 999999);
+        //     return;
+        // }
 
         // Protection contre les index invalides
         if ($orderBy < 0 || $orderBy >= count($this->allOrder)) {

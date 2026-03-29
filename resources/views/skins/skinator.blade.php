@@ -2833,6 +2833,9 @@
 
                     const itemCache = this.cacheTexture[category][id] ?? 123456;
                     const textureVersion = '?v=' + itemCache;
+                    url = url.replace('skins', 'skins_webp')
+                        .replace('bones', 'bones_webp')
+                        .replace('.png', '.webp')
 
                     img.src = '/storage/images/skinator/' + url + textureVersion;
                 });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Utils\ComputeColorHsl;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -77,6 +78,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class UnitySkin extends Model
 {
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function (UnitySkin $skin): void {
+            $computeColorHsl = new ComputeColorHsl;
+
+            foreach (['color_cloth_1', 'color_cloth_2', 'color_cloth_3', 'color_cloth_4'] as $color) {
+                if ($skin->isDirty($color)) {
+                    $hsl = $computeColorHsl($skin->$color);
+                    if ($hsl !== null) {
+                        $skin->{$color.'_hue'} = $hsl['hue'];
+                        $skin->{$color.'_saturation'} = $hsl['saturation'];
+                        $skin->{$color.'_lightness'} = $hsl['lightness'];
+                    }
+                }
+            }
+        });
+    }
+
     protected $fillable = [
         'face',
         'body',
@@ -105,6 +126,18 @@ class UnitySkin extends Model
         'name',
         'chunk_views',
         'detailed_views',
+        'color_cloth_1_hue',
+        'color_cloth_1_saturation',
+        'color_cloth_1_lightness',
+        'color_cloth_2_hue',
+        'color_cloth_2_saturation',
+        'color_cloth_2_lightness',
+        'color_cloth_3_hue',
+        'color_cloth_3_saturation',
+        'color_cloth_3_lightness',
+        'color_cloth_4_hue',
+        'color_cloth_4_saturation',
+        'color_cloth_4_lightness',
     ];
 
     protected $casts = [
