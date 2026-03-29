@@ -158,6 +158,14 @@ class PlanningController extends Controller
 
         $planning = $request->get('planning', []);
 
+        // Refuser d'écraser le planning avec un tableau vide
+        if (empty($planning)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Planning vide reçu, sauvegarde annulée'
+            ], 422);
+        }
+
         // Debug : afficher ce qui est reçu du frontend
         \Log::info("Planning reçu du frontend:", $planning);
 
@@ -271,7 +279,7 @@ class PlanningController extends Controller
         }
 
         $planning = $this->readPlanning();
-        $this->savePlanning($planning, $newWeek->week, $newWeek->year);
+        $this->savePlanning($planning, $newWeek->isoWeek, $newWeek->isoWeekYear);
 
         // Calculer les nouvelles dates pour la réponse
         $startOfWeek = $newWeek->copy()->startOfWeek();
@@ -279,8 +287,8 @@ class PlanningController extends Controller
 
         return response()->json([
             'success' => true,
-            'week' => $newWeek->week,
-            'year' => $newWeek->year,
+            'week' => $newWeek->isoWeek,
+            'year' => $newWeek->isoWeekYear,
             'startOfWeek' => $startOfWeek->format('Y-m-d'),
             'endOfWeek' => $endOfWeek->format('Y-m-d')
         ]);

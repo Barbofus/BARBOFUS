@@ -80,4 +80,31 @@ class TougliController extends Controller
             'locale' => $user->locale
         ], 200);
     }
+
+    /**
+     * Logout the user and redirect (cross-site support).
+     */
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        $redirect = $request->query('redirect');
+
+        if ($redirect) {
+            $host = parse_url($redirect, PHP_URL_HOST);
+            $baseDomain = 'barbofus.com';
+
+            $isAllowed = $host === $baseDomain
+                || str_ends_with($host, '.' . $baseDomain)
+                || in_array($host, ['localhost', '127.0.0.1']);
+
+            if ($isAllowed) {
+                return redirect()->to($redirect);
+            }
+        }
+
+        return redirect()->route('home');
+    }
 }

@@ -38,5 +38,6 @@ return [
 
     'dofus_update_secret' => env('DOFUS_UPDATE_SECRET'),
     'twitch_counter_secret' => env('TWITCH_COUNTER_SECRET'),
+    'cross_site_logout_secret' => env('CROSS_SITE_LOGOUT_SECRET'),
 
 ];

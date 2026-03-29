@@ -383,6 +383,12 @@
                         return;
                     }
 
+                    // Refus d'envoyer un planning vide qui écraserait les données
+                    if (!this.planning || this.planning.length === 0) {
+                        console.warn('savePlanning annulé : planning vide');
+                        return;
+                    }
+
                     // Debounce pour éviter les appels multiples
                     if (this.saveTimeout) {
                         clearTimeout(this.saveTimeout);

@@ -189,6 +189,8 @@ Route::get('/api/skin/{id}', [ApiSkinController::class, 'show']);
 
 Route::get('/api/whoami', [TougliController::class, 'whoami']);
 
+Route::get('/logout', [TougliController::class, 'logout'])->name('logout.cross-site');
+
 Route::put('/api/locale', [TougliController::class, 'updateLocale']);
 
 Route::post('/favorites', [FavoriteController::class, 'store']);
