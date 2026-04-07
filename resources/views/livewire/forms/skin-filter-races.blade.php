@@ -92,7 +92,8 @@
     </button>
 
     <!-- Menu déroulant -->
-    <div x-show="showSort" x-cloak class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer" id="race-dropdown">
+    <div x-show="showSort" x-cloak class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer
+              max-[900px]:static max-[900px]:top-auto max-[900px]:left-auto max-[900px]:rounded-t-md" id="race-dropdown">
         @foreach ($races as $race)
             <button id="label_race_id_{{ $race->dofus_id }}"
                     aria-label="Filtre {{ $race->localized_name }}"

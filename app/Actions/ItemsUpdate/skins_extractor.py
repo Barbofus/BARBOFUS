@@ -39,12 +39,14 @@ def unpack_assets_skinstemp(folder_path : str, destination_folder : str, ids_fil
                 # print("FIND TEXTURE")
                 data = obj.read()
                 # create dest based on original path
-                dest = os.path.join(destination_folder, name + ".png")
+                dest = os.path.join(destination_folder, name + ".webp")
                 # make sure that the dir of that path exists
                 os.makedirs(os.path.dirname(dest), exist_ok = True)
 
                 print(dest)
                 data.image.save(dest)
+                dest_png = os.path.join(destination_folder, name + ".png")
+                data.image.save(dest_png)
 
 def unpack_assets_bonestemp(folder_path : str, destination_folder : str, ids_file: str):
     # Charger les IDs
@@ -64,12 +66,14 @@ def unpack_assets_bonestemp(folder_path : str, destination_folder : str, ids_fil
                 # print("FIND TEXTURE")
                 data = obj.read()
                 # create dest based on original path
-                dest = os.path.join(destination_folder, name + ".png")
+                dest = os.path.join(destination_folder, name + ".webp")
                 # make sure that the dir of that path exists
                 os.makedirs(os.path.dirname(dest), exist_ok = True)
 
                 print(dest)
                 data.image.save(dest)
+                dest_png = os.path.join(destination_folder, name + ".png")
+                data.image.save(dest_png)
 
 def unpack_assets_skin(folder_path : str, destination_folder : str, ids_file: str):
     # Charger les IDs
@@ -110,12 +114,14 @@ def unpack_assets_skin(folder_path : str, destination_folder : str, ids_file: st
                 # print("FIND TEXTURE")
                 data = obj.read()
                 # create dest based on original path
-                dest = os.path.join(destination_folder, "public/images/skinator/skins", name + ".png")
+                dest = os.path.join(destination_folder, "public/images/skinator/skins", name + ".webp")
                 # make sure that the dir of that path exists
                 os.makedirs(os.path.dirname(dest), exist_ok = True)
 
                 print(dest)
                 data.image.save(dest)
+                dest_png = os.path.join(destination_folder, "public/images/skinator/skins", name + ".png")
+                data.image.save(dest_png)
 
 def unpack_assets_bone(folder_path : str, destination_folder : str, ids_file: str):
 
@@ -182,13 +188,15 @@ def unpack_assets_bone(folder_path : str, destination_folder : str, ids_file: st
                 # print("FIND TEXTURE")
                 data = obj.read()
                 # create dest based on original path
-                dest = os.path.join(destination_folder, "public/images/skinator/bones", name + ".png")
+                dest = os.path.join(destination_folder, "public/images/skinator/bones", name + ".webp")
                 # make sure that the dir of that path exists
                 os.makedirs(os.path.dirname(dest), exist_ok = True)
 
                 print(dest)
                 try:
                     data.image.save(dest)
+                    dest_png = os.path.join(destination_folder, "public/images/skinator/bones", name + ".png")
+                    data.image.save(dest_png)
                 except Exception as e:
                     print(f"Erreur lors de la sauvegarde de l'image pour {name}: {e}")
 

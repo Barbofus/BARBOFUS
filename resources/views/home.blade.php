@@ -142,7 +142,7 @@
                     alt="Logo DofusBook">
                 <div class="flex flex-col items-start justify-center">
                     <p class="text-xl font-light uppercase text-secondary">Amalik</p>
-                    <p class="italic font-thin text-secondary">Tradiction pt/br</p>
+                    <p class="italic font-thin text-secondary">Traduction pt/br</p>
                 </div>
             </div>
         </div>

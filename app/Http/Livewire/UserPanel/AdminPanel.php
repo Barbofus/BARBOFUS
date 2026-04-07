@@ -93,7 +93,7 @@ class AdminPanel extends Component
         $this->currentStep = 0;
 
         // Export des fichiers data en json
-        $this->getDataRootFiles();
+        /*$this->getDataRootFiles();
 
         // Export des fichiers lang.bin en json
         $this->getLangFiles();
@@ -102,16 +102,16 @@ class AdminPanel extends Component
         $this->updateDB();
 
         // Récupèrer les icones des items/mounts/visage
-        $this->getIcons();
+        $this->getIcons();*/
 
         // Récupère les skins / bones de ce que nous avons déjà (heads, breeds, mounts)
         $this->getRootFilesSkins();
 
         // Exporte les bundles modifiés
-        $this->exportUpdatedBundles();
+        /*$this->exportUpdatedBundles();
 
         // Exporte les nouveaux bundle pour identifier les skins / bones id
-        $this->exportBundleDifference();
+        $this->exportBundleDifference();*/
 
         $this->currentStep = $this->maxStep;
         $this->stepName = 'Mise à jour terminé';
@@ -378,10 +378,10 @@ class AdminPanel extends Component
         $this->stepLog();
 
         $ftpFiles = [
-            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
+            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins_webp/'],
             'skins_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
             'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
-            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
+            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones_webp/'],
             'bones_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
             'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
             'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
@@ -391,12 +391,12 @@ class AdminPanel extends Component
             foreach ($type as $file) {
                 if ($typeKey === 'skins') {
                     $ftpFiles['skins_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
-                        'name' => $file . '.png',
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.webp',
+                        'name' => $file . '.webp',
                     ];
                     $ftpFiles['skins_png_back']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
-                        'name' => $file . '.png',
+                        'name' => $file . 'png',
                     ];
                     $ftpFiles['skins_json']['files'][] = [
                         'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
@@ -404,8 +404,8 @@ class AdminPanel extends Component
                     ];
                 } elseif ($typeKey === 'bones') {
                     $ftpFiles['bones_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
-                        'name' => $file . '.png',
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.webp',
+                        'name' => $file . '.webp',
                     ];
                     $ftpFiles['bones_png_back']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
@@ -893,6 +893,7 @@ class AdminPanel extends Component
             $files['Skins'][] = $hd['skins'];
         }
 
+
         // Vérifie s'il faut redl le fichier, et ne conserve que ceux à dl
         foreach ($files as $typeKey => $type) {
             foreach ($type as $key => $file) {
@@ -1022,10 +1023,10 @@ class AdminPanel extends Component
 
 
         $ftpFiles = [
-            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins/'],
+            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins_webp/'],
             'skins_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
             'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
-            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones/'],
+            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones_webp/'],
             'bones_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
             'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
             'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
@@ -1033,10 +1034,10 @@ class AdminPanel extends Component
 
         foreach ($files as $typeKey => $type) {
             foreach ($type as $file) {
-                if ($typeKey === 'skins') {
+                if ($typeKey === 'Skins') {
                     $ftpFiles['skins_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
-                        'name' => $file . '.png',
+                        'file' => storage_path('app/public/images/skinator/skins/') . $file . '.webp',
+                        'name' => $file . '.webp',
                     ];
                     $ftpFiles['skins_png_back']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
@@ -1046,10 +1047,10 @@ class AdminPanel extends Component
                         'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
                         'name' => $file . '.json',
                     ];
-                } elseif ($typeKey === 'bones') {
+                } elseif ($typeKey === 'Bones') {
                     $ftpFiles['bones_png']['files'][] = [
-                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
-                        'name' => $file . '.png',
+                        'file' => storage_path('app/public/images/skinator/bones/') . $file . '.webp',
+                        'name' => $file . '.webp',
                     ];
                     $ftpFiles['bones_png_back']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
