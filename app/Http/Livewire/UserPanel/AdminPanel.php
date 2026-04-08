@@ -93,7 +93,7 @@ class AdminPanel extends Component
         $this->currentStep = 0;
 
         // Export des fichiers data en json
-        /*$this->getDataRootFiles();
+        $this->getDataRootFiles();
 
         // Export des fichiers lang.bin en json
         $this->getLangFiles();
@@ -102,16 +102,16 @@ class AdminPanel extends Component
         $this->updateDB();
 
         // Récupèrer les icones des items/mounts/visage
-        $this->getIcons();*/
+        $this->getIcons();
 
         // Récupère les skins / bones de ce que nous avons déjà (heads, breeds, mounts)
         $this->getRootFilesSkins();
 
         // Exporte les bundles modifiés
-        /*$this->exportUpdatedBundles();
+        $this->exportUpdatedBundles();
 
         // Exporte les nouveaux bundle pour identifier les skins / bones id
-        $this->exportBundleDifference();*/
+        $this->exportBundleDifference();
 
         $this->currentStep = $this->maxStep;
         $this->stepName = 'Mise à jour terminé';
@@ -396,7 +396,7 @@ class AdminPanel extends Component
                     ];
                     $ftpFiles['skins_png_back']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
-                        'name' => $file . 'png',
+                        'name' => $file . '.png',
                     ];
                     $ftpFiles['skins_json']['files'][] = [
                         'file' => storage_path('app/json/skinator/skins/') . $file . '.json',
