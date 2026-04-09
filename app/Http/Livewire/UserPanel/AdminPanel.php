@@ -43,8 +43,8 @@ class AdminPanel extends Component
 
     private string $logIcon;
 
-    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
-    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
+    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
+    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
 
     /**
      * @var string[]
@@ -1106,8 +1106,13 @@ class AdminPanel extends Component
      */
     public function checkIfDofusNewer(string $localFile, string $dofusFile): bool
     {
-        // Si le fichier local n'existe pas et le fichier Dofus existe, Dofus est plus récent
-        if (! file_exists($localFile) && file_exists($dofusFile)) {
+        // Si le fichier Dofus n'existe pas, il ne peut pas être plus récent
+        if (! file_exists($dofusFile)) {
+            return false;
+        }
+
+        // Si le fichier local n'existe pas mais le fichier Dofus existe, Dofus est plus récent
+        if (! file_exists($localFile)) {
             return true;
         }
 
