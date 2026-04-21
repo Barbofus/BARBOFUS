@@ -1770,7 +1770,7 @@
                     }
 
                     if (this.body == null) {
-                        this.body = this.updateBody(this.gender, this.breed);
+                        this.body = this.getFirstBody(this.gender, this.breed);
                     }
 
                     this.breedHeads = this.updateHeads(this.gender, this.breed);
