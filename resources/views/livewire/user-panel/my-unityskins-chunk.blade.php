@@ -3,8 +3,12 @@
         <div wire:key="skin.{{ $skin->id }}" class="relative h-full shadow-sm opacity-0 animate-skinApparition"
             style="animation-delay: {{ ($key - $itemsPerPage * ($page - 1)) * 35 }}ms">
             <x-skins-presentation.myunityskins-card :skin="$skin" />
+            @if($skin->status == 'MissSkin')
+                <p class="absolute mt-2 text-lg italic text-blue-400">{{ "Miss'Skin en cours" }}</p>
+            @else
             <p class="absolute mt-2 text-lg italic text-inactiveText">{{ __('barbofus.contentPosted') }}
                 {{ $skin->created_at->diffForHumans() }}</p>
+            @endif
         </div>
     @endforeach
 </div>

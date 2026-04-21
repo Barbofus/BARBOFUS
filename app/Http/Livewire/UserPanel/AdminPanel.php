@@ -43,8 +43,8 @@ class AdminPanel extends Component
 
     private string $logIcon;
 
-    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
-    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
+    //private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-beta\Dofus_Data\StreamingAssets\Content/';
+    private string $dofusContentPath = 'C:\Users\thefl\AppData\Local\Ankama\Dofus-dofus3\Dofus_Data\StreamingAssets\Content/';
 
     /**
      * @var string[]

@@ -758,47 +758,75 @@
 
                         {{-- Show colorable --}}
                         <button type="button" x-cloak title="Show only colorable"
-                            @click="showOnlyColorable = !showOnlyColorable; updateFilteredItems()"
-                            class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
-                            :class="showOnlyColorable ? 'border-secondary' : 'border-inactiveText'">
-                            <img :class="showOnlyColorable ? 'opacity-100' : 'opacity-60 grayscale'"
+                            @click="showOnlyColorable = (showOnlyColorable + 1) % 3; updateFilteredItems()"
+                            class="relative w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
+                            :class="showOnlyColorable === 1 ? 'border-secondary' : showOnlyColorable === 2 ? 'border-red-500' : 'border-inactiveText'">
+                            <img :class="showOnlyColorable > 0 ? 'opacity-100' : 'opacity-60 grayscale'"
                                 class="mx-auto transition-all h-7 hover:scale-90"
                                 src="{{ asset('storage/images/misc_ui/colorable_items_icon.png') }}" alt="Colorable">
+                            <div x-show="showOnlyColorable === 2"
+                                class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="text-red-500 w-9 h-9">
+                                    <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                                </svg>
+                            </div>
                         </button>
 
                         {{-- Show Mimisymbic --}}
                         <button type="button" x-cloak title="Show only mimisymbic"
-                            @click="showOnlyMimisymbic = !showOnlyMimisymbic; updateFilteredItems()"
-                            class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
-                            :class="showOnlyMimisymbic ? 'border-secondary' : 'border-inactiveText'">
-                            <img :class="showOnlyMimisymbic ? 'opacity-100' : 'opacity-60 grayscale'"
+                            @click="showOnlyMimisymbic = (showOnlyMimisymbic + 1) % 3; updateFilteredItems()"
+                            class="relative w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
+                            :class="showOnlyMimisymbic === 1 ? 'border-secondary' : showOnlyMimisymbic === 2 ? 'border-red-500' : 'border-inactiveText'">
+                            <img :class="showOnlyMimisymbic > 0 ? 'opacity-100' : 'opacity-60 grayscale'"
                                 class="mx-auto transition-all h-7 hover:scale-90"
                                 src="{{ asset('storage/images/icons/items/subcategories/mimisymbic.png') }}"
-                                alt="Colorable">
+                                alt="Mimisymbic">
+                            <div x-show="showOnlyMimisymbic === 2"
+                                class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="text-red-500 w-9 h-9">
+                                    <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                                </svg>
+                            </div>
                         </button>
 
                         {{-- Show Ceremonial --}}
                         <button type="button" x-cloak title="Show only ceremonial"
-                            @click="showOnlyCeremonial = !showOnlyCeremonial; updateFilteredItems()"
-                            class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
-                            :class="showOnlyCeremonial ? 'border-secondary' : 'border-inactiveText'">
-                            <img :class="showOnlyCeremonial ? 'opacity-100' : 'opacity-60 grayscale'"
+                            @click="showOnlyCeremonial = (showOnlyCeremonial + 1) % 3; updateFilteredItems()"
+                            class="relative w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
+                            :class="showOnlyCeremonial === 1 ? 'border-secondary' : showOnlyCeremonial === 2 ? 'border-red-500' : 'border-inactiveText'">
+                            <img :class="showOnlyCeremonial > 0 ? 'opacity-100' : 'opacity-60 grayscale'"
                                 class="mx-auto transition-all h-7 hover:scale-90"
                                 src="{{ asset('storage/images/icons/items/subcategories/ceremonial.png') }}"
-                                alt="Colorable">
+                                alt="Ceremonial">
+                            <div x-show="showOnlyCeremonial === 2"
+                                class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="text-red-500 w-9 h-9">
+                                    <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                                </svg>
+                            </div>
                         </button>
 
                         <button type="button" x-cloak title="Show only favorite"
-                            @click="showOnlyFavorite = !showOnlyFavorite; updateFilteredItems()"
-                            class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
-                            :class="showOnlyFavorite ? 'border-secondary text-secondary' :
-                                'border-inactiveText text-inactiveText'">
+                            @click="showOnlyFavorite = (showOnlyFavorite + 1) % 3; updateFilteredItems()"
+                            class="relative w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
+                            :class="showOnlyFavorite === 1 ? 'border-secondary text-secondary' : showOnlyFavorite === 2 ? 'border-red-500 text-red-500' : 'border-inactiveText text-inactiveText'">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="mx-auto h-7 hover:scale-90">
+                                class="mx-auto h-7 hover:scale-90"
+                                :class="showOnlyFavorite > 0 ? 'opacity-100' : 'opacity-60 grayscale'">
                                 <path fill-rule="evenodd"
                                     d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
                                     clip-rule="evenodd" />
                             </svg>
+                            <div x-show="showOnlyFavorite === 2"
+                                class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="text-red-500 w-9 h-9">
+                                    <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                                </svg>
+                            </div>
                         </button>
                     </div>
 
@@ -1690,10 +1718,10 @@
                 previousInvertX: '',
                 openShareUI: false,
                 searchColor: null,
-                showOnlyColorable: false,
-                showOnlyMimisymbic: false,
-                showOnlyCeremonial: false,
-                showOnlyFavorite: false,
+                showOnlyColorable: 0,
+                showOnlyMimisymbic: 0,
+                showOnlyCeremonial: 0,
+                showOnlyFavorite: 0,
                 clicked: -1,
                 userId: @json(auth()->check() ? auth()->id() : -1),
                 favorites: [],
@@ -2013,21 +2041,29 @@
                         );
                     }
 
-                    if (this.showOnlyFavorite) {
+                    if (this.showOnlyFavorite === 1) {
                         filteredItems = filteredItems.filter(i => this.favorites.includes(i.dofus_id));
+                    } else if (this.showOnlyFavorite === 2) {
+                        filteredItems = filteredItems.filter(i => !this.favorites.includes(i.dofus_id));
                     }
 
-                    if (this.showOnlyColorable) {
+                    if (this.showOnlyColorable === 1) {
                         filteredItems = filteredItems.filter(i => i.colorable);
+                    } else if (this.showOnlyColorable === 2) {
+                        filteredItems = filteredItems.filter(i => !i.colorable);
                     }
 
-                    if (this.showOnlyMimisymbic & !this.showOnlyCeremonial) {
-                        filteredItems = filteredItems.filter(i => i.subcategory === 'mimisymbic');
+                    const includeSubcats = [];
+                    const excludeSubcats = [];
+                    if (this.showOnlyMimisymbic === 1) includeSubcats.push('mimisymbic');
+                    if (this.showOnlyMimisymbic === 2) excludeSubcats.push('mimisymbic');
+                    if (this.showOnlyCeremonial === 1) includeSubcats.push('ceremonial', 'livingObject');
+                    if (this.showOnlyCeremonial === 2) excludeSubcats.push('ceremonial', 'livingObject');
+                    if (includeSubcats.length > 0) {
+                        filteredItems = filteredItems.filter(i => includeSubcats.includes(i.subcategory));
                     }
-
-                    if (this.showOnlyCeremonial & !this.showOnlyMimisymbic) {
-                        filteredItems = filteredItems.filter(i => i.subcategory === 'ceremonial' || i
-                            .subcategory === 'livingObject');
+                    if (excludeSubcats.length > 0) {
+                        filteredItems = filteredItems.filter(i => !excludeSubcats.includes(i.subcategory));
                     }
 
                     if (this.searchColor !== null) {

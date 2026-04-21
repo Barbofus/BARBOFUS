@@ -21,19 +21,24 @@ class MissSkinContest extends Component
     public bool $showConfirmFinalize = false;
     public bool $contestFinalized = false;
     public array $finalizedWinners = [];
+    public array $skinOrder = [];
 
     public function mount(): void
     {
         $this->loadCurrentTheme();
         $this->loadContestState();
+        $ids = UnitySkin::where('status', 'MissSkin')->pluck('id')->toArray();
+        shuffle($ids);
+        $this->skinOrder = $ids;
     }
 
     public function render(): View
     {
         $contestSkins = UnitySkin::where('status', 'MissSkin')
             ->with(['user'])
-            ->orderByDesc('created_at')
-            ->get();
+            ->get()
+            ->sortBy(fn($skin) => ($pos = array_search($skin->id, $this->skinOrder)) !== false ? $pos : PHP_INT_MAX)
+            ->values();
 
         return view('livewire.user-panel.miss-skin-contest', [
             'contestSkins' => $contestSkins
