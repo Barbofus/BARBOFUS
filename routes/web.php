@@ -189,6 +189,11 @@ Route::get('/api/skin/{id}', [ApiSkinController::class, 'show']);
 
 Route::get('/api/whoami', [TougliController::class, 'whoami']);
 
+Route::get('/api/tougli/skins', [TougliController::class, 'getSkins']);
+Route::get('/api/tougli/skins/global', [TougliController::class, 'getGlobalSkins']);
+Route::get('/api/tougli/skin/{id}', [TougliController::class, 'getSkinById']);
+Route::get('/api/tougli/skin/{id}/image', [TougliController::class, 'getSkinImage']);
+
 Route::get('/logout', [TougliController::class, 'logout'])->name('logout.cross-site');
 
 Route::put('/api/locale', [TougliController::class, 'updateLocale']);

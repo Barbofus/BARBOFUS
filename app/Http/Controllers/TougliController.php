@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\LocaleEnum;
+use App\Models\Race;
+use App\Models\UnitySkin;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 
@@ -79,6 +81,109 @@ class TougliController extends Controller
             'token' => $jwt,
             'locale' => $user->locale
         ], 200);
+    }
+
+    /**
+     * Get all unity skins of the authenticated user for a given Dofus class ID.
+     * Used by Tougli to let the user pick a skin matching their character's class.
+     *
+     * Query param: classDofusId (int) — the Dofus ID of the class (same as characters.class_id on Tougli)
+     */
+    public function getSkins(Request $request)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
+        }
+
+        $classDofusId = $request->query('classDofusId');
+
+        // Construire la requête de base
+        $query = UnitySkin::where('user_id', $user->id)
+            ->select('id', 'name', 'image_path')
+            ->orderBy('created_at', 'desc');
+
+        // Si classDofusId est fourni, filtrer par race
+        if ($classDofusId && is_numeric($classDofusId)) {
+            $race = Race::where('dofus_id', (int) $classDofusId)->first();
+            if (!$race) {
+                return response()->json(['data' => []]);
+            }
+            $query->where('race_id', $race->id);
+        }
+
+        $skins = $query->get();
+
+        return response()->json(['data' => $skins]);
+    }
+
+    /**
+     * Get a random sample of public skins from the global gallery for a given Dofus class ID.
+     * Used by Tougli as a fallback when the user has no personal skins for their class.
+     *
+     * Query param: classDofusId (int, required) — the Dofus ID of the class
+     * Query param: limit (int, optional, default 12) — number of skins to return
+     * No auth required.
+     */
+    public function getGlobalSkins(Request $request)
+    {
+        $classDofusId = $request->query('classDofusId');
+        $limit = min((int) ($request->query('limit', 12)), 50);
+
+        if (!$classDofusId || !is_numeric($classDofusId)) {
+            return response()->json(['error' => 'classDofusId is required and must be an integer'], 422);
+        }
+
+        $race = Race::where('dofus_id', (int) $classDofusId)->first();
+
+        if (!$race) {
+            return response()->json(['data' => []]);
+        }
+
+        // Optimisation : on prend les 100 derniers skins (index sur id, rapide)
+        // et on en tire un échantillon aléatoire côté PHP — évite ORDER BY RAND() sur 50k lignes.
+        $pool = UnitySkin::where('race_id', $race->id)
+            ->select('id', 'name', 'image_path')
+            ->latest('id')
+            ->limit(100)
+            ->get()
+            ->shuffle()
+            ->take($limit);
+
+        return response()->json(['data' => $pool->values()]);
+    }
+
+    /**
+     * Return a single UnitySkin as JSON (id, name, image_path).
+     * Used by Tougli to resolve the saved barbofusSkinId after a page reload.
+     * No auth required.
+     */
+    public function getSkinById(int $id)
+    {
+        $skin = UnitySkin::select('id', 'name', 'image_path')->find($id);
+
+        if (!$skin) {
+            return response()->json(['error' => 'Skin not found'], 404);
+        }
+
+        return response()->json(['data' => $skin]);
+    }
+
+    /**
+     * Redirect to the actual image of a UnitySkin by its ID.
+     * Used by Tougli to resolve custom skin inputs (URL or plain numeric ID).
+     * No auth required.
+     */
+    public function getSkinImage(int $id)
+    {
+        $skin = UnitySkin::select('image_path')->find($id);
+
+        if (!$skin) {
+            return response()->json(['error' => 'Skin not found'], 404);
+        }
+
+        return redirect()->to(asset('storage/' . $skin->image_path));
     }
 
     /**
