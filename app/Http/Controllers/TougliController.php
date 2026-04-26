@@ -105,12 +105,9 @@ class TougliController extends Controller
             ->orderBy('created_at', 'desc');
 
         // Si classDofusId est fourni, filtrer par race
+        // unity_skins.race_id stocke le dofus_id de la table races (pas le PK)
         if ($classDofusId && is_numeric($classDofusId)) {
-            $race = Race::where('dofus_id', (int) $classDofusId)->first();
-            if (!$race) {
-                return response()->json(['data' => []]);
-            }
-            $query->where('race_id', $race->id);
+            $query->where('race_id', (int) $classDofusId);
         }
 
         $skins = $query->get();
@@ -135,15 +132,15 @@ class TougliController extends Controller
             return response()->json(['error' => 'classDofusId is required and must be an integer'], 422);
         }
 
-        $race = Race::where('dofus_id', (int) $classDofusId)->first();
-
-        if (!$race) {
+        // unity_skins.race_id stocke le dofus_id de la table races (pas le PK)
+        // Vérifier que la race existe bien
+        if (!Race::where('dofus_id', (int) $classDofusId)->exists()) {
             return response()->json(['data' => []]);
         }
 
         // Optimisation : on prend les 100 derniers skins (index sur id, rapide)
         // et on en tire un échantillon aléatoire côté PHP — évite ORDER BY RAND() sur 50k lignes.
-        $pool = UnitySkin::where('race_id', $race->id)
+        $pool = UnitySkin::where('race_id', (int) $classDofusId)
             ->select('id', 'name', 'image_path')
             ->latest('id')
             ->limit(100)
@@ -155,19 +152,30 @@ class TougliController extends Controller
     }
 
     /**
-     * Return a single UnitySkin as JSON (id, name, image_path).
-     * Used by Tougli to resolve the saved barbofusSkinId after a page reload.
+     * Return a single UnitySkin as JSON (id, name, image_path, race_id).
+     * race_id contains the dofus_id of the class (same as characters.class_id on Tougli).
+     * Used by Tougli to resolve the saved barbofusSkinId after a page reload,
+     * and to validate that a manually entered skin matches the character's class.
      * No auth required.
      */
     public function getSkinById(int $id)
     {
-        $skin = UnitySkin::select('id', 'name', 'image_path')->find($id);
+        $skin = UnitySkin::select('id', 'name', 'image_path', 'race_id')->find($id);
 
         if (!$skin) {
             return response()->json(['error' => 'Skin not found'], 404);
         }
 
-        return response()->json(['data' => $skin]);
+        // Retourner un tableau explicite pour garantir que tous les champs sont présents,
+        // notamment race_id qui stocke le dofus_id de la classe (= characters.class_id sur Tougli).
+        return response()->json([
+            'data' => [
+                'id'         => $skin->id,
+                'name'       => $skin->name,
+                'image_path' => $skin->image_path,
+                'race_id'    => $skin->race_id,
+            ],
+        ]);
     }
 
     /**
