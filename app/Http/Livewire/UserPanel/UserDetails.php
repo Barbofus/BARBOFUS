@@ -32,7 +32,7 @@ class UserDetails extends Component
     /**
      * @var Connection|void
      */
-    public $discord;
+    private $discordData;
 
     public User $currentUser;
 
@@ -248,10 +248,20 @@ class UserDetails extends Component
     public function render()
     {
         // Récupère le compte discord (s'il est link)
-        $this->discord = (new GetDiscordUserInfo)(auth()->user()->id);
+        // Propriété privée : non sérialisée dans wire:initial-data
+        $rawDiscord = (new GetDiscordUserInfo)(auth()->user()->id);
+
+        // Ne passer à la vue que les champs nécessaires pour l'affichage
+        $discord = $rawDiscord ? [
+            'username'   => $rawDiscord['username'] ?? null,
+            'avatar'     => $rawDiscord['avatar'] ?? null,
+            'id'         => $rawDiscord['id'] ?? null,
+            'global_name' => $rawDiscord['global_name'] ?? null,
+        ] : null;
 
         return view('livewire.user-panel.user-details', [
-            'user' => $this->QueryUser(),
+            'user'    => $this->QueryUser(),
+            'discord' => $discord,
         ]);
     }
 }

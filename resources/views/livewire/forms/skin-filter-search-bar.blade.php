@@ -87,9 +87,8 @@
         {{-- Affichage des filtres actuels --}}
         <div class="flex flex-wrap justify-start w-full max-h-[7rem] overflow-auto items-center gap-2 mt-2">
             @foreach($itemResults as $result)
-                <button wire:click="$emit('ToggleSearchedText', '{{ $result[0] }}')"
-                        @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', '{{ $result[0] }}')"
-                        class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
+                <button wire:click="$emit('ToggleSearchedText', {{ \Illuminate\Support\Js::from($result[0]) }})"
+                        @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', {{ \Illuminate\Support\Js::from($result[0]) }})"                        class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
                     <p class="font-light text-[1rem] text-inactiveText">{{ $result[1] }}</p>
 
                     <!-- Croix -->

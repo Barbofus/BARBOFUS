@@ -134,8 +134,12 @@ class InfiniteUnitySkinIndex extends Component
                         }
                         break;
                     case 'search':
-                        foreach (explode(',', $param) as $searchKey => $searchedName) {
-                            $this->ToggleSearchedText($searchedName);
+                        foreach (explode(',', $param) as $searchedName) {
+                            $searchedName = trim($searchedName);
+                            // Valider le format attendu : '0' (item) ou '1' (user) suivi uniquement de chiffres
+                            if (preg_match('/^[01]\d{1,20}$/', $searchedName)) {
+                                $this->ToggleSearchedText($searchedName);
+                            }
                         }
                         break;
                     case 'sort':
@@ -399,7 +403,9 @@ class InfiniteUnitySkinIndex extends Component
 
             if ($this->randSort) {
                 $this->loadedPages[$this->page - 1] = array_slice(
-                    $this->randomOrderIds, $offset, self::ITEMS_PER_PAGE
+                    $this->randomOrderIds,
+                    $offset,
+                    self::ITEMS_PER_PAGE
                 );
             } else {
                 $orderedQuery = $this->buildOrderedQuery();
@@ -607,6 +613,11 @@ class InfiniteUnitySkinIndex extends Component
 
     public function ToggleSearchedText(string $search): void
     {
+        // Valider le format pour éviter toute injection (0=item, 1=user, suivi d'un ID numérique)
+        if (! preg_match('/^[01]\d{1,20}$/', $search)) {
+            return;
+        }
+
         // Si le mot clef est déjà dans le tableau, on le retire
         if (count($this->searchFilterInput) > 0 && ($key = array_search($search, $this->searchFilterInput)) !== false) {
             unset($this->searchFilterInput[$key]);

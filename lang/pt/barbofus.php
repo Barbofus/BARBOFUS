@@ -49,6 +49,7 @@ return [
     'buttonSend' => 'Enviar', // "enviar" has the meaning of sending something, like a letter, e-mail or message
     'buttonSendVerifyEmail' => 'Reenviar e-mail de verificação',
     'buttonToolsTougli' => 'Clique aqui para abrir o documento', // "Acesse o documento aqui" would be more lighthearted
+    'buttonToolsMinigolem' => 'Abrir o Minogolem Solver',
     'buttonToolsSkin2.0' => 'Clique aqui para (re)descobrir',
     'buttonDelete' => 'Apagar',
     'buttonCancel' => 'Cancelar',
@@ -74,6 +75,7 @@ return [
     'titleResetPassword' => 'Esqueci a senha',
     'titleSuccess' => 'Sucesso !',
     'titleToolsTougli' => 'Tougli - Um guia otimizado para Dofus',
+    'titleToolsMinigolem' => 'Minogolem Solver',
     'titleToolsSkin2.0' => 'Um pouco de nostalgia? As aparências 2.0 ',
     'titleCreate' => 'Criar',
     'titleEdit' => 'Editar',
@@ -117,6 +119,8 @@ return [
     'descriptionTools' => 'Aqui está uma lista de ferramentas que serão úteis para sua aventura!',
     'descriptionToolsTougli' => 'Esta Planilha Google permite que você acompanhe uma rota otimizada para o Dofus, veja a lista de recursos necessários e grave seu progresso.
                     <br>Todas as missões necessárias para obter os Dofus serão listadas na ordem mais eficiente e o documento Irá acompanhar as missões concluídas para monitorar facilmente o seu progresso.',
+    'descriptionToolsMinigolem' => 'Este aplicativo web permite simular o combate tático dos minogolem para obter o Dofus Carmesim.
+                    <br>Insira os estados futuros e a ferramenta calculará automaticamente seus próximos turnos ideais, para nunca mais perder uma jogada vencedora!',
     'descriptionToolsSkin2.0' => 'Mergulhe em um oceano de memórias com o retorno das aparências icônicas do Dofus 2.0!
                 <br>Estes designs atemporais, que marcaram gerações de aventureiros, trazem a à tona a magia das primeiras explorações. Redescubra a elegância do antigo equipamento e deixa a nostalgia guiar você através do Mundo dos Doze.',
     'descriptionShareHS' => 'Compartilhe seu saco de viagem !',

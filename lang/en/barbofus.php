@@ -45,6 +45,7 @@ return [
     'buttonSend' => 'Send',
     'buttonSendVerifyEmail' => 'Resend verification email',
     'buttonToolsTougli' => 'Click here to open the doc',
+    'buttonToolsMinigolem' => 'Open Minogolem Solver',
     'buttonToolsSkin2.0' => 'Click here to (re)discover them',
     'buttonDelete' => 'Delete',
     'buttonCancel' => 'Cancel',
@@ -70,6 +71,7 @@ return [
     'titleResetPassword' => 'Forgot password',
     'titleSuccess' => 'Success !',
     'titleToolsTougli' => 'Tougli - An optimized guide for the Dofus',
+    'titleToolsMinigolem' => 'Minogolem Solver',
     'titleToolsSkin2.0' => 'A bit of nostalgia? The 2.0 skins',
     'titleCreate' => 'Create',
     'titleEdit' => 'Edit',
@@ -112,6 +114,8 @@ return [
     'descriptionTools' => 'Here is a list of tools that will be useful for your adventure!',
     'descriptionToolsTougli' => 'This Google Sheet allows you to track an optimized route for your Dofus, view the list of required resources, and record your progress.
                     <br>All the quests required to obtain the Dofus will be listed in an efficient order, and the document will keep track of completed quests to easily monitor your progress.',
+    'descriptionToolsMinigolem' => 'This web app lets you simulate the tactical minogolem combat required to obtain the Crimson Dofus.
+                    <br>Enter the upcoming states and the tool will automatically calculate your optimal next turns, so you never miss a winning move again!',
     'descriptionToolsSkin2.0' => 'Dive into an ocean of memories with the return of the iconic Dofus 2.0 skins!
                 <br>These timeless designs, which have marked generations of adventurers, bring back the magic of early explorations. Rediscover the elegance of old gear and let nostalgia guide you through the World of Twelve.',
     'descriptionShareHS' => 'Share your haven bag !',

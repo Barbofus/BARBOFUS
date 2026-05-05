@@ -45,6 +45,7 @@ return [
     'buttonSend' => 'Envoyer',
     'buttonSendVerifyEmail' => 'Réenvoyer l\'e-mail de validation',
     'buttonToolsTougli' => 'Cliquez ici pour ouvrir le doc',
+    'buttonToolsMinigolem' => 'Ouvrir le Minogolem Solver',
     'buttonToolsSkin2.0' => 'Cliquez ici pour les (re)découvrir',
     'buttonDelete' => 'Supprimer',
     'buttonCancel' => 'Annuler',
@@ -70,6 +71,7 @@ return [
     'titleResetPassword' => 'Mot de passe oublié',
     'titleSuccess' => 'Succès !',
     'titleToolsTougli' => 'Tougli - Le guide opti des Dofus',
+    'titleToolsMinigolem' => 'Minogolem Solver',
     'titleToolsSkin2.0' => 'Un peu de nostalgie ? Les skins 2.0',
     'titleCreate' => 'Création',
     'titleEdit' => 'Modification',
@@ -112,6 +114,8 @@ return [
     'descriptionTools' => 'Voici une liste d\'outils qui seront utiles pour votre aventure !',
     'descriptionToolsTougli' => 'Ce Google Sheet vous permet de suivre une route optimisée pour vos Dofus, d\'avoir la liste des ressources requises et d\'enregistrer votre progression.
                     <br>Toutes les quêtes nécessaires à l\'obtention du Dofus seront listées dans un ordre efficace, et le document garde en mémoire les quêtes achevées pour suivre votre avancée facilement.',
+    'descriptionToolsMinigolem' => 'Cette application web vous permet de simuler le combat tactique des minogolem pour obtenir le Dofus Pourpre.
+                    <br>Renseignez les états à venir et l\'outil calculera automatiquement vos prochains tours de jeu optimaux, pour ne plus jamais rater une opportunité !',
     'descriptionToolsSkin2.0' => 'Plongez dans un océan de souvenirs avec le retour des skins emblématiques de Dofus 2.0 !
                 <br>Ces designs intemporels, qui ont marqué des générations d’aventuriers, réveillent la magie des premières explorations. Redécouvrez l’élégance des équipements d’antan et laissez la nostalgie vous guider à travers le Monde des Douze.',
     'descriptionShareHS' => 'Partage ton havre sac !',
