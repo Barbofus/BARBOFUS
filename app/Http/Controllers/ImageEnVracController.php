@@ -58,21 +58,26 @@ class ImageEnVracController extends Controller
 
                     if ($request->all()['name']) { // Si on a mis un nom custom, on le choisi
                         $finaleName = str_replace(' ', '_', $request->all()['name']);
-                    } else { // Sinon on garde le nom original du fichier
-                        $finaleName = str_replace(' ', '_', $file->getClientOriginalName());
+                    } else { // Sinon on garde le nom original du fichier (sans extension)
+                        $finaleName = str_replace(' ', '_', pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
                     }
 
                     // Nomme l'image en fonction de l'heure actuelle
-                    $imageName = time().$key.'_n_'.$finaleName.'.'.$file->getClientOriginalExtension();
+                    $imageName = time() . $key . '_n_' . $finaleName . '.' . $file->getClientOriginalExtension();
 
                     // On range ça dans le public
                     $destinationPath = storage_path('app/public/images/imagenvrac');
 
-                    // Créationd de l'image avec Intervention Image
-                    $img = Image::make($file->getRealPath());
+                    if ($file->getMimeType() === 'image/webp') {
+                        // WebP animé : copie directe sans traitement pour conserver l'animation
+                        $file->move($destinationPath, $imageName);
+                    } else {
+                        // Créationd de l'image avec Intervention Image
+                        $img = Image::make($file->getRealPath());
 
-                    // On resize suivant la taille désiré
-                    $img->save($destinationPath.'/'.$imageName);
+                        // On resize suivant la taille désiré
+                        $img->save($destinationPath . '/' . $imageName);
+                    }
                 }
             }
 
