@@ -13,8 +13,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-    # Force https
-    RewriteCond %{HTTPS} off
+    # Force HTTPS — compatible Varnish
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTPS} !on
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Force no www
@@ -28,48 +29,33 @@
 </IfModule>
 
 <IfModule mod_expires.c>
-  ExpiresActive On
+    ExpiresActive On
 
-  # Images : 1 mois
-  ExpiresByType image/jpg "access plus 1 month"
-  ExpiresByType image/jpeg "access plus 1 month"
-  ExpiresByType image/png "access plus 1 month"
-  ExpiresByType image/gif "access plus 1 month"
-  ExpiresByType image/webp "access plus 1 month"
-  ExpiresByType image/svg+xml "access plus 1 month"
+    # Images : 1 mois
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
 
-  # Fonts : 1 mois
-  ExpiresByType font/woff2 "access plus 1 month"
-  ExpiresByType font/woff "access plus 1 month"
+    # Fonts : 1 mois
+    ExpiresByType font/woff2 "access plus 1 month"
+    ExpiresByType font/woff "access plus 1 month"
 </IfModule>
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
-    Header always set Cache-Control "public, max-age=2592000, immutable"
-  </FilesMatch>
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+        Header always set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
 
-  # ------------------------------
-  # Security Headers
-  # ------------------------------
+    # Security Headers
+    Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
 
-  # HSTS (HTTPS obligatoire, 2 ans, inclut sous-domaines)
-  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-
-  # Empêche de deviner le type de fichier
-  Header always set X-Content-Type-Options "nosniff"
-
-  # Empêche l’inclusion dans des iframes externes
-  Header always set X-Frame-Options "SAMEORIGIN"
-
-  # Contrôle du referer
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-
-  # Limite l’accès à certaines API navigateur
-  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
-
-  # ------------------------------
-  # CSP (Content Security Policy)
-  # ------------------------------
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://embed.twitch.tv https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.gstatic.com https://www.google.com https://cdn.discordapp.com; frame-src 'self' https://player.twitch.tv https://embed.twitch.tv https://www.google.com/recaptcha/; connect-src 'self' data: https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://skinator.barbofus.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://decapi.me; object-src 'none'; base-uri 'self'; form-action 'self' https://barbofus.com https://*.barbofus.com; frame-ancestors 'self';"
-
+    # CSP
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://embed.twitch.tv https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.gstatic.com https://www.google.com https://cdn.discordapp.com; frame-src 'self' https://player.twitch.tv https://embed.twitch.tv https://www.google.com/recaptcha/; connect-src 'self' data: https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://skinator.barbofus.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://decapi.me; object-src 'none'; base-uri 'self'; form-action 'self' https://barbofus.com https://*.barbofus.com; frame-ancestors 'self';"
 </IfModule>

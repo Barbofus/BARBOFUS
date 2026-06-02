@@ -86,31 +86,34 @@ use Illuminate\Support\Facades\Route;
     dd(collect($allItems)->firstWhere('data.id', 34248)["data"], collect($allItems)->firstWhere('data.id', 34249)["data"], collect($allItems)->firstWhere('data.id', 34250)["data"],);
 });*/
 
-Route::get('/', HomeController::class)->name('home');
+Route::middleware(['cache.public'])->group(function () {
 
-Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
+    Route::get('/', HomeController::class)->name('home');
 
-Route::view('/socials', 'socials')->name('socials');
+    Route::view('/mentions-legales', 'mentions-legales')->name('mentions-legales');
 
-Route::get('/planning', [PlanningController::class, 'index'])->name('planning.index');
+    Route::view('/socials', 'socials')->name('socials');
 
-Route::get('/recompenses', [RewardsController::class, 'index'])->name('rewards.index');
+    Route::get('/planning', [PlanningController::class, 'index'])->name('planning.index');
 
-Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
+    Route::get('/recompenses', [RewardsController::class, 'index'])->name('rewards.index');
 
-Route::get('/outils', function () {
-    return view('tools');
-})->name('tools');
+    Route::get('/havre-sacs', [HavenBagController::class, 'index'])->name('havre-sacs.index');
 
-Route::get('/skinator', [SkinatorController::class, 'create'])->name('skinator.create');
-Route::get('/testator', [SkinatorController::class, 'testator'])->name('testator.create');
-Route::get('/devator', [SkinatorController::class, 'devator'])->name('devator.create');
+    Route::get('/outils', function () {
+        return view('tools');
+    })->name('tools');;
 
-Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
-Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
+    Route::get('/skinator', [SkinatorController::class, 'create'])->name('skinator.create');
+    Route::get('/testator', [SkinatorController::class, 'testator'])->name('testator.create');
+    Route::get('/devator', [SkinatorController::class, 'devator'])->name('devator.create');
 
-Route::get('/unity-skins', [UnitySkinController::class, 'index'])->name('unity-skins.index');
-Route::get('/unity-skin/{skin}', [UnitySkinController::class, 'show'])->name('unity-skins.show');
+    Route::get('/skins', [SkinController::class, 'index'])->name('skins.index');
+    Route::get('/skin/{skin}', [SkinController::class, 'show'])->name('skins.show');
+
+    Route::get('/unity-skins', [UnitySkinController::class, 'index'])->name('unity-skins.index');
+    Route::get('/unity-skin/{skin}', [UnitySkinController::class, 'show'])->name('unity-skins.show');
+});
 
 Route::middleware(['auth', 'throttle:skins-upload'])->group(function () {
 

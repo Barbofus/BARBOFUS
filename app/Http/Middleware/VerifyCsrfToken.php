@@ -12,6 +12,17 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
+        // Routes sans formulaire POST — le CSRF n'est pas nécessaire
+        '/',
+        '/mentions-legales',
+        '/socials',
+        '/planning',
+        '/recompenses',
+        '/havre-sacs',
+        '/outils',
+        '/skins',
+        '/unity-skins',
+        // Les routes API Laravel dans web.php
         '/api/whoami',
         '/api/locale',
     ];
