@@ -18,11 +18,21 @@ class CachePublicPages
     {
         $response = $next($request);
 
-        // Uniquement GET, sans utilisateur connecté
-        if ($request->isMethod('GET') && !auth()->check()) {
-            $response->headers->set('Cache-Control', 'public, max-age=300, s-maxage=300');
-            $response->headers->remove('Pragma');
+        // Ne pas toucher aux requêtes authentifiées ou Livewire
+        if (
+            auth()->check() ||
+            $request->is('livewire/*') ||
+            $request->ajax() ||
+            $request->isMethod('POST')
+        ) {
+            return $response;
         }
+
+        // Supprimer les headers bloquants de Laravel/PHP
+        $response->headers->remove('Pragma');
+        $response->headers->set('Cache-Control', 'public, s-maxage=300, max-age=0, must-revalidate');
+        $response->headers->set('Expires', gmdate('D, d M Y H:i:s', time() + 300) . ' GMT');
+        $response->headers->set('Surrogate-Control', 'max-age=300');
 
         return $response;
     }

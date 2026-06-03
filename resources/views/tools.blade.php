@@ -26,7 +26,7 @@
                     <a href="https://emmathie.fr/" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
                 </div>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsMinigolem') !!}</p>
-                <a href="https://minigolem.barbofus.com/" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsMinigolem') }}</a>
+                <a href="https://minogolem.barbofus.com/" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsMinigolem') }}</a>
             </div>
         </div>
 
