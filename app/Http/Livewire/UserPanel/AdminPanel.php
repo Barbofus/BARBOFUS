@@ -108,7 +108,7 @@ class AdminPanel extends Component
         $this->getRootFilesSkins();
 
         // Exporte les bundles modifiés
-        $this->exportUpdatedBundles();
+        //$this->exportUpdatedBundles();
 
         // Exporte les nouveaux bundle pour identifier les skins / bones id
         $this->exportBundleDifference();

@@ -44,8 +44,9 @@ return [
     'buttonForgotPassword' => 'Forgot password ?',
     'buttonSend' => 'Send',
     'buttonSendVerifyEmail' => 'Resend verification email',
-    'buttonToolsTougli' => 'Click here to open the doc',
+    'buttonToolsTougli' => 'Click here to open',
     'buttonToolsMinigolem' => 'Open Minogolem Solver',
+    'buttonToolsRainikrone' => 'Open the Rainikrone Solver',
     'buttonToolsSkin2.0' => 'Click here to (re)discover them',
     'buttonDelete' => 'Delete',
     'buttonCancel' => 'Cancel',
@@ -72,6 +73,7 @@ return [
     'titleSuccess' => 'Success !',
     'titleToolsTougli' => 'Tougli - An optimized guide for the Dofus',
     'titleToolsMinigolem' => 'Minogolem Solver',
+    'titleToolsRainikrone' => 'Rainikrone Solver',
     'titleToolsSkin2.0' => 'A bit of nostalgia? The 2.0 skins',
     'titleCreate' => 'Create',
     'titleEdit' => 'Edit',
@@ -116,6 +118,8 @@ return [
                     <br>All the quests required to obtain the Dofus will be listed in an efficient order, and the document will keep track of completed quests to easily monitor your progress.',
     'descriptionToolsMinigolem' => 'This web app lets you simulate the tactical minogolem combat required to obtain the Crimson Dofus.
                     <br>Enter the upcoming states and the tool will automatically calculate your optimal next turns, so you never miss a winning move again!',
+    'descriptionToolsRainikrone' => 'This web app lets you solve the Rainikrone combat puzzle required to obtain the Ivory Dofus.
+                    <br>Upload a screenshot of the fight and the tool will automatically detect the battle map layout, then calculate the optimal strategy to defeat the boss!',
     'descriptionToolsSkin2.0' => 'Dive into an ocean of memories with the return of the iconic Dofus 2.0 skins!
                 <br>These timeless designs, which have marked generations of adventurers, bring back the magic of early explorations. Rediscover the elegance of old gear and let nostalgia guide you through the World of Twelve.',
     'descriptionShareHS' => 'Share your haven bag !',

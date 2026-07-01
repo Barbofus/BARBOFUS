@@ -39,13 +39,11 @@ def unpack_assets_skinstemp(folder_path : str, destination_folder : str, ids_fil
                 # print("FIND TEXTURE")
                 data = obj.read()
                 # create dest based on original path
-                dest = os.path.join(destination_folder, name + ".webp")
-                # make sure that the dir of that path exists
-                os.makedirs(os.path.dirname(dest), exist_ok = True)
-
-                print(dest)
-                data.image.save(dest)
                 dest_png = os.path.join(destination_folder, name + ".png")
+                # make sure that the dir of that path exists
+                os.makedirs(os.path.dirname(dest_png), exist_ok = True)
+
+                print(dest_png)
                 data.image.save(dest_png)
 
 def unpack_assets_bonestemp(folder_path : str, destination_folder : str, ids_file: str):
@@ -66,13 +64,11 @@ def unpack_assets_bonestemp(folder_path : str, destination_folder : str, ids_fil
                 # print("FIND TEXTURE")
                 data = obj.read()
                 # create dest based on original path
-                dest = os.path.join(destination_folder, name + ".webp")
-                # make sure that the dir of that path exists
-                os.makedirs(os.path.dirname(dest), exist_ok = True)
-
-                print(dest)
-                data.image.save(dest)
                 dest_png = os.path.join(destination_folder, name + ".png")
+                # make sure that the dir of that path exists
+                os.makedirs(os.path.dirname(dest_png), exist_ok = True)
+
+                print(dest_png)
                 data.image.save(dest_png)
 
 def unpack_assets_skin(folder_path : str, destination_folder : str, ids_file: str):

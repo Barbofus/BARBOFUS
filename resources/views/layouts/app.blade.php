@@ -51,7 +51,7 @@
 
     @livewireStyles
 </head>
-<body class="bg-primary text-secondary min-h-screen max-w-screen"
+<body class="min-h-screen bg-primary text-secondary max-w-screen"
 
       x-data="{
         alertMessage: '',
@@ -99,6 +99,22 @@
         }
         const events = ["mouseover","keydown","touchmove","touchstart"];
         events.forEach(e => window.addEventListener(e, trigger, {passive: true, once: true}));
+    }
+
+    function detectElectron() {
+        // Vérification de l'User-Agent standard d'Electron
+        if (navigator.userAgent.toLowerCase().includes('electron')) {
+            return true;
+        }
+        // Vérification des objets spécifiques souvent exposés (si le wrapper est mal configuré)
+        if (typeof window !== 'undefined' && window.process && window.process.versions && window.process.versions.electron) {
+            return true;
+        }
+        return false;
+    }
+
+    if (detectElectron()) {
+        document.body.innerHTML = "<h1>Accès refusé : Utilisation d'une application non autorisée.</h1>";
     }
 </script>
 

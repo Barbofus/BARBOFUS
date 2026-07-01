@@ -9,11 +9,11 @@
 
         {{-- Tougli - All Dofus --}}
         <div class="border-y border-secondary px-0 py-4 min-[800px]:px-8 min-[800px]:py-8 flex flex-col min-[1200px]:flex-row items-center gap-16">
-            <img src="{{ asset('storage/images/misc_ui/logo_Tougli.png') }}" alt="Logo Tougli" class="h-40">
+            <img src="{{ asset('storage/images/misc_ui/logo_Tougli.webp') }}" alt="Logo Tougli" class="h-40">
             <div>
                 <h2 class="text-xl min-[800px]:text-4xl mb-4 font-light">{{ __('barbofus.titleToolsTougli') }}</h2>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsTougli') !!}</p>
-                <a href="https://docs.google.com/spreadsheets/d/1uL7svJ0E0MjhqHVLU7O4Q8v7iGwPd4bsI9qV-Pdhdds/edit?usp=sharing" title="Tougli - Dofus Opti" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsTougli') }}</a>
+                <a href="https://tougli.barbofus.com/" title="Tougli - Dofus Opti" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsTougli') }}</a>
             </div>
         </div>
 
@@ -23,10 +23,23 @@
             <div>
                 <div class="flex items-end mb-4 space-x-8">
                     <h2 class="text-xl min-[800px]:text-4xl font-light">{{ __('barbofus.titleToolsMinigolem') }}</h2>
-                    <a href="https://emmathie.fr/" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
+                    <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
                 </div>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsMinigolem') !!}</p>
                 <a href="https://minogolem.barbofus.com/" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsMinigolem') }}</a>
+            </div>
+        </div>
+
+        {{-- Rainikrone - Emmathie --}}
+        <div class="border-y border-secondary px-0 py-4 min-[800px]:px-8 min-[800px]:py-8 flex flex-col min-[1200px]:flex-row items-center gap-16">
+            <img src="{{ asset('storage/images/misc_ui/rainikrone.png') }}" alt="Logo Rainikrone Solver par Emmathie" class="h-40">
+            <div>
+                <div class="flex items-end mb-4 space-x-8">
+                    <h2 class="text-xl min-[800px]:text-4xl font-light">{{ __('barbofus.titleToolsRainikrone') }}</h2>
+                    <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
+                </div>
+                <p class="font-thin">{!! __('barbofus.descriptionToolsRainikrone') !!}</p>
+                <a href="https://rainikrone.barbofus.com/" title="Rainikrone Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsRainikrone') }}</a>
             </div>
         </div>
 
