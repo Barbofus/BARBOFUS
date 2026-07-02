@@ -46,6 +46,7 @@ return [
     'buttonSendVerifyEmail' => 'Réenvoyer l\'e-mail de validation',
     'buttonToolsTougli' => 'Cliquez ici pour ouvrir',
     'buttonToolsMinigolem' => 'Ouvrir le Minogolem Solver',
+    'buttonToolsBolgrot' => 'Ouvrir le Bolgrot Solver',
     'buttonToolsRainikrone' => 'Ouvrir le Rainikrone Solver',
     'buttonToolsSkin2.0' => 'Cliquez ici pour les (re)découvrir',
     'buttonDelete' => 'Supprimer',
@@ -73,6 +74,7 @@ return [
     'titleSuccess' => 'Succès !',
     'titleToolsTougli' => 'Tougli - Le guide opti des Dofus',
     'titleToolsMinigolem' => 'Minogolem Solver',
+    'titleToolsBolgrot' => 'Bolgrot Solver',
     'titleToolsRainikrone' => 'Rainikrone Solver',
     'titleToolsSkin2.0' => 'Un peu de nostalgie ? Les skins 2.0',
     'titleCreate' => 'Création',
@@ -118,6 +120,8 @@ return [
                     <br>Toutes les quêtes nécessaires à l\'obtention du Dofus seront listées dans un ordre efficace, et le document garde en mémoire les quêtes achevées pour suivre votre avancée facilement.',
     'descriptionToolsMinigolem' => 'Cette application web vous permet de simuler le combat tactique des minogolem pour obtenir le Dofus Pourpre.
                     <br>Renseignez les états à venir et l\'outil calculera automatiquement vos prochains tours de jeu optimaux, pour ne plus jamais rater une opportunité !',
+    'descriptionToolsBolgrot' => 'Cette application web vous permet de résoudre le combat tactique contre le Bolgrot afin de continuer votre Dofus Turquoise.
+                    <br>Renseignez la configuration du combat et l\'outil calculera automatiquement la stratégie optimale pour venir à bout de ce redoutable adversaire !',
     'descriptionToolsRainikrone' => 'Cette application web vous permet de résoudre le puzzle du combat contre la Rainikrone pour obtenir le Dofus Ivoire.
                     <br>Importez une capture d\'écran du combat et l\'outil détectera automatiquement la disposition de la carte de combat, puis calculera la stratégie optimale pour venir à bout du boss !',
     'descriptionToolsSkin2.0' => 'Plongez dans un océan de souvenirs avec le retour des skins emblématiques de Dofus 2.0 !

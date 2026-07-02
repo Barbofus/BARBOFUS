@@ -50,6 +50,7 @@ return [
     'buttonSendVerifyEmail' => 'Reenviar e-mail de verificação',
     'buttonToolsTougli' => 'Clique aqui para abrir', // "Acesse o documento aqui" would be more lighthearted
     'buttonToolsMinigolem' => 'Abrir o Minogolem Solver',
+    'buttonToolsBolgrot' => 'Abrir o Bolgrot Solver',
     'buttonToolsRainikrone' => 'Abrir o Rainikrone Solver',
     'buttonToolsSkin2.0' => 'Clique aqui para (re)descobrir',
     'buttonDelete' => 'Apagar',
@@ -77,6 +78,7 @@ return [
     'titleSuccess' => 'Sucesso !',
     'titleToolsTougli' => 'Tougli - Um guia otimizado para Dofus',
     'titleToolsMinigolem' => 'Minogolem Solver',
+    'titleToolsBolgrot' => 'Bolgrot Solver',
     'titleToolsRainikrone' => 'Rainikrone Solver',
     'titleToolsSkin2.0' => 'Um pouco de nostalgia? As aparências 2.0 ',
     'titleCreate' => 'Criar',
@@ -123,6 +125,8 @@ return [
                     <br>Todas as missões necessárias para obter os Dofus serão listadas na ordem mais eficiente e o documento Irá acompanhar as missões concluídas para monitorar facilmente o seu progresso.',
     'descriptionToolsMinigolem' => 'Este aplicativo web permite simular o combate tático dos minogolem para obter o Dofus Carmesim.
                     <br>Insira os estados futuros e a ferramenta calculará automaticamente seus próximos turnos ideais, para nunca mais perder uma jogada vencedora!',
+    'descriptionToolsBolgrot' => 'Este aplicativo web permite resolver o combate tático contra o Bolgrot para continuar sua busca pelo Dofus Turquesa.
+                    <br>Insira a configuração do combate e a ferramenta calculará automaticamente a estratégia ideal para vencer este formidável adversário!',
     'descriptionToolsRainikrone' => 'Este aplicativo web permite resolver o puzzle do combate contra a Rainikrone para obter o Dofus de Marfim.
                     <br>Envie uma captura de tela do combate e a ferramenta detectará automaticamente a disposição do mapa de batalha, calculando a estratégia ideal para derrotar o chefe!',
     'descriptionToolsSkin2.0' => 'Mergulhe em um oceano de memórias com o retorno das aparências icônicas do Dofus 2.0!

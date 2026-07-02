@@ -17,6 +17,19 @@
             </div>
         </div>
 
+        {{-- Bolgrot - Emmathie --}}
+        <div class="border-y border-secondary px-0 py-4 min-[800px]:px-8 min-[800px]:py-8 flex flex-col min-[1200px]:flex-row items-center gap-16">
+            <img src="{{ asset('storage/images/misc_ui/bolgrot.png') }}" alt="Logo Bolgrot Solver par Emmathie" class="h-40">
+            <div>
+                <div class="flex items-end mb-4 space-x-8">
+                    <h2 class="text-xl min-[800px]:text-4xl font-light">{{ __('barbofus.titleToolsBolgrot') }}</h2>
+                    <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
+                </div>
+                <p class="font-thin">{!! __('barbofus.descriptionToolsBolgrot') !!}</p>
+                <a href="https://solver.barbofus.com/bolgrot" title="Bolgrot Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsBolgrot') }}</a>
+            </div>
+        </div>
+
         {{-- Minogolem - Emmathie --}}
         <div class="border-y border-secondary px-0 py-4 min-[800px]:px-8 min-[800px]:py-8 flex flex-col min-[1200px]:flex-row items-center gap-16">
             <img src="{{ asset('storage/images/misc_ui/minogolem.png') }}" alt="Logo Minogolem Solver par Emmathie" class="h-40">
@@ -26,7 +39,7 @@
                     <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
                 </div>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsMinigolem') !!}</p>
-                <a href="https://minogolem.barbofus.com/" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsMinigolem') }}</a>
+                <a href="https://solver.barbofus.com/minogolem" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsMinigolem') }}</a>
             </div>
         </div>
 
@@ -39,7 +52,7 @@
                     <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
                 </div>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsRainikrone') !!}</p>
-                <a href="https://rainikrone.barbofus.com/" title="Rainikrone Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsRainikrone') }}</a>
+                <a href="https://solver.barbofus.com/rainikrone" title="Rainikrone Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsRainikrone') }}</a>
             </div>
         </div>
 

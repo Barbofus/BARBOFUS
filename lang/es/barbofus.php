@@ -46,6 +46,7 @@ return [
     'buttonSendVerifyEmail' => 'Reenviar correo de verificación',
     'buttonToolsTougli' => 'Haz clic aquí para abrir',
     'buttonToolsMinigolem' => 'Abrir Minogolem Solver',
+    'buttonToolsBolgrot' => 'Abrir el Bolgrot Solver',
     'buttonToolsRainikrone' => 'Abrir el Rainikrone Solver',
     'buttonToolsSkin2.0' => 'Haz clic aquí para (re)descubrirlas',
     'buttonDelete' => 'Eliminar',
@@ -73,6 +74,7 @@ return [
     'titleSuccess' => '¡Hecho!',
     'titleToolsTougli' => 'Tougli - Una guía optimizada para Dofus',
     'titleToolsMinigolem' => 'Minogolem Solver',
+    'titleToolsBolgrot' => 'Bolgrot Solver',
     'titleToolsRainikrone' => 'Rainikrone Solver',
     'titleToolsSkin2.0' => '¿Algo de nostalgia? Las skins 2.0',
     'titleCreate' => 'Crear',
@@ -118,6 +120,8 @@ return [
                     <br>Todas las misiones requeridas para obtener los Dofus están listadasen un orden eficiente, y el documento guardará registro de las misiones completadas para que puedas monitorear tu progreso fácilmente.',
     'descriptionToolsMinigolem' => 'Esta aplicación web te permite simular el combate táctico de los minogolem para obtener el Dofus Carmesí.
                     <br>Introduce los estados por venir y la herramienta calculará automáticamente tus próximos turnos óptimos, ¡para no perder ninguna oportunidad ganadora!',
+    'descriptionToolsBolgrot' => 'Esta aplicación web te permite resolver el combate táctico contra el Bolgrot para continuar con tu Dofus Turquesa.
+                    <br>Introduce la configuración del combate y la herramienta calculará automáticamente la estrategia óptima para vencer a este formidable adversario!',
     'descriptionToolsRainikrone' => 'Esta aplicación web te permite resolver el puzle del combate contra la Rainikrone para obtener el Dofus de Marfil.
                     <br>Sube una captura de pantalla del combate y la herramienta detectará automáticamente la disposición del mapa de batalla, ¡luego calculará la estrategia óptima para derrotar al jefe!',
     'descriptionToolsSkin2.0' => '¡Sumérgete en un mar de memorias con el regreso de las icónicas skins de Dofus 2.0!
