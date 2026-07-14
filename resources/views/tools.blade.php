@@ -26,7 +26,7 @@
                     <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
                 </div>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsBolgrot') !!}</p>
-                <a href="https://solver.barbofus.com/bolgrot" title="Bolgrot Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsBolgrot') }}</a>
+                <a href="https://solver.barbofus.com/bolgrot/" title="Bolgrot Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsBolgrot') }}</a>
             </div>
         </div>
 
@@ -39,7 +39,7 @@
                     <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
                 </div>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsMinigolem') !!}</p>
-                <a href="https://solver.barbofus.com/minogolem" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsMinigolem') }}</a>
+                <a href="https://solver.barbofus.com/minogolem/" title="Minogolem Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsMinigolem') }}</a>
             </div>
         </div>
 
@@ -52,7 +52,7 @@
                     <a href="https://emmathie.fr/" title="Site web d'Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">par Emmathie</a>
                 </div>
                 <p class="font-thin">{!! __('barbofus.descriptionToolsRainikrone') !!}</p>
-                <a href="https://solver.barbofus.com/rainikrone" title="Rainikrone Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsRainikrone') }}</a>
+                <a href="https://solver.barbofus.com/rainikrone/" title="Rainikrone Solver par Emmathie" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsRainikrone') }}</a>
             </div>
         </div>
 
