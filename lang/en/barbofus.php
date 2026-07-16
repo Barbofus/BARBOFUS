@@ -48,6 +48,7 @@ return [
     'buttonToolsMinigolem' => 'Open Minogolem Solver',
     'buttonToolsBolgrot' => 'Open the Bolgrot Solver',
     'buttonToolsRainikrone' => 'Open the Rainikrone Solver',
+    'buttonToolsGrougalorasalar' => 'Open the Grougalorasalar Solver',
     'buttonToolsSkin2.0' => 'Click here to (re)discover them',
     'buttonDelete' => 'Delete',
     'buttonCancel' => 'Cancel',
@@ -76,6 +77,7 @@ return [
     'titleToolsMinigolem' => 'Minogolem Solver',
     'titleToolsBolgrot' => 'Bolgrot Solver',
     'titleToolsRainikrone' => 'Rainikrone Solver',
+    'titleToolsGrougalorasalar' => 'Grougalorasalar Solver',
     'titleToolsSkin2.0' => 'A bit of nostalgia? The 2.0 skins',
     'titleCreate' => 'Create',
     'titleEdit' => 'Edit',
@@ -121,6 +123,8 @@ return [
     'descriptionToolsMinigolem' => 'This web app lets you simulate the tactical minogolem combat required to obtain the Crimson Dofus.
                     <br>Enter the upcoming states and the tool will automatically calculate your optimal next turns, so you never miss a winning move again!',
     'descriptionToolsBolgrot' => 'This web app lets you solve the tactical combat against the Bolgrot to continue your Turquoise Dofus quest.
+                    <br>Enter the fight configuration and the tool will automatically calculate the optimal strategy to overcome this formidable opponent!',
+    'descriptionToolsGrougalorasalar' => 'This web app lets you solve the tactical combat against the Grougalorasalar to obtain the Ebony Dofus.
                     <br>Enter the fight configuration and the tool will automatically calculate the optimal strategy to overcome this formidable opponent!',
     'descriptionToolsRainikrone' => 'This web app lets you solve the Rainikrone combat puzzle required to obtain the Ivory Dofus.
                     <br>Upload a screenshot of the fight and the tool will automatically detect the battle map layout, then calculate the optimal strategy to defeat the boss!',

@@ -48,6 +48,7 @@ return [
     'buttonToolsMinigolem' => 'Ouvrir le Minogolem Solver',
     'buttonToolsBolgrot' => 'Ouvrir le Bolgrot Solver',
     'buttonToolsRainikrone' => 'Ouvrir le Rainikrone Solver',
+    'buttonToolsGrougalorasalar' => 'Ouvrir le Grougalorasalar Solver',
     'buttonToolsSkin2.0' => 'Cliquez ici pour les (re)découvrir',
     'buttonDelete' => 'Supprimer',
     'buttonCancel' => 'Annuler',
@@ -76,6 +77,7 @@ return [
     'titleToolsMinigolem' => 'Minogolem Solver',
     'titleToolsBolgrot' => 'Bolgrot Solver',
     'titleToolsRainikrone' => 'Rainikrone Solver',
+    'titleToolsGrougalorasalar' => 'Grougalorasalar Solver',
     'titleToolsSkin2.0' => 'Un peu de nostalgie ? Les skins 2.0',
     'titleCreate' => 'Création',
     'titleEdit' => 'Modification',
@@ -121,6 +123,8 @@ return [
     'descriptionToolsMinigolem' => 'Cette application web vous permet de simuler le combat tactique des minogolem pour obtenir le Dofus Pourpre.
                     <br>Renseignez les états à venir et l\'outil calculera automatiquement vos prochains tours de jeu optimaux, pour ne plus jamais rater une opportunité !',
     'descriptionToolsBolgrot' => 'Cette application web vous permet de résoudre le combat tactique contre le Bolgrot afin de continuer votre Dofus Turquoise.
+                    <br>Renseignez la configuration du combat et l\'outil calculera automatiquement la stratégie optimale pour venir à bout de ce redoutable adversaire !',
+    'descriptionToolsGrougalorasalar' => 'Cette application web vous permet de résoudre le combat tactique contre le Grougalorasalar pour obtenir le Dofus Ébène.
                     <br>Renseignez la configuration du combat et l\'outil calculera automatiquement la stratégie optimale pour venir à bout de ce redoutable adversaire !',
     'descriptionToolsRainikrone' => 'Cette application web vous permet de résoudre le puzzle du combat contre la Rainikrone pour obtenir le Dofus Ivoire.
                     <br>Importez une capture d\'écran du combat et l\'outil détectera automatiquement la disposition de la carte de combat, puis calculera la stratégie optimale pour venir à bout du boss !',
