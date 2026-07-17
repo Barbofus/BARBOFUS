@@ -116,6 +116,10 @@ def unpack_assets_skin(folder_path : str, destination_folder : str, ids_file: st
 
                 print(dest)
                 data.image.save(dest)
+
+                dest_webp = os.path.join(destination_folder, "public/images/skinator/skins_webp", name + ".webp")
+                data.image.save(dest_webp)
+
                 dest_png = os.path.join(destination_folder, "public/images/skinator/skins", name + ".png")
                 data.image.save(dest_png)
 
@@ -191,6 +195,10 @@ def unpack_assets_bone(folder_path : str, destination_folder : str, ids_file: st
                 print(dest)
                 try:
                     data.image.save(dest)
+
+                    dest_webp = os.path.join(destination_folder, "public/images/skinator/bones_webp", name + ".webp")
+                    data.image.save(dest_webp)
+
                     dest_png = os.path.join(destination_folder, "public/images/skinator/bones", name + ".png")
                     data.image.save(dest_png)
                 except Exception as e:

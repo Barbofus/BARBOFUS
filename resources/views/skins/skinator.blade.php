@@ -1537,6 +1537,12 @@
                         orientation: 1
                     },
                     {
+                        shortName: 'Brandir son arme',
+                        name: 'AnimEmoteWeap@AnimEmoteWeap',
+                        frame: 20,
+                        orientation: 0
+                    },
+                    {
                         shortName: @json(__('barbofus.AnimRun')),
                         name: 'Course',
                         frame: 0,
