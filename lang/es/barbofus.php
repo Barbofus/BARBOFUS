@@ -187,6 +187,7 @@ return [
     'contentHat' => 'Sombrero',
     'contentCape' => 'Capa',
     'contentShield' => 'Escudo',
+    'contentWeapon' => 'Arma',
     'contentWings' => 'Alas',
     'contentShoulderpads' => 'Hombreras',
     'contentCostume' => 'Traje',

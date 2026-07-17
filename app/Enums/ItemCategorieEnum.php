@@ -11,6 +11,7 @@ enum ItemCategorieEnum: string
     case WINGS = 'wings';
     case SHOULDERPADS = 'shoulderpads';
     case COSTUME = 'costume';
+    case WEAPON = 'weapon';
 
     /**
      * @return string[]

@@ -86,6 +86,54 @@ use Illuminate\Support\Facades\Route;
     dd(collect($allItems)->firstWhere('data.id', 34248)["data"], collect($allItems)->firstWhere('data.id', 34249)["data"], collect($allItems)->firstWhere('data.id', 34250)["data"],);
 });*/
 
+// Route::get('foo', function () {
+//     $basePath = 'C:/Travail/Web/_DataBanks/barbofus.com/tests/test_exports/bundle/';
+
+//     $allItemTypes      = json_decode(file_get_contents($basePath . 'ItemTypesDataRoot.json'), true)['references']['RefIds'];
+//     $allItemSuperTypes = json_decode(file_get_contents($basePath . 'ItemSuperTypesDataRoot.json'), true)['references']['RefIds'];
+
+//     $langFile     = storage_path('app/json/skinator/lang/fr.json');
+//     $translations = json_decode(file_get_contents($langFile), true);
+
+//     // Indexer les superTypes par leur id pour un accès rapide
+//     $superTypesById = collect($allItemSuperTypes)->keyBy(fn($s) => $s['data']['id']);
+
+//     $result = collect($allItemTypes)->map(function ($itemType) use ($translations, $superTypesById) {
+//         $data        = $itemType['data'];
+//         $superType   = $superTypesById->get($data['superTypeId'])['data'];
+
+//         return [
+//             'id'          => $data['id'],
+//             'nameId'      => $data['nameId'],
+//             'name'        => $translations[$data['nameId']] ?? 'Nom non trouvé',
+//             'superType'   => [
+//                 "id" => $data['superTypeId'],
+//                 "possiblePositions" => $superType['possiblePositions']
+//             ],
+//             'categoryId'  => $data['categoryId'],
+//         ];
+//     })->sortBy('id')->values();
+
+//     return response()->json($result);
+// });
+
+// Route::get('foo', function () {
+//     $weaponsMap = json_decode(file_get_contents(storage_path('app/json/weaponsIdToSkin.json')), true);
+
+//     $updated = 0;
+
+//     foreach ($weaponsMap as $dofusId => $assetId) {
+//         $updated += \App\Models\Item::where('dofus_id', $dofusId)
+//             ->where('category', 'weapon')
+//             ->update([
+//                 'asset_id'        => $assetId,
+//                 'female_asset_id' => $assetId,
+//             ]);
+//     }
+
+//     return "Armes mises à jour : {$updated}";
+// });
+
 Route::middleware(['cache.public'])->group(function () {
 
     Route::get('/', HomeController::class)->name('home');

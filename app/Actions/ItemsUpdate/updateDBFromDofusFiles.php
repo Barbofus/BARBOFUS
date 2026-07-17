@@ -42,20 +42,40 @@ final class updateDBFromDofusFiles
         $langs = ['fr', 'en', 'es', 'pt'];
 
         $this->typeID = [
-            16 => ['cat' => ItemCategorieEnum::HAT->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
-            246 => ['cat' => ItemCategorieEnum::HAT->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            17 => ['cat' => ItemCategorieEnum::CAPE->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
-            247 => ['cat' => ItemCategorieEnum::CAPE->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            82 => ['cat' => ItemCategorieEnum::SHIELD->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],
-            248 => ['cat' => ItemCategorieEnum::SHIELD->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            199 => ['cat' => ItemCategorieEnum::COSTUME->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            299 => ['cat' => ItemCategorieEnum::SHOULDERPADS->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            300 => ['cat' => ItemCategorieEnum::WINGS->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],
-            18 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Familier
-            121 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],  // Montilier
-            324 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],  // Harnachements
-            249 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],  // Familier Cosmet
-            250 => ['cat' => ItemCategorieEnum::PET->value, 'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],  // Familier Cosmet
+            16  => ['cat' => ItemCategorieEnum::HAT->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Chapeau
+            246 => ['cat' => ItemCategorieEnum::HAT->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Chapeau d'apparat
+
+            17  => ['cat' => ItemCategorieEnum::CAPE->value,            'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Cape
+            247 => ['cat' => ItemCategorieEnum::CAPE->value,            'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Cape d'apparat
+
+            82  => ['cat' => ItemCategorieEnum::SHIELD->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Bouclier
+            248 => ['cat' => ItemCategorieEnum::SHIELD->value,          'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Bouclier d'apparat
+
+            199 => ['cat' => ItemCategorieEnum::COSTUME->value,         'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Costume
+            299 => ['cat' => ItemCategorieEnum::SHOULDERPADS->value,    'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Épaulière
+            300 => ['cat' => ItemCategorieEnum::WINGS->value,           'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Ailes
+
+            18  => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Familier
+            121 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Montilier
+            311 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Monture
+            324 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Monture d'apparat
+            249 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Familier d'apparat
+            250 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Montilier d'apparat
+
+            2   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Arc
+            3   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Baguette
+            4   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Bâton
+            5   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Dague
+            6   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Épée
+            7   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Marteau
+            8   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Pelle
+            19  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Hache
+            20  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Outil
+            21  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Pioche
+            22  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Faux
+            114 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Arme magique
+            271 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Lance
+            251 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Arme d'apparat
         ];
 
         foreach ($langs as $lang) {

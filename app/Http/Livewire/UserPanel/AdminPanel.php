@@ -1258,6 +1258,11 @@ class AdminPanel extends Component
             'bones' => $oldBoneNames,
         ];
 
+        $bundleNames = [
+            'skins' => [],
+            'bones' => [],
+        ];
+
         foreach ($updatedBundleNames as $key => $category) {
             foreach ($category as $bundle) {
                 $bundleNames[$key][] = [
@@ -1401,6 +1406,11 @@ class AdminPanel extends Component
                 ];
             }
         }
+
+        $bundleNames = [
+            'skins' => [],
+            'bones' => [],
+        ];
 
         $jsonBundles = json_encode($bundleNames, JSON_PRETTY_PRINT);
 

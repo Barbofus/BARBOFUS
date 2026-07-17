@@ -187,7 +187,7 @@ class InfiniteSkinIndex extends Component
 
             ->when($this->skinColors != '', function (Builder $query) {
                 foreach ($this->skinColors as $color) {
-                    $query->addSelect('skins.'.$color);
+                    $query->addSelect('skins.' . $color);
                 }
             })
 
@@ -238,16 +238,15 @@ class InfiniteSkinIndex extends Component
                             $query->whereNotExists(function (Builder $query) use ($category) {
                                 $query->select('dofus_id')
                                     ->from('items')
-                                    ->whereColumn('items.dofus_id', 'skins.'.$category.'_id');
+                                    ->whereColumn('items.dofus_id', 'skins.' . $category . '_id');
                             })
                                 ->orWhereExists(function (Builder $query) use ($category) {
                                     $query->select('dofus_id')
                                         ->from('items')
-                                        ->whereColumn('items.dofus_id', 'skins.'.$category.'_id')
+                                        ->whereColumn('items.dofus_id', 'skins.' . $category . '_id')
                                         ->whereNotIn('items.subcategory', $this->skinContentWhere);
                                 });
                         });
-
                     }
                 });
             })
@@ -290,7 +289,7 @@ class InfiniteSkinIndex extends Component
                         // Si le mot clef est un item
                         $query->when($input[0] == '0', function (Builder $query) use ($input) {
                             foreach ($this->itemCategory as $category) {
-                                $query->orWhere($category.'_id', substr($input, 1));
+                                $query->orWhere($category . '_id', substr($input, 1));
                             }
                         });
                     }
@@ -366,7 +365,7 @@ class InfiniteSkinIndex extends Component
                 ->select('id')
                 ->when($this->skinColors != '', function (Builder $query) {
                     foreach ($this->skinColors as $color) {
-                        $query->addSelect('skins.'.$color);
+                        $query->addSelect('skins.' . $color);
                     }
                 })->get()->toArray();
 

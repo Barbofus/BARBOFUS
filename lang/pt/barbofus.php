@@ -192,6 +192,7 @@ return [
     'contentHat' => 'Chapéu',
     'contentCape' => 'Capa',
     'contentShield' => 'Escudo',
+    'contentWeapon' => 'Arma',
     'contentWings' => 'Asas',
     'contentShoulderpads' => 'Ombreiras',
     'contentCostume' => 'Traje',

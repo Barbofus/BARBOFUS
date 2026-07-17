@@ -52,6 +52,7 @@ class InfiniteUnitySkinIndex extends Component
         'hat',
         'cape',
         'shield',
+        'weapon',
         'pet',
         'costume',
         'wings',

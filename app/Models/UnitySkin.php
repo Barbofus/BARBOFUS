@@ -89,9 +89,9 @@ class UnitySkin extends Model
                 if ($skin->isDirty($color)) {
                     $hsl = $computeColorHsl($skin->$color);
                     if ($hsl !== null) {
-                        $skin->{$color.'_hue'} = $hsl['hue'];
-                        $skin->{$color.'_saturation'} = $hsl['saturation'];
-                        $skin->{$color.'_lightness'} = $hsl['lightness'];
+                        $skin->{$color . '_hue'} = $hsl['hue'];
+                        $skin->{$color . '_saturation'} = $hsl['saturation'];
+                        $skin->{$color . '_lightness'} = $hsl['lightness'];
                     }
                 }
             }
@@ -104,6 +104,7 @@ class UnitySkin extends Model
         'hat_id',
         'cape_id',
         'shield_id',
+        'weapon_id',
         'pet_id',
         'costume_id',
         'wings_id',
@@ -168,6 +169,14 @@ class UnitySkin extends Model
     public function shield()
     {
         return $this->belongsTo(Item::class, 'shield_id');
+    }
+
+    /**
+     * @return BelongsTo<Item, UnitySkin>
+     */
+    public function weapon()
+    {
+        return $this->belongsTo(Item::class, 'weapon_id');
     }
 
     /**

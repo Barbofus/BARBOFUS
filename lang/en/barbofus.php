@@ -187,6 +187,7 @@ return [
     'contentHat' => 'Hat',
     'contentCape' => 'Cape',
     'contentShield' => 'Shield',
+    'contentWeapon' => 'Weapon',
     'contentWings' => 'Wings',
     'contentShoulderpads' => 'Shoulder Pads',
     'contentCostume' => 'Costume',

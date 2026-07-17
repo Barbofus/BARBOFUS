@@ -1708,6 +1708,7 @@
                     hat: @json($skin?->hat_id),
                     cape: @json($skin?->cape_id),
                     shield: @json($skin?->shield_id),
+                    weapon: @json($skin?->weapon_id),
                     pet: @json($skin?->pet_id),
                     shoulderpads: @json($skin?->shoulderpads_id),
                     wings: @json($skin?->wings_id),
@@ -2197,6 +2198,7 @@
                         "hat",
                         "cape",
                         "shield",
+                        "weapon",
                         "pet",
                         "shoulderpads",
                         "wings",
@@ -2302,7 +2304,8 @@
             costume: "10",
             shoulderpads: "11",
             wings: "12",
-            mount: "13"
+            mount: "13",
+            weapon: "14",
         };
 
         function shortenKeys(obj) {

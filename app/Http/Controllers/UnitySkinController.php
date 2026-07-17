@@ -26,6 +26,7 @@ class UnitySkinController extends Controller
         'hat',
         'cape',
         'shield',
+        'weapon',
         'pet',
         'mount',
         'costume',
@@ -196,6 +197,7 @@ class UnitySkinController extends Controller
             'hat_id' => $request->hat_id,
             'cape_id' => $request->cape_id,
             'shield_id' => $request->shield_id,
+            'weapon_id' => $request->weapon_id,
             'pet_id' => $request->pet_id,
             'mount_id' => $request->mount_id,
             'costume_id' => $request->costume_id,
@@ -278,6 +280,7 @@ class UnitySkinController extends Controller
         $skin->hat_id = $request->hat_id;
         $skin->cape_id = $request->cape_id;
         $skin->shield_id = $request->shield_id;
+        $skin->weapon_id = $request->weapon_id;
         $skin->pet_id = $request->pet_id;
         $skin->mount_id = $request->mount_id;
         $skin->costume_id = $request->costume_id;

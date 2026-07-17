@@ -244,6 +244,28 @@
                     </div>
                 @endif
 
+                @if (isset($skin->weapon_level))
+                    <div
+                        class="min-[950px]:absolute left-[calc(50%-43.5rem)] top-[30rem] order-7 w-[31.25rem] flex justify-center min-[950px]:justify-end">
+                        <div
+                            class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-end">
+                            <x-skins-presentation.item :subname="$skin->weapon_subname" :name="$skin->weapon_name" :level="$skin->weapon_level"
+                                :icon="$skin->weapon_icon" />
+                        </div>
+                    </div>
+                @endif
+
+                @if (isset($skin->mount_level))
+                    <div
+                        class="min-[950px]:absolute left-[calc(50%+8.5rem)] top-[24rem] order-8 w-[31.25rem] flex justify-center min-[950px]:justify-start">
+                        <div
+                            class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
+                            <x-skins-presentation.item :subname="$skin->mount_subname" :name="$skin->mount_name" :level="$skin->mount_level"
+                                :icon="$skin->mount_icon" />
+                        </div>
+                    </div>
+                @endif
+
                 @if (isset($skin->hat_level))
                     <div
                         class="min-[950px]:absolute left-[calc(50%+11.5rem)] top-[6rem] order-1 w-[31.25rem] flex justify-center min-[950px]:justify-start">
@@ -262,17 +284,6 @@
                             class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
                             <x-skins-presentation.item :subname="$skin->shoulderpads_subname" :name="$skin->shoulderpads_name" :level="$skin->shoulderpads_level"
                                 :icon="$skin->shoulderpads_icon" />
-                        </div>
-                    </div>
-                @endif
-
-                @if (isset($skin->mount_level))
-                    <div
-                        class="min-[950px]:absolute left-[calc(50%+8.5rem)] top-[24rem] order-8 w-[31.25rem] flex justify-center min-[950px]:justify-start">
-                        <div
-                            class="w-[clamp(90vw,12.5rem,31.25rem)] min-[950px]:w-[clamp(25vw,12.5rem,31.25rem)] flex justify-center min-[950px]:justify-start">
-                            <x-skins-presentation.item :subname="$skin->mount_subname" :name="$skin->mount_name" :level="$skin->mount_level"
-                                :icon="$skin->mount_icon" />
                         </div>
                     </div>
                 @endif
