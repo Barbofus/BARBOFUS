@@ -55,6 +55,7 @@ class Item extends Model
         'subcategory',
         'icon_path',
         'pet_type',
+        'weapon_type',
         'asset_id',
         'female_asset_id',
         'folder',

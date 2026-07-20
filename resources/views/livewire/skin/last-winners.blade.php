@@ -1,4 +1,4 @@
-<div wire:poll.visible.60s="Refresh" id="rewards-section"
+<div id="rewards-section"
     class="flex flex-col items-center w-full px-8 pt-4 top-12 z-10 row-start-3 bg-primary
             min-[1501px]:row-start-2 min-[1501px]:col-start-2
             min-[1801px]:fixed min-[1801px]:order-last min-[1801px]:w-[25rem] min-[1801px]:flex-row min-[1801px]:px-0 min-[1801px]:min-h-[calc(100vh-15vh-1rem)] min-[1801px]:row-span-2

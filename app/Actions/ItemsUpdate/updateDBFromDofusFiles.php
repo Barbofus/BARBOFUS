@@ -6,11 +6,14 @@ namespace App\Actions\ItemsUpdate;
 
 use App\Enums\ItemCategorieEnum;
 use App\Enums\ItemSubcategorieEnum;
+use App\Enums\WeaponSubcategorieEnum;
 use App\Models\Item;
 use App\Models\LocalizedItem;
 use App\Models\LocalizedRace;
 use App\Models\Race;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\VarDumper;
 
 final class updateDBFromDofusFiles
 {
@@ -94,6 +97,8 @@ final class updateDBFromDofusFiles
             'icons' => $this->icons,
         ];
     }
+
+    public function updateWeapons(): void {}
 
     public function updateMounts(): void
     {
@@ -328,11 +333,23 @@ final class updateDBFromDofusFiles
             return isset($item['data']['typeId']) && isset($this->typeID[$item['data']['typeId']]);
         });
 
+        // Indexe les items par leur ID pour un accès rapide
+        $itemsByRid = [];
+        foreach ($itemsData as $item) {
+            if (isset($item['rid'])) {
+                $itemsByRid[$item['rid']] = $item['data'] ?? [];
+            }
+        }
+
         $allItems = Item::all()->keyBy('dofus_id');
         $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
 
+        $weaponData = [];
+
         foreach ($itemsData as $item) {
             $itemD = $item['data'];
+
+            if ($item['type']['class'] === "WeaponData") $weaponData[] = $itemD;
 
             if (! isset($itemD['typeId'])) {
                 continue;
@@ -340,6 +357,63 @@ final class updateDBFromDofusFiles
 
             if (! in_array($itemD['typeId'], array_keys($this->typeID))) {
                 continue;
+            }
+
+            $weaponType = null;
+
+            if ($itemD['typeId'] === 251) {
+                //dd($itemD, $itemsData);
+                foreach ($itemD['possibleEffects'] ?? [] as $effect) {
+                    if (isset($effect['rid'], $itemsByRid[$effect['rid']]['value'])) {
+                        $effectValue = $itemsByRid[$effect['rid']]['value'];
+                        dd($itemD, $effect, $effectValue);
+                        if (array_key_exists($effectValue, $this->typeID)) {
+                            $item['data']['usefulLivingEffect'] = $effectValue;
+                        }
+                    }
+                }
+            }
+
+            switch ($itemD['typeId']) {
+                case 2:
+                    $weaponType = WeaponSubcategorieEnum::ARC->value;
+                    break;
+                case 3:
+                    $weaponType = WeaponSubcategorieEnum::BAGUETTE->value;
+                    break;
+                case 4:
+                    $weaponType = WeaponSubcategorieEnum::BATON->value;
+                    break;
+                case 5:
+                    $weaponType = WeaponSubcategorieEnum::DAGUE->value;
+                    break;
+                case 6:
+                    $weaponType = WeaponSubcategorieEnum::EPEE->value;
+                    break;
+                case 7:
+                    $weaponType = WeaponSubcategorieEnum::MARTEAU->value;
+                    break;
+                case 8:
+                    $weaponType = WeaponSubcategorieEnum::PELLE->value;
+                    break;
+                case 19:
+                    $weaponType = WeaponSubcategorieEnum::HACHE->value;
+                    break;
+                case 20:
+                    $weaponType = WeaponSubcategorieEnum::OUTIL->value;
+                    break;
+                case 21:
+                    $weaponType = WeaponSubcategorieEnum::PIOCHE->value;
+                    break;
+                case 22:
+                    $weaponType = WeaponSubcategorieEnum::FAUX->value;
+                    break;
+                case 114:
+                    $weaponType = WeaponSubcategorieEnum::ARME_MAGIQUE->value;
+                    break;
+                case 271:
+                    $weaponType = WeaponSubcategorieEnum::LANCE->value;
+                    break;
             }
 
             $petType = null;
@@ -376,6 +450,7 @@ final class updateDBFromDofusFiles
                 }
             }
 
+
             $value = [
                 'dofus_id' => $itemD['id'],
                 'folder' => in_array($itemD['typeId'], [18, 249, 121, 250]) ? 'bones' : 'skins',
@@ -383,6 +458,7 @@ final class updateDBFromDofusFiles
                 'category' => $this->typeID[$itemD['typeId']]['cat'],
                 'subcategory' => $this->typeID[$itemD['typeId']]['subcat'],
                 'pet_type' => $petType,
+                'weapon_type' => $weaponType,
                 'icon_path' => 'images/icons/items/' . $itemD['iconId'] . '.webp',
                 'colorable' => $itemD['isColorable'],
             ];
@@ -416,6 +492,7 @@ final class updateDBFromDofusFiles
                 }
             }
         }
+        dd($weaponData[0]);
     }
 
     public function updateBreeds(): void
