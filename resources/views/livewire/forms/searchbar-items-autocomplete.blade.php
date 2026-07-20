@@ -1,7 +1,8 @@
+
 <div class="relative">
     <div class="flex items-center h-6 space-x-2 text-inactiveText">
         @if ($selectedItem)
-            <img class="h-full" src="{{ asset(asset('storage/images/icons/items/subcategories/'. $selectedItem->subcategory .'.png')) }}" draggable="false">
+            <img class="h-full" src="{{ asset(asset('https://static.barbofus.com/images/icons/items/subcategories/'. $selectedItem->subcategory .'.png')) }}" draggable="false">
             <p>{{ __('barbofus.labelSkinItem'.$selectedItem->subcategory) }}</p>
             <p>Lvl. {{ $selectedItem->level }}</p>
         @endif
@@ -43,7 +44,7 @@
             }"
             @mousedown.away="show = false">
             <label for="{{ $name }}">
-                <img class="absolute h-full" src="{{ $selectedItem ? asset('storage/'. $selectedItem->icon_path) : '' }}" draggable="false">
+                <img class="absolute h-full" src="{{ $selectedItem ? asset('https://static.barbofus.com/'. $selectedItem->icon_path) : '' }}" draggable="false">
                 <input x-ref="input"
                     maxlength="30" id="{{ $name }}" type="text" placeholder="{{ $placeholder }}"
                     class="w-full h-full rounded-md pl-14 focus:outline-none placeholder-inactiveText bg-primary-100 @error($name) err-border @enderror"
@@ -59,9 +60,9 @@
             </label>
 
             {{-- Menu déroulant --}}
-            <div class="max-h-72 w-full absolute" x-show="show">
+            <div class="absolute w-full max-h-72" x-show="show">
 
-                <div class="absolute bg-primary-100 z-50 w-full max-h-60 overflow-y-auto">
+                <div class="absolute z-50 w-full overflow-y-auto bg-primary-100 max-h-60">
                     @foreach ($items as $key => $item)
                         <button
                             type="button"
@@ -71,7 +72,7 @@
                             wire:click="setSelection({{$key}})"
                             @click="show = false">
 
-                            <img draggable="false" class="h-full select-none" src="{{ asset('storage\\'. $item->icon_path) }}" alt="">
+                            <img draggable="false" class="h-full select-none" src="{{ asset('https://static.barbofus.com\\'. $item->icon_path) }}" alt="">
                             <p class="select-none">{{ $item->name }}</p>
                         </button>
 

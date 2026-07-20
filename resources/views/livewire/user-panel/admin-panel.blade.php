@@ -36,7 +36,7 @@
                     @foreach ($newItems as $newItem)
                         <div>
                             <div class="flex items-center justify-start gap-x-2">
-                                <img src="{{ asset('storage/images/icons/items/subcategories/' . $newItem['subcategory'] . '.png') }}"
+                                <img src="{{ asset('https://static.barbofus.com/images/icons/items/subcategories/' . $newItem['subcategory'] . '.png') }}"
                                     class="h-7">
                                 <p class="font-light text-inactiveText text-md">
                                     {{ __('barbofus.labelSkinItem' . $newItem['subcategory']) }}</p>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="flex items-center pr-4 space-x-2 rounded-md bg-primary-100">
                                 <img class="w-14" draggable="false"
-                                    src="{{ asset('storage/' . $newItem['icon_path']) }}">
+                                    src="{{ asset('https://static.barbofus.com/' . $newItem['icon_path']) }}">
                                 <p class="font-light italic text-secondary text-md min-[750px]:text-lg">
                                     {{ $newItem['name'] }}</p>
                             </div>

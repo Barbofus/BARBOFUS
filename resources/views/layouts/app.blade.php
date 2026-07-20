@@ -47,7 +47,7 @@
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="icon" type="image/x-icon" href="{{ asset('/storage/images/icons/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('https://static.barbofus.com/images/icons/favicon.ico') }}">
 
     @livewireStyles
 </head>

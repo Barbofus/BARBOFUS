@@ -133,14 +133,14 @@
 
         <div class="flex items-center justify-center space-x-4">
             <p class="font-thin text-[min(5vw,1.25rem)] text-center text-secondary">{{ __('barbofus.contentFace') }}</p>
-            <img src="{{ asset(sprintf('storage/images/icons/classes/faces/unity/%s.png', $head)) }}"
+            <img src="{{ asset(sprintf('https://static.barbofus.com/images/icons/classes/faces/unity/%s.png', $head)) }}"
                 alt="Visage {{ $skin->race_name }}" draggable="false" class="h-20">
         </div>
 
         <div class="flex flex-col gap-y-4 items-center min-[950px]:pt-24 relative h-full">
             {{-- Skin image + icon classe --}}
             <img src="{{ asset('storage/' . $skin->image_path) }}" draggable="false">
-            <img src="{{ asset('storage/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
+            <img src="{{ asset('https://static.barbofus.com/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
 
             <div class="flex space-x-8">
                 {{-- Button Copy Link --}}

@@ -9,10 +9,10 @@
                 {{-- Gros container d'un skin --}}
                 <div wire:key="'haven-bags-validation-{{ $havenBag->id }}-{{ rand() }}'">
 
-                    <div class="mt-2 flex space-x-4 w-full">
+                    <div class="flex w-full mt-2 space-x-4">
                         <div class="w-1/3">
                             <div class="flex space-x-2">
-                                <img src="{{ asset('storage/' . $havenBag->popocket_icon_path) }}" alt="" draggable="false" class="h-[5rem]">
+                                <img src="{{ asset('https://static.barbofus.com/' . $havenBag->popocket_icon_path) }}" alt="" draggable="false" class="h-[5rem]">
                                 <div>
                                     <p class="text-xl italic">{{ $havenBag->name }}</p>
                                     <p class="text-lg font-thin">par <span class="text-xl font-normal">{{ $havenBag->user_name }}</span></p>
@@ -38,7 +38,7 @@
                             <button @click="$wire.refuseHavenBag(refused_reason, {{ $havenBag->id }}), refused_reason = ''" class="px-4 h-12 absolute top-0 right-0 text-primary transition-all hover:rounded-3xl hover:tracking-widest heartGradient rounded-md text-md min-[750px]:text-xl hover:brightness-110 min-[750px]:static">Refuser</button>
                             <textarea
                                 type="text" name="reason" placeholder="Raison du refus ..." maxlength="128"
-                                class="rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100 flex-1 h-12 p-2"
+                                class="flex-1 h-12 p-2 rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100"
                                 x-model="refused_reason"></textarea>
                         </div>
                     </div>

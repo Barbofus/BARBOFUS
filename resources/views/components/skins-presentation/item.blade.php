@@ -1,11 +1,11 @@
 <div>
-    <div class="flex gap-x-2 items-center justify-start">
-        <img src="{{ asset('storage/images/icons/items/subcategories/'. $subname .'.png') }}" class="h-7">
-        <p class="text-inactiveText text-md font-light">{{ __('barbofus.labelSkinItem'.$subname) }}</p>
-        <p class="text-inactiveText text-md font-light">Lv. {{ $level }}</p>
+    <div class="flex items-center justify-start gap-x-2">
+        <img src="{{ asset('https://static.barbofus.com/images/icons/items/subcategories/'. $subname .'.png') }}" class="h-7">
+        <p class="font-light text-inactiveText text-md">{{ __('barbofus.labelSkinItem'.$subname) }}</p>
+        <p class="font-light text-inactiveText text-md">Lv. {{ $level }}</p>
     </div>
-    <div class="flex space-x-2 items-center bg-primary-100 rounded-md pr-4">
-        <img class="w-14" draggable="false" src="{{ asset('storage/' . $icon )}}">
+    <div class="flex items-center pr-4 space-x-2 rounded-md bg-primary-100">
+        <img class="w-14" draggable="false" src="{{ asset('https://static.barbofus.com/' . $icon )}}">
         <p class="font-light italic text-secondary text-md min-[750px]:text-lg">{{ $name }}</p>
     </div>
 </div>

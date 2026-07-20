@@ -4,7 +4,7 @@
           [@media(min-height:900px)_and_(min-width:901px)]:block [@media(min-height:900px)_and_(min-width:901px)]:h-[15vh] [@media(min-height:900px)_and_(min-width:901px)]:min-h-[150px] overflow-hidden">
 
     {{-- Arrière plan --}}
-    <div class="absolute w-full h-full flex items-center justify-center bg-primary">
+    <div class="absolute flex items-center justify-center w-full h-full bg-primary">
         <div class="w-[min(100vw,1500px)] relative h-full">
 
             {{-- Image arrière plan --}}
@@ -17,8 +17,8 @@
     </div>
 
     {{-- Section logo --}}
-    <div class="flex h-full justify-center z-10 relative">
-        <div class="max-w-1/2 h-full flex justify-center relative overflow-hidden">
+    <div class="relative z-10 flex justify-center h-full">
+        <div class="relative flex justify-center h-full overflow-hidden max-w-1/2">
 
             {{-- Degradé derrière logo --}}
             <div class="bg-[linear-gradient(90deg,transparent_0%,rgba(0,0,0,0.65)_25%,rgba(0,0,0,.65)_75%,transparent_100%)] via-primary h-full w-full absolute -z-10"></div>
@@ -59,11 +59,11 @@
     </div>
 
     {{-- Lp --}}
-    <div class="opacity-0">
+    {{-- <div class="opacity-0">
         @if(Route::currentRouteName() != 'skins.index' && Route::currentRouteName() != 'home' && Route::currentRouteName() != 'unity-skins.index')
             <x-utils.twitch-embed />
         @endif
-    </div>
+    </div> --}}
 
     @vite('resources/js/header/OnSlope.js')
 </div>

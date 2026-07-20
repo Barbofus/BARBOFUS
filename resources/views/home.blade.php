@@ -129,7 +129,7 @@
 
         <div class="flex min-[800px]:flex-row flex-col gap-x-16 gap-y-8 justify-center items-center">
             <div class="flex items-center p-2 transition-all gap-x-4 hover:bg-primary-100 hover:rounded-md bg-primary">
-                <img src="{{ asset('storage/images/icons/locale/es.png') }}" height="48" width="48"
+                <img src="{{ asset('https://static.barbofus.com/images/icons/locale/es.png') }}" height="48" width="48"
                     alt="Logo DofusDB">
                 <div class="flex flex-col items-start justify-center">
                     <p class="text-xl font-light uppercase text-secondary">Max Medina</p>
@@ -138,7 +138,7 @@
             </div>
 
             <div class="flex items-center p-2 transition-all gap-x-4 hover:bg-primary-100 hover:rounded-md bg-primary">
-                <img src="{{ asset('storage/images/icons/locale/pt.png') }}" height="48" width="48"
+                <img src="{{ asset('https://static.barbofus.com/images/icons/locale/pt.png') }}" height="48" width="48"
                     alt="Logo DofusBook">
                 <div class="flex flex-col items-start justify-center">
                     <p class="text-xl font-light uppercase text-secondary">Amalik</p>

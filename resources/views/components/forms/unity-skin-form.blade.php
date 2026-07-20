@@ -322,7 +322,7 @@
                         <template x-for="head in heads" :key="head.id">
                             <label>
                                 <input type="radio" name="face" :value="head.id" class="absolute opacity-0 peer" :checked="head.id === sHead">
-                                <img :src="'{{ asset('storage/images/icons/classes/faces/unity/') }}/' + head.assetId + '.png'" :alt="'Visage n° ' + head.id"
+                                <img :src="'{{ asset('https://static.barbofus.com/images/icons/classes/faces/unity/') }}/' + head.assetId + '.png'" :alt="'Visage n° ' + head.id"
                                      class="flex rounded-md items-center justify-center w-full h-full text-3xl bg-primary-100 border-2 border-inactiveText cursor-pointer hover:border-secondary peer-checked:border-goldText">
                             </label>
                         </template>

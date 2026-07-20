@@ -57,7 +57,7 @@
                     @foreach(session('newItems') as $newItem)
                         <div>
                             <div class="flex gap-x-2 items-center justify-start">
-                                <img src="{{ asset('storage/images/icons/items/subcategories/'.$newItem[2]->value.'.png') }}" class="h-7">
+                                <img src="{{ asset('https://static.barbofus.com/images/icons/items/subcategories/'.$newItem[2]->value.'.png') }}" class="h-7">
                                 <p class="text-inactiveText text-md font-light">{{ __('barbofus.labelSkinItem'.$newItem[2]->value) }}</p>
                                 <p class="text-inactiveText text-md font-light">Lv. {{ $newItem[3] }}</p>
                             </div>

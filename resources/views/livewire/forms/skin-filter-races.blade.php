@@ -1,6 +1,6 @@
 
 
-<div class="relative w-fit mt-2" @click.away="showSort = false"
+<div class="relative mt-2 w-fit" @click.away="showSort = false"
      x-data="{
         showSort: false,
         selection: 0,
@@ -99,7 +99,7 @@
                     aria-label="Filtre {{ $race->localized_name }}"
                     @click="setSelection( {{ $race->dofus_id }}), window.scrollTo({top: 0, behavior: 'smooth'})"
                     class="flex rounded-md items-center transition-all w-full justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
-                <img src="{{ asset('storage/' . $race->ghost_icon_path) }}" class="h-11">
+                <img src="{{ asset('https://static.barbofus.com/' . $race->ghost_icon_path) }}" class="h-11">
                 <p>{{ $race->localized_name }}</p>
             </button>
         @endforeach
@@ -115,7 +115,7 @@
                 </p>
 
                 <!-- Croix -->
-                <svg class="w-4 text-red-500 group-hover:text-red-400 ml-2"
+                <svg class="w-4 ml-2 text-red-500 group-hover:text-red-400"
                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>

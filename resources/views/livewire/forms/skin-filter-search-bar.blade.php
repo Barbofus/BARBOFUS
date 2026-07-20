@@ -1,5 +1,5 @@
 <div class="text-[1.15rem]">
-    <p class="text-ivory font-thin">{{ __('barbofus.labelSearchItemUsername') }}</p>
+    <p class="font-thin text-ivory">{{ __('barbofus.labelSearchItemUsername') }}</p>
 
     <div
         class="w-[90%] -ml-1 relative"
@@ -66,13 +66,13 @@
             @foreach($itemToShow as $key => $item)
                 <button
                     id="skin-filter-search-bar-result-{{$key}}"
-                    class="flex w-full p-1 items-center group transition-all"
+                    class="flex items-center w-full p-1 transition-all group"
                     :class="(selection == {{$key}} ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10')"
                     wire:click="$emit('ToggleSearchedText', '{{$item['is_user'].$item['id'] }}')"
                     @click="EnterPressedOnSearchBar('{{ $item['is_user'] }}','{{ $item['id'] }}')"
                     wire:key="{{ addslashes($item['id']) . rand() }}">
                     @if(@isset($item['icon_path']))
-                        <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('storage\/'. $item['icon_path']) }}">
+                        <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('https://static.barbofus.com/'. $item['icon_path']) }}">
                     @else
                         <svg class="h-10 fill-inactiveText transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                              viewBox="-10 -10 80 80" xml:space="preserve">
@@ -92,7 +92,7 @@
                     <p class="font-light text-[1rem] text-inactiveText">{{ $result[1] }}</p>
 
                     <!-- Croix -->
-                    <svg class="w-4 text-red-500 group-hover:text-red-400 ml-2"
+                    <svg class="w-4 ml-2 text-red-500 group-hover:text-red-400"
                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>

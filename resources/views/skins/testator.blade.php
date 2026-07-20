@@ -203,7 +203,7 @@
                             :alt="allItems.find(i => i.dofus_id === item).name">
                         <div class="flex items-end pt-4 space-x-1">
                             <img loading="lazy" draggable="false" width="24" height="24" class="w-6 h-6"
-                                :src="'/storage/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id ===
+                                :src="'https://static.barbofus.com/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id ===
                                         item)
                                     .subcategory + '.png'"
                                 :alt="allItems.find(i => i.dofus_id === item).subcategory">
@@ -298,7 +298,7 @@
                                     <label :for="'breed_' + breedInfo.dofus_id" :title="breed.name"
                                         class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                         <img loading="lazy" draggable="false"
-                                            :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[
+                                            :src="'https://static.barbofus.com/images/icons/classes/faces/unity/' + breedInfo.heads[
                                                 gender ===
                                                 0 ? 'male' : 'female'][0].assetId + '.png'"
                                             :alt="breed.name">
@@ -324,7 +324,7 @@
                                             breed).name) + ' ' + breedHead.id"
                                         class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                         <img loading="lazy" draggable="false"
-                                            :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId +
+                                            :src="'https://static.barbofus.com/images/icons/classes/faces/unity/' + breedHead.assetId +
                                                 '.png'"
                                             :alt="'{{ __('barbofus.contentFace') }} ' + (breedInfos.find(i => i
                                                 .dofus_id ===
@@ -743,7 +743,7 @@
                             :class="showOnlyMimisymbic ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyMimisymbic ? 'opacity-100' : 'opacity-60 grayscale'"
                                 class="mx-auto transition-all h-7 hover:scale-90"
-                                src="{{ asset('storage/images/icons/items/subcategories/mimisymbic.png') }}"
+                                src="{{ asset('https://static.barbofus.com/images/icons/items/subcategories/mimisymbic.png') }}"
                                 alt="Colorable">
                         </button>
 
@@ -754,7 +754,7 @@
                             :class="showOnlyCeremonial ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyCeremonial ? 'opacity-100' : 'opacity-60 grayscale'"
                                 class="mx-auto transition-all h-7 hover:scale-90"
-                                src="{{ asset('storage/images/icons/items/subcategories/ceremonial.png') }}"
+                                src="{{ asset('https://static.barbofus.com/images/icons/items/subcategories/ceremonial.png') }}"
                                 alt="Colorable">
                         </button>
 
@@ -781,7 +781,7 @@
                             :class="(petCurrentTab === 'familier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'familier') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/familiar.png') }}" alt="Familier">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/familiar.png') }}" alt="Familier">
                         </button>
 
                         <button type="button" x-cloak data-tab="montilier"
@@ -789,7 +789,7 @@
                             :class="(petCurrentTab === 'montilier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'montilier') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/petsmount.png') }}" alt="Montilier">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/petsmount.png') }}" alt="Montilier">
                         </button>
 
                         <button type="button" x-cloak data-tab="dragodinde"
@@ -797,7 +797,7 @@
                             :class="(petCurrentTab === 'dragodinde') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'dragodinde') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/dragoturkey.png') }}" alt="Dragodinde">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/dragoturkey.png') }}" alt="Dragodinde">
                         </button>
 
                         <button type="button" x-cloak data-tab="muldo"
@@ -805,7 +805,7 @@
                             :class="(petCurrentTab === 'muldo') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'muldo') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/seemyool.png') }}" alt="Muldo">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/seemyool.png') }}" alt="Muldo">
                         </button>
 
                         <button type="button" x-cloak data-tab="volkorne"
@@ -813,7 +813,7 @@
                             :class="(petCurrentTab === 'volkorne') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'volkorne') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
                         </button>
                     </div>
                 </div>
@@ -826,7 +826,7 @@
                         <button type="button" @click="animation = index; orientationKey = 0"
                             class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                             <img draggable="false" class="h-[9rem]"
-                                :src="'{{ asset('storage/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
+                                :src="'{{ asset('https://static.barbofus.com/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
                             <p x-text="a.shortName"
                                 class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
                             </p>
@@ -2677,7 +2677,7 @@
                     const itemCache = this.cacheTexture?.[category]?.[id] ?? 123456;
                     const textureVersion = '?v=' + itemCache;
 
-                    img.src = '/storage/images/skinator/' + url + textureVersion;
+                    img.src = 'https://static.barbofus.com/images/skinator/' + url + textureVersion;
                 });
 
                 const texture = gl.createTexture();

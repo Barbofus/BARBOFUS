@@ -9,7 +9,7 @@
                 {{-- Gros container d'un skin --}}
                 <div
                     wire:key="'unity-skins-validation-{{ $skin->id }}-{{ rand() }}'"
-                    class="mt-2 flex space-y-2 flex-col border-2 border-green-500/10 rounded-2xl bg-green-500/5">
+                    class="flex flex-col mt-2 space-y-2 border-2 border-green-500/10 rounded-2xl bg-green-500/5">
 
                     <div class="flex flex-col min-[750px]:flex-row max-[749px]:gap-y-2 min-[750px]:gap-x-2 items-center">
 
@@ -17,10 +17,10 @@
                         <div class="flex flex-col items-center rounded-md">
 
                             {{-- Classe + ID --}}
-                            <div class="flex items-center space-x-2 w-full">
-                                <img draggable="false" width="64" src="{{ asset('storage/' . $skin->race_icon) }}">
+                            <div class="flex items-center w-full space-x-2">
+                                <img draggable="false" width="64" src="{{ asset('https://static.barbofus.com/' . $skin->race_icon) }}">
                                 <div class="flex flex-col items-baseline">
-                                    <p class="text-inactiveText italic text-sm">
+                                    <p class="text-sm italic text-inactiveText">
                                         @if(isset($skin->name))
                                             {{ $skin->name }}
                                         @else
@@ -34,7 +34,7 @@
                             {{-- Image --}}
                             <img draggable="false" width="200" src="{{ asset('storage/' . $skin->image_path) }}">
 
-                            <p class="text-inactiveText italic">{{ $skin->user_name }}</p>
+                            <p class="italic text-inactiveText">{{ $skin->user_name }}</p>
                         </div>
 
                         {{-- Détails --}}
@@ -43,8 +43,8 @@
                             {{-- Items --}}
                             <div>
 
-                                <div class="flex gap-x-8 justify-center items-center">
-                                    <div class="flex gap-x-2 items-center">
+                                <div class="flex items-center justify-center gap-x-8">
+                                    <div class="flex items-center gap-x-2">
                                         @if($skin->gender == 'Femme')
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
                                             </svg>
@@ -57,7 +57,7 @@
 
                                     <div class="flex items-center justify-center space-x-4">
                                         <p class="text-secondary font-thin text-md min-[750px]:text-lg">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
-                                        <img src="{{  asset(sprintf("storage/images/icons/classes/faces/unity/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
+                                        <img src="{{  asset(sprintf("https://static.barbofus.com/images/icons/classes/faces/unity/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
                                              alt="Visage {{ $skin->race_name }} n° {{ $skin->face }}" draggable="false" class="h-12">
                                     </div>
                                 </div>
@@ -116,10 +116,10 @@
                             <button @click="$wire.refuseUnitySkin(refused_reason, {{ $skin->id }}), refused_reason = ''" class="px-4 h-12 absolute top-0 right-0 max-[749px]:right-2 text-primary transition-all hover:rounded-3xl hover:tracking-widest heartGradient rounded-md text-md min-[750px]:text-xl hover:brightness-110 min-[750px]:static">Refuser</button>
                             <textarea
                                 type="text" name="reason" placeholder="Raison du refus ..." maxlength="128"
-                                class="rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100 flex-1 h-12 p-2"
+                                class="flex-1 h-12 p-2 rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100"
                                 x-model="refused_reason"></textarea>
                         </div>--}}
-                        <a href="{{ route('skinator.edit', $skin->id) }}" class="p-4 goldGradient text-primary text-lg rounded-lg">Skinator</a>
+                        <a href="{{ route('skinator.edit', $skin->id) }}" class="p-4 text-lg rounded-lg goldGradient text-primary">Skinator</a>
                     </div>
                 </div>
             @endforeach
@@ -129,7 +129,7 @@
                 {{-- Gros container d'un skin --}}
                 <div
                     wire:key="'skins-validation-{{ $skin->id }}-{{ rand() }}'"
-                    class="mt-2 flex space-y-2 flex-col">
+                    class="flex flex-col mt-2 space-y-2">
 
                     <div class="flex flex-col min-[750px]:flex-row max-[749px]:gap-y-2 min-[750px]:gap-x-2 items-center">
 
@@ -137,10 +137,10 @@
                         <div class="flex flex-col items-center rounded-md">
 
                             {{-- Classe + ID --}}
-                            <div class="flex items-center space-x-2 w-full">
-                                <img draggable="false" width="64" src="{{ asset('storage/' . $skin->race_icon) }}">
+                            <div class="flex items-center w-full space-x-2">
+                                <img draggable="false" width="64" src="{{ asset('https://static.barbofus.com/' . $skin->race_icon) }}">
                                 <div class="flex flex-col items-baseline">
-                                    <p class="text-inactiveText italic text-sm">
+                                    <p class="text-sm italic text-inactiveText">
                                         @if(isset($skin->name))
                                             {{ $skin->name }}
                                         @else
@@ -154,7 +154,7 @@
                             {{-- Image --}}
                             <img draggable="false" width="200" src="{{ asset('storage/' . $skin->image_path) }}">
 
-                            <p class="text-inactiveText italic">{{ $skin->user_name }}</p>
+                            <p class="italic text-inactiveText">{{ $skin->user_name }}</p>
                         </div>
 
                         {{-- Détails --}}
@@ -163,8 +163,8 @@
                             {{-- Items --}}
                             <div>
 
-                                <div class="flex gap-x-8 justify-center items-center">
-                                    <div class="flex gap-x-2 items-center">
+                                <div class="flex items-center justify-center gap-x-8">
+                                    <div class="flex items-center gap-x-2">
                                         @if($skin->gender == 'Femme')
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6" fill="currentColor" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
                                             </svg>
@@ -177,7 +177,7 @@
 
                                     <div class="flex items-center justify-center space-x-4">
                                         <p class="text-secondary font-thin text-md min-[750px]:text-lg">Visage n°<span class="font-normal">{{ $skin->face }}</span></p>
-                                        <img src="{{  asset(sprintf("storage/images/icons/classes/faces/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
+                                        <img src="{{  asset(sprintf("https://static.barbofus.com/images/icons/classes/faces/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
                                              alt="Visage {{ $skin->race_name }} n° {{ $skin->face }}" draggable="false" class="h-12">
                                     </div>
                                 </div>
@@ -227,7 +227,7 @@
                             <button @click="$wire.refuseSkin(refused_reason, {{ $skin->id }}), refused_reason = ''" class="px-4 h-12 absolute top-0 right-0 text-primary transition-all hover:rounded-3xl hover:tracking-widest heartGradient rounded-md text-md min-[750px]:text-xl hover:brightness-110 min-[750px]:static">Refuser</button>
                             <textarea
                                 type="text" name="reason" placeholder="Raison du refus ..." maxlength="128"
-                                class="rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100 flex-1 h-12 p-2"
+                                class="flex-1 h-12 p-2 rounded-md text-md text-secondary placeholder:text-inactiveText bg-primary-100"
                                 x-model="refused_reason"></textarea>
                         </div>
                     </div>

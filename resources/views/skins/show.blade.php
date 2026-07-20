@@ -11,9 +11,9 @@
         x-data="{ skinDeleteID: null, skinDeleteImg:''}">
 
         @can('validate-skin')
-            <div class="flex absolute gap-x-2 top-2 right-2">
+            <div class="absolute flex gap-x-2 top-2 right-2">
                 {{-- Modification --}}
-                <a class="scale-90 hover:scale-110 text-inactiveText hover:text-blue-500 transition-all"
+                <a class="transition-all scale-90 hover:scale-110 text-inactiveText hover:text-blue-500"
                    href="{{ route('skins.edit', $skin->id) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-12">
@@ -24,7 +24,7 @@
                 </a>
 
                 {{-- Suppression --}}
-                <button class="scale-90 hover:scale-110 text-inactiveText hover:text-red-500 transition-all"
+                <button class="transition-all scale-90 hover:scale-110 text-inactiveText hover:text-red-500"
                         @click="skinDeleteID = {{ $skin->id }}, skinDeleteImg='{{ asset('storage/'. $skin->image_path) }}'">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-12">
@@ -35,7 +35,7 @@
             </div>
 
 
-            <div class="fixed top-0 right-0 bottom-0 left-0 z-50"
+            <div class="fixed top-0 bottom-0 left-0 right-0 z-50"
                  x-show="skinDeleteID" x-cloak
                  x-transition:enter="transition ease-out duration-300"
                  x-transition:enter-start="opacity-0 -translate-y-full"
@@ -119,9 +119,9 @@
             </div>
         </div>
 
-        <div class="flex justify-center items-center space-x-4">
+        <div class="flex items-center justify-center space-x-4">
             <p class="font-thin text-[min(5vw,1.25rem)] text-center text-secondary">{{ __('barbofus.contentFace') }} N°{{ $skin->face }}</p>
-            <img src="{{  asset(sprintf("storage/images/icons/classes/faces/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
+            <img src="{{  asset(sprintf("https://static.barbofus.com/images/icons/classes/faces/%s%d_%s.png", $skin->race_dofus_id, $skin->gender === 'Homme' ? 0 : 1, $skin->face)) }}"
                 alt="Visage {{ $skin->race_name }} n° {{ $skin->face }}" draggable="false" class="h-12">
         </div>
 
@@ -129,7 +129,7 @@
             {{-- Skin image + icon classe --}}
             <img src="{{ asset('storage/' . $skin->image_path) }}" draggable="false"
                  class="max-[949px]:h-[min(50vh,25rem)] min-[950px]:w-[18.75rem]">
-            <img src="{{ asset('storage/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
+            <img src="{{ asset('https://static.barbofus.com/' . $skin->race_icon) }}" draggable="false" class="absolute -z-10 opacity-40">
 
             {{-- Button Copy Link --}}
             <button
@@ -182,7 +182,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-y-4 mt-4">
+            <div class="flex flex-col mt-4 gap-y-4">
                 {{-- Items --}}
                 @if(isset($skin->costume_level))
                     <div

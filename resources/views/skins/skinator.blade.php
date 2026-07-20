@@ -199,11 +199,11 @@
 
                     <div class="flex items-start">
                         <img loading="lazy" draggable="false" class="h-10 min-[1600px]:h-16"
-                            :src="'/storage/' + allItems.find(i => i.dofus_id === item).icon_path"
+                            :src="'https://static.barbofus.com/' + allItems.find(i => i.dofus_id === item).icon_path"
                             :alt="allItems.find(i => i.dofus_id === item).name">
                         <div class="flex items-end pt-4 space-x-1">
                             <img loading="lazy" draggable="false" width="24" height="24" class="w-6 h-6"
-                                :src="'/storage/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id ===
+                                :src="'https://static.barbofus.com/images/icons/items/subcategories/' + allItems.find(i => i.dofus_id ===
                                         item)
                                     .subcategory + '.png'"
                                 :alt="allItems.find(i => i.dofus_id === item).subcategory">
@@ -301,7 +301,7 @@
                                     <label :for="'breed_' + breedInfo.dofus_id" :title="breed.name"
                                         class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                         <img loading="lazy" draggable="false"
-                                            :src="'/storage/images/icons/classes/faces/unity/' + breedInfo.heads[
+                                            :src="'https://static.barbofus.com/images/icons/classes/faces/unity/' + breedInfo.heads[
                                                 gender ===
                                                 0 ? 'male' : 'female'][0].assetId + '.png'"
                                             :alt="breed.name">
@@ -327,7 +327,7 @@
                                             breed).name) + ' ' + breedHead.id"
                                         class="transition-all rounded-md text-inactiveText border-2 hover:border-inactiveText bg-primary-100 cursor-pointer w-[max(min(3.5vw,5rem),4rem)] aspect-square flex justify-center items-center border-primary-100 peer-checked:text-secondary peer-checked:border-goldText">
                                         <img loading="lazy" draggable="false"
-                                            :src="'/storage/images/icons/classes/faces/unity/' + breedHead.assetId +
+                                            :src="'https://static.barbofus.com/images/icons/classes/faces/unity/' + breedHead.assetId +
                                                 '.png'"
                                             :alt="'{{ __('barbofus.contentFace') }} ' + (breedInfos.find(i => i
                                                 .dofus_id ===
@@ -354,7 +354,7 @@
                                             breed).name) + ' ' + breedBody.id"
                                         class="flex p-2 items-center justify-center transition-all border-2 rounded-md cursor-pointer text-inactiveText hover:border-inactiveText bg-primary-100 aspect-[2/3] border-primary-100 peer-checked:text-secondary peer-checked:border-goldText overflow-hidden">
                                         <img loading="lazy" draggable="false" class="object-cover w-auto h-full"
-                                            :src="'/storage/images/icons/classes/bodies/unity/' + breedBody.assetId.replace(/\d+$/, n => +n - 1) +
+                                            :src="'https://static.barbofus.com/images/icons/classes/bodies/unity/' + breedBody.assetId.replace(/\d+$/, n => +n - 1) +
                                                 '.png'"
                                             :alt="'{{ __('barbofus.contentBody') }} ' + (breedInfos.find(i => i
                                                 .dofus_id ===
@@ -780,7 +780,7 @@
                             :class="showOnlyMimisymbic === 1 ? 'border-secondary' : showOnlyMimisymbic === 2 ? 'border-red-500' : 'border-inactiveText'">
                             <img :class="showOnlyMimisymbic > 0 ? 'opacity-100' : 'opacity-60 grayscale'"
                                 class="mx-auto transition-all h-7 hover:scale-90"
-                                src="{{ asset('storage/images/icons/items/subcategories/mimisymbic.png') }}"
+                                src="{{ asset('https://static.barbofus.com/images/icons/items/subcategories/mimisymbic.png') }}"
                                 alt="Mimisymbic">
                             <div x-show="showOnlyMimisymbic === 2"
                                 class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -798,7 +798,7 @@
                             :class="showOnlyCeremonial === 1 ? 'border-secondary' : showOnlyCeremonial === 2 ? 'border-red-500' : 'border-inactiveText'">
                             <img :class="showOnlyCeremonial > 0 ? 'opacity-100' : 'opacity-60 grayscale'"
                                 class="mx-auto transition-all h-7 hover:scale-90"
-                                src="{{ asset('storage/images/icons/items/subcategories/ceremonial.png') }}"
+                                src="{{ asset('https://static.barbofus.com/images/icons/items/subcategories/ceremonial.png') }}"
                                 alt="Ceremonial">
                             <div x-show="showOnlyCeremonial === 2"
                                 class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -839,7 +839,7 @@
                             :class="(petCurrentTab === 'familier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'familier') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/familiar.png') }}" alt="Familier">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/familiar.png') }}" alt="Familier">
                         </button>
 
                         <button type="button" x-cloak data-tab="montilier"
@@ -847,7 +847,7 @@
                             :class="(petCurrentTab === 'montilier') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'montilier') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/petsmount.png') }}" alt="Montilier">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/petsmount.png') }}" alt="Montilier">
                         </button>
 
                         <button type="button" x-cloak data-tab="dragodinde"
@@ -855,7 +855,7 @@
                             :class="(petCurrentTab === 'dragodinde') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'dragodinde') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/dragoturkey.png') }}" alt="Dragodinde">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/dragoturkey.png') }}" alt="Dragodinde">
                         </button>
 
                         <button type="button" x-cloak data-tab="muldo"
@@ -863,7 +863,7 @@
                             :class="(petCurrentTab === 'muldo') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'muldo') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/seemyool.png') }}" alt="Muldo">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/seemyool.png') }}" alt="Muldo">
                         </button>
 
                         <button type="button" x-cloak data-tab="volkorne"
@@ -871,7 +871,7 @@
                             :class="(petCurrentTab === 'volkorne') ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="(petCurrentTab === 'volkorne') ? 'opacity-100' : 'opacity-60'"
                                 class="h-full transition-all"
-                                src="{{ asset('storage/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
+                                src="{{ asset('https://static.barbofus.com/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
                         </button>
                     </div>
                 </div>
@@ -904,7 +904,7 @@
                             <button type="button" @click="animation = index; orientationKey = 0"
                                 class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                                 <img draggable="false" class="h-[9rem]"
-                                    :src="'{{ asset('storage/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
+                                    :src="'{{ asset('https://static.barbofus.com/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
                                 <p x-text="a.shortName"
                                     class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
                                 </p>
@@ -919,7 +919,7 @@
                             <button type="button" @click="animationName = `AnimStatiqueCombat${b.dofus_id}a@1-${b.dofus_id}-static`; orientationKey = 0"
                                 class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                                 <img draggable="false" class="h-[9rem]"
-                                    :src="'/storage/images/icons/anims/combat_' + b.dofus_id + '.png'" :alt="'{{ __('barbofus.contentCombat') }} ' + b.name">
+                                    :src="'https://static.barbofus.com/images/icons/anims/combat_' + b.dofus_id + '.png'" :alt="'{{ __('barbofus.contentCombat') }} ' + b.name">
                                 <p x-text="'{{ __('barbofus.contentCombat') }} ' + b.name"
                                     class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
                                 </p>
@@ -934,7 +934,7 @@
                             <button type="button" @click="animationName = `AnimStatiqueExploRetro${b.dofus_id}@1-${b.dofus_id}-static`; orientationKey = 0"
                                 class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                                 <img draggable="false" class="h-[9rem]"
-                                    :src="'/storage/images/icons/classes/bodies/unity/' + b.bodies[gender ? 'female' : 'male'][2].assetId.replace(/\d+$/, n => +n - 1) + '.png'" :alt="'{{ __('barbofus.contentRetro') }} ' + b.name">
+                                    :src="'https://static.barbofus.com/images/icons/classes/bodies/unity/' + b.bodies[gender ? 'female' : 'male'][2].assetId.replace(/\d+$/, n => +n - 1) + '.png'" :alt="'{{ __('barbofus.contentRetro') }} ' + b.name">
                                 <p x-text="'{{ __('barbofus.contentRetro') }} ' + b.name"
                                     class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
                                 </p>
@@ -949,7 +949,7 @@
                             <button type="button" @click="animationName = `AnimStatiqueExploNewAge${b.dofus_id}@1-${b.dofus_id}-static`; orientationKey = 0"
                                 class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                                 <img draggable="false" class="h-[9rem]"
-                                    :src="'/storage/images/icons/classes/bodies/unity/' + b.bodies[gender ? 'female' : 'male'][3].assetId.replace(/\d+$/, n => +n - 1) + '.png'" :alt="'{{ __('barbofus.contentNewAge') }} ' + b.name">
+                                    :src="'https://static.barbofus.com/images/icons/classes/bodies/unity/' + b.bodies[gender ? 'female' : 'male'][3].assetId.replace(/\d+$/, n => +n - 1) + '.png'" :alt="'{{ __('barbofus.contentNewAge') }} ' + b.name">
                                 <p x-text="'{{ __('barbofus.contentNewAge') }} ' + b.name"
                                     class="absolute bottom-0 right-0 z-50 px-2 py-1 text-right transition-all translate-y-1/2 border opacity-0 bg-primary border-secondary whitespace-nowrap w-fit group-hover:opacity-100">
                                 </p>
@@ -1115,7 +1115,7 @@
 
 
                                 <img loading="lazy" draggable="false" height="64" width="64"
-                                    :src="'/storage/' + allItem.icon_path" :alt="allItem.name"
+                                    :src="'https://static.barbofus.com/' + allItem.icon_path" :alt="allItem.name"
                                     class="relative z-10 mt-0 transition-opacity duration-300 delay-100"
                                     @load="loaded = true" x-intersect:enter="intersected = true"
                                     :class="(loaded && intersected) ? 'opacity-100' : 'opacity-0'">
@@ -2459,7 +2459,7 @@
         //import { FFmpeg } from './@ffmpeg/ffmpeg/dist/esm/index.js';
         import {
             FFmpeg
-        } from '/storage/package/@ffmpeg/ffmpeg/dist/esm/index.js';
+        } from 'https://static.barbofus.com/package/@ffmpeg/ffmpeg/dist/esm/index.js';
 
 
         class SkinRenderer {
@@ -2467,7 +2467,7 @@
             static skinRendererProto = null
             static async decodeData(data) {
                 if (!SkinRenderer.skinRendererProto) {
-                    const root = await protobuf.load('/storage/proto/skin.proto')
+                    const root = await protobuf.load('https://static.barbofus.com/proto/skin.proto')
                     SkinRenderer.skinRendererProto = root.lookupType("SkinRenderer")
                 }
                 return SkinRenderer.skinRendererProto.decode(new Uint8Array(data))
@@ -2882,7 +2882,7 @@
                         .replace('bones', 'bones_webp')
                         .replace('.png', '.webp')
 
-                    img.src = '/storage/images/skinator/' + url + textureVersion;
+                    img.src = 'https://static.barbofus.com/images/skinator/' + url + textureVersion;
                 });
 
                 const texture = gl.createTexture();

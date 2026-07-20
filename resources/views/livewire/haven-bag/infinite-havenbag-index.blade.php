@@ -3,7 +3,7 @@
 
     {{-- Aside section--}}
     <div class="w-96 h-[calc(100vh-15vh-4rem)] sticky top-16 overflow-y-scroll p-2 no-scrollbar border-r-2 border-secondary hidden min-[600px]:block">
-        <div class="flex justify-center items-center">
+        <div class="flex items-center justify-center">
             <div class="relative w-10 h-10">
                 <svg class="absolute top-0 left-0 w-10 fill-secondary"
                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -18,17 +18,17 @@
             <div class="mt-8">
                 <p class="text-ivory font-thin text-[1.25rem]">{{ __('barbofus.contentSet') }} :</p>
 
-                <div class="grid grid-cols-2 gap-x-2 gap-y-4 mt-4">
+                <div class="grid grid-cols-2 mt-4 gap-x-2 gap-y-4">
                     @foreach($selectedThemes as $sTheme)
-                        <button class="relative group overflow-hidden h-fit rounded-lg bg-primary-100" wire:click="ToggleTheme({{ $sTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
+                        <button class="relative overflow-hidden rounded-lg group h-fit bg-primary-100" wire:click="ToggleTheme({{ $sTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
                             <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span> {{ ' ' . $sTheme->localized_name }}</p>
-                            <div class="relative aspect-video overflow-hidden">
+                            <div class="relative overflow-hidden aspect-video">
                                 <img src="{{ asset('storage/'. $sTheme->image_path) }}" draggable="false"
                                      alt="Image du havre sac"
                                      class="absolute top-[-25%] h-[150%] w-full object-cover group-hover:top-[-30%] group-hover:h-[160%] transition-all">
                             </div>
-                            <div class="absolute h-full w-full top-0 left-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all text-red-500">
-                                <div class="mx-auto h-full w-fit relative top-0 group-hover:top-1/4 transition-all">
+                            <div class="absolute top-0 left-0 w-full h-full text-red-500 transition-all opacity-0 bg-black/40 group-hover:opacity-100">
+                                <div class="relative top-0 h-full mx-auto transition-all w-fit group-hover:top-1/4">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-[75%] rotate-180 bottom-0">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                     </svg>
@@ -43,17 +43,17 @@
         <div class="mt-8">
             <p class="text-ivory font-thin text-[1.25rem]">{{ __('barbofus.contentUnset') }} :</p>
 
-            <div class="grid grid-cols-2 gap-x-2 gap-y-4 mt-4">
+            <div class="grid grid-cols-2 mt-4 gap-x-2 gap-y-4">
                 @foreach($unselectedThemes as $uTheme)
-                    <button class="relative group overflow-hidden h-fit rounded-lg bg-primary-100" wire:click="ToggleTheme({{ $uTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <button class="relative overflow-hidden rounded-lg group h-fit bg-primary-100" wire:click="ToggleTheme({{ $uTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
                         <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span>{{ ' ' . $uTheme->localized_name }}</p>
-                        <div class="relative aspect-video overflow-hidden">
+                        <div class="relative overflow-hidden aspect-video">
                             <img src="{{ asset('storage/'. $uTheme->image_path) }}" draggable="false"
                                  alt="Image du havre sac"
                                  class="absolute top-[-25%] h-[150%] w-full object-cover group-hover:top-[-30%] group-hover:h-[160%] transition-all">
                         </div>
-                        <div class="absolute h-full w-full top-0 left-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all text-blue-500">
-                            <div class="mx-auto h-full w-fit relative top-1/4 group-hover:top-0 transition-all">
+                        <div class="absolute top-0 left-0 w-full h-full text-blue-500 transition-all opacity-0 bg-black/40 group-hover:opacity-100">
+                            <div class="relative h-full mx-auto transition-all w-fit top-1/4 group-hover:top-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-[75%] bottom-0">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                 </svg>
@@ -70,7 +70,7 @@
         x-data="{
             showHavenBag: {{ isset($initHavenBag[0]) ? 'true' : 'false' }},
             havenBagImagePath: '{{ isset($initHavenBag[0]) ? asset('storage/'). '/'. $initHavenBag[0]->image_path : '' }}',
-            popocketIconPath: '{{ isset($initHavenBag[0]) ? asset('storage/'). '/'. $initHavenBag[0]->popocket_icon_path : '' }}',
+            popocketIconPath: '{{ isset($initHavenBag[0]) ? asset('https://static.barbofus.com/'). '/'. $initHavenBag[0]->popocket_icon_path : '' }}',
             username: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->user_name : '' }}',
             havenBagName: '{{ isset($initHavenBag[0]) ? addslashes($initHavenBag[0]->name) : '' }}',
             havenBagThemeName: '{{ isset($initHavenBag[0]) ? $initHavenBag[0]->haven_bag_theme_name : '' }}',
@@ -104,13 +104,13 @@
         }">
 
 
-        <div class="bg-primary w-full flex justify-center mt-6">
+        <div class="flex justify-center w-full mt-6 bg-primary">
             <a href="{{ route('havre-sacs.create') }}" class="goldGradient px-4 py-2 rounded-md text-primary flex flex-col transition-all items-center text-lg min-[400px]:text-2xl hover:rounded-3xl group hover:brightness-110">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-12">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
 
-                <p class="group-hover:-translate-y-2 transition-all">{{ __('barbofus.buttonPostHS') }}</p>
+                <p class="transition-all group-hover:-translate-y-2">{{ __('barbofus.buttonPostHS') }}</p>
             </a>
         </div>
 
@@ -122,17 +122,17 @@
             @endfor
         @else
             <img class="mt-8 h-[16rem]" height="256" alt="Barbe en pleure" src="{{ asset('storage/images/misc_ui/Barbe_pleure.webp') }}">
-            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} <span class="font-thin italic text-3xl">{{ __('barbofus.contentNoResult') }}</span></p>
+            <p class="text-4xl font-normal">{{ __('barbofus.contentOuch') }} <span class="text-3xl italic font-thin">{{ __('barbofus.contentNoResult') }}</span></p>
         @endif
 
         <template x-if="true">
-            <button class="z-50 bg-black/50 h-screen w-screen fixed top-0 left-0 flex justify-center items-center"
+            <button class="fixed top-0 left-0 z-50 flex items-center justify-center w-screen h-screen bg-black/50"
                     x-show="showHavenBag"
                     @click="
                         showHavenBag = false,
                         EmptyUrl()"
                     x-transition>
-                <div class="group relative shadow-sm bg-primary-100 rounded-xl overflow-hidden transition-all">
+                <div class="relative overflow-hidden transition-all shadow-sm group bg-primary-100 rounded-xl">
                     <div class="flex justify-left items-center relative p-2 h-[clamp(3rem,8vw,6rem)]">
                         <img :src="popocketIconPath" draggable="false" class="h-full aspect-square invisible min-[400px]:visible" alt="Popoche du havre sac">
 
@@ -144,12 +144,12 @@
                                         <p class="slidableTextCenter" x-text="havenBagName">&nbsp</p>
                                     </div>
 
-                                    <div class="flex w-full h-fit items-end overflow-hidden font-thin whitespace-nowrap">
+                                    <div class="flex items-end w-full overflow-hidden font-thin h-fit whitespace-nowrap">
                                         <p class="slidableTextCenter">{{ __('barbofus.contentBy') }} <span class="font-normal text-[calc(clamp(3rem,8vw,6rem)/100*22)]" x-text="username" />&nbsp</p>
                                     </div>
                                 </div>
 
-                                <div class="font-thin text-left flex w-full h-fit pt-1 items-end overflow-hidden whitespace-nowrap">
+                                <div class="flex items-end w-full pt-1 overflow-hidden font-thin text-left h-fit whitespace-nowrap">
                                     <p class="slidableText">{{ __('barbofus.contentTheme') }} : <span class="italic font-light" x-text="'{{ __('barbofus.contentHS') }} ' + havenBagThemeName" />&nbsp</p>
                                 </div>
                             </div>
