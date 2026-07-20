@@ -2459,7 +2459,7 @@
         //import { FFmpeg } from './@ffmpeg/ffmpeg/dist/esm/index.js';
         import {
             FFmpeg
-        } from 'https://static.barbofus.com/package/@ffmpeg/ffmpeg/dist/esm/index.js';
+        } from '/storage/package/@ffmpeg/ffmpeg/dist/esm/index.js';
 
 
         class SkinRenderer {
@@ -2467,7 +2467,8 @@
             static skinRendererProto = null
             static async decodeData(data) {
                 if (!SkinRenderer.skinRendererProto) {
-                    const root = await protobuf.load('https://static.barbofus.com/proto/skin.proto')
+
+                    const root = await protobuf.load('/storage/proto/skin.proto')
                     SkinRenderer.skinRendererProto = root.lookupType("SkinRenderer")
                 }
                 return SkinRenderer.skinRendererProto.decode(new Uint8Array(data))
@@ -2882,6 +2883,7 @@
                         .replace('bones', 'bones_webp')
                         .replace('.png', '.webp')
 
+                    img.crossOrigin = "anonymous";
                     img.src = 'https://static.barbofus.com/images/skinator/' + url + textureVersion;
                 });
 
