@@ -172,6 +172,10 @@
                 const key = event.target.closest('button[data-key]').dataset.key;
                 const id = items[key];
 
+                if(key == 'weapon' && animation === animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
+                    animation = 0;
+                }
+
                 if(key == 'mount')
                 {
                     const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
@@ -972,6 +976,15 @@
                      {
                         items[event.target.dataset.category] = Number(event.target.dataset.id);
 
+                        console.log('trigger')
+
+                        if(items['weapon']) {
+                            animation = animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'));
+                        }
+                        else if(animation === animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
+                            animation = 0;
+                        }
+
                         if(items['pet']) {
                             const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
                             const mount = allItems.find(i => (i.dofus_id === items['mount'] ));
@@ -1518,6 +1531,17 @@
                         ? ['#' . ltrim((string) $skin?->color_guild_1, '#'), '#' . ltrim((string) $skin?->color_guild_2, '#')]
                         : ['#241F1D', '#FAB420'],
                 ) !!},
+                items: {
+                    hat: @json($skin?->hat_id),
+                    cape: @json($skin?->cape_id),
+                    shield: @json($skin?->shield_id),
+                    weapon: @json($skin?->weapon_id),
+                    pet: @json($skin?->pet_id),
+                    shoulderpads: @json($skin?->shoulderpads_id),
+                    wings: @json($skin?->wings_id),
+                    costume: @json($skin?->costume_id),
+                    mount: @json($skin?->mount_id),
+                },
                 animations: [{
                         shortName: @json(__('barbofus.AnimStatic')),
                         name: 'AnimStatiqueExplo0@1-static',
@@ -1537,16 +1561,22 @@
                         orientation: 1
                     },
                     {
-                        shortName: 'Brandir son arme',
-                        name: 'AnimEmoteWeap@AnimEmoteWeap',
-                        frame: 20,
-                        orientation: 0
-                    },
-                    {
                         shortName: @json(__('barbofus.AnimRun')),
                         name: 'Course',
                         frame: 0,
                         orientation: 1
+                    },
+                    {
+                        shortName: 'Défourailler son arme',
+                        name: 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe',
+                        frame: 20,
+                        orientation: 0
+                    },
+                    {
+                        shortName: 'Brandir son arme',
+                        name: 'AnimEmoteWeap@AnimEmoteWeap',
+                        frame: 20,
+                        orientation: 0
                     },
                     {
                         shortName: @json(__('barbofus.AnimEmoteJuggle')),
@@ -1710,17 +1740,6 @@
                 animationName: "",
                 animated: true,
                 cameleon: false,
-                items: {
-                    hat: @json($skin?->hat_id),
-                    cape: @json($skin?->cape_id),
-                    shield: @json($skin?->shield_id),
-                    weapon: @json($skin?->weapon_id),
-                    pet: @json($skin?->pet_id),
-                    shoulderpads: @json($skin?->shoulderpads_id),
-                    wings: @json($skin?->wings_id),
-                    costume: @json($skin?->costume_id),
-                    mount: @json($skin?->mount_id),
-                },
                 previousData: '',
                 previousInvertX: '',
                 openShareUI: false,
@@ -1759,7 +1778,6 @@
                 },
 
                 init() {
-                    console.log(this.breedInfos)
                     if (this.userId > -1) {
                         this.favorites = @json(auth()->user()?->favorites()->pluck('item_id'));
                     } else {
@@ -1791,6 +1809,10 @@
                             this.colors = this.getDefaultColor(this.gender, this.breed);
                         }
                         editURLParam(this.getURLObject())
+                    }
+
+                    if(this.items['weapon']) {
+                        this.animation = this.animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))
                     }
                 },
 

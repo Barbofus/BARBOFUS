@@ -361,18 +361,18 @@ final class updateDBFromDofusFiles
 
             $weaponType = null;
 
-            if ($itemD['typeId'] === 251) {
-                //dd($itemD, $itemsData);
-                foreach ($itemD['possibleEffects'] ?? [] as $effect) {
-                    if (isset($effect['rid'], $itemsByRid[$effect['rid']]['value'])) {
-                        $effectValue = $itemsByRid[$effect['rid']]['value'];
-                        dd($itemD, $effect, $effectValue);
-                        if (array_key_exists($effectValue, $this->typeID)) {
-                            $item['data']['usefulLivingEffect'] = $effectValue;
-                        }
-                    }
-                }
-            }
+            // if ($itemD['typeId'] === 251) {
+            //     //dd($itemD, $itemsData);
+            //     foreach ($itemD['possibleEffects'] ?? [] as $effect) {
+            //         if (isset($effect['rid'], $itemsByRid[$effect['rid']]['value'])) {
+            //             $effectValue = $itemsByRid[$effect['rid']]['value'];
+            //             dd($itemD, $effect, $effectValue);
+            //             if (array_key_exists($effectValue, $this->typeID)) {
+            //                 $item['data']['usefulLivingEffect'] = $effectValue;
+            //             }
+            //         }
+            //     }
+            // }
 
             switch ($itemD['typeId']) {
                 case 2:
@@ -492,7 +492,7 @@ final class updateDBFromDofusFiles
                 }
             }
         }
-        dd($weaponData[0]);
+        //dd($weaponData[0]);
     }
 
     public function updateBreeds(): void

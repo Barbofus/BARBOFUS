@@ -93,16 +93,16 @@ class AdminPanel extends Component
         $this->currentStep = 0;
 
         // Export des fichiers data en json
-        /*$this->getDataRootFiles();
+        $this->getDataRootFiles();
 
         // Export des fichiers lang.bin en json
-        $this->getLangFiles();*/
+        $this->getLangFiles();
 
         // Met à jour avec les fichiers fraichement dl. Return la liste des nouveautés ainsi que les icons à récupèrer
         $this->updateDB();
 
         // Récupèrer les icones des items/mounts/visage
-        /*$this->getIcons();
+        $this->getIcons();
 
         // Récupère les skins / bones de ce que nous avons déjà (heads, breeds, mounts)
         $this->getRootFilesSkins();
@@ -111,7 +111,7 @@ class AdminPanel extends Component
         //$this->exportUpdatedBundles();
 
         // Exporte les nouveaux bundle pour identifier les skins / bones id
-        $this->exportBundleDifference();*/
+        $this->exportBundleDifference();
 
         $this->currentStep = $this->maxStep;
         $this->stepName = 'Mise à jour terminé';
@@ -378,11 +378,11 @@ class AdminPanel extends Component
         $this->stepLog();
 
         $ftpFiles = [
-            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins_webp/'],
-            'skins_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
+            'skins_webp' => ['remoteDestination' => '/home/debian/sites/static.barbofus.com/public/images/skinator/skins_webp/'],
+            'skins_png' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
             'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
-            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones_webp/'],
-            'bones_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
+            'bones_webp' => ['remoteDestination' => '/home/debian/sites/static.barbofus.com/public/images/skinator/bones_webp/'],
+            'bones_png' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
             'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
             'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
         ];
@@ -390,11 +390,11 @@ class AdminPanel extends Component
         foreach ($files as $typeKey => $type) {
             foreach ($type as $file) {
                 if ($typeKey === 'skins') {
-                    $ftpFiles['skins_png']['files'][] = [
+                    $ftpFiles['skins_webp']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.webp',
                         'name' => $file . '.webp',
                     ];
-                    $ftpFiles['skins_png_back']['files'][] = [
+                    $ftpFiles['skins_png']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
                         'name' => $file . '.png',
                     ];
@@ -403,11 +403,11 @@ class AdminPanel extends Component
                         'name' => $file . '.json',
                     ];
                 } elseif ($typeKey === 'bones') {
-                    $ftpFiles['bones_png']['files'][] = [
+                    $ftpFiles['bones_webp']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.webp',
                         'name' => $file . '.webp',
                     ];
-                    $ftpFiles['bones_png_back']['files'][] = [
+                    $ftpFiles['bones_png']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
                         'name' => $file . '.png',
                     ];
@@ -433,11 +433,12 @@ class AdminPanel extends Component
                 continue;
             }
 
-            if (in_array($key, ['skins_png', 'bones_png'])) {
+            (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
+            /*if (in_array($key, ['skins_png', 'bones_png'])) {
                 (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
             } else {
                 (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
-            }
+            }*/
         }
 
         $this->stepName = 'Envoi itemsCache.json serveur o2Switch';
@@ -615,9 +616,9 @@ class AdminPanel extends Component
         $this->stepName = 'X-Secret-Key: ' . config('services.dofus_update_secret');
         $this->stepLog();
 
-        /*Http::withHeaders([
+        Http::withHeaders([
             'X-Secret-Key' => config('services.dofus_update_secret'),
-        ])->post('https://barbofus.com/api/run-update-items');*/
+        ])->post('https://barbofus.com/api/run-update-items');
 
         $this->logIcon = '✅';
         $this->stepLog();
@@ -673,7 +674,8 @@ class AdminPanel extends Component
             ];
         }
 
-        (new uploadToFtp)($files, '/storage/app/public/images/icons/items/');
+        //(new uploadToFtp)($files, '/storage/app/public/images/icons/items/');
+        (new uploadToSsh)($files, '/home/debian/sites/static.barbofus.com/public/images/icons/items/');
 
         $this->stepName = 'Export visage';
         $this->logIcon = '🌱';
@@ -715,7 +717,8 @@ class AdminPanel extends Component
             ];
         }
 
-        (new uploadToFtp)($files, '/storage/app/public/images/icons/classes/faces/unity/');
+        //(new uploadToFtp)($files, '/storage/app/public/images/icons/classes/faces/unity/');
+        (new uploadToSsh)($files, '/home/debian/sites/static.barbofus.com/public/images/icons/classes/faces/unity/');
 
 
 
@@ -761,7 +764,8 @@ class AdminPanel extends Component
             ];
         }
 
-        (new uploadToFtp)($files, '/storage/app/public/images/icons/classes/bodies/unity/');
+        //(new uploadToFtp)($files, '/storage/app/public/images/icons/classes/bodies/unity/');
+        (new uploadToSsh)($files, '/home/debian/sites/static.barbofus.com/public/images/icons/classes/bodies/unity/');
 
         $this->stepName = 'Fin';
         $this->logIcon = '✅';
@@ -829,10 +833,12 @@ class AdminPanel extends Component
             '1-static',
             '2',
             '1-movement',
+            '9582',
             'AnimEmoteJuggle',
             'AnimEmotePaint',
             'AnimEmoteCry',
             'AnimEmoteBunnyhop',
+            'AnimEmoteUnsheathe',
             'AnimEmoteCarnival',
             'AnimEmoteSamourai',
             'AnimEmoteSit',
@@ -1024,11 +1030,11 @@ class AdminPanel extends Component
 
 
         $ftpFiles = [
-            'skins_png' => ['remoteDestination' => '/storage/app/public/images/skinator/skins_webp/'],
-            'skins_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
+            'skins_webp' => ['remoteDestination' => '/home/debian/sites/static.barbofus.com/public/images/skinator/skins_webp/'],
+            'skins_png' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/skins/'],
             'skins_json' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/skins/'],
-            'bones_png' => ['remoteDestination' => '/storage/app/public/images/skinator/bones_webp/'],
-            'bones_png_back' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
+            'bones_webp' => ['remoteDestination' => '/home/debian/sites/static.barbofus.com/public/images/skinator/bones_webp/'],
+            'bones_png' => ['remoteDestination' => '/home/debian/sites/barbofus.com/textures/bones/'],
             'bones_data' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_Data/'],
             'bones_asset' => ['remoteDestination' => '/home/debian/sites/barbofus.com/data/bones/Bones_AssetData/'],
         ];
@@ -1036,11 +1042,11 @@ class AdminPanel extends Component
         foreach ($files as $typeKey => $type) {
             foreach ($type as $file) {
                 if ($typeKey === 'Skins') {
-                    $ftpFiles['skins_png']['files'][] = [
+                    $ftpFiles['skins_webp']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.webp',
                         'name' => $file . '.webp',
                     ];
-                    $ftpFiles['skins_png_back']['files'][] = [
+                    $ftpFiles['skins_png']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/skins/') . $file . '.png',
                         'name' => $file . '.png',
                     ];
@@ -1049,11 +1055,11 @@ class AdminPanel extends Component
                         'name' => $file . '.json',
                     ];
                 } elseif ($typeKey === 'Bones') {
-                    $ftpFiles['bones_png']['files'][] = [
+                    $ftpFiles['bones_webp']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.webp',
                         'name' => $file . '.webp',
                     ];
-                    $ftpFiles['bones_png_back']['files'][] = [
+                    $ftpFiles['bones_png']['files'][] = [
                         'file' => storage_path('app/public/images/skinator/bones/') . $file . '.png',
                         'name' => $file . '.png',
                     ];
@@ -1079,11 +1085,13 @@ class AdminPanel extends Component
                 continue;
             }
 
-            if (in_array($key, ['skins_png', 'bones_png'])) {
+            (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
+
+            /*if (in_array($key, ['skins_png', 'bones_png'])) {
                 (new uploadToFtp)($ftpFile['files'], $ftpFile['remoteDestination']);
             } else {
                 (new uploadToSsh)($ftpFile['files'], $ftpFile['remoteDestination']);
-            }
+            }*/
         }
 
         $this->stepName = 'Envoi itemsCache.json serveur o2Switch';
@@ -1399,6 +1407,11 @@ class AdminPanel extends Component
             'bones' => $bonesBundlesNames,
         ];
 
+        $bundleNames = [
+            'skins' => [],
+            'bones' => [],
+        ];
+
         foreach ($completBundleNames as $key => $category) {
             foreach ($category as $bundle) {
                 $bundleNames[$key][] = [
@@ -1407,11 +1420,6 @@ class AdminPanel extends Component
                 ];
             }
         }
-
-        $bundleNames = [
-            'skins' => [],
-            'bones' => [],
-        ];
 
         $jsonBundles = json_encode($bundleNames, JSON_PRETTY_PRINT);
 
