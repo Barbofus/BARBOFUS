@@ -2468,7 +2468,7 @@
             static async decodeData(data) {
                 if (!SkinRenderer.skinRendererProto) {
 
-                    const root = await protobuf.load('/storage/proto/skin.proto')
+                    const root = await protobuf.load('/storage/proto/skinv2.proto')
                     SkinRenderer.skinRendererProto = root.lookupType("SkinRenderer")
                 }
                 return SkinRenderer.skinRendererProto.decode(new Uint8Array(data))
