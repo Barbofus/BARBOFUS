@@ -976,8 +976,6 @@
                      {
                         items[event.target.dataset.category] = Number(event.target.dataset.id);
 
-                        console.log('trigger')
-
                         if(items['weapon']) {
                             animation = animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'));
                         }
@@ -2596,7 +2594,7 @@
                 const _data = await SkinRenderer.decodeData(data)
                 this.gl.uniform1f(this.uInvertX, invX ? -1 : 1)
 
-                console.log(this.data)
+                //console.log(this.data)
 
                 const textures = []
                 for (const texture of _data.textures) {
@@ -3116,10 +3114,10 @@
                 const width = this.$canvas.width
                 let ratio = width / height
 
-                console.log({
+                /*console.log({
                     maxX,
                     ratio
-                })
+                })*/
 
                 if (ratio < 1) {
                     if (maxX < ratio) {
@@ -3311,9 +3309,16 @@
         })
 
         document.querySelector('#btnShare').addEventListener('click', async (e) => {
+            const skinatorEl = document.querySelector('[x-data="skinator"]');
+            const alpineData = Alpine.$data(skinatorEl);
+
             let data = JSON.parse(skinRenderer.rendererData);
             data.orientation = 1;
-            data.animation = 'Static';
+
+            // Vérifie si un des items équipés est une arme
+            data.animation = alpineData.items['weapon']
+                ? 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'
+                : 'Static';
 
             // Affiche le loader
             const loader = document.getElementById('shareLoader');
@@ -3344,10 +3349,18 @@
 
         window.generateFinalInputImage = async function() {
 
+
+            const skinatorEl = document.querySelector('[x-data="skinator"]');
+            const alpineData = Alpine.$data(skinatorEl);
+
             // Génère l'image
             let data = JSON.parse(skinRenderer.rendererData);
             data.orientation = 1;
-            data.animation = 'Static';
+
+            // Vérifie si un des items équipés est une arme
+            data.animation = alpineData.items['weapon']
+                ? 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'
+                : 'Static';
 
             await UpdateRenderer(JSON.stringify(data, null, 2), false);
 
