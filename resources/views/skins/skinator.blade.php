@@ -176,6 +176,10 @@
                     animation = 0;
                 }
 
+                if(key == 'shield' && items['weapon'] && animation === 0) {
+                    animation = animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'));
+                }
+
                 if(key == 'mount')
                 {
                     const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
@@ -976,10 +980,10 @@
                      {
                         items[event.target.dataset.category] = Number(event.target.dataset.id);
 
-                        if(items['weapon']) {
+                        if(items['weapon'] && animation === 0 && !items['shield']) {
                             animation = animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'));
                         }
-                        else if(animation === animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
+                        else if(!items['weapon'] && animation === animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
                             animation = 0;
                         }
 
@@ -3316,9 +3320,14 @@
             data.orientation = 1;
 
             // Vérifie si un des items équipés est une arme
-            data.animation = alpineData.items['weapon']
-                ? 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'
-                : 'Static';
+            if(alpineData.animation === 0 || alpineData.animation === alpineData.animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
+                data.animation === alpineData.animations[alpineData.animation].name;
+            }
+            else {
+                data.animation = alpineData.items['weapon']
+                    ? 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'
+                    : 'Static';
+            }
 
             // Affiche le loader
             const loader = document.getElementById('shareLoader');
@@ -3358,9 +3367,14 @@
             data.orientation = 1;
 
             // Vérifie si un des items équipés est une arme
-            data.animation = alpineData.items['weapon']
-                ? 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'
-                : 'Static';
+            if(alpineData.animation === 0 || alpineData.animation === alpineData.animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
+                data.animation === alpineData.animations[alpineData.animation].name;
+            }
+            else {
+                data.animation = alpineData.items['weapon']
+                    ? 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'
+                    : 'Static';
+            }
 
             await UpdateRenderer(JSON.stringify(data, null, 2), false);
 
