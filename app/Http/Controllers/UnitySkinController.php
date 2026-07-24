@@ -7,6 +7,7 @@ use App\Actions\Discord\SendDiscordPostedWebhook;
 use App\Actions\Images\ResizeImages;
 use App\Actions\Skins\DeleteSkin;
 use App\Actions\MissSkin\IsMissSkinTime;
+use App\Actions\Skins\IncrementView;
 use App\Http\Middleware\UnitySkinsOwnerShip;
 use App\Http\Requests\StoreUpdateUnitySkinRequest;
 use App\Models\UnitySkin;
@@ -60,13 +61,12 @@ class UnitySkinController extends Controller
             abort(403);
         }
 
-        // Incrémenter les vues détaillées de façon asynchrone
-        dispatch(new \App\Jobs\IncrementViewJob(
+        // Incrémenter les vues détaillées
+        (new IncrementView)(
             $skin->id,
-            'detailed',
             auth()->id(),
             session()->getId()
-        ));
+        );
 
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];
 

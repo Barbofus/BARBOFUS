@@ -1,5 +1,9 @@
 @extends('layouts.basic-views')
 
+@section('meta-image')
+{{ $metaImage ?? asset('storage/images/misc_ui/Barbofus_Meta_image.jpg') }}
+@endsection
+
 @section('content')
     <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">
         {{ str_ends_with(Route::currentRouteName(), 'edit') ? __('barbofus.titleEdit') : 'Skinator' }}</h1>
@@ -454,7 +458,7 @@
 
                                             <button
                                                 class="opacity-0 -z-10 absolute top-0 left-0 h-full w-full border-transparent bg-primary-100 text-inactiveText group-hover:opacity-100 group-hover:translate-x-[calc(100%*2)] hover:text-purple-500 transition-all"
-                                                @click="if (index < colors.length) { colors[index] = getOneRandomColor(); } else { guildColors[index - colors.length] = getOneRandomColor(); } editURLParam(getURLObject()); window.resetDefaultColors()"
+                                                @click="if (index < colors.length) { colors[index] = getOneRandomColor(index); } else { guildColors[index - colors.length] = getOneRandomColor(index); } editURLParam(getURLObject()); window.resetDefaultColors()"
                                                 type="button" title="randomize">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -472,7 +476,7 @@
                         <div class="flex justify-evenly">
 
                             <button type="button"
-                                @click="colors = colors.map(() => getOneRandomColor()); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                @click="colors = colors.map((value, index) => getOneRandomColor(index)); editURLParam(getURLObject()); window.resetDefaultColors()"
                                 class="flex items-center px-4 py-2 mx-auto mt-4 space-x-2 text-lg uppercase transition-all duration-75 rounded-md bg-primary-100 text-inactiveText hover:text-purple-500 hover:rounded-3xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="2.5" stroke="currentColor" class="h-8">
@@ -2217,10 +2221,66 @@
                     return '#FFFFFF';
                 },
 
-                getOneRandomColor() {
-                    const randomDecimal = Math.floor(Math.random() *
-                        0xFFFFFF); // Nombre aléatoire entre 0 et 16777215
-                    return '#' + randomDecimal.toString(16).padStart(6, '0').toUpperCase();
+                hexToRgb(hex) {
+                    hex = hex.replace("#", "");
+
+                    return {
+                        r: parseInt(hex.substring(0, 2), 16),
+                        g: parseInt(hex.substring(2, 4), 16),
+                        b: parseInt(hex.substring(4, 6), 16),
+                    };
+                },
+
+                rgbToHex(r, g, b) {
+                    return (
+                        "#" +
+                        [r, g, b]
+                            .map(c => Math.round(c).toString(16).padStart(2, "0"))
+                            .join("")
+                            .toUpperCase()
+                    );
+                },
+
+                getOneRandomColor(index = 1) {
+                    if(index === 0) {
+                        const skinPalette = [
+                            "#F8E6D0",
+                            "#F2D5B8",
+                            "#E8C39F",
+                            "#D9AE84",
+                            "#C9976D",
+                            "#B88259",
+                            "#A56F49",
+                            "#8D5C3D",
+                            "#734730",
+                            "#5B3725",
+                            "#46291B",
+                            "#321B12"
+                        ];
+
+                        const base = skinPalette[Math.floor(Math.random() * skinPalette.length)];
+
+                        let { r, g, b } = this.hexToRgb(base);
+
+                        // Légère variation (±10)
+                        r += Math.floor(Math.random() * 21) - 10;
+                        g += Math.floor(Math.random() * 21) - 10;
+                        b += Math.floor(Math.random() * 21) - 10;
+
+                        return this.rgbToHex(
+                            Math.max(0, Math.min(255, r)),
+                            Math.max(0, Math.min(255, g)),
+                            Math.max(0, Math.min(255, b))
+                        );
+                    }
+
+                    // Couleur totalement aléatoire pour les autres index
+                    const randomDecimal = Math.floor(Math.random() * 0x1000000);
+
+                    return "#" + randomDecimal
+                        .toString(16)
+                        .padStart(6, "0")
+                        .toUpperCase();
                 },
 
                 getRandomItems() {
@@ -3172,7 +3232,7 @@
         // ==== Exemple Button d'export  ====
         // ======================================================================
         const skinRenderer = new SkinRenderer(document.querySelector('#canvas0'))
-
+		window.__skinator = skinRenderer
         /*const urlData = window.getDataFromURL();
         skinRenderer.setColors(urlData.colors)*/
 
@@ -3249,7 +3309,13 @@
         // ======================================================================
         // ==== Exemple des couleurs ====
         // ======================================================================
-        document.querySelectorAll('input[type="color"]').forEach(input => {
+        async function loadColorInput() {
+			const inputsColor = document.querySelectorAll('input[type="color"]')
+			const inputsTextColor = document.querySelectorAll('input[type="text"][data-color]')
+			if (inputsColor.length < 8 || inputsTextColor.length < 8) {
+				return false
+			}
+			inputsColor.forEach(input => {
             input.addEventListener('input', (e) => {
                 const index = parseInt(e.target.getAttribute('data-color'))
                 const color = parseInt(e.target.value.replace('#', ''), 16)
@@ -3271,17 +3337,29 @@
                 const index = parseInt(e.target.getAttribute('data-color'))
                 skinRenderer.setColorFocusIndex(null)
             });
-        });
+			});
 
-        document.querySelectorAll('input[type="text"][data-color]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.getAttribute('data-color'))
-                const color = parseInt(e.target.value.replace('#', ''), 16)
-                skinRenderer.setColorFocusIndex(null)
-                skinRenderer.setColorIndex(index, color)
-            });
-        });
+			inputsTextColor.forEach(input => {
+				input.addEventListener('input', (e) => {
+					const index = parseInt(e.target.getAttribute('data-color'))
+					const color = parseInt(e.target.value.replace('#', ''), 16)
+					skinRenderer.setColorFocusIndex(null)
+					skinRenderer.setColorIndex(index, color)
+				});
+			});
+			return true
 
+		}
+
+		console.log('loadColorInput')
+		while (true) {
+			const resultOk = await loadColorInput()
+			if (resultOk === true) {
+				break
+			}
+			console.log('Retry loadColorInput')
+			await new Promise((r) => setTimeout(r, 200))
+		}
 
         // ======================================================================
         // ==== Exemple Button d'export  ====
