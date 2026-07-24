@@ -886,6 +886,31 @@
                                 src="{{ asset('https://static.barbofus.com/images/icons/mounts/rhineetle.png') }}" alt="Volkorne">
                         </button>
                     </div>
+
+                    {{-- CHOIX ONGLET ARMES --}}
+                    <div x-show="itemsCurrentTab === 'weapon'" x-transition class="flex h-10 mb-2 space-x-2 font-thin"
+                        @click="if(event.target.closest('button[data-tab]')) { weaponCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
+
+                        @php
+                            $excludedWeaponTypes = [
+                                \App\Enums\WeaponSubcategorieEnum::PIOCHE,
+                                \App\Enums\WeaponSubcategorieEnum::ARME_MAGIQUE,
+                                \App\Enums\WeaponSubcategorieEnum::OUTIL,
+                            ];
+                        @endphp
+
+                        @foreach (\App\Enums\WeaponSubcategorieEnum::cases() as $weaponType)
+                            @continue(in_array($weaponType, $excludedWeaponTypes))
+                            <button type="button" x-cloak data-tab="{{ $weaponType->value }}"
+                                class="w-10 h-full transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
+                                :class="(weaponCurrentTab === '{{ $weaponType->value }}') ? 'border-secondary' : 'border-inactiveText'">
+                                <img :class="(weaponCurrentTab === '{{ $weaponType->value }}') ? 'opacity-100' : 'opacity-60'"
+                                    class="h-full transition-all"
+                                    src="{{ asset('https://static.barbofus.com/images/icons/weapons/' . $weaponType->value . '.png') }}"
+                                    alt="{{ $weaponType->value }}">
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
 
                 {{-- Animation lists --}}
@@ -1055,12 +1080,13 @@
 
                     <template
                         x-for="(allItem, index) in (
-                              searchBar.length >= 3
+                            searchBar.length >= 3
                                 ? filteredItems
                                 : filteredItems.filter(i =>
                                     i.category === itemsCurrentTab &&
-                                    (i.pet_type === petCurrentTab || i.pet_type === null)
-                                  )
+                                    (i.pet_type === petCurrentTab || i.pet_type === null) &&
+                                    (i.weapon_type === weaponCurrentTab || i.weapon_type === null)
+                                )
                             ).slice(0, maxItemVisible)"
                         :key="allItem.dofus_id">
                         <div class="h-fit group">
@@ -1513,6 +1539,7 @@
                 charactersCurrentTab: 'breed',
                 itemsCurrentTab: 'hat',
                 petCurrentTab: 'familier',
+                weaponCurrentTab: 'arc',
                 animationsCurrentTab: 'default',
                 oldGender: 0,
                 oldBreed: 1,
