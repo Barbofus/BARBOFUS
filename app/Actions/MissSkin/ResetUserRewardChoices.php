@@ -22,10 +22,10 @@ final class ResetUserRewardChoices
         // Réinitialiser aussi l'état du concours Miss Skin finalisé
         $this->resetMissSkinContestState();
 
-        \Log::info('Miss Skin reward choices and contest state reset', [
+        /*\Log::info('Miss Skin reward choices and contest state reset', [
             'affected_users' => $affectedRows,
             'reset_time' => now()->toDateTimeString()
-        ]);
+        ]);*/
 
         return $affectedRows;
     }

@@ -38,11 +38,29 @@ final class updateDBFromDofusFiles
     private array $typeID = [];
 
     /**
+     * @var array<int, string>
+     */
+    private array $ceremonialWeaponValues = [];
+
+    /**
      * @return array<string, array<int, mixed>>
      */
     public function __invoke(): array
     {
         $langs = ['fr', 'en', 'es', 'pt'];
+
+        $this->ceremonialWeaponValues = [
+            2   => WeaponSubcategorieEnum::ARC->value,
+            3   => WeaponSubcategorieEnum::BAGUETTE->value,
+            4   => WeaponSubcategorieEnum::BATON->value,
+            5   => WeaponSubcategorieEnum::DAGUE->value,
+            6   => WeaponSubcategorieEnum::EPEE->value,
+            7   => WeaponSubcategorieEnum::MARTEAU->value,
+            8   => WeaponSubcategorieEnum::PELLE->value,
+            19  => WeaponSubcategorieEnum::HACHE->value,
+            22  => WeaponSubcategorieEnum::FAUX->value,
+            271 => WeaponSubcategorieEnum::LANCE->value,
+        ];
 
         $this->typeID = [
             16  => ['cat' => ItemCategorieEnum::HAT->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Chapeau
@@ -323,19 +341,19 @@ final class updateDBFromDofusFiles
     public function updateItems(): void
     {
 
-        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
+        $itemsDataBrut = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             dd('erreur json : ' . json_last_error_msg());
         }
 
-        $itemsData = array_filter($itemsData, function ($item) {
+        $itemsData = array_filter($itemsDataBrut, function ($item) {
             return isset($item['data']['typeId']) && isset($this->typeID[$item['data']['typeId']]);
         });
 
         // Indexe les items par leur ID pour un accès rapide
         $itemsByRid = [];
-        foreach ($itemsData as $item) {
+        foreach ($itemsDataBrut as $item) {
             if (isset($item['rid'])) {
                 $itemsByRid[$item['rid']] = $item['data'] ?? [];
             }
@@ -345,6 +363,7 @@ final class updateDBFromDofusFiles
         $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
 
         $weaponData = [];
+        $values = [];
 
         foreach ($itemsData as $item) {
             $itemD = $item['data'];
@@ -361,18 +380,24 @@ final class updateDBFromDofusFiles
 
             $weaponType = null;
 
-            // if ($itemD['typeId'] === 251) {
-            //     //dd($itemD, $itemsData);
-            //     foreach ($itemD['possibleEffects'] ?? [] as $effect) {
-            //         if (isset($effect['rid'], $itemsByRid[$effect['rid']]['value'])) {
-            //             $effectValue = $itemsByRid[$effect['rid']]['value'];
-            //             dd($itemD, $effect, $effectValue);
-            //             if (array_key_exists($effectValue, $this->typeID)) {
-            //                 $item['data']['usefulLivingEffect'] = $effectValue;
-            //             }
-            //         }
-            //     }
-            // }
+
+            if ($itemD['typeId'] === 251) {
+
+                foreach ($itemD['possibleEffects'] ?? [] as $pEffect) {
+                    $rid = $pEffect['rid'];
+
+                    if (isset($rid, $itemsByRid[$rid]['value'])) {
+                        $effect = $itemsByRid[$rid];
+
+                        if ($effect['effectId'] != 1179) {
+                            continue;
+                        }
+
+                        $weaponType = $this->ceremonialWeaponValues[$effect['value']];
+                        break;
+                    }
+                }
+            }
 
             switch ($itemD['typeId']) {
                 case 2:
@@ -492,7 +517,6 @@ final class updateDBFromDofusFiles
                 }
             }
         }
-        //dd($weaponData[0]);
     }
 
     public function updateBreeds(): void

@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/run-update-items', function (Request $request) {
-    \Illuminate\Support\Facades\Log::info('Start /api/run-update-items');
+    //\Illuminate\Support\Facades\Log::info('Start /api/run-update-items');
     if (app()->environment('local')) {
         return Response::json(['error' => 'Not allowed in this environment'], 403);
     }
@@ -29,14 +29,14 @@ Route::post('/run-update-items', function (Request $request) {
     $providedKey = $request->header('X-Secret-Key');
     $expectedKey = config('services.dofus_update_secret');
 
-    Log::info('Provide X-Secret-Key...', ['providedKey' => $providedKey, 'expectedKey' => $expectedKey]);
+    //Log::info('Provide X-Secret-Key...', ['providedKey' => $providedKey, 'expectedKey' => $expectedKey]);
     if ($providedKey !== $expectedKey) {
         return Response::json(['error' => 'Unauthorized'], 401);
     }
 
-    Log::info('Calling artisan...');
+    //Log::info('Calling artisan...');
     Artisan::call('update:dofus-items');
-    Log::info('Artisan output', ['output' => Artisan::output()]);
+    //Log::info('Artisan output', ['output' => Artisan::output()]);
 
     return Response::json([
         'success' => true,

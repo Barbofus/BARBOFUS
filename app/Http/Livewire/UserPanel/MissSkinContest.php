@@ -83,13 +83,13 @@ class MissSkinContest extends Component
         dd('setTop called', ['skinId' => $skinId, 'position' => $position, 'current_selectedTop3' => $this->selectedTop3]);
 
         if (!in_array($position, ['top1', 'top2', 'top3'])) {
-            \Log::warning('Invalid position', ['position' => $position]);
+            //\Log::warning('Invalid position', ['position' => $position]);
             return;
         }
 
         // Toggle logic: if already selected at this position, remove it
         if ($this->selectedTop3[$position] == $skinId) {
-            \Log::info('Removing from position (toggle)', ['position' => $position, 'skinId' => $skinId]);
+            //\Log::info('Removing from position (toggle)', ['position' => $position, 'skinId' => $skinId]);
             $this->selectedTop3[$position] = null;
             $this->checkCanFinalize();
             return;
@@ -98,16 +98,16 @@ class MissSkinContest extends Component
         // Remove from other positions if already selected
         foreach ($this->selectedTop3 as $pos => $selectedId) {
             if ($selectedId == $skinId && $pos !== $position) {
-                \Log::info('Removing from other position', ['old_position' => $pos, 'new_position' => $position, 'skinId' => $skinId]);
+                //\Log::info('Removing from other position', ['old_position' => $pos, 'new_position' => $position, 'skinId' => $skinId]);
                 $this->selectedTop3[$pos] = null;
             }
         }
 
-        \Log::info('Setting new top', ['position' => $position, 'skinId' => $skinId]);
+        //\Log::info('Setting new top', ['position' => $position, 'skinId' => $skinId]);
         $this->selectedTop3[$position] = $skinId;
         $this->checkCanFinalize();
 
-        \Log::info('Final selectedTop3 state', ['selectedTop3' => $this->selectedTop3]);
+        //\Log::info('Final selectedTop3 state', ['selectedTop3' => $this->selectedTop3]);
     }
 
     public function removeFromTop(string $position): void

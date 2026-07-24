@@ -93,16 +93,16 @@ class AdminPanel extends Component
         $this->currentStep = 0;
 
         // Export des fichiers data en json
-        $this->getDataRootFiles();
+        /*$this->getDataRootFiles();
 
         // Export des fichiers lang.bin en json
-        $this->getLangFiles();
+        $this->getLangFiles();*/
 
         // Met à jour avec les fichiers fraichement dl. Return la liste des nouveautés ainsi que les icons à récupèrer
         $this->updateDB();
 
         // Récupèrer les icones des items/mounts/visage
-        $this->getIcons();
+        /*$this->getIcons();
 
         // Récupère les skins / bones de ce que nous avons déjà (heads, breeds, mounts)
         $this->getRootFilesSkins();
@@ -111,7 +111,7 @@ class AdminPanel extends Component
         //$this->exportUpdatedBundles();
 
         // Exporte les nouveaux bundle pour identifier les skins / bones id
-        $this->exportBundleDifference();
+        $this->exportBundleDifference();*/
 
         $this->currentStep = $this->maxStep;
         $this->stepName = 'Mise à jour terminé';
