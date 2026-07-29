@@ -1005,7 +1005,79 @@
                 </div>
 
                 {{-- Liste des items --}}
-                <div x-on:change="handleCategoryChange($event)" class="overflow-auto flex flex-wrap gap-2 justify-left max-h-[25rem] min-[700px]:max-h-[60rem] min-[1249px]:max-h-[32rem]">
+                <div x-on:change="
+                    if (event.target.matches('input[type=radio]'))
+                    {
+                        items[event.target.dataset.category] = Number(event.target.dataset.id);
+
+                        if(items['weapon'] && animation === 0 && !items['shield']) {
+                            animation = animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'));
+                        }
+                        else if(!items['weapon'] && animation === animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
+                            animation = 0;
+                        }
+
+                        if(items['pet']) {
+                            const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
+                            const mount = allItems.find(i => (i.dofus_id === items['mount'] ));
+
+                            if(event.target.dataset.category == 'pet')
+                            {
+                                if(harn != null)
+                                {
+                                    if(mount != null) {
+                                        const id = items['mount'];
+                                        const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                        if (radio) radio.checked = false;
+                                    }
+
+                                    const id = {
+                                        dragodinde: 1,
+                                        muldo: 2,
+                                        volkorne: 3,
+                                    }
+                                    items['mount'] = id[harn.pet_type];
+                                    const radio = document.querySelector(`input[type='radio'][data-id='${id[harn.pet_type]}']`);
+
+                                    if (radio) radio.checked = true;
+                                }
+                            }
+
+
+                            if(event.target.dataset.category == 'pet' && harn == null && items['mount'] != null)
+                            {
+                                const id = items['mount'];
+                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                if (radio) radio.checked = false;
+
+                                items['mount'] = null;
+                            }
+
+                            if(event.target.dataset.category == 'mount' && harn == null && items['pet'] != null)
+                            {
+                                const id = items['pet'];
+                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                if (radio) radio.checked = false;
+
+                                items['pet'] = null;
+                            }
+
+                            if(event.target.dataset.category == 'mount' && harn)
+                            {
+                                const id = items['pet'];
+                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
+
+                                if (radio) radio.checked = false;
+
+                                items['pet'] = null;
+                            }
+                        }
+
+                        editURLParam(getURLObject());
+                    }" class="overflow-auto flex flex-wrap gap-2 justify-left max-h-[25rem] min-[700px]:max-h-[60rem] min-[1249px]:max-h-[32rem]">
 
                     <template x-for="(allItem, index) in (
                             searchBar.length >= 3
@@ -1871,81 +1943,6 @@
                     } else {
                         LocalFavorites.remove(id);
                         this.favorites = LocalFavorites.get();
-                    }
-                },
-
-                handleCategoryChange($event) {
-                    if (event.target.matches('input[type=radio]'))
-                    {
-                        items[event.target.dataset.category] = Number(event.target.dataset.id);
-
-                        if(items['weapon'] && animation === 0 && !items['shield']) {
-                            animation = animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'));
-                        }
-                        else if(!items['weapon'] && animation === animations.findIndex(i => (i.name === 'AnimEmoteUnsheathe_Statique@AnimEmoteUnsheathe'))) {
-                            animation = 0;
-                        }
-
-                        if(items['pet']) {
-                            const harn = allItems.find(i => (i.dofus_id === items['pet'] && ['dragodinde', 'muldo', 'volkorne'].includes(i.pet_type)));
-                            const mount = allItems.find(i => (i.dofus_id === items['mount'] ));
-
-                            if(event.target.dataset.category == 'pet')
-                            {
-                                if(harn != null)
-                                {
-                                    if(mount != null) {
-                                        const id = items['mount'];
-                                        const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
-
-                                        if (radio) radio.checked = false;
-                                    }
-
-                                    const id = {
-                                        dragodinde: 1,
-                                        muldo: 2,
-                                        volkorne: 3,
-                                    }
-                                    items['mount'] = id[harn.pet_type];
-                                    const radio = document.querySelector(`input[type='radio'][data-id='${id[harn.pet_type]}']`);
-
-                                    if (radio) radio.checked = true;
-                                }
-                            }
-
-
-                            if(event.target.dataset.category == 'pet' && harn == null && items['mount'] != null)
-                            {
-                                const id = items['mount'];
-                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
-
-                                if (radio) radio.checked = false;
-
-                                items['mount'] = null;
-                            }
-
-                            if(event.target.dataset.category == 'mount' && harn == null && items['pet'] != null)
-                            {
-                                const id = items['pet'];
-                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
-
-                                if (radio) radio.checked = false;
-
-                                items['pet'] = null;
-                            }
-
-                            if(event.target.dataset.category == 'mount' && harn)
-                            {
-                                const id = items['pet'];
-                                const radio = document.querySelector(`input[type='radio'][data-id='${id}']`);
-
-                                if (radio) radio.checked = false;
-
-                                items['pet'] = null;
-                            }
-                        }
-
-                        editURLParam(getURLObject());
                     }
                 },
 
