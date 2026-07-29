@@ -62,7 +62,7 @@
                                 {{ (old('haven_bag_theme_id')) ? ((old('haven_bag_theme_id') == $hbTheme->id) ? 'checked' : '') : (isset($havenBag) ? (($havenBag['haven_bag_theme_id'] == $hbTheme->id) ? 'checked' : '') : (($hbTheme->id == 1) ? 'checked' : '')) }}>
                             <label for="haven_bag_theme_id_{{ $hbTheme->id }}" id="label_haven_bag_theme_id_{{ $hbTheme->id }}"
                                    onclick="setSelection({{ $hbTheme->id }})"
-                                   @keydown.enter="selection = {{ $hbTheme->id }}, showSort = false"
+                                   x-on:keydown.enter="selection = {{ $hbTheme->id }}, showSort = false"
                                    class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
                                 <img src="{{ $hbTheme->popocket_icon_path }}" class="h-11 aspect-square">
                                 <p>{{ $hbTheme->localized_name }}</p>

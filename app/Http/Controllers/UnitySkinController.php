@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\Discord\GetDiscordUserInfo;
 use App\Actions\Discord\SendDiscordPostedWebhook;
 use App\Actions\Images\ResizeImages;
-use App\Actions\Skins\DeleteSkin;
 use App\Actions\MissSkin\IsMissSkinTime;
+use App\Actions\Skins\DeleteSkin;
 use App\Actions\Skins\IncrementView;
 use App\Http\Middleware\UnitySkinsOwnerShip;
 use App\Http\Requests\StoreUpdateUnitySkinRequest;
@@ -56,7 +56,7 @@ class UnitySkinController extends Controller
         // Vérifier l'autorisation pour les skins MissSkin
         if (
             $skin->status === 'MissSkin' &&
-            ($skin->user_id !== auth()->id() && !auth()->user()?->hasRole('Administrateur'))
+            ($skin->user_id !== auth()->id() && ! auth()->user()?->hasRole('Administrateur'))
         ) {
             abort(403);
         }
@@ -64,7 +64,7 @@ class UnitySkinController extends Controller
         // Incrémenter les vues détaillées
         (new IncrementView)(
             $skin->id,
-            auth()->id(),
+            auth()->id() !== null ? (string) auth()->id() : null,
             session()->getId()
         );
 
@@ -112,28 +112,28 @@ class UnitySkinController extends Controller
             ->when(true, function (Builder $query) {
                 foreach ($this->itemCategories as $category) {
                     $query->addSelect([
-                        $category . '_name' => DB::table('localized_items')
+                        $category.'_name' => DB::table('localized_items')
                             ->select('name')
                             ->where('locale', app()->getLocale())
-                            ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
+                            ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                             ->take(1),
                     ])
                         ->addSelect([
-                            $category . '_icon' => DB::table('items')
+                            $category.'_icon' => DB::table('items')
                                 ->select('icon_path')
-                                ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
+                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $category . '_level' => DB::table('items')
+                            $category.'_level' => DB::table('items')
                                 ->select('level')
-                                ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
+                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                                 ->take(1),
                         ])
                         ->addSelect([
-                            $category . '_subname' => DB::table('items')
+                            $category.'_subname' => DB::table('items')
                                 ->select('subcategory')
-                                ->whereColumn('dofus_id', 'unity_skins.' . $category . '_id')
+                                ->whereColumn('dofus_id', 'unity_skins.'.$category.'_id')
                                 ->take(1),
                         ]);
                 }
@@ -173,8 +173,8 @@ class UnitySkinController extends Controller
             ->get()->toArray();
 
         foreach ($races as $race) {
-            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
-            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
+            $race->ghost_icon_path = asset('storage\/'.$race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/'.$race->colored_icon_path);
         }
 
         return view('unity-skins.create', [
@@ -190,7 +190,7 @@ class UnitySkinController extends Controller
         // Resize de l'image, on affichera que 200px max
         $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
             'width' => 300,
-            'height' => 500
+            'height' => 500,
         ]); // 390
 
         $skin = UnitySkin::create([
@@ -226,7 +226,7 @@ class UnitySkinController extends Controller
         /*if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
         } else {*/
-        //(new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
+        // (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
         // }
 
         return redirect()->route('user-dashboard.index', 'section=my-unity-skins');
@@ -249,8 +249,8 @@ class UnitySkinController extends Controller
             ->get()->toArray();
 
         foreach ($races as $race) {
-            $race->ghost_icon_path = asset('storage\/' . $race->ghost_icon_path);
-            $race->colored_icon_path = asset('storage\/' . $race->colored_icon_path);
+            $race->ghost_icon_path = asset('storage\/'.$race->ghost_icon_path);
+            $race->colored_icon_path = asset('storage\/'.$race->colored_icon_path);
         }
 
         return view('unity-skins.edit', [
@@ -273,7 +273,7 @@ class UnitySkinController extends Controller
             // Resize de l'image, on affichera que 200px max
             $imagePath = (new ResizeImages)($request->image_path, 'images/skins', [
                 'width' => 300,
-                'height' => 500
+                'height' => 500,
             ]);
         }
 
@@ -309,7 +309,7 @@ class UnitySkinController extends Controller
         /*if (! Gate::check('validate-skin')) {
             (new SendDiscordPendingWebhook)(config('app.pending_webhook_url'), $skin);
         } else {*/
-        //(new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
+        // (new SendDiscordPostedWebhook)(config('app.posted_webhook_url'), $skin, true);
         // }
 
         return redirect()->route('user-dashboard.index', 'section=my-unity-skins');
@@ -325,7 +325,7 @@ class UnitySkinController extends Controller
 
         (new DeleteSkin)($skinID, true);
 
-        session()->flash('alert-message', __('barbofus.alertDeleteSkin', ['skin' => (($skin->name) ?: 'ID#' . $skinID), 'username' => $skinUserName]));
+        session()->flash('alert-message', __('barbofus.alertDeleteSkin', ['skin' => (($skin->name) ?: 'ID#'.$skinID), 'username' => $skinUserName]));
 
         return redirect()->route('unity-skins.index');
     }

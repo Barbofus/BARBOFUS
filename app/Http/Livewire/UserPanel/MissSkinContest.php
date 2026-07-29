@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\UserPanel;
 
-use App\Models\UnitySkin;
-use App\Models\UnityReward;
+use App\Actions\Discord\SendDiscordMissSkinWebhook;
+use App\Http\Controllers\SkinatorController;
 use App\Models\RewardPrice;
 use App\Models\SkinWinner;
-use App\Http\Controllers\SkinatorController;
-use App\Actions\Discord\SendDiscordMissSkinWebhook;
+use App\Models\UnityReward;
+use App\Models\UnitySkin;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -15,12 +15,31 @@ use Livewire\Component;
 
 class MissSkinContest extends Component
 {
-
     public string $currentTheme = '';
+
+    /**
+     * Undocumented variable
+     *
+     * @var array<string, int|null>
+     */
     public array $selectedTop3 = ['top1' => null, 'top2' => null, 'top3' => null];
+
     public bool $showConfirmFinalize = false;
+
     public bool $contestFinalized = false;
+
+    /**
+     * Undocumented variable
+     *
+     * @var array<int, array<string, mixed>>
+     */
     public array $finalizedWinners = [];
+
+    /**
+     * Undocumented variable
+     *
+     * @var int[]
+     */
     public array $skinOrder = [];
 
     public function mount(): void
@@ -37,18 +56,23 @@ class MissSkinContest extends Component
         $contestSkins = UnitySkin::where('status', 'MissSkin')
             ->with(['user'])
             ->get()
-            ->sortBy(fn($skin) => ($pos = array_search($skin->id, $this->skinOrder)) !== false ? $pos : PHP_INT_MAX)
+            ->sortBy(fn ($skin) => ($pos = array_search($skin->id, $this->skinOrder)) !== false ? $pos : PHP_INT_MAX)
             ->values();
 
         return view('livewire.user-panel.miss-skin-contest', [
-            'contestSkins' => $contestSkins
+            'contestSkins' => $contestSkins,
         ]);
     }
 
     public function updateTheme(): void
     {
         $missSkinData = ['theme' => $this->currentTheme];
-        Storage::disk('local')->put('json/missskin.json', json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        $json = json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        if (! $json) {
+            return;
+        }
+
+        Storage::disk('local')->put('json/missskin.json', $json);
 
         $this->dispatchBrowserEvent('theme-updated');
     }
@@ -68,6 +92,11 @@ class MissSkinContest extends Component
         $this->dispatchBrowserEvent('skin-deleted');
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param  array<string, mixed>  $selectedTops
+     */
     public function syncTops(array $selectedTops): void
     {
         // Synchroniser les tops sélectionnés depuis le frontend
@@ -80,34 +109,33 @@ class MissSkinContest extends Component
 
     public function setTop(int $skinId, string $position): void
     {
-        dd('setTop called', ['skinId' => $skinId, 'position' => $position, 'current_selectedTop3' => $this->selectedTop3]);
-
-        if (!in_array($position, ['top1', 'top2', 'top3'])) {
-            //\Log::warning('Invalid position', ['position' => $position]);
+        if (! in_array($position, ['top1', 'top2', 'top3'])) {
+            // \Log::warning('Invalid position', ['position' => $position]);
             return;
         }
 
         // Toggle logic: if already selected at this position, remove it
         if ($this->selectedTop3[$position] == $skinId) {
-            //\Log::info('Removing from position (toggle)', ['position' => $position, 'skinId' => $skinId]);
+            // \Log::info('Removing from position (toggle)', ['position' => $position, 'skinId' => $skinId]);
             $this->selectedTop3[$position] = null;
             $this->checkCanFinalize();
+
             return;
         }
 
         // Remove from other positions if already selected
         foreach ($this->selectedTop3 as $pos => $selectedId) {
             if ($selectedId == $skinId && $pos !== $position) {
-                //\Log::info('Removing from other position', ['old_position' => $pos, 'new_position' => $position, 'skinId' => $skinId]);
+                // \Log::info('Removing from other position', ['old_position' => $pos, 'new_position' => $position, 'skinId' => $skinId]);
                 $this->selectedTop3[$pos] = null;
             }
         }
 
-        //\Log::info('Setting new top', ['position' => $position, 'skinId' => $skinId]);
+        // \Log::info('Setting new top', ['position' => $position, 'skinId' => $skinId]);
         $this->selectedTop3[$position] = $skinId;
         $this->checkCanFinalize();
 
-        //\Log::info('Final selectedTop3 state', ['selectedTop3' => $this->selectedTop3]);
+        // \Log::info('Final selectedTop3 state', ['selectedTop3' => $this->selectedTop3]);
     }
 
     public function removeFromTop(string $position): void
@@ -120,7 +148,7 @@ class MissSkinContest extends Component
 
     public function finalizeContest(): void
     {
-        if (!$this->canFinalize()) {
+        if (! $this->canFinalize()) {
             return;
         }
 
@@ -135,7 +163,7 @@ class MissSkinContest extends Component
                     $winnerData = [
                         'skin' => $skin,
                         'rank' => $rankMapping[$position],
-                        'position' => $position
+                        'position' => $position,
                     ];
 
                     // Pour le gagnant top1, récupérer sa récompense sélectionnée
@@ -164,7 +192,7 @@ class MissSkinContest extends Component
         // Créer les SkinWinner (pour l'affichage)
         foreach ($winners as $index => $winner) {
             $skin = $winner['skin'];
-            $newPath = 'images/winners/winner_' . ($index + 3) . '_' . time() . '.png';
+            $newPath = 'images/winners/winner_'.($index + 3).'_'.time().'.png';
 
             if (Storage::exists($skin->image_path)) {
                 Storage::copy($skin->image_path, $newPath);
@@ -204,7 +232,7 @@ class MissSkinContest extends Component
 
     private function loadCurrentTheme(): void
     {
-        $controller = new SkinatorController();
+        $controller = new SkinatorController;
         $this->currentTheme = $controller->GetMissSkinTheme();
     }
 
@@ -215,15 +243,21 @@ class MissSkinContest extends Component
 
     private function canFinalize(): bool
     {
-        return !empty($this->selectedTop3['top1']) &&
-            !empty($this->selectedTop3['top2']) &&
-            !empty($this->selectedTop3['top3']);
+        return ! empty($this->selectedTop3['top1']) &&
+            ! empty($this->selectedTop3['top2']) &&
+            ! empty($this->selectedTop3['top3']);
     }
 
     private function resetContest(): void
     {
         $missSkinData = ['theme' => 'A définir'];
-        Storage::disk('local')->put('json/missskin.json', json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        $json = json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+        if (! $json) {
+            return;
+        }
+
+        Storage::disk('local')->put('json/missskin.json', $json);
 
         $this->currentTheme = 'A définir';
         $this->selectedTop3 = ['top1' => null, 'top2' => null, 'top3' => null];
@@ -268,9 +302,15 @@ class MissSkinContest extends Component
         $missSkinData = array_merge($currentData, [
             'contest_finalized' => $this->contestFinalized,
             'finalized_winners' => $this->finalizedWinners,
-            'updated_at' => now()->toISOString()
+            'updated_at' => now()->toISOString(),
         ]);
 
-        File::put($missSkinPath, json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        $json = json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+        if (! $json) {
+            return;
+        }
+
+        File::put($missSkinPath, $json);
     }
 }

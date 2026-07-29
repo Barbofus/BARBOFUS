@@ -28,7 +28,7 @@
                 {{-- S'il s'agit de notre propre skin, nous empêche de le liker --}}
                 <x-skins.likes :skin="$skin" :canLike="false" />
             @else
-                <button aria-label="Aimer un skin" @click="SwitchLike">
+                <button aria-label="Aimer un skin" x-on:click="SwitchLike">
                     <x-skins.likes :skin="$skin" :canLike="true" />
                 </button>
             @endif

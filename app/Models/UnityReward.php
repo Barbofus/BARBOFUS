@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $rank
  * @property int $points
  * @property-read \App\Models\UnitySkin|null $Skin
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|UnityReward newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UnityReward newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UnityReward query()
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|UnityReward wherePoints($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UnityReward whereRank($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UnityReward whereUnitySkinId($value)
+ *
  * @mixin \Eloquent
  */
 class UnityReward extends Model

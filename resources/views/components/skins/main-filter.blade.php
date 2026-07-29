@@ -2,7 +2,7 @@
     showFilter: (window.innerWidth > 1500),
     showLive: (window.innerHeight > 700),
 }"
-    @resize.window="
+    x-on:resize.window="
               if(window.innerWidth > 1500) showFilter = true;
               showLive=!(window.innerWidth <= 1500 && showFilter);"
     :class="showFilter ?
@@ -19,7 +19,7 @@
     <div class="flex py-3 items-end justify-center transition-all duration-150 group
               max-[1500px]:cursor-pointer max-[1500px]:bg-primary-100 max-[1500px]:w-[16rem] max-[1500px]:rounded-lg max-[1500px]:shadow-md
               min-[1501px]:justify-start min-[1501px]:pl-10 min-[1501px]:h-[4rem]"
-        @click="if(window.innerWidth <= 1500) {showFilter = !showFilter; if(window.innerHeight > 700) showLive = !showFilter}">
+        x-on:click="if(window.innerWidth <= 1500) {showFilter = !showFilter; if(window.innerHeight > 700) showLive = !showFilter}">
         <div class="flex items-center transition-all duration-150"
             :class="showFilter ? 'max-[1500px]:group-hover:-translate-y-1' : 'max-[1500px]:group-hover:translate-y-1'">
             <div class="relative w-6 h-6 min-[1501px]:w-10 min-[1501px]:h-10">
@@ -202,10 +202,10 @@
                     class="font-thin text-secondary text-[1.15rem]">{{ __('barbofus.labelColors') }}</label>
                 <div class="w-10 h-10 border-2 rounded border-inactiveText" :style="{ background: color }">
                     <input id="color" type="color" x-model="color" class="w-full h-full opacity-0 cursor-pointer"
-                        @change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'}), AddParamToUrl('color', color)">
+                        x-on:change="$wire.updateFilterColor(color), window.scrollTo({top: 0, behavior: 'smooth'}), AddParamToUrl('color', color)">
                 </div>
                 <button aria-label="Réinitialiser les couleurs"
-                    @click="window.scrollTo({top: 0, behavior: 'smooth'}), color = '#000000', RemoveParamUrl('color')"
+                    x-on:click="window.scrollTo({top: 0, behavior: 'smooth'}), color = '#000000', RemoveParamUrl('color')"
                     wire:click="resetFilterColor"
                     class="text-primary font-light text-lg py-1 px-4 bg-secondary rounded-lg hover:rounded-2xl transition-all hover:bg-secondary-100 {{ $filterColor == '' ? 'hidden' : '' }}">Reset</button>
             </div>

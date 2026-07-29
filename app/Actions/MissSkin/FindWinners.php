@@ -7,7 +7,6 @@ namespace App\Actions\MissSkin;
 use App\Actions\Discord\SendDiscordMissSkinWebhook;
 use App\Models\Reward;
 use App\Models\RewardPrice;
-use App\Models\Skin;
 use App\Models\SkinWinner;
 use App\Models\UnityReward;
 use Carbon\Carbon;

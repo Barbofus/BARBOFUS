@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \App\Models\Item|null $shield
  * @property-read \App\Models\Item|null $shoulderPads
  * @property-read \App\Models\Item|null $wings
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin query()
@@ -74,6 +75,46 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereWingsId($value)
+ *
+ * @property int|null $weapon_id
+ * @property int $body
+ * @property int $chunk_views
+ * @property int $detailed_views
+ * @property int|null $total_views
+ * @property int|null $color_cloth_1_hue
+ * @property int|null $color_cloth_1_saturation
+ * @property int|null $color_cloth_1_lightness
+ * @property int|null $color_cloth_2_hue
+ * @property int|null $color_cloth_2_saturation
+ * @property int|null $color_cloth_2_lightness
+ * @property int|null $color_cloth_3_hue
+ * @property int|null $color_cloth_3_saturation
+ * @property int|null $color_cloth_3_lightness
+ * @property int|null $color_cloth_4_hue
+ * @property int|null $color_cloth_4_saturation
+ * @property int|null $color_cloth_4_lightness
+ * @property-read \App\Models\Item|null $weapon
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereChunkViews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth1Hue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth1Lightness($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth1Saturation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth2Hue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth2Lightness($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth2Saturation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth3Hue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth3Lightness($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth3Saturation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth4Hue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth4Lightness($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorCloth4Saturation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorGuild1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereColorGuild2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereDetailedViews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereTotalViews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UnitySkin whereWeaponId($value)
+ *
  * @mixin \Eloquent
  */
 class UnitySkin extends Model
@@ -89,9 +130,9 @@ class UnitySkin extends Model
                 if ($skin->isDirty($color)) {
                     $hsl = $computeColorHsl($skin->$color);
                     if ($hsl !== null) {
-                        $skin->{$color . '_hue'} = $hsl['hue'];
-                        $skin->{$color . '_saturation'} = $hsl['saturation'];
-                        $skin->{$color . '_lightness'} = $hsl['lightness'];
+                        $skin->{$color.'_hue'} = $hsl['hue'];
+                        $skin->{$color.'_saturation'} = $hsl['saturation'];
+                        $skin->{$color.'_lightness'} = $hsl['lightness'];
                     }
                 }
             }

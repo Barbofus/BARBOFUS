@@ -180,7 +180,7 @@ return [
     'contentLikesReceived' => 'curtidas recebidas',
     'contentLikesGiven' => 'curtidas dadas',
     'contentFavoritesReceived' => 'favoritos recebidos',
-    'contentFavoritesGiven'    => 'favoritos adicionados',
+    'contentFavoritesGiven' => 'favoritos adicionados',
     'contentSkinPosted' => 'aparências postadas',
     'contentRegistered' => 'Regsitrado',
     'contentVictory' => 'vitória(s)',

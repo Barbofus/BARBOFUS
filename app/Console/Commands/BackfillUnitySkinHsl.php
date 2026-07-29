@@ -53,18 +53,18 @@ class BackfillUnitySkinHsl extends Command
                 $hsl4 = $computeHsl($skin->color_cloth_4);
 
                 DB::table('unity_skins')->where('id', $skin->id)->update([
-                    'color_cloth_1_hue'        => $hsl1['hue'] ?? null,
-                    'color_cloth_1_saturation'  => $hsl1['saturation'] ?? null,
-                    'color_cloth_1_lightness'   => $hsl1['lightness'] ?? null,
-                    'color_cloth_2_hue'        => $hsl2['hue'] ?? null,
-                    'color_cloth_2_saturation'  => $hsl2['saturation'] ?? null,
-                    'color_cloth_2_lightness'   => $hsl2['lightness'] ?? null,
-                    'color_cloth_3_hue'        => $hsl3['hue'] ?? null,
-                    'color_cloth_3_saturation'  => $hsl3['saturation'] ?? null,
-                    'color_cloth_3_lightness'   => $hsl3['lightness'] ?? null,
-                    'color_cloth_4_hue'        => $hsl4['hue'] ?? null,
-                    'color_cloth_4_saturation'  => $hsl4['saturation'] ?? null,
-                    'color_cloth_4_lightness'   => $hsl4['lightness'] ?? null,
+                    'color_cloth_1_hue' => $hsl1['hue'] ?? null,
+                    'color_cloth_1_saturation' => $hsl1['saturation'] ?? null,
+                    'color_cloth_1_lightness' => $hsl1['lightness'] ?? null,
+                    'color_cloth_2_hue' => $hsl2['hue'] ?? null,
+                    'color_cloth_2_saturation' => $hsl2['saturation'] ?? null,
+                    'color_cloth_2_lightness' => $hsl2['lightness'] ?? null,
+                    'color_cloth_3_hue' => $hsl3['hue'] ?? null,
+                    'color_cloth_3_saturation' => $hsl3['saturation'] ?? null,
+                    'color_cloth_3_lightness' => $hsl3['lightness'] ?? null,
+                    'color_cloth_4_hue' => $hsl4['hue'] ?? null,
+                    'color_cloth_4_saturation' => $hsl4['saturation'] ?? null,
+                    'color_cloth_4_lightness' => $hsl4['lightness'] ?? null,
                 ]);
 
                 $processed++;

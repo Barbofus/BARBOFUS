@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -16,16 +16,16 @@ return new class extends Migration
             $table->index(['user_id', 'created_at']);
 
             // Index simples (vérifiés)
-            if (!$this->indexExists('unity_skins', 'unity_skins_status_index')) {
+            if (! $this->indexExists('unity_skins', 'unity_skins_status_index')) {
                 $table->index('status');
             }
-            if (!$this->indexExists('unity_skins', 'unity_skins_race_id_index')) {
+            if (! $this->indexExists('unity_skins', 'unity_skins_race_id_index')) {
                 $table->index('race_id');
             }
-            if (!$this->indexExists('unity_skins', 'unity_skins_gender_index')) {
+            if (! $this->indexExists('unity_skins', 'unity_skins_gender_index')) {
                 $table->index('gender');
             }
-            if (!$this->indexExists('unity_skins', 'unity_skins_created_at_index')) {
+            if (! $this->indexExists('unity_skins', 'unity_skins_created_at_index')) {
                 $table->index('created_at');
             }
 

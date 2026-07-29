@@ -175,7 +175,7 @@ return [
     'contentLikesReceived' => 'likes reçus',
     'contentLikesGiven' => 'likes donnés',
     'contentFavoritesReceived' => 'favoris reçus',
-    'contentFavoritesGiven'    => 'favoris ajoutés',
+    'contentFavoritesGiven' => 'favoris ajoutés',
     'contentSkinPosted' => 'skins postés',
     'contentRegistered' => 'Inscrit',
     'contentVictory' => 'victoire(s)',

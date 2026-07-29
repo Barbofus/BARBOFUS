@@ -26,7 +26,7 @@ class LoginResponse implements LoginResponseContract
 
                 $parsed = parse_url($redirect);
 
-                if (!$parsed || !isset($parsed['host'])) {
+                if (! $parsed || ! isset($parsed['host'])) {
                     abort(403);
                 }
 
@@ -42,7 +42,7 @@ class LoginResponse implements LoginResponseContract
                 }
 
                 // Autorise sous-domaines
-                if (str_ends_with($host, '.' . $baseDomain)) {
+                if (str_ends_with($host, '.'.$baseDomain)) {
                     $isAllowed = true;
                 }
 
@@ -51,7 +51,7 @@ class LoginResponse implements LoginResponseContract
                     $isAllowed = true;
                 }
 
-                if (!$isAllowed) {
+                if (! $isAllowed) {
                     abort(403, 'Invalid redirect host');
                 }
 
@@ -68,6 +68,6 @@ class LoginResponse implements LoginResponseContract
 
         auth()->logout();
 
-        return redirect()->route('verification.notice', ['id' => $id]);
+        return redirect()->route('verification.notice.show', ['id' => $id]);
     }
 }

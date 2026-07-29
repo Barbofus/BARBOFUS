@@ -49,7 +49,7 @@
 
                                         <!-- Bouton semaine précédente (Admin seulement) -->
                                         @if (auth()->check() && auth()->user()->can('admin-access'))
-                                            <button @click="changeWeek('prev')"
+                                            <button x-on:click="changeWeek('prev')"
                                                 class="flex items-center justify-center w-6 h-6 ml-1 transition-opacity duration-200 rounded-full opacity-0 group-hover:opacity-100 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="2" stroke="currentColor" class="w-3 h-3">
@@ -61,7 +61,7 @@
 
                                         <!-- Bouton semaine suivante (Admin seulement) -->
                                         @if (auth()->check() && auth()->user()->can('admin-access'))
-                                            <button @click="changeWeek('next')"
+                                            <button x-on:click="changeWeek('next')"
                                                 class="flex items-center justify-center w-6 h-6 mr-1 transition-opacity duration-200 rounded-full opacity-0 group-hover:opacity-100 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="2" stroke="currentColor" class="w-3 h-3">

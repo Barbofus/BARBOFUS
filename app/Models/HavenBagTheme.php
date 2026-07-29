@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HavenBag> $havenBags
  * @property-read int|null $haven_bags_count
  * @property-read \App\Models\LocalizedHavenBagTheme|null $localizedName
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBagTheme newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBagTheme newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBagTheme query()
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBagTheme whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBagTheme wherePopocketIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBagTheme whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class HavenBagTheme extends Model

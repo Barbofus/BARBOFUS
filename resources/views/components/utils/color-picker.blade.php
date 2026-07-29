@@ -1,7 +1,7 @@
 <div x-data="colorPicker('#ffffff'), isHexDragging = false, isHueDragging = false"
      :class="showPicker ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-90 pointer-events-none'"
      x-cloak
-     @mousedown.away="showPicker = false"
+     x-on:mousedown.away="showPicker = false"
      x-on:show-color-picker.window="showColorPicker($event)"
      :style="{ top: inputPosition.y + 'px', left: inputPosition.x + 'px' }"
      class="absolute w-52 translate-y-2 bg-primary-100 shadow-lg rounded-lg z-50 transition-[scale, opacity] duration-300"
@@ -9,9 +9,9 @@
     <div class="relative z-10 h-32 cursor-pointer select-none"
          id="color-picker-hex"
          :style="{ background: 'hsl(' + hue + ', 100%, 50%)'}"
-         @mousedown="isHexDragging = true; pickColor($event); $event.preventDefault()"
-         @mouseup.window="if(isHexDragging) updateColor(); if(isHexDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex }); isHexDragging = false"
-         @mousemove.window="if(isHexDragging) pickColor($event)">
+         x-on:mousedown="isHexDragging = true; pickColor($event); $event.preventDefault()"
+         x-on:mouseup.window="if(isHexDragging) updateColor(); if(isHexDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex }); isHexDragging = false"
+         x-on:mousemove.window="if(isHexDragging) pickColor($event)">
         <div class="absolute pointer-events-none inset-0 bg-gradient-to-r from-white to-transparent"></div>
         <div class="absolute pointer-events-none inset-0 bg-gradient-to-t from-black to-transparent"></div>
 
@@ -23,9 +23,9 @@
     <!-- Barre de teinte -->
     <div class="h-4 relative select-none"
          id="color-picker-hue"
-         @mousedown="isHueDragging = true, pickHue($event); $event.preventDefault()"
-         @mouseup.window="if(isHueDragging) updateColor(); if(isHueDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex }); isHueDragging = false"
-         @mousemove.window="if(isHueDragging) pickHue($event)">
+         x-on:mousedown="isHueDragging = true, pickHue($event); $event.preventDefault()"
+         x-on:mouseup.window="if(isHueDragging) updateColor(); if(isHueDragging) $dispatch('color-picked', { hex: selectedHex, cindex: cindex }); isHueDragging = false"
+         x-on:mousemove.window="if(isHueDragging) pickHue($event)">
         <svg width="208" height="24" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="Gradient1">
@@ -142,12 +142,12 @@
     <!-- Input Hexadécimal -->
     <input type="text" x-model="selectedHex" maxlength="7"
            class="w-full mt-2 p-2 text-xl bg-primary-100 text-center focus:outline-none"
-           @input="updateFromHex(); $dispatch('color-picked', { hex: selectedHex, cindex: cindex })">
+           x-on:input="updateFromHex(); $dispatch('color-picked', { hex: selectedHex, cindex: cindex })">
 
     <div class="flex">
         <!-- Bouton randomize -->
         <button type="button"
-                @click="randomizeColor(); $dispatch('color-picked', { hex: selectedHex, cindex: cindex })"
+                x-on:click="randomizeColor(); $dispatch('color-picked', { hex: selectedHex, cindex: cindex })"
                 class="w-full text-primary bg-inactiveText text-xl p-2 group hover:bg-purple-500 transition-all duration-75">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-8 mx-auto group-hover:rotate-45 group-hover:scale-110 group-active:scale-90 transition-all duration-75">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -156,7 +156,7 @@
 
         <!-- Bouton copier -->
         <button type="button"
-                @click="copyHex, copy = '{{ __('barbofus.contentCopied') }}'"
+                x-on:click="copyHex, copy = '{{ __('barbofus.contentCopied') }}'"
                 class="w-full text-primary text-xl p-2 transition-all"
                 :class="copy ? 'bg-secondary' : 'goldGradient hover:tracking-wider'"
                 x-text="copy ? copy : '{{ __('barbofus.contentCopy') }}'" />

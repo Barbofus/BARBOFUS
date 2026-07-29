@@ -54,7 +54,7 @@
             x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-90"
-            @click.outside="openShareUI = false; $refs.btnShare.disabled = false;"
+            x-on:click.outside="openShareUI = false; $refs.btnShare.disabled = false;"
             class="absolute p-4 shadow-[rgba(0,_0,_0,_0.5)_0px_0px_70px_4px] rounded-lg bg-primary top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
             <img id="previsu-img" src="" height="500" width="300" alt="Render" style="opacity: 0"
                 class="mx-auto transition-all">
@@ -82,7 +82,7 @@
                 </button>
 
                 {{-- Annuler --}}
-                <button @click="openShareUI = false; $refs.btnShare.disabled = false;" type="button"
+                <button x-on:click="openShareUI = false; $refs.btnShare.disabled = false;" type="button"
                     class="relative px-5 py-3 text-lg font-normal uppercase transition-all rounded-lg text-primary bg-gradient-to-tr from-red-700 to-red-500 hover:brightness-110 hover:tracking-widest focus:brightness-75">
                     <p class="absolute left-0 w-full text-center">{{ __('barbofus.buttonCancel') }}</p>
                     <p class="tracking-widest opacity-0">{{ __('barbofus.buttonCancel') }}</p>
@@ -92,7 +92,7 @@
             @if ($isMissSkinTime)
                 {{-- Miss Skin --}}
                 <div class="flex justify-center mt-4" x-transition>
-                    <div class="flex items-center gap-3 cursor-pointer" @click="useForMissSkin = !useForMissSkin">
+                    <div class="flex items-center gap-3 cursor-pointer" x-on:click="useForMissSkin = !useForMissSkin">
                         <button id="use_for_miss_skin" type="button"
                             class="w-[1.125rem] h-[1.125rem] border rounded-[3px] bg-anthraciteLit border-1 border-ivory flex-shrink-0 relative">
 
@@ -101,7 +101,7 @@
                                 :class="useForMissSkin ? 'opacity-100' : 'opacity-0'">
                         </button>
 
-                        <label for="use_for_miss_skin" @click="useForMissSkin = !useForMissSkin"
+                        <label for="use_for_miss_skin" x-on:click="useForMissSkin = !useForMissSkin"
                             class="text-lg font-thin cursor-pointer text-secondary whitespace-nowrap">
                             Utiliser pour Miss'Skin
                         </label>
@@ -168,7 +168,7 @@
 
         {{--    ITEMS ACTUELS    --}}
         <div class="flex h-24 my-2 space-x-4 overflow-auto"
-            @click="if(event.target.closest('button[data-key]')) {
+            x-on:click="if(event.target.closest('button[data-key]')) {
                 const key = event.target.closest('button[data-key]').dataset.key;
                 const id = items[key];
 
@@ -238,7 +238,7 @@
 
                     {{-- CHOIX ONGLET --}}
                     <div class="text-md min-[1600px]:text-xl h-12 font-thin flex justify-evenly"
-                        @click="if(event.target.closest('button[data-tab]')) { charactersCurrentTab = event.target.closest('button[data-tab]').dataset.tab; }">
+                        x-on:click="if(event.target.closest('button[data-tab]')) { charactersCurrentTab = event.target.closest('button[data-tab]').dataset.tab; }">
                         <button type="button" class="w-1/3 uppercase" data-tab="breed"
                             :class="(charactersCurrentTab === 'breed') ? 'font-medium border-b-4 border-secondary' :
                             'border-b-2 border-inactiveText'">{{ __('barbofus.contentBreed') }}</button>
@@ -256,7 +256,7 @@
                     {{--      Choix sexe      --}}
                     <p class="mt-4 mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinGender') }}</p>
                     <div class="flex mx-auto gap-x-4 w-fit"
-                        @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); gender = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
+                        x-on:change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); gender = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
                         <div>
                             <input id="male" type="radio" name="gender" value="0" class="hidden peer"
                                 :checked="gender === 0">
@@ -292,7 +292,7 @@
                         <p class="mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinClass') }}</p>
 
                         <div class="flex flex-wrap items-center justify-center gap-2"
-                            @change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
+                            x-on:change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
                             <template x-for="breedInfo in breedInfos" :key="breedInfo.dofus_id">
                                 <div>
                                     <input :id="'breed_' + breedInfo.dofus_id" type="radio" name="race_id"
@@ -317,7 +317,7 @@
                         <p class="mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinFace') }}</p>
 
                         <div class="flex flex-wrap items-center justify-center gap-2"
-                            @change="if (event.target.matches('input[type=radio]')) { head = Number(event.target.value); editURLParam(getURLObject()); }">
+                            x-on:change="if (event.target.matches('input[type=radio]')) { head = Number(event.target.value); editURLParam(getURLObject()); }">
                             <template x-for="breedHead in breedHeads" :key="breedHead.id">
                                 <div>
                                     <input :id="'head_' + breedHead.id" type="radio" name="face"
@@ -344,7 +344,7 @@
                         <p class="mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinBody') }}</p>
 
                         <div class="grid items-center justify-center grid-cols-3 gap-2"
-                            @change="if (event.target.matches('input[type=radio]')) { body = Number(event.target.value); editURLParam(getURLObject()); }">
+                            x-on:change="if (event.target.matches('input[type=radio]')) { body = Number(event.target.value); editURLParam(getURLObject()); }">
                             <template x-for="breedBody in breedBodies" :key="breedBody.id">
                                 <div>
                                     <input :id="'body_' + breedBody.id" type="radio" name="body"
@@ -370,13 +370,13 @@
 
                         {{--      Choix couleur      --}}
                         <div class="flex flex-wrap justify-evenly"
-                            @click="if(event.target.closest('button[data-copy]')) {
+                            x-on:click="if(event.target.closest('button[data-copy]')) {
                                 const index = parseInt(event.target.closest('button[data-copy]').dataset.copy);
                                 const colorValue = index < colors.length ? colors[index] : guildColors[index - colors.length];
                                 copyToClipboard(colorValue.slice(1), 'hex' + index);
                             }"
-                            @change="editURLParam(getURLObject())"
-                            @input="if(event.target.closest('input[data-color]'))
+                            x-on:change="editURLParam(getURLObject())"
+                            x-on:input="if(event.target.closest('input[data-color]'))
                              {
                                 const index = parseInt(event.target.closest('input[data-color]').dataset.color);
                                 newColor = '#' + event.target.closest('input[data-color]').value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
@@ -434,7 +434,7 @@
 
                                             <button
                                                 class="absolute top-0 left-0 w-full h-full transition-all border-transparent opacity-0 -z-10 bg-primary-100 text-inactiveText group-hover:opacity-100 group-hover:translate-x-full hover:text-red-500"
-                                                @click="if (index < colors.length) { colors[index] = getOneDefaultColor(gender, breed, index); } else { guildColors[index - colors.length] = index === 6 ? '#241F1D' : '#FAB420'; } editURLParam(getURLObject()); window.resetDefaultColors()"
+                                                x-on:click="if (index < colors.length) { colors[index] = getOneDefaultColor(gender, breed, index); } else { guildColors[index - colors.length] = index === 6 ? '#241F1D' : '#FAB420'; } editURLParam(getURLObject()); window.resetDefaultColors()"
                                                 type="button" title="reset">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -446,7 +446,7 @@
 
                                             <button
                                                 class="opacity-0 -z-10 absolute top-0 left-0 h-full w-full border-transparent bg-primary-100 text-inactiveText group-hover:opacity-100 group-hover:translate-x-[calc(100%*2)] hover:text-purple-500 transition-all"
-                                                @click="if (index < colors.length) { colors[index] = getOneRandomColor(); } else { guildColors[index - colors.length] = getOneRandomColor(); } editURLParam(getURLObject()); window.resetDefaultColors()"
+                                                x-on:click="if (index < colors.length) { colors[index] = getOneRandomColor(); } else { guildColors[index - colors.length] = getOneRandomColor(); } editURLParam(getURLObject()); window.resetDefaultColors()"
                                                 type="button" title="randomize">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -464,7 +464,7 @@
                         <div class="flex justify-evenly">
 
                             <button type="button"
-                                @click="colors = colors.map(() => getOneRandomColor()); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                x-on:click="colors = colors.map(() => getOneRandomColor()); editURLParam(getURLObject()); window.resetDefaultColors()"
                                 class="flex items-center px-4 py-2 mx-auto mt-4 space-x-2 text-lg uppercase transition-all duration-75 rounded-md bg-primary-100 text-inactiveText hover:text-purple-500 hover:rounded-3xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="2.5" stroke="currentColor" class="h-8">
@@ -476,7 +476,7 @@
                             </button>
 
                             <button type="button"
-                                @click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetDefaultColors()"
+                                x-on:click="colors = getDefaultColor(gender, breed); editURLParam(getURLObject()); window.resetDefaultColors()"
                                 class="flex items-center px-4 py-2 mx-auto mt-4 space-x-2 text-xl uppercase transition-all duration-75 rounded-md bg-primary-100 text-inactiveText hover:text-red-500 hover:rounded-3xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="2.5" stroke="currentColor" class="h-8">
@@ -546,7 +546,7 @@
                         </div>
 
                         {{-- Render --}}
-                        <canvas @click="if(!showAnimationList) { animated = !animated }"
+                        <canvas x-on:click="if(!showAnimationList) { animated = !animated }"
                             class="cursor-pointer canvas-renderer" title="Cliquez pour activer/désactiver l'animation"
                             x-ref="canvas" id="canvas0" width="300px" height="500px"></canvas>
 
@@ -574,7 +574,7 @@
                     {{-- Zone sous skins / Orientation / Animation --}}
                     <div class="flex items-center mx-auto space-x-8 justify-evenly w-fit">
                         <button type="button" class="group"
-                            @click="orientationKey++; if(orientationKey >= possibleOrientation[animations[animation].orientation].length) orientationKey = 0">
+                            x-on:click="orientationKey++; if(orientationKey >= possibleOrientation[animations[animation].orientation].length) orientationKey = 0">
                             <img loading="lazy"
                                 src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}"
                                 class="transition-all group-hover:-translate-y-1 h-14 group-active:translate-y-0 group-active:scale-90">
@@ -583,7 +583,7 @@
                         {{-- Choix anim exploration / combat --}}
                         <button type="button" title="Exploration / Combat"
                             class="relative p-1 uppercase transition-all rounded-md group bg-secondary text-primary hover:rounded-3xl"
-                            @click="showAnimationList = !showAnimationList">
+                            x-on:click="showAnimationList = !showAnimationList">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="h-8">
                                 <path fill-rule="evenodd"
@@ -593,7 +593,7 @@
                         </button>
 
                         <button type="button" class="group"
-                            @click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animations[animation].orientation].length - 1">
+                            x-on:click="orientationKey--; if(orientationKey < 0) orientationKey = possibleOrientation[animations[animation].orientation].length - 1">
                             <img loading="lazy"
                                 src="{{ asset('storage/images/misc_ui/btn_skinator_orientation_arrow.png') }}"
                                 class="transition-all group-hover:-translate-y-1 h-14 -scale-x-100 group-active:translate-y-0 group-active:scale-y-90 group-active:-scale-x-90">
@@ -616,7 +616,7 @@
 
                             {{-- Bouton Copier --}}
                             <button type="button" id="btnCopyImg" title="Copie image"
-                                @click="copyToClipboard('test', 'finalSkin')"
+                                x-on:click="copyToClipboard('test', 'finalSkin')"
                                 :class="copy === 'finalSkin' ? 'bg-secondary text-primary' :
                                     'bg-primary-100 hover:bg-primary hover:border-secondary'"
                                 class="p-2 transition-all border-2 border-transparent rounded-lg">
@@ -649,7 +649,7 @@
 
                         {{-- Bouton Copy link --}}
                         <div class="flex justify-end w-full">
-                            <button type="button" @click="copyToClipboard(window.location.href, 'url')"
+                            <button type="button" x-on:click="copyToClipboard(window.location.href, 'url')"
                                 x-text="copy === 'url' ? '{{ __('barbofus.contentCopied') }}' : '{{ __('barbofus.contentCopy') }} URL'"
                                 :class="copy === 'url' ? 'bg-secondary text-primary' :
                                     'bg-primary-100 hover:bg-primary hover:border-secondary'"
@@ -661,7 +661,7 @@
                         <div class="flex justify-start w-full">
                             <button disabled x-ref="btnShare" type="button" id="btnShare"
                                 class="g-recaptcha relative px-5 min-[600px]:px-8 py-3 text-lg font-normal text-primary goldGradient rounded-lg hover:enabled:brightness-110 hover:enabled:tracking-widest disabled:cursor-not-allowed disabled:grayscale transition-all focus:brightness-75 uppercase"
-                                @click="openShareUI = true; $refs.btnShare.disabled = true;">
+                                x-on:click="openShareUI = true; $refs.btnShare.disabled = true;">
                                 <p class="absolute left-0 w-full text-center">
                                     {{ str_ends_with(Route::currentRouteName(), 'edit') ? __('barbofus.buttonModify') : __('barbofus.buttonShare') }}
                                 </p>
@@ -679,7 +679,7 @@
 
                 {{-- CHOIX ONGLET --}}
                 <div class="text-md min-[1600px]:text-xl h-fit font-thin flex flex-wrap gap-y-2 justify-evenly"
-                    @click="if(event.target.closest('button[data-tab]')) { itemsCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
+                    x-on:click="if(event.target.closest('button[data-tab]')) { itemsCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
 
                     @foreach ($itemCategories as $category)
                         <button type="button" data-tab="{{ $category }}" class="flex-grow px-2 uppercase truncate"
@@ -695,11 +695,11 @@
                         class="relative flex items-center space-x-2 mb-2 h-full w-[16rem] mr-6 bg-primary-100 rounded-md py-2">
                         <input maxlength="64" id="skinator-search" type="text"
                             placeholder="{{ __('barbofus.contentRefineSearch') }}" x-model="searchBar"
-                            x-ref="skinatorSearchInput" @input="updateFilteredItems"
+                            x-ref="skinatorSearchInput" x-on:input="updateFilteredItems"
                             class="pl-4 rounded-md focus:outline-none placeholder-inactiveText bg-primary-100" />
 
                         <button type="button" x-cloak
-                            @click="searchBar = ''; $refs.skinatorSearchInput.focus(); updateFilteredItems()"
+                            x-on:click="searchBar = ''; $refs.skinatorSearchInput.focus(); updateFilteredItems()"
                             class="relative w-6 h-6" for="skinator-search">
                             <svg :class="searchBar.length === 0 ? 'visible' : 'invisible'"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -720,7 +720,7 @@
                     <div class="flex mb-2 mr-6 space-x-2">
 
                         {{-- election items aléatoire --}}
-                        <button type="button" x-cloak title="Randomize items" @click="getRandomItems()"
+                        <button type="button" x-cloak title="Randomize items" x-on:click="getRandomItems()"
                             class="w-10 h-10 transition-all border-2 rounded-md text-md bg-primary-100 border-inactiveText text-inactiveText hover:text-secondary hover:border-secondary">
                             <img src="{{ asset('storage/images/misc_ui/simple_dice.png') }}" alt="Skin Aléatoire"
                                 height="32" width="32" draggable="false"
@@ -739,13 +739,13 @@
                                     backgroundColor: 'transparent'
                                 }">
                             <input type="color" title="Item filter" x-model="searchColor"
-                                @change="updateFilteredItems()" class="w-full h-full opacity-0 cursor-pointer">
+                                x-on:change="updateFilteredItems()" class="w-full h-full opacity-0 cursor-pointer">
                         </div>
 
                         <button
                             class="absolute top-0 left-0 w-full h-full transition-all border-transparent opacity-0 -z-10 bg-primary-100 text-inactiveText hover:text-red-500"
                             :class="searchColor ? 'group-hover:translate-x-full group-hover:opacity-100' : ''"
-                            @click="searchColor = null; updateFilteredItems()" type="button" title="reset">
+                            x-on:click="searchColor = null; updateFilteredItems()" type="button" title="reset">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                 stroke="currentColor" class="mx-auto h-7">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -758,7 +758,7 @@
 
                         {{-- Show colorable --}}
                         <button type="button" x-cloak title="Show only colorable"
-                            @click="showOnlyColorable = !showOnlyColorable; updateFilteredItems()"
+                            x-on:click="showOnlyColorable = !showOnlyColorable; updateFilteredItems()"
                             class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
                             :class="showOnlyColorable ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyColorable ? 'opacity-100' : 'opacity-60 grayscale'"
@@ -768,7 +768,7 @@
 
                         {{-- Show Mimisymbic --}}
                         <button type="button" x-cloak title="Show only mimisymbic"
-                            @click="showOnlyMimisymbic = !showOnlyMimisymbic; updateFilteredItems()"
+                            x-on:click="showOnlyMimisymbic = !showOnlyMimisymbic; updateFilteredItems()"
                             class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
                             :class="showOnlyMimisymbic ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyMimisymbic ? 'opacity-100' : 'opacity-60 grayscale'"
@@ -779,7 +779,7 @@
 
                         {{-- Show Ceremonial --}}
                         <button type="button" x-cloak title="Show only ceremonial"
-                            @click="showOnlyCeremonial = !showOnlyCeremonial; updateFilteredItems()"
+                            x-on:click="showOnlyCeremonial = !showOnlyCeremonial; updateFilteredItems()"
                             class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
                             :class="showOnlyCeremonial ? 'border-secondary' : 'border-inactiveText'">
                             <img :class="showOnlyCeremonial ? 'opacity-100' : 'opacity-60 grayscale'"
@@ -789,7 +789,7 @@
                         </button>
 
                         <button type="button" x-cloak title="Show only favorite"
-                            @click="showOnlyFavorite = !showOnlyFavorite; updateFilteredItems()"
+                            x-on:click="showOnlyFavorite = !showOnlyFavorite; updateFilteredItems()"
                             class="w-10 h-10 transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
                             :class="showOnlyFavorite ? 'border-secondary text-secondary' :
                                 'border-inactiveText text-inactiveText'">
@@ -804,7 +804,7 @@
 
                     {{-- CHOIX ONGLET FAMILIER --}}
                     <div x-show="itemsCurrentTab === 'pet'" x-transition class="flex h-10 mb-2 space-x-2 font-thin"
-                        @click="if(event.target.closest('button[data-tab]')) { petCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
+                        x-on:click="if(event.target.closest('button[data-tab]')) { petCurrentTab = event.target.closest('button[data-tab]').dataset.tab; maxItemVisible = 96; if(searchBar != '') { searchBar = ''; updateFilteredItems(); } }">
 
                         <button type="button" x-cloak data-tab="familier"
                             class="w-10 h-full transition-all border-2 rounded-md bg-primary-100 hover:border-secondary"
@@ -849,11 +849,11 @@
                 </div>
 
                 {{-- Animation lists --}}
-                <div x-show="showAnimationList" x-transition x-cloak @click.outside="showAnimationList = false"
+                <div x-show="showAnimationList" x-transition x-cloak x-on:click.outside="showAnimationList = false"
                     class="h-[35rem] rounded border-2 border-secondary p-4 pb-8 w-full overflow-auto z-30 top-20 left-0 absolute flex flex-wrap gap-4 gap-y-6 bg-primary">
 
                     <template x-for="(a, index) in animations" :key="index">
-                        <button type="button" @click="animation = index; orientationKey = 0"
+                        <button type="button" x-on:click="animation = index; orientationKey = 0"
                             class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                             <img draggable="false" class="h-[9rem]"
                                 :src="'{{ asset('https://static.barbofus.com/images/icons/anims/') }}/' + a.name + '.png'" alt="a.shortName">
@@ -863,7 +863,7 @@
                         </button>
                     </template>
 
-                    <button type="button" @click="showAnimationList = false"
+                    <button type="button" x-on:click="showAnimationList = false"
                         class="absolute w-12 h-12 transition-all text-inactiveText hover:text-red-500 hover:scale-110 top-2 right-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" class="size-6">
@@ -874,7 +874,7 @@
 
                 {{-- Liste des items --}}
                 <div class="overflow-auto flex flex-wrap gap-2 justify-left max-h-[25rem] min-[700px]:max-h-[60rem] min-[1249px]:max-h-[32rem]"
-                    @change="if (event.target.matches('input[type=radio]'))
+                    x-on:change="if (event.target.matches('input[type=radio]'))
                      {
                         items[event.target.dataset.category] = Number(event.target.dataset.id);
 
@@ -986,7 +986,7 @@
                                     class="h-4 w-4 min-[1501px]:h-6 min-[1501px]:w-6 absolute top-0 right-0 p-0 min-[1501px]:top-1 min-[1501px]:right-1 transition-all z-20"
                                     :class="favorites.includes(allItem.dofus_id) ? 'text-secondary' :
                                         'text-inactiveText opacity-0 group-hover:opacity-100'"
-                                    @click="SwitchFavorite(allItem.dofus_id)">
+                                    x-on:click="SwitchFavorite(allItem.dofus_id)">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                         class="absolute top-0 z-10 transition-all hover:brightness-125">
                                         <path fill-rule="evenodd"
@@ -1023,7 +1023,7 @@
                                 <img loading="lazy" draggable="false" height="64" width="64"
                                     :src="'/storage/' + allItem.icon_path" :alt="allItem.name"
                                     class="relative z-10 mt-0 transition-opacity duration-300 delay-100"
-                                    @load="loaded = true" x-intersect:enter="intersected = true"
+                                    x-on:load="loaded = true" x-intersect:enter="intersected = true"
                                     :class="(loaded && intersected) ? 'opacity-100' : 'opacity-0'">
 
                             </label>
@@ -1036,7 +1036,7 @@
                         'invisible'"
                     :disabled="maxItemVisible >= filteredItems.filter(i => i.category === itemsCurrentTab).length"
                     class="px-6 py-2 mx-auto my-4 transition-all rounded-md w-fit group bg-secondary text-primary hover:rounded-lg"
-                    @click="maxItemVisible += 4800">
+                    x-on:click="maxItemVisible += 4800">
                     <p class="group-hover:-translate-y-0.5 transition-all">{{ __('barbofus.contentLoadMore') }}</p>
                 </button>
             </div>

@@ -124,10 +124,10 @@
                 {{-- Choix du sexe --}}
                 <div>
                     <p class="text-xl ml-10 font-light">{{ __('barbofus.labelSkinGender') }}</p>
-                    <div class="flex gap-x-4" @input="updateHeads()">
+                    <div class="flex gap-x-4" x-on:input="updateHeads()">
 
                         <div>
-                            <input id="male" name="gender" type="radio" value="0" class="hidden peer" checked @click="currentGender = 0">
+                            <input id="male" name="gender" type="radio" value="0" class="hidden peer" checked x-on:click="currentGender = 0">
                             <label for="male" class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-full" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
                                 </svg>
@@ -136,7 +136,7 @@
                         </div>
 
                         <div>
-                            <input id="female" name="gender" type="radio" value="1" class="hidden peer" @click="currentGender = 1"
+                            <input id="female" name="gender" type="radio" value="1" class="hidden peer" x-on:click="currentGender = 1"
                                 {{ (old('gender')) ? ((old('gender') == 1) ? 'checked' : '') : (isset($skin) ? (($skin['gender'] == 1) ? 'checked' : '') : '') }}>
                             <label for="female"
                                    class="flex transition-all rounded-md items-center justify-left gap-x-2 text-inactiveText border-2 border-primary-100 peer-checked:text-secondary peer-checked:border-goldText hover:border-inactiveText cursor-pointer w-32 h-12 bg-primary-100 p-2">
@@ -167,11 +167,11 @@
                             <div class="left-0 top-12 w-[15rem] max-h-[18.75rem] overflow-auto rounded-b-md z-50 absolute bg-primary-100 text-[1rem] font-light transition-all duration-200 cursor-pointer" id="races_dropdown">
                                 @foreach ($races as $race)
                                     <div>
-                                        <input type="radio" value="{{ $race->dofus_id }}" class="hidden peer" name="race_id" id="race_id_{{ $race->dofus_id }}" @click="currentRaceDofusID = {{ $race->dofus_id }}"
+                                        <input type="radio" value="{{ $race->dofus_id }}" class="hidden peer" name="race_id" id="race_id_{{ $race->dofus_id }}" x-on:click="currentRaceDofusID = {{ $race->dofus_id }}"
                                             {{ (old('race_id')) ? ((old('race_id') == $race->dofus_id) ? 'checked' : '') : (isset($skin) ? (($skin['race_id'] == $race->dofus_id) ? 'checked' : '') : (($race->dofus_id == 1) ? 'checked' : '')) }}>
                                         <label for="race_id_{{ $race->dofus_id }}" id="label_race_id_{{ $race->dofus_id }}"
                                                onclick="setSelection({{ $race->dofus_id }})"
-                                               @keydown.enter="selection = {{ $race->dofus_id }}, showSort = false"
+                                               x-on:keydown.enter="selection = {{ $race->dofus_id }}, showSort = false"
                                                class="flex rounded-md items-center transition-all justify-left gap-x-2 text-inactiveText border-2 border-primary-100 hover:border-inactiveText cursor-pointer h-12 bg-primary-100 p-2 [&.active]:border-inactiveText [&.active]:text-secondary">
                                             <img src="{{ $race->ghost_icon_path }}" class="h-11">
                                             <p>{{ $race->localized_name }}</p>

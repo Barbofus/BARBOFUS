@@ -59,7 +59,7 @@
                                  :class="{ 'border-goldTextLit border-2': isAuthenticated && userSelectedReward === reward.image }">
                                 {{-- Image de la récompense --}}
                                 <div class="relative w-full h-full overflow-hidden transition-all rounded-lg bg-white/5 group-hover:bg-white/10"
-                                    @dragover.prevent @dragenter.prevent="dragOverIndex = index" @dragleave.prevent="handleDragLeave($event, index)" @drop.prevent="handleDrop($event, index)">
+                                    @dragover.prevent x-on:dragenter.prevent="dragOverIndex = index" x-on:dragleave.prevent="handleDragLeave($event, index)" x-on:drop.prevent="handleDrop($event, index)">
 
                                     {{-- Image si elle existe --}}
                                     <img x-show="reward.image" :src="reward.image" alt="Récompense"
@@ -94,7 +94,7 @@
                                     {{-- Bouton de sélection pour tous les utilisateurs connectés --}}
                                     <div x-show="isAuthenticated"
                                         class="absolute z-10 transition-opacity opacity-0 bottom-3 left-3 right-3 group-hover:opacity-100">
-                                        <button @click="selectReward(reward.image)"
+                                        <button x-on:click="selectReward(reward.image)"
                                             :disabled="userSelectedReward === reward.image"
                                             class="w-full px-3 py-2 text-sm font-medium transition-all rounded-lg"
                                             :class="userSelectedReward === reward.image
@@ -107,7 +107,7 @@
                                     {{-- Upload button admin --}}
                                     <div x-show="isAdmin"
                                         class="absolute z-20 transition-opacity opacity-0 top-2 right-2 group-hover:opacity-100">
-                                        <button @click="document.getElementById('fileInput' + index).click()"
+                                        <button x-on:click="document.getElementById('fileInput' + index).click()"
                                             class="p-2 transition-all rounded-lg bg-black/50 backdrop-blur-sm hover:bg-black/70">
                                             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                                                 <path
@@ -115,12 +115,12 @@
                                             </svg>
                                         </button>
                                         <input :id="'fileInput' + index" type="file" accept="image/*"
-                                            style="display: none;" @change="handleFileUpload($event, index)">
+                                            style="display: none;" x-on:change="handleFileUpload($event, index)">
                                     </div>
 
                                     {{-- Delete button admin --}}
                                     <div x-show="isAdmin" class="absolute z-20 transition-opacity opacity-0 top-2 left-2 group-hover:opacity-100">
-                                        <button @click="deleteReward(index)"
+                                        <button x-on:click="deleteReward(index)"
                                             class="p-2 transition-all rounded-lg bg-red-500/50 backdrop-blur-sm hover:bg-red-500/70">
                                             <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                                                 <path
@@ -134,7 +134,7 @@
 
                         {{-- Bouton Ajouter dans la grille --}}
                         <div x-show="isAdmin" class="transition-all border-2 border-dashed bg-white/5 backdrop-blur-sm border-white/20 rounded-xl hover:border-white/40 hover:bg-white/10 group" style="width: 220px; height: 270px;">
-                            <button @click="addReward()"
+                            <button x-on:click="addReward()"
                                 class="flex flex-col items-center justify-center w-full h-full">
                                 <div class="flex flex-col items-center gap-3 text-white/70 group-hover:text-white/90">
                                     <div class="p-4 rounded-full bg-gradient-to-r from-green-600 to-green-700 group-hover:from-green-700 group-hover:to-green-800">

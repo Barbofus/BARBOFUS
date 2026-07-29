@@ -53,6 +53,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -68,6 +69,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ *
+ * @property string|null $selected_reward_image
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSelectedRewardImage($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements MustVerifyEmail
@@ -218,6 +224,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(HavenBag::class);
     }
 
+    /**
+     * @return Hasmany<Favorite>
+     */
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
@@ -225,24 +234,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Vérifie si la récompense sélectionnée par l'utilisateur est encore valide
-     *
-     * @return bool
      */
     public function hasValidSelectedReward(): bool
     {
-        if (!$this->selected_reward_image) {
+        if (! $this->selected_reward_image) {
             return false;
         }
 
         // Vérifier si le fichier existe (convertir le chemin /storage/ vers le path relatif)
         $filePath = str_replace('/storage/', '', $this->selected_reward_image);
-        if (!Storage::disk('public')->exists($filePath)) {
+        if (! Storage::disk('public')->exists($filePath)) {
             return false;
         }
 
         // Vérifier si la récompense est encore dans la liste actuelle
         $rewardsPath = storage_path('app/json/rewards.json');
-        if (!File::exists($rewardsPath)) {
+        if (! File::exists($rewardsPath)) {
             return false;
         }
 
@@ -261,11 +268,11 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Récupère les données complètes de la récompense sélectionnée
      *
-     * @return array|null
+     * @return array<string, string>|null
      */
     public function getSelectedRewardData(): ?array
     {
-        if (!$this->hasValidSelectedReward()) {
+        if (! $this->hasValidSelectedReward()) {
             return null;
         }
 

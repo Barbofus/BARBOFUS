@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read int|null $skin_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UnitySkin> $unitySkin
  * @property-read int|null $unity_skin_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item query()
@@ -44,6 +45,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|Item wherePetType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereSubcategory($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereUpdatedAt($value)
+ *
+ * @property string|null $weapon_type
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Item whereWeaponType($value)
+ *
  * @mixin \Eloquent
  */
 class Item extends Model

@@ -12,8 +12,6 @@ use App\Models\LocalizedItem;
 use App\Models\LocalizedRace;
 use App\Models\Race;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\VarDumper;
 
 final class updateDBFromDofusFiles
 {
@@ -50,57 +48,57 @@ final class updateDBFromDofusFiles
         $langs = ['fr', 'en', 'es', 'pt'];
 
         $this->ceremonialWeaponValues = [
-            2   => WeaponSubcategorieEnum::ARC->value,
-            3   => WeaponSubcategorieEnum::BAGUETTE->value,
-            4   => WeaponSubcategorieEnum::BATON->value,
-            5   => WeaponSubcategorieEnum::DAGUE->value,
-            6   => WeaponSubcategorieEnum::EPEE->value,
-            7   => WeaponSubcategorieEnum::MARTEAU->value,
-            8   => WeaponSubcategorieEnum::PELLE->value,
-            19  => WeaponSubcategorieEnum::HACHE->value,
-            22  => WeaponSubcategorieEnum::FAUX->value,
+            2 => WeaponSubcategorieEnum::ARC->value,
+            3 => WeaponSubcategorieEnum::BAGUETTE->value,
+            4 => WeaponSubcategorieEnum::BATON->value,
+            5 => WeaponSubcategorieEnum::DAGUE->value,
+            6 => WeaponSubcategorieEnum::EPEE->value,
+            7 => WeaponSubcategorieEnum::MARTEAU->value,
+            8 => WeaponSubcategorieEnum::PELLE->value,
+            19 => WeaponSubcategorieEnum::HACHE->value,
+            22 => WeaponSubcategorieEnum::FAUX->value,
             271 => WeaponSubcategorieEnum::LANCE->value,
         ];
 
         $this->typeID = [
-            16  => ['cat' => ItemCategorieEnum::HAT->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Chapeau
+            16 => ['cat' => ItemCategorieEnum::HAT->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Chapeau
             246 => ['cat' => ItemCategorieEnum::HAT->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Chapeau d'apparat
 
-            17  => ['cat' => ItemCategorieEnum::CAPE->value,            'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Cape
+            17 => ['cat' => ItemCategorieEnum::CAPE->value,            'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Cape
             247 => ['cat' => ItemCategorieEnum::CAPE->value,            'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Cape d'apparat
 
-            82  => ['cat' => ItemCategorieEnum::SHIELD->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Bouclier
+            82 => ['cat' => ItemCategorieEnum::SHIELD->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Bouclier
             248 => ['cat' => ItemCategorieEnum::SHIELD->value,          'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Bouclier d'apparat
 
             199 => ['cat' => ItemCategorieEnum::COSTUME->value,         'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Costume
             299 => ['cat' => ItemCategorieEnum::SHOULDERPADS->value,    'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Épaulière
             300 => ['cat' => ItemCategorieEnum::WINGS->value,           'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Ailes
 
-            18  => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Familier
+            18 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Familier
             121 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Montilier
             311 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Monture
             324 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Monture d'apparat
             249 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Familier d'apparat
             250 => ['cat' => ItemCategorieEnum::PET->value,             'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Montilier d'apparat
 
-            2   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Arc
-            3   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Baguette
-            4   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Bâton
-            5   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Dague
-            6   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Épée
-            7   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Marteau
-            8   => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Pelle
-            19  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Hache
-            20  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Outil
-            21  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Pioche
-            22  => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Faux
+            2 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Arc
+            3 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Baguette
+            4 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Bâton
+            5 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Dague
+            6 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Épée
+            7 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Marteau
+            8 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Pelle
+            19 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Hache
+            20 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Outil
+            21 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Pioche
+            22 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Faux
             114 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Arme magique
             271 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::MIMISYMBIC->value],   // Lance
             251 => ['cat' => ItemCategorieEnum::WEAPON->value,          'subcat' => ItemSubcategorieEnum::CEREMONIAL->value],   // Arme d'apparat
         ];
 
         foreach ($langs as $lang) {
-            $langFile = storage_path('app/json/skinator/lang/') . $lang . '.json';
+            $langFile = storage_path('app/json/skinator/lang/').$lang.'.json';
             // @phpstan-ignore-next-line
             $this->langData[$lang] = json_decode(file_get_contents($langFile), true);
         }
@@ -124,7 +122,7 @@ final class updateDBFromDofusFiles
         $itemsData = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
 
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
 
         foreach ($mountsData as $mount) {
             $mountD = $mount['data'];
@@ -162,7 +160,7 @@ final class updateDBFromDofusFiles
                 'category' => ItemCategorieEnum::PET->value,
                 'subcategory' => ItemSubcategorieEnum::MIMISYMBIC->value,
                 'pet_type' => $petType,
-                'icon_path' => 'images/icons/items/' . $item['iconId'] . '.webp',
+                'icon_path' => 'images/icons/items/'.$item['iconId'].'.webp',
                 'colorable' => $item['isColorable'],
                 'asset_id' => $mountD['id'],
                 'female_asset_id' => $mountD['id'],
@@ -171,7 +169,7 @@ final class updateDBFromDofusFiles
             $names = [];
 
             foreach ($this->langData as $lang => $translation) {
-                $names[$lang] = $translation[$item['nameId']] ?? "no translation yet";
+                $names[$lang] = $translation[$item['nameId']] ?? 'no translation yet';
             }
 
             $this->icons[] = $item['iconId'];
@@ -185,7 +183,7 @@ final class updateDBFromDofusFiles
             }
 
             foreach ($this->langData as $lang => $translation) {
-                $existingItemName = $allItemsName[$item['id'] . '|' . $lang][0] ?? null;
+                $existingItemName = $allItemsName[$item['id'].'|'.$lang][0] ?? null;
                 if (! $existingItemName) {
                     LocalizedItem::create([
                         'dofus_id' => $item['id'],
@@ -205,11 +203,11 @@ final class updateDBFromDofusFiles
         $livingData = json_decode(Storage::disk('local')->get('json/skinator/LivingObjectSkinsMoodsDataRoot.json'), true)['references']['RefIds'];
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            dd('erreur json : ' . json_last_error_msg());
+            dd('erreur json : '.json_last_error_msg());
         }
 
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
 
         // Indexe les items par leur ID pour un accès rapide
         $itemsById = [];
@@ -230,7 +228,7 @@ final class updateDBFromDofusFiles
         // Filtre les items correspondants
         $itemsLivingData = array_filter(
             $itemsData,
-            fn($item) => isset($item['data']['id']) && in_array($item['data']['id'], $skinIds)
+            fn ($item) => isset($item['data']['id']) && in_array($item['data']['id'], $skinIds)
         );
 
         // On garde seulement ceux avec effets utiles
@@ -288,7 +286,7 @@ final class updateDBFromDofusFiles
             $names = [];
 
             foreach ($this->langData as $lang => $translation) {
-                $names[$lang] = $translation[$itemD['nameId']] ?? "no translation yet";
+                $names[$lang] = $translation[$itemD['nameId']] ?? 'no translation yet';
             }
 
             $currentLV = null;
@@ -308,7 +306,7 @@ final class updateDBFromDofusFiles
                     'category' => $this->typeID[$itemD['usefulLivingEffect']]['cat'],
                     'subcategory' => ItemSubcategorieEnum::LIVINGOBJECT->value,
                     'pet_type' => $petType,
-                    'icon_path' => 'images/icons/items/' . $lv . '.webp',
+                    'icon_path' => 'images/icons/items/'.$lv.'.webp',
                     'colorable' => $itemD['isColorable'],
                 ];
 
@@ -316,22 +314,22 @@ final class updateDBFromDofusFiles
 
                 $existingItem = $allItems[$dofusId] ?? null;
                 if (! $existingItem) {
-                    $this->newItems[] = $value + ['name' => ($names['fr'] . ' ' . ($key + 1))];
+                    $this->newItems[] = $value + ['name' => ($names['fr'].' '.($key + 1))];
                     Item::create($value);
                 } elseif (array_diff_assoc($value, $existingItem->toArray())) {
                     $existingItem->update($value);
                 }
 
                 foreach ($this->langData as $lang => $translation) {
-                    $existingItemName = $allItemsName[$dofusId . '|' . $lang][0] ?? null;
+                    $existingItemName = $allItemsName[$dofusId.'|'.$lang][0] ?? null;
                     if (! $existingItemName) {
                         LocalizedItem::create([
                             'dofus_id' => $dofusId,
                             'locale' => $lang,
-                            'name' => $names[$lang] . ' ' . ($key + 1),
+                            'name' => $names[$lang].' '.($key + 1),
                         ]);
                     } elseif ($existingItemName->name != $names[$lang]) {
-                        $existingItemName->update(['name' => $names[$lang] . ' ' . ($key + 1)]);
+                        $existingItemName->update(['name' => $names[$lang].' '.($key + 1)]);
                     }
                 }
             }
@@ -344,7 +342,7 @@ final class updateDBFromDofusFiles
         $itemsDataBrut = json_decode(Storage::disk('local')->get('json/skinator/ItemsDataRoot.json'), true)['references']['RefIds'];
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            dd('erreur json : ' . json_last_error_msg());
+            dd('erreur json : '.json_last_error_msg());
         }
 
         $itemsData = array_filter($itemsDataBrut, function ($item) {
@@ -360,7 +358,7 @@ final class updateDBFromDofusFiles
         }
 
         $allItems = Item::all()->keyBy('dofus_id');
-        $allItemsName = LocalizedItem::all()->groupBy(fn($item) => $item->dofus_id . '|' . $item->locale);
+        $allItemsName = LocalizedItem::all()->groupBy(fn ($item) => $item->dofus_id.'|'.$item->locale);
 
         $weaponData = [];
         $values = [];
@@ -368,7 +366,9 @@ final class updateDBFromDofusFiles
         foreach ($itemsData as $item) {
             $itemD = $item['data'];
 
-            if ($item['type']['class'] === "WeaponData") $weaponData[] = $itemD;
+            if ($item['type']['class'] === 'WeaponData') {
+                $weaponData[] = $itemD;
+            }
 
             if (! isset($itemD['typeId'])) {
                 continue;
@@ -379,7 +379,6 @@ final class updateDBFromDofusFiles
             }
 
             $weaponType = null;
-
 
             if ($itemD['typeId'] === 251) {
 
@@ -475,7 +474,6 @@ final class updateDBFromDofusFiles
                 }
             }
 
-
             $value = [
                 'dofus_id' => $itemD['id'],
                 'folder' => in_array($itemD['typeId'], [18, 249, 121, 250]) ? 'bones' : 'skins',
@@ -484,7 +482,7 @@ final class updateDBFromDofusFiles
                 'subcategory' => $this->typeID[$itemD['typeId']]['subcat'],
                 'pet_type' => $petType,
                 'weapon_type' => $weaponType,
-                'icon_path' => 'images/icons/items/' . $itemD['iconId'] . '.webp',
+                'icon_path' => 'images/icons/items/'.$itemD['iconId'].'.webp',
                 'colorable' => $itemD['isColorable'],
             ];
 
@@ -493,7 +491,7 @@ final class updateDBFromDofusFiles
             $names = [];
 
             foreach ($this->langData as $lang => $translation) {
-                $names[$lang] = $translation[$itemD['nameId']] ?? "no translation yet";
+                $names[$lang] = $translation[$itemD['nameId']] ?? 'no translation yet';
             }
 
             $existingItem = $allItems[$itemD['id']] ?? null;
@@ -505,7 +503,7 @@ final class updateDBFromDofusFiles
             }
 
             foreach ($this->langData as $lang => $translation) {
-                $existingItemName = $allItemsName[$itemD['id'] . '|' . $lang][0] ?? null;
+                $existingItemName = $allItemsName[$itemD['id'].'|'.$lang][0] ?? null;
                 if (! $existingItemName) {
                     LocalizedItem::create([
                         'dofus_id' => $itemD['id'],
@@ -578,8 +576,8 @@ final class updateDBFromDofusFiles
                 'colors' => json_encode($colorsArray),
                 'heads' => json_encode($headsArray),
                 'bodies' => json_encode($bodiesArray),
-                'ghost_icon_path' => 'images/icons/classes/ghost/' . $breed['id'] . '.png',
-                'colored_icon_path' => 'images/icons/classes/colored/' . $breed['id'] . '.png',
+                'ghost_icon_path' => 'images/icons/classes/ghost/'.$breed['id'].'.png',
+                'colored_icon_path' => 'images/icons/classes/colored/'.$breed['id'].'.png',
                 'dofus_id' => $breed['id'],
             ];
 

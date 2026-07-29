@@ -29,7 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('unity_skins', function (Blueprint $table) {
-            $table->dropColumn(["weapon_id"]);
+            $table->dropColumn(['weapon_id']);
         });
     }
 };

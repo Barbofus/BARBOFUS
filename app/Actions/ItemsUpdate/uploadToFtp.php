@@ -13,9 +13,9 @@ final class uploadToFtp
     public function __invoke(array $localFiles, string $remoteDestination)
     {
         // Détails de la connexion FTP
-        $ftp_server = env('FTP_SERVER_HOST');  // Adresse du serveur FTP
-        $ftp_user_name = env('FTP_SERVER_USER');      // Nom d'utilisateur FTP
-        $ftp_user_pass = env('FTP_SERVER_PASSWORD');      // Mot de passe FTP
+        $ftp_server = (string) env('FTP_SERVER_HOST');  // Adresse du serveur FTP
+        $ftp_user_name = (string) env('FTP_SERVER_USER');      // Nom d'utilisateur FTP
+        $ftp_user_pass = (string) env('FTP_SERVER_PASSWORD');      // Mot de passe FTP
 
         // Connexion au serveur FTP
         $ftp_conn = ftp_connect($ftp_server) or exit('Impossible de se connecter au serveur FTP');

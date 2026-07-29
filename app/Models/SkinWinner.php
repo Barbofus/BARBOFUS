@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $image_path
  * @property int $weekly_likes
  * @property string|null $skin_name
+ *
  * @method static \Database\Factories\SkinWinnerFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|SkinWinner newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SkinWinner newQuery()
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|SkinWinner whereSkinName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SkinWinner whereUserName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SkinWinner whereWeeklyLikes($value)
+ *
  * @mixin \Eloquent
  */
 class SkinWinner extends Model

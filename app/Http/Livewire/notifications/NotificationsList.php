@@ -62,7 +62,8 @@ class NotificationsList extends Component
      */
     public function DeleteNotification(DatabaseNotification $notification)
     {
-        auth()->user()->notifications->find($notification)->delete();
+        abort_unless($notification->notifiable_id === auth()->id(), 403);
+        $notification->delete();
     }
 
     /**
@@ -78,7 +79,8 @@ class NotificationsList extends Component
      */
     public function ReadNotification(DatabaseNotification $notification)
     {
-        auth()->user()->notifications->find($notification)->markAsRead();
+        abort_unless($notification->notifiable_id === auth()->id(), 403);
+        $notification->markAsRead();
     }
 
     /**
@@ -86,7 +88,7 @@ class NotificationsList extends Component
      */
     public function ReadNotifications()
     {
-        auth()->user()->unreadNotifications->markAsRead();
+        auth()->user()->unreadNotifications()->update(['read_at' => now()]);
     }
 
     /**

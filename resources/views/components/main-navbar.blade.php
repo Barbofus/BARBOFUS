@@ -16,7 +16,7 @@
             unselectedClass: 'px-5 transition-all max-[1300px]:flex max-[1300px]:items-center h-[12%] min-[1301px]:h-[2rem] min-[1301px]:border-r hover:text-secondary-100 border-r-inactiveText focus:outline-none',
             unselectedClassLast: 'px-5 transition-all max-[1300px]:flex max-[1300px]:items-center h-[12%] min-[1301px]:h-[2rem] hover:text-secondary-100 focus:outline-none',
           }"
-     @resize.window="
+     x-on:resize.window="
             showNavbar = (window.innerWidth > 1300);">
     <template x-if="true">
         <div x-show="showNavbar" x-transition
@@ -48,7 +48,7 @@
     <!-- Croix -->
     <button x-show="showNavbar" x-transition
             aria-label="Fermeture du menu de navigation"
-            @click="showNavbar = !showNavbar"
+            x-on:click="showNavbar = !showNavbar"
             class="h-10 z-50 w-10 visible min-[1301px]:invisible fixed top-2 right-2 text-secondary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -58,7 +58,7 @@
     <!-- Hamburger -->
     <button x-show="!showNavbar" x-transition
             aria-label="Ouverture du menu de navigation"
-            @click="showNavbar = !showNavbar"
+            x-on:click="showNavbar = !showNavbar"
             class="h-10 w-10 visible min-[1301px]:invisible fixed top-2 right-2 text-secondary">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -68,7 +68,7 @@
     {{-- Header --}}
     <div x-show="!showNavbar" x-transition
             aria-label="Ouverture du menu de navigation"
-            @click="showNavbar = !showNavbar"
+            x-on:click="showNavbar = !showNavbar"
             class="h-12 visible min-[1301px]:invisible fixed top-0 left-2 text-secondary flex">
         <a href="{{ route('home') }}" title="Accueil Barbofus"><img src="{{ asset('storage/images/misc_ui/Barbofus_Logo.webp') }}" loading="lazy" height="48" alt="Logo Barbofus" class="h-full" draggable="false" /></a>
 

@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\UnitySkin|null $Skin
  * @property-read \App\Models\User|null $User
+ *
  * @method static \Database\Factories\UnityLikeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|UnityLike newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UnityLike newQuery()
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|UnityLike whereUnitySkinId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UnityLike whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UnityLike whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class UnityLike extends Model

@@ -6,12 +6,12 @@ use App\Actions\Discord\ConnectToDiscord;
 use App\Actions\Discord\GetDiscordUserInfo;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Models\Connection;
 use App\Models\User;
 use App\Models\UserNotificationPreferences;
 use App\Notifications\UserNameChangeNotification;
 use App\Notifications\UserPasswordChangeNotification;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -28,11 +28,6 @@ class UserDetails extends Component
     public string $name = '';
 
     public string $email = '';
-
-    /**
-     * @var Connection|void
-     */
-    private $discordData;
 
     public User $currentUser;
 
@@ -195,7 +190,7 @@ class UserDetails extends Component
 
         Auth::logout();
 
-        return $this->redirect(route('verification.notice', ['id' => $id]));
+        return $this->redirect(route('verification.notice.show', ['id' => $id]));
     }
 
     /**
@@ -236,6 +231,8 @@ class UserDetails extends Component
 
     /**
      * Rediriger vers la page des récompenses
+     *
+     * @return RedirectResponse
      */
     public function goToRewards()
     {
@@ -253,14 +250,14 @@ class UserDetails extends Component
 
         // Ne passer à la vue que les champs nécessaires pour l'affichage
         $discord = $rawDiscord ? [
-            'username'   => $rawDiscord['username'] ?? null,
-            'avatar'     => $rawDiscord['avatar'] ?? null,
-            'id'         => $rawDiscord['id'] ?? null,
+            'username' => $rawDiscord['username'] ?? null,
+            'avatar' => $rawDiscord['avatar'] ?? null,
+            'id' => $rawDiscord['id'] ?? null,
             'global_name' => $rawDiscord['global_name'] ?? null,
         ] : null;
 
         return view('livewire.user-panel.user-details', [
-            'user'    => $this->QueryUser(),
+            'user' => $this->QueryUser(),
             'discord' => $discord,
         ]);
     }

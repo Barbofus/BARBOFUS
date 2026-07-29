@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Skin $Skin
  * @property-read \App\Models\User|null $User
+ *
  * @method static \Database\Factories\LikeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Like newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Like newQuery()
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Like whereSkinId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Like whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Like whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Like extends Model

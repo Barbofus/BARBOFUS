@@ -49,7 +49,7 @@
     "Alpine.js Click Handler": {
         "prefix": "@click",
         "body": [
-            "@click=\"$1\""
+            "x-on:click\"$1\""
         ],
         "description": "Gestionnaire de clic Alpine.js"
     },

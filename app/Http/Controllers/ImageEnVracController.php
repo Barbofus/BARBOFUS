@@ -63,7 +63,7 @@ class ImageEnVracController extends Controller
                     }
 
                     // Nomme l'image en fonction de l'heure actuelle
-                    $imageName = time() . $key . '_n_' . $finaleName . '.' . $file->getClientOriginalExtension();
+                    $imageName = time().$key.'_n_'.$finaleName.'.'.$file->getClientOriginalExtension();
 
                     // On range ça dans le public
                     $destinationPath = storage_path('app/public/images/imagenvrac');
@@ -76,7 +76,7 @@ class ImageEnVracController extends Controller
                         $img = Image::make($file->getRealPath());
 
                         // On resize suivant la taille désiré
-                        $img->save($destinationPath . '/' . $imageName);
+                        $img->save($destinationPath.'/'.$imageName);
                     }
                 }
             }

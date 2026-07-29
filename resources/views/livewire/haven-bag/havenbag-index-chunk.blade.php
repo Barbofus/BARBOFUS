@@ -3,7 +3,7 @@
         <button wire:key="haven-bag.{{ $havenBag->id }}"
                 class="relative w-full h-full overflow-hidden transition-all duration-1000 shadow-sm opacity-0 group animate-skinApparition bg-primary-100 rounded-xl hover:brightness-110"
                 style="animation-delay: {{ ($key - ($itemsPerPage * ($page - 1))) * 35 }}ms"
-                @click="
+                x-on:click="
                     showHavenBag = true,
                     havenBagImagePath = '{{ asset('storage/'. $havenBag->image_path) }}',
                     popocketIconPath = '{{ asset('https://static.barbofus.com/'. $havenBag->popocket_icon_path) }}',

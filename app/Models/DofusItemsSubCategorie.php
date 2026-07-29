@@ -19,10 +19,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $dofus_item_pet_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DofusItemShield> $DofusItemShield
  * @property-read int|null $dofus_item_shield_count
+ *
  * @method static \Database\Factories\DofusItemsSubCategorieFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemsSubCategorie newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemsSubCategorie newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemsSubCategorie query()
+ *
  * @mixin \Eloquent
  */
 class DofusItemsSubCategorie extends Model

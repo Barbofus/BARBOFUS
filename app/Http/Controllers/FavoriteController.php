@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class FavoriteController extends Controller
 {
     /**
      * Store a newly created favorite in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         $validated = $request->validate([
             'item_id' => 'integer|required|exists:items,dofus_id',
@@ -27,7 +28,7 @@ class FavoriteController extends Controller
     /**
      * Remove the specified favorite from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): Response
     {
         $validated = $request->validate([
             'item_id' => 'integer|required|exists:items,dofus_id',

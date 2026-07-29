@@ -6,6 +6,8 @@ use App\Enums\LocaleEnum;
 use App\Models\Race;
 use App\Models\UnitySkin;
 use Firebase\JWT\JWT;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class TougliController extends Controller
@@ -13,11 +15,11 @@ class TougliController extends Controller
     /**
      * Get current user information with JWT token.
      */
-    public function whoami(Request $request)
+    public function whoami(Request $request): JsonResponse
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
         }
 
@@ -42,11 +44,11 @@ class TougliController extends Controller
     /**
      * Update user locale and return updated JWT token.
      */
-    public function updateLocale(Request $request)
+    public function updateLocale(Request $request): JsonResponse
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
         }
 
@@ -55,7 +57,7 @@ class TougliController extends Controller
         }
 
         $validated = $request->validate([
-            'locale' => 'required|string|in:' . implode(',', LocaleEnum::values()),
+            'locale' => 'required|string|in:'.implode(',', LocaleEnum::values()),
         ]);
 
         // Mettre à jour la locale de l'utilisateur
@@ -79,7 +81,7 @@ class TougliController extends Controller
         return response()->json([
             'message' => 'Locale updated successfully',
             'token' => $jwt,
-            'locale' => $user->locale
+            'locale' => $user->locale,
         ], 200);
     }
 
@@ -89,11 +91,11 @@ class TougliController extends Controller
      *
      * Query param: classDofusId (int) — the Dofus ID of the class (same as characters.class_id on Tougli)
      */
-    public function getSkins(Request $request)
+    public function getSkins(Request $request): JsonResponse
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['error' => __('barbofus.errorUnauthenticated')], 401);
         }
 
@@ -123,18 +125,18 @@ class TougliController extends Controller
      * Query param: limit (int, optional, default 12) — number of skins to return
      * No auth required.
      */
-    public function getGlobalSkins(Request $request)
+    public function getGlobalSkins(Request $request): JsonResponse
     {
         $classDofusId = $request->query('classDofusId');
         $limit = min((int) ($request->query('limit', 12)), 50);
 
-        if (!$classDofusId || !is_numeric($classDofusId)) {
+        if (! $classDofusId || ! is_numeric($classDofusId)) {
             return response()->json(['error' => 'classDofusId is required and must be an integer'], 422);
         }
 
         // unity_skins.race_id stocke le dofus_id de la table races (pas le PK)
         // Vérifier que la race existe bien
-        if (!Race::where('dofus_id', (int) $classDofusId)->exists()) {
+        if (! Race::where('dofus_id', (int) $classDofusId)->exists()) {
             return response()->json(['data' => []]);
         }
 
@@ -158,11 +160,11 @@ class TougliController extends Controller
      * and to validate that a manually entered skin matches the character's class.
      * No auth required.
      */
-    public function getSkinById(int $id)
+    public function getSkinById(int $id): JsonResponse
     {
         $skin = UnitySkin::select('id', 'name', 'image_path', 'race_id')->find($id);
 
-        if (!$skin) {
+        if (! $skin) {
             return response()->json(['error' => 'Skin not found'], 404);
         }
 
@@ -170,10 +172,10 @@ class TougliController extends Controller
         // notamment race_id qui stocke le dofus_id de la classe (= characters.class_id sur Tougli).
         return response()->json([
             'data' => [
-                'id'         => $skin->id,
-                'name'       => $skin->name,
+                'id' => $skin->id,
+                'name' => $skin->name,
                 'image_path' => $skin->image_path,
-                'race_id'    => $skin->race_id,
+                'race_id' => $skin->race_id,
             ],
         ]);
     }
@@ -183,21 +185,21 @@ class TougliController extends Controller
      * Used by Tougli to resolve custom skin inputs (URL or plain numeric ID).
      * No auth required.
      */
-    public function getSkinImage(int $id)
+    public function getSkinImage(int $id): JsonResponse|RedirectResponse
     {
         $skin = UnitySkin::select('image_path')->find($id);
 
-        if (!$skin) {
+        if (! $skin) {
             return response()->json(['error' => 'Skin not found'], 404);
         }
 
-        return redirect()->to(asset('storage/' . $skin->image_path));
+        return redirect()->to(asset('storage/'.$skin->image_path));
     }
 
     /**
      * Logout the user and redirect (cross-site support).
      */
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         auth()->logout();
         $request->session()->invalidate();
@@ -210,7 +212,7 @@ class TougliController extends Controller
             $baseDomain = 'barbofus.com';
 
             $isAllowed = $host === $baseDomain
-                || str_ends_with($host, '.' . $baseDomain)
+                || str_ends_with(''.$host, '.'.$baseDomain)
                 || in_array($host, ['localhost', '127.0.0.1']);
 
             if ($isAllowed) {

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\HavenBagTheme|null $havenBagTheme
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedHavenBagTheme newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedHavenBagTheme newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedHavenBagTheme query()
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedHavenBagTheme whereLocale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedHavenBagTheme whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedHavenBagTheme whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class LocalizedHavenBagTheme extends Model

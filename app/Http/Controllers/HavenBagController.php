@@ -37,7 +37,7 @@ class HavenBagController extends Controller
             ])->get()->toArray();
 
         foreach ($hbThemes as $hbTheme) {
-            $hbTheme->popocket_icon_path = asset('storage\/' . $hbTheme->popocket_icon_path);
+            $hbTheme->popocket_icon_path = asset('storage\/'.$hbTheme->popocket_icon_path);
         }
 
         return view('haven-bags.create', [
@@ -50,7 +50,7 @@ class HavenBagController extends Controller
         // Resize de l'image
         $imagePath = (new ResizeImages)($request->image_path, 'images/haven-bags', [
             'width' => 1920,
-            'height' => 1080
+            'height' => 1080,
         ]);
 
         $havenBag = HavenBag::create([
@@ -83,7 +83,7 @@ class HavenBagController extends Controller
             ])->get()->toArray();
 
         foreach ($hbThemes as $hbTheme) {
-            $hbTheme->popocket_icon_path = asset('storage\/' . $hbTheme->popocket_icon_path);
+            $hbTheme->popocket_icon_path = asset('storage\/'.$hbTheme->popocket_icon_path);
         }
 
         return view('haven-bags.edit', [
@@ -103,7 +103,7 @@ class HavenBagController extends Controller
             // Resize de l'image
             $imagePath = (new ResizeImages)($request->image_path, 'images/haven-bags', [
                 'width' => 1920,
-                'height' => 1080
+                'height' => 1080,
             ]);
         }
 

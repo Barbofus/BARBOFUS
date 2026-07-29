@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $rank
  * @property int $points
+ *
  * @method static \Database\Factories\RewardPriceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|RewardPrice newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RewardPrice newQuery()
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|RewardPrice whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RewardPrice wherePoints($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RewardPrice whereRank($value)
+ *
  * @mixin \Eloquent
  */
 class RewardPrice extends Model

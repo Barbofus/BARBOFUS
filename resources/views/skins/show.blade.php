@@ -25,7 +25,7 @@
 
                 {{-- Suppression --}}
                 <button class="transition-all scale-90 hover:scale-110 text-inactiveText hover:text-red-500"
-                        @click="skinDeleteID = {{ $skin->id }}, skinDeleteImg='{{ asset('storage/'. $skin->image_path) }}'">
+                        x-on:click="skinDeleteID = {{ $skin->id }}, skinDeleteImg='{{ asset('storage/'. $skin->image_path) }}'">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor" class="w-12">
                         <path stroke-linecap="round" stroke-linejoin="round"

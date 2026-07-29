@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $User
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Connection newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Connection newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Connection query()
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Connection whereRefreshToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Connection whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Connection whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Connection extends Model

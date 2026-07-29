@@ -9,7 +9,7 @@
     <p class="font-normal text-2xl">{{ __('barbofus.titleSuccess') }}</p>
     <p x-text="alertMessage" class="font-light"></p>
 
-    <button class="absolute top-2 right-2" @click="closeAlert()">
+    <button class="absolute top-2 right-2" x-on:click="closeAlert()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 hover:scale-125 transition-all">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>

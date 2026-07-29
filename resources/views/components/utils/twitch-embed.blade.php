@@ -11,7 +11,7 @@
         {{-- Close button (when needed) --}}
         @if(isset($canClose) && $canClose)
             <button aria-label="Ferme le live" class="opacity-0 group-hover:opacity-100 absolute top-0 right-0 p-2 h-12 w-12 bg-primary z-40 rounded-bl-xl hover:bg-primary-100 transition-all group"
-                @click="open = false">
+                x-on:click="open = false">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-full">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>

@@ -20,7 +20,7 @@
 
                 <div class="grid grid-cols-2 mt-4 gap-x-2 gap-y-4">
                     @foreach($selectedThemes as $sTheme)
-                        <button class="relative overflow-hidden rounded-lg group h-fit bg-primary-100" wire:click="ToggleTheme({{ $sTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
+                        <button class="relative overflow-hidden rounded-lg group h-fit bg-primary-100" wire:click="ToggleTheme({{ $sTheme->id }})" x-on:click="window.scrollTo({top: 0, behavior: 'smooth'})">
                             <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span> {{ ' ' . $sTheme->localized_name }}</p>
                             <div class="relative overflow-hidden aspect-video">
                                 <img src="{{ asset('storage/'. $sTheme->image_path) }}" draggable="false"
@@ -45,7 +45,7 @@
 
             <div class="grid grid-cols-2 mt-4 gap-x-2 gap-y-4">
                 @foreach($unselectedThemes as $uTheme)
-                    <button class="relative overflow-hidden rounded-lg group h-fit bg-primary-100" wire:click="ToggleTheme({{ $uTheme->id }})" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <button class="relative overflow-hidden rounded-lg group h-fit bg-primary-100" wire:click="ToggleTheme({{ $uTheme->id }})" x-on:click="window.scrollTo({top: 0, behavior: 'smooth'})">
                         <p class="text-left font-thin text-[0.9rem] px-2 py-0.5"><span class="hidden min-[900px]:inline-block">{{ __('barbofus.contentTheme') }}</span>{{ ' ' . $uTheme->localized_name }}</p>
                         <div class="relative overflow-hidden aspect-video">
                             <img src="{{ asset('storage/'. $uTheme->image_path) }}" draggable="false"
@@ -128,7 +128,7 @@
         <template x-if="true">
             <button class="fixed top-0 left-0 z-50 flex items-center justify-center w-screen h-screen bg-black/50"
                     x-show="showHavenBag"
-                    @click="
+                    x-on:click="
                         showHavenBag = false,
                         EmptyUrl()"
                     x-transition>

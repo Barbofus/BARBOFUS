@@ -33,7 +33,7 @@ class IncrementViewJob implements ShouldQueue
         }
 
         $skin = UnitySkin::find($this->skinId);
-        if (!$skin) {
+        if (! $skin) {
             return;
         }
 
@@ -45,6 +45,6 @@ class IncrementViewJob implements ShouldQueue
         }
 
         // Marquer comme vu pendant 1 heure
-        //Cache::put($cacheKey, true, 3600);
+        // Cache::put($cacheKey, true, 3600);
     }
 }

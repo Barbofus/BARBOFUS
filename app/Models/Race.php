@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UnitySkin> $UnitySkins
  * @property-read int|null $unity_skins_count
  * @property-read \App\Models\LocalizedRace|null $localizedName
+ *
  * @method static \Database\Factories\RaceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Race newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Race newQuery()
@@ -33,6 +34,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|Race whereHeads($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Race whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Race whereName($value)
+ *
+ * @property mixed|null $bodies
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Race whereBodies($value)
+ *
  * @mixin \Eloquent
  */
 class Race extends Model

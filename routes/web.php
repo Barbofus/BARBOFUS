@@ -150,7 +150,7 @@ Route::middleware(['cache.public'])->group(function () {
 
     Route::get('/outils', function () {
         return view('tools');
-    })->name('tools');;
+    })->name('tools');
 
     Route::get('/skinator', [SkinatorController::class, 'create'])->name('skinator.create');
     Route::get('/testator', [SkinatorController::class, 'testator'])->name('testator.create');
@@ -209,8 +209,8 @@ Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
     ->middleware(['signed', 'throttle:6,1'])
     ->name('verification.verify');
 
-Route::get('/email/verify/{id}', EmailVerificationPromptController::class)->name('verification.notice');
-Route::post('/email/verification-notification/{id}', [EmailVerificationPromptController::class, 'store'])->name('verification.send');
+Route::get('/email/verify/{id}', EmailVerificationPromptController::class)->name('verification.notice.show');
+Route::post('/email/verification-notification/{id}', [EmailVerificationPromptController::class, 'store'])->name('verification.send.show');
 
 Route::middleware(['can:admin-access', 'auth'])->group(function () {
 

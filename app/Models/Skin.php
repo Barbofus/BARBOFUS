@@ -49,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \App\Models\Item|null $hat
  * @property-read \App\Models\Item|null $pet
  * @property-read \App\Models\Item|null $shield
+ *
  * @method static \Database\Factories\SkinFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Skin newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Skin newQuery()
@@ -74,6 +75,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Skin whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Skin whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Skin whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Skin extends Model

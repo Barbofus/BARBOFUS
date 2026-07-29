@@ -23,7 +23,7 @@ class UsersList extends Component
         $discordInfos = $this->GetDiscordInfos($users);
 
         return view('livewire.user-panel.users-list', [
-            'userCount' => User::all()->count(),
+            'userCount' => User::count('id'),
             'users' => $users,
             'roles' => $this->GetRoles(),
             'discordInfos' => $discordInfos,
@@ -41,15 +41,15 @@ class UsersList extends Component
     }
 
     /**
-     * @return Collection<int, \stdClass>
+     * @return Collection<int, User>
      */
     public function GetAllUsers()
     {
         return User::query()
-            ->select('users.id', 'users.name', 'users.email')
+            ->select(['users.id', 'users.name', 'users.email'])
             ->with('roles:id,name')
             ->when($this->query, function ($query) {
-                $query->where('users.name', 'LIKE', '%' . $this->query . '%');
+                $query->where('users.name', 'LIKE', '%'.$this->query.'%');
             })
             ->orderByDesc(
                 DB::table('role_user')
@@ -66,9 +66,9 @@ class UsersList extends Component
      */
     public function deleteUser(int $userID)
     {
-        $user = User::find($userID);
+        $user = User::find($userID, 'id');
 
-        $this->dispatchBrowserEvent('alert-event', ['message' => 'Le compte de ' . $user->name . ' a été supprimé.']);
+        $this->dispatchBrowserEvent('alert-event', ['message' => 'Le compte de '.$user->name.' a été supprimé.']);
 
         $user->delete();
     }
@@ -87,7 +87,7 @@ class UsersList extends Component
 
             // Événement navigateur
             $this->dispatchBrowserEvent('alert-event', [
-                'message' => $user->name . ' quitte ' . $role->name
+                'message' => $user->name.' quitte '.$role->name,
             ]);
         } else {
             // Sinon, on l'ajoute
@@ -95,7 +95,7 @@ class UsersList extends Component
 
             // Événement navigateur
             $this->dispatchBrowserEvent('alert-event', [
-                'message' => $user->name . ' devient ' . $role->name
+                'message' => $user->name.' devient '.$role->name,
             ]);
         }
 
@@ -106,12 +106,13 @@ class UsersList extends Component
     /**
      * Récupère les informations Discord pour tous les utilisateurs de manière optimisée
      *
-     * @param Collection $users
-     * @return array<int, array|null>
+     * @param  Collection<int, User>  $users
+     * @return array<int, array<string, mixed>|null>
      */
     private function GetDiscordInfos(Collection $users): array
     {
         $userIds = $users->pluck('id');
+
         return (new GetDiscordUsersInfo)($userIds);
     }
 }

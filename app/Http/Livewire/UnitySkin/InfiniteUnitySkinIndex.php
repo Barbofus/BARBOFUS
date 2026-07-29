@@ -189,12 +189,12 @@ class InfiniteUnitySkinIndex extends Component
                             $query->whereNotExists(function (Builder $query) use ($category) {
                                 $query->select('dofus_id')
                                     ->from('items')
-                                    ->whereColumn('items.dofus_id', 'unity_skins.' . $category . '_id');
+                                    ->whereColumn('items.dofus_id', 'unity_skins.'.$category.'_id');
                             })
                                 ->orWhereExists(function (Builder $query) use ($category) {
                                     $query->select('dofus_id')
                                         ->from('items')
-                                        ->whereColumn('items.dofus_id', 'unity_skins.' . $category . '_id')
+                                        ->whereColumn('items.dofus_id', 'unity_skins.'.$category.'_id')
                                         ->whereNotIn('items.subcategory', $this->skinContentWhere);
                                 });
                         });
@@ -240,7 +240,7 @@ class InfiniteUnitySkinIndex extends Component
                         // Si le mot clef est un item
                         $query->when($input[0] == '0', function (Builder $query) use ($input) {
                             foreach ($this->itemCategory as $category) {
-                                $query->orWhere($category . '_id', substr($input, 1));
+                                $query->orWhere($category.'_id', substr($input, 1));
                             }
                         });
                     }

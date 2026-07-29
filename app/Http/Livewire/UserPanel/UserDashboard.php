@@ -42,7 +42,7 @@ class UserDashboard extends Component
     {
         $this->section = $newSection;
         $this->dispatchBrowserEvent('user-dashboard-change', [
-            'section' => $newSection
+            'section' => $newSection,
         ]);
     }
 }

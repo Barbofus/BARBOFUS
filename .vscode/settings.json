@@ -80,7 +80,11 @@
         "**/vendor/**/tests/**",
         "**/vendor/phpunit/**",
         "**/storage/framework/**",
-        "**/bootstrap/cache/**"
+        "**/bootstrap/cache/**",
+        "**/.git/**",
+        "**/_ide_helper.php",
+        "**/_ide_helper_models.php",
+        "**/vendor/_laravel_ide/**"
     ],
     "intelephense.environment.includePaths": [
         "./vendor",
@@ -200,10 +204,6 @@
     "headwind.runOnSave": true,
     "headwind.sortTailwindClasses": true,
 
-    // === ALPINE.JS CONFIGURATION ===
-    "alpineIntelliSense.settings.completions.enabled": true,
-    "alpineIntelliSense.settings.hover.enabled": true,
-
     // === DÉSACTIVATION DES ERREURS DECORATORS ===
     "javascript.preferences.includePackageJsonAutoImports": "off",
     "typescript.preferences.includePackageJsonAutoImports": "off",
@@ -226,6 +226,7 @@
     "problems.decorations.enabled": true,
     "typescript.reportStyleChecksAsWarnings": false,
     "javascript.reportStyleChecksAsWarnings": false,
+    "intelephense.diagnostics.argumentCount": "off",
 
     // === AUTRES CONFIGURATIONS ===
     "files.associations": {
@@ -237,6 +238,7 @@
         "blade": "html",
         "javascript": "javascriptreact"
     },
+    
 
     // === DÉSACTIVATION ESLINT POUR BLADE ===
     "eslint.validate": [
@@ -256,5 +258,22 @@
         "**/.DS_Store": true,
         "**/storage/framework": true,
         "**/storage/logs": true
-    }
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "127.0.0.1",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "mysql",
+            "database": "BARBOFUS",
+            "username": "root",
+            "password": "password"
+        }
+    ]
 }

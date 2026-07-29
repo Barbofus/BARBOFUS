@@ -4,9 +4,9 @@
     x-data="{
         showButton: (document.documentElement.scrollTop > 20 || document.body.scrollTop > 20)
       }"
-    @scroll.window="(document.documentElement.scrollTop > 20 || document.body.scrollTop > 20) ? showButton = true : showButton = false"
+    x-on:scroll.window="(document.documentElement.scrollTop > 20 || document.body.scrollTop > 20) ? showButton = true : showButton = false"
     :class="showButton ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
-    @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+    x-on:click="window.scrollTo({top: 0, behavior: 'smooth'})"
     class="fixed z-40 flex items-center justify-center w-16 h-16 rounded-full shadow-sm right-4 bg-secondary bottom-6 group transition-all">
     <svg
         class="w-10 transition-all duration-150 text-primary group-hover:-translate-y-1"

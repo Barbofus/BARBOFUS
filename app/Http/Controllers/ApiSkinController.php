@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UnitySkin;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class ApiSkinController extends Controller
@@ -11,12 +11,12 @@ class ApiSkinController extends Controller
     /**
      * Get skin details with optimized queries
      */
-    public function show(int $id)
+    public function show(int $id): JsonResponse
     {
         // Récupérer le skin avec ses relations
         $skin = UnitySkin::with(['User', 'Race'])->find($id);
 
-        if (!$skin) {
+        if (! $skin) {
             return response()->json(['error' => 'Skin not found'], 404);
         }
 
@@ -33,7 +33,7 @@ class ApiSkinController extends Controller
         ]);
 
         $items = [];
-        if (!empty($itemIds)) {
+        if (! empty($itemIds)) {
             // Requête optimisée avec JOIN pour récupérer items + noms localisés
             $itemsData = DB::table('items')
                 ->leftJoin('localized_items', function ($join) {
@@ -98,10 +98,10 @@ class ApiSkinController extends Controller
                 'shoulderPads' => $getItem($skin->shoulderpads_id),
                 'mount' => $getItem($skin->mount_id),
             ],
-            'user' => $skin->User ? [
+            'user' => [
                 'id' => $skin->User->id,
                 'name' => $skin->User->name,
-            ] : null,
+            ],
             'breed' => $skin->Race ? [
                 'id' => $skin->Race->id,
                 'name' => $skin->Race->name,

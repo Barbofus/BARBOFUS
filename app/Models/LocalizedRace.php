@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Race|null $race
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedRace newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedRace newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedRace query()
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedRace whereLocale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedRace whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LocalizedRace whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class LocalizedRace extends Model

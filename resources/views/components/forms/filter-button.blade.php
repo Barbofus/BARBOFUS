@@ -1,7 +1,7 @@
 <button
     id="{{ $name }}"
     class="w-[1.125rem] h-[1.125rem] mt-2 border rounded-[3px] bg-anthraciteLit border-1 border-ivory"
-    @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+    x-on:click="window.scrollTo({top: 0, behavior: 'smooth'})"
     {{ $attributes }}>
 
     <x-svg.checkmark :checked="$checked"/>

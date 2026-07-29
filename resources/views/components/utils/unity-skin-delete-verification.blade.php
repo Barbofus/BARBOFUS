@@ -1,6 +1,6 @@
 <div class="fixed top-0 right-0 bottom-0 left-0 z-[999] bg-black/40 flex justify-center items-center">
     <div class="w-96 rounded-md bg-primary-100 shadow-lg flex flex-col items-center justify-center gap-y-8 p-8"
-         @click.away="skinDeleteID = null">
+         x-on:click.away="skinDeleteID = null">
 
         {{-- Skin image + icon classe --}}
         <img :src="skinDeleteImg" draggable="false" class="w-[12.5rem]">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="flex justify-between w-full">
-            <button @click="skinDeleteID = null" class="uppercase text-xl text-goldText border-goldText border-2 hover:rounded-3xl transition-all hover:tracking-widest px-4 py-2 rounded-md">{{ __('barbofus.buttonCancel') }}</button>
+            <button x-on:click="skinDeleteID = null" class="uppercase text-xl text-goldText border-goldText border-2 hover:rounded-3xl transition-all hover:tracking-widest px-4 py-2 rounded-md">{{ __('barbofus.buttonCancel') }}</button>
 
             @if(isset($useController))
                 <form action="{{ route('unity-skins.delete', $skin->id) }}" method="POST">
@@ -21,7 +21,7 @@
                     <button type="submit" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">{{ __('barbofus.buttonDelete') }}</button>
                 </form>
             @else
-                <button @click="$wire.deleteUnitySkin(skinDeleteID), skinDeleteID = null" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">{{ __('barbofus.buttonDelete') }}</button>
+                <button x-on:click="$wire.deleteUnitySkin(skinDeleteID), skinDeleteID = null" class="uppercase text-xl text-primary px-4 py-2 rounded-md goldGradient hover:rounded-3xl transition-all hover:tracking-widest">{{ __('barbofus.buttonDelete') }}</button>
             @endif
         </div>
     </div>

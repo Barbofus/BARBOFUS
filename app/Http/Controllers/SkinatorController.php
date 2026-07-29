@@ -1,48 +1,27 @@
 <?php
 
-
-
 namespace App\Http\Controllers;
 
-
-
+use App\Actions\MissSkin\IsMissSkinTime;
 use App\Enums\ItemCategorieEnum;
-
 use App\Http\Middleware\UnitySkinsOwnerShip;
-
 use App\Models\UnitySkin;
-
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Collection;
-
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Gate;
-
 use Illuminate\Support\Facades\Storage;
-
 use Illuminate\View\View;
 
-use App\Actions\MissSkin\IsMissSkinTime;
-
-
-
 class SkinatorController extends Controller
-
 {
-
     public function __construct()
-
     {
 
         $this->middleware(UnitySkinsOwnerShip::class)->only(['edit']);
     }
 
-
-
-    function GetMissSkinTheme(): string
-
+    public function GetMissSkinTheme(): string
     {
 
         $missSkinData = json_decode(Storage::disk('local')->get('json/missskin.json'), true);
@@ -50,25 +29,16 @@ class SkinatorController extends Controller
         return $missSkinData['theme'] ?? 'A définir';
     }
 
-
-
     public function create(Request $request): View
-
     {
-
-
 
         $skinId = $request->input('skin');
 
         $skin = null;
 
-
-
         if ($skinId) {
 
             $skin = UnitySkin::find($skinId);
-
-
 
             if (! $skin) {
 
@@ -76,13 +46,11 @@ class SkinatorController extends Controller
             }
         }
 
-
-
         $metaImage = null;
 
         $userAgent = $request->userAgent();
 
-        //Discord bot or Twitter bot
+        // Discord bot or Twitter bot
 
         if (str_contains($userAgent, 'Discordbot') || str_contains($userAgent, 'Twitterbot')) {
 
@@ -90,11 +58,9 @@ class SkinatorController extends Controller
 
             if ($s) {
 
-                $metaImage = 'https://skinator.barbofus.com/renderer-server?s=' . $s;
+                $metaImage = 'https://skinator.barbofus.com/renderer-server?s='.$s;
             }
         }
-
-
 
         return view('skins.skinator', [
 
@@ -108,7 +74,7 @@ class SkinatorController extends Controller
 
             'skin' => $skin,
 
-            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json')) ?: '{}'),
 
             'method' => 'POST',
 
@@ -116,15 +82,12 @@ class SkinatorController extends Controller
 
             'missSkinTheme' => $this->GetMissSkinTheme(),
 
-            'metaImage' => $metaImage
+            'metaImage' => $metaImage,
 
         ]);
     }
 
-
-
     public function testator(Request $request): View
-
     {
 
         // 465 Gannon
@@ -134,27 +97,19 @@ class SkinatorController extends Controller
             abort(403);
         }
 
-
-
         $skinId = $request->input('skin');
 
         $skin = null;
 
-
-
         if ($skinId) {
 
             $skin = UnitySkin::find($skinId);
-
-
 
             if (! $skin) {
 
                 abort(404);
             }
         }
-
-
 
         return view('skins.testator', [
 
@@ -168,21 +123,18 @@ class SkinatorController extends Controller
 
             'skin' => $skin,
 
-            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json')) ?: '{}'),
 
             'method' => 'POST',
 
             'isMissSkinTime' => (new IsMissSkinTime)(),
 
-            'missSkinTheme' => $this->GetMissSkinTheme()
+            'missSkinTheme' => $this->GetMissSkinTheme(),
 
         ]);
     }
 
-
-
     public function devator(Request $request): View
-
     {
 
         // 465 Gannon; 2496 Coatox; 3230 Mcdonald
@@ -192,27 +144,19 @@ class SkinatorController extends Controller
             abort(403);
         }
 
-
-
         $skinId = $request->input('skin');
 
         $skin = null;
 
-
-
         if ($skinId) {
 
             $skin = UnitySkin::find($skinId);
-
-
 
             if (! $skin) {
 
                 abort(404);
             }
         }
-
-
 
         return view('skins.devator', [
 
@@ -226,21 +170,18 @@ class SkinatorController extends Controller
 
             'skin' => $skin,
 
-            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json')) ?: '{}'),
 
             'method' => 'POST',
 
             'isMissSkinTime' => (new IsMissSkinTime)(),
 
-            'missSkinTheme' => $this->GetMissSkinTheme()
+            'missSkinTheme' => $this->GetMissSkinTheme(),
 
         ]);
     }
 
-
-
     public function edit(UnitySkin $skin): View
-
     {
 
         return view('skins.skinator', [
@@ -255,32 +196,24 @@ class SkinatorController extends Controller
 
             'skin' => $skin,
 
-            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json'))),
+            'itemsCache' => json_decode(file_get_contents(storage_path('app/json/skinator/itemsCache.json')) ?: '{}'),
 
             'method' => 'PUT',
 
             'isMissSkinTime' => (new IsMissSkinTime)(),
 
-            'missSkinTheme' => $this->GetMissSkinTheme()
+            'missSkinTheme' => $this->GetMissSkinTheme(),
 
         ]);
     }
 
-
-
     /**
-
      * @return Collection<int, \stdClass>
-
      */
-
     private function getItems(): Collection
-
     {
 
-        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/itemsExport.json'), true);
-
-
+        $itemsData = json_decode(Storage::disk('local')->get('json/skinator/itemsExport.json') ?: '{}', true);
 
         $items = DB::table('items')
 
@@ -306,8 +239,6 @@ class SkinatorController extends Controller
 
             ->get();
 
-
-
         $items->map(function ($item) use ($itemsData) {
 
             $item->kolors = $itemsData[$item->dofus_id]['kolors'] ?? null;
@@ -315,21 +246,13 @@ class SkinatorController extends Controller
             $item->colorable = $itemsData[$item->dofus_id]['colorivant'] ?? null;
         });
 
-
-
         return $items;
     }
 
-
-
     /**
-
      * @return Collection<int, \stdClass>
-
      */
-
     private function getBreeds(): Collection
-
     {
 
         return DB::table('races')
@@ -359,8 +282,6 @@ class SkinatorController extends Controller
                 $breed->heads = json_decode($breed->heads);
 
                 $breed->bodies = json_decode($breed->bodies);
-
-
 
                 return $breed;
             });

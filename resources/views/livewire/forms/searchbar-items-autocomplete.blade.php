@@ -42,7 +42,7 @@
                     goScrollToo(toGo);
                 }
             }"
-            @mousedown.away="show = false">
+            x-on:mousedown.away="show = false">
             <label for="{{ $name }}">
                 <img class="absolute h-full" src="{{ $selectedItem ? asset('https://static.barbofus.com/'. $selectedItem->icon_path) : '' }}" draggable="false">
                 <input x-ref="input"
@@ -50,12 +50,12 @@
                     class="w-full h-full rounded-md pl-14 focus:outline-none placeholder-inactiveText bg-primary-100 @error($name) err-border @enderror"
                     value=""
                     wire:model="query"
-                    @keydown.arrow-down.prevent="{{ (count($items) > 0) ? 'incrementSelection' : '' }}"
-                    @keydown.arrow-up.prevent="{{ (count($items) > 0) ? 'decrementSelection' : '' }}"
-                    @keydown.enter="{{ count($items) > 0 ? '$wire.setSelection(selection)' : ''}}"
-                    @mousedown="show = true"
-                    @focusin="show = true"
-                    @keydown.enter.prevent="show = false, $refs.input.blur()"/>
+                    x-on:keydown.arrow-down.prevent="{{ (count($items) > 0) ? 'incrementSelection' : '' }}"
+                    x-on:keydown.arrow-up.prevent="{{ (count($items) > 0) ? 'decrementSelection' : '' }}"
+                    x-on:keydown.enter="{{ count($items) > 0 ? '$wire.setSelection(selection)' : ''}}"
+                    x-on:mousedown="show = true"
+                    x-on:focusin="show = true"
+                    x-on:keydown.enter.prevent="show = false, $refs.input.blur()"/>
                 <input type="hidden" name="{{ $name }}" value="{{ $selectedItem ? $selectedItem->dofus_id : null }}" />
             </label>
 
@@ -70,7 +70,7 @@
                             class="flex w-full rounded-md items-center transition-all duration-75 border-2 h-12 space-x-2 cursor-pointer}"
                             :class="(selection === @js($key) ? 'border-secondary text-secondary font-normal' : 'hover:border-inactiveText border-primary-100 text-inactiveText font-light')"
                             wire:click="setSelection({{$key}})"
-                            @click="show = false">
+                            x-on:click="show = false">
 
                             <img draggable="false" class="h-full select-none" src="{{ asset('https://static.barbofus.com\\'. $item->icon_path) }}" alt="">
                             <p class="select-none">{{ $item->name }}</p>

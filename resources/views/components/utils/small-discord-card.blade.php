@@ -15,10 +15,10 @@
     </div>
     <div x-show="!showDiscordInfo" class="flex items-center gap-x-2">
         <div class="bg-inactiveText rounded-full w-8 h-8 cursor-pointer hover:bg-secondary transition-colors"
-             @click="showDiscordInfo = true">
+             x-on:click="showDiscordInfo = true">
         </div>
         <div class="bg-inactiveText rounded-md px-2 py-1 cursor-pointer hover:bg-secondary transition-colors"
-             @click="showDiscordInfo = true">
+             x-on:click="showDiscordInfo = true">
             <p class="text-sm font-medium text-transparent">████████</p>
             <p class="text-xs font-medium text-transparent">████████</p>
         </div>

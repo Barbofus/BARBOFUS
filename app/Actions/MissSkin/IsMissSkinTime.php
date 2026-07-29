@@ -8,7 +8,7 @@ final class IsMissSkinTime
 {
     /**
      * @return bool
-     * Vérifie si l'heure française permet d'attribuer le statut MissSkin (7h00 - 11h30)
+     *              Vérifie si l'heure française permet d'attribuer le statut MissSkin (7h00 - 11h30)
      */
     public function __invoke(): bool
     {

@@ -2,41 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class RewardsController extends Controller
 {
     /**
      * Lit le JSON des récompenses depuis le stockage
+     *
+     * @return mixed
      */
-    private function readRewards(): array
+    private function readRewards()
     {
-        if (!Storage::disk('local')->exists('json/rewards.json')) {
+        if (! Storage::disk('local')->exists('json/rewards.json')) {
             return [];
         }
 
         $json = Storage::disk('local')->get('json/rewards.json');
+
         return json_decode($json, true)['rewards'] ?? [];
     }
 
     /**
      * Sauvegarde les récompenses dans le JSON
+     *
+     * @param  string[]  $rewards
      */
     private function saveRewards(array $rewards): void
     {
         $data = [
             'rewards' => $rewards,
-            'updated_at' => now()->toISOString()
+            'updated_at' => now()->toISOString(),
         ];
 
-        Storage::disk('local')->put('json/rewards.json', json_encode($data, JSON_PRETTY_PRINT));
+        Storage::disk('local')->put(
+            'json/rewards.json',
+            json_encode($data, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR)
+        );
     }
 
     /**
      * Page de la boutique de récompenses
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $rewards = $this->readRewards();
         $userSelectedReward = auth()->check() ? auth()->user()->selected_reward_image : null;
@@ -50,13 +60,13 @@ class RewardsController extends Controller
     /**
      * Met à jour toutes les récompenses
      */
-    public function updateAll(Request $request)
+    public function updateAll(Request $request): JsonResponse
     {
         // Vérifier que l'utilisateur est admin
-        if (!auth()->check() || !auth()->user()->can('admin-access')) {
+        if (! auth()->check() || ! auth()->user()->can('admin-access')) {
             return response()->json([
                 'success' => false,
-                'message' => 'Accès non autorisé'
+                'message' => 'Accès non autorisé',
             ], 403);
         }
 
@@ -64,7 +74,7 @@ class RewardsController extends Controller
 
         // Normaliser les données
         foreach ($rewards as &$reward) {
-            if (!isset($reward['image'])) {
+            if (! isset($reward['image'])) {
                 $reward['image'] = '/storage/images/rewards/default.png';
             }
         }
@@ -73,27 +83,27 @@ class RewardsController extends Controller
 
         return response()->json([
             'success' => true,
-            'rewards' => $rewards
+            'rewards' => $rewards,
         ], 200);
     }
 
     /**
      * Met à jour l'image d'une récompense spécifique
      */
-    public function updateImage(Request $request)
+    public function updateImage(Request $request): JsonResponse
     {
         // Vérifier que l'utilisateur est admin
-        if (!auth()->check() || !auth()->user()->can('admin-access')) {
+        if (! auth()->check() || ! auth()->user()->can('admin-access')) {
             return response()->json([
                 'success' => false,
-                'message' => 'Accès non autorisé'
+                'message' => 'Accès non autorisé',
             ], 403);
         }
 
         $rewardIndex = $request->input('rewardIndex');
         $file = $request->file('image');
 
-        if ($rewardIndex === null || !$file) {
+        if ($rewardIndex === null || ! $file) {
             return response()->json(['success' => false, 'message' => 'Données manquantes'], 400);
         }
 
@@ -101,7 +111,7 @@ class RewardsController extends Controller
         $rewards = $this->readRewards();
 
         // Vérifier que l'index est valide
-        if (!isset($rewards[$rewardIndex])) {
+        if (! isset($rewards[$rewardIndex])) {
             return response()->json(['success' => false, 'message' => 'Récompense non trouvée'], 404);
         }
 
@@ -109,7 +119,7 @@ class RewardsController extends Controller
         $oldImagePath = $rewards[$rewardIndex]['image'] ?? null;
 
         // Supprimer l'ancienne image si elle existe et n'est pas l'image par défaut
-        if ($oldImagePath && !str_contains($oldImagePath, 'default.png')) {
+        if ($oldImagePath && ! str_contains($oldImagePath, 'default.png')) {
             $oldPath = str_replace('/storage/', '', $oldImagePath);
             if (Storage::disk('public')->exists($oldPath)) {
                 Storage::disk('public')->delete($oldPath);
@@ -118,7 +128,7 @@ class RewardsController extends Controller
 
         // Stocker la nouvelle image
         $newPath = $file->store('images/rewards', 'public');
-        $newImageUrl = '/storage/' . $newPath;
+        $newImageUrl = '/storage/'.$newPath;
 
         // Mettre à jour l'image dans les récompenses
         $rewards[$rewardIndex]['image'] = $newImageUrl;
@@ -129,20 +139,20 @@ class RewardsController extends Controller
         return response()->json([
             'success' => true,
             'imageUrl' => $newImageUrl,
-            'rewards' => $rewards
+            'rewards' => $rewards,
         ]);
     }
 
     /**
      * Ajouter une nouvelle récompense
      */
-    public function add(Request $request)
+    public function add(Request $request): JsonResponse
     {
         // Vérifier que l'utilisateur est admin
-        if (!auth()->check() || !auth()->user()->can('admin-access')) {
+        if (! auth()->check() || ! auth()->user()->can('admin-access')) {
             return response()->json([
                 'success' => false,
-                'message' => 'Accès non autorisé'
+                'message' => 'Accès non autorisé',
             ], 403);
         }
 
@@ -150,27 +160,27 @@ class RewardsController extends Controller
 
         // Ajouter une nouvelle récompense
         $rewards[] = [
-            'image' => '/storage/images/rewards/default.png'
+            'image' => '/storage/images/rewards/default.png',
         ];
 
         $this->saveRewards($rewards);
 
         return response()->json([
             'success' => true,
-            'rewards' => $rewards
+            'rewards' => $rewards,
         ]);
     }
 
     /**
      * Supprimer une récompense
      */
-    public function delete(Request $request)
+    public function delete(Request $request): JsonResponse
     {
         // Vérifier que l'utilisateur est admin
-        if (!auth()->check() || !auth()->user()->can('admin-access')) {
+        if (! auth()->check() || ! auth()->user()->can('admin-access')) {
             return response()->json([
                 'success' => false,
-                'message' => 'Accès non autorisé'
+                'message' => 'Accès non autorisé',
             ], 403);
         }
 
@@ -182,13 +192,13 @@ class RewardsController extends Controller
 
         $rewards = $this->readRewards();
 
-        if (!isset($rewards[$rewardIndex])) {
+        if (! isset($rewards[$rewardIndex])) {
             return response()->json(['success' => false, 'message' => 'Récompense non trouvée'], 404);
         }
 
         // Supprimer l'image associée si elle n'est pas l'image par défaut
         $imagePath = $rewards[$rewardIndex]['image'] ?? null;
-        if ($imagePath && !str_contains($imagePath, 'default.png')) {
+        if ($imagePath && ! str_contains($imagePath, 'default.png')) {
             $path = str_replace('/storage/', '', $imagePath);
             if (Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path);
@@ -202,28 +212,28 @@ class RewardsController extends Controller
 
         return response()->json([
             'success' => true,
-            'rewards' => $rewards
+            'rewards' => $rewards,
         ]);
     }
 
     /**
      * Sélectionner une récompense pour l'utilisateur connecté
      */
-    public function selectReward(Request $request)
+    public function selectReward(Request $request): JsonResponse
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Connexion requise'
+                'message' => 'Connexion requise',
             ], 401);
         }
 
         $imagePath = $request->input('imagePath');
 
-        if (!$imagePath) {
+        if (! $imagePath) {
             return response()->json([
                 'success' => false,
-                'message' => 'Image path requis'
+                'message' => 'Image path requis',
             ], 400);
         }
 
@@ -238,19 +248,19 @@ class RewardsController extends Controller
             }
         }
 
-        if (!$rewardExists) {
+        if (! $rewardExists) {
             return response()->json([
                 'success' => false,
-                'message' => 'Cette récompense n\'est plus disponible'
+                'message' => 'Cette récompense n\'est plus disponible',
             ], 404);
         }
 
         // Vérifier que le fichier image existe
         $filePath = str_replace('/storage/', '', $imagePath);
-        if (!Storage::disk('public')->exists($filePath)) {
+        if (! Storage::disk('public')->exists($filePath)) {
             return response()->json([
                 'success' => false,
-                'message' => 'L\'image de cette récompense n\'existe plus'
+                'message' => 'L\'image de cette récompense n\'existe plus',
             ], 404);
         }
 
@@ -261,7 +271,7 @@ class RewardsController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Récompense sélectionnée avec succès',
-            'selected_reward' => $imagePath
+            'selected_reward' => $imagePath,
         ]);
     }
 }

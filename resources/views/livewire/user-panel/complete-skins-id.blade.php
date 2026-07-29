@@ -11,7 +11,7 @@
 
             <input x-model="id" type="text" class="h-12 rounded-lg bg-primary-100">
 
-            <button @click="$wire.useSkinId(id, {{$item->dofus_id}}, 2), id = null" class="h-12 p-2 rounded-lg w-fit text-primary goldGradient">
+            <button x-on:click="$wire.useSkinId(id, {{$item->dofus_id}}, 2), id = null" class="h-12 p-2 rounded-lg w-fit text-primary goldGradient">
                 Valider
             </button>
         </div>
@@ -30,7 +30,7 @@
             <input x-model="idM" placeholder="Skin Mâle" type="text" class="h-12 pl-4 rounded-lg placeholder-inactiveText bg-primary-100">
             <input x-model="idF" placeholder="Skin Femelle" type="text" class="h-12 pl-4 rounded-lg placeholder-inactiveText bg-primary-100">
 
-            <button @click="$wire.useSkinIdCostume({{$item->dofus_id}}, idM, idF), idF = null, idM = null" class="h-12 p-2 rounded-lg w-fit text-primary goldGradient">
+            <button x-on:click="$wire.useSkinIdCostume({{$item->dofus_id}}, idM, idF), idF = null, idM = null" class="h-12 p-2 rounded-lg w-fit text-primary goldGradient">
                 Valider
             </button>
         </div>

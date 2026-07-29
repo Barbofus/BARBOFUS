@@ -16,7 +16,7 @@ final class ComputeColorHsl
 
     /**
      * @param  string|null  $hex  A 6-character hex color string (e.g. "FF5733"), without leading "#"
-     * @return array{hue: int, saturation: int, lightness: int}|null  Returns null on invalid input
+     * @return array{hue: int, saturation: int, lightness: int}|null Returns null on invalid input
      */
     public function __invoke(?string $hex): ?array
     {

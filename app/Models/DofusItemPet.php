@@ -15,10 +15,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $skins_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UnitySkin> $UnitySkins
  * @property-read int|null $unity_skins_count
+ *
  * @method static \Database\Factories\DofusItemPetFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemPet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemPet newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemPet query()
+ *
  * @mixin \Eloquent
  */
 class DofusItemPet extends Model

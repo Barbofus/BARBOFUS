@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $refused_reason
  * @property-read \App\Models\HavenBagTheme $havenBagTheme
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\HavenBagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBag newQuery()
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBag whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBag whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HavenBag whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class HavenBag extends Model

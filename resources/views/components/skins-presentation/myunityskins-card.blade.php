@@ -15,7 +15,7 @@
         </a>
 
         <button
-            @click="skinDeleteID = {{ $skin->id }}, skinDeleteImg = '{{ asset('storage/' . $skin->image_path) }}'">
+            x-on:click="skinDeleteID = {{ $skin->id }}, skinDeleteImg = '{{ asset('storage/' . $skin->image_path) }}'">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="h-10 transition-all hover:scale-125 group-hover:text-red-500">
                 <path stroke-linecap="round" stroke-linejoin="round"

@@ -11,7 +11,7 @@
         'opacity-0 grayscale hover:opacity-50': activity.visible === false
     }"
     x-data="activityImageUpload(activity, dayIndex, activityIndex, {{ $isAdmin ? 'true' : 'false' }})"
-    @if ($isAdmin) @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false" @drop.prevent="handleDrop($event)" @endif>
+    @if ($isAdmin) x-on:dragover.prevent="isDragging = true" x-on:dragleave.prevent="isDragging = false" x-on:drop.prevent="handleDrop($event)" @endif>
     <div class="relative flex flex-col h-full overflow-hidden">
 
         {{-- Badge LIVE pour activité en cours --}}
@@ -25,7 +25,7 @@
 
         {{-- Bouton de visibilité - Seulement pour les admins --}}
         @if ($isAdmin)
-            <button @click="toggleVisibility()"
+            <button x-on:click="toggleVisibility()"
                 class="absolute z-10 flex items-center justify-center transition-all duration-200 top-2 right-2 hover:scale-110 group/btn"
                 :class="activity.visible === false ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'">
                 <!-- Icône œil ouvert (visible) -->
@@ -49,7 +49,7 @@
 
         {{-- Image Section --}}
         <div class="relative flex-1 min-h-0 overflow-hidden @if ($isAdmin) cursor-pointer @endif"
-            @if ($isAdmin) @click="$refs.fileInput.click()" @endif>
+            @if ($isAdmin) x-on:click="$refs.fileInput.click()" @endif>
             <img :src="activity.Image" class="object-cover w-full h-full transition-transform duration-700 ease-out"
                 :class="{
                     'scale-110': isCurrentActivity(),
@@ -98,7 +98,7 @@
 
         {{-- Hidden file input - Seulement pour les admins --}}
         @if ($isAdmin)
-            <input type="file" x-ref="fileInput" class="hidden" @change="handleFileUpload($event)">
+            <input type="file" x-ref="fileInput" class="hidden" x-on:change="handleFileUpload($event)">
         @endif
 
         {{-- Content Section --}}
@@ -115,9 +115,9 @@
                         <input type="text"
                             class="bg-transparent text-transparent font-light bg-gradient-to-r from-[#fba436] to-[#faed61] bg-clip-text tracking-wider outline-none w-12 min-[400px]:w-14 lg:w-[min(3.5rem,4vw)]
                                   focus:from-white/10 focus:to-white/20 focus:text-white focus:bg-clip-border focus:rounded px-1 transition-all text-sm min-[400px]:text-base lg:text-[min(1rem,1.25vw)]"
-                            x-model="activity.StartTime" @focus="activity.StartTime = ''"
-                            @blur="activity.StartTime = window.planningComponent().validateTime(activity.StartTime); window.planningComponent().savePlanning()"
-                            @keydown.enter="$event.target.blur()" />
+                            x-model="activity.StartTime" x-on:focus="activity.StartTime = ''"
+                            x-on:blur="activity.StartTime = window.planningComponent().validateTime(activity.StartTime); window.planningComponent().savePlanning()"
+                            x-on:keydown.enter="$event.target.blur()" />
                     @else
                         <span
                             class="bg-transparent text-transparent font-light bg-gradient-to-r from-[#fba436] to-[#faed61] bg-clip-text tracking-wider text-sm min-[400px]:text-base lg:text-[min(1rem,1.25vw)] w-12 min-[400px]:w-14 lg:w-[min(3.5rem,4vw)]"
@@ -132,9 +132,9 @@
                         <input type="text"
                             class="bg-transparent text-transparent font-light bg-gradient-to-r from-[#fba436] to-[#faed61] bg-clip-text tracking-wider outline-none w-12 min-[400px]:w-14 lg:w-[min(3.5rem,4vw)]
                                   focus:from-white/10 focus:to-white/20 focus:text-white focus:bg-clip-border focus:rounded px-1 transition-all text-sm min-[400px]:text-base lg:text-[min(1rem,1.25vw)]"
-                            x-model="activity.EndTime" @focus="activity.EndTime = ''"
-                            @blur="activity.EndTime = window.planningComponent().validateTime(activity.EndTime); window.planningComponent().savePlanning()"
-                            @keydown.enter="$event.target.blur()" />
+                            x-model="activity.EndTime" x-on:focus="activity.EndTime = ''"
+                            x-on:blur="activity.EndTime = window.planningComponent().validateTime(activity.EndTime); window.planningComponent().savePlanning()"
+                            x-on:keydown.enter="$event.target.blur()" />
                     @else
                         <span
                             class="bg-transparent text-transparent font-light bg-gradient-to-r from-[#fba436] to-[#faed61] bg-clip-text tracking-wider text-sm min-[400px]:text-base lg:text-[min(1rem,1.25vw)] w-12 min-[400px]:w-14 lg:w-[min(3.5rem,4vw)]"
@@ -147,8 +147,8 @@
                 @if ($isAdmin)
                     <input type="text"
                         class="w-full px-1 leading-tight text-white transition-all bg-transparent outline-none text-sm min-[400px]:text-base lg:text-[min(1rem,1.2vw)] focus:bg-white/10 focus:rounded"
-                        x-model="activity.Name" @blur="window.planningComponent().savePlanning()"
-                        @keydown.enter="$event.target.blur()" />
+                        x-model="activity.Name" x-on:blur="window.planningComponent().savePlanning()"
+                        x-on:keydown.enter="$event.target.blur()" />
                 @else
                     <span
                         class="w-full px-1 leading-tight text-sm min-[400px]:text-base lg:text-[min(1rem,1.2vw)] text-white"

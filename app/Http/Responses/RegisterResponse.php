@@ -20,6 +20,6 @@ class RegisterResponse extends FortifyRegisterResponse
         auth()->user()->update(['locale' => app()->getLocale()]);
         $this->guard->logout();
 
-        return redirect()->route('verification.notice', ['id' => $id]);
+        return redirect()->route('verification.notice.show', ['id' => $id]);
     }
 }

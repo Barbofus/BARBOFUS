@@ -41,7 +41,7 @@
                 goScrollToo(toGo);
             }
         }"
-        @click.away="{{ (count($itemToShow) > 0) ? '$wire.emptyQuery(), selection = 0' : '' }}">
+        x-on:click.away="{{ (count($itemToShow) > 0) ? '$wire.emptyQuery(), selection = 0' : '' }}">
 
         {{-- La barre de recherche --}}
         <input type="text"
@@ -50,14 +50,14 @@
                placeholder="{{ __('barbofus.inputSearchItemUsername') }}"
                maxlength="45"
                autocomplete="off"
-               @keydown.enter="@if(count($itemToShow) > 0)
+               x-on:keydown.enter="@if(count($itemToShow) > 0)
                     $wire.emit('ToggleSearchedText', items[selection].is_user + '' + items[selection].id), EnterPressedOnSearchBar(items[selection].is_user, items[selection].id)
                @endif"
                wire:model="query"
-               @keydown.arrow-down.prevent="@if(count($itemToShow) > 0)
+               x-on:keydown.arrow-down.prevent="@if(count($itemToShow) > 0)
                     incrementSelection
                @endif"
-               @keydown.arrow-up.prevent="@if(count($itemToShow) > 0)
+               x-on:keydown.arrow-up.prevent="@if(count($itemToShow) > 0)
                     decrementSelection
                @endif">
 
@@ -69,7 +69,7 @@
                     class="flex items-center w-full p-1 transition-all group"
                     :class="(selection == {{$key}} ? 'bg-white bg-opacity-10' : 'hover:bg-white hover:bg-opacity-10')"
                     wire:click="$emit('ToggleSearchedText', '{{$item['is_user'].$item['id'] }}')"
-                    @click="EnterPressedOnSearchBar('{{ $item['is_user'] }}','{{ $item['id'] }}')"
+                    x-on:click="EnterPressedOnSearchBar('{{ $item['is_user'] }}','{{ $item['id'] }}')"
                     wire:key="{{ addslashes($item['id']) . rand() }}">
                     @if(@isset($item['icon_path']))
                         <img class="h-10 transition-all {{ ($key == $selectionKey) ? 'scale-110' : 'group-hover:scale-110' }}" src="{{ asset('https://static.barbofus.com/'. $item['icon_path']) }}">
@@ -88,7 +88,7 @@
         <div class="flex flex-wrap justify-start w-full max-h-[7rem] overflow-auto items-center gap-2 mt-2">
             @foreach($itemResults as $result)
                 <button wire:click="$emit('ToggleSearchedText', {{ \Illuminate\Support\Js::from($result[0]) }})"
-                        @click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', {{ \Illuminate\Support\Js::from($result[0]) }})"                        class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
+                        x-on:click="window.scrollTo({top: 0, behavior: 'smooth'}), ToggleArrayParamToUrl('search', {{ \Illuminate\Support\Js::from($result[0]) }})"                        class="flex justify-between items-center px-2 py-1 bg-black bg-opacity-[0.2] rounded-[2.25px] group hover:bg-opacity-100 hover:bg-primary-100 transition-colors">
                     <p class="font-light text-[1rem] text-inactiveText">{{ $result[1] }}</p>
 
                     <!-- Croix -->

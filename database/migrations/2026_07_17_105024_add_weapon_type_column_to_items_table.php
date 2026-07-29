@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->enum('weapon_type',  WeaponSubcategorieEnum::values())->nullable()->after('pet_type');
+            $table->enum('weapon_type', WeaponSubcategorieEnum::values())->nullable()->after('pet_type');
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->dropColumn(["weapon_type"]);
+            $table->dropColumn(['weapon_type']);
         });
     }
 };

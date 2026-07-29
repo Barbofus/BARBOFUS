@@ -40,7 +40,7 @@
     }
 }" x-show="showPopup" x-cloak>
     {{-- Overlay --}}
-    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 font-light bg-black bg-opacity-50 text-secondary" @click="closePopup()">
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 font-light bg-black bg-opacity-50 text-secondary" x-on:click="closePopup()">
         {{-- Popup Container --}}
         <div class="w-full max-w-md mx-auto rounded-lg shadow-xl bg-primary" @click.stop>
             {{-- Header --}}
@@ -48,7 +48,7 @@
                 <h3 class="text-xl font-normal">
                     {{ __('barbofus.popupMissSkinTitle') }}<span x-text="misskinTheme"></span>
                 </h3>
-                <button @click="closePopup()" class="text-red-400 transition-colors hover:text-red-600">
+                <button x-on:click="closePopup()" class="text-red-400 transition-colors hover:text-red-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>

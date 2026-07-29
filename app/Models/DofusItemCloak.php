@@ -14,9 +14,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $skins_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UnitySkin> $UnitySkins
  * @property-read int|null $unity_skins_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemCloak newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemCloak newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DofusItemCloak query()
+ *
  * @mixin \Eloquent
  */
 class DofusItemCloak extends Model

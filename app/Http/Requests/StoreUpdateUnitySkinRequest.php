@@ -42,7 +42,7 @@ class StoreUpdateUnitySkinRequest extends FormRequest
             $imageValidation = 'required|image|max:250|dimensions:width=300,height=500';
         } else {
             $imageRequired = (str_ends_with(\Route::currentRouteName(), 'update')) ? 'nullable' : 'required';
-            $imageValidation = $imageRequired . '|image|max:500|dimensions:max_width=500,max_height=650';
+            $imageValidation = $imageRequired.'|image|max:500|dimensions:max_width=500,max_height=650';
         }
 
         $headsData = json_decode(Storage::disk('local')->get('json/skinator/HeadsDataRoot.json'), true)['references']['RefIds'];

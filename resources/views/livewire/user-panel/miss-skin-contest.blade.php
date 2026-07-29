@@ -86,13 +86,13 @@
                         @if ($showConfirmFinalize)
                             <div class="p-4 bg-primary-100 border border-[var(--emeraldLit)] rounded-lg">
                                 <p class="mb-3 text-inactiveText">⚠️ Voulez-vous finaliser le concours ?</p>
-                                <button @click="syncTopsWithLivewire(); $wire.finalizeContest()"
+                                <button x-on:click="syncTopsWithLivewire(); $wire.finalizeContest()"
                                     class="px-6 py-2 transition-colors rounded-md text-primary emeraldGradient hover:brightness-110">
                                     Finaliser le concours
                                 </button>
                             </div>
                         @else
-                            <button @click="syncTopsWithLivewire(); $wire.showConfirmFinalize = true"
+                            <button x-on:click="syncTopsWithLivewire(); $wire.showConfirmFinalize = true"
                                 class="px-6 py-2 transition-colors rounded-md text-primary emeraldGradient hover:brightness-110">
                                 Finaliser le concours
                             </button>
@@ -232,7 +232,7 @@
                                     {{-- Controls overlay --}}
                                     <div class="absolute z-20 flex justify-between w-full px-2 text-inactiveText top-6">
                                         {{-- Heart favorite button --}}
-                                        <button @click.stop="toggleFavorite({{ $skin->id }})"
+                                        <button x-on:click.stop="toggleFavorite({{ $skin->id }})"
                                             class="p-1 text-red-500 transition-all hover:scale-125">
                                             <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
                                                 <path
@@ -247,7 +247,7 @@
                                         <div class="flex flex-col items-center justify-center h-full gap-6 pl-2">
 
                                             {{-- TOP 1 Button --}}
-                                            <button type="button" @click.stop="setTop({{ $skin->id }}, 'top1')"
+                                            <button type="button" x-on:click.stop="setTop({{ $skin->id }}, 'top1')"
                                                 class="relative px-3 py-2 text-sm text-white rounded group/top1 bg-primary">
                                                 <div :class="selectedTops.top1 === {{ $skin->id }} ? 'opacity-100' : 'opacity-0'"
                                                     class="absolute transition-all group-hover/top1:opacity-100 -top-1 -left-1 w-[calc(100%+0.5rem)] h-[calc(100%+0.5rem)] rounded-lg -z-20 goldGradient">
@@ -256,7 +256,7 @@
                                             </button>
 
                                             {{-- TOP 2 Button --}}
-                                            <button type="button" @click.stop="setTop({{ $skin->id }}, 'top2')"
+                                            <button type="button" x-on:click.stop="setTop({{ $skin->id }}, 'top2')"
                                                 class="relative px-3 py-2 text-sm text-white rounded group/top2 bg-primary">
                                                 <div :class="selectedTops.top2 === {{ $skin->id }} ? 'opacity-100' : 'opacity-0'"
                                                     class="absolute opacity-0 transition-all group-hover/top2:opacity-100 -top-1 -left-1 w-[calc(100%+0.5rem)] h-[calc(100%+0.5rem)] rounded-lg -z-20 emeraldGradient">
@@ -265,7 +265,7 @@
                                             </button>
 
                                             {{-- TOP 3 Button --}}
-                                            <button type="button" @click.stop="setTop({{ $skin->id }}, 'top3')"
+                                            <button type="button" x-on:click.stop="setTop({{ $skin->id }}, 'top3')"
                                                 class="relative px-3 py-2 text-sm text-white rounded group/top3 bg-primary">
                                                 <div :class="selectedTops.top3 === {{ $skin->id }} ? 'opacity-100' : 'opacity-0'"
                                                     class="absolute opacity-0 transition-all group-hover/top3:opacity-100 -top-1 -left-1 w-[calc(100%+0.5rem)] h-[calc(100%+0.5rem)] rounded-lg -z-20 cawotteGradient">
@@ -342,7 +342,7 @@
                         {{-- Controls overlay --}}
                         <div class="absolute z-20 flex justify-between w-full px-2 text-inactiveText top-6">
                             {{-- Heart favorite button --}}
-                            <button @click.stop="toggleFavorite({{ $skin->id }})"
+                            <button x-on:click.stop="toggleFavorite({{ $skin->id }})"
                                 :class="isInFavorites({{ $skin->id }}) ? 'text-red-500' : 'text-gray-400'"
                                 class="p-1 transition-all hover:scale-125">
                                 <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">

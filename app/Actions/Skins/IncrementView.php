@@ -27,7 +27,7 @@ final class IncrementView
         }
 
         $skin = UnitySkin::find($skinId);
-        if (!$skin) {
+        if (! $skin) {
             return;
         }
 

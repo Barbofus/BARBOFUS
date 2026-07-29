@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class TwitchCounterController extends Controller
 {
-    private $secret;
+    private string $secret;
 
     public function __construct()
     {
@@ -16,10 +17,8 @@ class TwitchCounterController extends Controller
 
     /**
      * Handle the incoming request.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         // Validation basique
         $request->validate([
@@ -58,7 +57,11 @@ class TwitchCounterController extends Controller
         }
 
         // Sauvegarde
-        Storage::disk('local')->put('json/twitch_counters.json', json_encode($counters));
+        $json = json_encode($counters);
+
+        if ($json !== false) {
+            Storage::disk('local')->put('json/twitch_counters.json', $json);
+        }
 
         return response()->json([
             'value' => $counters[$name],

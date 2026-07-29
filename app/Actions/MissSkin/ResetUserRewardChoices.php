@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Actions\MissSkin;
 
 use App\Models\User;
-use Illuminate\Support\Facades\File;
 
 final class ResetUserRewardChoices
 {
@@ -39,8 +38,8 @@ final class ResetUserRewardChoices
         $missSkinPath = storage_path('app/json/missskin.json');
 
         // S'assurer que le fichier existe
-        if (!\File::exists($missSkinPath)) {
-            \File::put($missSkinPath, json_encode(['theme' => 'A définir'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        if (! \File::exists($missSkinPath)) {
+            \File::put($missSkinPath, json_encode(['theme' => 'A définir'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
         }
 
         // Réinitialiser les données du concours
@@ -48,9 +47,9 @@ final class ResetUserRewardChoices
             'theme' => 'A définir',
             'contest_finalized' => false,
             'finalized_winners' => [],
-            'reset_time' => now()->toISOString()
+            'reset_time' => now()->toISOString(),
         ];
 
-        \File::put($missSkinPath, json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        \File::put($missSkinPath, json_encode($missSkinData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
     }
 }

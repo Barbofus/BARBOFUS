@@ -18,7 +18,7 @@
         <div class="min-[1250px]:w-[20rem] max-h-[25rem] font-light fixed min-[400px]:sticky top-16 min-[400px]:top-32">
 
             <button wire:click="ChangeSection('user-details')"
-                @click="currentPage = 'user-details', window.scrollTo(0,0), updateUrl('user-details')"
+                x-on:click="currentPage = 'user-details', window.scrollTo(0,0), updateUrl('user-details')"
                 :class="(currentPage == 'user-details') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
@@ -31,7 +31,7 @@
             </button>
 
             <button wire:click="ChangeSection('my-unity-skins')"
-                @click="currentPage = 'my-unity-skins', window.scrollTo(0,0), updateUrl('my-unity-skins')"
+                x-on:click="currentPage = 'my-unity-skins', window.scrollTo(0,0), updateUrl('my-unity-skins')"
                 :class="(currentPage == 'my-unity-skins') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
@@ -45,7 +45,7 @@
             </button>
 
             <button wire:click="ChangeSection('my-skins')"
-                @click="currentPage = 'my-skins', window.scrollTo(0,0), updateUrl('my-skins')"
+                x-on:click="currentPage = 'my-skins', window.scrollTo(0,0), updateUrl('my-skins')"
                 :class="(currentPage == 'my-skins') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
@@ -59,7 +59,7 @@
             </button>
 
             <button wire:click="ChangeSection('my-havenbags')"
-                @click="currentPage = 'my-havenbags', window.scrollTo(0,0), updateUrl('my-havenbags')"
+                x-on:click="currentPage = 'my-havenbags', window.scrollTo(0,0), updateUrl('my-havenbags')"
                 :class="(currentPage == 'my-havenbags') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path
@@ -75,7 +75,7 @@
             </button>
 
             <button wire:click="ChangeSection('my-likes')"
-                @click="currentPage = 'my-likes', window.scrollTo(0,0), updateUrl('my-likes')"
+                x-on:click="currentPage = 'my-likes', window.scrollTo(0,0), updateUrl('my-likes')"
                 :class="(currentPage == 'my-likes') ? activeButtonClass: initButtonClass" x-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path
@@ -87,7 +87,7 @@
 
             {{-- Onglet visible uniquement par les modérateurs et les admins --}}
             @can('validate-skin')
-                {{-- <button wire:click="$set('section', 'skins-validation')" @click="currentPage = 'skins-validation', window.scrollTo(0,0)" :class="(currentPage == 'skins-validation') ? activeButtonClass : initButtonClass" x-cloak>
+                {{-- <button wire:click="$set('section', 'skins-validation')" x-on:click="currentPage = 'skins-validation', window.scrollTo(0,0)" :class="(currentPage == 'skins-validation') ? activeButtonClass : initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                         <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
@@ -97,7 +97,7 @@
                 </button> --}}
 
                 <button wire:click="ChangeSection('haven-bags-validation')"
-                    @click="currentPage = 'haven-bags-validation', window.scrollTo(0,0), updateUrl('haven-bags-validation')"
+                    x-on:click="currentPage = 'haven-bags-validation', window.scrollTo(0,0), updateUrl('haven-bags-validation')"
                     :class="(currentPage == 'haven-bags-validation') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
@@ -114,7 +114,7 @@
             @can('admin-access')
 
                 <button wire:click="ChangeSection('users-list')"
-                    @click="currentPage = 'users-list', window.scrollTo(0,0), updateUrl('users-list')"
+                    x-on:click="currentPage = 'users-list', window.scrollTo(0,0), updateUrl('users-list')"
                     :class="(currentPage == 'users-list') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path
@@ -127,7 +127,7 @@
 
 
                 <button wire:click="ChangeSection('admin-panel')"
-                    @click="currentPage = 'admin-panel', window.scrollTo(0,0), updateUrl('admin-panel')"
+                    x-on:click="currentPage = 'admin-panel', window.scrollTo(0,0), updateUrl('admin-panel')"
                     :class="(currentPage == 'admin-panel') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path fill-rule="evenodd"
@@ -151,7 +151,7 @@
                 </a>
 
                 <button wire:click="ChangeSection('miss-skin-contest')"
-                    @click="currentPage = 'miss-skin-contest', window.scrollTo(0,0), updateUrl('miss-skin-contest')"
+                    x-on:click="currentPage = 'miss-skin-contest', window.scrollTo(0,0), updateUrl('miss-skin-contest')"
                     :class="(currentPage == 'miss-skin-contest') ? activeButtonClass: initButtonClass" x-cloak>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path fill-rule="evenodd"
@@ -164,7 +164,7 @@
 
                 @if ($skinsToComplete > 0)
                     <button wire:click="ChangeSection('complete-skins-id')"
-                        @click="currentPage = 'complete-skins-id', window.scrollTo(0,0), updateUrl('complete-skins-id')"
+                        x-on:click="currentPage = 'complete-skins-id', window.scrollTo(0,0), updateUrl('complete-skins-id')"
                         :class="(currentPage == 'complete-skins-id') ? activeButtonClass: initButtonClass" x-cloak>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                             <path fill-rule="evenodd"
