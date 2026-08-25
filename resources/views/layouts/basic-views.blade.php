@@ -33,7 +33,7 @@
 
     <x-main-header />
 
-    <x-popup-missskin />
+    {{-- <x-popup-missskin /> --}}
 
     {{-- Notifications --}}
     @auth

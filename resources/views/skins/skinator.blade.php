@@ -8,7 +8,7 @@
     <h1 class="text-[min(3rem,10vw)] mt-8 font-normal text-center uppercase">
         {{ str_ends_with(Route::currentRouteName(), 'edit') ? __('barbofus.titleEdit') : 'Skinator' }}</h1>
 
-    @if ($isMissSkinTime)
+    {{-- @if ($isMissSkinTime)
         <div class="flex items-center justify-center mx-auto gap-x-2 w-fit">
             <p class="text-lg italic font-light text-center text-inactiveText whitespace-nowrap">Thème du Miss'Skin: <span class="text-secondary">{{ $missSkinTheme }}</span></p>
 
@@ -41,7 +41,7 @@
                     </div>
                 </div>
         </div>
-    @endif
+    @endif --}}
 
     <form autocomplete="off" class="w-[min(98vw,120rem)] mx-auto mb-16 h-fit relative" method="POST" id="skinator-form"
         action="{{ $route }}" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';"
