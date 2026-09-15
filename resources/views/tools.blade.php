@@ -18,7 +18,7 @@
         </div>
 
         {{-- Grougalorasalar - Pawmi (Sinaninho) --}}
-        <div class="border-y border-secondary px-0 py-4 min-[800px]:px-8 min-[800px]:py-8 flex flex-col min-[1200px]:flex-row items-center gap-16">
+        {{-- <div class="border-y border-secondary px-0 py-4 min-[800px]:px-8 min-[800px]:py-8 flex flex-col min-[1200px]:flex-row items-center gap-16">
             <img src="{{ asset('storage/images/misc_ui/grougalorasalar.png') }}" alt="Logo Grougalorasalar Solver par Pawmi (Sinaninho)" class="h-40">
             <div>
                 <div class="flex items-end mb-4 space-x-8">
@@ -28,7 +28,7 @@
                 <p class="font-thin">{!! __('barbofus.descriptionToolsGrougalorasalar') !!}</p>
                 <a href="https://solver.barbofus.com/grougalorasalar/" title="Grougalorasalar Solver par Pawmi (Sinaninho)" target="_blank" class="italic font-light underline transition-all text-goldText hover:text-goldTextLit">{{ __('barbofus.buttonToolsGrougalorasalar') }}</a>
             </div>
-        </div>
+        </div> --}}
 
         {{-- Bolgrot - Emmathie --}}
         <div class="border-y border-secondary px-0 py-4 min-[800px]:px-8 min-[800px]:py-8 flex flex-col min-[1200px]:flex-row items-center gap-16">
