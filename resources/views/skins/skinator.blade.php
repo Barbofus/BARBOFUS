@@ -305,7 +305,7 @@
                         <p class="mb-1 text-xl font-light text-center">{{ __('barbofus.labelSkinClass') }}</p>
 
                         <div class="flex flex-wrap items-center justify-center gap-2"
-                            x-on:change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
+                            x-on:change="if (event.target.matches('input[type=radio]')) { shouldResetColors = checkIfDefaultColors(gender, breed, colors); breed = Number(event.target.value); updateLineage(); editURLParam(getURLObject()); updateAlpineHead(); updateAlpineBody(); }">
                             <template x-for="breedInfo in breedInfos" :key="breedInfo.dofus_id">
                                 <div>
                                     <input :id="'breed_' + breedInfo.dofus_id" type="radio" name="race_id"
@@ -349,6 +349,25 @@
                                 </div>
                             </template>
                         </div>
+
+                        {{--      Choix du dragon (Bellaphone)      --}}
+                        <template x-if="breed === BELLAPHONE">
+                            <div class="mt-4">
+                                <p class="mb-1 text-xl font-light text-center">Dragon</p>
+                                <div class="flex flex-wrap items-center justify-center gap-2">
+                                    <template x-for="l in lineages" :key="l.id">
+                                        <button type="button" x-on:click="lineage = l.id; editURLParam(getURLObject())"
+                                            :title="lineageName(l)"
+                                            :class="lineage === l.id ? 'text-secondary border-goldText' : 'text-inactiveText border-primary-100'"
+                                            class="flex flex-col items-center gap-1 px-2 py-2 transition-all border-2 rounded-md cursor-pointer bg-primary-100 hover:border-inactiveText">
+                                            <span class="block w-8 h-8 border rounded-full border-primary"
+                                                :style="'background-color: ' + l.color"></span>
+                                            <span class="text-xs" x-text="lineageName(l)"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
                     </div>
 
                     <div x-cloak class="py-4 min-[600px]:px-4" x-show="charactersCurrentTab === 'body'">
@@ -968,7 +987,8 @@
 
                     {{-- RETRO --}}
                     <div x-cloak class="flex flex-wrap gap-4 gap-y-5" x-show="animationsCurrentTab === 'retro'">
-                        <template x-for="b in breedInfos" :key="b.dofus_id">
+                        {{-- Seulement les classes qui ont un corps rétro (le Bellaphone n'en a pas encore) --}}
+                        <template x-for="b in breedInfos.filter(b => b.bodies[gender ? 'female' : 'male']?.[2])" :key="b.dofus_id">
                             <button type="button" x-on:click="animationName = `AnimStatiqueExploRetro${b.dofus_id}@1-${b.dofus_id}-static`; orientationKey = 0"
                                 class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                                 <img draggable="false" class="h-[9rem]"
@@ -983,7 +1003,8 @@
 
                     {{-- NEW AGE --}}
                     <div x-cloak class="flex flex-wrap gap-4 gap-y-5" x-show="animationsCurrentTab === 'newage'">
-                        <template x-for="b in breedInfos" :key="b.dofus_id">
+                        {{-- Seulement les classes qui ont un corps avant-gardiste --}}
+                        <template x-for="b in breedInfos.filter(b => b.bodies[gender ? 'female' : 'male']?.[3])" :key="b.dofus_id">
                             <button type="button" x-on:click="animationName = `AnimStatiqueExploNewAge${b.dofus_id}@1-${b.dofus_id}-static`; orientationKey = 0"
                                 class="relative transition-all rounded bg-primary-100 group hover:brightness-110">
                                 <img draggable="false" class="h-[9rem]"
@@ -1546,6 +1567,19 @@
                 breed: @json($skin ? $skin->race_id : $breeds[rand(0, $breeds->count() - 1)]->dofus_id),
                 head: @json($skin?->face),
                 body: @json($skin?->body),
+                // Le dragon d'un Bellaphone (classe 21) : sa lignée, lue par le renderer v2
+                // (BreedLineagesDataRoot). Une autre classe n'en a pas.
+                BELLAPHONE: 21,
+                lineage: null,
+                lineages: [
+                    { id: 4, color: '#717e58', names: { fr: 'Aerafal' } },
+                    { id: 5, color: '#963a3b', names: { fr: 'Ignemikhal' } },
+                    { id: 6, color: '#0a9a9e', names: { fr: 'Aguabrial' } },
+                    { id: 7, color: '#ae8838', names: { fr: 'Terrakourial', es: 'Terrakurial', pt: 'Terrakurial' } },
+                    { id: 8, color: '#caedd9', names: { fr: 'Dardondakal' } },
+                    { id: 9, color: '#49454b', names: { fr: 'Grougalorasalar', es: 'Grugalorasalar', pt: 'Grugalorasalar' } },
+                ],
+                locale: @json(app()->getLocale()),
                 colors: {!! json_encode(
                     $skin
                         ? [
@@ -1840,6 +1874,7 @@
                         if (this.colors.length == 0) {
                             this.colors = this.getDefaultColor(this.gender, this.breed);
                         }
+                        this.updateLineage();
                         editURLParam(this.getURLObject())
                     }
 
@@ -1971,6 +2006,21 @@
                     }
 
                     this.items = json.items;
+                    this.lineage = json.lineage ?? null;
+                    this.updateLineage();
+                },
+
+                // Un Bellaphone a toujours un dragon (le premier par défaut), une autre classe jamais.
+                updateLineage() {
+                    if (this.breed !== this.BELLAPHONE) {
+                        this.lineage = null;
+                    } else if (!this.lineages.some(l => l.id === this.lineage)) {
+                        this.lineage = this.lineages[0].id;
+                    }
+                },
+
+                lineageName(l) {
+                    return l.names[this.locale] ?? l.names.fr;
                 },
 
                 getURLObject() {
@@ -1984,6 +2034,7 @@
                                 16) : color
                         ),
                         items: this.items,
+                        ...(this.lineage !== null && { lineage: this.lineage }),
                     }));
                 },
 
@@ -2006,6 +2057,7 @@
                             .items.mount).asset_id : null,
                         cameleon: this.items.mount ? ([1, 2, 3].includes(this.items.mount)) :
                             false,
+                        ...(this.lineage !== null && { lineage: this.lineage }),
                         animated: this.animated
                     }, null, 2);
                 },
